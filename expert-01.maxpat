@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 103.0, 79.0, 1008.0, 857.0 ],
+		"rect" : [ 409.0, 79.0, 1008.0, 857.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -55,7 +55,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 622.916687, 434.666687, 119.0, 22.0 ],
+					"patching_rect" : [ 601.416687, 434.666687, 119.0, 22.0 ],
 					"style" : "",
 					"text" : "symbol Digital Piano"
 				}
@@ -275,7 +275,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-29",
-					"items" : [ "to Max 1", ",", "to Max 2", ",", "Digital Piano" ],
+					"items" : [ "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -561,7 +561,8 @@
 					"patching_rect" : [ 40.0, 419.666687, 159.799988, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 39.599998, 141.0, 133.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "dynamics"
 				}
 
 			}
@@ -708,7 +709,8 @@
 					"patching_rect" : [ 40.0, 235.666687, 159.799988, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 39.599998, 111.199997, 133.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "nondidactic"
 				}
 
 			}
@@ -1484,6 +1486,24 @@
  ],
 		"autosave" : 0,
 		"styles" : [ 			{
+				"name" : "AudioStatus_Menu",
+				"default" : 				{
+					"bgfillcolor" : 					{
+						"type" : "color",
+						"color" : [ 0.294118, 0.313726, 0.337255, 1 ],
+						"color1" : [ 0.454902, 0.462745, 0.482353, 0.0 ],
+						"color2" : [ 0.290196, 0.309804, 0.301961, 1.0 ],
+						"angle" : 270.0,
+						"proportion" : 0.39,
+						"autogradient" : 0
+					}
+
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
 				"name" : "buttonBlue",
 				"default" : 				{
 					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ]
@@ -1502,9 +1522,33 @@
 				"multi" : 0
 			}
 , 			{
+				"name" : "dac",
+				"default" : 				{
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
+				"name" : "generic",
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
 				"name" : "newobjBlue-1",
 				"default" : 				{
 					"accentcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ]
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
+				"name" : "newobjBrown-1",
+				"default" : 				{
+					"accentcolor" : [ 0.654902, 0.572549, 0.376471, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1538,10 +1582,93 @@
 				"multi" : 0
 			}
 , 			{
+				"name" : "newobjRed-1",
+				"default" : 				{
+					"accentcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
 					"fontsize" : [ 12.059008 ],
 					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
+				"name" : "numberGold-1",
+				"default" : 				{
+					"accentcolor" : [ 0.764706, 0.592157, 0.101961, 1.0 ]
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
+				"name" : "panelGold-1",
+				"default" : 				{
+					"bgfillcolor" : 					{
+						"type" : "color",
+						"color" : [ 0.764706, 0.592157, 0.101961, 0.25 ],
+						"color1" : [ 0.764706, 0.592157, 0.101961, 1.0 ],
+						"color2" : [ 0.290196, 0.309804, 0.301961, 1.0 ],
+						"angle" : 270.0,
+						"proportion" : 0.39,
+						"autogradient" : 0
+					}
+
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
+				"name" : "receive",
+				"default" : 				{
+					"accentcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
+				"name" : "scope~001",
+				"default" : 				{
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
+				"name" : "send",
+				"default" : 				{
+					"accentcolor" : [ 0.439216, 0.74902, 0.254902, 1.0 ]
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
+				"name" : "subpatch",
+				"default" : 				{
+					"accentcolor" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
+				}
+,
+				"parentstyle" : "",
+				"multi" : 0
+			}
+, 			{
+				"name" : "texteditGold",
+				"default" : 				{
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
 				}
 ,
 				"parentstyle" : "",
