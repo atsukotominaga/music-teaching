@@ -143,7 +143,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 447.80011, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 179.300018, 734.983398, 50.0, 22.0 ],
+					"presentation_rect" : [ 179.300018, 753.983398, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -158,7 +158,7 @@
 					"patching_rect" : [ 40.0, 340.333313, 150.0, 100.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 179.300018, 696.0, 437.0, 33.0 ],
+					"presentation_rect" : [ 179.300018, 715.0, 437.0, 33.0 ],
 					"style" : "",
 					"text" : "*In case you want to reset the current counter to the previous number (e.g., when you hit a key by mistake and want to record the same trial again.)",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
@@ -533,7 +533,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 570.916687, 538.80011, 42.0, 22.0 ],
+					"patching_rect" : [ 465.916687, 548.80011, 42.0, 22.0 ],
 					"style" : "",
 					"text" : "midiin"
 				}
@@ -568,7 +568,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-29",
-					"items" : [ "to Max 1", ",", "to Max 2", ",", "Digital Piano" ],
+					"items" : [ "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -667,7 +667,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "int", "int", "int", "int" ],
-					"patching_rect" : [ 570.916687, 571.666626, 50.5, 22.0 ],
+					"patching_rect" : [ 465.916687, 581.666626, 50.5, 22.0 ],
 					"style" : "",
 					"text" : "xnotein"
 				}
@@ -703,7 +703,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 299.5, 692.75, 435.0, 303.5 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 179.300018, 398.0, 437.0, 296.0 ],
+					"presentation_rect" : [ 179.300018, 398.0, 437.0, 310.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -730,7 +730,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 570.916687, 637.0, 95.0, 22.0 ],
+					"patching_rect" : [ 465.916687, 647.0, 95.0, 22.0 ],
 					"style" : "",
 					"text" : "print midiNoteIn"
 				}
@@ -743,7 +743,7 @@
 					"numinlets" : 4,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 570.916687, 605.0, 76.0, 22.0 ],
+					"patching_rect" : [ 465.916687, 615.0, 76.0, 22.0 ],
 					"style" : "",
 					"text" : "pack 0 0 0 0"
 				}
