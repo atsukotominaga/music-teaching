@@ -39,11 +39,30 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"bgmode" : 1,
+					"border" : 0,
+					"clickthrough" : 0,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-18",
+					"lockeddragscroll" : 0,
+					"maxclass" : "bpatcher",
+					"name" : "subPatch_condFileReading.maxpat",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patching_rect" : [ 831.0, 433.0, 313.5, 96.80011 ],
+					"viewvisibility" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-6",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 748.0, 541.80011, 190.0, 20.0 ],
+					"patching_rect" : [ 749.0, 692.80011, 190.0, 20.0 ],
 					"style" : "",
 					"text" : "MIDI setting - instrument / volume"
 				}
@@ -56,7 +75,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 748.0, 563.80011, 60.0, 22.0 ],
+					"patching_rect" : [ 749.0, 714.80011, 60.0, 22.0 ],
 					"style" : "",
 					"text" : "loadbang"
 				}
@@ -69,7 +88,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 748.0, 600.80011, 29.5, 22.0 ],
+					"patching_rect" : [ 749.0, 751.80011, 29.5, 22.0 ],
 					"style" : "",
 					"text" : "0"
 				}
@@ -81,7 +100,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 748.0, 629.80011, 61.0, 22.0 ],
+					"patching_rect" : [ 749.0, 780.80011, 61.0, 22.0 ],
 					"style" : "",
 					"text" : "pgmout 2"
 				}
@@ -94,9 +113,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 818.0, 600.80011, 31.0, 22.0 ],
+					"patching_rect" : [ 819.0, 751.80011, 30.0, 22.0 ],
 					"style" : "",
-					"text" : "127"
+					"text" : "110"
 				}
 
 			}
@@ -108,7 +127,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 3,
 					"numoutlets" : 0,
-					"patching_rect" : [ 818.0, 629.80011, 59.0, 22.0 ],
+					"patching_rect" : [ 819.0, 780.80011, 59.0, 22.0 ],
 					"style" : "",
 					"text" : "ctlout 7 2"
 				}
@@ -124,7 +143,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 447.80011, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 179.300049, 588.80011, 50.0, 22.0 ],
+					"presentation_rect" : [ 179.300018, 734.983398, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -139,7 +158,7 @@
 					"patching_rect" : [ 40.0, 340.333313, 150.0, 100.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 179.300049, 549.816711, 437.0, 33.0 ],
+					"presentation_rect" : [ 179.300018, 696.0, 437.0, 33.0 ],
 					"style" : "",
 					"text" : "*In case you want to reset the current counter to the previous number (e.g., when you hit a key by mistake and want to record the same trial again.)",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
@@ -184,26 +203,6 @@
 					"patching_rect" : [ 202.0, 84.0, 72.0, 22.0 ],
 					"style" : "",
 					"text" : "loadmess 0"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"bgmode" : 1,
-					"border" : 0,
-					"clickthrough" : 0,
-					"enablehscroll" : 0,
-					"enablevscroll" : 0,
-					"id" : "obj-94",
-					"jspainterfile" : "subPatcher_CondFileReading.maxpat",
-					"lockeddragscroll" : 0,
-					"maxclass" : "bpatcher",
-					"name" : "subPatcher_CondFileReading.maxpat",
-					"numinlets" : 0,
-					"numoutlets" : 0,
-					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 708.5, 327.499939, 433.0, 91.833374 ],
-					"viewvisibility" : 1
 				}
 
 			}
@@ -699,12 +698,12 @@
 					"lockeddragscroll" : 0,
 					"maxclass" : "bpatcher",
 					"name" : "subPatch_MIDInote_Recording.maxpat",
-					"numinlets" : 5,
+					"numinlets" : 6,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 299.5, 692.75, 428.0, 216.5 ],
+					"patching_rect" : [ 299.5, 692.75, 435.0, 303.5 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 179.300049, 319.0, 437.0, 224.0 ],
+					"presentation_rect" : [ 179.300018, 398.0, 437.0, 296.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -762,12 +761,12 @@
 					"maxclass" : "bpatcher",
 					"name" : "subPatch_DataFileNaming.maxpat",
 					"numinlets" : 1,
-					"numoutlets" : 1,
+					"numoutlets" : 2,
 					"offset" : [ 0.0, 0.0 ],
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 708.5, 116.333344, 433.0, 198.0 ],
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 708.5, 116.333344, 436.0, 305.133453 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 179.300018, 82.0, 437.0, 224.0 ],
+					"presentation_rect" : [ 179.300018, 82.0, 437.0, 303.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -1240,6 +1239,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 5 ],
+					"source" : [ "obj-28", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-27", 4 ],
 					"source" : [ "obj-28", 0 ]
 				}
@@ -1503,7 +1509,7 @@
 				"implicit" : 1
 			}
 , 			{
-				"name" : "subPatcher_CondFileReading.maxpat",
+				"name" : "subPatch_condFileReading.maxpat",
 				"bootpath" : "~/Dropbox (Personal)/- Research/[Project]/GitHub/expert01",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
@@ -1557,8 +1563,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1626,8 +1632,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1672,8 +1678,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
