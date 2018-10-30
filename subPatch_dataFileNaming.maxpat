@@ -44,8 +44,10 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1194.5, 675.0, 168.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 13.0, 239.0, 168.0, 20.0 ],
 					"style" : "",
-					"text" : "File name for MIDI recording"
+					"text" : "MIDI recording"
 				}
 
 			}
@@ -56,8 +58,10 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 497.0, 675.0, 150.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 13.0, 162.0, 150.0, 20.0 ],
 					"style" : "",
-					"text" : "File name for MIDI data"
+					"text" : "MIDI data"
 				}
 
 			}
@@ -119,8 +123,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 993.0, 453.0, 81.0, 22.0 ],
-					"presentation_rect" : [ 992.5, 445.0, 0.0, 0.0 ],
+					"patching_rect" : [ 1157.5, 453.0, 81.0, 22.0 ],
 					"style" : "",
 					"text" : "loadmess set"
 				}
@@ -133,7 +136,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 833.0, 485.0, 241.0, 22.0 ],
+					"patching_rect" : [ 833.0, 485.0, 405.5, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 13.0, 261.0, 400.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -142,12 +147,12 @@
 				"box" : 				{
 					"id" : "obj-93",
 					"maxclass" : "newobj",
-					"numinlets" : 7,
+					"numinlets" : 8,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 833.0, 415.0, 241.0, 22.0 ],
+					"patching_rect" : [ 833.0, 415.0, 267.0, 22.0 ],
 					"style" : "",
-					"text" : "combine recording _ subNr _ block _ trialNr"
+					"text" : "combine recording _ subNr _ block _ trialNr .mid"
 				}
 
 			}
@@ -668,7 +673,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 117.5, 485.0, 400.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 13.0, 157.0, 400.0, 22.0 ],
+					"presentation_rect" : [ 13.0, 184.0, 400.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -1301,8 +1306,16 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-57", 0 ],
+					"destination" : [ "obj-57", 1 ],
 					"order" : 1,
+					"source" : [ "obj-93", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-67", 0 ],
+					"order" : 2,
 					"source" : [ "obj-93", 0 ]
 				}
 
