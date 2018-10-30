@@ -44,7 +44,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1015.0, 279.5, 150.0, 33.0 ],
+					"patching_rect" : [ 936.0, 356.5, 150.0, 33.0 ],
 					"style" : "",
 					"text" : "Update the file name in each trial"
 				}
@@ -57,7 +57,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "bang" ],
-					"patching_rect" : [ 977.0, 285.0, 34.0, 22.0 ],
+					"patching_rect" : [ 900.0, 362.0, 34.0, 22.0 ],
 					"style" : "",
 					"text" : "t b b"
 				}
@@ -605,7 +605,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 960.0, 330.0, 51.0, 22.0 ],
+					"patching_rect" : [ 960.0, 296.0, 51.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 290.0, 125.0, 51.0, 22.0 ],
 					"style" : ""
@@ -764,7 +764,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-19", 0 ],
-					"order" : 1,
+					"order" : 0,
 					"source" : [ "obj-14", 0 ]
 				}
 
@@ -772,7 +772,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-31", 0 ],
-					"order" : 0,
+					"order" : 1,
 					"source" : [ "obj-14", 0 ]
 				}
 
