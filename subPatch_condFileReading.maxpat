@@ -303,8 +303,7 @@
 					"patching_rect" : [ 19.0, 563.0, 107.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 121.0, 54.0, 107.0, 22.0 ],
-					"style" : "",
-					"text" : "excerpt1.jpg"
+					"style" : ""
 				}
 
 			}
@@ -395,9 +394,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 19.0, 529.0, 83.0, 22.0 ],
+					"patching_rect" : [ 19.0, 529.0, 87.0, 22.0 ],
 					"style" : "",
-					"text" : "sprintf %s.jpg"
+					"text" : "sprintf %s.png"
 				}
 
 			}
