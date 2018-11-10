@@ -1,10 +1,12 @@
 \version "2.18.2"
 
+% define melody
+
 melody = {
     \relative c' {
     \clef treble
     \time 4/4
-    \tempo "Andente" 4 = 80
+    \tempo "Andente" 4 = 70
     
     \tuplet 3/2 { fis'8 a,8 a8 }
     \tuplet 3/2 { e'8 g,8 g8 }
@@ -15,7 +17,7 @@ melody = {
     \tuplet 3/2 { a8 fis8 fis8  }
     \tuplet 3/2 { b8 a8 b8 }
     }\break
-    
+
     \relative c' {
     \tuplet 3/2 { cis'8 bes8 bes8 }
     \tuplet 3/2 { d8 a8 a8 }
@@ -47,11 +49,17 @@ melody = {
     e4
     \tuplet 3/2 { e8 e8 e8 }
     e4
-    }\break
+    }
     }
 
+% Export melody to pdf and midi files
+
 \score{
-    \new Staff \melody
-    \layout {}
+    \melody
+    \layout {
+        \context {
+        \Score
+        \omit BarNumber }
+    indent = #0 }
     \midi {}
     }
