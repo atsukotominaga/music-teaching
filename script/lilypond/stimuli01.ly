@@ -6,7 +6,7 @@ melody = {
     \relative c' {
     \clef treble
     \time 4/4
-    \tempo "Andente" 4 = 70
+    \tempo "Andente" 4 = 80
     
     \tuplet 3/2 { fis'8 a,8 a8 }
     \tuplet 3/2 { e'8 g,8 g8 }

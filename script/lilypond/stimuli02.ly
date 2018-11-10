@@ -4,7 +4,7 @@ melody = {
     \relative c' {
     \clef treble
     \time 4/4
-    \tempo "Andante" 4 = 70
+    \tempo "Andante" 4 = 80
     
     g'16 d16 e16 b16 r16 d16 e16 b16
     g'16 d16 e16 b16 r16 d16 e16 b16
