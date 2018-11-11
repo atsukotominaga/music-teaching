@@ -143,7 +143,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 447.80011, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 179.300018, 753.983398, 50.0, 22.0 ],
+					"presentation_rect" : [ 179.300018, 780.983398, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -158,7 +158,7 @@
 					"patching_rect" : [ 40.0, 340.333313, 150.0, 100.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 179.300018, 715.0, 437.0, 33.0 ],
+					"presentation_rect" : [ 179.300018, 742.0, 437.0, 33.0 ],
 					"style" : "",
 					"text" : "*In case you want to reset the current counter to the previous number (e.g., when you hit a key by mistake and want to record the same trial again.)",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
@@ -701,9 +701,9 @@
 					"numinlets" : 6,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 299.5, 692.75, 435.0, 303.5 ],
+					"patching_rect" : [ 299.5, 692.75, 435.041718, 335.5 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 179.300018, 398.0, 437.0, 310.0 ],
+					"presentation_rect" : [ 179.300018, 398.0, 437.0, 334.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -984,9 +984,9 @@
 					"patching_rect" : [ 40.0, 481.333313, 211.0, 835.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 28,
-					"presentation_rect" : [ 635.300049, 82.0, 509.0, 574.0 ],
+					"presentation_rect" : [ 635.300049, 82.0, 515.0, 574.0 ],
 					"style" : "",
-					"text" : "Image Display setup\n\n1. Open 'image_display.matpat' and move the window to the right screen so that it shows on the screen in front of the piano.\n\n2. Press the F key to fullscreen (to exit, press the esc key)\n\nRun the experiment\n\n1. Enter SubNum and Block Num (otherwise, it is not recorded properly).\n\n2. Start a trial with the space key.\n\n3. Stop the trial with the Z key.\n\n4. Procedure\n\nFirst block (one of the skills; articulation or tempoChange)\n- 8 trials (nondidactic)\n- 8 trials (didactic)\n- 8 trials (nondidactic)\n\nSecond block (the other one of the skills)\n- 8 trials (nondidactic)\n- 8 trials (didactic)\n- 8 trials (nondidactic)"
+					"text" : "Image Display setup\n\n1. Open 'image_display.matpat' and move the window to the right screen so that it shows on the screen in front of the piano.\n\n2. Press the F key to fullscreen (to exit, press the esc key)\n\nRun the experiment\n\n1. Enter SubNr and Block Nr (otherwise, it is not recorded properly).\n\n2. Start a trial with the space key.\n\n3. Stop the trial with the Z key.\n\n4. Procedure\n\nFirst block (one of the skills; articulation or tempoChange)\n- 8 trials (nondidactic)\n- 8 trials (didactic)\n- 8 trials (nondidactic)\n\nSecond block (the other one of the skills)\n- 8 trials (nondidactic)\n- 8 trials (didactic)\n- 8 trials (nondidactic)"
 				}
 
 			}
@@ -1496,28 +1496,28 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "subPatch_DataFileNaming.maxpat",
-				"bootpath" : "~/Dropbox (Personal)/- Research/[Project]/GitHub/expert01",
+				"bootpath" : "~/Dropbox (Personal)/Research/[Project]/GitHub/expert01/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_MIDInote_Recording.maxpat",
-				"bootpath" : "~/Dropbox (Personal)/- Research/[Project]/GitHub/expert01",
+				"bootpath" : "~/Dropbox (Personal)/Research/[Project]/GitHub/expert01/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_condFileReading.maxpat",
-				"bootpath" : "~/Dropbox (Personal)/- Research/[Project]/GitHub/expert01",
+				"bootpath" : "~/Dropbox (Personal)/Research/[Project]/GitHub/expert01/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/Dropbox (Personal)/- Research/[Project]/GitHub/expert01",
+				"bootpath" : "~/Dropbox (Personal)/Research/[Project]/GitHub/expert01/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
@@ -1563,8 +1563,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
