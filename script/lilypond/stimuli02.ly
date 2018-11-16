@@ -18,8 +18,8 @@ melody = {
     gis16 a16 b16 f'16 e16 d16 bes16 a16
     aes16 cis16 g16 d'16 gis,16 dis'16 g,16 e'16
     aes,16 cis16 g16 d'16 gis,16 dis'16 g,16 e'16
-    r16 e16 dis16 e16 f16 b,16 c16 dis16
-    r16 e16 dis16 e16 f16 b,16 c16 dis16
+    r16 e16 dis16 e16 f16 b,16 c16 d16
+    r16 e16 dis16 e16 f16 b,16 c16 d16
     e16 bes16 e8 e4
     e16 bes16 e8 e4
     
