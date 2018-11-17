@@ -330,9 +330,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 117.5, 564.0, 529.5, 22.0 ],
+					"patching_rect" : [ 117.5, 564.0, 621.5, 22.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/Dropbox (Personal)/- Research/[Project]/GitHub/expert01/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertTeaching/script/Max/\""
 				}
 
 			}
@@ -685,9 +685,9 @@
 					"numinlets" : 16,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 117.5, 415.0, 431.0, 22.0 ],
+					"patching_rect" : [ 117.5, 415.0, 467.0, 22.0 ],
 					"style" : "",
-					"text" : "combine expert01 _ subNr _ block _ trialNr _ skill _ condition _ score _ time .txt"
+					"text" : "combine ExpertTeaching _ subNr _ block _ trialNr _ skill _ condition _ score _ time .txt"
 				}
 
 			}
@@ -1380,8 +1380,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
