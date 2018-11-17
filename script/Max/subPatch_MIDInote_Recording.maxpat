@@ -45,7 +45,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 624.0, 726.0, 108.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 236.0, 108.0, 20.0 ],
+					"presentation_rect" : [ 15.0, 255.0, 108.0, 20.0 ],
 					"style" : "",
 					"text" : "MIDI recording"
 				}
@@ -87,7 +87,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 241.0, 700.0, 491.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 258.0, 400.0, 22.0 ],
+					"presentation_rect" : [ 15.0, 277.0, 400.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -1507,8 +1507,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
