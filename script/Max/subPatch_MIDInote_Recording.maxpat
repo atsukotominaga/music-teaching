@@ -39,6 +39,19 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-29",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 262.0, 398.0, 150.0, 33.0 ],
+					"style" : "",
+					"text" : "Generate MIDI sounds - connect to unpack"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-53",
 					"maxclass" : "comment",
 					"numinlets" : 1,
@@ -374,7 +387,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 214.0, 398.0, 49.0, 22.0 ],
+					"patching_rect" : [ 262.0, 466.0, 49.0, 22.0 ],
 					"style" : "",
 					"text" : "midiout"
 				}
@@ -765,7 +778,7 @@
 					"numinlets" : 4,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 214.0, 367.0, 57.0, 22.0 ],
+					"patching_rect" : [ 262.0, 435.0, 57.0, 22.0 ],
 					"style" : "",
 					"text" : "xnoteout"
 				}
@@ -1055,38 +1068,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
-					"order" : 2,
-					"source" : [ "obj-26", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-40", 3 ],
-					"order" : 1,
-					"source" : [ "obj-26", 3 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-40", 2 ],
-					"order" : 1,
-					"source" : [ "obj-26", 2 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-40", 1 ],
-					"order" : 2,
-					"source" : [ "obj-26", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-40", 0 ],
 					"order" : 1,
 					"source" : [ "obj-26", 0 ]
 				}
@@ -1095,7 +1076,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-55", 3 ],
-					"order" : 0,
 					"source" : [ "obj-26", 3 ]
 				}
 
@@ -1103,7 +1083,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-55", 2 ],
-					"order" : 0,
 					"source" : [ "obj-26", 2 ]
 				}
 
