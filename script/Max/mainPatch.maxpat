@@ -328,9 +328,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 997.0, 998.633423, 77.0, 22.0 ],
+					"patching_rect" : [ 997.0, 998.633423, 87.0, 22.0 ],
 					"style" : "",
-					"text" : "append .png"
+					"text" : "sprintf %s.png"
 				}
 
 			}
@@ -3470,6 +3470,13 @@
 					"destination" : [ "obj-64", 0 ],
 					"order" : 1,
 					"source" : [ "obj-91", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-83", 0 ],
+					"source" : [ "obj-92", 0 ]
 				}
 
 			}
