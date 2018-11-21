@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 2549.0, -625.0, 1310.0, 857.0 ],
+		"rect" : [ 336.0, 79.0, 1310.0, 857.0 ],
 		"bgcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -470,9 +470,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 19.0, 475.0, 93.0, 20.0 ],
+					"patching_rect" : [ 19.0, 475.0, 213.0, 20.0 ],
 					"style" : "",
-					"text" : "Set a picture"
+					"text" : "Set a picture when a block is changing"
 				}
 
 			}
@@ -541,7 +541,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 524.0, 342.5, 360.0, 35.0 ],
 					"style" : "",
-					"text" : "read \"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertTeaching/script/Max/cb.csv\""
+					"text" : "read \"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/TeachingPiano/script/Max/cb.csv\""
 				}
 
 			}
@@ -581,7 +581,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 524.0, 260.5, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertTeaching/script/Max/cb.csv\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/TeachingPiano/script/Max/cb.csv\""
 				}
 
 			}
@@ -608,7 +608,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 524.0, 183.5, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertTeaching/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/TeachingPiano/script/Max/\""
 				}
 
 			}
@@ -1012,7 +1012,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/OneDrive - Central European University/Project/ExpertTeaching/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/TeachingPiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
