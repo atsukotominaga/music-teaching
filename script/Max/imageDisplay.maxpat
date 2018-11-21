@@ -44,9 +44,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
-					"patching_rect" : [ 22.333332, 141.0, 1107.0, 697.0 ],
+					"patching_rect" : [ 20.0, 140.0, 1280.0, 720.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 75.333328, 97.0, 2425.0, 1280.0 ]
+					"presentation_rect" : [ 80.0, 100.0, 2560.0, 1440.0 ]
 				}
 
 			}
@@ -57,7 +57,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 22.333332, 65.333359, 54.0, 22.0 ],
+					"patching_rect" : [ 20.0, 69.333359, 54.0, 22.0 ],
 					"style" : "",
 					"text" : "r picture"
 				}
@@ -69,7 +69,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 103.333328, 102.333359, 101.0, 20.0 ],
+					"patching_rect" : [ 101.0, 106.333359, 101.0, 20.0 ],
 					"style" : "",
 					"text" : "Display an image"
 				}
@@ -173,7 +173,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 22.333332, 100.333359, 73.0, 22.0 ],
+					"patching_rect" : [ 20.0, 104.333359, 73.0, 22.0 ],
 					"style" : "",
 					"text" : "prepend pic"
 				}
@@ -253,8 +253,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
