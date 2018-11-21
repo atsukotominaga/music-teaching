@@ -517,9 +517,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 504.25, 614.683472, 32.5, 22.0 ],
+					"patching_rect" : [ 504.25, 614.683472, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "120"
+					"text" : "80"
 				}
 
 			}
@@ -586,9 +586,9 @@
 					"numinlets" : 4,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 504.25, 681.483521, 67.0, 22.0 ],
+					"patching_rect" : [ 504.25, 681.483521, 61.0, 22.0 ],
 					"style" : "",
-					"text" : "tempo 120"
+					"text" : "tempo 80"
 				}
 
 			}
@@ -1842,7 +1842,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 279.333344, 81.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 351.700012, 127.699982, 49.0 ],
+					"presentation_rect" : [ 40.0, 351.700012, 128.0, 49.0 ],
 					"style" : ""
 				}
 
@@ -2275,7 +2275,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 826.166687, 192.333344, 81.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 431.666656, 127.699982, 49.0 ],
+					"presentation_rect" : [ 40.0, 431.666656, 128.0, 49.0 ],
 					"style" : ""
 				}
 
@@ -3584,8 +3584,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3653,8 +3653,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3699,8 +3699,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3727,8 +3727,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
 				}
 ,
 				"parentstyle" : "",
