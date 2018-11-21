@@ -1,8 +1,8 @@
-1,	Teaching	Performing	articulation	tempoChange	a_e1	t_e2;
-2,	Performing	Teaching	articulation	tempoChange	a_e1	t_e2;
-3,	Teaching	Performing	articulation	tempoChange	a_e2	t_e1;
-4,	Performing	Teaching	articulation	tempoChange	a_e2	t_e1;
-5,	Teaching	Performing	tempoChange	articulation	t_e1	a_e2;
-6,	Performing	Teaching	tempoChange	articulation	t_e1	a_e2;
-7,	Teaching	Performing	tempoChange	articulation	t_e2	a_e1;
-8,	Performing	Teaching	tempoChange	articulation	t_e2	a_e1;
+1,	Teaching	Performing	articulation	tempoChange	stim_a	stim_t;
+2,	Performing	Teaching	articulation	tempoChange	stim_a	stim_t;
+3,	Teaching	Performing	articulation	tempoChange	stim_a	stim_t;
+4,	Performing	Teaching	articulation	tempoChange	stim_a	stim_t;
+5,	Teaching	Performing	tempoChange	articulation	stim_t	stim_a;
+6,	Performing	Teaching	tempoChange	articulation	stim_t	stim_a;
+7,	Teaching	Performing	tempoChange	articulation	stim_t	stim_a;
+8,	Performing	Teaching	tempoChange	articulation	stim_t	stim_a;
