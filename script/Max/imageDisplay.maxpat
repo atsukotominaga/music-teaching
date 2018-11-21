@@ -46,7 +46,7 @@
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 20.0, 140.0, 1280.0, 720.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 80.0, 100.0, 2560.0, 1440.0 ]
+					"presentation_rect" : [ 0.0, 50.0, 2560.0, 1440.0 ]
 				}
 
 			}
@@ -253,8 +253,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
