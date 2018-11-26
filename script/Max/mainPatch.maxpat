@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 79.0, 1310.0, 861.0 ],
+		"rect" : [ 34.0, 79.0, 1310.0, 857.0 ],
 		"bgcolor" : [ 0.862745, 0.870588, 0.878431, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -38,6 +38,47 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-174",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 829.0, 745.483521, 150.0, 33.0 ],
+					"style" : "",
+					"text" : "Metronome indicator (MIDI channel)"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-170",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 829.0, 785.133423, 29.5, 22.0 ],
+					"style" : "",
+					"text" : "10"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-167",
+					"maxclass" : "newobj",
+					"numinlets" : 3,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 782.0, 818.0, 66.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 0.0, 0.0, 100.0, 22.0 ],
+					"style" : "",
+					"text" : "pack 0 0 0"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"fontsize" : 24.0,
 					"id" : "obj-67",
@@ -2106,7 +2147,7 @@
 					"lockeddragscroll" : 0,
 					"maxclass" : "bpatcher",
 					"name" : "subPatch_MIDInote_Recording.maxpat",
-					"numinlets" : 6,
+					"numinlets" : 7,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 489.25, 873.633423, 435.041718, 349.5 ],
@@ -2757,6 +2798,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-139", 1 ],
+					"order" : 1,
 					"source" : [ "obj-138", 1 ]
 				}
 
@@ -2764,6 +2806,23 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-139", 0 ],
+					"order" : 1,
+					"source" : [ "obj-138", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-167", 1 ],
+					"order" : 0,
+					"source" : [ "obj-138", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-167", 0 ],
+					"order" : 0,
 					"source" : [ "obj-138", 0 ]
 				}
 
@@ -2824,7 +2883,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-134", 0 ],
-					"order" : 1,
+					"order" : 2,
 					"source" : [ "obj-144", 0 ]
 				}
 
@@ -2832,6 +2891,14 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-135", 0 ],
+					"order" : 1,
+					"source" : [ "obj-144", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-170", 0 ],
 					"order" : 0,
 					"source" : [ "obj-144", 0 ]
 				}
@@ -2992,6 +3059,20 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 4 ],
+					"source" : [ "obj-167", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-167", 2 ],
+					"source" : [ "obj-170", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-28", 0 ],
 					"source" : [ "obj-19", 0 ]
 				}
@@ -3073,14 +3154,14 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-27", 5 ],
+					"destination" : [ "obj-27", 6 ],
 					"source" : [ "obj-28", 1 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-27", 4 ],
+					"destination" : [ "obj-27", 5 ],
 					"source" : [ "obj-28", 0 ]
 				}
 
@@ -3617,8 +3698,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3686,8 +3767,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3732,8 +3813,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3760,8 +3841,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
