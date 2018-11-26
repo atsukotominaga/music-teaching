@@ -65,21 +65,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-167",
-					"maxclass" : "newobj",
-					"numinlets" : 3,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 782.0, 818.0, 66.0, 22.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 0.0, 0.0, 100.0, 22.0 ],
-					"style" : "",
-					"text" : "pack 0 0 0"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"fontsize" : 24.0,
 					"id" : "obj-67",
 					"maxclass" : "message",
@@ -2798,7 +2783,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-139", 1 ],
-					"order" : 1,
 					"source" : [ "obj-138", 1 ]
 				}
 
@@ -2806,23 +2790,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-139", 0 ],
-					"order" : 1,
-					"source" : [ "obj-138", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-167", 1 ],
-					"order" : 0,
-					"source" : [ "obj-138", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-167", 0 ],
-					"order" : 0,
 					"source" : [ "obj-138", 0 ]
 				}
 
@@ -3054,20 +3021,6 @@
 					"destination" : [ "obj-157", 0 ],
 					"order" : 1,
 					"source" : [ "obj-164", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-27", 4 ],
-					"source" : [ "obj-167", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-167", 2 ],
-					"source" : [ "obj-170", 0 ]
 				}
 
 			}
@@ -3624,28 +3577,28 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "subPatch_DataFileNaming.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/TeachingPiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_MIDInote_Recording.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/TeachingPiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_condFileReading.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/TeachingPiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/OneDrive - Central European University/Project/TeachingPiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1

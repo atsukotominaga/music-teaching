@@ -39,6 +39,31 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-18",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 626.0, 261.0, 150.0, 20.0 ],
+					"style" : "",
+					"text" : "Open a cond file"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-14",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 584.0, 260.0, 40.0, 22.0 ],
+					"style" : "",
+					"text" : "cond/"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-5",
 					"linecount" : 2,
 					"maxclass" : "comment",
@@ -495,7 +520,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 614.0, 391.5, 99.0, 20.0 ],
+					"patching_rect" : [ 614.0, 457.5, 99.0, 20.0 ],
 					"style" : "",
 					"text" : "\bRead a csv file"
 				}
@@ -508,7 +533,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "", "", "", "" ],
-					"patching_rect" : [ 524.0, 390.5, 86.0, 22.0 ],
+					"patching_rect" : [ 524.0, 456.5, 86.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0
 					}
@@ -525,7 +550,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 524.0, 307.5, 82.0, 22.0 ],
+					"patching_rect" : [ 524.0, 373.5, 82.0, 22.0 ],
 					"style" : "",
 					"text" : "prepend read"
 				}
@@ -539,9 +564,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 524.0, 342.5, 360.0, 35.0 ],
+					"patching_rect" : [ 524.0, 408.5, 360.0, 35.0 ],
 					"style" : "",
-					"text" : "read \"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/TeachingPiano/script/Max/cb.csv\""
+					"text" : "read \"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/cond/cb.csv\""
 				}
 
 			}
@@ -579,9 +604,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 524.0, 260.5, 356.699951, 35.0 ],
+					"patching_rect" : [ 524.0, 326.5, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/TeachingPiano/script/Max/cb.csv\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/cond/cb.csv\""
 				}
 
 			}
@@ -589,12 +614,12 @@
 				"box" : 				{
 					"id" : "obj-12",
 					"maxclass" : "newobj",
-					"numinlets" : 2,
+					"numinlets" : 3,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 524.0, 227.5, 122.0, 22.0 ],
+					"patching_rect" : [ 524.0, 293.5, 139.0, 22.0 ],
 					"style" : "",
-					"text" : "sprintf symout %s%s"
+					"text" : "sprintf symout %s%s%s"
 				}
 
 			}
@@ -608,7 +633,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 524.0, 183.5, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/TeachingPiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/\""
 				}
 
 			}
@@ -721,7 +746,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-12", 1 ],
+					"destination" : [ "obj-12", 2 ],
 					"order" : 0,
 					"source" : [ "obj-11", 0 ]
 				}
@@ -771,6 +796,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
 					"source" : [ "obj-13", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-12", 1 ],
+					"source" : [ "obj-14", 0 ]
 				}
 
 			}
@@ -914,6 +946,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-12", 0 ],
+					"order" : 1,
+					"source" : [ "obj-67", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-14", 0 ],
+					"order" : 0,
 					"source" : [ "obj-67", 0 ]
 				}
 
@@ -1012,8 +1053,8 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/OneDrive - Central European University/Project/TeachingPiano/script/Max",
-				"patcherrelativepath" : ".",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/cond",
+				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
