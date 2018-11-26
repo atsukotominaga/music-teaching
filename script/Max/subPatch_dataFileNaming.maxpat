@@ -332,7 +332,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 117.5, 564.0, 621.5, 22.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertTeaching/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/TeachingPiano/script/Max/\""
 				}
 
 			}
@@ -685,9 +685,9 @@
 					"numinlets" : 16,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 117.5, 415.0, 467.0, 22.0 ],
+					"patching_rect" : [ 117.5, 415.0, 449.0, 22.0 ],
 					"style" : "",
-					"text" : "combine ExpertTeaching _ subNr _ block _ trialNr _ skill _ condition _ score _ time .txt"
+					"text" : "combine ExpertPiano _ subNr _ block _ trialNr _ skill _ condition _ score _ time .txt"
 				}
 
 			}
