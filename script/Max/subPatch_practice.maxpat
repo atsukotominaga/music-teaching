@@ -10,7 +10,7 @@
 		}
 ,
 		"rect" : [ 34.0, 79.0, 1310.0, 857.0 ],
-		"bgcolor" : [ 0.862745, 0.870588, 0.878431, 1.0 ],
+		"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -297,7 +297,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 282.75, 323.633423, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_a",
+					"text" : "set",
 					"textjustification" : 1
 				}
 
@@ -310,7 +310,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 43.0, 475.633423, 87.0, 22.0 ],
-					"presentation_rect" : [ 44.0, 375.633423, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "sprintf %s.png"
 				}
@@ -323,7 +322,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 43.0, 503.633423, 56.0, 22.0 ],
-					"presentation_rect" : [ 44.0, 403.633423, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "s picture"
 				}
@@ -367,7 +365,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 161.5, 323.633423, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_t",
+					"text" : "set",
 					"textjustification" : 1
 				}
 
@@ -384,7 +382,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 41.0, 323.633423, 96.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_d",
+					"text" : "set",
 					"textjustification" : 1
 				}
 
@@ -541,7 +539,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 281.75, 207.633423, 93.5, 35.0 ],
 					"style" : "",
-					"text" : "inst_p",
 					"textjustification" : 1
 				}
 
@@ -558,7 +555,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 160.5, 207.633423, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "inst_t",
 					"textjustification" : 1
 				}
 
@@ -571,7 +567,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 40.0, 247.766846, 87.0, 22.0 ],
-					"presentation_rect" : [ 48.0, 198.633423, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "sprintf %s.png"
 				}
@@ -584,7 +579,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 275.766846, 56.0, 22.0 ],
-					"presentation_rect" : [ 48.0, 234.633423, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "s picture"
 				}
@@ -634,10 +628,10 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 700.0, 120.633423, 74.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 210.25, 90.983398, 165.0, 35.0 ],
+					"presentation_rect" : [ 40.0, 104.983398, 165.0, 35.0 ],
 					"style" : "",
 					"text" : "Metro",
-					"textcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
+					"textcolor" : [ 0.952941, 0.564706, 0.098039, 1.0 ],
 					"textjustification" : 1
 				}
 
@@ -836,7 +830,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 700.0, 89.266846, 215.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 210.25, 65.633423, 165.0, 20.0 ],
+					"presentation_rect" : [ 40.0, 79.633423, 165.0, 20.0 ],
 					"style" : "",
 					"text" : "Manual metronome"
 				}
@@ -992,10 +986,9 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 40.333328, 401.0, 33.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 3,
-					"presentation_rect" : [ 40.0, 40.333328, 146.0, 87.0 ],
+					"presentation_rect" : [ 40.0, 40.333328, 246.0, 33.0 ],
 					"style" : "",
-					"text" : "ExpertPiano - Instruction & Practice"
+					"text" : "Instruction & Practice"
 				}
 
 			}
@@ -1030,8 +1023,32 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-26", 0 ],
+					"order" : 2,
+					"source" : [ "obj-15", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"order" : 4,
+					"source" : [ "obj-15", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-33", 0 ],
+					"order" : 0,
+					"source" : [ "obj-15", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-7", 0 ],
-					"order" : 1,
+					"order" : 3,
 					"source" : [ "obj-15", 0 ]
 				}
 
@@ -1039,7 +1056,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-8", 0 ],
-					"order" : 0,
+					"order" : 1,
 					"source" : [ "obj-15", 0 ]
 				}
 
@@ -1467,7 +1484,7 @@
 		"dependency_cache" : [ 			{
 				"name" : "black.png",
 				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/image",
-				"patcherrelativepath" : "./ExpertPiano/script/Max/image",
+				"patcherrelativepath" : "./image",
 				"type" : "PNG ",
 				"implicit" : 1
 			}
