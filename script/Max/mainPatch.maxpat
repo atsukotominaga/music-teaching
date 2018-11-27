@@ -39,6 +39,24 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"bubble" : 1,
+					"fontface" : 1,
+					"fontsize" : 24.0,
+					"id" : "obj-50",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 616.833374, 92.499985, 291.0, 37.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 152.0, 106.033203, 300.0, 37.0 ],
+					"style" : "",
+					"text" : "Start - Space / Stop - Z",
+					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"bgmode" : 1,
 					"border" : 0,
 					"clickthrough" : 0,
@@ -54,7 +72,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 1184.0, 78.999985, 927.0, 524.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 223.0, 171.016602, 927.0, 524.0 ],
+					"presentation_rect" : [ 40.666672, 263.016602, 855.0, 443.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -781,7 +799,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 378.5, 53.333328, 353.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 227.0, 53.333328, 350.0, 20.0 ],
+					"presentation_rect" : [ 333.300049, 53.333328, 350.0, 20.0 ],
 					"style" : "",
 					"text" : "Private repo: https://github.com/atsukotominaga/ExpertPiano"
 				}
@@ -799,7 +817,7 @@
 					"patching_rect" : [ 138.0, 127.333344, 118.0, 37.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 3,
-					"presentation_rect" : [ 361.300018, 106.0, 100.0, 51.0 ],
+					"presentation_rect" : [ 284.300049, 204.033203, 100.0, 51.0 ],
 					"style" : "",
 					"text" : "Please enter a Subject Number",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
@@ -919,10 +937,11 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 173.5, 406.183472, 91.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 526.016602, 91.0, 35.0 ],
+					"presentation_rect" : [ 785.666687, 212.033203, 109.999985, 35.0 ],
 					"style" : "",
 					"text" : "RESET",
-					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
+					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
+					"textjustification" : 1
 				}
 
 			}
@@ -934,7 +953,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 105.0, 396.216675, 48.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 105.0, 476.0, 48.0, 20.0 ],
+					"presentation_rect" : [ 724.666687, 208.049805, 48.0, 20.0 ],
 					"style" : "",
 					"text" : "Trial no"
 				}
@@ -948,7 +967,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 396.216675, 41.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 476.0, 41.0, 20.0 ],
+					"presentation_rect" : [ 664.666687, 208.049805, 41.0, 20.0 ],
 					"style" : "",
 					"text" : "Block"
 				}
@@ -976,7 +995,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 420.733521, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 498.0, 50.0, 22.0 ],
+					"presentation_rect" : [ 664.666687, 230.049805, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -1585,7 +1604,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 105.0, 420.733521, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 105.0, 498.0, 50.0, 22.0 ],
+					"presentation_rect" : [ 724.666687, 230.049805, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -1599,10 +1618,10 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 340.333313, 346.0, 47.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 7,
-					"presentation_rect" : [ 39.0, 372.016602, 143.0, 100.0 ],
+					"presentation_linecount" : 5,
+					"presentation_rect" : [ 663.983398, 127.033203, 231.683273, 74.0 ],
 					"style" : "",
-					"text" : "*In case you want to reset the current counter to the previous number, please enter the current block number and the previous trial number and hit a RESET button.",
+					"text" : "*In case you want to reset the current counter to the previous number, please enter the current block number and the previous trial number and hit the RESET button.",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
@@ -1614,8 +1633,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 920.770874, 711.10022, 84.0, 20.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 39.0, 315.033203, 143.0, 20.0 ],
 					"style" : "",
 					"text" : "Current input"
 				}
@@ -1629,7 +1646,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 913.083374, 207.000031, 72.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 606.0, 82.016602, 127.0, 20.0 ],
+					"presentation_rect" : [ 528.300049, 181.033203, 127.0, 20.0 ],
 					"style" : "",
 					"text" : "Current trial"
 				}
@@ -1658,7 +1675,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 489.25, 293.86676, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 149.183273, 149.0, 149.0 ],
+					"presentation_rect" : [ 40.0, 155.033203, 100.016602, 100.016602 ],
 					"style" : ""
 				}
 
@@ -1674,7 +1691,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 279.333344, 81.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 473.0, 106.0, 128.0, 49.0 ],
+					"presentation_rect" : [ 392.300049, 205.016602, 128.0, 49.0 ],
 					"style" : ""
 				}
 
@@ -1687,7 +1704,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 211.816711, 81.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 473.0, 82.016602, 127.0, 20.0 ],
+					"presentation_rect" : [ 392.300049, 181.033203, 127.0, 20.0 ],
 					"style" : "",
 					"text" : "\bBlock"
 				}
@@ -1704,7 +1721,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 119.333344, 81.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 227.0, 106.0, 127.0, 49.0 ],
+					"presentation_rect" : [ 152.0, 205.033203, 127.0, 49.0 ],
 					"style" : "",
 					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
@@ -1796,8 +1813,6 @@
 					"outlettype" : [ "int", "", "" ],
 					"parameter_enable" : 0,
 					"patching_rect" : [ 816.020874, 716.60022, 100.0, 22.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 39.0, 341.033203, 143.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -1924,7 +1939,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 489.25, 873.633423, 435.041718, 349.5 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 693.0, 706.016602, 457.0, 347.0 ],
+					"presentation_rect" : [ 904.333374, 357.016602, 457.0, 347.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -1932,16 +1947,16 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-53",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 530.25, 289.36676, 157.5, 33.0 ],
+					"patching_rect" : [ 530.25, 289.36676, 157.5, 47.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 2,
-					"presentation_rect" : [ 40.0, 106.0, 149.0, 33.0 ],
+					"presentation_linecount" : 3,
+					"presentation_rect" : [ 40.0, 101.033203, 100.016602, 47.0 ],
 					"style" : "",
-					"text" : "Data recoring\nOn - Blue / Off - Black"
+					"text" : "Data recoring\nOn - Blue /\nOff - Black"
 				}
 
 			}
@@ -1987,7 +2002,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 957.5, 877.0, 436.0, 305.133453 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 223.0, 706.016602, 455.0, 347.0 ],
+					"presentation_rect" : [ 904.333374, 40.333328, 455.0, 307.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -2001,8 +2016,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 40.333328, 331.0, 33.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 2,
-					"presentation_rect" : [ 40.0, 40.333328, 149.0, 60.0 ],
+					"presentation_rect" : [ 40.0, 40.333328, 286.0, 33.0 ],
 					"style" : "",
 					"text" : "ExpertPiano - Experiment"
 				}
@@ -2016,7 +2030,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 86.0, 81.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 227.0, 82.0, 127.0, 20.0 ],
+					"presentation_rect" : [ 152.0, 181.033203, 127.0, 20.0 ],
 					"style" : "",
 					"text" : "SubNr"
 				}
@@ -2108,7 +2122,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 826.166687, 192.333344, 81.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 606.0, 106.016602, 128.0, 49.0 ],
+					"presentation_rect" : [ 528.300049, 205.033203, 128.0, 49.0 ],
 					"style" : ""
 				}
 
