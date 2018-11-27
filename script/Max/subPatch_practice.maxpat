@@ -39,6 +39,19 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 40.0, 164.0, 60.0, 22.0 ],
+					"style" : "",
+					"text" : "loadbang"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"fontsize" : 20.0,
 					"id" : "obj-54",
 					"maxclass" : "comment",
@@ -126,7 +139,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 507.25, 1111.0, 356.699951, 49.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/image/black.png\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/image/inst_o.png\""
 				}
 
 			}
@@ -223,7 +236,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 39.25, 920.5, 450.0, 250.0 ],
-					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/image/black.png",
+					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/image/inst_o.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 420.0, 225.849792, 450.0, 250.0 ]
 				}
@@ -279,7 +292,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 400.75, 385.633423, 45.0, 22.0 ],
+					"patching_rect" : [ 493.75, 380.633423, 45.0, 22.0 ],
 					"style" : "",
 					"text" : "r skill3"
 				}
@@ -297,7 +310,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 282.75, 323.633423, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "set",
+					"text" : "stim_t",
 					"textjustification" : 1
 				}
 
@@ -334,7 +347,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 217.75, 385.633423, 45.0, 22.0 ],
+					"patching_rect" : [ 303.5, 380.633423, 45.0, 22.0 ],
 					"style" : "",
 					"text" : "r skill2"
 				}
@@ -347,7 +360,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 43.0, 385.633423, 45.0, 22.0 ],
+					"patching_rect" : [ 133.0, 380.633423, 45.0, 22.0 ],
 					"style" : "",
 					"text" : "r skill1"
 				}
@@ -365,7 +378,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 161.5, 323.633423, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "set",
+					"text" : "stim_d",
 					"textjustification" : 1
 				}
 
@@ -382,7 +395,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 41.0, 323.633423, 96.5, 35.0 ],
 					"style" : "",
-					"text" : "set",
+					"text" : "stim_a",
 					"textjustification" : 1
 				}
 
@@ -508,7 +521,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 400.75, 160.766846, 50.0, 22.0 ],
+					"patching_rect" : [ 493.75, 164.0, 50.0, 22.0 ],
 					"style" : "",
 					"text" : "r inst_2"
 				}
@@ -521,7 +534,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 210.5, 160.766846, 50.0, 22.0 ],
+					"patching_rect" : [ 303.5, 164.0, 50.0, 22.0 ],
 					"style" : "",
 					"text" : "r inst_1"
 				}
@@ -539,6 +552,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 281.75, 207.633423, 93.5, 35.0 ],
 					"style" : "",
+					"text" : "inst_p",
 					"textjustification" : 1
 				}
 
@@ -555,6 +569,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 160.5, 207.633423, 94.5, 35.0 ],
 					"style" : "",
+					"text" : "inst_t",
 					"textjustification" : 1
 				}
 
@@ -1008,15 +1023,6 @@
 		"lines" : [ 			{
 				"patchline" : 				{
 					"destination" : [ "obj-8", 1 ],
-					"order" : 0,
-					"source" : [ "obj-10", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-8", 0 ],
-					"order" : 1,
 					"source" : [ "obj-10", 0 ]
 				}
 
@@ -1203,15 +1209,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-26", 1 ],
-					"order" : 0,
-					"source" : [ "obj-23", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-26", 0 ],
-					"order" : 1,
 					"source" : [ "obj-23", 0 ]
 				}
 
@@ -1219,15 +1216,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-27", 1 ],
-					"order" : 0,
-					"source" : [ "obj-24", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-27", 0 ],
-					"order" : 1,
 					"source" : [ "obj-24", 0 ]
 				}
 
@@ -1255,16 +1243,14 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-33", 1 ],
-					"order" : 0,
-					"source" : [ "obj-32", 0 ]
+					"destination" : [ "obj-4", 0 ],
+					"source" : [ "obj-3", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-33", 0 ],
-					"order" : 1,
+					"destination" : [ "obj-33", 1 ],
 					"source" : [ "obj-32", 0 ]
 				}
 
@@ -1460,15 +1446,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-7", 1 ],
-					"order" : 0,
-					"source" : [ "obj-9", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-7", 0 ],
-					"order" : 1,
 					"source" : [ "obj-9", 0 ]
 				}
 
@@ -1482,7 +1459,7 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "black.png",
+				"name" : "inst_o.png",
 				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/image",
 				"patcherrelativepath" : "./image",
 				"type" : "PNG ",
