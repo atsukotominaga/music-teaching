@@ -59,7 +59,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 43.0, 842.0, 244.0, 29.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 542.5, 188.0, 205.0, 29.0 ],
+					"presentation_rect" : [ 541.5, 144.150208, 205.0, 29.0 ],
 					"style" : "",
 					"text" : "Mini Display",
 					"textjustification" : 1
@@ -238,7 +238,7 @@
 					"patching_rect" : [ 39.25, 920.5, 450.0, 250.0 ],
 					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/image/inst_o.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 420.0, 225.849792, 450.0, 250.0 ]
+					"presentation_rect" : [ 419.0, 182.0, 450.0, 250.0 ]
 				}
 
 			}
