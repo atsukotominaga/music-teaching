@@ -310,7 +310,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 282.75, 323.633423, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_t",
 					"textjustification" : 1
 				}
 
@@ -378,7 +377,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 161.5, 323.633423, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_d",
 					"textjustification" : 1
 				}
 
@@ -395,7 +393,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 41.0, 323.633423, 96.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_a",
 					"textjustification" : 1
 				}
 
@@ -552,7 +549,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 281.75, 207.633423, 93.5, 35.0 ],
 					"style" : "",
-					"text" : "inst_p",
 					"textjustification" : 1
 				}
 
@@ -569,7 +565,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 160.5, 207.633423, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "inst_t",
 					"textjustification" : 1
 				}
 
@@ -1157,6 +1152,13 @@
 					"destination" : [ "obj-162", 0 ],
 					"order" : 1,
 					"source" : [ "obj-159", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-83", 0 ],
+					"source" : [ "obj-16", 0 ]
 				}
 
 			}
