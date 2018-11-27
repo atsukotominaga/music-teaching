@@ -39,6 +39,28 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"bgmode" : 1,
+					"border" : 0,
+					"clickthrough" : 0,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-66",
+					"jspainterfile" : "subPatch_practice.maxpat",
+					"lockeddragscroll" : 0,
+					"maxclass" : "bpatcher",
+					"name" : "subPatch_practice.maxpat",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patching_rect" : [ 1184.0, 78.999985, 927.0, 524.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 223.0, 171.016602, 927.0, 524.0 ],
+					"viewvisibility" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-55",
 					"linecount" : 2,
 					"maxclass" : "comment",
@@ -411,18 +433,6 @@
 					"patching_rect" : [ 505.25, 563.266846, 61.0, 22.0 ],
 					"style" : "",
 					"text" : "tempo 80"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-66",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 1250.416748, 657.433472, 170.0, 20.0 ],
-					"style" : "",
-					"text" : "Generate a percussion sound"
 				}
 
 			}
@@ -909,7 +919,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 173.5, 406.183472, 91.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 41.0, 502.0, 91.0, 35.0 ],
+					"presentation_rect" : [ 40.0, 526.016602, 91.0, 35.0 ],
 					"style" : "",
 					"text" : "RESET",
 					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
@@ -924,7 +934,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 105.0, 396.216675, 48.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 106.0, 451.983398, 48.0, 20.0 ],
+					"presentation_rect" : [ 105.0, 476.0, 48.0, 20.0 ],
 					"style" : "",
 					"text" : "Trial no"
 				}
@@ -938,7 +948,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 396.216675, 41.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 41.0, 451.983398, 41.0, 20.0 ],
+					"presentation_rect" : [ 40.0, 476.0, 41.0, 20.0 ],
 					"style" : "",
 					"text" : "Block"
 				}
@@ -966,7 +976,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 420.733521, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 41.0, 473.983398, 50.0, 22.0 ],
+					"presentation_rect" : [ 40.0, 498.0, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -1231,7 +1241,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1172.0, 79.0, 277.0, 20.0 ],
+					"patching_rect" : [ 986.0, 847.0, 277.0, 20.0 ],
 					"style" : "",
 					"text" : "Naming the current data file / export for each trial"
 				}
@@ -1243,7 +1253,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1266.0, 526.466797, 313.5, 20.0 ],
+					"patching_rect" : [ 1080.0, 1294.466797, 313.5, 20.0 ],
 					"style" : "",
 					"text" : "Read conditions for each participant"
 				}
@@ -1547,7 +1557,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 1266.0, 425.666656, 313.5, 96.80011 ],
+					"patching_rect" : [ 1080.0, 1193.666626, 313.5, 96.80011 ],
 					"viewvisibility" : 1
 				}
 
@@ -1575,7 +1585,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 105.0, 420.733521, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 106.0, 473.983398, 50.0, 22.0 ],
+					"presentation_rect" : [ 105.0, 498.0, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -1590,7 +1600,7 @@
 					"patching_rect" : [ 40.0, 340.333313, 346.0, 47.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 7,
-					"presentation_rect" : [ 40.0, 348.0, 143.0, 100.0 ],
+					"presentation_rect" : [ 39.0, 372.016602, 143.0, 100.0 ],
 					"style" : "",
 					"text" : "*In case you want to reset the current counter to the previous number, please enter the current block number and the previous trial number and hit a RESET button.",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
@@ -1605,7 +1615,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 920.770874, 711.10022, 84.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 291.016602, 143.0, 20.0 ],
+					"presentation_rect" : [ 39.0, 315.033203, 143.0, 20.0 ],
 					"style" : "",
 					"text" : "Current input"
 				}
@@ -1648,7 +1658,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 489.25, 293.86676, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 141.849792, 143.0, 143.0 ],
+					"presentation_rect" : [ 40.0, 149.183273, 149.0, 149.0 ],
 					"style" : ""
 				}
 
@@ -1787,7 +1797,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 816.020874, 716.60022, 100.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 317.016602, 143.0, 22.0 ],
+					"presentation_rect" : [ 39.0, 341.033203, 143.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -1914,7 +1924,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 489.25, 873.633423, 435.041718, 349.5 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 229.0, 277.016602, 505.0, 347.0 ],
+					"presentation_rect" : [ 693.0, 706.016602, 457.0, 347.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -1929,7 +1939,7 @@
 					"patching_rect" : [ 530.25, 289.36676, 157.5, 33.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 40.0, 105.0, 143.0, 33.0 ],
+					"presentation_rect" : [ 40.0, 106.0, 149.0, 33.0 ],
 					"style" : "",
 					"text" : "Data recoring\nOn - Blue / Off - Black"
 				}
@@ -1975,9 +1985,9 @@
 					"numoutlets" : 2,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 1143.5, 109.0, 436.0, 305.133453 ],
+					"patching_rect" : [ 957.5, 877.0, 436.0, 305.133453 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 229.0, 634.016602, 505.0, 303.0 ],
+					"presentation_rect" : [ 223.0, 706.016602, 455.0, 347.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -2019,7 +2029,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 1143.5, 77.0, 24.0, 24.0 ],
+					"patching_rect" : [ 957.5, 845.0, 24.0, 24.0 ],
 					"style" : ""
 				}
 
@@ -2139,27 +2149,6 @@
 					"patching_rect" : [ 434.25, 78.999985, 50.5, 22.0 ],
 					"style" : "",
 					"text" : "key"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"bgcolor" : [ 0.886447, 0.875368, 0.752885, 0.0 ],
-					"bubble" : 1,
-					"fontface" : 0,
-					"fontname" : "Arial",
-					"fontsize" : 18.0,
-					"id" : "obj-15",
-					"linecount" : 36,
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 824.883423, 346.0, 734.0 ],
-					"presentation" : 1,
-					"presentation_linecount" : 31,
-					"presentation_rect" : [ 743.300049, 82.016602, 515.0, 634.0 ],
-					"style" : "",
-					"text" : "Image Display setup\n\n1. Open 'image_display.matpat' and move the window to the right screen so that it shows on the screen in front of the piano.\n\n2. Press the F key to fullscreen (to exit, press the esc key)\n\nRun the experiment\n\n1. Enter SubNr (otherwise, it is not recorded properly).\n\n2. Start a trial with the space key.\n\n3. Stop the trial with the Z key.\n\n4. Procedure\n\nFirst condition (Teaching or Performing)\nBlock 1: Articulation or TempoChange\nBlock 2: TempoChange or Articulation\n\nSecond condition (Performing or Teaching)\nBlock 3: Articulation or TempoChange\nBlock 4: TempoChange or Articulation\n\nEach block has 8 trials.\nFor more detail, please consult the instruction sheet.\n\nIf you have any problems, please call Atsuko (+36 203130097)"
 				}
 
 			}
@@ -3327,6 +3316,20 @@
 				"bootpath" : "~/Documents/Max 7/Snapshots",
 				"patcherrelativepath" : "../../../../../Documents/Max 7/Snapshots",
 				"type" : "mx@s",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "subPatch_practice.maxpat",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "black.png",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/image",
+				"patcherrelativepath" : "./image",
+				"type" : "PNG ",
 				"implicit" : 1
 			}
  ],
