@@ -921,7 +921,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 43.0, 735.633423, 87.0, 22.0 ],
+					"patching_rect" : [ 46.0, 735.633423, 87.0, 22.0 ],
 					"style" : "",
 					"text" : "sprintf %s.png"
 				}
@@ -981,7 +981,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 43.0, 771.633423, 56.0, 22.0 ],
+					"patching_rect" : [ 46.0, 766.633423, 56.0, 22.0 ],
 					"style" : "",
 					"text" : "s picture"
 				}
