@@ -30,7 +30,7 @@ melody = {
     c16 \startTextSpan d16 e16 f16 \stopTextSpan
     \override TextSpanner.bound-details.left.text = "rit."
     g16 \startTextSpan f16 e16 d16 \stopTextSpan
-    c2
+    c2 \bar "|."
 
     }
 }
