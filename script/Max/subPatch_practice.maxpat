@@ -407,7 +407,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 258.75, 275.0, 94.5, 20.0 ],
 					"style" : "",
-					"text" : "Third skill"
+					"text" : "Third Stimuli"
 				}
 
 			}
@@ -421,7 +421,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 137.5, 275.0, 94.5, 20.0 ],
 					"style" : "",
-					"text" : "Second skill"
+					"text" : "Second Stimuli"
 				}
 
 			}
@@ -435,7 +435,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 17.0, 275.0, 94.5, 20.0 ],
 					"style" : "",
-					"text" : "First skill"
+					"text" : "First Stimuli"
 				}
 
 			}
