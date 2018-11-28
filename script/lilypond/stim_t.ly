@@ -44,5 +44,6 @@ melody = {
         \Score
         \omit BarNumber }
     indent = #0 }
-    \midi {}
+    % Remove % if you need a midi file
+    % \midi {}
     }
