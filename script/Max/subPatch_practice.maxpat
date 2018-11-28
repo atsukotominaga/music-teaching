@@ -39,6 +39,62 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontsize" : 24.0,
+					"id" : "obj-30",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 926.0, 120.633423, 81.25, 35.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 187.0, 80.983398, 186.0, 35.0 ],
+					"style" : "",
+					"text" : "stim_n",
+					"textjustification" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-31",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 926.0, 171.633423, 87.0, 22.0 ],
+					"style" : "",
+					"text" : "sprintf %s.png"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-47",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 926.0, 202.633423, 56.0, 22.0 ],
+					"style" : "",
+					"text" : "s picture"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-22",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 926.0, 89.266846, 215.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 187.0, 55.633423, 186.0, 20.0 ],
+					"style" : "",
+					"text" : "Sheet music without expressions"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-3",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -59,7 +115,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 43.0, 842.0, 244.0, 29.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 497.5, 46.78363, 205.0, 29.0 ],
+					"presentation_rect" : [ 510.5, 43.133606, 205.0, 29.0 ],
 					"style" : "",
 					"text" : "Mini Display",
 					"textjustification" : 1
@@ -238,7 +294,7 @@
 					"patching_rect" : [ 39.25, 920.5, 450.0, 250.0 ],
 					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/image/inst_o.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 375.0, 84.633423, 450.0, 250.0 ]
+					"presentation_rect" : [ 388.0, 80.983398, 450.0, 250.0 ]
 				}
 
 			}
@@ -1247,6 +1303,20 @@
 				"patchline" : 				{
 					"destination" : [ "obj-4", 0 ],
 					"source" : [ "obj-3", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-31", 0 ],
+					"source" : [ "obj-30", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-47", 0 ],
+					"source" : [ "obj-31", 0 ]
 				}
 
 			}
