@@ -44,7 +44,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1080.0, 1364.0, 204.0, 20.0 ],
-					"presentation_rect" : [ 1082.5, 1364.0, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "subPatch_condFIleReading.maxpat"
 				}
@@ -57,7 +56,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 489.25, 1232.06665, 215.916687, 20.0 ],
-					"presentation_rect" : [ 489.0, 1235.0, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "subPatch_MIDInoteRecording.maxpat"
 				}
@@ -70,7 +68,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 957.5, 1190.0, 196.0, 20.0 ],
-					"presentation_rect" : [ 1266.0, 726.333313, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "subPatch_dataFileNaming.maxpat"
 				}
@@ -2769,6 +2766,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 4 ],
+					"source" : [ "obj-147", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-149", 0 ],
 					"source" : [ "obj-163", 0 ]
 				}
@@ -2842,13 +2846,31 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-24", 0 ],
+					"order" : 0,
 					"source" : [ "obj-21", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 3 ],
+					"order" : 1,
+					"source" : [ "obj-21", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-27", 2 ],
+					"order" : 1,
+					"source" : [ "obj-22", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-51", 0 ],
+					"order" : 0,
 					"source" : [ "obj-22", 0 ]
 				}
 
@@ -2906,6 +2928,20 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 6 ],
+					"source" : [ "obj-28", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-27", 5 ],
+					"source" : [ "obj-28", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-21", 0 ],
 					"source" : [ "obj-29", 1 ]
 				}
@@ -2929,6 +2965,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-25", 0 ],
 					"source" : [ "obj-32", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-27", 0 ],
+					"source" : [ "obj-32", 0 ]
 				}
 
 			}
@@ -3169,6 +3212,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-27", 1 ],
+					"source" : [ "obj-62", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-32", 0 ],
 					"source" : [ "obj-64", 0 ]
 				}
@@ -3318,8 +3368,8 @@
 			}
 , 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/cond",
-				"patcherrelativepath" : "./cond",
+				"bootpath" : "~/Desktop/ExpertPiano-6827f441a3a0ceacf261f9495b59db2fa4428950/script/Max/cond",
+				"patcherrelativepath" : "../../../../../Desktop/ExpertPiano-6827f441a3a0ceacf261f9495b59db2fa4428950/script/Max/cond",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
@@ -3447,8 +3497,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3521,8 +3571,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
