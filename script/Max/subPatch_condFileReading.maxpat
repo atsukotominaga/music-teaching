@@ -259,7 +259,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 529.0, 376.5, 52.0, 22.0 ],
 					"style" : "",
-					"text" : "stim_t"
+					"text" : "stim_d"
 				}
 
 			}
@@ -272,7 +272,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 529.0, 334.0, 93.0, 22.0 ],
 					"style" : "",
-					"text" : "tempoChange"
+					"text" : "dynamics"
 				}
 
 			}
@@ -349,7 +349,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 103.0, 360.0, 71.0, 22.0 ],
 					"style" : "",
-					"text" : "Performing"
+					"text" : "performing"
 				}
 
 			}
@@ -374,7 +374,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 19.0, 360.0, 71.0, 22.0 ],
 					"style" : "",
-					"text" : "Teaching"
+					"text" : "teaching"
 				}
 
 			}
@@ -578,7 +578,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 403.0, 376.5, 52.0, 22.0 ],
 					"style" : "",
-					"text" : "stim_d"
+					"text" : "stim_a"
 				}
 
 			}
@@ -591,7 +591,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 281.0, 376.5, 52.0, 22.0 ],
 					"style" : "",
-					"text" : "stim_a"
+					"text" : "stim_t"
 				}
 
 			}
@@ -604,7 +604,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 403.0, 334.0, 93.0, 22.0 ],
 					"style" : "",
-					"text" : "dynamics"
+					"text" : "articulation"
 				}
 
 			}
@@ -617,7 +617,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 281.0, 334.0, 91.5, 22.0 ],
 					"style" : "",
-					"text" : "articulation"
+					"text" : "tempoChange"
 				}
 
 			}
@@ -644,7 +644,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 121.0, 54.0, 107.0, 22.0 ],
 					"style" : "",
-					"text" : "2__stim_a.png"
+					"text" : "8_t_stim_a.png"
 				}
 
 			}
