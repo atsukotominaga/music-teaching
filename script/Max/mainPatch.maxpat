@@ -39,6 +39,57 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-80",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1080.0, 1364.0, 204.0, 20.0 ],
+					"presentation_rect" : [ 1082.5, 1364.0, 0.0, 0.0 ],
+					"style" : "",
+					"text" : "subPatch_condFIleReading.maxpat"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-76",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 489.25, 1232.06665, 215.916687, 20.0 ],
+					"presentation_rect" : [ 489.0, 1235.0, 0.0, 0.0 ],
+					"style" : "",
+					"text" : "subPatch_MIDInoteRecording.maxpat"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-69",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 957.5, 1190.0, 196.0, 20.0 ],
+					"presentation_rect" : [ 1266.0, 726.333313, 0.0, 0.0 ],
+					"style" : "",
+					"text" : "subPatch_dataFileNaming.maxpat"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-60",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1184.0, 606.883423, 150.0, 20.0 ],
+					"style" : "",
+					"text" : "subPatch_practice.maxpat"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
 					"fontsize" : 24.0,
@@ -937,7 +988,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 173.5, 406.183472, 91.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 785.666687, 212.033203, 109.999985, 35.0 ],
+					"presentation_rect" : [ 785.666687, 217.049805, 109.999985, 35.0 ],
 					"style" : "",
 					"text" : "RESET",
 					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
@@ -953,9 +1004,9 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 105.0, 396.216675, 48.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 724.666687, 208.049805, 48.0, 20.0 ],
+					"presentation_rect" : [ 724.666687, 208.049805, 50.0, 20.0 ],
 					"style" : "",
-					"text" : "Trial no"
+					"text" : "Trial Nr"
 				}
 
 			}
@@ -1272,7 +1323,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1080.0, 1294.466797, 313.5, 20.0 ],
+					"patching_rect" : [ 1080.0, 1238.883545, 313.5, 20.0 ],
 					"style" : "",
 					"text" : "Read conditions for each participant"
 				}
@@ -1576,7 +1627,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 1080.0, 1193.666626, 313.5, 96.80011 ],
+					"patching_rect" : [ 1080.0, 1263.083252, 313.5, 96.80011 ],
 					"viewvisibility" : 1
 				}
 
@@ -1612,16 +1663,16 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-7",
-					"linecount" : 3,
+					"linecount" : 5,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 340.333313, 346.0, 47.0 ],
+					"patching_rect" : [ 40.0, 340.333313, 346.0, 74.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 5,
-					"presentation_rect" : [ 663.983398, 127.033203, 231.683273, 74.0 ],
+					"presentation_linecount" : 8,
+					"presentation_rect" : [ 664.666687, 87.033203, 236.0, 114.0 ],
 					"style" : "",
-					"text" : "*In case you want to reset the current counter to the previous number, please enter the current block number and the previous trial number and hit the RESET button.",
+					"text" : "*In case you want to reset the current counter to the previous number, please enter the current block number and the previous trial number and hit the RESET button.\ne.g., If you want to start from Block 3 Trial 1 and enter \"2\" for Block and \"8\" for Trial Nr.",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
@@ -1933,7 +1984,7 @@
 					"id" : "obj-27",
 					"lockeddragscroll" : 0,
 					"maxclass" : "bpatcher",
-					"name" : "subPatch_MIDInote_Recording.maxpat",
+					"name" : "subPatch_MIDInoteRecording.maxpat",
 					"numinlets" : 7,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
@@ -2092,7 +2143,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 865.166687, 78.999985, 72.0, 22.0 ],
+					"patching_rect" : [ 865.166687, 58.999985, 72.0, 22.0 ],
 					"style" : "",
 					"text" : "loadmess 0"
 				}
@@ -2718,13 +2769,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-27", 4 ],
-					"source" : [ "obj-147", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-149", 0 ],
 					"source" : [ "obj-163", 0 ]
 				}
@@ -2798,31 +2842,13 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-24", 0 ],
-					"order" : 0,
 					"source" : [ "obj-21", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-27", 3 ],
-					"order" : 1,
-					"source" : [ "obj-21", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-27", 2 ],
-					"order" : 1,
-					"source" : [ "obj-22", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-51", 0 ],
-					"order" : 0,
 					"source" : [ "obj-22", 0 ]
 				}
 
@@ -2880,20 +2906,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-27", 6 ],
-					"source" : [ "obj-28", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-27", 5 ],
-					"source" : [ "obj-28", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-21", 0 ],
 					"source" : [ "obj-29", 1 ]
 				}
@@ -2917,13 +2929,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-25", 0 ],
 					"source" : [ "obj-32", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-27", 0 ],
-					"source" : [ "obj-32", 0 ]
 				}
 
 			}
@@ -3164,13 +3169,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-27", 1 ],
-					"source" : [ "obj-62", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-32", 0 ],
 					"source" : [ "obj-64", 0 ]
 				}
@@ -3305,7 +3303,7 @@
 				"implicit" : 1
 			}
 , 			{
-				"name" : "subPatch_MIDInote_Recording.maxpat",
+				"name" : "subPatch_MIDInoteRecording.maxpat",
 				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
@@ -3337,13 +3335,6 @@
 				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "black.png",
-				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/image",
-				"patcherrelativepath" : "./image",
-				"type" : "PNG ",
 				"implicit" : 1
 			}
  ],
