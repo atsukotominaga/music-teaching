@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 79.0, 1310.0, 857.0 ],
+		"rect" : [ 34.0, 79.0, 1310.0, 858.0 ],
 		"bgcolor" : [ 0.862745, 0.870588, 0.878431, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -38,6 +38,72 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-153",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 771.0, 514.066711, 150.0, 33.0 ],
+					"style" : "",
+					"text" : "Black screen after each trial finishes"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-83",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 718.770874, 551.0, 87.0, 22.0 ],
+					"style" : "",
+					"text" : "sprintf %s.png"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontsize" : 12.0,
+					"id" : "obj-150",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 718.770874, 520.0, 47.0, 22.0 ],
+					"style" : "",
+					"text" : "black",
+					"textjustification" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-151",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 718.770874, 581.0, 56.0, 22.0 ],
+					"style" : "",
+					"text" : "s picture"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-94",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "bang", "bang" ],
+					"patching_rect" : [ 620.166687, 412.683472, 34.0, 22.0 ],
+					"style" : "",
+					"text" : "t b b"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-80",
 					"maxclass" : "comment",
@@ -79,7 +145,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1184.0, 606.883423, 150.0, 20.0 ],
+					"patching_rect" : [ 1184.0, 545.066711, 150.0, 20.0 ],
 					"style" : "",
 					"text" : "subPatch_practice.maxpat"
 				}
@@ -118,7 +184,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 1184.0, 78.999985, 927.0, 524.0 ],
+					"patching_rect" : [ 1184.0, 78.999985, 849.0, 452.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 40.666672, 263.016602, 855.0, 443.0 ],
 					"viewvisibility" : 1
@@ -2773,6 +2839,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-83", 0 ],
+					"source" : [ "obj-150", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-149", 0 ],
 					"source" : [ "obj-163", 0 ]
 				}
@@ -3212,7 +3285,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-27", 1 ],
+					"destination" : [ "obj-94", 0 ],
 					"source" : [ "obj-62", 0 ]
 				}
 
@@ -3275,6 +3348,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-151", 0 ],
+					"source" : [ "obj-83", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-46", 0 ],
 					"source" : [ "obj-86", 0 ]
 				}
@@ -3307,6 +3387,20 @@
 					"destination" : [ "obj-64", 0 ],
 					"order" : 1,
 					"source" : [ "obj-91", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-150", 0 ],
+					"source" : [ "obj-94", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-27", 1 ],
+					"source" : [ "obj-94", 1 ]
 				}
 
 			}
@@ -3368,8 +3462,8 @@
 			}
 , 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/Desktop/ExpertPiano-6827f441a3a0ceacf261f9495b59db2fa4428950/script/Max/cond",
-				"patcherrelativepath" : "../../../../../Desktop/ExpertPiano-6827f441a3a0ceacf261f9495b59db2fa4428950/script/Max/cond",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/cond",
+				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
@@ -3385,6 +3479,13 @@
 				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "inst_o.png",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/image",
+				"patcherrelativepath" : "./image",
+				"type" : "PNG ",
 				"implicit" : 1
 			}
  ],
