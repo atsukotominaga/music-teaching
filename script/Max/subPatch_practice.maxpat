@@ -407,7 +407,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 258.75, 275.0, 94.5, 20.0 ],
 					"style" : "",
-					"text" : "Third Stimuli"
+					"text" : "3rd Stimulius"
 				}
 
 			}
@@ -421,7 +421,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 137.5, 275.0, 94.5, 20.0 ],
 					"style" : "",
-					"text" : "Second Stimuli"
+					"text" : "2nd Stimulus"
 				}
 
 			}
@@ -435,7 +435,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 17.0, 275.0, 94.5, 20.0 ],
 					"style" : "",
-					"text" : "First Stimuli"
+					"text" : "1st Stimulus"
 				}
 
 			}
@@ -1577,8 +1577,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1651,8 +1651,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
