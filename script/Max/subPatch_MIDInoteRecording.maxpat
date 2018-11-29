@@ -263,11 +263,11 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1024.0, 166.0, 47.0, 22.0 ],
+					"patching_rect" : [ 1024.0, 166.0, 54.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 173.0, 123.0, 66.0, 22.0 ],
 					"style" : "",
-					"text" : "r score"
+					"text" : "r picture"
 				}
 
 			}
@@ -1520,8 +1520,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
