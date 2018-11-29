@@ -2031,7 +2031,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 489.25, 873.633423, 435.041718, 349.5 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 904.333374, 357.016602, 457.0, 347.0 ],
+					"presentation_rect" : [ 911.333374, 398.016602, 457.0, 347.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -2094,7 +2094,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 957.5, 877.0, 436.0, 305.133453 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 904.333374, 40.333328, 455.0, 307.0 ],
+					"presentation_rect" : [ 911.333374, 81.333328, 455.0, 307.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -2272,9 +2272,9 @@
 					"numinlets" : 0,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 398.0, 555.0, 128.0, 128.0 ],
+					"patching_rect" : [ 40.0, 873.633423, 423.0, 353.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 273.0, 850.0, 431.016602 ],
+					"presentation_rect" : [ 40.0, 273.0, 850.0, 472.016602 ],
 					"viewvisibility" : 1
 				}
 
@@ -3443,13 +3443,6 @@
 				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "inst_o.png",
-				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/image",
-				"patcherrelativepath" : "./image",
-				"type" : "PNG ",
 				"implicit" : 1
 			}
 , 			{
