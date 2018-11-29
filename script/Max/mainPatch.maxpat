@@ -171,28 +171,6 @@
 			}
 , 			{
 				"box" : 				{
-					"bgmode" : 1,
-					"border" : 0,
-					"clickthrough" : 0,
-					"enablehscroll" : 0,
-					"enablevscroll" : 0,
-					"id" : "obj-66",
-					"jspainterfile" : "subPatch_practice.maxpat",
-					"lockeddragscroll" : 0,
-					"maxclass" : "bpatcher",
-					"name" : "subPatch_practice.maxpat",
-					"numinlets" : 0,
-					"numoutlets" : 0,
-					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 1184.0, 78.999985, 849.0, 452.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 40.666672, 263.016602, 855.0, 443.0 ],
-					"viewvisibility" : 1
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-55",
 					"linecount" : 2,
 					"maxclass" : "comment",
@@ -2280,6 +2258,27 @@
 				}
 
 			}
+, 			{
+				"box" : 				{
+					"bgmode" : 1,
+					"border" : 0,
+					"clickthrough" : 0,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-67",
+					"lockeddragscroll" : 0,
+					"maxclass" : "bpatcher",
+					"name" : "subPatch_practice.maxpat",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patching_rect" : [ 398.0, 555.0, 128.0, 128.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 40.0, 273.0, 850.0, 431.016602 ],
+					"viewvisibility" : 1
+				}
+
+			}
  ],
 		"lines" : [ 			{
 				"patchline" : 				{
@@ -3440,6 +3439,20 @@
 		}
 ,
 		"dependency_cache" : [ 			{
+				"name" : "subPatch_practice.maxpat",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "inst_o.png",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/image",
+				"patcherrelativepath" : "./image",
+				"type" : "PNG ",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "subPatch_DataFileNaming.maxpat",
 				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
@@ -3472,20 +3485,6 @@
 				"bootpath" : "~/Documents/Max 7/Snapshots",
 				"patcherrelativepath" : "../../../../../Documents/Max 7/Snapshots",
 				"type" : "mx@s",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "subPatch_practice.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
-				"patcherrelativepath" : ".",
-				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "inst_o.png",
-				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/image",
-				"patcherrelativepath" : "./image",
-				"type" : "PNG ",
 				"implicit" : 1
 			}
  ],
@@ -3644,8 +3643,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3672,8 +3671,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
 				}
 ,
 				"parentstyle" : "",
