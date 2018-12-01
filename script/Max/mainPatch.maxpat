@@ -145,7 +145,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1184.0, 545.066711, 150.0, 20.0 ],
+					"patching_rect" : [ 40.0, 1235.483521, 150.0, 20.0 ],
 					"style" : "",
 					"text" : "subPatch_practice.maxpat"
 				}
@@ -202,7 +202,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 288.0, 615.516846, 34.0, 22.0 ],
+					"patching_rect" : [ 288.0, 646.850037, 34.0, 22.0 ],
 					"style" : "",
 					"text" : "+ 40"
 				}
@@ -215,7 +215,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 288.0, 557.883423, 34.0, 22.0 ],
+					"patching_rect" : [ 288.0, 589.216614, 34.0, 22.0 ],
 					"style" : "",
 					"text" : "+ 32"
 				}
@@ -228,7 +228,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 288.0, 589.316895, 109.0, 22.0 ],
+					"patching_rect" : [ 288.0, 620.650085, 109.0, 22.0 ],
 					"style" : "",
 					"text" : "if $i1 == 6 then $i2"
 				}
@@ -241,7 +241,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 288.0, 531.283386, 109.0, 22.0 ],
+					"patching_rect" : [ 288.0, 562.616577, 109.0, 22.0 ],
 					"style" : "",
 					"text" : "if $i1 == 5 then $i2"
 				}
@@ -948,7 +948,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "bang" ],
-					"patching_rect" : [ 173.5, 449.883423, 34.0, 22.0 ],
+					"patching_rect" : [ 173.5, 481.216614, 34.0, 22.0 ],
 					"style" : "",
 					"text" : "t b b"
 				}
@@ -961,9 +961,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 105.0, 453.533508, 29.5, 22.0 ],
+					"patching_rect" : [ 105.0, 484.866699, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "5"
+					"text" : "7"
 				}
 
 			}
@@ -974,7 +974,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 164.5, 615.516846, 34.0, 22.0 ],
+					"patching_rect" : [ 164.5, 646.850037, 34.0, 22.0 ],
 					"style" : "",
 					"text" : "+ 24"
 				}
@@ -987,7 +987,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 164.5, 557.883423, 34.0, 22.0 ],
+					"patching_rect" : [ 164.5, 589.216614, 34.0, 22.0 ],
 					"style" : "",
 					"text" : "+ 16"
 				}
@@ -1000,7 +1000,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 40.0, 615.516846, 29.5, 22.0 ],
+					"patching_rect" : [ 40.0, 646.850037, 29.5, 22.0 ],
 					"style" : "",
 					"text" : "+ 8"
 				}
@@ -1013,9 +1013,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 40.0, 453.533508, 29.5, 22.0 ],
+					"patching_rect" : [ 40.0, 484.866699, 29.5, 22.0 ],
 					"style" : "",
-					"text" : "6"
+					"text" : "3"
 				}
 
 			}
@@ -1027,7 +1027,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 173.5, 406.183472, 91.0, 35.0 ],
+					"patching_rect" : [ 173.5, 437.516663, 91.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 785.666687, 217.049805, 109.999985, 35.0 ],
 					"style" : "",
@@ -1043,7 +1043,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 105.0, 396.216675, 48.0, 20.0 ],
+					"patching_rect" : [ 105.0, 422.733521, 48.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 724.666687, 208.049805, 50.0, 20.0 ],
 					"style" : "",
@@ -1057,7 +1057,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 396.216675, 41.0, 20.0 ],
+					"patching_rect" : [ 40.0, 422.733521, 41.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 664.666687, 208.049805, 41.0, 20.0 ],
 					"style" : "",
@@ -1071,7 +1071,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 492.0, 48.0, 22.0 ],
+					"patching_rect" : [ 40.0, 523.333191, 48.0, 22.0 ],
 					"style" : "",
 					"text" : "s block"
 				}
@@ -1085,7 +1085,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 40.0, 420.733521, 50.0, 22.0 ],
+					"patching_rect" : [ 40.0, 452.066711, 50.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 664.666687, 230.049805, 50.0, 22.0 ],
 					"style" : ""
@@ -1100,7 +1100,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 40.0, 657.433472, 50.0, 22.0 ],
+					"patching_rect" : [ 40.0, 688.766663, 50.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -1112,7 +1112,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 164.5, 589.316895, 109.0, 22.0 ],
+					"patching_rect" : [ 164.5, 620.650085, 109.0, 22.0 ],
 					"style" : "",
 					"text" : "if $i1 == 4 then $i2"
 				}
@@ -1125,7 +1125,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 40.0, 589.316895, 109.0, 22.0 ],
+					"patching_rect" : [ 40.0, 620.650085, 109.0, 22.0 ],
 					"style" : "",
 					"text" : "if $i1 == 2 then $i2"
 				}
@@ -1138,7 +1138,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 40.0, 531.283386, 109.0, 22.0 ],
+					"patching_rect" : [ 40.0, 562.616577, 109.0, 22.0 ],
 					"style" : "",
 					"text" : "if $i1 == 1 then $i2"
 				}
@@ -1151,7 +1151,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 164.5, 531.283386, 109.0, 22.0 ],
+					"patching_rect" : [ 164.5, 562.616577, 109.0, 22.0 ],
 					"style" : "",
 					"text" : "if $i1 == 3 then $i2"
 				}
@@ -1229,7 +1229,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1004.0, 255.000031, 125.0, 47.0 ],
 					"style" : "",
-					"text" : "Used to switch a condition after 16 trials"
+					"text" : "Used to switch a condition after 24 trials"
 				}
 
 			}
@@ -1694,7 +1694,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 105.0, 420.733521, 50.0, 22.0 ],
+					"patching_rect" : [ 105.0, 452.066711, 50.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 724.666687, 230.049805, 50.0, 22.0 ],
 					"style" : ""
@@ -2043,7 +2043,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 530.25, 289.36676, 157.5, 47.0 ],
+					"patching_rect" : [ 520.25, 293.86676, 157.5, 47.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 3,
 					"presentation_rect" : [ 40.0, 101.033203, 100.016602, 47.0 ],
@@ -3446,6 +3446,13 @@
 				"implicit" : 1
 			}
 , 			{
+				"name" : "8_p_stim_a.png",
+				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max/image",
+				"patcherrelativepath" : "./image",
+				"type" : "PNG ",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "subPatch_DataFileNaming.maxpat",
 				"bootpath" : "~/OneDrive - Central European University/Project/ExpertPiano/script/Max",
 				"patcherrelativepath" : ".",
@@ -3521,8 +3528,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3636,8 +3643,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3664,8 +3671,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
