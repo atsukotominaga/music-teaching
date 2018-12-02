@@ -6,7 +6,7 @@ This repo contains scripts and materials necessary for a Musical experiment with
     + Rmd for generating an instruction sheet
     
 - material
-    + Photoshop files for stimuli
+    + Photoshop files for experimental stimuli (images)
 
 ## Project
 ### Title
