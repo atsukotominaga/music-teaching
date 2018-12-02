@@ -1,0 +1,245 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+---
+title: "Instruction"
+author: "Atsuko Tominaga"
+date: "03/12/2018"
+output:
+  pdf_document:
+fontsize: 12pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.pos = 'h', fig.align = 'center', fig.lp = 'AAA')
+# Install and load packages
+if (!require("rmarkdown")) {install.packages("rmarkdown"); require("rmarkdown")}
+```
+
+## PARTICIPANT RECRUITMENT:
+- More than 10 years experience to play the piano
+- Basic English skills
+
+## BEFORE PARTICIPANT ARRIVES:
+- Devices
+1. Connect the audio interface (Focusrite Scarlett 6i6) to Macbook Pro.
+2. Connect a headphone to the audio interface.
+3. Connect the piano to the audio interface.
+4. Turn on the piano, the audio interface and the screen in front of the piano.
+5. Open “Focusrite Control” app ![](focusriteControl.jpg){ width=5% } and click “Load from device”.
+
+```{r 01, out.width = '50%'}
+knitr::include_graphics("01.png")
+```
+```{r 02, out.width = '80%'}
+knitr::include_graphics("02.png")
+```
+
+6. Go to “Device Settings” and click “LINE” for Analogue 1.
+
+```{r 03, out.width = '80%'}
+knitr::include_graphics("03.png")
+``` 
+
+If you don’t see the images above, go to File >> Preset >> select “Analogue + Digital”.
+Adjust the volume of the headphone so that it sounds naturally (Later, also ask a participant).
+
+\pagebreak
+
+- Max
+
+1. Go to Desktop >> Atsuko >> ExpertPiano >> open the “mainPatch.maxpat” and the “imageDisplay.maxpat”.
+2. Move the window of the “imageDisplay.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode.
+3. Read the instruction for the “mainPatch.maxpat" below.
+    + Start a trial with the space key.
+    + Stop a trial with the Z key.
+    + The blue patcher is used to change an image of the screen and start a metronome manually (mainly used for a practice session and instructions).
+    + The green patcher shows ongoing recordings.
+    + The yellow patcher shows the name of the current file.
+    + The pink patcher (hidden) reads the condition of the current participant.
+
+```{r mainPatch, out.width = '100%'}
+knitr::include_graphics("mainPatch_screen.png")
+``` 
+
+4. Press the "Metro" button on the blue patcher to make sure the sound of a metronome comes from the headphone, not from the computer speaker.
+5. Also check whether the piano sounds come from the headphone and MIDI inputs are correctly responded on the green patcher (Pitch and Velocity should change according to key presses).
+6. If the sound of the metronome and the piano does not come from the computer speaker, go to System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”.
+7. Click the “inst_g1” button to show a general instruction on the “imageDisplay.maxpat”.
+8. Enter SubNr for the current participant.
+
+\pagebreak
+
+## WHEN PARTICIPANT ARRIVES:
+
+- *Italic*: Instruction
+
+### Introduction
+
+*Thank you for participating in the experiment. The aim of the experiment is to investigate how people play a piece of music with musical expressions. The experiment is going to last about one hour.*
+
+*If you have any questions or concerns, please ask the experimenter at any time about the nature of the study or the methods we are using. Also, you have the right to withdraw from the experiment at any time.*
+
+*Before we start the experiment, please read the informed consent form carefully and fill it out if you agree to take part in the study.*
+
+**[ Collect the informed consent form ]**
+
+### Practice session
+
+**[ Click “inst_g1” ]**
+
+```{r inst_g1, out.width = '80%'}
+knitr::include_graphics("inst_g1.png")
+``` 
+
+**[ Click “stim_n” ]**
+
+```{r stim_n, out.width = '80%'}
+knitr::include_graphics("stim_n.png")
+``` 
+
+**[ Click “Metro” ]**
+
+**[ Let the participant practise the piece ]**
+
+**[ Click "inst_g2" ]**
+
+```{r inst_g2, out.width = '80%'}
+knitr::include_graphics("inst_g2.png")
+``` 
+
+**[ Check whether he or she can produce the sound without pitch errors twice consecutively]**
+
+- If he or she cannot perform the piece within **5 attempts**, he or she cannot continue the experiment.
+
+**[ Click “Black” ]**
+
+### Experiment
+
+- Participants whose SubNr is odd start from the teaching condition whereas those whose SubNr is even start from the performing condition.
+- Please see the order of the stimuli on the blue patcher.
+
+#### 1) Teaching condition
+##### 1st Stimulus
+
+*You are going to perform the piece with the first musical expressions. I will show sheet music with expressive notations on the screen in front of you. Please read the notations and practise the piece.*
+
+**[ Click 1st Stimulus ]**
+
+```{r stim_a, out.width = '80%', fig.cap = 'Articulation'}
+knitr::include_graphics("stim_a.png")
+``` 
+
+**[ Ask the participant to play the piece with the expressions 5 times ]**
+
+Thank you. Do you have any questions?
+
+**[ Click “inst_t” ]**
+
+```{r inst_t, out.width = '80%'}
+knitr::include_graphics("inst_t.png")
+``` 
+
+**[ 1 - 8 trials ]**
+
+##### 2nd Stimulus
+
+*Thank you. Now, we are moving on to the second musical expressions. Again, I will show sheet music with expressive notations on the screen in front of you. Please read the notations and practice the piece.*
+
+**[ Click 2nd Stimuli ]**
+
+```{r stim_d, out.width = '80%', fig.cap = 'Dynamics'}
+knitr::include_graphics("stim_d.png")
+``` 
+
+**[ Ask the participant to play the piece with the expressions 5 times ]**
+
+*Thank you. Do you have any questions?*
+
+**[ Click “inst_t” ]**
+
+**[ 1 - 8 trials ]**
+
+#####  3rd Stimulus
+
+*Thank you. Now, we are moving on to the third musical expressions. Again, I will show sheet music with expressive notations on the screen in front of you. Please read the notations and practice the piece.*
+
+**[ Click 3rd Stimulus ]**
+
+```{r stim_t, out.width = '80%', fig.cap = 'Tempo Change'}
+knitr::include_graphics("stim_t.png")
+``` 
+
+**[ Ask the participant to play the piece with the expressions 5 times ]**
+
+*Thank you. Do you have any questions?*
+
+**[ Click “inst_t” ]**
+
+**[ 1 - 8 trials ]**
+
+*Thank you. Next, you will perform the same piece again but in a different condition.*
+
+#### 2) Performing condition
+##### 1st Stimulus
+
+*You are going to perform the piece with the first musical expressions. I will show sheet music with expressive notations on the screen in front of you. Please read the notations and practise the piece twice.*
+
+**[ Click 1st Stimulus ]**
+
+**[ Ask the participant to play the piece with the expressions 5 times ]**
+
+*Thank you. Do you have any questions?*
+
+**[ Click “inst_p” ]**
+
+```{r inst_p, out.width = '80%'}
+knitr::include_graphics("inst_p.png")
+``` 
+
+**[ 1 - 8 trials ]**
+
+##### 2nd Stimulus
+
+*Thank you. Now, we are moving on to the second musical expressions. Again, I will show sheet music with expressive notations on the screen in front of you. Please read the notations and practice the piece.*
+
+**[ Click 2nd Stimulus ]**
+
+**[ Ask the participant to play the piece with the expressions 5 times ]**
+
+*Thank you. Do you have any questions?*
+
+**[ Click “inst_p” ]**
+
+**[ 1 - 8 trials ]**
+
+##### 3rd Stimulus
+
+*Thank you. Now, we are moving on to the third musical expressions. Again, I will show sheet music with expressive notations on the screen in front of you. Please read the notations and practice the piece.*
+
+**[ Click 3rd Stimulus ]**
+
+**[ Ask the participant to play the piece with the expressions 5 times ]**
+
+*Thank you. Do you have any questions?*
+
+**[ Click “inst_p” ]**
+
+**[ 1 - 8 trials ]**
+
+### Questionnaire
+
+*Thank you. This is the end of the experiment. Lastly, could you please fill in the short questionnaire?*
+
+**[ Collect the short questionnaire ]**
+
+*Thank you for coming today and please feel free to contact me if you have any questions about my study.*
+
+## AFTER PARTICIPANT LEAVES:
+1. Check whether data were recorded correctly. If not, please leave a memo.
+2. Quit Max.
+3. Turn off the piano, the audio interface and the screen in front of the piano.
