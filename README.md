@@ -4,6 +4,7 @@ This repo contains scripts and materials necessary for a Musical experiment with
     + Max 7 for an experimental programme
     + Lilypond for generating sheet music
     + Rmd for generating an instruction sheet
+        + "instruction.png" is the final version
     
 - material
     + Photoshop files for experimental stimuli (images)
