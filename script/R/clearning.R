@@ -84,7 +84,7 @@ for (i in unique(data_all$SubNr)){
               data_current[note,]$Error <- 1
               mark_error <- rbind(mark_error, data_current[note,])
               ls_error <- c(ls_error, list(c(i, m, n)))
-              print(sprintf("Error - SubNr/BlockNr/TrialNr/Order: %i/%i/%i", i, m, n))
+              print(sprintf("Error - SubNr/BlockNr/TrialNr: %i/%i/%i", i, m, n))
             } else {
               mark_error <- rbind(mark_error, data_current[note,])
             }
@@ -94,11 +94,11 @@ for (i in unique(data_all$SubNr)){
           data_current$Error <- 1
           mark_error <- rbind(mark_error, data_current)
           ls_error <- c(ls_error, list(c(i, m, n)))
-          print(sprintf("Error - SubNr/BlockNr/TrialNr/Order: %i/%i/%i", i, m, n))
+          print(sprintf("Error - SubNr/BlockNr/TrialNr: %i/%i/%i", i, m, n))
         }
       } else if (nrow(data_current) == 0){
         ls_miss <- c(ls_miss, list(c(i, m, n)))
-        print(sprintf("Missing data - SubNr/BlockNr/TrialNr/Order: %i/%i/%i", i, m, n))
+        print(sprintf("Missing data - SubNr/BlockNr/TrialNr: %i/%i/%i", i, m, n))
       }
     }
   }
