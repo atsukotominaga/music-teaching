@@ -15,7 +15,7 @@ lf <- list.files('./data', pattern = 'txt')
 raw_data <- data.frame()
 
 for (i in 1:length(lf)){
-  data_i <- read.csv(file.path('./data', lf[i]), header = F, sep = " ", dec = '.') #Change the path after the script has been written
+  data_i <- read.csv(file.path('./data', lf[i]), header = F, sep = " ", dec = '.')
   raw_data <- rbind(raw_data, data_i)
 }
 
