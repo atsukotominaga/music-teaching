@@ -3,7 +3,6 @@
 #ctrl+shift+C - comment out a block of code
 
 # Install and load required packages
-if (!require("plyr")) {install.packages("plyr"); require("plyr")}
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 
@@ -12,14 +11,13 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 ####################################
 df <- read.csv('data_analysis.csv', header = T, sep = ",", dec = '.')
 df$SubNr <- as.factor(df$SubNr)
-df_onset <- df %>% dplyr::filter(Key_OnOff == 1)
 
 ####################################
 # Interonset intervals
 ####################################
 # Calculate IOIs
-df_ioi <- df_onset
-df_ioi$IOI <- diff(c(0, df_onset$TimeStamp))
+df_ioi <- df %>% dplyr::filter(Key_OnOff == 1)
+df_ioi$IOI <- diff(c(0, df_ioi$TimeStamp))
 
 # Detect the first note and remove them
 df_ioi$FirstNote <- 0
@@ -27,44 +25,110 @@ df_ioi$FirstNote[df_ioi$IOI > 5000 | df_ioi$IOI < 0] <- 1
 df_ioi <- df_ioi %>% dplyr::filter(FirstNote != 1)
 
 # Assign a sequence number for each tone
-df_ioi$Seq <- rep(2:51, length(df_ioi$NoteNr)/50)
+df_ioi$Note <- rep(1:50, length(df_ioi$NoteNr)/50)
 
-# Remove three tones
-df_analysis1 <- df_ioi %>% dplyr::filter(Seq != 26 & Seq != 27)
+# Remove irrelevant tones
+df_analysis1 <- df_ioi %>% dplyr::filter(Note != 24 & Note != 25 & Note != 26 & Note != 50)
 
-# Descriptive stats
+# Aggregated data
 ioi <- aggregate(IOI~Condition*Skill, data = df_analysis1, FUN = function(x){c(N = length(x), mean = mean(x), 
                                                           sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-
-ioi_seq <- aggregate(IOI~Seq*Condition*Skill, data = df_analysis1, FUN = function(x){c(N = length(x), mean = mean(x), 
+ioi_seq <- aggregate(IOI~Note*Condition*Skill, data = df_analysis1, FUN = function(x){c(N = length(x), mean = mean(x), 
                                                                                sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
+# Descriptive stats
+ioi <- cbind(ioi, as.data.frame(ioi[,3]))
+ioi_seq <- cbind(ioi_seq, as.data.frame(ioi_seq[,4]))
+
+# Add a grouping name
+ls_grouping <- list(c('Performing', 'Teaching'), c('articulation', 'tempoChange'))
+for (i in 1:length(ls_grouping[[1]])){
+  for (j in 1:length(ls_grouping[[2]])){
+  ioi_seq$Grouping[ioi_seq$Condition == ls_grouping[[1]][i] & ioi_seq$Skill == ls_grouping[[2]][j]] <- paste(ls_grouping[[1]][i], '-', ls_grouping[[2]][j], sep = '')
+  }
+}
+
 ####################################
 # IOIs plots
 ####################################
+plot_ioi <- ggplot(data = ioi, aes(x = Condition, y = mean, fill = Skill)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width=.2, position=position_dodge(.9)) +
+  coord_cartesian(ylim = c(150, 210)) + labs(y = "Mean IOI (ms)")
+
+plot_ioi_seq <- ggplot(data = ioi_seq, aes(x = Note, y = mean, group = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position=position_dodge(0.05)) +
+
+ggsave('plot_ioi.png', plot = plot_ioi, dpi = 300, width = 15, height = 12)
+ggsave('plot_ioi_seq.png', plot = plot_ioi_seq, dpi = 300, width = 15, height = 4)  
 
 ####################################
 # Velocity
 ####################################
 # Create a dataframe for a velocity profile
-df_velocity <- df_onset
+df_velocity <- df %>% dplyr::filter(Key_OnOff == 1)
+df_velocity$Acc <- diff(c(0, df_velocity$Velocity))
 
 # Assign a sequence number for each tone
-df_velocity$Seq <- rep(1:51, length(df_velocity$NoteNr)/51)
+df_velocity$Note <- rep(1:51, length(df_velocity$NoteNr)/51)
 
-# Remove three tones
-df_analysis2 <- df_velocity %>% dplyr::filter(Seq != 26 & Seq != 27 & Seq != 51)
+# Remove irrelevant tones
+df_analysis2 <- df_velocity %>% dplyr::filter(Note != 25 & Note != 26 & Note != 51)
 
 # Descriptive stats
 velocity <- aggregate(Velocity~Condition*Skill, data = df_analysis2, FUN = function(x){c(N = length(x), mean = mean(x), 
                                                                               sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-
-velocity_seq <- aggregate(Velocity~Seq*Condition*Skill, data = df_analysis2, FUN = function(x){c(N = length(x), mean = mean(x), 
+velocity_seq <- aggregate(Velocity~Note*Condition*Skill, data = df_analysis2, FUN = function(x){c(N = length(x), mean = mean(x), 
                                                                                          sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+velocity_acc_seq <- aggregate(Acc~Note*Condition*Skill, data = df_analysis2, FUN = function(x){c(N = length(x), mean = mean(x), 
+                                                                                                 sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
+# Aggregated data
+velocity <- cbind(velocity, as.data.frame(velocity[,3]))
+velocity_seq <- cbind(velocity_seq, as.data.frame(velocity_seq[,4]))
+velocity_acc_seq <- cbind(velocity_acc_seq, as.data.frame(velocity_acc_seq[,4]))
+
+# Add a grouping name
+for (i in 1:length(ls_grouping[[1]])){
+  for (j in 1:length(ls_grouping[[2]])){
+    velocity_seq$Grouping[velocity_seq$Condition == ls_grouping[[1]][i] & velocity_seq$Skill == ls_grouping[[2]][j]] <- paste(ls_grouping[[1]][i], '-', ls_grouping[[2]][j], sep = '')
+    velocity_acc_seq$Grouping[velocity_acc_seq$Condition == ls_grouping[[1]][i] & velocity_acc_seq$Skill == ls_grouping[[2]][j]] <- paste(ls_grouping[[1]][i], '-', ls_grouping[[2]][j], sep = '')
+  }
+}
 ####################################
-# IOIs plots
+# Velocity plots
 ####################################
+
+plot_velocity <- ggplot(data = velocity, aes(x = Condition, y = mean, fill = Skill)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width=.2, position=position_dodge(.9)) + labs(y = "Velocity")
+
+plot_velocity_seq <- ggplot(data = velocity_seq, aes(x = Note, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position=position_dodge(0.05)) + 
+  labs(y = "Velocity") + scale_x_continuous(breaks=seq(1,50,1))
+
+plot_velocity_acc_seq <- ggplot(data = velocity_acc_seq, aes(x = Note, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() + geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position=position_dodge(0.05)) + 
+  labs(y = "Velocity") + scale_x_continuous(breaks=seq(1,50,1))
+
+ggsave('plot_velocity.png', plot = plot_velocity, dpi = 300, width = 15, height = 12)
+ggsave('plot_velocity_seq.png', plot = plot_velocity_seq, dpi = 300, width = 15, height = 4)
+ggsave('plot_velocity_acc_seq.png', plot = plot_velocity_acc_seq, dpi = 300, width = 15, height = 4) 
 
 ####################################
 # Articulation values
+####################################
+
+####################################
+# Articulation plots
 ####################################
