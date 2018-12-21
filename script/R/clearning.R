@@ -1,6 +1,5 @@
 #!/usr/bin/Rscript
 #rm(list=ls(all=TRUE)) - clear all in Environment
-#ctrl+shift+C - comment out a block of code
 
 ####################################
 #  Documentation
@@ -66,11 +65,13 @@ for (i in unique(data_onset$SubNr)){
         if (length(data_current$NoteNr) == length(data_ideal$NoteNr)){
           for (note in 1:length(data_current$NoteNr)){
             if (data_current[note,]$Pitch != data_ideal[note,]$IdealPerformance){
+              # Mark an error
               data_current[note,]$Error <- 1
               mark_error <- rbind(mark_error, data_current[note,])
               ls_error <- c(ls_error, list(c(i, j, k)))
               print(sprintf('Error - SubNr/BlockNr/TrialNr: %i/%i/%i', i, j, k))
             } else {
+              # Add without marking
               mark_error <- rbind(mark_error, data_current[note,])
             }
           }
