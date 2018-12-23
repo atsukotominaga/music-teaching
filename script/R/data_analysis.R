@@ -21,20 +21,20 @@ df_ioi$IOI <- diff(c(0, df_ioi$TimeStamp))
 df_ioi <- df_ioi %>% dplyr::filter(IOI > 0 & IOI < 2000)
 
 # Remove the first note
-# df_ioi <- df_ioi %>% dplyr::filter(NoteNr != 17)
+# df_ioi <- df_ioi %>% dplyr::filter(IntervalNr != 17)
 
 # Assign a sequence number for each tone
-df_ioi$Note <- rep(1:50, length(df_ioi$NoteNr)/50)
+df_ioi$Interval <- rep(1:50, length(df_ioi$NoteNr)/50)
 
 # Aggregate data
 # Overall average
-ioi <- aggregate(IOI~Condition*Skill, data = subset(df_ioi, df_ioi$Note != 24 & df_ioi$Note != 25 & df_ioi$Note != 26 & df_ioi$Note != 50),
+ioi <- aggregate(IOI~Condition*Skill, data = subset(df_ioi, df_ioi$Interval != 24 & df_ioi$Interval != 25 & df_ioi$Interval != 26 & df_ioi$Interval != 50),
                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
 # Average for each note
-ioi_seq <- aggregate(IOI~Note*Condition*Skill, data = df_ioi, 
+ioi_seq <- aggregate(IOI~Interval*Condition*Skill, data = df_ioi, 
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-ioi_seq[,4][ioi_seq$Note == 24 | ioi_seq$Note == 25 | ioi_seq$Note == 26 | ioi_seq$Note == 50] <- NA
+ioi_seq[,4][ioi_seq$Interval == 24 | ioi_seq$Interval == 25 | ioi_seq$Interval == 26 | ioi_seq$Interval == 50] <- NA
 
 # Descriptive stats
 ioi <- cbind(ioi, as.data.frame(ioi[,3]))
@@ -75,7 +75,7 @@ plot_ioi <- ggplot(data = ioi, aes(x = Condition, y = mean, fill = Skill)) +
                 width=.2, position = position_dodge(.9)) +
   labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 210)) + theme_classic()
 
-plot_ioi_seq <- ggplot(data = ioi_seq, aes(x = Note, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+plot_ioi_seq <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
   geom_line() +
   geom_point() +
   geom_hline(yintercept = 188, linetype = 'dashed') + # Tempo
@@ -216,9 +216,127 @@ ggsave('plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 300, width = 15, h
 ####################################
 # Articulation values
 ####################################
+df_onset <- df %>% dplyr::filter(Key_OnOff == 1)
+df_offset <- df %>% dplyr::filter(Key_OnOff == 0)
 
+# Offset 1 - Onset 2
+df_onset$KOT <- NA
+for (i in 1:length(df_onset$NoteNr)){
+  if (i < length(df_onset$NoteNr)){
+    df_onset$KOT[i+1] <- df_offset$TimeStamp[i] - df_onset$TimeStamp[i+1]
+  }
+}
 
+# Remove the first note for pilot data
+df_kot <- df_onset %>% dplyr::filter(KOT < 10000)
+
+# Remove the first note
+# df_kot <- df_onset %>% dplyr::filter(NoteNr != 1)
+
+# Assign a sequence number for each tone
+df_kot$Interval <- rep(1:50, length(df_kot$NoteNr)/50)
+
+# Assign numbers for legato and staccato
+ls_legato <- list(c(1:7), c(17:19), c(27:34), c(43:45))
+ls_staccato <- list(c(9:15), c(21:23), c(35:41), c(47:49))
+names(ls_legato) <- c('first', 'second', 'third', 'fourth')
+names(ls_staccato) <- c('first', 'second', 'third', 'fourth')
+
+# Legato
+df_kot$Articulation <- NA
+for (i in 1:length(ls_legato)){
+  for (j in 1:length(ls_legato[[i]])){
+    df_kot$Articulation[df_kot$Interval == ls_legato[[i]][j]] <- 'Legato'
+  }
+}
+
+# Staccato
+for (i in 1:length(ls_staccato)){
+  for (j in 1:length(ls_staccato[[i]])){
+    df_kot$Articulation[df_kot$Interval == ls_staccato[[i]][j]] <- 'Staccato'
+  }
+}
+
+# Aggregate data
+# Overall average
+kot <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Interval != 24 & df_kot$Interval != 25 & df_kot$Interval != 26 & df_kot$Interval != 50),
+                 FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
+# Average for legato
+legato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Articulation == 'Legato'),
+                    FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
+# Average for staccato
+staccato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Articulation == 'Staccato'),
+                    FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
+# Average for each note
+kot_seq <- aggregate(KOT~Interval*Condition*Skill, data = df_kot, 
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+kot_seq[,4][kot_seq$Interval == 24 | kot_seq$Interval == 25 | kot_seq$Interval == 26 | kot_seq$Interval == 50] <- NA
+
+# Descriptive stats
+kot <- cbind(kot, as.data.frame(kot[,3]))
+kot_seq <- cbind(kot_seq, as.data.frame(kot_seq[,4]))
+legato <- cbind(legato, as.data.frame(legato[,3]))
+staccato <- cbind(staccato, as.data.frame(staccato[,3]))
+
+# Add a grouping name for pilot data
+ls_grouping <- list(Condition = c('Performing', 'Teaching'), Skill = c('articulation', 'tempoChange'))
+for (i in 1:length(ls_grouping$Condition)){
+  for (j in 1:length(ls_grouping$Skill)){
+    kot_seq$Grouping[kot_seq$Condition == ls_grouping$Condition[i] & kot_seq$Skill == ls_grouping$Skill[j]] <- 
+      paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
+  }
+}
+
+# # Add a grouping name
+# ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'tempoChange', dynamics))
+# for (i in 1:length(ls_grouping$Condition)){
+#   for (j in 1:length(ls_grouping$Skill)){
+#     kot_seq$Grouping[kot_seq$Condition == ls_grouping$Condition[i] & kot_seq$Skill == ls_grouping$Skill[j]] <- 
+#       paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
+#   }
+# }
+
+# Change labels for pilot data
+kot$Grouping[kot$Condition == 'Performing' & kot$Skill == 'articulation'] <- 'Performing-articulation'
+kot$Grouping[kot$Condition == 'Performing' & kot$Skill == 'tempoChange'] <- 'Performing-dynamics'
+kot$Grouping[kot$Condition == 'Teaching' & kot$Skill == 'articulation'] <- 'Teaching-articulation'
+kot$Grouping[kot$Condition == 'Teaching' & kot$Skill == 'tempoChange'] <- 'Teaching-dynamics'
+kot_seq$Grouping[kot_seq$Grouping == 'Performing-tempoChange'] <- 'Performing-dynamics'
+kot_seq$Grouping[kot_seq$Grouping == 'Teaching-tempoChange'] <- 'Teaching-dynamics'
 
 ####################################
 # Articulation plots
 ####################################
+plot_kot <- ggplot(data = kot, aes(x = Condition, y = mean, fill = Skill)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width=.2, position = position_dodge(.9)) +
+  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-70, 25)) + theme_classic()
+
+plot_legato <- ggplot(data = legato, aes(x = Condition, y = mean, fill = Skill)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width=.2, position = position_dodge(.9)) +
+  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 35)) + theme_classic()
+
+plot_staccato <- ggplot(data = staccato, aes(x = Condition, y = mean, fill = Skill)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width=.2, position = position_dodge(.9)) +
+  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-150, 30)) + theme_classic()
+
+plot_kot_seq <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
+ggsave('plot_kot.eps', plot = plot_kot, dpi = 300, width = 5, height = 4)
+ggsave('plot_legato.eps', plot = plot_legato, dpi = 300, width = 5, height = 4)
+ggsave('plot_staccato.eps', plot = plot_staccato, dpi = 300, width = 5, height = 4)
+ggsave('plot_kot_seq.eps', plot = plot_kot_seq, dpi = 300, width = 15, height = 4)  
