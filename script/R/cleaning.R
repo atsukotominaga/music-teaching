@@ -25,7 +25,8 @@ for (i in 1:length(lf)){
 }
 
 # Add column names
-colnames(raw_data) <- c('NoteNr', 'TimeStamp', 'Pitch', 'Velocity', 'Key_OnOff', 'Device', 'SubNr', 'BlockNr', 'TrialNr', 'Skill', 'Condition', 'Image')
+colnames(raw_data) <- c('NoteNr', 'TimeStamp', 'Pitch', 'Velocity', 'Key_OnOff', 'Device', 
+                        'SubNr', 'BlockNr', 'TrialNr', 'Skill', 'Condition', 'Image')
 
 # Clean raw_data
 raw_data$NoteNr <- as.numeric(gsub(",", "", raw_data$NoteNr))
@@ -40,49 +41,38 @@ raw_data <- raw_data[c(13, 1:12)]
 # Detect pitch errors
 ####################################
 # Only MIDI onsets and offsets
-data_all <- raw_data %>% dplyr::filter(Key_OnOff != 10)
+df_all <- raw_data %>% dplyr::filter(Key_OnOff != 10)
 
 # Only MIDI onsets
-data_onset <- raw_data %>% dplyr::filter(Key_OnOff == 1)
+df_onset <- raw_data %>% dplyr::filter(Key_OnOff == 1)
 
 # Read ideal performance
-data_ideal <- read.csv('./ideal.csv')
+df_ideal <- read.csv('./ideal.csv')
 
-# Mark pitch errors for onsets
-mark_error <- data.frame()
-ls_error <- list()
-ls_miss <- list()
-for (i in unique(data_onset$SubNr)){
-  print(sprintf('Pitch error and missing trial for SubNr %i', i))
-  for (j in unique(data_onset$BlockNr)){
-    for (k in unique(data_onset$TrialNr)){
+# Find pitch errors and missing data
+ls_error <- list() # List - SubNr/BlockNr/TrialNr for pitch errors
+ls_miss <- list() # List - SubNr/BlockNr/TrialNr for missing data
+for (i in unique(df_onset$SubNr)){
+  print(sprintf('----- SubNr %i -----', i))
+  for (j in unique(df_onset$BlockNr)){
+    for (k in unique(df_onset$TrialNr)){
       # Extract each trial for each participant
-      data_current <- data_onset %>% dplyr::filter(SubNr == i & BlockNr == j & TrialNr == k)
-      if (nrow(data_current) != 0){ # if data_current is NOT empty
-        # Create an error column
-        data_current$Error <- 0
+      df_current <- df_onset %>% dplyr::filter(SubNr == i & BlockNr == j & TrialNr == k)
+      if (nrow(df_current) != 0){ # if data_current is NOT empty
         # NoteNr is 51 - detect pitch errors
-        if (length(data_current$NoteNr) == length(data_ideal$NoteNr)){
-          for (note in 1:length(data_current$NoteNr)){
-            if (data_current[note,]$Pitch != data_ideal[note,]$IdealPerformance){
-              # Mark an error
-              data_current[note,]$Error <- 1
-              mark_error <- rbind(mark_error, data_current[note,])
+        if (length(df_current$NoteNr) == length(df_ideal$NoteNr)){
+          for (note in 1:length(df_current$NoteNr)){
+            if (df_current[note,]$Pitch != df_ideal[note,]$IdealPerformance){
               ls_error <- c(ls_error, list(c(i, j, k)))
               print(sprintf('Error - SubNr/BlockNr/TrialNr: %i/%i/%i', i, j, k))
-            } else {
-              # Add without marking
-              mark_error <- rbind(mark_error, data_current[note,])
             }
           }
         # NoteNr is NOT 51 - discard the current trial
         } else {
-          data_current$Error <- 1
-          mark_error <- rbind(mark_error, data_current)
           ls_error <- c(ls_error, list(c(i, j, k)))
           print(sprintf('Error - SubNr/BlockNr/TrialNr: %i/%i/%i', i, j, k))
         }
-      } else if (nrow(data_current) == 0){
+      } else if (nrow(df_current) == 0){
         ls_miss <- c(ls_miss, list(c(i, j, k)))
         print(sprintf('Missing - SubNr/BlockNr/TrialNr: %i/%i/%i', i, j, k))
       }
@@ -90,34 +80,25 @@ for (i in unique(data_onset$SubNr)){
   }
 }
 
+# Remove duplicate data
+ls_error <- unique(ls_error)
+
 # Create data with pitch errors
-data_error <- data.frame()
-data_error_c <- data.frame()
+df_error <- data.frame()
 for (i in 1:length(ls_error)){
   # # of errors of onsets and offsets
-  data_error <- rbind(data_error, data_all %>%
+  df_error <- rbind(df_error, df_all %>%
                         dplyr::filter(SubNr == ls_error[[i]][1] & BlockNr == ls_error[[i]][2] & TrialNr == ls_error[[i]][3]))
-  # # of errors of onsets
-  data_error_c <- rbind(data_error_c, mark_error %>%
-                          dplyr::filter(SubNr == ls_error[[i]][1] & BlockNr == ls_error[[i]][2] & TrialNr == ls_error[[i]][3]))
-}
-
-# Check whether # of notes in data_error is twice as large as # of notes in data_error_c
-if (nrow(data_error) != nrow(data_error_c)*2){
-  print('Caution: check # of notes in data_error and data_error_c')
-}
+  }
 
 # Mark pitch errors for data_all
-data_all$Error <- 0
-for (i in 1:length(data_all$NoteNr)){
-  for (j in 1:length(ls_error)){
-    if (data_all[i,]$SubNr == ls_error[[j]][1] & data_all[i,]$BlockNr == ls_error[[j]][2] & data_all[i,]$TrialNr == ls_error[[j]][3]){
-      data_all[i,]$Error <- 1
-    }
-  }
+df_all$Error <- 0
+for (i in 1:length(ls_error)){
+  df_all$Error[df_all$SubNr == ls_error[[i]][1] & df_all$BlockNr == ls_error[[i]][2] & df_all$TrialNr == ls_error[[i]][3]] <- 1
 }
+
 # Create data without pitch errors
-data_analysis <- data_all %>% dplyr::filter(Error != 1)
+data_analysis <- df_all %>% dplyr::filter(Error != 1)
 
 ####################################
 # Export csv files
@@ -127,11 +108,11 @@ write.csv(raw_data, file = './raw_data.csv', row.names = F)
 # Create data only containing metronome sounds
 
 # Export a csv file for data_metro
-data_metro <- raw_data %>% dplyr::filter(Key_OnOff == 10)
-write.csv(data_metro, file = './data_metro.csv', row.names = F)
+df_metro <- raw_data %>% dplyr::filter(Key_OnOff == 10)
+write.csv(df_metro, file = './data_metro.csv', row.names = F)
 
 # Export a csv file for data_error
-write.csv(data_error, file = './data_error.csv', row.names = F)
+write.csv(df_error, file = './data_error.csv', row.names = F)
 
 # Export a csv file for data_analysis
 write.csv(data_analysis, file = './data_analysis.csv', row.names = F)
