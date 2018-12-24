@@ -1,1 +1,5 @@
 script/R/data/
+script/R/data_analysis.csv
+script/R/data_error.csv
+script/R/data_metro.csv
+script/R/raw_data.csv
