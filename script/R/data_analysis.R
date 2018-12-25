@@ -1,17 +1,24 @@
 #!/usr/bin/Rscript
 #rm(list=ls(all=TRUE)) - clear all in Environment
 
+####################################
+#  Documentation
+####################################
+# Created: 25/12/2018
+# This script aggregate and plot data.
+# GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
+
 # Install and load required packages
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 
 ####################################
-# Reading and formatting data
+### Reading and formatting data
 ####################################
 df <- read.csv('data_analysis.csv', header = T, sep = ",", dec = '.')
 
 ####################################
-# Interonset intervals
+### Interonset intervals
 ####################################
 # Calculate IOIs
 df_ioi <- df %>% dplyr::filter(Key_OnOff == 1)
@@ -26,6 +33,10 @@ df_ioi <- df_ioi %>% dplyr::filter(IOI > 0 & IOI < 2000)
 # Assign a sequence number for each tone
 df_ioi$Interval <- rep(1:50, length(df_ioi$NoteNr)/50)
 
+# Change labels for pilot data
+levels(df_ioi$Condition) <- c('performing', 'teaching')
+levels(df_ioi$Skill)[levels(df_ioi$Skill) == 'tempoChange'] <- 'dynamics'
+
 # Aggregate data
 # Overall average
 ioi <- aggregate(IOI~Condition*Skill, data = subset(df_ioi, df_ioi$Interval != 24 & df_ioi$Interval != 25 & df_ioi$Interval != 26 & df_ioi$Interval != 50),
@@ -39,12 +50,6 @@ ioi_seq[,4][ioi_seq$Interval == 24 | ioi_seq$Interval == 25 | ioi_seq$Interval =
 # Descriptive stats
 ioi <- cbind(ioi, as.data.frame(ioi[,3]))
 ioi_seq <- cbind(ioi_seq, as.data.frame(ioi_seq[,4]))
-
-# Change labels for pilot data
-levels(ioi$Condition) <- c('performing', 'teaching')
-levels(ioi$Skill)[levels(ioi$Skill) == 'tempoChange'] <- 'dynamics'
-levels(ioi_seq$Condition) <- c('performing', 'teaching')
-levels(ioi_seq$Skill)[levels(ioi_seq$Skill) == 'tempoChange'] <- 'dynamics'
 
 # Add a grouping name for pilot data
 ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
@@ -69,13 +74,14 @@ for (i in 1:length(ls_grouping$Condition)){
 # }
 
 ####################################
-# IOIs plots
+### IOIs plots
 ####################################
 plot_ioi <- ggplot(data = ioi, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 210)) + theme_classic()
+  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 210)) + 
+  theme_classic()
 
 plot_ioi_seq <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
   geom_line() +
@@ -110,13 +116,14 @@ plot_ioi_seq_d <- ggplot(data = subset(ioi_seq, ioi_seq$Skill == 'dynamics'), ae
   labs(x = 'Interval', y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
   theme_classic()
 
+# Save plots
 ggsave('plot_ioi.eps', plot = plot_ioi, dpi = 300, width = 5, height = 4)
 ggsave('plot_ioi_seq.eps', plot = plot_ioi_seq, dpi = 300, width = 15, height = 4)
 ggsave('plot_ioi_seq_a.eps', plot = plot_ioi_seq_a, dpi = 300, width = 15, height = 4)
 ggsave('plot_ioi_seq_d.eps', plot = plot_ioi_seq_d, dpi = 300, width = 15, height = 4)
 
 ####################################
-# Velocity
+### Velocity
 ####################################
 # Calculate Acc (acceleration - velocity difference between notes)
 df_vel <- df %>% dplyr::filter(Key_OnOff == 1)
@@ -138,7 +145,13 @@ for (i in unique(df_vel$SubNr)){
 
 # Assign a sequence number for each tone
 df_vel$Note <- rep(1:51, length(df_vel$NoteNr)/51) # for vel_seq
-df_vel_acc$Note <- rep(1:50, length(df_vel_acc$NoteNr)/50) # for vel_acc_seq
+df_vel_acc$Interval <- rep(1:50, length(df_vel_acc$NoteNr)/50) # for vel_acc_seq
+
+# Change labels for pilot data
+levels(df_vel$Condition) <- c('performing', 'teaching')
+levels(df_vel$Skill)[levels(df_vel$Skill) == 'tempoChange'] <- 'dynamics'
+levels(df_vel_acc$Condition) <- c('performing', 'teaching')
+levels(df_vel_acc$Skill)[levels(df_vel_acc$Skill) == 'tempoChange'] <- 'dynamics'
 
 # Average data
 # Overall average
@@ -148,7 +161,7 @@ vel <- aggregate(Velocity~Condition*Skill, data = subset(df_vel, df_ioi$Note != 
 vel_seq <- aggregate(Velocity~Note*Condition*Skill, data = df_vel, 
                           FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 vel_seq[,4][vel_seq$Note == 25 | vel_seq$Note == 26 | vel_seq$Note == 51] <- NA
-vel_acc_seq <- aggregate(Acc~Note*Condition*Skill, data = df_vel_acc, 
+vel_acc_seq <- aggregate(Acc~Interval*Condition*Skill, data = df_vel_acc, 
                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 vel_acc_seq[,4][vel_acc_seq$Note == 24 | vel_acc_seq$Note == 25 | vel_acc_seq$Note == 26 | vel_acc_seq$Note == 50] <- NA
 
@@ -160,6 +173,8 @@ vel_acc_seq <- cbind(vel_acc_seq, as.data.frame(vel_acc_seq[,4]))
 # Add a grouping name
 for (i in 1:length(ls_grouping$Condition)){
   for (j in 1:length(ls_grouping$Skill)){
+    vel$Grouping[vel$Condition == ls_grouping$Condition[i] & vel$Skill == ls_grouping$Skill[j]] <- 
+      paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
     vel_seq$Grouping[vel_seq$Condition == ls_grouping$Condition[i] & vel_seq$Skill == ls_grouping$Skill[j]] <- 
       paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
     vel_acc_seq$Grouping[vel_acc_seq$Condition == ls_grouping$Condition[i] & vel_acc_seq$Skill == ls_grouping$Skill[j]] <- 
@@ -167,20 +182,9 @@ for (i in 1:length(ls_grouping$Condition)){
   }
 }
 
-# Change labenly for pilot data
-vel$Grouping[vel$Condition == 'Performing' & vel$Skill == 'articulation'] <- 'Performing-articulation'
-vel$Grouping[vel$Condition == 'Performing' & vel$Skill == 'tempoChange'] <- 'Performing-dynamics'
-vel$Grouping[vel$Condition == 'Teaching' & vel$Skill == 'articulation'] <- 'Teaching-articulation'
-vel$Grouping[vel$Condition == 'Teaching' & vel$Skill == 'tempoChange'] <- 'Teaching-dynamics'
-vel_seq$Grouping[vel_seq$Grouping == 'Performing-tempoChange'] <- 'Performing-dynamics'
-vel_seq$Grouping[vel_seq$Grouping == 'Teaching-tempoChange'] <- 'Teaching-dynamics'
-vel_acc_seq$Grouping[vel_acc_seq$Grouping == 'Performing-tempoChange'] <- 'Performing-dynamics'
-vel_acc_seq$Grouping[vel_acc_seq$Grouping == 'Teaching-tempoChange'] <- 'Teaching-dynamics'
-
 # Max - Min
 # Define apriori max and min
 ls_apriori <- list(c(1, 5), c(9, 13), c(17, 21), c(27, 31), c(35, 39), c(43, 47))
-names(ls_apriori) <- c('first', 'second', 'third', 'fourth', 'fifth', 'sixth')
 
 # Assign apriori max and min
 vel_seq$ApriMaxMin <- NA
@@ -193,7 +197,6 @@ for (i in 1:length(ls_apriori)){
 
 # Assign actual max and min
 ls_range <- list(c(1, 8), c(9, 16), c(17, 24), c(27, 34), c(35, 42), c(43, 50))
-names(ls_range) <- c('first', 'second', 'third', 'fourth', 'fifth', 'sixth')
 
 # Find actual min and max
 vel_seq$DataMaxMin <- NA
@@ -209,10 +212,9 @@ for (group in unique(vel_seq$Grouping)){
 }
 
 ####################################
-# Velocity plots
+### Velocity plots - dynamics
 ####################################
-
-plot_vel <- ggplot(data = vel, aes(x = Condition, y = mean, fill = Skill)) +
+plot_vel <- ggplot(data = vel, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width = .2, position=position_dodge(.9)) + 
@@ -227,7 +229,25 @@ plot_vel_seq <- ggplot(data = vel_seq, aes(x = Note, y = mean, group = Grouping,
   labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,51,1)) +
   theme_classic()
 
-plot_vel_acc_seq <- ggplot(data = vel_acc_seq, aes(x = Note, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+plot_vel_seq_a <- ggplot(data = subset(vel_seq, vel_seq$Skill == 'articulation'), aes(x = Note, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(data = subset(vel, vel$Skill == 'articulation'), aes(yintercept = mean, colour = Grouping), linetype = 'dashed') + # Mean Velocity for each grouping
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position=position_dodge(0.05)) + 
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,51,1)) +
+  theme_classic()
+
+plot_vel_seq_d <- ggplot(data = subset(vel_seq, vel_seq$Skill == 'dynamics'), aes(x = Note, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(data = subset(vel, vel$Skill == 'dynamics'), aes(yintercept = mean, colour = Grouping), linetype = 'dashed') + # Mean Velocity for each grouping
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position=position_dodge(0.05)) + 
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,51,1)) +
+  theme_classic()
+
+plot_vel_acc_seq <- ggplot(data = vel_acc_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
   geom_line() +
   geom_point() +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
@@ -237,10 +257,12 @@ plot_vel_acc_seq <- ggplot(data = vel_acc_seq, aes(x = Note, y = mean, group = G
 
 ggsave('plot_vel.eps', plot = plot_vel, dpi = 300, width = 5, height = 4)
 ggsave('plot_vel_seq.eps', plot = plot_vel_seq, dpi = 300, width = 15, height = 4)
+ggsave('plot_vel_seq_a.eps', plot = plot_vel_seq_a, dpi = 300, width = 15, height = 4)
+ggsave('plot_vel_seq_d.eps', plot = plot_vel_seq_d, dpi = 300, width = 15, height = 4)
 ggsave('plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 300, width = 15, height = 4) 
 
 ####################################
-# Articulation values
+### Key Overlap Time - articulation
 ####################################
 df_onset <- df %>% dplyr::filter(Key_OnOff == 1)
 df_offset <- df %>% dplyr::filter(Key_OnOff == 0)
@@ -257,16 +279,18 @@ for (i in 1:length(df_onset$NoteNr)){
 df_kot <- df_onset %>% dplyr::filter(KOT < 10000)
 
 # Remove the first note
-# df_kot <- df_onset %>% dplyr::filter(NoteNr != 1)
+# df_kot <- df_onset %>% dplyr::filter(NoteNr != 17)
+
+# Change labels for pilot data
+levels(df_kot$Condition) <- c('performing', 'teaching')
+levels(df_kot$Skill)[levels(df_kot$Skill) == 'tempoChange'] <- 'dynamics'
 
 # Assign a sequence number for each tone
 df_kot$Interval <- rep(1:50, length(df_kot$NoteNr)/50)
 
 # Assign numbers for legato and staccato
-ls_legato <- list(c(1:7), c(17:19), c(27:34), c(43:45))
+ls_legato <- list(c(1:7), c(17:19), c(27:33), c(43:45))
 ls_staccato <- list(c(9:15), c(21:23), c(35:41), c(47:49))
-names(ls_legato) <- c('first', 'second', 'third', 'fourth')
-names(ls_staccato) <- c('first', 'second', 'third', 'fourth')
 
 # Legato
 df_kot$Articulation <- NA
@@ -288,12 +312,16 @@ for (i in 1:length(ls_staccato)){
 kot <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Interval != 24 & df_kot$Interval != 25 & df_kot$Interval != 26 & df_kot$Interval != 50),
                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
+# Change labels for pilot data
+levels(kot$Condition) <- c('performing', 'teaching')
+levels(kot$Skill)[levels(kot$Skill) == 'tempoChange'] <- 'dynamics'
+
 # Average for legato
-legato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Articulation == 'Legato'),
+legato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Legato'),
                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
 # Average for staccato
-staccato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Articulation == 'Staccato'),
+staccato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Staccato'),
                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
 # Average for each note
@@ -303,12 +331,12 @@ kot_seq[,4][kot_seq$Interval == 24 | kot_seq$Interval == 25 | kot_seq$Interval =
 
 # Descriptive stats
 kot <- cbind(kot, as.data.frame(kot[,3]))
-kot_seq <- cbind(kot_seq, as.data.frame(kot_seq[,4]))
 legato <- cbind(legato, as.data.frame(legato[,3]))
 staccato <- cbind(staccato, as.data.frame(staccato[,3]))
+kot_seq <- cbind(kot_seq, as.data.frame(kot_seq[,4]))
 
 # Add a grouping name for pilot data
-ls_grouping <- list(Condition = c('Performing', 'Teaching'), Skill = c('articulation', 'tempoChange'))
+ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
 for (i in 1:length(ls_grouping$Condition)){
   for (j in 1:length(ls_grouping$Skill)){
     kot_seq$Grouping[kot_seq$Condition == ls_grouping$Condition[i] & kot_seq$Skill == ls_grouping$Skill[j]] <- 
@@ -325,36 +353,47 @@ for (i in 1:length(ls_grouping$Condition)){
 #   }
 # }
 
-# Change labels for pilot data
-kot$Grouping[kot$Condition == 'Performing' & kot$Skill == 'articulation'] <- 'Performing-articulation'
-kot$Grouping[kot$Condition == 'Performing' & kot$Skill == 'tempoChange'] <- 'Performing-dynamics'
-kot$Grouping[kot$Condition == 'Teaching' & kot$Skill == 'articulation'] <- 'Teaching-articulation'
-kot$Grouping[kot$Condition == 'Teaching' & kot$Skill == 'tempoChange'] <- 'Teaching-dynamics'
-kot_seq$Grouping[kot_seq$Grouping == 'Performing-tempoChange'] <- 'Performing-dynamics'
-kot_seq$Grouping[kot_seq$Grouping == 'Teaching-tempoChange'] <- 'Teaching-dynamics'
-
 ####################################
 # Articulation plots
 ####################################
-plot_kot <- ggplot(data = kot, aes(x = Condition, y = mean, fill = Skill)) +
+plot_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-70, 25)) + theme_classic()
+  labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(-70, 25)) + 
+  theme_classic()
 
-plot_legato <- ggplot(data = legato, aes(x = Condition, y = mean, fill = Skill)) +
+plot_legato <- ggplot(data = legato, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 35)) + theme_classic()
+  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 35)) + 
+  theme_classic()
 
-plot_staccato <- ggplot(data = staccato, aes(x = Condition, y = mean, fill = Skill)) +
+plot_staccato <- ggplot(data = staccato, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-150, 30)) + theme_classic()
+  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-150, 30)) + 
+  theme_classic()
 
 plot_kot_seq <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
+plot_kot_seq_a <- ggplot(data = subset(kot_seq, kot_seq$Skill == 'articulation'), aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
+plot_kot_seq_d <- ggplot(data = subset(kot_seq, kot_seq$Skill == 'dynamics'), aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
   geom_line() +
   geom_point() +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
@@ -365,4 +404,6 @@ plot_kot_seq <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Group
 ggsave('plot_kot.eps', plot = plot_kot, dpi = 300, width = 5, height = 4)
 ggsave('plot_legato.eps', plot = plot_legato, dpi = 300, width = 5, height = 4)
 ggsave('plot_staccato.eps', plot = plot_staccato, dpi = 300, width = 5, height = 4)
-ggsave('plot_kot_seq.eps', plot = plot_kot_seq, dpi = 300, width = 15, height = 4)  
+ggsave('plot_kot_seq.eps', plot = plot_kot_seq, dpi = 300, width = 15, height = 4)
+ggsave('plot_kot_seq_a.eps', plot = plot_kot_seq_a, dpi = 300, width = 15, height = 4) 
+ggsave('plot_kot_seq_d.eps', plot = plot_kot_seq_d, dpi = 300, width = 15, height = 4) 
