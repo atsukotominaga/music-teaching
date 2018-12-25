@@ -117,10 +117,174 @@ plot_ioi_seq_d <- ggplot(data = subset(ioi_seq, ioi_seq$Skill == 'dynamics'), ae
   theme_classic()
 
 # Save plots
-ggsave('./plot/plot_ioi.eps', plot = plot_ioi, dpi = 300, width = 5, height = 4)
-ggsave('./plot/plot_ioi_seq.eps', plot = plot_ioi_seq, dpi = 300, width = 15, height = 4)
-ggsave('./plot/plot_ioi_seq_a.eps', plot = plot_ioi_seq_a, dpi = 300, width = 15, height = 4)
-ggsave('./plot/plot_ioi_seq_d.eps', plot = plot_ioi_seq_d, dpi = 300, width = 15, height = 4)
+# eps files
+ggsave('./plot/eps/plot_ioi.eps', plot = plot_ioi, dpi = 600, width = 5, height = 4)
+ggsave('./plot/eps/plot_ioi_seq.eps', plot = plot_ioi_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_ioi_seq_a.eps', plot = plot_ioi_seq_a, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_ioi_seq_d.eps', plot = plot_ioi_seq_d, dpi = 600, width = 15, height = 4)
+
+# png files
+ggsave('./plot/png/plot_ioi.png', plot = plot_ioi, dpi = 600, width = 5, height = 4)
+ggsave('./plot/png/plot_ioi_seq.png', plot = plot_ioi_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_ioi_seq_a.png', plot = plot_ioi_seq_a, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_ioi_seq_d.png', plot = plot_ioi_seq_d, dpi = 600, width = 15, height = 4)
+
+####################################
+### Key Overlap Time - articulation
+####################################
+df_onset <- df %>% dplyr::filter(Key_OnOff == 1)
+df_offset <- df %>% dplyr::filter(Key_OnOff == 0)
+
+# Offset 1 - Onset 2
+df_onset$KOT <- NA
+for (i in 1:length(df_onset$NoteNr)){
+  if (i < length(df_onset$NoteNr)){
+    df_onset$KOT[i+1] <- df_offset$TimeStamp[i] - df_onset$TimeStamp[i+1]
+  }
+}
+
+# Remove the first note for pilot data
+df_kot <- df_onset %>% dplyr::filter(KOT < 10000)
+
+# Remove the first note
+# df_kot <- df_onset %>% dplyr::filter(NoteNr != 17)
+
+# Change labels for pilot data
+levels(df_kot$Condition) <- c('performing', 'teaching')
+levels(df_kot$Skill)[levels(df_kot$Skill) == 'tempoChange'] <- 'dynamics'
+
+# Assign a sequence number for each tone
+df_kot$Interval <- rep(1:50, length(df_kot$NoteNr)/50)
+
+# Assign numbers for legato and staccato
+ls_legato <- list(c(1:7), c(17:19), c(27:33), c(43:45))
+ls_staccato <- list(c(9:15), c(21:23), c(35:41), c(47:49))
+
+# Legato
+df_kot$Articulation <- NA
+for (i in 1:length(ls_legato)){
+  for (j in 1:length(ls_legato[[i]])){
+    df_kot$Articulation[df_kot$Interval == ls_legato[[i]][j]] <- 'Legato'
+  }
+}
+
+# Staccato
+for (i in 1:length(ls_staccato)){
+  for (j in 1:length(ls_staccato[[i]])){
+    df_kot$Articulation[df_kot$Interval == ls_staccato[[i]][j]] <- 'Staccato'
+  }
+}
+
+# Aggregate data
+# Overall average
+kot <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Interval != 24 & df_kot$Interval != 25 & df_kot$Interval != 26 & df_kot$Interval != 50),
+                 FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
+# Change labels for pilot data
+levels(kot$Condition) <- c('performing', 'teaching')
+levels(kot$Skill)[levels(kot$Skill) == 'tempoChange'] <- 'dynamics'
+
+# Average for legato
+legato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Legato'),
+                    FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
+# Average for staccato
+staccato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Staccato'),
+                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
+# Average for each note
+kot_seq <- aggregate(KOT~Interval*Condition*Skill, data = df_kot, 
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+kot_seq[,4][kot_seq$Interval == 24 | kot_seq$Interval == 25 | kot_seq$Interval == 26 | kot_seq$Interval == 50] <- NA
+
+# Descriptive stats
+kot <- cbind(kot, as.data.frame(kot[,3]))
+legato <- cbind(legato, as.data.frame(legato[,3]))
+staccato <- cbind(staccato, as.data.frame(staccato[,3]))
+kot_seq <- cbind(kot_seq, as.data.frame(kot_seq[,4]))
+
+# Add a grouping name for pilot data
+ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+for (i in 1:length(ls_grouping$Condition)){
+  for (j in 1:length(ls_grouping$Skill)){
+    kot_seq$Grouping[kot_seq$Condition == ls_grouping$Condition[i] & kot_seq$Skill == ls_grouping$Skill[j]] <- 
+      paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
+  }
+}
+
+# # Add a grouping name
+# ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'tempoChange', dynamics))
+# for (i in 1:length(ls_grouping$Condition)){
+#   for (j in 1:length(ls_grouping$Skill)){
+#     kot_seq$Grouping[kot_seq$Condition == ls_grouping$Condition[i] & kot_seq$Skill == ls_grouping$Skill[j]] <- 
+#       paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
+#   }
+# }
+
+####################################
+# Articulation plots
+####################################
+plot_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width=.2, position = position_dodge(.9)) +
+  labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(-70, 25)) + 
+  theme_classic()
+
+plot_kot_leg <- ggplot(data = legato, aes(x = Skill, y = mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width=.2, position = position_dodge(.9)) +
+  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 35)) + 
+  theme_classic()
+
+plot_kot_sta <- ggplot(data = staccato, aes(x = Skill, y = mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width=.2, position = position_dodge(.9)) +
+  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-150, 30)) + 
+  theme_classic()
+
+plot_kot_seq <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
+plot_kot_seq_a <- ggplot(data = subset(kot_seq, kot_seq$Skill == 'articulation'), aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
+plot_kot_seq_d <- ggplot(data = subset(kot_seq, kot_seq$Skill == 'dynamics'), aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
+# Save plots 
+# eps files
+ggsave('./plot/eps/plot_kot.eps', plot = plot_kot, dpi = 600, width = 5, height = 4)
+ggsave('./plot/eps/plot_kot_leg.eps', plot = plot_kot_leg, dpi = 600, width = 5, height = 4)
+ggsave('./plot/eps/plot_kot_sta.eps', plot = plot_kot_sta, dpi = 600, width = 5, height = 4)
+ggsave('./plot/eps/plot_kot_seq.eps', plot = plot_kot_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_kot_seq_a.eps', plot = plot_kot_seq_a, dpi = 600, width = 15, height = 4) 
+ggsave('./plot/eps/plot_kot_seq_d.eps', plot = plot_kot_seq_d, dpi = 600, width = 15, height = 4) 
+
+# png files
+ggsave('./plot/png/plot_kot.png', plot = plot_kot, dpi = 600, width = 5, height = 4)
+ggsave('./plot/png/plot_kot_leg.png', plot = plot_kot_leg, dpi = 600, width = 5, height = 4)
+ggsave('./plot/png/plot_kot_sta.png', plot = plot_kot_sta, dpi = 600, width = 5, height = 4)
+ggsave('./plot/png/plot_kot_seq.png', plot = plot_kot_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_kot_seq_a.png', plot = plot_kot_seq_a, dpi = 600, width = 15, height = 4) 
+ggsave('./plot/png/plot_kot_seq_d.png', plot = plot_kot_seq_d, dpi = 600, width = 15, height = 4) 
 
 ####################################
 ### Velocity
@@ -255,155 +419,17 @@ plot_vel_acc_seq <- ggplot(data = vel_acc_seq, aes(x = Interval, y = mean, group
   labs(x = 'Interval', y = "Acceleration") + scale_x_continuous(breaks=seq(1,50,1)) +
   theme_classic()
 
-ggsave('./plot/plot_vel.eps', plot = plot_vel, dpi = 300, width = 5, height = 4)
-ggsave('./plot/plot_vel_seq.eps', plot = plot_vel_seq, dpi = 300, width = 15, height = 4)
-ggsave('./plot/plot_vel_seq_a.eps', plot = plot_vel_seq_a, dpi = 300, width = 15, height = 4)
-ggsave('./plot/plot_vel_seq_d.eps', plot = plot_vel_seq_d, dpi = 300, width = 15, height = 4)
-ggsave('./plot/plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 300, width = 15, height = 4) 
+# Save plots
+# eps files
+ggsave('./plot/eps/plot_vel.eps', plot = plot_vel, dpi = 600, width = 5, height = 4)
+ggsave('./plot/eps/plot_vel_seq.eps', plot = plot_vel_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_vel_seq_a.eps', plot = plot_vel_seq_a, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_vel_seq_d.eps', plot = plot_vel_seq_d, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4) 
 
-####################################
-### Key Overlap Time - articulation
-####################################
-df_onset <- df %>% dplyr::filter(Key_OnOff == 1)
-df_offset <- df %>% dplyr::filter(Key_OnOff == 0)
-
-# Offset 1 - Onset 2
-df_onset$KOT <- NA
-for (i in 1:length(df_onset$NoteNr)){
-  if (i < length(df_onset$NoteNr)){
-    df_onset$KOT[i+1] <- df_offset$TimeStamp[i] - df_onset$TimeStamp[i+1]
-  }
-}
-
-# Remove the first note for pilot data
-df_kot <- df_onset %>% dplyr::filter(KOT < 10000)
-
-# Remove the first note
-# df_kot <- df_onset %>% dplyr::filter(NoteNr != 17)
-
-# Change labels for pilot data
-levels(df_kot$Condition) <- c('performing', 'teaching')
-levels(df_kot$Skill)[levels(df_kot$Skill) == 'tempoChange'] <- 'dynamics'
-
-# Assign a sequence number for each tone
-df_kot$Interval <- rep(1:50, length(df_kot$NoteNr)/50)
-
-# Assign numbers for legato and staccato
-ls_legato <- list(c(1:7), c(17:19), c(27:33), c(43:45))
-ls_staccato <- list(c(9:15), c(21:23), c(35:41), c(47:49))
-
-# Legato
-df_kot$Articulation <- NA
-for (i in 1:length(ls_legato)){
-  for (j in 1:length(ls_legato[[i]])){
-    df_kot$Articulation[df_kot$Interval == ls_legato[[i]][j]] <- 'Legato'
-  }
-}
-
-# Staccato
-for (i in 1:length(ls_staccato)){
-  for (j in 1:length(ls_staccato[[i]])){
-    df_kot$Articulation[df_kot$Interval == ls_staccato[[i]][j]] <- 'Staccato'
-  }
-}
-
-# Aggregate data
-# Overall average
-kot <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Interval != 24 & df_kot$Interval != 25 & df_kot$Interval != 26 & df_kot$Interval != 50),
-                 FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-
-# Change labels for pilot data
-levels(kot$Condition) <- c('performing', 'teaching')
-levels(kot$Skill)[levels(kot$Skill) == 'tempoChange'] <- 'dynamics'
-
-# Average for legato
-legato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Legato'),
-                    FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-
-# Average for staccato
-staccato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Staccato'),
-                    FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-
-# Average for each note
-kot_seq <- aggregate(KOT~Interval*Condition*Skill, data = df_kot, 
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-kot_seq[,4][kot_seq$Interval == 24 | kot_seq$Interval == 25 | kot_seq$Interval == 26 | kot_seq$Interval == 50] <- NA
-
-# Descriptive stats
-kot <- cbind(kot, as.data.frame(kot[,3]))
-legato <- cbind(legato, as.data.frame(legato[,3]))
-staccato <- cbind(staccato, as.data.frame(staccato[,3]))
-kot_seq <- cbind(kot_seq, as.data.frame(kot_seq[,4]))
-
-# Add a grouping name for pilot data
-ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
-for (i in 1:length(ls_grouping$Condition)){
-  for (j in 1:length(ls_grouping$Skill)){
-    kot_seq$Grouping[kot_seq$Condition == ls_grouping$Condition[i] & kot_seq$Skill == ls_grouping$Skill[j]] <- 
-      paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
-  }
-}
-
-# # Add a grouping name
-# ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'tempoChange', dynamics))
-# for (i in 1:length(ls_grouping$Condition)){
-#   for (j in 1:length(ls_grouping$Skill)){
-#     kot_seq$Grouping[kot_seq$Condition == ls_grouping$Condition[i] & kot_seq$Skill == ls_grouping$Skill[j]] <- 
-#       paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
-#   }
-# }
-
-####################################
-# Articulation plots
-####################################
-plot_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
-                width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(-70, 25)) + 
-  theme_classic()
-
-plot_kot_leg <- ggplot(data = legato, aes(x = Skill, y = mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
-                width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 35)) + 
-  theme_classic()
-
-plot_kot_sta <- ggplot(data = staccato, aes(x = Skill, y = mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
-                width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-150, 30)) + 
-  theme_classic()
-
-plot_kot_seq <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
-  geom_line() +
-  geom_point() +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
-                position = position_dodge(.05)) + 
-  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
-  theme_classic()
-
-plot_kot_seq_a <- ggplot(data = subset(kot_seq, kot_seq$Skill == 'articulation'), aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
-  geom_line() +
-  geom_point() +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
-                position = position_dodge(.05)) + 
-  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
-  theme_classic()
-
-plot_kot_seq_d <- ggplot(data = subset(kot_seq, kot_seq$Skill == 'dynamics'), aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
-  geom_line() +
-  geom_point() +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
-                position = position_dodge(.05)) + 
-  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
-  theme_classic()
-
-ggsave('./plot/plot_kot.eps', plot = plot_kot, dpi = 300, width = 5, height = 4)
-ggsave('./plot/plot_kot_leg.eps', plot = plot_kot_leg, dpi = 300, width = 5, height = 4)
-ggsave('./plot/plot_kot_sta.eps', plot = plot_kot_sta, dpi = 300, width = 5, height = 4)
-ggsave('./plot/plot_kot_seq.eps', plot = plot_kot_seq, dpi = 300, width = 15, height = 4)
-ggsave('./plot/plot_kot_seq_a.eps', plot = plot_kot_seq_a, dpi = 300, width = 15, height = 4) 
-ggsave('./plot/plot_kot_seq_d.eps', plot = plot_kot_seq_d, dpi = 300, width = 15, height = 4) 
+# png files
+ggsave('./plot/png/plot_vel.png', plot = plot_vel, dpi = 600, width = 5, height = 4)
+ggsave('./plot/png/plot_vel_seq.png', plot = plot_vel_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_vel_seq_a.png', plot = plot_vel_seq_a, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_vel_seq_d.png', plot = plot_vel_seq_d, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_vel_acc_seq.png', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4) 
