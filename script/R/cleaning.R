@@ -47,7 +47,7 @@ df_all <- raw_data %>% dplyr::filter(Key_OnOff != 10)
 df_onset <- raw_data %>% dplyr::filter(Key_OnOff == 1)
 
 # Read ideal performance
-df_ideal <- read.csv('./ideal.csv')
+df_ideal <- read.csv('./csv/ideal.csv')
 
 # Find pitch errors and missing data
 ls_error <- list() # List - SubNr/BlockNr/TrialNr for pitch errors
@@ -104,18 +104,18 @@ data_analysis <- df_all %>% dplyr::filter(Error != 1)
 # Export csv files
 ####################################
 # Export a csv file for raw_data
-write.csv(raw_data, file = './raw_data.csv', row.names = F)
+write.csv(raw_data, file = './csv/raw_data.csv', row.names = F)
 # Create data only containing metronome sounds
 
 # Export a csv file for data_metro
 df_metro <- raw_data %>% dplyr::filter(Key_OnOff == 10)
-write.csv(df_metro, file = './data_metro.csv', row.names = F)
+write.csv(df_metro, file = './csv/data_metro.csv', row.names = F)
 
 # Export a csv file for data_error
-write.csv(df_error, file = './data_error.csv', row.names = F)
+write.csv(df_error, file = './csv/data_error.csv', row.names = F)
 
 # Export a csv file for data_analysis
-write.csv(data_analysis, file = './data_analysis.csv', row.names = F)
+write.csv(data_analysis, file = './csv/data_analysis.csv', row.names = F)
 
 # # Data for each participant
 # for (i in unique(data_analysis$SubNr)){
