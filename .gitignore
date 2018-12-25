@@ -3,3 +3,8 @@ script/R/data_analysis.csv
 script/R/data_error.csv
 script/R/data_metro.csv
 script/R/raw_data.csv
+script/R/.Rhistory
+script/R/plot_ioi.eps
+script/R/plot_ioi_seq.eps
+script/R/plot_ioi_seq_a.eps
+script/R/plot_ioi_seq_d.eps

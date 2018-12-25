@@ -40,10 +40,18 @@ ioi_seq[,4][ioi_seq$Interval == 24 | ioi_seq$Interval == 25 | ioi_seq$Interval =
 ioi <- cbind(ioi, as.data.frame(ioi[,3]))
 ioi_seq <- cbind(ioi_seq, as.data.frame(ioi_seq[,4]))
 
+# Change labels for pilot data
+levels(ioi$Condition) <- c('performing', 'teaching')
+levels(ioi$Skill)[levels(ioi$Skill) == 'tempoChange'] <- 'dynamics'
+levels(ioi_seq$Condition) <- c('performing', 'teaching')
+levels(ioi_seq$Skill)[levels(ioi_seq$Skill) == 'tempoChange'] <- 'dynamics'
+
 # Add a grouping name for pilot data
-ls_grouping <- list(Condition = c('Performing', 'Teaching'), Skill = c('articulation', 'tempoChange'))
+ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
 for (i in 1:length(ls_grouping$Condition)){
   for (j in 1:length(ls_grouping$Skill)){
+  ioi$Grouping[ioi$Condition == ls_grouping$Condition[i] & ioi$Skill == ls_grouping$Skill[j]] <-
+    paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
   ioi_seq$Grouping[ioi_seq$Condition == ls_grouping$Condition[i] & ioi_seq$Skill == ls_grouping$Skill[j]] <- 
     paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
   }
@@ -53,23 +61,17 @@ for (i in 1:length(ls_grouping$Condition)){
 # ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'tempoChange', dynamics))
 # for (i in 1:length(ls_grouping$Condition)){
 #   for (j in 1:length(ls_grouping$Skill)){
-#     ioi_seq$Grouping[ioi_seq$Condition == ls_grouping$Condition[i] & ioi_seq$Skill == ls_grouping$Skill[j]] <- 
+#     ioi$Grouping[ioi$Condition == ls_grouping$Condition[i] & ioi$Skill == ls_grouping$Skill[j]] <-
+#       paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
+#     ioi_seq$Grouping[ioi_seq$Condition == ls_grouping$Condition[i] & ioi_seq$Skill == ls_grouping$Skill[j]] <-
 #       paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
 #   }
 # }
 
-# Change labels for pilot data
-ioi$Grouping[ioi$Condition == 'Performing' & ioi$Skill == 'articulation'] <- 'Performing-articulation'
-ioi$Grouping[ioi$Condition == 'Performing' & ioi$Skill == 'tempoChange'] <- 'Performing-dynamics'
-ioi$Grouping[ioi$Condition == 'Teaching' & ioi$Skill == 'articulation'] <- 'Teaching-articulation'
-ioi$Grouping[ioi$Condition == 'Teaching' & ioi$Skill == 'tempoChange'] <- 'Teaching-dynamics'
-ioi_seq$Grouping[ioi_seq$Grouping == 'Performing-tempoChange'] <- 'Performing-dynamics'
-ioi_seq$Grouping[ioi_seq$Grouping == 'Teaching-tempoChange'] <- 'Teaching-dynamics'
-
 ####################################
 # IOIs plots
 ####################################
-plot_ioi <- ggplot(data = ioi, aes(x = Condition, y = mean, fill = Skill)) +
+plot_ioi <- ggplot(data = ioi, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
@@ -86,8 +88,32 @@ plot_ioi_seq <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Group
   labs(x = 'Interval', y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
   theme_classic()
 
+plot_ioi_seq_a <- ggplot(data = subset(ioi_seq, ioi_seq$Skill == 'articulation'), aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 188, linetype = 'dashed') + # Tempo
+  geom_hline(data = subset(ioi, ioi$Skill == 'articulation'), aes(yintercept = mean, colour = Grouping), linetype = 'dashed') + # Mean IOI for each grouping
+  annotate('text', 0, 188, label = 'Tempo (80bpm)', vjust = -1) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
+plot_ioi_seq_d <- ggplot(data = subset(ioi_seq, ioi_seq$Skill == 'dynamics'), aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 188, linetype = 'dashed') + # Tempo
+  geom_hline(data = subset(ioi, ioi$Skill == 'dynamics'), aes(yintercept = mean, colour = Grouping), linetype = 'dashed') + # Mean IOI for each grouping
+  annotate('text', 0, 188, label = 'Tempo (80bpm)', vjust = -1) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
 ggsave('plot_ioi.eps', plot = plot_ioi, dpi = 300, width = 5, height = 4)
-ggsave('plot_ioi_seq.eps', plot = plot_ioi_seq, dpi = 300, width = 15, height = 4)  
+ggsave('plot_ioi_seq.eps', plot = plot_ioi_seq, dpi = 300, width = 15, height = 4)
+ggsave('plot_ioi_seq_a.eps', plot = plot_ioi_seq_a, dpi = 300, width = 15, height = 4)
+ggsave('plot_ioi_seq_d.eps', plot = plot_ioi_seq_d, dpi = 300, width = 15, height = 4)
 
 ####################################
 # Velocity
