@@ -15,7 +15,7 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 ####################################
 ### Reading and formatting data
 ####################################
-df <- read.csv('data_analysis.csv', header = T, sep = ",", dec = '.')
+df <- read.csv('./csv/data_analysis.csv', header = T, sep = ",", dec = '.')
 
 ####################################
 ### Interonset intervals
@@ -117,10 +117,10 @@ plot_ioi_seq_d <- ggplot(data = subset(ioi_seq, ioi_seq$Skill == 'dynamics'), ae
   theme_classic()
 
 # Save plots
-ggsave('plot_ioi.eps', plot = plot_ioi, dpi = 300, width = 5, height = 4)
-ggsave('plot_ioi_seq.eps', plot = plot_ioi_seq, dpi = 300, width = 15, height = 4)
-ggsave('plot_ioi_seq_a.eps', plot = plot_ioi_seq_a, dpi = 300, width = 15, height = 4)
-ggsave('plot_ioi_seq_d.eps', plot = plot_ioi_seq_d, dpi = 300, width = 15, height = 4)
+ggsave('./plot/plot_ioi.eps', plot = plot_ioi, dpi = 300, width = 5, height = 4)
+ggsave('./plot/plot_ioi_seq.eps', plot = plot_ioi_seq, dpi = 300, width = 15, height = 4)
+ggsave('./plot/plot_ioi_seq_a.eps', plot = plot_ioi_seq_a, dpi = 300, width = 15, height = 4)
+ggsave('./plot/plot_ioi_seq_d.eps', plot = plot_ioi_seq_d, dpi = 300, width = 15, height = 4)
 
 ####################################
 ### Velocity
@@ -255,11 +255,11 @@ plot_vel_acc_seq <- ggplot(data = vel_acc_seq, aes(x = Interval, y = mean, group
   labs(x = 'Interval', y = "Acceleration") + scale_x_continuous(breaks=seq(1,50,1)) +
   theme_classic()
 
-ggsave('plot_vel.eps', plot = plot_vel, dpi = 300, width = 5, height = 4)
-ggsave('plot_vel_seq.eps', plot = plot_vel_seq, dpi = 300, width = 15, height = 4)
-ggsave('plot_vel_seq_a.eps', plot = plot_vel_seq_a, dpi = 300, width = 15, height = 4)
-ggsave('plot_vel_seq_d.eps', plot = plot_vel_seq_d, dpi = 300, width = 15, height = 4)
-ggsave('plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 300, width = 15, height = 4) 
+ggsave('./plot/plot_vel.eps', plot = plot_vel, dpi = 300, width = 5, height = 4)
+ggsave('./plot/plot_vel_seq.eps', plot = plot_vel_seq, dpi = 300, width = 15, height = 4)
+ggsave('./plot/plot_vel_seq_a.eps', plot = plot_vel_seq_a, dpi = 300, width = 15, height = 4)
+ggsave('./plot/plot_vel_seq_d.eps', plot = plot_vel_seq_d, dpi = 300, width = 15, height = 4)
+ggsave('./plot/plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 300, width = 15, height = 4) 
 
 ####################################
 ### Key Overlap Time - articulation
@@ -363,14 +363,14 @@ plot_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
   labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(-70, 25)) + 
   theme_classic()
 
-plot_legato <- ggplot(data = legato, aes(x = Skill, y = mean, fill = Condition)) +
+plot_kot_leg <- ggplot(data = legato, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
   labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 35)) + 
   theme_classic()
 
-plot_staccato <- ggplot(data = staccato, aes(x = Skill, y = mean, fill = Condition)) +
+plot_kot_sta <- ggplot(data = staccato, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
@@ -401,9 +401,9 @@ plot_kot_seq_d <- ggplot(data = subset(kot_seq, kot_seq$Skill == 'dynamics'), ae
   labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
   theme_classic()
 
-ggsave('plot_kot.eps', plot = plot_kot, dpi = 300, width = 5, height = 4)
-ggsave('plot_legato.eps', plot = plot_legato, dpi = 300, width = 5, height = 4)
-ggsave('plot_staccato.eps', plot = plot_staccato, dpi = 300, width = 5, height = 4)
-ggsave('plot_kot_seq.eps', plot = plot_kot_seq, dpi = 300, width = 15, height = 4)
-ggsave('plot_kot_seq_a.eps', plot = plot_kot_seq_a, dpi = 300, width = 15, height = 4) 
-ggsave('plot_kot_seq_d.eps', plot = plot_kot_seq_d, dpi = 300, width = 15, height = 4) 
+ggsave('./plot/plot_kot.eps', plot = plot_kot, dpi = 300, width = 5, height = 4)
+ggsave('./plot/plot_kot_leg.eps', plot = plot_kot_leg, dpi = 300, width = 5, height = 4)
+ggsave('./plot/plot_kot_sta.eps', plot = plot_kot_sta, dpi = 300, width = 5, height = 4)
+ggsave('./plot/plot_kot_seq.eps', plot = plot_kot_seq, dpi = 300, width = 15, height = 4)
+ggsave('./plot/plot_kot_seq_a.eps', plot = plot_kot_seq_a, dpi = 300, width = 15, height = 4) 
+ggsave('./plot/plot_kot_seq_d.eps', plot = plot_kot_seq_d, dpi = 300, width = 15, height = 4) 
