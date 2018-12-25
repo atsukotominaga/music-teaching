@@ -1,5 +1,7 @@
 script/R/data/
 script/R/plot/
 script/R/csv/
+script/R/.Rhistory
+script/R/.DS_Store
 .DS_Store
 .Rhistory
