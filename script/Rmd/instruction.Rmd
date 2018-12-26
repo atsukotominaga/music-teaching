@@ -13,7 +13,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, fig.pos = 'h', fig.align = 'center')
+knitr::opts_chunk$set(echo = F, fig.align = 'center')
 # Install and load packages
 if (!require("rmarkdown")) {install.packages("rmarkdown"); require("rmarkdown")}
 ```
@@ -24,10 +24,6 @@ body{
   font-family: Helvetica;
   font-size: 14pt;
 }
-<!-- /* Headers */ -->
-<!-- h1,h2,h3,h4,h5,h6{ -->
-<!--   font-size: 24pt; -->
-<!-- } -->
 </style>
 
 ## PARTICIPANT RECRUITMENT:
@@ -40,23 +36,21 @@ body{
 2. Connect twp headphones to the audio interface.
 3. Connect the piano to the audio interface.
 4. Turn on the piano, the audio interface and the screen in front of the piano.
-5. Open “Focusrite Control” app ![](focusriteControl.jpg){ width=5% } and click “Load from device”.
+5. Open “Focusrite Control” app ![](./image/focusriteControl.jpg){ width=5% } and click “Load from device”.
 
-![](01.png){ width=50% }
-![](02.png){ width=80% }
+![](./image/01.png){ width=50% }
+![](./image/02.png){ width=80% }
 
 6. Go to “Device Settings” and click “LINE” for Analogue 1.
 
-![](03.png){ width=80% }
+![](./image/03.png){ width=80% }
 
 If you don’t see the images above, go to File >> Preset >> select “Analogue + Digital”.
 Adjust the volume of the headphone so that it sounds naturally.
 
-\pagebreak
-
 - Max
 
-1. Go to Desktop >> Atsuko >> ExpertPiano >> open the “mainPatch.maxpat” and the “imageDisplay.maxpat”.
+1. Go to Desktop >> Atsuko >> expertpiano >> open the “mainPatch.maxpat” and the “imageDisplay.maxpat”.
 2. Move the window of the “imageDisplay.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode.
 3. Read the instruction for the “mainPatch.maxpat" below.
     + Start a trial with the space key.
@@ -66,15 +60,13 @@ Adjust the volume of the headphone so that it sounds naturally.
     + The yellow patcher shows the name of the current file.
     + The pink patcher (hidden) reads the condition of the current participant.
 
-![](mainPatch_screen.png)
+![](./image/mainPatch_screen.png)
 
 4. Press the "Metro" button on the blue patcher to make sure the sound of a metronome comes from the headphone, not from the computer speaker.
 5. Also check whether the piano sounds come from the headphone and MIDI inputs are correctly responded on the green patcher (Pitch and Velocity should change according to key presses).
 6. If the sound of the metronome and the piano does not come from the computer speaker, go to System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”.
 7. Click the “inst_g1” button to show a general instruction on the “imageDisplay.maxpat”.
 8. Enter SubNr for the current participant.
-
-\pagebreak
 
 ## WHEN PARTICIPANT ARRIVES:
 
@@ -95,11 +87,11 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 **[ Click “inst_g1” ]**
 
-![](inst_g1.png){ width=80% }
+![](./image/inst_g1.png){ width=80% }
 
 **[ Click “stim_n” ]**
 
-![](stim_n.png){ width=80% }
+![](./image/stim_n.png){ width=80% }
 
 **[ Click “Metro” ]**
 
@@ -109,7 +101,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 **[ Click "inst_g2" ]**
 
-![](inst_g2.png){ width=80% }
+![](./image/inst_g2.png){ width=80% }
 
 **[ Check whether he or she can produce the sound without pitch errors twice consecutively]**
 
@@ -130,7 +122,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 **[ Click 1st Stimulus ]**
 **[ Explain the musical notation]**
 
-![](stim_a.png){ width=80% }
+![](./image/stim_a.png){ width=80% }
 
 **[ Ask the participant to play the piece with the expressions 5 times ]**
 
@@ -138,7 +130,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 **[ Click “inst_t” ]**
 
-![](inst_t.png){ width=80% }
+![](./image/inst_t.png){ width=80% }
 
 **[ 1 - 8 trials ]**
 
@@ -149,7 +141,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 **[ Click 2nd Stimuli ]**
 **[ Explain the musical notation]**
 
-![](stim_d.png){ width=80% }
+![](./image/stim_d.png){ width=80% }
 
 **[ Ask the participant to play the piece with the expression 5 times ]**
 
@@ -166,7 +158,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 **[ Click 3rd Stimulus ]**
 **[ Explain the musical notation]**
 
-![](stim_t.png){ width=80% }
+![](./image/stim_t.png){ width=80% }
 
 **[ Ask the participant to play the piece with the expression 5 times ]**
 
@@ -192,7 +184,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 **[ Click “inst_p” ]**
 
-![](inst_p.png){ width=80% }
+![](./image/inst_p.png){ width=80% }
 
 **[ 1 - 8 trials ]**
 
