@@ -1,17 +1,15 @@
 ---
 output:
   html_document: default
-  pdf_document: default
-  word_document: default
 ---
 
 ---
 title: "Instruction"
 author: "Atsuko Tominaga"
-date: "03/12/2018"
+date: "26/12/2018"
 output:
-  pdf_document:
-fontsize: 12pt
+  html_document:
+    css: style.css
 ---
 
 ```{r setup, include=FALSE}
@@ -19,6 +17,18 @@ knitr::opts_chunk$set(echo = F, fig.pos = 'h', fig.align = 'center')
 # Install and load packages
 if (!require("rmarkdown")) {install.packages("rmarkdown"); require("rmarkdown")}
 ```
+
+<style type="text/css">
+/* Whole document: */
+body{
+  font-family: Helvetica;
+  font-size: 14pt;
+}
+<!-- /* Headers */ -->
+<!-- h1,h2,h3,h4,h5,h6{ -->
+<!--   font-size: 24pt; -->
+<!-- } -->
+</style>
 
 ## PARTICIPANT RECRUITMENT:
 - More than 10 years experience to play the piano
@@ -32,18 +42,12 @@ if (!require("rmarkdown")) {install.packages("rmarkdown"); require("rmarkdown")}
 4. Turn on the piano, the audio interface and the screen in front of the piano.
 5. Open “Focusrite Control” app ![](focusriteControl.jpg){ width=5% } and click “Load from device”.
 
-```{r 01, out.width = '50%'}
-knitr::include_graphics("01.png")
-```
-```{r 02, out.width = '80%'}
-knitr::include_graphics("02.png")
-```
+![](01.png){ width=50% }
+![](02.png){ width=80% }
 
 6. Go to “Device Settings” and click “LINE” for Analogue 1.
 
-```{r 03, out.width = '80%'}
-knitr::include_graphics("03.png")
-``` 
+![](03.png){ width=80% }
 
 If you don’t see the images above, go to File >> Preset >> select “Analogue + Digital”.
 Adjust the volume of the headphone so that it sounds naturally.
@@ -62,9 +66,7 @@ Adjust the volume of the headphone so that it sounds naturally.
     + The yellow patcher shows the name of the current file.
     + The pink patcher (hidden) reads the condition of the current participant.
 
-```{r mainPatch, out.width = '100%'}
-knitr::include_graphics("mainPatch_screen.png")
-``` 
+![](mainPatch_screen.png)
 
 4. Press the "Metro" button on the blue patcher to make sure the sound of a metronome comes from the headphone, not from the computer speaker.
 5. Also check whether the piano sounds come from the headphone and MIDI inputs are correctly responded on the green patcher (Pitch and Velocity should change according to key presses).
@@ -93,15 +95,11 @@ knitr::include_graphics("mainPatch_screen.png")
 
 **[ Click “inst_g1” ]**
 
-```{r inst_g1, out.width = '80%'}
-knitr::include_graphics("inst_g1.png")
-``` 
+![](inst_g1.png){ width=80% }
 
 **[ Click “stim_n” ]**
 
-```{r stim_n, out.width = '80%'}
-knitr::include_graphics("stim_n.png")
-``` 
+![](stim_n.png){ width=80% }
 
 **[ Click “Metro” ]**
 
@@ -111,9 +109,7 @@ knitr::include_graphics("stim_n.png")
 
 **[ Click "inst_g2" ]**
 
-```{r inst_g2, out.width = '80%'}
-knitr::include_graphics("inst_g2.png")
-``` 
+![](inst_g2.png){ width=80% }
 
 **[ Check whether he or she can produce the sound without pitch errors twice consecutively]**
 
@@ -127,16 +123,14 @@ knitr::include_graphics("inst_g2.png")
 - Please see the order of the stimuli on the blue patcher.
 
 #### 1) Teaching condition
-##### 1st Stimulus
+> 1st Stimulus
 
 *You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and perform the piece 5 times according to the notation.*
 
 **[ Click 1st Stimulus ]**
 **[ Explain the musical notation]**
 
-```{r stim_a, out.width = '80%', fig.cap = 'Articulation'}
-knitr::include_graphics("stim_a.png")
-``` 
+![](stim_a.png){ width=80% }
 
 **[ Ask the participant to play the piece with the expressions 5 times ]**
 
@@ -144,22 +138,18 @@ knitr::include_graphics("stim_a.png")
 
 **[ Click “inst_t” ]**
 
-```{r inst_t, out.width = '80%'}
-knitr::include_graphics("inst_t.png")
-``` 
+![](inst_t.png){ width=80% }
 
 **[ 1 - 8 trials ]**
 
-##### 2nd Stimulus
+> 2nd Stimulus
 
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation and perform the piece 5 times according to the notation.*
 
 **[ Click 2nd Stimuli ]**
 **[ Explain the musical notation]**
 
-```{r stim_d, out.width = '80%', fig.cap = 'Dynamics'}
-knitr::include_graphics("stim_d.png")
-``` 
+![](stim_d.png){ width=80% }
 
 **[ Ask the participant to play the piece with the expression 5 times ]**
 
@@ -169,16 +159,14 @@ knitr::include_graphics("stim_d.png")
 
 **[ 1 - 8 trials ]**
 
-#####  3rd Stimulus
+> 3rd Stimulus
 
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation and perform the piece 5 times according to the notation.*
 
 **[ Click 3rd Stimulus ]**
 **[ Explain the musical notation]**
 
-```{r stim_t, out.width = '80%', fig.cap = 'Tempo Change'}
-knitr::include_graphics("stim_t.png")
-``` 
+![](stim_t.png){ width=80% }
 
 **[ Ask the participant to play the piece with the expression 5 times ]**
 
@@ -191,7 +179,7 @@ knitr::include_graphics("stim_t.png")
 *Thank you. Next, you will perform the same piece again but in a different condition.*
 
 #### 2) Performing condition
-##### 1st Stimulus
+> 1st Stimulus
 
 *You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and perform the piece 5 times according to the notation.*
 
@@ -204,18 +192,15 @@ knitr::include_graphics("stim_t.png")
 
 **[ Click “inst_p” ]**
 
-```{r inst_p, out.width = '80%'}
-knitr::include_graphics("inst_p.png")
-``` 
+![](inst_p.png){ width=80% }
 
 **[ 1 - 8 trials ]**
 
-##### 2nd Stimulus
+> 2nd Stimulus
 
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation and perform the piece 5 times according to the notation.*
 
 **[ Click 2nd Stimulus ]**
-
 
 **[ Explain the musical notation]**
 
@@ -227,7 +212,7 @@ knitr::include_graphics("inst_p.png")
 
 **[ 1 - 8 trials ]**
 
-##### 3rd Stimulus
+> 3rd Stimulus
 
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation and perform the piece 5 times according to the notation.*
 
