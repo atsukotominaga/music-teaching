@@ -15,7 +15,7 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 ####################################
 ### Reading and formatting data
 ####################################
-df <- read.csv('data_analysis.csv', header = T, sep = ",", dec = '.')
+df <- read.csv('./csv/data_analysis.csv', header = T, sep = ",", dec = '.')
 
 ####################################
 ### Inter-Onset intervals - tempoChange
@@ -231,14 +231,14 @@ plot_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
   labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(-70, 25)) + 
   theme_classic()
 
-plot_legato <- ggplot(data = legato, aes(x = Skill, y = mean, fill = Condition)) +
+plot_kot_leg <- ggplot(data = legato, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
   labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 35)) + 
   theme_classic()
 
-plot_staccato <- ggplot(data = staccato, aes(x = Skill, y = mean, fill = Condition)) +
+plot_kot_sta <- ggplot(data = staccato, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
