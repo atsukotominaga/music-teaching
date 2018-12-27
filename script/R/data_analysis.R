@@ -4,7 +4,8 @@
 ####################################
 #  Documentation
 ####################################
-# Created: 25/12/2018
+# Created: 5/12/2018
+# Modified: 27/12/2018
 # This script aggregate and plot data.
 # GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
 
@@ -94,6 +95,17 @@ plot_ioi_seq <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Group
   labs(x = 'Interval', y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
   theme_classic()
 
+plot_ioi_seq_f <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 188, linetype = 'dashed') + # Tempo
+  facet_grid(Skill ~ .) +
+  annotate('text', 0, 188, label = 'Tempo (80bpm)', vjust = -1) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
 plot_ioi_seq_a <- ggplot(data = subset(ioi_seq, ioi_seq$Skill == 'articulation'), aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
   geom_line() +
   geom_point() +
@@ -120,12 +132,14 @@ plot_ioi_seq_d <- ggplot(data = subset(ioi_seq, ioi_seq$Skill == 'dynamics'), ae
 # eps files
 ggsave('./plot/eps/plot_ioi.eps', plot = plot_ioi, dpi = 600, width = 5, height = 4)
 ggsave('./plot/eps/plot_ioi_seq.eps', plot = plot_ioi_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_ioi_seq_f.eps', plot = plot_ioi_seq_f, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_ioi_seq_a.eps', plot = plot_ioi_seq_a, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_ioi_seq_d.eps', plot = plot_ioi_seq_d, dpi = 600, width = 15, height = 4)
 
 # png files
 ggsave('./plot/png/plot_ioi.png', plot = plot_ioi, dpi = 600, width = 5, height = 4)
 ggsave('./plot/png/plot_ioi_seq.png', plot = plot_ioi_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_ioi_seq_f.png', plot = plot_ioi_seq_f, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_ioi_seq_a.png', plot = plot_ioi_seq_a, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_ioi_seq_d.png', plot = plot_ioi_seq_d, dpi = 600, width = 15, height = 4)
 
@@ -185,11 +199,11 @@ levels(kot$Condition) <- c('performing', 'teaching')
 levels(kot$Skill)[levels(kot$Skill) == 'tempoChange'] <- 'dynamics'
 
 # Average for legato
-legato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Legato'),
+kot_leg <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Legato'),
                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
 # Average for staccato
-staccato <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Staccato'),
+kot_sta <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Staccato'),
                       FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
 # Average for each note
@@ -199,8 +213,8 @@ kot_seq[,4][kot_seq$Interval == 24 | kot_seq$Interval == 25 | kot_seq$Interval =
 
 # Descriptive stats
 kot <- cbind(kot, as.data.frame(kot[,3]))
-legato <- cbind(legato, as.data.frame(legato[,3]))
-staccato <- cbind(staccato, as.data.frame(staccato[,3]))
+kot_leg <- cbind(kot_leg, as.data.frame(kot_leg[,3]))
+kot_sta <- cbind(kot_sta, as.data.frame(kot_sta[,3]))
 kot_seq <- cbind(kot_seq, as.data.frame(kot_seq[,4]))
 
 # Add a grouping name for pilot data
@@ -231,14 +245,14 @@ plot_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
   labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(-70, 25)) + 
   theme_classic()
 
-plot_kot_leg <- ggplot(data = legato, aes(x = Skill, y = mean, fill = Condition)) +
+plot_kot_leg <- ggplot(data = kot_leg, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
   labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 35)) + 
   theme_classic()
 
-plot_kot_sta <- ggplot(data = staccato, aes(x = Skill, y = mean, fill = Condition)) +
+plot_kot_sta <- ggplot(data = kot_sta, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
@@ -248,6 +262,15 @@ plot_kot_sta <- ggplot(data = staccato, aes(x = Skill, y = mean, fill = Conditio
 plot_kot_seq <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
   geom_line() +
   geom_point() +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
+plot_kot_seq_f <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_grid(Skill ~ .) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
                 position = position_dodge(.05)) + 
   labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,50,1)) +
@@ -275,6 +298,7 @@ ggsave('./plot/eps/plot_kot.eps', plot = plot_kot, dpi = 600, width = 5, height 
 ggsave('./plot/eps/plot_kot_leg.eps', plot = plot_kot_leg, dpi = 600, width = 5, height = 4)
 ggsave('./plot/eps/plot_kot_sta.eps', plot = plot_kot_sta, dpi = 600, width = 5, height = 4)
 ggsave('./plot/eps/plot_kot_seq.eps', plot = plot_kot_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_kot_seq_f.eps', plot = plot_kot_seq_f, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_kot_seq_a.eps', plot = plot_kot_seq_a, dpi = 600, width = 15, height = 4) 
 ggsave('./plot/eps/plot_kot_seq_d.eps', plot = plot_kot_seq_d, dpi = 600, width = 15, height = 4) 
 
@@ -283,6 +307,7 @@ ggsave('./plot/png/plot_kot.png', plot = plot_kot, dpi = 600, width = 5, height 
 ggsave('./plot/png/plot_kot_leg.png', plot = plot_kot_leg, dpi = 600, width = 5, height = 4)
 ggsave('./plot/png/plot_kot_sta.png', plot = plot_kot_sta, dpi = 600, width = 5, height = 4)
 ggsave('./plot/png/plot_kot_seq.png', plot = plot_kot_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_kot_seq_f.png', plot = plot_kot_seq_f, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_kot_seq_a.png', plot = plot_kot_seq_a, dpi = 600, width = 15, height = 4) 
 ggsave('./plot/png/plot_kot_seq_d.png', plot = plot_kot_seq_d, dpi = 600, width = 15, height = 4) 
 
@@ -327,7 +352,7 @@ vel_seq <- aggregate(Velocity~Note*Condition*Skill, data = df_vel,
 vel_seq[,4][vel_seq$Note == 25 | vel_seq$Note == 26 | vel_seq$Note == 51] <- NA
 vel_acc_seq <- aggregate(Acc~Interval*Condition*Skill, data = df_vel_acc, 
                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-vel_acc_seq[,4][vel_acc_seq$Note == 24 | vel_acc_seq$Note == 25 | vel_acc_seq$Note == 26 | vel_acc_seq$Note == 50] <- NA
+vel_acc_seq[,4][vel_acc_seq$Interval == 24 | vel_acc_seq$Interval == 25 | vel_acc_seq$Interval == 26 | vel_acc_seq$Interval == 50] <- NA
 
 # Aggregated data
 vel <- cbind(vel, as.data.frame(vel[,3]))
@@ -346,35 +371,6 @@ for (i in 1:length(ls_grouping$Condition)){
   }
 }
 
-# Max - Min
-# Define apriori max and min
-ls_apriori <- list(c(1, 5), c(9, 13), c(17, 21), c(27, 31), c(35, 39), c(43, 47))
-
-# Assign apriori max and min
-vel_seq$ApriMaxMin <- NA
-for (i in 1:length(ls_apriori)){
-  # Assign min
-  vel_seq$ApriMaxMin[vel_seq$Note == ls_apriori[[i]][1]] <- 'Min'
-  # Assign max
-  vel_seq$ApriMaxMin[vel_seq$Note == ls_apriori[[i]][2]] <- 'Max'
-}
-
-# Assign actual max and min
-ls_range <- list(c(1, 8), c(9, 16), c(17, 24), c(27, 34), c(35, 42), c(43, 50))
-
-# Find actual min and max
-vel_seq$DataMaxMin <- NA
-for (group in unique(vel_seq$Grouping)){
-  for (range in 1:length(ls_range)){
-    min <- min(vel_seq$mean[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] & vel_seq$Note <= ls_range[[range]][2]])
-    max <- max(vel_seq$mean[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] & vel_seq$Note <= ls_range[[range]][2]])
-    vel_seq$DataMaxMin[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] 
-                       & vel_seq$Note <= ls_range[[range]][2] & vel_seq$mean == min] <- 'Min'
-    vel_seq$DataMaxMin[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] 
-                       & vel_seq$Note <= ls_range[[range]][2] & vel_seq$mean == max] <- 'Max'
-  }
-}
-
 ####################################
 ### Velocity plots
 ####################################
@@ -389,7 +385,16 @@ plot_vel_seq <- ggplot(data = vel_seq, aes(x = Note, y = mean, group = Grouping,
   geom_point() +
   geom_hline(data = vel, aes(yintercept = mean, colour = Grouping), linetype = 'dashed') + # Mean Velocity for each grouping
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
-                position=position_dodge(0.05)) + 
+                position = position_dodge(0.05)) + 
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,51,1)) +
+  theme_classic()
+
+plot_vel_seq_f <- ggplot(data = vel_seq, aes(x = Note, y = mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_grid(Skill ~ .) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(0.05)) + 
   labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,51,1)) +
   theme_classic()
 
@@ -419,17 +424,81 @@ plot_vel_acc_seq <- ggplot(data = vel_acc_seq, aes(x = Interval, y = mean, group
   labs(x = 'Interval', y = "Acceleration") + scale_x_continuous(breaks=seq(1,50,1)) +
   theme_classic()
 
+plot_vel_acc_seq_f <- ggplot(data = vel_acc_seq, aes(x = Interval, y = mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_grid(Skill ~ .) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = 'Interval', y = "Acceleration") + scale_x_continuous(breaks=seq(1,50,1)) +
+  theme_classic()
+
 # Save plots
 # eps files
 ggsave('./plot/eps/plot_vel.eps', plot = plot_vel, dpi = 600, width = 5, height = 4)
 ggsave('./plot/eps/plot_vel_seq.eps', plot = plot_vel_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_vel_seq_f.eps', plot = plot_vel_seq_f, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_vel_seq_a.eps', plot = plot_vel_seq_a, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_vel_seq_d.eps', plot = plot_vel_seq_d, dpi = 600, width = 15, height = 4)
-ggsave('./plot/eps/plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4) 
+ggsave('./plot/eps/plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_vel_acc_seq_f.eps', plot = plot_vel_acc_seq_f, dpi = 600, width = 15, height = 4) 
 
 # png files
 ggsave('./plot/png/plot_vel.png', plot = plot_vel, dpi = 600, width = 5, height = 4)
 ggsave('./plot/png/plot_vel_seq.png', plot = plot_vel_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_vel_seq_f.png', plot = plot_vel_seq_f, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_vel_seq_a.png', plot = plot_vel_seq_a, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_vel_seq_d.png', plot = plot_vel_seq_d, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_vel_acc_seq.png', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4) 
+ggsave('./plot/png/plot_vel_acc_seq_f.png', plot = plot_vel_acc_seq_f, dpi = 600, width = 15, height = 4) 
+
+####################################
+### Velocity Max-Min - dynamics
+####################################
+# Max - Min
+# Define apriori max and min
+ls_apriori <- list(c(1, 5), c(9, 13), c(17, 21), c(27, 31), c(35, 39), c(43, 47))
+
+# Assign apriori max and min
+vel_seq$ApriMaxMin <- NA
+for (i in 1:length(ls_apriori)){
+  # Assign min
+  vel_seq$ApriMaxMin[vel_seq$Note == ls_apriori[[i]][1]] <- 'Min'
+  # Assign max
+  vel_seq$ApriMaxMin[vel_seq$Note == ls_apriori[[i]][2]] <- 'Max'
+}
+
+# Assign actual max and min
+ls_range <- list(c(1, 8), c(9, 16), c(17, 24), c(27, 34), c(35, 42), c(43, 50))
+
+# Find actual min and max
+vel_seq$DataMaxMin <- NA
+for (group in unique(vel_seq$Grouping)){
+  for (range in 1:length(ls_range)){
+    min <- min(vel_seq$mean[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] & vel_seq$Note <= ls_range[[range]][2]])
+    max <- max(vel_seq$mean[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] & vel_seq$Note <= ls_range[[range]][2]])
+    vel_seq$DataMaxMin[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] 
+                       & vel_seq$Note <= ls_range[[range]][2] & vel_seq$mean == min] <- 'Min'
+    vel_seq$DataMaxMin[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] 
+                       & vel_seq$Note <= ls_range[[range]][2] & vel_seq$mean == max] <- 'Max'
+  }
+}
+
+maxmin_apri <- subset(vel_seq, vel_seq$ApriMaxMin == 'Min' | vel_seq$ApriMaxMin == 'Max')
+maxmin_data <- subset(vel_seq, vel_seq$DataMaxMin == 'Min' | vel_seq$DataMaxMin == 'Max')
+
+####################################
+### Velocity Max-Min plots
+####################################
+plot_maxmin_data <- ggplot(data = subset(maxmin_data, maxmin_data$Skill == 'dynamics'), 
+                        aes(x = Note, y = mean, group = DataMaxMin, shape = DataMaxMin, colour = Condition)) +
+  geom_point(size = 3) +
+  geom_vline(xintercept = c(unlist(lapply(ls_apriori, `[[`, 1))), linetype = 'dotted', colour = 'grey') + # Apriori Max
+  geom_vline(xintercept = c(unlist(lapply(ls_apriori, `[[`, 2))), linetype = 'longdash', colour = 'grey') + # Apriori Max
+  facet_grid(Skill ~ .) +
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,51,1)) +
+  theme_classic()
+plot_maxmin_data
+
+ggsave('./plot/eps/plot_maxmin_data.eps', plot = plot_maxmin_data, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_maxmin_data.png', plot = plot_maxmin_data, dpi = 600, width = 15, height = 4)
