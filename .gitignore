@@ -1,7 +1,11 @@
+# R
 script/R/data/
 script/R/plot/
 script/R/csv/
 script/R/.Rhistory
 script/R/.DS_Store
+
+# python Jupyter notebook
+script/python/.ipynb_checkpoints/image_generator-checkpoint.ipynb
 .DS_Store
 .Rhistory
