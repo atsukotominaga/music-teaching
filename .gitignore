@@ -1,3 +1,6 @@
+#General
+.DS_Store
+
 # R
 script/R/data/
 script/R/plot/
@@ -7,5 +10,3 @@ script/R/.DS_Store
 
 # python Jupyter notebook
 script/python/.ipynb_checkpoints/image_generator-checkpoint.ipynb
-.DS_Store
-.Rhistory
