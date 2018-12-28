@@ -6,26 +6,22 @@ melody = {
     \time 4/4
     
     \override TextSpanner.bound-details.left.text = "accel."
-    c16 \startTextSpan d16 e16 f16 \stopTextSpan
+    c16 \startTextSpan d16 e16 f16
+    g16 f16 e16 d16 \stopTextSpan
     \override TextSpanner.bound-details.left.text = "rit."
-    g16 \startTextSpan f16 e16 d16 \stopTextSpan
-    \override TextSpanner.bound-details.left.text = "accel."
-    c16 \startTextSpan d16 e16 f16 \stopTextSpan
-    \override TextSpanner.bound-details.left.text = "rit."
-    g16 \startTextSpan f16 e16 d16 \stopTextSpan
+    c16 \startTextSpan d16 e16 f16
+    g16 f16 e16 d16 \stopTextSpan
     \override TextSpanner.bound-details.left.text = "accel."
     c16 \startTextSpan d16 e16 f16 \stopTextSpan
     \override TextSpanner.bound-details.left.text = "rit."
     g16 \startTextSpan f16 e16 d16 \stopTextSpan
     c4 g'4
     \override TextSpanner.bound-details.left.text = "accel."
-    c,16 \startTextSpan d16 e16 f16 \stopTextSpan
+    c,16 \startTextSpan d16 e16 f16
+    g16 f16 e16 d16 \stopTextSpan
     \override TextSpanner.bound-details.left.text = "rit."
-    g16 \startTextSpan f16 e16 d16 \stopTextSpan
-    \override TextSpanner.bound-details.left.text = "accel."
-    c16 \startTextSpan d16 e16 f16 \stopTextSpan
-    \override TextSpanner.bound-details.left.text = "rit."
-    g16 \startTextSpan f16 e16 d16 \stopTextSpan
+    c16 \startTextSpan d16 e16 f16
+    g16 f16 e16 d16 \stopTextSpan
     \override TextSpanner.bound-details.left.text = "accel."
     c16 \startTextSpan d16 e16 f16 \stopTextSpan
     \override TextSpanner.bound-details.left.text = "rit."
