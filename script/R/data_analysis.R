@@ -5,7 +5,7 @@
 #  Documentation
 ####################################
 # Created: 5/12/2018
-# Modified: 27/12/2018
+# Modified: 30/12/2018
 # This script aggregate and plot data.
 # GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
 
@@ -371,6 +371,99 @@ for (i in 1:length(ls_grouping$Condition)){
   }
 }
 
+# Max - Min
+# Define apriori max and min
+ls_apriori <- list(c(1, 5), c(9, 13), c(17, 21), c(27, 31), c(35, 39), c(43, 47))
+
+# Assign apriori max and min
+vel_seq$ApriMaxMin <- NA
+for (i in 1:length(ls_apriori)){
+  # Assign min
+  vel_seq$ApriMaxMin[vel_seq$Note == ls_apriori[[i]][1]] <- 'Min'
+  # Assign max
+  vel_seq$ApriMaxMin[vel_seq$Note == ls_apriori[[i]][2]] <- 'Max'
+}
+
+# Assign actual max and min
+ls_range <- list(c(1, 8), c(9, 16), c(17, 24), c(27, 34), c(35, 42), c(43, 50))
+
+# Find actual min and max for aggregated data
+vel_seq$MaxMin <- NA
+for (group in unique(vel_seq$Grouping)){
+  for (range in 1:length(ls_range)){
+    min <- min(vel_seq$mean[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] & vel_seq$Note <= ls_range[[range]][2]])
+    max <- max(vel_seq$mean[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] & vel_seq$Note <= ls_range[[range]][2]])
+    vel_seq$MaxMin[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] 
+                   & vel_seq$Note <= ls_range[[range]][2] & vel_seq$mean == min] <- 'Min'
+    vel_seq$MaxMin[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] 
+                   & vel_seq$Note <= ls_range[[range]][2] & vel_seq$mean == max] <- 'Max'
+  }
+}
+
+# Calculate Diff (max-min)
+df_maxmin <- data.frame()
+df_vel$MaxMin <- NA
+for (i in unique(df_vel$SubNr)){
+  for (j in unique(df_vel$BlockNr[df_vel$SubNr == i])){
+    for (k in unique(df_vel$TrialNr[df_vel$SubNr == i & df_vel$BlockNr == j])){
+      for (range in 1:length(ls_range)){
+        min <- min(df_vel$Velocity[df_vel$SubNr == i & df_vel$BlockNr == j & df_vel$TrialNr == k &
+                                     df_vel$Note >= ls_range[[range]][1] & df_vel$Note <= ls_range[[range]][2]])
+        max <- max(df_vel$Velocity[df_vel$SubNr == i & df_vel$BlockNr == j & df_vel$TrialNr == k &
+                                     df_vel$Note >= ls_range[[range]][1] & df_vel$Note <= ls_range[[range]][2]])
+        # Assign Max and Min for each trial
+        df_vel$MaxMin[df_vel$SubNr == i & df_vel$BlockNr == j & df_vel$TrialNr == k &
+                        df_vel$Note >= ls_range[[range]][1] & df_vel$Note <= ls_range[[range]][2] &
+                        df_vel$Velocity == min] <- 'Min'
+        df_vel$MaxMin[df_vel$SubNr == i & df_vel$BlockNr == j & df_vel$TrialNr == k &
+                        df_vel$Note >= ls_range[[range]][1] & df_vel$Note <= ls_range[[range]][2] &
+                        df_vel$Velocity == max] <- 'Max'
+        ls_current <- list(SubNr = i, BlockNr = j, TrialNr = k, 
+                           Condition = unique(df_vel$Condition[df_vel$SubNr == i & df_vel$BlockNr == j & df_vel$TrialNr == k]),
+                           Skill = unique(df_vel$Skill[df_vel$SubNr == i & df_vel$BlockNr == j & df_vel$TrialNr == k]),
+                           Range = range, Diff = max-min)
+        df_maxmin <- rbind(df_maxmin, as.data.frame(ls_current))
+      }
+    }
+  }
+}
+
+# Aggregate data
+# Overall Max-Min average
+maxmin <- aggregate(Velocity~MaxMin*Condition*Skill, data = subset(df_vel, !(is.na(df_vel$MaxMin))), 
+                    FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+# Average for each Max-Min note
+maxmin_seq <- subset(vel_seq, !is.na(MaxMin))
+# Average Max-Min diff
+maxmin_diff <- aggregate(Diff~Condition*Skill, data = df_maxmin, 
+                         FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
+# Descriptive stats
+maxmin <- cbind(maxmin, as.data.frame(maxmin[,4]))
+maxmin_diff <- cbind(maxmin_diff, as.data.frame(maxmin_diff[,3]))
+
+# Add a grouping name for pilot data
+ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+for (i in 1:length(ls_grouping$Condition)){
+  for (j in 1:length(ls_grouping$Skill)){
+    maxmin$Grouping[maxmin$Condition == ls_grouping$Condition[i] & maxmin$Skill == ls_grouping$Skill[j]] <-
+      paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
+    maxmin_diff$Grouping[maxmin_diff$Condition == ls_grouping$Condition[i] & maxmin_diff$Skill == ls_grouping$Skill[j]] <- 
+      paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
+  }
+}
+
+# # Add a grouping name
+# ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'tempoChange', dynamics))
+# for (i in 1:length(ls_grouping$Condition)){
+#   for (j in 1:length(ls_grouping$Skill)){
+#     maxmin$Grouping[maxmin$Condition == ls_grouping$Condition[i] & maxmin$Skill == ls_grouping$Skill[j]] <-
+#       paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
+#     maxmin_diff$Grouping[maxmin_diff$Condition == ls_grouping$Condition[i] & maxmin_diff$Skill == ls_grouping$Skill[j]] <-
+#       paste(ls_grouping$Condition[i], '-', ls_grouping$Skill[j], sep = '')
+#   }
+# }
+
 ####################################
 ### Velocity plots
 ####################################
@@ -433,6 +526,33 @@ plot_vel_acc_seq_f <- ggplot(data = vel_acc_seq, aes(x = Interval, y = mean, gro
   labs(x = 'Interval', y = "Acceleration") + scale_x_continuous(breaks=seq(1,50,1)) +
   theme_classic()
 
+plot_maxmin <- ggplot(data = maxmin, aes(x = Skill, y = mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width = .2, position=position_dodge(.9)) + 
+  facet_grid(MaxMin ~ .) +
+  labs(y = "Velocity (0-127)") + coord_cartesian(ylim = c(20, 90)) + 
+  theme_classic()
+
+plot_maxmin_diff <- ggplot(data = maxmin_diff, aes(x = Skill, y = mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width = .2, position=position_dodge(.9)) + 
+  labs(y = "Max-Min velocity difference (0-127)") + coord_cartesian(ylim = c(0, 40)) + 
+  theme_classic()
+
+plot_maxmin_seq <- ggplot(data = subset(maxmin_seq), 
+                          aes(x = Note, y = mean, group = Condition, shape = MaxMin, colour = Condition)) +
+  geom_point(size = 3) +
+  geom_line() +
+  geom_vline(xintercept = c(unlist(lapply(ls_apriori, `[[`, 1))), linetype = 'dotted', colour = 'grey') + # Apriori Min
+  geom_vline(xintercept = c(unlist(lapply(ls_apriori, `[[`, 2))), linetype = 'longdash', colour = 'grey') + # Apriori Max
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
+                position = position_dodge(.05)) +
+  facet_grid(Skill ~ .) +
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,51,1)) +
+  theme_classic()
+
 # Save plots
 # eps files
 ggsave('./plot/eps/plot_vel.eps', plot = plot_vel, dpi = 600, width = 5, height = 4)
@@ -441,7 +561,10 @@ ggsave('./plot/eps/plot_vel_seq_f.eps', plot = plot_vel_seq_f, dpi = 600, width 
 ggsave('./plot/eps/plot_vel_seq_a.eps', plot = plot_vel_seq_a, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_vel_seq_d.eps', plot = plot_vel_seq_d, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4)
-ggsave('./plot/eps/plot_vel_acc_seq_f.eps', plot = plot_vel_acc_seq_f, dpi = 600, width = 15, height = 4) 
+ggsave('./plot/eps/plot_vel_acc_seq_f.eps', plot = plot_vel_acc_seq_f, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_maxmin.eps', plot = plot_maxmin, dpi = 600, width = 5, height = 4)
+ggsave('./plot/eps/plot_maxmin_seq.eps', plot = plot_maxmin_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_maxmin_diff.eps', plot = plot_maxmin_diff, dpi = 600, width = 5, height = 4)
 
 # png files
 ggsave('./plot/png/plot_vel.png', plot = plot_vel, dpi = 600, width = 5, height = 4)
@@ -451,54 +574,6 @@ ggsave('./plot/png/plot_vel_seq_a.png', plot = plot_vel_seq_a, dpi = 600, width 
 ggsave('./plot/png/plot_vel_seq_d.png', plot = plot_vel_seq_d, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_vel_acc_seq.png', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4) 
 ggsave('./plot/png/plot_vel_acc_seq_f.png', plot = plot_vel_acc_seq_f, dpi = 600, width = 15, height = 4) 
-
-####################################
-### Velocity Max-Min - dynamics
-####################################
-# Max - Min
-# Define apriori max and min
-ls_apriori <- list(c(1, 5), c(9, 13), c(17, 21), c(27, 31), c(35, 39), c(43, 47))
-
-# Assign apriori max and min
-vel_seq$ApriMaxMin <- NA
-for (i in 1:length(ls_apriori)){
-  # Assign min
-  vel_seq$ApriMaxMin[vel_seq$Note == ls_apriori[[i]][1]] <- 'Min'
-  # Assign max
-  vel_seq$ApriMaxMin[vel_seq$Note == ls_apriori[[i]][2]] <- 'Max'
-}
-
-# Assign actual max and min
-ls_range <- list(c(1, 8), c(9, 16), c(17, 24), c(27, 34), c(35, 42), c(43, 50))
-
-# Find actual min and max
-vel_seq$DataMaxMin <- NA
-for (group in unique(vel_seq$Grouping)){
-  for (range in 1:length(ls_range)){
-    min <- min(vel_seq$mean[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] & vel_seq$Note <= ls_range[[range]][2]])
-    max <- max(vel_seq$mean[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] & vel_seq$Note <= ls_range[[range]][2]])
-    vel_seq$DataMaxMin[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] 
-                       & vel_seq$Note <= ls_range[[range]][2] & vel_seq$mean == min] <- 'Min'
-    vel_seq$DataMaxMin[vel_seq$Grouping == group & vel_seq$Note >= ls_range[[range]][1] 
-                       & vel_seq$Note <= ls_range[[range]][2] & vel_seq$mean == max] <- 'Max'
-  }
-}
-
-maxmin_apri <- subset(vel_seq, vel_seq$ApriMaxMin == 'Min' | vel_seq$ApriMaxMin == 'Max')
-maxmin_data <- subset(vel_seq, vel_seq$DataMaxMin == 'Min' | vel_seq$DataMaxMin == 'Max')
-
-####################################
-### Velocity Max-Min plots
-####################################
-plot_maxmin_data <- ggplot(data = subset(maxmin_data, maxmin_data$Skill == 'dynamics'), 
-                        aes(x = Note, y = mean, group = DataMaxMin, shape = DataMaxMin, colour = Condition)) +
-  geom_point(size = 3) +
-  geom_vline(xintercept = c(unlist(lapply(ls_apriori, `[[`, 1))), linetype = 'dotted', colour = 'grey') + # Apriori Max
-  geom_vline(xintercept = c(unlist(lapply(ls_apriori, `[[`, 2))), linetype = 'longdash', colour = 'grey') + # Apriori Max
-  facet_grid(Skill ~ .) +
-  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,51,1)) +
-  theme_classic()
-plot_maxmin_data
-
-ggsave('./plot/eps/plot_maxmin_data.eps', plot = plot_maxmin_data, dpi = 600, width = 15, height = 4)
-ggsave('./plot/png/plot_maxmin_data.png', plot = plot_maxmin_data, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_maxmin.png', plot = plot_maxmin, dpi = 600, width = 5, height = 4)
+ggsave('./plot/eps/plot_maxmin_seq.png', plot = plot_maxmin_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/eps/plot_maxmin_diff.png', plot = plot_maxmin_diff, dpi = 600, width = 5, height = 4)
