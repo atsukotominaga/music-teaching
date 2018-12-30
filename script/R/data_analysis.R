@@ -318,6 +318,7 @@ ggsave('./plot/png/plot_kot_seq_d.png', plot = plot_kot_seq_d, dpi = 600, width 
 df_vel <- df %>% dplyr::filter(Key_OnOff == 1)
 df_vel$Acc <- diff(c(0, df_vel$Velocity))
 
+
 # Remove the first note for pilot data
 df_vel_acc <- data.frame()
 for (i in unique(df_vel$SubNr)){
@@ -574,6 +575,6 @@ ggsave('./plot/png/plot_vel_seq_a.png', plot = plot_vel_seq_a, dpi = 600, width 
 ggsave('./plot/png/plot_vel_seq_d.png', plot = plot_vel_seq_d, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_vel_acc_seq.png', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4) 
 ggsave('./plot/png/plot_vel_acc_seq_f.png', plot = plot_vel_acc_seq_f, dpi = 600, width = 15, height = 4) 
-ggsave('./plot/eps/plot_maxmin.png', plot = plot_maxmin, dpi = 600, width = 5, height = 4)
-ggsave('./plot/eps/plot_maxmin_seq.png', plot = plot_maxmin_seq, dpi = 600, width = 15, height = 4)
-ggsave('./plot/eps/plot_maxmin_diff.png', plot = plot_maxmin_diff, dpi = 600, width = 5, height = 4)
+ggsave('./plot/png/plot_maxmin.png', plot = plot_maxmin, dpi = 600, width = 5, height = 4)
+ggsave('./plot/png/plot_maxmin_seq.png', plot = plot_maxmin_seq, dpi = 600, width = 15, height = 4)
+ggsave('./plot/png/plot_maxmin_diff.png', plot = plot_maxmin_diff, dpi = 600, width = 5, height = 4)
