@@ -8,5 +8,8 @@ script/R/csv/
 script/R/.Rhistory
 script/R/.DS_Store
 
+# Max
+script/Max/data/
+
 # python Jupyter notebook
 script/python/.ipynb_checkpoints/image_generator-checkpoint.ipynb
