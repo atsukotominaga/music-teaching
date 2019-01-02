@@ -382,7 +382,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 117.5, 564.0, 621.5, 22.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/ExpertPiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
 				}
 
 			}
@@ -735,9 +735,9 @@
 					"numinlets" : 16,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 117.5, 415.0, 449.0, 22.0 ],
+					"patching_rect" : [ 117.5, 415.0, 447.0, 22.0 ],
 					"style" : "",
-					"text" : "combine ExpertPiano _ subNr _ block _ trialNr _ skill _ condition _ score _ time .txt"
+					"text" : "combine expertpiano _ subNr _ block _ trialNr _ skill _ condition _ score _ time .txt"
 				}
 
 			}
@@ -1460,8 +1460,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
