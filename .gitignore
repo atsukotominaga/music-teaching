@@ -12,4 +12,4 @@ script/R/.DS_Store
 script/Max/data/
 
 # python Jupyter notebook
-script/python/.ipynb_checkpoints/image_generator-checkpoint.ipynb
+script/jupyter/.ipynb_checkpoints/image_generator-checkpoint.ipynb
