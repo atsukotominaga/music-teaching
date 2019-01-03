@@ -148,7 +148,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 829.0, 694.0, 529.5, 35.0 ],
+					"patching_rect" : [ 829.0, 694.0, 529.5, 22.0 ],
 					"style" : ""
 				}
 
@@ -382,7 +382,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 117.5, 564.0, 621.5, 22.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
 				}
 
 			}
@@ -450,7 +450,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 117.5, 694.0, 529.5, 49.0 ],
+					"patching_rect" : [ 117.5, 694.0, 529.5, 22.0 ],
 					"style" : ""
 				}
 
