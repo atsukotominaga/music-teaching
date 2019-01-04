@@ -200,9 +200,9 @@
 					"numinlets" : 8,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 833.0, 415.0, 267.0, 22.0 ],
+					"patching_rect" : [ 833.0, 415.0, 311.0, 22.0 ],
 					"style" : "",
-					"text" : "combine recording _ subNr _ block _ trialNr .mid"
+					"text" : "combine recordingPractice _ subNr _ block _ trialNr .mid"
 				}
 
 			}
@@ -382,7 +382,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 117.5, 564.0, 621.5, 22.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
 				}
 
 			}
@@ -1460,8 +1460,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
