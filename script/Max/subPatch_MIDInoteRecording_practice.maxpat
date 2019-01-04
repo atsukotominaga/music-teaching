@@ -5,11 +5,11 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x64",
+			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 56.0, 1103.0, 960.0 ],
+		"rect" : [ 34.0, 79.0, 1612.0, 857.0 ],
 		"bgcolor" : [ 0.701961, 0.415686, 0.886275, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -94,9 +94,9 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1261.0, 167.0, 63.0, 22.0 ],
+					"patching_rect" : [ 1261.0, 167.0, 50.0, 22.0 ],
 					"style" : "",
-					"text" : "r trialNr_p"
+					"text" : "r trialNr"
 				}
 
 			}
@@ -315,8 +315,7 @@
 					"patching_rect" : [ 1024.0, 218.0, 81.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 123.0, 151.0, 22.0 ],
-					"style" : "",
-					"text" : "inst_1.png"
+					"style" : ""
 				}
 
 			}
@@ -397,8 +396,7 @@
 					"patching_rect" : [ 938.0, 218.0, 81.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 90.0, 151.0, 22.0 ],
-					"style" : "",
-					"text" : "teaching"
+					"style" : ""
 				}
 
 			}
@@ -1421,8 +1419,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
