@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 123.0, 124.0, 1310.0, 857.0 ],
+		"rect" : [ 1714.0, -939.0, 2190.0, 1327.0 ],
 		"bgcolor" : [ 0.701961, 0.415686, 0.886275, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -38,6 +38,32 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-59",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 892.0, 574.5, 156.0, 33.0 ],
+					"style" : "",
+					"text" : "Add messages into a clear storage (set)"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-30",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 741.0, 580.0, 55.0, 22.0 ],
+					"style" : "",
+					"text" : "prepend"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-15",
 					"maxclass" : "newobj",
@@ -265,7 +291,8 @@
 					"patching_rect" : [ 1024.0, 218.0, 81.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 123.0, 151.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "stim_n.png"
 				}
 
 			}
@@ -346,7 +373,8 @@
 					"patching_rect" : [ 938.0, 218.0, 81.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 90.0, 151.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "practice"
 				}
 
 			}
@@ -389,7 +417,8 @@
 					"patching_rect" : [ 852.0, 218.0, 81.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 58.0, 151.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "practice"
 				}
 
 			}
@@ -605,7 +634,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 816.0, 618.0, 74.0, 22.0 ],
+					"patching_rect" : [ 816.0, 580.0, 74.0, 22.0 ],
 					"style" : "",
 					"text" : "prepend set"
 				}
@@ -1015,6 +1044,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-57", 0 ],
+					"source" : [ "obj-30", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-45", 0 ],
 					"source" : [ "obj-31", 0 ]
 				}
@@ -1036,7 +1072,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-57", 0 ],
+					"destination" : [ "obj-30", 0 ],
 					"source" : [ "obj-36", 0 ]
 				}
 
@@ -1230,7 +1266,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-36", 0 ],
+					"destination" : [ "obj-30", 0 ],
 					"source" : [ "obj-63", 0 ]
 				}
 
@@ -1346,8 +1382,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
