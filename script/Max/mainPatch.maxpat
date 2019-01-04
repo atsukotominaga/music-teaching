@@ -5,11 +5,11 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x64",
+			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 79.0, 1612.0, 933.0 ],
+		"rect" : [ 34.0, 79.0, 1310.0, 857.0 ],
 		"bgcolor" : [ 0.862745, 0.870588, 0.878431, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -118,7 +118,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1389.25, 230.633423, 150.0, 20.0 ],
+					"patching_rect" : [ 1391.25, 230.633423, 150.0, 20.0 ],
 					"style" : "",
 					"text" : "Open an image file"
 				}
@@ -160,7 +160,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1284.25, 336.133423, 356.699951, 49.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/black.png\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/black.png\""
 				}
 
 			}
@@ -187,7 +187,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1284.25, 153.133423, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
 				}
 
 			}
@@ -244,7 +244,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 20.25, 873.633423, 450.0, 250.0 ],
-					"pic" : "Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/black.png",
+					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/black.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 40.0, 280.266846, 860.666687, 464.749756 ]
 				}
@@ -883,7 +883,7 @@
 							"version" : 1,
 							"isbank" : 0,
 							"isbase64" : 1,
-							"blob" : "980.hAGaoMGcv.S2AHv.DTfAGfPBJr.CM3vCPDADRLAEUXQFZrAViAWcsv1agQFUtEVakckckI2bo8laeAwD0MWYsjlazUlbtEFasHWY1Ulbh4EYoM2ZsLGcxUVXsklamQEc4AWYdIWYtQVYx0Rb0EFaoQWdTQVXzEFWsEla0YVXiQWcxUlbeAwClkFak0hbkYVYxUlaiU1bWMWchQWdvUFUBElaqwUYrUVak4Fcs3VXsUlH.....fUUtQWZzwVYjAA.PDfDgUWa0AweOAAI..............v......LDEiQM...P.AC+R+C...HfvvC..RDFbvwVzWfwVyIVKlkFak0hbkY1WPP0KSk2bzUVauvTZhIWXxk2KC8Vav8lak4Fcy8xPuIWYAUGYo8lKi8Vav8lak4FcuLzatQWYtQ2buHUYy8VcxMVYy8xYy8UZtMGcxUWak4Fcy4BYrMmDjw1bf7TDAvN.....AvN.B...LzTXiklaz81bnABRDA....................chppERq....nRhCHwYy8UZtMGcxUWak4Fcy4BYrMG.............................................................pjXTQ6O0sA..........+++++C..I.B...................PBRU1buUmbiU1b...D.f....chbpD...PD.f...Ds+31D...P..fA.pj3..nBg5.fJDlC.pD38.fBIDC.JjLL.B.fYME1Xo4FcuMGZffDQ5LUdyQWYsoC.LklXxElb4oC.C8Vav8lak4FcyoC.C8lbkETcjk1atL1asA2atUlazoC.C8lazUlazMmN.HUYy8VcxMVYyoC.mM2Wo41bzIWcsUlazMmKjw1b.3..l.fD.bF.yAvW.jF.tAvb.PG.xAPc.zF.kAfa.PG.yAfK.PF.rAvb.7..Z..C.zD.gAvX.jF.tA.c.7F.yA.Z..B.HA.Q.HA.SMUdyQWYs8BSoIlbgIWduLzasA2atUlazM2KC8lbkETcjk1atL1asA2atUlaz8xPu4Fck4Fcy8hTkM2a0I2XkM2KmM2Wo41bzIWcsUlazMmKjw1b..vD.DvK.7++..PzbzQTxHsGe.RHQASTwn0bzUlbk8FHskFdVUma0MWYjA.B.LB.r.PL.jC.OAfW.LF.xAvc.PH.VBfm.LJ.vBPs.3K..Cfv.bL.IC.7.TO.3G.AArU.fM.TCL0.UMfVCv0.dMPZ........BD..........h...................C.G"
+							"blob" : "912.hAGaoMGcv.S2AHv.DTfAGfPBJr.CM3vCPDgDYDgFc3wGfDBUzkGbkQkPg41ZXMFb00BauEFYWYWYxMWZu4FWkwVYsUlaz0hag0VYWMWchQWdvUlWjk1bq0xbzIWYg0VZtc1WP7fYowVYsHWYlUlbk41XkMGWsEla0YVXiQWcxUlbT4VXsUlWxUlajUlbsDWcgwVZzk2WPLQcyUVKo4FckImagwVKxUlckImXTQVXzElDgUWa08TDAfJ.....AfJ.B...LzTXiklaz81bnABRDA........................fPDAP.+++++KwYy8UZtMGcxUWak4Fcy4BYrMG...........................................................v+++++................+++++C..J.xX0A................PBRU1buUmbiU1b..f..T0K5LUdyQWYsoCSoIlbgIWd5LzasA2atUlazMmNC8lbkETcjk1atL1asA2atUlazoyPu4Fck4FcyoiTkM2a0I2XkMmNmM2Wo41bzIWcsUlazMmKjw1b..fC.XB.R.vY.LG.eAPZ.3F.yA.c.HG.0APa.TF.tA.c.LG.t..Y.vF.yAvC.nA.L.PS.DF.iAPZ.3F.zAva.LG.nA.H.fD.DAfD.L0T4MGck01KLklXxElb48xPu0Fbu4VYtQ2buLzaxUVP0QVZu4xXu0Fbu4VYtQ2KC8lazUlazM2KRU1buUmbiU1bub1beklayQmb00VYtQ2btPFayA..S.P.u.v++C..h......D.D8DTDkLRWgEWfQTvDULZMGckIWYuARaogmU04VcyUFYRPFayARzavwVyIVKlkFak0hbkY1WPP0KSk2bzUVauvTZhIWXxk2KC8Vav8lak4Fcy8xPuIWYAUGYo8lKi8Vav8lak4FcuLzatQWYtQ2buHUYy8VcxMVYy8xYy8UZtMGcxUWak4Fcy4BYrMmDgAGbrgUUtQWZzwVYjAwePDvSPPB..............L......CQwXTC...DPvvuz+....BHL7....H.vH.fB.s.fM.3C.KAvT.HF.zAPf.XH.UBvp..K.0JPXBXl.nIvZBzl.xI.cBXm.AJ.hBzn.PJ.mBLu.3OP.CLv.E........HP..........HB..................L.K"
 						}
 ,
 						"snapshotlist" : 						{
@@ -905,7 +905,7 @@
 										"version" : 1,
 										"isbank" : 0,
 										"isbase64" : 1,
-										"blob" : "980.hAGaoMGcv.S2AHv.DTfAGfPBJr.CM3vCPDADRLAEUXQFZrAViAWcsv1agQFUtEVakckckI2bo8laeAwD0MWYsjlazUlbtEFasHWY1Ulbh4EYoM2ZsLGcxUVXsklamQEc4AWYdIWYtQVYx0Rb0EFaoQWdTQVXzEFWsEla0YVXiQWcxUlbeAwClkFak0hbkYVYxUlaiU1bWMWchQWdvUFUBElaqwUYrUVak4Fcs3VXsUlH.....fUUtQWZzwVYjAA.PDfDgUWa0AweOAAI..............v......LDEiQM...P.AC+R+C...HfvvC..RDFbvwVzWfwVyIVKlkFak0hbkY1WPP0KSk2bzUVauvTZhIWXxk2KC8Vav8lak4Fcy8xPuIWYAUGYo8lKi8Vav8lak4FcuLzatQWYtQ2buHUYy8VcxMVYy8xYy8UZtMGcxUWak4Fcy4BYrMmDjw1bf7TDAvN.....AvN.B...LzTXiklaz81bnABRDA....................chppERq....nRhCHwYy8UZtMGcxUWak4Fcy4BYrMG.............................................................pjXTQ6O0sA..........+++++C..I.B...................PBRU1buUmbiU1b...D.f....chbpD...PD.f...Ds+31D...P..fA.pj3..nBg5.fJDlC.pD38.fBIDC.JjLL.B.fYME1Xo4FcuMGZffDQ5LUdyQWYsoC.LklXxElb4oC.C8Vav8lak4FcyoC.C8lbkETcjk1atL1asA2atUlazoC.C8lazUlazMmN.HUYy8VcxMVYyoC.mM2Wo41bzIWcsUlazMmKjw1b.3..l.fD.bF.yAvW.jF.tAvb.PG.xAPc.zF.kAfa.PG.yAfK.PF.rAvb.7..Z..C.zD.gAvX.jF.tA.c.7F.yA.Z..B.HA.Q.HA.SMUdyQWYs8BSoIlbgIWduLzasA2atUlazM2KC8lbkETcjk1atL1asA2atUlaz8xPu4Fck4Fcy8hTkM2a0I2XkM2KmM2Wo41bzIWcsUlazMmKjw1b..vD.DvK.7++..PzbzQTxHsGe.RHQASTwn0bzUlbk8FHskFdVUma0MWYjA.B.LB.r.PL.jC.OAfW.LF.xAvc.PH.VBfm.LJ.vBPs.3K..Cfv.bL.IC.7.TO.3G.AArU.fM.TCL0.UMfVCv0.dMPZ........BD..........h...................C.G"
+										"blob" : "912.hAGaoMGcv.S2AHv.DTfAGfPBJr.CM3vCPDgDYDgFc3wGfDBUzkGbkQkPg41ZXMFb00BauEFYWYWYxMWZu4FWkwVYsUlaz0hag0VYWMWchQWdvUlWjk1bq0xbzIWYg0VZtc1WP7fYowVYsHWYlUlbk41XkMGWsEla0YVXiQWcxUlbT4VXsUlWxUlajUlbsDWcgwVZzk2WPLQcyUVKo4FckImagwVKxUlckImXTQVXzElDgUWa08TDAfJ.....AfJ.B...LzTXiklaz81bnABRDA........................fPDAP.+++++KwYy8UZtMGcxUWak4Fcy4BYrMG...........................................................v+++++................+++++C..J.xX0A................PBRU1buUmbiU1b..f..T0K5LUdyQWYsoCSoIlbgIWd5LzasA2atUlazMmNC8lbkETcjk1atL1asA2atUlazoyPu4Fck4FcyoiTkM2a0I2XkMmNmM2Wo41bzIWcsUlazMmKjw1b..fC.XB.R.vY.LG.eAPZ.3F.yA.c.HG.0APa.TF.tA.c.LG.t..Y.vF.yAvC.nA.L.PS.DF.iAPZ.3F.zAva.LG.nA.H.fD.DAfD.L0T4MGck01KLklXxElb48xPu0Fbu4VYtQ2buLzaxUVP0QVZu4xXu0Fbu4VYtQ2KC8lazUlazM2KRU1buUmbiU1bub1beklayQmb00VYtQ2btPFayA..S.P.u.v++C..h......D.D8DTDkLRWgEWfQTvDULZMGckIWYuARaogmU04VcyUFYRPFayARzavwVyIVKlkFak0hbkY1WPP0KSk2bzUVauvTZhIWXxk2KC8Vav8lak4Fcy8xPuIWYAUGYo8lKi8Vav8lak4FcuLzatQWYtQ2buHUYy8VcxMVYy8xYy8UZtMGcxUWak4Fcy4BYrMmDgAGbrgUUtQWZzwVYjAwePDvSPPB..............L......CQwXTC...DPvvuz+....BHL7....H.vH.fB.s.fM.3C.KAvT.HF.zAPf.XH.UBvp..K.0JPXBXl.nIvZBzl.xI.cBXm.AJ.hBzn.PJ.mBLu.3OP.CLv.E........HP..........HB..................L.K"
 									}
 ,
 									"fileref" : 									{
@@ -913,7 +913,25 @@
 										"filename" : "DLSMusicDevice.maxsnap",
 										"filepath" : "~/Documents/Max 7/Snapshots",
 										"filepos" : -1,
-										"snapshotfileid" : "e57bff3628148a178d6122aaaf1e4cf2"
+										"snapshotfileid" : "76340f7188b4bc86538b47b1540b9698"
+									}
+
+								}
+, 								{
+									"filetype" : "C74Snapshot",
+									"version" : 2,
+									"minorversion" : 0,
+									"name" : "DLSMusicDevice",
+									"origin" : "DLSMusicDevice.auinfo",
+									"type" : "AudioUnit",
+									"subtype" : "Instrument",
+									"embed" : 0,
+									"fileref" : 									{
+										"name" : "DLSMusicDevice",
+										"filename" : "DLSMusicDevice.maxsnap",
+										"filepath" : "~/Documents/Max 7/Snapshots",
+										"filepos" : -1,
+										"snapshotfileid" : "76340f7188b4bc86538b47b1540b9698"
 									}
 
 								}
@@ -2112,7 +2130,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-29",
-					"items" : [ "Digital Piano", ",", "Scarlett 6i6 USB", ",", "to Max 1", ",", "to Max 2" ],
+					"items" : [ "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -3751,28 +3769,28 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "subPatch_DataFileNaming.maxpat",
-				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_MIDInoteRecording.maxpat",
-				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_condFileReading.maxpat",
-				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/Desktop/expertpiano/script/Max/cond",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
@@ -3780,13 +3798,13 @@
 , 			{
 				"name" : "DLSMusicDevice.maxsnap",
 				"bootpath" : "~/Documents/Max 7/Snapshots",
-				"patcherrelativepath" : "../../../../Documents/Max 7/Snapshots",
+				"patcherrelativepath" : "../../../../../Documents/Max 7/Snapshots",
 				"type" : "mx@s",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "black.png",
-				"bootpath" : "~/Desktop/expertpiano/script/Max/image",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/image",
 				"patcherrelativepath" : "./image",
 				"type" : "PNG ",
 				"implicit" : 1
@@ -3832,8 +3850,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3901,8 +3919,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3947,8 +3965,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
