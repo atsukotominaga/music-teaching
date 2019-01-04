@@ -5,11 +5,11 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x64",
+			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 56.0, 1103.0, 960.0 ],
+		"rect" : [ 1714.0, -939.0, 2190.0, 1327.0 ],
 		"bgcolor" : [ 0.862745, 0.870588, 0.878431, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -39,11 +39,40 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-20",
+					"maxclass" : "button",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 107.5, 598.350037, 24.0, 24.0 ],
+					"style" : ""
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 1,
+					"fontsize" : 24.0,
+					"id" : "obj-15",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 378.25, 40.333328, 569.0, 33.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 330.0, 40.333328, 570.666687, 33.0 ],
+					"style" : "",
+					"text" : "Do not open the practicePatch at the same time!",
+					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-6",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 306.36676, 48.0, 22.0 ],
+					"patching_rect" : [ 40.0, 327.033447, 48.0, 22.0 ],
 					"style" : "",
 					"text" : "s block"
 				}
@@ -172,7 +201,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1284.25, 336.133423, 356.699951, 49.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/black.png\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/black.png\""
 				}
 
 			}
@@ -199,7 +228,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1284.25, 153.133423, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
 				}
 
 			}
@@ -256,9 +285,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 20.25, 873.633423, 450.0, 250.0 ],
-					"pic" : "Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/black.png",
+					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/black.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 280.266846, 860.666687, 464.749756 ]
+					"presentation_rect" : [ 40.0, 267.266846, 941.666687, 590.749756 ]
 				}
 
 			}
@@ -386,7 +415,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 616.833374, 92.499985, 291.0, 37.0 ],
+					"patching_rect" : [ 610.375, 89.133423, 291.0, 37.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 152.0, 106.033203, 300.0, 37.0 ],
 					"style" : "",
@@ -793,7 +822,7 @@
 							"version" : 1,
 							"isbank" : 0,
 							"isbase64" : 1,
-							"blob" : "980.hAGaoMGcv.S2AHv.DTfAGfPBJr.CM3vCPDADRLAEUXQFZrAViAWcsv1agQFUtEVakckckI2bo8laeAwD0MWYsjlazUlbtEFasHWY1Ulbh4EYoM2ZsLGcxUVXsklamQEc4AWYdIWYtQVYx0Rb0EFaoQWdTQVXzEFWsEla0YVXiQWcxUlbeAwClkFak0hbkYVYxUlaiU1bWMWchQWdvUFUBElaqwUYrUVak4Fcs3VXsUlH.....fUUtQWZzwVYjAA.PDfDgUWa0AweOAAI..............v......LDEiQM...P.AC+R+C...HfvvC..RDFbvwVzWfwVyIVKlkFak0hbkY1WPP0KSk2bzUVauvTZhIWXxk2KC8Vav8lak4Fcy8xPuIWYAUGYo8lKi8Vav8lak4FcuLzatQWYtQ2buHUYy8VcxMVYy8xYy8UZtMGcxUWak4Fcy4BYrMmDjw1bf7TDAvN.....AvN.B...LzTXiklaz81bnABRDA....................chppERq....nRhCHwYy8UZtMGcxUWak4Fcy4BYrMG.............................................................pjXTQ6O0sA..........+++++C..I.B...................PBRU1buUmbiU1b...D.f....chbpD...PD.f...Ds+31D...P..fA.pj3..nBg5.fJDlC.pD38.fBIDC.JjLL.B.fYME1Xo4FcuMGZffDQ5LUdyQWYsoC.LklXxElb4oC.C8Vav8lak4FcyoC.C8lbkETcjk1atL1asA2atUlazoC.C8lazUlazMmN.HUYy8VcxMVYyoC.mM2Wo41bzIWcsUlazMmKjw1b.3..l.fD.bF.yAvW.jF.tAvb.PG.xAPc.zF.kAfa.PG.yAfK.PF.rAvb.7..Z..C.zD.gAvX.jF.tA.c.7F.yA.Z..B.HA.Q.HA.SMUdyQWYs8BSoIlbgIWduLzasA2atUlazM2KC8lbkETcjk1atL1asA2atUlaz8xPu4Fck4Fcy8hTkM2a0I2XkM2KmM2Wo41bzIWcsUlazMmKjw1b..vD.DvK.7++..PzbzQTxHsGe.RHQASTwn0bzUlbk8FHskFdVUma0MWYjA.B.LB.r.PL.jC.OAfW.LF.xAvc.PH.VBfm.LJ.vBPs.3K..Cfv.bL.IC.7.TO.3G.AArU.fM.TCL0.UMfVCv0.dMPZ........BD..........h...................C.G"
+							"blob" : "912.hAGaoMGcv.S2AHv.DTfAGfPBJr.CM3vCPDgDYDgFc3wGfDBUzkGbkQkPg41ZXMFb00BauEFYWYWYxMWZu4FWkwVYsUlaz0hag0VYWMWchQWdvUlWjk1bq0xbzIWYg0VZtc1WP7fYowVYsHWYlUlbk41XkMGWsEla0YVXiQWcxUlbT4VXsUlWxUlajUlbsDWcgwVZzk2WPLQcyUVKo4FckImagwVKxUlckImXTQVXzElDgUWa08TDAfJ.....AfJ.B...LzTXiklaz81bnABRDA........................fPDAP.+++++KwYy8UZtMGcxUWak4Fcy4BYrMG...........................................................v+++++................+++++C..J.xX0A................PBRU1buUmbiU1b..f..T0K5LUdyQWYsoCSoIlbgIWd5LzasA2atUlazMmNC8lbkETcjk1atL1asA2atUlazoyPu4Fck4FcyoiTkM2a0I2XkMmNmM2Wo41bzIWcsUlazMmKjw1b..fC.XB.R.vY.LG.eAPZ.3F.yA.c.HG.0APa.TF.tA.c.LG.t..Y.vF.yAvC.nA.L.PS.DF.iAPZ.3F.zAva.LG.nA.H.fD.DAfD.L0T4MGck01KLklXxElb48xPu0Fbu4VYtQ2buLzaxUVP0QVZu4xXu0Fbu4VYtQ2KC8lazUlazM2KRU1buUmbiU1bub1beklayQmb00VYtQ2btPFayA..S.P.u.v++C..h......D.D8DTDkLRWgEWfQTvDULZMGckIWYuARaogmU04VcyUFYRPFayARzavwVyIVKlkFak0hbkY1WPP0KSk2bzUVauvTZhIWXxk2KC8Vav8lak4Fcy8xPuIWYAUGYo8lKi8Vav8lak4FcuLzatQWYtQ2buHUYy8VcxMVYy8xYy8UZtMGcxUWak4Fcy4BYrMmDgAGbrgUUtQWZzwVYjAwePDvSPPB..............L......CQwXTC...DPvvuz+....BHL7....H.vH.fB.s.fM.3C.KAvT.HF.zAPf.XH.UBvp..K.0JPXBXl.nIvZBzl.xI.cBXm.AJ.hBzn.PJ.mBLu.3OP.CLv.E........HP..........HB..................L.K"
 						}
 ,
 						"snapshotlist" : 						{
@@ -815,7 +844,7 @@
 										"version" : 1,
 										"isbank" : 0,
 										"isbase64" : 1,
-										"blob" : "980.hAGaoMGcv.S2AHv.DTfAGfPBJr.CM3vCPDADRLAEUXQFZrAViAWcsv1agQFUtEVakckckI2bo8laeAwD0MWYsjlazUlbtEFasHWY1Ulbh4EYoM2ZsLGcxUVXsklamQEc4AWYdIWYtQVYx0Rb0EFaoQWdTQVXzEFWsEla0YVXiQWcxUlbeAwClkFak0hbkYVYxUlaiU1bWMWchQWdvUFUBElaqwUYrUVak4Fcs3VXsUlH.....fUUtQWZzwVYjAA.PDfDgUWa0AweOAAI..............v......LDEiQM...P.AC+R+C...HfvvC..RDFbvwVzWfwVyIVKlkFak0hbkY1WPP0KSk2bzUVauvTZhIWXxk2KC8Vav8lak4Fcy8xPuIWYAUGYo8lKi8Vav8lak4FcuLzatQWYtQ2buHUYy8VcxMVYy8xYy8UZtMGcxUWak4Fcy4BYrMmDjw1bf7TDAvN.....AvN.B...LzTXiklaz81bnABRDA....................chppERq....nRhCHwYy8UZtMGcxUWak4Fcy4BYrMG.............................................................pjXTQ6O0sA..........+++++C..I.B...................PBRU1buUmbiU1b...D.f....chbpD...PD.f...Ds+31D...P..fA.pj3..nBg5.fJDlC.pD38.fBIDC.JjLL.B.fYME1Xo4FcuMGZffDQ5LUdyQWYsoC.LklXxElb4oC.C8Vav8lak4FcyoC.C8lbkETcjk1atL1asA2atUlazoC.C8lazUlazMmN.HUYy8VcxMVYyoC.mM2Wo41bzIWcsUlazMmKjw1b.3..l.fD.bF.yAvW.jF.tAvb.PG.xAPc.zF.kAfa.PG.yAfK.PF.rAvb.7..Z..C.zD.gAvX.jF.tA.c.7F.yA.Z..B.HA.Q.HA.SMUdyQWYs8BSoIlbgIWduLzasA2atUlazM2KC8lbkETcjk1atL1asA2atUlaz8xPu4Fck4Fcy8hTkM2a0I2XkM2KmM2Wo41bzIWcsUlazMmKjw1b..vD.DvK.7++..PzbzQTxHsGe.RHQASTwn0bzUlbk8FHskFdVUma0MWYjA.B.LB.r.PL.jC.OAfW.LF.xAvc.PH.VBfm.LJ.vBPs.3K..Cfv.bL.IC.7.TO.3G.AArU.fM.TCL0.UMfVCv0.dMPZ........BD..........h...................C.G"
+										"blob" : "912.hAGaoMGcv.S2AHv.DTfAGfPBJr.CM3vCPDgDYDgFc3wGfDBUzkGbkQkPg41ZXMFb00BauEFYWYWYxMWZu4FWkwVYsUlaz0hag0VYWMWchQWdvUlWjk1bq0xbzIWYg0VZtc1WP7fYowVYsHWYlUlbk41XkMGWsEla0YVXiQWcxUlbT4VXsUlWxUlajUlbsDWcgwVZzk2WPLQcyUVKo4FckImagwVKxUlckImXTQVXzElDgUWa08TDAfJ.....AfJ.B...LzTXiklaz81bnABRDA........................fPDAP.+++++KwYy8UZtMGcxUWak4Fcy4BYrMG...........................................................v+++++................+++++C..J.xX0A................PBRU1buUmbiU1b..f..T0K5LUdyQWYsoCSoIlbgIWd5LzasA2atUlazMmNC8lbkETcjk1atL1asA2atUlazoyPu4Fck4FcyoiTkM2a0I2XkMmNmM2Wo41bzIWcsUlazMmKjw1b..fC.XB.R.vY.LG.eAPZ.3F.yA.c.HG.0APa.TF.tA.c.LG.t..Y.vF.yAvC.nA.L.PS.DF.iAPZ.3F.zAva.LG.nA.H.fD.DAfD.L0T4MGck01KLklXxElb48xPu0Fbu4VYtQ2buLzaxUVP0QVZu4xXu0Fbu4VYtQ2KC8lazUlazM2KRU1buUmbiU1bub1beklayQmb00VYtQ2btPFayA..S.P.u.v++C..h......D.D8DTDkLRWgEWfQTvDULZMGckIWYuARaogmU04VcyUFYRPFayARzavwVyIVKlkFak0hbkY1WPP0KSk2bzUVauvTZhIWXxk2KC8Vav8lak4Fcy8xPuIWYAUGYo8lKi8Vav8lak4FcuLzatQWYtQ2buHUYy8VcxMVYy8xYy8UZtMGcxUWak4Fcy4BYrMmDgAGbrgUUtQWZzwVYjAwePDvSPPB..............L......CQwXTC...DPvvuz+....BHL7....H.vH.fB.s.fM.3C.KAvT.HF.zAPf.XH.UBvp..K.0JPXBXl.nIvZBzl.xI.cBXm.AJ.hBzn.PJ.mBLu.3OP.CLv.E........HP..........HB..................L.K"
 									}
 ,
 									"fileref" : 									{
@@ -823,7 +852,7 @@
 										"filename" : "DLSMusicDevice.maxsnap",
 										"filepath" : "~/Documents/Max 7/Snapshots",
 										"filepos" : -1,
-										"snapshotfileid" : "e57bff3628148a178d6122aaaf1e4cf2"
+										"snapshotfileid" : "76340f7188b4bc86538b47b1540b9698"
 									}
 
 								}
@@ -1013,9 +1042,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 378.5, 53.333328, 353.0, 20.0 ],
+					"patching_rect" : [ 40.0, 80.999985, 353.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 333.300049, 53.333328, 350.0, 20.0 ],
+					"presentation_rect" : [ 40.0, 75.333328, 350.0, 20.0 ],
 					"style" : "",
 					"text" : "Private repo: https://github.com/atsukotominaga/expertpiano"
 				}
@@ -1030,7 +1059,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 138.0, 127.333344, 118.0, 51.0 ],
+					"patching_rect" : [ 138.0, 148.000031, 118.0, 51.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 4,
 					"presentation_rect" : [ 420.333344, 186.049805, 100.0, 64.0 ],
@@ -1048,21 +1077,8 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 1004.0, 197.0, 50.0, 22.0 ],
+					"patching_rect" : [ 1003.354187, 262.300079, 50.0, 22.0 ],
 					"style" : ""
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-110",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"outlettype" : [ "bang", "bang" ],
-					"patching_rect" : [ 108.5, 540.216614, 34.0, 22.0 ],
-					"style" : "",
-					"text" : "t b b"
 				}
 
 			}
@@ -1073,7 +1089,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 40.0, 543.866699, 29.5, 22.0 ],
+					"patching_rect" : [ 39.0, 598.350037, 29.5, 22.0 ],
 					"style" : "",
 					"text" : "0"
 				}
@@ -1087,9 +1103,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 108.5, 496.516663, 91.0, 35.0 ],
+					"patching_rect" : [ 107.5, 551.0, 91.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 785.666687, 217.049805, 109.999985, 35.0 ],
+					"presentation_rect" : [ 1069.333496, 155.033203, 109.999985, 35.0 ],
 					"style" : "",
 					"text" : "RESET",
 					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
@@ -1100,14 +1116,15 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-108",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 481.733521, 48.0, 20.0 ],
+					"patching_rect" : [ 39.0, 536.216858, 48.0, 33.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 724.666687, 208.049805, 50.0, 20.0 ],
+					"presentation_rect" : [ 994.333374, 133.033203, 84.0, 20.0 ],
 					"style" : "",
-					"text" : "Trial Nr"
+					"text" : "Reset Trial Nr"
 				}
 
 			}
@@ -1118,7 +1135,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1004.0, 127.333344, 125.0, 33.0 ],
+					"patching_rect" : [ 1003.354187, 192.633423, 125.0, 33.0 ],
 					"style" : "",
 					"text" : "totalNr for all trials in the experiment"
 				}
@@ -1130,7 +1147,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 826.166687, 136.999985, 150.0, 20.0 ],
+					"patching_rect" : [ 825.520874, 202.300064, 150.0, 20.0 ],
 					"style" : "",
 					"text" : "trialNr for each condition"
 				}
@@ -1142,7 +1159,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1004.0, 231.000031, 55.0, 22.0 ],
+					"patching_rect" : [ 1003.354187, 296.30011, 55.0, 22.0 ],
 					"style" : "",
 					"text" : "s totalNr"
 				}
@@ -1155,7 +1172,7 @@
 					"numinlets" : 5,
 					"numoutlets" : 4,
 					"outlettype" : [ "int", "", "", "int" ],
-					"patching_rect" : [ 1004.0, 162.666687, 61.0, 22.0 ],
+					"patching_rect" : [ 1003.354187, 227.966766, 61.0, 22.0 ],
 					"style" : "",
 					"text" : "counter"
 				}
@@ -1503,32 +1520,36 @@
 			}
 , 			{
 				"box" : 				{
+					"fontsize" : 24.0,
 					"id" : "obj-9",
 					"maxclass" : "number",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 40.0, 511.066711, 50.0, 22.0 ],
+					"patching_rect" : [ 39.0, 565.550049, 66.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 724.666687, 230.049805, 50.0, 22.0 ],
-					"style" : ""
+					"presentation_rect" : [ 994.333374, 155.033203, 66.0, 35.0 ],
+					"style" : "",
+					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
 
 			}
 , 			{
 				"box" : 				{
+					"bubble" : 1,
+					"bubbleside" : 3,
 					"id" : "obj-7",
-					"linecount" : 8,
+					"linecount" : 10,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 579.883423, 370.0, 114.0 ],
+					"patching_rect" : [ 40.0, 384.5, 370.0, 145.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 11,
-					"presentation_rect" : [ 664.666687, 87.033203, 236.0, 154.0 ],
+					"presentation_rect" : [ 664.666687, 93.533203, 317.0, 158.0 ],
 					"style" : "",
-					"text" : "*Tweak Again!\n\n\n*In case you want to reset the current counter to the previous number, please enter the current block number and the previous trial number and hit the RESET button.\ne.g., If you want to start from Block 3 Trial 1 and enter \"2\" for Block and \"8\" for Trial Nr.",
+					"text" : "*In case you want to run the previous trial again, please enter the number of the previous trialNr - 1.\ne.g., If you want to start from Block 2 Trial 8, enter \"2\" for Block and \"7\" for Trial Nr.\n\n*If you want to run the first trial again, please enter \"0\". e.g., If you want to start from Block 1 Trial 1, enter \"1\" for Block and \"0\" for TrialNr.\n\nAfter you set the correct number, press the RESET button.",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
@@ -1551,7 +1572,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 913.083374, 207.000031, 72.0, 20.0 ],
+					"patching_rect" : [ 912.437561, 272.30011, 72.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 528.300049, 181.033203, 127.0, 20.0 ],
 					"style" : "",
@@ -1566,7 +1587,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 299.0, 86.0, 72.0, 22.0 ],
+					"patching_rect" : [ 299.0, 106.666687, 72.0, 22.0 ],
 					"style" : "",
 					"text" : "loadmess 0"
 				}
@@ -1596,11 +1617,11 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 40.0, 247.666687, 81.0, 49.0 ],
+					"patching_rect" : [ 40.0, 268.333374, 81.0, 49.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 287.300049, 205.033203, 128.0, 49.0 ],
 					"style" : "",
-					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
+					"textcolor" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 
 			}
@@ -1610,7 +1631,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 211.816711, 81.0, 20.0 ],
+					"patching_rect" : [ 40.0, 232.483398, 81.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 287.300049, 181.049805, 127.0, 20.0 ],
 					"style" : "",
@@ -1627,11 +1648,11 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 40.0, 119.333344, 81.0, 49.0 ],
+					"patching_rect" : [ 40.0, 140.000031, 81.0, 49.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 152.0, 205.033203, 127.0, 49.0 ],
 					"style" : "",
-					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
+					"textcolor" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 
 			}
@@ -1641,7 +1662,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 180.133453, 52.0, 22.0 ],
+					"patching_rect" : [ 40.0, 200.80014, 52.0, 22.0 ],
 					"style" : "",
 					"text" : "s subNr"
 				}
@@ -1714,7 +1735,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-29",
-					"items" : [ "Digital Piano", ",", "to Max 1", ",", "to Max 2", ",", "Scarlett 6i6 USB #2" ],
+					"items" : [ "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1847,7 +1868,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 489.25, 873.633423, 435.041718, 349.5 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 911.333374, 398.016602, 457.0, 347.0 ],
+					"presentation_rect" : [ 994.333374, 511.016602, 457.0, 347.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -1910,7 +1931,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 957.5, 877.0, 436.0, 305.133453 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 911.333374, 81.333328, 455.0, 307.0 ],
+					"presentation_rect" : [ 994.333374, 195.041504, 455.0, 307.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -1936,7 +1957,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 86.0, 81.0, 20.0 ],
+					"patching_rect" : [ 40.0, 106.666687, 81.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 152.0, 181.033203, 127.0, 20.0 ],
 					"style" : "",
@@ -1962,7 +1983,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 826.166687, 279.333344, 52.0, 22.0 ],
+					"patching_rect" : [ 825.520874, 344.633423, 52.0, 22.0 ],
 					"style" : "",
 					"text" : "s trialNr"
 				}
@@ -2000,7 +2021,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 865.166687, 58.999985, 72.0, 22.0 ],
+					"patching_rect" : [ 864.520874, 124.300064, 72.0, 22.0 ],
 					"style" : "",
 					"text" : "loadmess 0"
 				}
@@ -2013,7 +2034,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "int" ],
-					"patching_rect" : [ 826.166687, 247.666687, 30.0, 22.0 ],
+					"patching_rect" : [ 825.520874, 312.966766, 30.0, 22.0 ],
 					"style" : "",
 					"text" : "t b i"
 				}
@@ -2028,7 +2049,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 826.166687, 192.333344, 81.0, 49.0 ],
+					"patching_rect" : [ 825.520874, 257.633423, 81.0, 49.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 528.300049, 205.033203, 128.0, 49.0 ],
 					"style" : ""
@@ -2042,7 +2063,7 @@
 					"numinlets" : 5,
 					"numoutlets" : 4,
 					"outlettype" : [ "int", "", "", "int" ],
-					"patching_rect" : [ 826.166687, 162.666687, 71.0, 22.0 ],
+					"patching_rect" : [ 825.520874, 227.966766, 71.0, 22.0 ],
 					"style" : "",
 					"text" : "counter 1 8"
 				}
@@ -2098,7 +2119,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-110", 0 ],
+					"destination" : [ "obj-20", 0 ],
 					"source" : [ "obj-103", 0 ]
 				}
 
@@ -2128,13 +2149,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-12", 0 ],
 					"source" : [ "obj-11", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-105", 0 ],
-					"source" : [ "obj-110", 1 ]
 				}
 
 			}
@@ -2625,6 +2639,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-105", 0 ],
+					"source" : [ "obj-20", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-200", 0 ],
 					"source" : [ "obj-201", 0 ]
 				}
@@ -3057,28 +3078,28 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "subPatch_DataFileNaming.maxpat",
-				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_MIDInoteRecording.maxpat",
-				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_condFileReading.maxpat",
-				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/Desktop/expertpiano/script/Max/cond",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
@@ -3086,13 +3107,13 @@
 , 			{
 				"name" : "DLSMusicDevice.maxsnap",
 				"bootpath" : "~/Documents/Max 7/Snapshots",
-				"patcherrelativepath" : "../../../../Documents/Max 7/Snapshots",
+				"patcherrelativepath" : "../../../../../Documents/Max 7/Snapshots",
 				"type" : "mx@s",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "black.png",
-				"bootpath" : "~/Desktop/expertpiano/script/Max/image",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/image",
 				"patcherrelativepath" : "./image",
 				"type" : "PNG ",
 				"implicit" : 1
@@ -3138,8 +3159,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3207,8 +3228,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3253,8 +3274,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3281,8 +3302,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
