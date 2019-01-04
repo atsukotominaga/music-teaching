@@ -5,11 +5,11 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x86",
+			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 1714.0, -939.0, 2492.0, 1327.0 ],
+		"rect" : [ 34.0, 56.0, 1612.0, 960.0 ],
 		"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -39,24 +39,22 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"bgmode" : 1,
+					"border" : 0,
+					"clickthrough" : 0,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
 					"id" : "obj-127",
-					"maxclass" : "live.numbox",
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "float" ],
-					"parameter_enable" : 1,
-					"patching_rect" : [ 1021.0, 807.0, 36.0, 15.0 ],
-					"saved_attribute_attributes" : 					{
-						"valueof" : 						{
-							"parameter_longname" : "live.numbox",
-							"parameter_shortname" : "live.numbox",
-							"parameter_type" : 0,
-							"parameter_unitstyle" : 0
-						}
-
-					}
-,
-					"varname" : "live.numbox"
+					"lockeddragscroll" : 0,
+					"maxclass" : "bpatcher",
+					"name" : "subPatch_condFileReading.maxpat",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patching_rect" : [ 1170.0, 700.0, 128.0, 128.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 1002.0, 596.0, 254.0, 99.0 ],
+					"viewvisibility" : 1
 				}
 
 			}
@@ -1192,7 +1190,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-59",
-					"items" : [ "to Max 1", ",", "to Max 2" ],
+					"items" : [ "Digital Piano", ",", "to Max 1", ",", "to Max 2", ",", "Scarlett 6i6 USB #2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1430,7 +1428,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 529.0, 1175.244995, 356.699951, 49.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/stim_n.png\""
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/inst_1.png\""
 				}
 
 			}
@@ -1457,7 +1455,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 529.0, 992.244995, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
 				}
 
 			}
@@ -1527,7 +1525,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 61.0, 1184.744995, 450.0, 250.0 ],
-					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/stim_n.png",
+					"pic" : "Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/inst_1.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 514.75, 234.349976, 470.438812, 261.0 ]
 				}
@@ -1586,7 +1584,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 273.75, 439.39978, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_t",
 					"textjustification" : 1
 				}
 
@@ -1654,7 +1651,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 152.5, 439.39978, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_d",
 					"textjustification" : 1
 				}
 
@@ -1671,7 +1667,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 32.0, 439.39978, 96.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_a",
 					"textjustification" : 1
 				}
 
@@ -1814,7 +1809,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 214.25, 511.166626, 153.0, 35.0 ],
 					"style" : "",
-					"text" : "inst_t",
 					"textjustification" : 1
 				}
 
@@ -1831,7 +1825,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 32.0, 511.166626, 154.0, 35.0 ],
 					"style" : "",
-					"text" : "inst_p",
 					"textjustification" : 1
 				}
 
@@ -3401,29 +3394,39 @@
 
 			}
  ],
-		"parameters" : 		{
-			"obj-127" : [ "live.numbox", "live.numbox", 0 ]
-		}
-,
 		"dependency_cache" : [ 			{
-				"name" : "stim_n.png",
-				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/image",
+				"name" : "inst_1.png",
+				"bootpath" : "~/Desktop/expertpiano/script/Max/image",
 				"patcherrelativepath" : "./image",
 				"type" : "PNG ",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_MIDInoteRecording_practice.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
+				"bootpath" : "~/Desktop/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_dataFileNaming_practice.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
+				"bootpath" : "~/Desktop/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "subPatch_condFileReading.maxpat",
+				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "cb.csv",
+				"bootpath" : "~/Desktop/expertpiano/script/Max/cond",
+				"patcherrelativepath" : "./cond",
+				"type" : "TEXT",
 				"implicit" : 1
 			}
  ],
@@ -3467,8 +3470,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3536,8 +3539,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3582,8 +3585,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
