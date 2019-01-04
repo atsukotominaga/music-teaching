@@ -5,11 +5,11 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x86",
+			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 1714.0, -939.0, 2190.0, 1327.0 ],
+		"rect" : [ 34.0, 56.0, 1103.0, 960.0 ],
 		"bgcolor" : [ 0.701961, 0.415686, 0.886275, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -39,12 +39,36 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-20",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 264.0, 804.0, 44.0, 22.0 ],
+					"style" : "",
+					"text" : "print 2"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-19",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 841.0, 734.0, 44.0, 22.0 ],
+					"style" : "",
+					"text" : "print 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-59",
 					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 892.0, 574.5, 156.0, 33.0 ],
+					"patching_rect" : [ 893.0, 609.5, 156.0, 33.0 ],
 					"style" : "",
 					"text" : "Add messages into a clear storage (set)"
 				}
@@ -292,7 +316,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 123.0, 151.0, 22.0 ],
 					"style" : "",
-					"text" : "stim_n.png"
+					"text" : "inst_1.png"
 				}
 
 			}
@@ -374,7 +398,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 90.0, 151.0, 22.0 ],
 					"style" : "",
-					"text" : "practice"
+					"text" : "teaching"
 				}
 
 			}
@@ -417,8 +441,7 @@
 					"patching_rect" : [ 852.0, 218.0, 81.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 58.0, 151.0, 22.0 ],
-					"style" : "",
-					"text" : "practice"
+					"style" : ""
 				}
 
 			}
@@ -634,7 +657,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 816.0, 580.0, 74.0, 22.0 ],
+					"patching_rect" : [ 816.0, 615.0, 74.0, 22.0 ],
 					"style" : "",
 					"text" : "prepend set"
 				}
@@ -1044,7 +1067,16 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-19", 0 ],
+					"order" : 0,
+					"source" : [ "obj-30", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-57", 0 ],
+					"order" : 1,
 					"source" : [ "obj-30", 0 ]
 				}
 
@@ -1236,6 +1268,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-20", 0 ],
+					"source" : [ "obj-57", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-21", 0 ],
 					"source" : [ "obj-6", 0 ]
 				}
@@ -1382,8 +1421,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
