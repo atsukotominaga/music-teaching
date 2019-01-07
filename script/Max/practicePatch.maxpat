@@ -39,15 +39,16 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"bubble" : 1,
 					"fontface" : 1,
 					"fontsize" : 24.0,
 					"id" : "obj-124",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 308.25, 55.333328, 542.0, 33.0 ],
+					"patching_rect" : [ 308.25, 55.333328, 542.0, 37.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 286.0, 31.333328, 547.0, 33.0 ],
+					"presentation_rect" : [ 279.0, 29.333328, 547.0, 37.0 ],
 					"style" : "",
 					"text" : "Do not open the mainPatch at the same time!",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
