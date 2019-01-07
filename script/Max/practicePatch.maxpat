@@ -45,7 +45,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 70.0, 70.333328, 542.0, 33.0 ],
+					"patching_rect" : [ 308.25, 55.333328, 542.0, 33.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 286.0, 31.333328, 547.0, 33.0 ],
 					"style" : "",
@@ -321,7 +321,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 622.75, 160.349976, 127.0, 49.0 ],
 					"style" : "",
-					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
+					"textcolor" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 
 			}
@@ -499,7 +499,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 1706.0, 913.581665, 446.0, 321.16333 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 31.0, 596.0, 472.0, 341.16333 ],
+					"presentation_rect" : [ 31.0, 596.0, 472.0, 364.16333 ],
 					"viewvisibility" : 1
 				}
 
@@ -1107,7 +1107,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 1221.666748, 918.418335, 473.333252, 341.16333 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 514.75, 596.0, 472.0, 341.16333 ],
+					"presentation_rect" : [ 514.75, 596.0, 472.0, 364.16333 ],
 					"viewvisibility" : 1
 				}
 
@@ -1443,7 +1443,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 529.0, 1175.244995, 356.699951, 49.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/stim_d.png\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/0__.png\""
 				}
 
 			}
@@ -1540,7 +1540,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 61.0, 1184.744995, 450.0, 250.0 ],
-					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/stim_d.png",
+					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/0__.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 514.75, 234.349976, 470.438812, 261.0 ]
 				}
@@ -1599,7 +1599,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 273.75, 439.39978, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_d",
 					"textjustification" : 1
 				}
 
@@ -1667,7 +1666,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 152.5, 439.39978, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_a",
 					"textjustification" : 1
 				}
 
@@ -1684,7 +1682,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 32.0, 439.39978, 96.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_t",
 					"textjustification" : 1
 				}
 
@@ -1827,7 +1824,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 214.25, 511.166626, 153.0, 35.0 ],
 					"style" : "",
-					"text" : "inst_p",
 					"textjustification" : 1
 				}
 
@@ -1844,7 +1840,6 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 32.0, 511.166626, 154.0, 35.0 ],
 					"style" : "",
-					"text" : "inst_t",
 					"textjustification" : 1
 				}
 
@@ -3415,13 +3410,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "stim_d.png",
-				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/image",
-				"patcherrelativepath" : "./image",
-				"type" : "PNG ",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "subPatch_MIDInoteRecording_practice.maxpat",
 				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
