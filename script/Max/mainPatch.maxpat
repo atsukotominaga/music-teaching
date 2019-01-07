@@ -1089,7 +1089,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 39.0, 598.350037, 29.5, 22.0 ],
+					"patching_rect" : [ 39.0, 605.883423, 29.5, 22.0 ],
 					"style" : "",
 					"text" : "0"
 				}
@@ -1547,7 +1547,7 @@
 					"patching_rect" : [ 40.0, 384.5, 370.0, 145.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 11,
-					"presentation_rect" : [ 664.666687, 93.533203, 317.0, 158.0 ],
+					"presentation_rect" : [ 664.666687, 93.533203, 318.0, 158.0 ],
 					"style" : "",
 					"text" : "*In case you want to run the previous trial again, please enter the number of the previous trialNr - 1.\ne.g., If you want to start from Block 2 Trial 8, enter \"2\" for Block and \"7\" for Trial Nr.\n\n*If you want to run the first trial again, please enter \"0\". e.g., If you want to start from Block 1 Trial 1, enter \"1\" for Block and \"0\" for TrialNr.\n\nAfter you set the correct number, press the RESET button.",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
