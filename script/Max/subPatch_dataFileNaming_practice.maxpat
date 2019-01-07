@@ -43,7 +43,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 927.0, 623.0, 150.0, 20.0 ],
+					"patching_rect" : [ 967.699951, 622.0, 150.0, 20.0 ],
 					"style" : "",
 					"text" : "Save in a midi folder"
 				}
@@ -55,9 +55,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 206.0, 620.0, 150.0, 20.0 ],
+					"patching_rect" : [ 252.0, 619.0, 150.0, 20.0 ],
 					"style" : "",
-					"text" : "Save in a data folder"
+					"text" : "Save in a practice folder"
 				}
 
 			}
@@ -68,9 +68,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 889.0, 622.0, 36.0, 22.0 ],
+					"patching_rect" : [ 889.0, 622.0, 78.0, 22.0 ],
 					"style" : "",
-					"text" : "midi/"
+					"text" : "midi/practice"
 				}
 
 			}
@@ -81,9 +81,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 167.0, 619.0, 37.0, 22.0 ],
+					"patching_rect" : [ 167.0, 619.0, 83.0, 22.0 ],
 					"style" : "",
-					"text" : "data/"
+					"text" : "data/practice/"
 				}
 
 			}
