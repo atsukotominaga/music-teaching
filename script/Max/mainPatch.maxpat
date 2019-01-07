@@ -51,15 +51,16 @@
 			}
 , 			{
 				"box" : 				{
+					"bubble" : 1,
 					"fontface" : 1,
 					"fontsize" : 24.0,
 					"id" : "obj-15",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 378.25, 40.333328, 569.0, 33.0 ],
+					"patching_rect" : [ 378.25, 40.333328, 587.0, 37.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 330.0, 40.333328, 570.666687, 33.0 ],
+					"presentation_rect" : [ 328.0, 38.333328, 591.666687, 37.0 ],
 					"style" : "",
 					"text" : "Do not open the practicePatch at the same time!",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
