@@ -1,4 +1,4 @@
-## Overview
+# Overview
 This repo contains scripts and materials necessary for a Musical experiment with expert pianists.
 - script
     + Max 7 for an experimental programme
@@ -16,3 +16,7 @@ Teaching behaviour in musical skill transmission
 
 ### Preregistration
 TBC
+
+## Script
+### Max
+- Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 7.
