@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 516.0, 79.0, 2123.0, 1323.0 ],
+		"rect" : [ 1714.0, -939.0, 2492.0, 1247.0 ],
 		"bgcolor" : [ 0.862745, 0.741176, 0.137255, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -39,39 +39,341 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
-					"id" : "obj-85",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 1308.0, 253.0, 59.0, 22.0 ],
-					"style" : "",
-					"text" : "tosymbol"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-81",
-					"maxclass" : "newobj",
+					"id" : "obj-94",
+					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1337.0, 543.5, 34.0, 22.0 ],
+					"patching_rect" : [ 1911.0, 384.0, 182.0, 20.0 ],
 					"style" : "",
-					"text" : "print"
+					"text" : "\bRemove \"Macintosh HD:\" (Mac)"
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"id" : "obj-80",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1544.0, 384.0, 182.0, 20.0 ],
+					"style" : "",
+					"text" : "\bRemove \"Macintosh HD:\" (Mac)"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-101",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "bang", "bang" ],
+					"patching_rect" : [ 1836.0, 216.0, 34.0, 22.0 ],
+					"style" : "",
+					"text" : "t b b"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-100",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 1836.0, 182.864502, 63.0, 22.0 ],
+					"style" : "",
+					"text" : "delay 100"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-86",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
-					"patching_rect" : [ 1308.0, 485.0, 35.0, 22.0 ],
+					"patching_rect" : [ 1826.0, 766.0, 35.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"shell" : "(default)"
+					}
+,
 					"style" : "",
 					"text" : "shell"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-87",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1863.0, 766.0, 150.0, 33.0 ],
+					"style" : "",
+					"text" : "\bCreate a practice file inside the midi file"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-88",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1826.0, 673.5, 87.0, 22.0 ],
+					"style" : "",
+					"text" : "prepend mkdir"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-89",
+					"linecount" : 2,
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1826.0, 716.0, 356.699951, 35.0 ],
+					"style" : "",
+					"text" : "mkdir \"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/midi/practice\""
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-91",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1929.0, 609.5, 56.0, 22.0 ],
+					"style" : "",
+					"text" : "/practice"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-92",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1826.0, 640.0, 122.0, 22.0 ],
+					"style" : "",
+					"text" : "sprintf symout %s%s"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-82",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"patching_rect" : [ 1459.0, 766.0, 35.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"shell" : "(default)"
+					}
+,
+					"style" : "",
+					"text" : "shell"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-83",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1496.0, 766.0, 150.0, 33.0 ],
+					"style" : "",
+					"text" : "\bCreate a practice file inside the data folder"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-84",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1459.0, 670.5, 87.0, 22.0 ],
+					"style" : "",
+					"text" : "prepend mkdir"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-85",
+					"linecount" : 2,
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1459.0, 716.0, 356.699951, 35.0 ],
+					"style" : "",
+					"text" : "mkdir \"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/data/practice\""
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-81",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1562.0, 606.5, 56.0, 22.0 ],
+					"style" : "",
+					"text" : "/practice"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-71",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1459.0, 637.0, 122.0, 22.0 ],
+					"style" : "",
+					"text" : "sprintf symout %s%s"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-35",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"patching_rect" : [ 1459.0, 550.0, 35.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"shell" : "(default)"
+					}
+,
+					"style" : "",
+					"text" : "shell"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-97",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1459.0, 189.5, 157.0, 20.0 ],
+					"style" : "",
+					"text" : "Create folders to store data"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-77",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1863.0, 549.0, 150.0, 20.0 ],
+					"style" : "",
+					"text" : "Create a midi file"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-72",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1496.0, 550.0, 150.0, 20.0 ],
+					"style" : "",
+					"text" : "\bCreate a data file"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-45",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"patching_rect" : [ 1826.0, 549.0, 35.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"shell" : "(default)"
+					}
+,
+					"style" : "",
+					"text" : "shell"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-33",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 5,
+					"outlettype" : [ "", "", "", "", "" ],
+					"patching_rect" : [ 1826.0, 383.0, 83.0, 22.0 ],
+					"style" : "",
+					"text" : "regexp .+:(.+)"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-18",
+					"linecount" : 2,
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1826.0, 421.5, 356.699951, 35.0 ],
+					"style" : "",
+					"text" : "\"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/midi\""
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-106",
+					"linecount" : 2,
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1459.0, 421.5, 356.699951, 35.0 ],
+					"style" : "",
+					"text" : "\"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/data\""
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-102",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 5,
+					"outlettype" : [ "", "", "", "", "" ],
+					"patching_rect" : [ 1459.0, 383.0, 83.0, 22.0 ],
+					"style" : "",
+					"text" : "regexp .+:(.+)"
 				}
 
 			}
@@ -83,9 +385,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1724.5, 432.0, 406.699951, 35.0 ],
+					"patching_rect" : [ 1826.0, 504.5, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "mkdir \"Macintosh HD:/Users/musiclabimac/Desktop/expertpiano/script/Max/midi\""
+					"text" : "mkdir \"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/midi\""
 				}
 
 			}
@@ -96,7 +398,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1724.5, 397.0, 87.0, 22.0 ],
+					"patching_rect" : [ 1826.0, 469.5, 87.0, 22.0 ],
 					"style" : "",
 					"text" : "prepend mkdir"
 				}
@@ -105,13 +407,14 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-75",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1724.5, 350.0, 406.699951, 22.0 ],
+					"patching_rect" : [ 1826.0, 335.0, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/expertpiano/script/Max/midi\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/midi\""
 				}
 
 			}
@@ -122,7 +425,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1456.5, 288.0, 122.0, 22.0 ],
+					"patching_rect" : [ 1607.5, 297.0, 122.0, 22.0 ],
 					"style" : "",
 					"text" : "sprintf symout %s%s"
 				}
@@ -135,7 +438,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1532.0, 167.0, 33.0, 22.0 ],
+					"patching_rect" : [ 1683.0, 176.0, 33.0, 22.0 ],
 					"style" : "",
 					"text" : "midi"
 				}
@@ -148,7 +451,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1308.0, 397.0, 87.0, 22.0 ],
+					"patching_rect" : [ 1459.0, 469.5, 87.0, 22.0 ],
 					"style" : "",
 					"text" : "prepend mkdir"
 				}
@@ -162,9 +465,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1308.0, 432.0, 406.0, 35.0 ],
+					"patching_rect" : [ 1459.0, 504.5, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "mkdir \"Macintosh HD:/Users/musiclabimac/Desktop/expertpiano/script/Max/data\""
+					"text" : "mkdir \"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/data\""
 				}
 
 			}
@@ -173,11 +476,11 @@
 					"id" : "obj-50",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
-					"numoutlets" : 4,
-					"outlettype" : [ "bang", "bang", "bang", "bang" ],
-					"patching_rect" : [ 1580.25, 109.0, 54.0, 22.0 ],
+					"numoutlets" : 5,
+					"outlettype" : [ "bang", "bang", "bang", "bang", "bang" ],
+					"patching_rect" : [ 1731.25, 118.0, 64.0, 22.0 ],
 					"style" : "",
-					"text" : "t b b b b"
+					"text" : "t b b b b b"
 				}
 
 			}
@@ -188,7 +491,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1486.75, 167.0, 34.0, 22.0 ],
+					"patching_rect" : [ 1637.75, 176.0, 34.0, 22.0 ],
 					"style" : "",
 					"text" : "data"
 				}
@@ -197,13 +500,14 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-59",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1308.0, 350.0, 406.699951, 22.0 ],
+					"patching_rect" : [ 1459.0, 335.0, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/expertpiano/script/Max/data\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/data\""
 				}
 
 			}
@@ -214,7 +518,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1308.0, 288.0, 122.0, 22.0 ],
+					"patching_rect" : [ 1459.0, 297.0, 122.0, 22.0 ],
 					"style" : "",
 					"text" : "sprintf symout %s%s"
 				}
@@ -228,9 +532,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1308.0, 207.0, 356.699951, 35.0 ],
+					"patching_rect" : [ 1459.0, 216.0, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
 				}
 
 			}
@@ -241,7 +545,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1580.25, 52.0, 47.0, 20.0 ],
+					"patching_rect" : [ 1731.25, 61.0, 47.0, 20.0 ],
 					"style" : "",
 					"text" : "Path"
 				}
@@ -254,7 +558,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 1580.25, 78.0, 60.0, 22.0 ],
+					"patching_rect" : [ 1731.25, 87.0, 60.0, 22.0 ],
 					"style" : "",
 					"text" : "loadbang"
 				}
@@ -269,7 +573,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1595.25, 143.0, 34.0, 22.0 ],
+					"patching_rect" : [ 1746.25, 152.0, 34.0, 22.0 ],
 					"style" : "",
 					"text" : "path"
 				}
@@ -284,7 +588,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 1595.25, 173.864502, 69.0, 22.0 ],
+					"patching_rect" : [ 1746.25, 182.864502, 69.0, 22.0 ],
 					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
 					"style" : "",
 					"text" : "thispatcher"
@@ -636,7 +940,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 117.5, 564.0, 621.5, 22.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
 				}
 
 			}
@@ -1130,6 +1434,59 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-101", 0 ],
+					"source" : [ "obj-100", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-85", 0 ],
+					"source" : [ "obj-101", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-89", 0 ],
+					"source" : [ "obj-101", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-106", 1 ],
+					"order" : 0,
+					"source" : [ "obj-102", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-106", 0 ],
+					"order" : 1,
+					"source" : [ "obj-102", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-46", 0 ],
+					"order" : 1,
+					"source" : [ "obj-106", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-71", 0 ],
+					"order" : 0,
+					"source" : [ "obj-106", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-9", 1 ],
 					"order" : 0,
 					"source" : [ "obj-12", 0 ]
@@ -1201,6 +1558,22 @@
 				"patchline" : 				{
 					"destination" : [ "obj-141", 0 ],
 					"source" : [ "obj-17", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-78", 0 ],
+					"order" : 1,
+					"source" : [ "obj-18", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-92", 0 ],
+					"order" : 0,
+					"source" : [ "obj-18", 0 ]
 				}
 
 			}
@@ -1362,6 +1735,22 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-18", 1 ],
+					"order" : 0,
+					"source" : [ "obj-33", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-18", 0 ],
+					"order" : 1,
+					"source" : [ "obj-33", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-12", 2 ],
 					"order" : 1,
 					"source" : [ "obj-36", 0 ]
@@ -1503,42 +1892,58 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-80", 0 ],
+					"destination" : [ "obj-35", 0 ],
 					"source" : [ "obj-49", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-51", 0 ],
-					"source" : [ "obj-50", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-65", 0 ],
+					"destination" : [ "obj-100", 0 ],
 					"source" : [ "obj-50", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-69", 0 ],
-					"source" : [ "obj-50", 3 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-73", 0 ],
+					"destination" : [ "obj-51", 0 ],
 					"source" : [ "obj-50", 2 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-65", 0 ],
+					"source" : [ "obj-50", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-69", 0 ],
+					"source" : [ "obj-50", 4 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-73", 0 ],
+					"source" : [ "obj-50", 3 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-64", 1 ],
+					"order" : 0,
+					"source" : [ "obj-51", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-81", 0 ],
+					"order" : 1,
 					"source" : [ "obj-51", 0 ]
 				}
 
@@ -1598,7 +2003,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-46", 0 ],
+					"destination" : [ "obj-102", 0 ],
 					"source" : [ "obj-59", 0 ]
 				}
 
@@ -1644,7 +2049,16 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-85", 0 ],
+					"destination" : [ "obj-64", 0 ],
+					"order" : 1,
+					"source" : [ "obj-65", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-74", 0 ],
+					"order" : 0,
 					"source" : [ "obj-65", 0 ]
 				}
 
@@ -1711,7 +2125,23 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-84", 0 ],
+					"source" : [ "obj-71", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-74", 1 ],
+					"order" : 1,
+					"source" : [ "obj-73", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-91", 0 ],
+					"order" : 0,
 					"source" : [ "obj-73", 0 ]
 				}
 
@@ -1734,7 +2164,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-78", 0 ],
+					"destination" : [ "obj-33", 0 ],
 					"source" : [ "obj-75", 0 ]
 				}
 
@@ -1757,6 +2187,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-45", 0 ],
+					"source" : [ "obj-79", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-141", 1 ],
 					"source" : [ "obj-8", 0 ]
 				}
@@ -1764,24 +2201,36 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-81", 0 ],
-					"source" : [ "obj-80", 1 ]
+					"destination" : [ "obj-71", 1 ],
+					"source" : [ "obj-81", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-64", 0 ],
-					"order" : 1,
+					"destination" : [ "obj-85", 1 ],
+					"source" : [ "obj-84", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-82", 0 ],
 					"source" : [ "obj-85", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-74", 0 ],
-					"order" : 0,
-					"source" : [ "obj-85", 0 ]
+					"destination" : [ "obj-89", 1 ],
+					"source" : [ "obj-88", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-86", 0 ],
+					"source" : [ "obj-89", 0 ]
 				}
 
 			}
@@ -1805,6 +2254,20 @@
 					"destination" : [ "obj-63", 0 ],
 					"order" : 1,
 					"source" : [ "obj-90", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-92", 1 ],
+					"source" : [ "obj-91", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-88", 0 ],
+					"source" : [ "obj-92", 0 ]
 				}
 
 			}
@@ -1914,8 +2377,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
