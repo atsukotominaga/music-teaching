@@ -8,11 +8,13 @@ melody = {
     c16 d16 e16 f16 g16 f16 e16 d16
     c16 d16 e16 f16 g16 f16 e16 d16
     c16 d16 e16 f16 g16 f16 e16 d16
-    c4 g'4
-    c,16 d16 e16 f16 g16 f16 e16 d16
     c16 d16 e16 f16 g16 f16 e16 d16
-    c16 d16 e16 f16 g16 f16 e16 d16
-    c2 \bar "|."
+    c1
+    g'16 f16 e16 d16 c16 d16 e16 f16
+    g16 f16 e16 d16 c16 d16 e16 f16
+    g16 f16 e16 d16 c16 d16 e16 f16
+    g16 f16 e16 d16 c16 d16 e16 f16
+    g2 c,2 \bar "|."
 
     }
 }
