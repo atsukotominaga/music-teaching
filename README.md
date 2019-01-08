@@ -16,3 +16,7 @@ Teaching behaviour in musical skill transmission
 
 ### Preregistration
 TBC
+
+## Scripts
+### Max
+- Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 7.
