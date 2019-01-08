@@ -10,6 +10,7 @@ script/R/.DS_Store
 
 # Max
 script/Max/data/
+script/Max/midi/
 
 # python Jupyter notebook
 script/jupyter/.ipynb_checkpoints/image_generator-checkpoint.ipynb
