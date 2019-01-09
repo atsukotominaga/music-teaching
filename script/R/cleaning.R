@@ -5,8 +5,14 @@
 #  Documentation
 ####################################
 # Created: 14/12/2018
-# This script removes pitch errors from raw data.
+# Modifed: 09/01/2019
+# This script organises raw data and removes pitch errors from it.
 # GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
+
+####################################
+#  Requirements
+####################################
+# !!! Set working directory to file source location !!!
 
 # Install and load required packages
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
