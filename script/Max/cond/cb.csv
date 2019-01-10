@@ -1,9 +1,1 @@
-1,	teaching	performing	inst_t	inst_p	articulation	dynamics	tempoChange	stim_a	stim_d	stim_t;
-2,	performing	teaching	inst_p	inst_t	dynamics	tempoChange	articulation	stim_d	stim_t	stim_a;
-3,	teaching	performing	inst_t	inst_p	tempoChange	articulation	dynamics	stim_t	stim_a	stim_d;
-4,	performing	teaching	inst_p	inst_t	articulation	dynamics	tempoChange	stim_a	stim_d	stim_t;
-5,	teaching	performing	inst_t	inst_p	dynamics	tempoChange	articulation	stim_d	stim_t	stim_a;
-6,	performing	teaching	inst_p	inst_t	tempoChange	articulation	dynamics	stim_t	stim_a	stim_d;
-7,	teaching	performing	inst_t	inst_p	articulation	dynamics	tempoChange	stim_a	stim_d	stim_t;
-8,	performing	teaching	inst_p	inst_t	dynamics	tempoChange	articulation	stim_d	stim_t	stim_a;
-9,	teaching	performing	inst_t	inst_p	tempoChange	articulation	dynamics	stim_t	stim_a	stim_d;
+subNr	firstCond	secondCond	inst_1	inst_2	firstSkill	secondSkill	firstStimuli	secondStimuli1,	teaching	performing	inst_t	inst_p	articulation	dynamics	stim_a	stim_d2,	performing	teaching	inst_p	inst_t	dynamics	articulation	stim_d	stim_a3,	teaching	performing	inst_t	inst_p	articulation	dynamics	stim_a	stim_d4,	performing	teaching	inst_p	inst_t	dynamics	articulation	stim_d	stim_a5,	teaching	performing	inst_t	inst_p	articulation	dynamics	stim_a	stim_d6,	performing	teaching	inst_p	inst_t	dynamics	articulation	stim_d	stim_a7,	teaching	performing	inst_t	inst_p	articulation	dynamics	stim_a	stim_d8,	performing	teaching	inst_p	inst_t	dynamics	articulation	stim_d	stim_a9,	teaching	performing	inst_t	inst_p	articulation	dynamics	stim_a	stim_d10,	performing	teaching	inst_p	inst_t	dynamics	articulation	stim_d	stim_a
