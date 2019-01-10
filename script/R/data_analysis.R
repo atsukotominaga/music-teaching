@@ -5,9 +5,14 @@
 #  Documentation
 ####################################
 # Created: 5/12/2018
-# Modified: 30/12/2018
+# Modified: 09/01/2019
 # This script aggregate and plot data.
 # GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
+
+####################################
+#  Requirements
+####################################
+# !!! Set working directory to file source location !!!
 
 # Install and load required packages
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
