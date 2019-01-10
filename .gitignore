@@ -14,3 +14,7 @@ script/Max/midi/
 
 # python Jupyter notebook
 script/jupyter/.ipynb_checkpoints/image_generator-checkpoint.ipynb
+script/jupyter/stimuli/removed/
+
+# lilypond
+script/lilypond/removed/
