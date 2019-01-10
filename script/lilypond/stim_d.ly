@@ -5,14 +5,16 @@ melody = {
     \clef treble
     \time 4/4
     
-    c16\< d16 e16 f16\! g16\> f16 e16 d16\!
-    c16\< d16 e16 f16\! g16\> f16 e16 d16\!
-    c16\< d16 e16 f16\! g16\> f16 e16 d16\!
-    c4 g'4
-    c,16\< d16 e16 f16\! g16\> f16 e16 d16\!
-    c16\< d16 e16 f16\! g16\> f16 e16 d16\!
-    c16\< d16 e16 f16\! g16\> f16 e16 d16\!
-    c2 \bar "|."
+    c16\f d16 e16 f16 g16 f16 e16 d16
+    c16\p d16 e16 f16 g16 f16 e16 d16
+    c16\f d16 e16 f16 g16 f16 e16 d16
+    c16\p d16 e16 f16 g16 f16 e16 d16
+    c1
+    g'16\p f16 e16 d16 c16 d16 e16 f16
+    g16\f f16 e16 d16 c16 d16 e16 f16
+    g16\p f16 e16 d16 c16 d16 e16 f16
+    g16\f f16 e16 d16 c16 d16 e16 f16
+    g2 c,2 \bar "|."
 
     }
 }
