@@ -5,7 +5,7 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x64",
+			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
@@ -43,7 +43,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 468.0, 280.0, 47.0, 22.0 ],
+					"patching_rect" : [ 468.0, 468.0, 47.0, 22.0 ],
 					"style" : "",
 					"text" : "s skill2"
 				}
@@ -55,7 +55,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 346.0, 280.0, 47.0, 22.0 ],
+					"patching_rect" : [ 346.0, 468.0, 47.0, 22.0 ],
 					"style" : "",
 					"text" : "s skill1"
 				}
@@ -237,7 +237,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 346.0, 232.5, 154.0, 33.0 ],
+					"patching_rect" : [ 524.5, 462.5, 154.0, 33.0 ],
 					"style" : "",
 					"text" : "Send the order of skills for practice"
 				}
@@ -276,7 +276,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 103.0, 598.0, 50.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "inst_p"
 				}
 
 			}
@@ -300,7 +301,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 19.0, 598.0, 50.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "inst_t"
 				}
 
 			}
@@ -361,7 +363,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 109.0, 471.0, 71.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "performing"
 				}
 
 			}
@@ -385,7 +388,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 19.0, 364.0, 71.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "teaching"
 				}
 
 			}
@@ -588,7 +592,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 468.0, 371.5, 52.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "stim_d"
 				}
 
 			}
@@ -600,7 +605,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 346.0, 371.5, 52.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "stim_a"
 				}
 
 			}
@@ -612,7 +618,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 468.0, 329.0, 93.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "dynamics"
 				}
 
 			}
@@ -624,7 +631,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 346.0, 329.0, 91.5, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "articulation"
 				}
 
 			}
@@ -650,7 +658,8 @@
 					"patching_rect" : [ 289.0, 745.0, 107.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 121.0, 54.0, 107.0, 22.0 ],
-					"style" : ""
+					"style" : "",
+					"text" : "0_p_.png"
 				}
 
 			}
@@ -799,7 +808,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 788.0, 420.0, 406.0, 35.0 ],
 					"style" : "",
-					"text" : "read \"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/cond/cb.csv\""
+					"text" : "read \"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/cond/cb.csv\""
 				}
 
 			}
@@ -839,7 +848,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 788.0, 338.0, 406.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/cond/cb.csv\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/cond/cb.csv\""
 				}
 
 			}
@@ -866,7 +875,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 788.0, 195.0, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
 				}
 
 			}
@@ -1275,6 +1284,14 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-31", 0 ],
+					"order" : 1,
+					"source" : [ "obj-51", 6 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-33", 1 ],
 					"order" : 0,
 					"source" : [ "obj-51", 2 ]
@@ -1302,6 +1319,14 @@
 					"destination" : [ "obj-34", 0 ],
 					"order" : 1,
 					"source" : [ "obj-51", 3 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-37", 0 ],
+					"order" : 1,
+					"source" : [ "obj-51", 7 ]
 				}
 
 			}
@@ -1338,6 +1363,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-85", 1 ],
+					"order" : 0,
 					"source" : [ "obj-51", 6 ]
 				}
 
@@ -1345,6 +1371,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-86", 1 ],
+					"order" : 0,
 					"source" : [ "obj-51", 7 ]
 				}
 
@@ -1409,8 +1436,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-31", 0 ],
-					"order" : 1,
+					"destination" : [ "obj-87", 0 ],
 					"source" : [ "obj-81", 0 ]
 				}
 
@@ -1418,23 +1444,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-87", 0 ],
-					"order" : 0,
-					"source" : [ "obj-81", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-37", 0 ],
-					"order" : 0,
-					"source" : [ "obj-82", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-87", 0 ],
-					"order" : 1,
 					"source" : [ "obj-82", 0 ]
 				}
 
@@ -1498,7 +1507,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/Desktop/expertpiano/script/Max/cond",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1

@@ -5,11 +5,11 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x64",
+			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 79.0, 1612.0, 933.0 ],
+		"rect" : [ 1714.0, -939.0, 2492.0, 1327.0 ],
 		"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -1276,7 +1276,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 245.5, 747.983643, 75.0, 35.0 ],
+					"patching_rect" : [ 232.75, 747.983643, 75.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 1002.0, 232.683228, 146.5, 35.0 ],
 					"style" : "",
@@ -1444,7 +1444,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 529.0, 1175.244995, 356.699951, 49.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/0__.png\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/black.png\""
 				}
 
 			}
@@ -1471,7 +1471,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 529.0, 992.244995, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
 				}
 
 			}
@@ -1541,7 +1541,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 61.0, 1184.744995, 450.0, 250.0 ],
-					"pic" : "Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/0__.png",
+					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/black.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 514.75, 234.349976, 470.438812, 261.0 ]
 				}
@@ -1630,14 +1630,17 @@
 				"box" : 				{
 					"fontsize" : 24.0,
 					"id" : "obj-26",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 232.75, 490.633423, 104.75, 35.0 ],
+					"patching_rect" : [ 232.75, 490.633423, 104.75, 62.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 152.5, 439.39978, 94.5, 35.0 ],
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 152.5, 439.39978, 94.5, 62.0 ],
 					"style" : "",
+					"text" : "dynamics",
 					"textjustification" : 1
 				}
 
@@ -1646,14 +1649,17 @@
 				"box" : 				{
 					"fontsize" : 24.0,
 					"id" : "obj-27",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 58.0, 490.633423, 109.0, 35.0 ],
+					"patching_rect" : [ 58.0, 490.633423, 109.0, 62.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 32.0, 439.39978, 96.5, 35.0 ],
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 32.0, 439.39978, 96.5, 62.0 ],
 					"style" : "",
+					"text" : "articulation",
 					"textjustification" : 1
 				}
 
@@ -1782,6 +1788,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 214.25, 511.166626, 153.0, 35.0 ],
 					"style" : "",
+					"text" : "inst_p",
 					"textjustification" : 1
 				}
 
@@ -1798,6 +1805,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 32.0, 511.166626, 154.0, 35.0 ],
 					"style" : "",
+					"text" : "inst_t",
 					"textjustification" : 1
 				}
 
@@ -2085,23 +2093,6 @@
 , 			{
 				"box" : 				{
 					"fontsize" : 24.0,
-					"id" : "obj-60",
-					"maxclass" : "message",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 328.25, 793.983643, 75.0, 35.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 1002.0, 478.033203, 146.5, 35.0 ],
-					"style" : "",
-					"text" : "stim_t",
-					"textjustification" : 1
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontsize" : 24.0,
 					"id" : "obj-76",
 					"maxclass" : "message",
 					"numinlets" : 2,
@@ -2124,7 +2115,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 430.25, 747.983643, 75.0, 35.0 ],
+					"patching_rect" : [ 409.25, 747.983643, 75.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 1002.0, 314.033203, 146.5, 35.0 ],
 					"style" : "",
@@ -2168,7 +2159,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 340.75, 747.983643, 81.0, 35.0 ],
+					"patching_rect" : [ 318.5, 747.983643, 81.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 1002.0, 273.683228, 146.5, 35.0 ],
 					"style" : "",
@@ -3020,30 +3011,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-113", 0 ],
-					"order" : 0,
-					"source" : [ "obj-60", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-17", 0 ],
-					"order" : 1,
-					"source" : [ "obj-60", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-83", 0 ],
-					"order" : 2,
-					"source" : [ "obj-60", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-63", 3 ],
 					"source" : [ "obj-61", 3 ]
 				}
@@ -3329,29 +3296,36 @@
 			}
  ],
 		"dependency_cache" : [ 			{
+				"name" : "black.png",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/image",
+				"patcherrelativepath" : "./image",
+				"type" : "PNG ",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "subPatch_MIDInoteRecording_practice.maxpat",
-				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_dataFileNaming_practice.maxpat",
-				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_condFileReading.maxpat",
-				"bootpath" : "~/Desktop/expertpiano/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/Desktop/expertpiano/script/Max/cond",
+				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
