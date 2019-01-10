@@ -94,9 +94,9 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1261.0, 167.0, 50.0, 22.0 ],
+					"patching_rect" : [ 1261.0, 167.0, 63.0, 22.0 ],
 					"style" : "",
-					"text" : "r trialNr"
+					"text" : "r trialNr_p"
 				}
 
 			}
@@ -1419,8 +1419,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
