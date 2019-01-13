@@ -8,6 +8,9 @@ script/R/csv/
 script/R/.Rhistory
 script/R/.DS_Store
 
+# Rmd
+script/Rmd/.Rhistory
+
 # Max
 script/Max/data/
 script/Max/midi/
