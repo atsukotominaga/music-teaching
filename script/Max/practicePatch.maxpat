@@ -5,7 +5,7 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x86",
+			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
@@ -38,6 +38,19 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-60",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 825.0, 482.183594, 41.0, 22.0 ],
+					"style" : "",
+					"text" : "prac_"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-129",
 					"maxclass" : "message",
@@ -291,7 +304,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 938.0, 485.0, 24.0, 24.0 ],
+					"patching_rect" : [ 938.0, 536.0, 24.0, 24.0 ],
 					"style" : ""
 				}
 
@@ -469,7 +482,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 825.0, 551.983643, 53.0, 22.0 ],
+					"patching_rect" : [ 825.0, 602.983643, 53.0, 22.0 ],
 					"style" : "",
 					"text" : "practice"
 				}
@@ -481,7 +494,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 947.0, 584.633423, 49.0, 22.0 ],
+					"patching_rect" : [ 947.0, 635.633423, 49.0, 22.0 ],
 					"style" : "",
 					"text" : "s score"
 				}
@@ -493,7 +506,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 872.0, 586.0, 68.0, 22.0 ],
+					"patching_rect" : [ 872.0, 637.0, 68.0, 22.0 ],
 					"style" : "",
 					"text" : "s condition"
 				}
@@ -505,7 +518,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 825.0, 586.0, 40.0, 22.0 ],
+					"patching_rect" : [ 825.0, 637.0, 40.0, 22.0 ],
 					"style" : "",
 					"text" : "s skill"
 				}
@@ -1258,7 +1271,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-59",
-					"items" : [ "to Max 1", ",", "to Max 2", ",", "Scarlett 6i6 USB" ],
+					"items" : [ "Digital Piano", ",", "Scarlett 6i6 USB", ",", "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1375,12 +1388,12 @@
 				"box" : 				{
 					"id" : "obj-31",
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 825.0, 472.5, 87.0, 22.0 ],
+					"patching_rect" : [ 825.0, 523.5, 103.0, 22.0 ],
 					"style" : "",
-					"text" : "sprintf %s.png"
+					"text" : "sprintf %s%s.png"
 				}
 
 			}
@@ -1390,7 +1403,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 825.0, 503.5, 56.0, 22.0 ],
+					"patching_rect" : [ 825.0, 554.5, 56.0, 22.0 ],
 					"style" : "",
 					"text" : "s picture"
 				}
@@ -1417,7 +1430,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 55.0, 179.0, 60.0, 22.0 ],
+					"patching_rect" : [ 415.75, 688.0, 60.0, 22.0 ],
 					"style" : "",
 					"text" : "loadbang"
 				}
@@ -1494,7 +1507,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 529.0, 1175.244995, 220.699951, 62.0 ],
+					"patching_rect" : [ 529.0, 1175.244995, 221.0, 62.0 ],
 					"style" : "",
 					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/inst_1.png\""
 				}
@@ -2875,7 +2888,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-4", 0 ],
+					"destination" : [ "obj-55", 0 ],
 					"source" : [ "obj-3", 0 ]
 				}
 
@@ -2898,8 +2911,24 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-31", 0 ],
+					"destination" : [ "obj-31", 1 ],
 					"order" : 2,
+					"source" : [ "obj-30", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-31", 0 ],
+					"order" : 3,
+					"source" : [ "obj-30", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-60", 0 ],
+					"order" : 4,
 					"source" : [ "obj-30", 0 ]
 				}
 
@@ -3123,6 +3152,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-56", 0 ],
 					"source" : [ "obj-59", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-31", 0 ],
+					"source" : [ "obj-60", 0 ]
 				}
 
 			}
@@ -3364,14 +3400,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-113", 0 ],
-					"order" : 0,
-					"source" : [ "obj-92", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-17", 0 ],
 					"order" : 1,
 					"source" : [ "obj-92", 0 ]
 				}
@@ -3379,7 +3407,31 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-83", 0 ],
+					"destination" : [ "obj-128", 1 ],
+					"order" : 0,
+					"source" : [ "obj-92", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-128", 0 ],
+					"order" : 3,
+					"source" : [ "obj-92", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-129", 0 ],
+					"order" : 4,
+					"source" : [ "obj-92", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-17", 0 ],
 					"order" : 2,
 					"source" : [ "obj-92", 0 ]
 				}
@@ -3651,8 +3703,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
 				}
 ,
 				"parentstyle" : "",
