@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 1714.0, -939.0, 2190.0, 1327.0 ],
+		"rect" : [ 34.0, 56.0, 1612.0, 960.0 ],
 		"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -45,7 +45,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 158.5, 848.366943, 41.0, 22.0 ],
-					"presentation_rect" : [ 258.666687, 678.316956, 0.0, 0.0 ],
 					"style" : "",
 					"text" : "prac_"
 				}
@@ -814,9 +813,9 @@
 					"numinlets" : 3,
 					"numoutlets" : 2,
 					"outlettype" : [ "float", "float" ],
-					"patching_rect" : [ 1239.25, 738.783691, 110.0, 22.0 ],
+					"patching_rect" : [ 1239.25, 738.783691, 103.0, 22.0 ],
 					"style" : "",
-					"text" : "makenote 127 100"
+					"text" : "makenote 90 100"
 				}
 
 			}
@@ -1259,7 +1258,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-59",
-					"items" : [ "to Max 1", ",", "to Max 2" ],
+					"items" : [ "to Max 1", ",", "to Max 2", ",", "Scarlett 6i6 USB" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1495,9 +1494,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 529.0, 1175.244995, 356.699951, 62.0 ],
+					"patching_rect" : [ 529.0, 1175.244995, 220.699951, 62.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/prac_stim_a.png\""
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/inst_1.png\""
 				}
 
 			}
@@ -1524,7 +1523,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 529.0, 992.244995, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
 				}
 
 			}
@@ -1594,7 +1593,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 61.0, 1184.744995, 450.0, 250.0 ],
-					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/image/prac_stim_a.png",
+					"pic" : "Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/inst_1.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 514.75, 234.349976, 470.438812, 261.0 ]
 				}
@@ -1691,7 +1690,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 152.5, 439.39978, 94.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_a",
+					"text" : "stim_d",
 					"textjustification" : 1
 				}
 
@@ -1708,7 +1707,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 32.0, 439.39978, 96.5, 35.0 ],
 					"style" : "",
-					"text" : "stim_d",
+					"text" : "stim_a",
 					"textjustification" : 1
 				}
 
@@ -1837,7 +1836,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 214.25, 511.166626, 153.0, 35.0 ],
 					"style" : "",
-					"text" : "inst_t",
+					"text" : "inst_p",
 					"textjustification" : 1
 				}
 
@@ -1854,7 +1853,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 32.0, 511.166626, 154.0, 35.0 ],
 					"style" : "",
-					"text" : "inst_p",
+					"text" : "inst_t",
 					"textjustification" : 1
 				}
 
@@ -2003,9 +2002,9 @@
 					"numinlets" : 3,
 					"numoutlets" : 2,
 					"outlettype" : [ "float", "float" ],
-					"patching_rect" : [ 604.0, 702.433472, 110.0, 22.0 ],
+					"patching_rect" : [ 604.0, 702.433472, 103.0, 22.0 ],
 					"style" : "",
-					"text" : "makenote 127 100"
+					"text" : "makenote 90 100"
 				}
 
 			}
@@ -3430,36 +3429,36 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "prac_stim_a.png",
-				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/image",
+				"name" : "inst_1.png",
+				"bootpath" : "~/Desktop/expertpiano/script/Max/image",
 				"patcherrelativepath" : "./image",
 				"type" : "PNG ",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_MIDInoteRecording_practice.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
+				"bootpath" : "~/Desktop/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_dataFileNaming_practice.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
+				"bootpath" : "~/Desktop/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subPatch_condFileReading.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max",
+				"bootpath" : "~/Desktop/expertpiano/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "cb.csv",
-				"bootpath" : "~/OneDrive - Central European University/Project/expertpiano/script/Max/cond",
+				"bootpath" : "~/Desktop/expertpiano/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
@@ -3578,8 +3577,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3652,8 +3651,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
