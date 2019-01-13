@@ -71,6 +71,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 - *Italic*: Verbal instruction
 - **[  ]**: What to do
+- Please use a checklist to make sure you don't forget each procedure.
 
 ### Introduction
 <span>
@@ -82,6 +83,8 @@ Adjust the volume of the headphone so that it sounds naturally.
 **[ Collect the informed consent form ]**
 
 ### Practice session
+
+**[ Open practicePatch ]**
 
 **[ Click “inst_1” ]**
 
@@ -105,6 +108,8 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 **[ Check whether he or she can produce the sound without pitch errors twice consecutively]**
 
+**[ Click "stim_n"]**
+
 - If he or she cannot perform the piece within **5 attempts**, he or she cannot continue the experiment.
 
 **[ Click “Black” ]**
@@ -112,7 +117,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 ### Experiment
 
 - Participants whose SubNr is odd start from the teaching condition whereas those whose SubNr is even start from the performing condition.
-- Please see the order of the stimuli on the blue patcher.
+- Please see the order of the stimuli on the practicePatcher.
 
 #### 1) Teaching condition
 > 1st Stimulus
@@ -121,15 +126,13 @@ Adjust the volume of the headphone so that it sounds naturally.
 *You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask me now (Also explain the main information of the expression). If you don't have any question, I will give you the sound of the metronome and please perform the piece according to the notation.*
 </span>
 
-**[ Open practicePatch ]**
-
 **[ Click 1st Stimulus ]**
 
 **[ Explain the musical notation]**
 
 ![](./image/prac_stim_a.png){ width=80% }
 
-**[ Ask the participant to play the piece with the expressions 5 times ]**
+**[ Check the participant to play the piece expressively without pitch errors twice consecutively ]**
 
 <span>
 *Thank you. Do you have any questions?*
@@ -144,7 +147,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 > 2nd Stimulus
 
 <span>
-*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation and perform the piece 5 times according to the notation.*
+*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 </span>
 
 **[ Click 2nd Stimuli ]**
@@ -153,7 +156,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 ![](./image/prac_stim_d.png){ width=80% }
 
-**[ Ask the participant to play the piece with the expression 5 times ]**
+**[ Check the participant to play the piece expressively without pitch errors twice consecutively ]**
 
 <span>
 *Thank you. Do you have any questions?*
@@ -171,14 +174,14 @@ Adjust the volume of the headphone so that it sounds naturally.
 > 1st Stimulus
 
 <span>
-*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and perform the piece 5 times according to the notation.*
+*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 </span>
 
 **[ Click 1st Stimulus ]**
 
 **[ Explain the musical notation]**
 
-**[ Ask the participant to play the piece with the expression 5 times ]**
+**[ Check the participant to play the piece expressively without pitch errors twice consecutively ]**
 
 <span>
 *Thank you. Do you have any questions?*
@@ -193,14 +196,14 @@ Adjust the volume of the headphone so that it sounds naturally.
 > 2nd Stimulus
 
 <span>
-*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation and perform the piece 5 times according to the notation.*
+*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 </span>
 
 **[ Click 2nd Stimulus ]**
 
 **[ Explain the musical notation]**
 
-**[ Ask the participant to play the piece with the expression 5 times ]**
+**[ Check the participant to play the piece expressively without pitch errors twice consecutively ]**
 
 <span>
 *Thank you. Do you have any questions?*
@@ -223,6 +226,6 @@ Adjust the volume of the headphone so that it sounds naturally.
 </span>
 
 ## AFTER PARTICIPANT LEAVES:
-1. Check whether data were recorded correctly. If not, please leave a memo.
+1. Check whether data were recorded correctly. If not, leave a memo on the checklist.
 2. Quit Max.
 3. Turn off the piano, the audio interface and the screen in front of the piano.
