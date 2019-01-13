@@ -5,7 +5,7 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x86",
+			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
@@ -739,12 +739,12 @@
 				"box" : 				{
 					"id" : "obj-93",
 					"maxclass" : "newobj",
-					"numinlets" : 8,
+					"numinlets" : 9,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 833.0, 415.0, 311.0, 22.0 ],
+					"patching_rect" : [ 833.0, 415.0, 343.0, 22.0 ],
 					"style" : "",
-					"text" : "combine recordingPractice _ subNr _ block _ trialNr .mid"
+					"text" : "combine recordingPractice _ subNr _ block _ trialNr_ time .mid"
 				}
 
 			}
@@ -1508,6 +1508,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-36", 14 ],
+					"order" : 1,
+					"source" : [ "obj-141", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-93", 7 ],
+					"order" : 0,
 					"source" : [ "obj-141", 0 ]
 				}
 

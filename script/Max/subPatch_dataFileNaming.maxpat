@@ -5,11 +5,11 @@
 			"major" : 7,
 			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x86",
+			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 1714.0, -939.0, 2492.0, 1247.0 ],
+		"rect" : [ 34.0, 79.0, 1612.0, 933.0 ],
 		"bgcolor" : [ 0.862745, 0.741176, 0.137255, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -95,10 +95,6 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"patching_rect" : [ 1826.0, 766.0, 35.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"shell" : "(default)"
-					}
-,
 					"style" : "",
 					"text" : "shell"
 				}
@@ -138,9 +134,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1826.0, 716.0, 356.699951, 35.0 ],
+					"patching_rect" : [ 1826.0, 716.0, 384.699951, 35.0 ],
 					"style" : "",
-					"text" : "mkdir \"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/midi/practice\""
+					"text" : "mkdir /Users/musiclabmacbook/Desktop/expertpiano/script/Max/midi/practice"
 				}
 
 			}
@@ -178,10 +174,6 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"patching_rect" : [ 1459.0, 766.0, 35.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"shell" : "(default)"
-					}
-,
 					"style" : "",
 					"text" : "shell"
 				}
@@ -221,9 +213,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1459.0, 716.0, 356.699951, 35.0 ],
+					"patching_rect" : [ 1459.0, 716.0, 386.699951, 35.0 ],
 					"style" : "",
-					"text" : "mkdir \"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/data/practice\""
+					"text" : "mkdir /Users/musiclabmacbook/Desktop/expertpiano/script/Max/data/practice"
 				}
 
 			}
@@ -261,10 +253,6 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"patching_rect" : [ 1459.0, 550.0, 35.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"shell" : "(default)"
-					}
-,
 					"style" : "",
 					"text" : "shell"
 				}
@@ -314,10 +302,6 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"patching_rect" : [ 1826.0, 549.0, 35.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"shell" : "(default)"
-					}
-,
 					"style" : "",
 					"text" : "shell"
 				}
@@ -344,9 +328,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1826.0, 421.5, 356.699951, 35.0 ],
+					"patching_rect" : [ 1826.0, 421.5, 338.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/midi\""
+					"text" : "/Users/musiclabmacbook/Desktop/expertpiano/script/Max/midi"
 				}
 
 			}
@@ -358,9 +342,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1459.0, 421.5, 356.699951, 35.0 ],
+					"patching_rect" : [ 1459.0, 421.5, 338.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/data\""
+					"text" : "/Users/musiclabmacbook/Desktop/expertpiano/script/Max/data"
 				}
 
 			}
@@ -387,7 +371,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1826.0, 504.5, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "mkdir \"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/midi\""
+					"text" : "mkdir /Users/musiclabmacbook/Desktop/expertpiano/script/Max/midi"
 				}
 
 			}
@@ -412,9 +396,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1826.0, 335.0, 356.699951, 35.0 ],
+					"patching_rect" : [ 1826.0, 335.0, 364.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/midi\""
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/midi\""
 				}
 
 			}
@@ -467,7 +451,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1459.0, 504.5, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "mkdir \"/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/data\""
+					"text" : "mkdir /Users/musiclabmacbook/Desktop/expertpiano/script/Max/data"
 				}
 
 			}
@@ -505,9 +489,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1459.0, 335.0, 356.699951, 35.0 ],
+					"patching_rect" : [ 1459.0, 335.0, 366.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/data\""
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/data\""
 				}
 
 			}
@@ -534,7 +518,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1459.0, 216.0, 356.699951, 35.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
 				}
 
 			}
@@ -755,12 +739,12 @@
 				"box" : 				{
 					"id" : "obj-93",
 					"maxclass" : "newobj",
-					"numinlets" : 8,
+					"numinlets" : 10,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 833.0, 415.0, 267.0, 22.0 ],
+					"patching_rect" : [ 833.0, 415.0, 303.0, 22.0 ],
 					"style" : "",
-					"text" : "combine recording _ subNr _ block _ trialNr .mid"
+					"text" : "combine recording _ subNr _ block _ trialNr _ time .mid"
 				}
 
 			}
@@ -940,7 +924,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 117.5, 564.0, 621.5, 22.0 ],
 					"style" : "",
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/expertpiano/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/\""
 				}
 
 			}
@@ -1536,6 +1520,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-36", 14 ],
+					"order" : 1,
+					"source" : [ "obj-141", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-93", 8 ],
+					"order" : 0,
 					"source" : [ "obj-141", 0 ]
 				}
 
@@ -2377,8 +2370,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
