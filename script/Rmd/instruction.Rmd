@@ -6,7 +6,7 @@ output:
 ---
 title: "Instruction"
 author: "Atsuko Tominaga"
-date: "13/01/2019"
+date: "14/01/2019"
 output:
   html_document:
     css: style.css
@@ -54,17 +54,13 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 - Max
 
-1. Go to Desktop >> Atsuko >> expertpiano >> open the “mainPatch.maxpat” and the “imageDisplay.maxpat”.
+1. Go to Desktop >> Max alias >> open the "mainPatch.maxpat", the “practicePatch.maxpat” and the “imageDisplay.maxpat”.
 2. Move the window of the “imageDisplay.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode.
-3. Read the instruction for the “mainPatch.maxpat" below.
-    + Start a trial with the A key.
-    + Stop a trial with the D key.
-    + If you want to record the same trial again, use the reset button.
-
-4. Press the "Metro" button on the blue patcher to make sure the sound of a metronome comes from the headphone, not from the computer speaker.
-5. Also check whether the piano sounds come from the headphone and MIDI inputs are correctly responded on the green patcher (Pitch and Velocity should change according to key presses).
+3. Read the instruction on the “mainPatch.maxpat" and the "practicePatch.maxpat". <span>**Both patchers cannot be opende at the same time.**</span>
+4. Press the "Metro" button on the "blue patcher"practicePatcher" to make sure the sound of a metronome comes from the headphone, not from the computer speaker.
+5. Also check whether the piano sounds come from the headphone and MIDI inputs are correctly responded (Pitch and Velocity should change according to key presses on MIDIRecording subpatchers).
 6. If the sound of the metronome and the piano does not come from the computer speaker, go to System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”.
-7. Click the “inst_g1” button to show a general instruction on the “imageDisplay.maxpat”.
+7. Click the “inst_1” button to show a general instruction on the “imageDisplay.maxpat”.
 8. Enter SubNr for the current participant.
 
 ## WHEN PARTICIPANT ARRIVES:
@@ -77,7 +73,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 <span>
 *Thank you for participating in the experiment. The aim of the experiment is to investigate how people play a piece of music expressively. The experiment is going to last about one hour.*<br>
 *If you have any questions or concerns, please ask the experimenter at any time about the nature of the study or the methods we are using. Also, you have the right to withdraw from the experiment at any time.*<br>
-*Before we start the experiment, please read the informed consent form carefully and fill it out if you agree to take part in the study.*
+*Before we start the experiment, please read the information sheet carefully and fill it out if you agree to take part in the study.*
 </span>
 
 **[ Collect the informed consent form ]**
@@ -112,23 +108,28 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 - If he or she cannot perform the piece within **5 attempts**, he or she cannot continue the experiment.
 
-**[ Click “Black” ]**
-
 ### Experiment
 
 - Participants whose SubNr is odd start from the teaching condition whereas those whose SubNr is even start from the performing condition.
-- Please see the order of the stimuli on the practicePatcher.
+- Please see the order of the stimuli (i.e., starting from articulation or dynamics) on the practicePatcher.
 
 #### 1) Teaching condition
 > 1st Stimulus
 
 <span>
-*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask me now (Also explain the main information of the expression). If you don't have any question, I will give you the sound of the metronome and please perform the piece according to the notation.*
+*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask the experimenter now. If you don't have any question, I will give you the sound of the metronome and please perform the piece according to the notation.*
 </span>
 
 **[ Click 1st Stimulus ]**
 
 **[ Explain the musical notation]**
+
+Definition (based on Wikipedia)
+
+- Legato: musical notes are played smoothly and connected
+- Staccato: musical notes have shortened duration and are separated from each other
+- Forte: louder sound
+- Piano: quieter sound
 
 ![](./image/prac_stim_a.png){ width=80% }
 
