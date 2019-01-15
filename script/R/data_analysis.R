@@ -18,6 +18,20 @@
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 
+# Create necessary folders if not exist
+# plot
+if (!file.exists("plot")){
+  dir.create()
+}
+# eps
+if (!file.exists("plot/eps")){
+  dir.create()
+}
+# png
+if (!file.exists("plot/png")){
+  dir.create()
+}
+
 ####################################
 ### Reading and formatting data
 ####################################

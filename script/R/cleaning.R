@@ -17,6 +17,12 @@
 # Install and load required packages
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 
+# Create necessary folders if not exist
+# csv
+if (!file.exists("csv")){
+  dir.create()
+}
+
 ####################################
 # Reading & Clearning data
 ####################################
@@ -109,11 +115,6 @@ data_analysis <- df_all %>% dplyr::filter(Error != 1)
 ####################################
 # Export csv files
 ####################################
-# Create folders if it does not exist
-if (!file.exists("csv")){
-  dir.create()
-}
-
 # Export a csv file for raw_data
 write.csv(raw_data, file = './csv/raw_data.csv', row.names = F)
 # Create data only containing metronome sounds
