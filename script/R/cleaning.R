@@ -101,7 +101,24 @@ for (i in 1:length(ls_error)){
   # # of errors of onsets and offsets
   df_error <- rbind(df_error, df_all %>%
                         dplyr::filter(SubNr == ls_error[[i]][1] & BlockNr == ls_error[[i]][2] & TrialNr == ls_error[[i]][3]))
+}
+
+# Calculate error rate
+error_rate <- c()
+for (i in unique(df_error$SubNr)){
+  error = 0
+  for (j in 1:length(ls_error)){
+    if (i  == ls_error[[j]][1]){
+      error = error + 1
+    }
   }
+  error_rate <- c(error_rate, error/32)
+}
+
+# Average for each note
+print("Error rate")
+print(sprintf('mean: %g', mean(error_rate)))
+print(sprintf('sem: %g', sd(error_rate)/sqrt(length(error_rate))))
 
 # Mark pitch errors for data_all
 df_all$Error <- 0
