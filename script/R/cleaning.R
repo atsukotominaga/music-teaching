@@ -118,7 +118,7 @@ for (i in unique(df_error$SubNr)){
 # Average for each note
 print("Error rate")
 print(sprintf('mean: %g', mean(error_rate)))
-print(sprintf('sem: %g', sd(error_rate)/sqrt(length(error_rate))))
+print(sprintf('sd: %g', sd(error_rate)))
 
 # Mark pitch errors for data_all
 df_all$Error <- 0
