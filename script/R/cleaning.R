@@ -53,7 +53,7 @@ df_all <- raw_data %>% dplyr::filter(Key_OnOff != 10)
 df_onset <- raw_data %>% dplyr::filter(Key_OnOff == 1)
 
 # Read ideal performance
-df_ideal <- read.csv('./csv/ideal.csv')
+df_ideal <- read.csv('./ideal.csv')
 
 # Find pitch errors and missing data
 ls_error <- list() # List - SubNr/BlockNr/TrialNr for pitch errors
