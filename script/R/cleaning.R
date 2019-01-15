@@ -20,7 +20,7 @@ if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 # Create necessary folders if not exist
 # csv
 if (!file.exists("csv")){
-  dir.create()
+  dir.create("csv")
 }
 
 ####################################

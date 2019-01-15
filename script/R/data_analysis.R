@@ -21,15 +21,15 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 # Create necessary folders if not exist
 # plot
 if (!file.exists("plot")){
-  dir.create()
+  dir.create("plot")
 }
 # eps
-if (!file.exists("plot/eps")){
-  dir.create()
+if (!file.exists("plot/eps/")){
+  dir.create("plot/eps")
 }
 # png
-if (!file.exists("plot/png")){
-  dir.create()
+if (!file.exists("plot/png/")){
+  dir.create("plot/png")
 }
 
 ####################################
