@@ -6,7 +6,7 @@ output:
 ---
 title: "Instruction"
 author: "Atsuko Tominaga"
-date: "14/01/2019"
+date: "18/01/2019"
 output:
   html_document:
     css: style.css
@@ -56,12 +56,13 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 1. Go to Desktop >> Max alias >> open the "mainPatch.maxpat", the “practicePatch.maxpat” and the “imageDisplay.maxpat”.
 2. Move the window of the “imageDisplay.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode.
-3. Read the instruction on the “mainPatch.maxpat" and the "practicePatch.maxpat". <span>**Both patchers cannot be opende at the same time.**</span>
-4. Press the "Metro" button on the "blue patcher"practicePatcher" to make sure the sound of a metronome comes from the headphone, not from the computer speaker.
+3. Read the instruction on the “mainPatch.maxpat" and the "practicePatch.maxpat". <span>**Both patchers cannot be opened at the same time.**</span>
+4. Press the "Metro" button on the "blue patcher"practicePatcher" to make sure the sound of a metronome comes from the headphone, not from the computer speaker. <span>**Please do not skip this procedurea otherwise sometimes the metronome does not work properly only for the first time.** # added on 18/01/19</span>
 5. Also check whether the piano sounds come from the headphone and MIDI inputs are correctly responded (Pitch and Velocity should change according to key presses on MIDIRecording subpatchers).
 6. If the sound of the metronome and the piano does not come from the computer speaker, go to System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”.
-7. Click the “inst_1” button to show a general instruction on the “imageDisplay.maxpat”.
-8. Enter SubNr for the current participant.
+7. If you cannot still solve the problem above, please quit Max and relaunch it again. <span># added on 18/01/19</span>
+8. Click the “inst_1” button to show a general instruction on the “imageDisplay.maxpat”.
+9. Enter SubNr for the current participant.
 
 ## WHEN PARTICIPANT ARRIVES:
 
@@ -230,3 +231,8 @@ Definition (based on Wikipedia)
 1. Check whether data were recorded correctly. If not, leave a memo on the checklist.
 2. Quit Max.
 3. Turn off the piano, the audio interface and the screen in front of the piano.
+
+## Additional instructions after the pilot has started (18/01/19 Updated)
+- If participants ask you whether they should keep the tempo or not, please let them know that they can play the piece as they like, but keep in mind the metronome tells you the original tempo of this piece.
+- If participants ask anything related to detailed information about each skill (e.g., forte should be )
+- If participants start playing before the metronome beats, please record the same trial again.
