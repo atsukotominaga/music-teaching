@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 1714.0, -939.0, 2190.0, 1327.0 ],
+		"rect" : [ 34.0, 79.0, 1852.0, 1083.0 ],
 		"bgcolor" : [ 0.439216, 0.74902, 0.254902, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -60,18 +60,6 @@
 					"patching_rect" : [ 892.0, 612.5, 156.0, 33.0 ],
 					"style" : "",
 					"text" : "Add messages into a clear storage (set)"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-20",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 215.0, 871.0, 34.0, 22.0 ],
-					"style" : "",
-					"text" : "print"
 				}
 
 			}
@@ -290,8 +278,7 @@
 					"patching_rect" : [ 1024.0, 218.0, 81.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 123.0, 151.0, 22.0 ],
-					"style" : "",
-					"text" : "stim_n.png"
+					"style" : ""
 				}
 
 			}
@@ -372,8 +359,7 @@
 					"patching_rect" : [ 938.0, 218.0, 81.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 90.0, 151.0, 22.0 ],
-					"style" : "",
-					"text" : "practice"
+					"style" : ""
 				}
 
 			}
@@ -416,8 +402,7 @@
 					"patching_rect" : [ 852.0, 218.0, 81.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 58.0, 151.0, 22.0 ],
-					"style" : "",
-					"text" : "practice"
+					"style" : ""
 				}
 
 			}
@@ -1387,13 +1372,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-20", 0 ],
-					"source" : [ "obj-57", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-21", 0 ],
 					"source" : [ "obj-6", 0 ]
 				}
@@ -1568,8 +1546,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
