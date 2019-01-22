@@ -234,5 +234,8 @@ Definition (based on Wikipedia)
 
 ## Additional instructions after the pilot has started (18/01/19 Updated)
 - If participants ask you whether they should keep the tempo or not, please let them know that they can play the piece as they like, but keep in mind the metronome tells you the original tempo of this piece.
-- If participants ask anything related to detailed information about each skill (e.g., forte should be )
+- If participants ask anything related to detailed information about each skill (e.g., deeper legato? normal/subito forte?), just ask them to play as they like.
 - If participants start playing before the metronome beats, please record the same trial again.
+
+## Memo for patchers (20/01/19 Updated)
+- Change variable names for data storage on practice sub-patchers (data / data_p)
