@@ -6,7 +6,7 @@ output:
 ---
 title: "Instruction"
 author: "Atsuko Tominaga"
-date: "18/01/2019"
+date: "24/01/2019"
 output:
   html_document:
     css: style.css
@@ -57,12 +57,32 @@ Adjust the volume of the headphone so that it sounds naturally.
 1. Go to Desktop >> Max alias >> open the "mainPatch.maxpat", the “practicePatch.maxpat” and the “imageDisplay.maxpat”.
 2. Move the window of the “imageDisplay.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode.
 3. Read the instruction on the “mainPatch.maxpat" and the "practicePatch.maxpat". <span>**Both patchers cannot be opened at the same time.**</span>
-4. Press the "Metro" button on the "blue patcher"practicePatcher" to make sure the sound of a metronome comes from the headphone, not from the computer speaker. <span>**Please do not skip this procedurea otherwise sometimes the metronome does not work properly only for the first time.** # added on 18/01/19</span>
+4. Press the "Metro" button on the "blue patcher"practicePatcher" to make sure the sound of a metronome comes from the headphone, not from the computer speaker. <span>~~**Please do not skip this procedurea otherwise sometimes the metronome does not work properly only for the first time.** # added on 18/01/19~~</span>
 5. Also check whether the piano sounds come from the headphone and MIDI inputs are correctly responded (Pitch and Velocity should change according to key presses on MIDIRecording subpatchers).
 6. If the sound of the metronome and the piano does not come from the computer speaker, go to System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”.
 7. If you cannot still solve the problem above, please quit Max and relaunch it again. <span># added on 18/01/19</span>
 8. Click the “inst_1” button to show a general instruction on the “imageDisplay.maxpat”.
 9. Enter SubNr for the current participant.
+
+### Practice Patch <span># added on 24/01/19</span>
+![](./image/praPatch.png)
+
+### Main Patch <span># added on 24/01/19</span>
+![](./image/mainPatch.png)
+
+### Experimental Design <span># added on 24/01/19</span>
+|Condition 1 (teaching / performing)|
+|-----------------------------------|
+|1st Stimulus (articulation / dynamics) - Block 1|
+|2nd Stimulus (dynamics / articulation) - Block 2|
+
+|Condition 2 (performing / teaching)|
+|-----------------------------------|
+|1st Stimulus (articulation / dynamics) - Block 3|
+|2nd Stimulus (dynamics / articulation) - Block 4|
+
+* The order of the conditions is counterbalanced across participants.
+* The order of the stimuli is counterbalanced across participants, but it is fixed within one condition (e.g., if a participant start with articulation and move on dynamics in the first condition, he/she will perform in the same order.)
 
 ## WHEN PARTICIPANT ARRIVES:
 
@@ -121,6 +141,8 @@ Adjust the volume of the headphone so that it sounds naturally.
 *You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask the experimenter now. If you don't have any question, I will give you the sound of the metronome and please perform the piece according to the notation.*
 </span>
 
+**[ Open practicePatch ]**
+
 **[ Click 1st Stimulus ]**
 
 **[ Explain the musical notation]**
@@ -144,6 +166,10 @@ Definition (based on Wikipedia)
 
 ![](./image/inst_t.png){ width=80% }
 
+**[ Close practicePatch ]**
+
+**[ Open mainPatch ]**
+
 **[ 1 - 8 trials ]**
 
 > 2nd Stimulus
@@ -152,9 +178,11 @@ Definition (based on Wikipedia)
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 </span>
 
+**[ Open practicePatch ]**
+
 **[ Click 2nd Stimuli ]**
 
-**[ Explain the musical notation]**
+**[ Explain the musical notation ]**
 
 ![](./image/prac_stim_d.png){ width=80% }
 
@@ -165,6 +193,10 @@ Definition (based on Wikipedia)
 </span>
 
 **[ Click “inst_t” ]**
+
+**[ Close practicePatch ]**
+
+**[ Open mainPatch ]**
 
 **[ 1 - 8 trials ]**
 
@@ -178,6 +210,8 @@ Definition (based on Wikipedia)
 <span>
 *You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 </span>
+
+**[ Open practicePatch ]**
 
 **[ Click 1st Stimulus ]**
 
@@ -193,6 +227,10 @@ Definition (based on Wikipedia)
 
 ![](./image/inst_p.png){ width=80% }
 
+**[ Close practicePatch ]**
+
+**[ Open mainPatch ]**
+
 **[ 1 - 8 trials ]**
 
 > 2nd Stimulus
@@ -200,6 +238,8 @@ Definition (based on Wikipedia)
 <span>
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 </span>
+
+**[ Open practicePatch ]**
 
 **[ Click 2nd Stimulus ]**
 
@@ -212,6 +252,10 @@ Definition (based on Wikipedia)
 </span>
 
 **[ Click “inst_p” ]**
+
+**[ Close practicePatch ]**
+
+**[ Open mainPatch ]**
 
 **[ 1 - 8 trials ]**
 
@@ -237,5 +281,6 @@ Definition (based on Wikipedia)
 - If participants ask anything related to detailed information about each skill (e.g., deeper legato? normal/subito forte?), just ask them to play as they like.
 - If participants start playing before the metronome beats, please record the same trial again.
 
-## Memo for patchers (20/01/19 Updated)
-- Change variable names for data storage on practice sub-patchers (data / data_p)
+## Memo for patchers (24/01/19 Updated)
+- Change variable names for data storage on practice sub-patchers (data / data_p) <span># added on 20/01/19</span>
+- Add a tone counter to detect error (if the number of tones is not equal to 150 after performing, there will be an error in performance) <span># added on 24/01/19</span>
