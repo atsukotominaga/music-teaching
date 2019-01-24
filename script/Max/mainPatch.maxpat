@@ -49,7 +49,7 @@
 					"patching_rect" : [ 1503.0, 1267.0, 199.0, 100.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 5,
-					"presentation_rect" : [ 1129.0, 520.024902, 199.0, 100.0 ],
+					"presentation_rect" : [ 1129.0, 558.024902, 199.0, 100.0 ],
 					"style" : "",
 					"text" : "After participant finish performing, the number of tones should be 150 if they did not make any mistakes."
 				}
@@ -1951,7 +1951,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 489.25, 873.633423, 435.041718, 349.5 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 700.0, 439.041504, 457.0, 347.0 ],
+					"presentation_rect" : [ 700.0, 477.041504, 457.0, 347.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -2014,7 +2014,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 957.5, 877.0, 436.0, 305.133453 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 700.0, 86.041504, 455.0, 347.0 ],
+					"presentation_rect" : [ 700.0, 124.041504, 455.0, 347.0 ],
 					"viewvisibility" : 1
 				}
 
