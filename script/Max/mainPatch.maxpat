@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 79.0, 1612.0, 933.0 ],
+		"rect" : [ 34.0, 56.0, 1612.0, 960.0 ],
 		"bgcolor" : [ 0.862745, 0.870588, 0.878431, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -38,6 +38,24 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"bubble" : 1,
+					"fontsize" : 16.0,
+					"id" : "obj-169",
+					"linecount" : 5,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1503.0, 1267.0, 199.0, 100.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 5,
+					"presentation_rect" : [ 1129.0, 520.024902, 199.0, 100.0 ],
+					"style" : "",
+					"text" : "After participant finish performing, the number of tones should be 150 if they did not make any mistakes."
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-16",
 					"linecount" : 2,
@@ -352,7 +370,7 @@
 					"patching_rect" : [ 20.25, 873.633423, 450.0, 250.0 ],
 					"pic" : "Macintosh HD:/Users/musiclabmacbook/Desktop/expertpiano/script/Max/image/black.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 267.266846, 941.666687, 590.749756 ]
+					"presentation_rect" : [ 40.0, 301.266846, 646.833374, 398.749756 ]
 				}
 
 			}
@@ -482,7 +500,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 610.375, 89.133423, 291.0, 37.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 152.0, 106.033203, 300.0, 37.0 ],
+					"presentation_rect" : [ 152.0, 143.033203, 300.0, 37.0 ],
 					"style" : "",
 					"text" : "Start - A / Stop - D",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
@@ -1119,15 +1137,16 @@
 				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
+					"fontsize" : 14.0,
 					"id" : "obj-96",
 					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 138.0, 148.000031, 118.0, 51.0 ],
+					"patching_rect" : [ 138.0, 148.000031, 127.0, 57.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 4,
-					"presentation_rect" : [ 420.333344, 186.049805, 100.0, 64.0 ],
+					"presentation_linecount" : 3,
+					"presentation_rect" : [ 419.333344, 238.033203, 134.0, 57.0 ],
 					"style" : "",
 					"text" : "Please enter a Subject and Block Number",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
@@ -1170,7 +1189,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 107.5, 551.0, 91.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 1069.333496, 155.033203, 109.999985, 35.0 ],
+					"presentation_rect" : [ 115.000122, 749.033203, 109.999985, 35.0 ],
 					"style" : "",
 					"text" : "RESET",
 					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
@@ -1187,7 +1206,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 39.0, 536.216858, 48.0, 33.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 994.333374, 133.033203, 84.0, 20.0 ],
+					"presentation_rect" : [ 40.0, 727.033203, 84.0, 20.0 ],
 					"style" : "",
 					"text" : "Reset Trial Nr"
 				}
@@ -1594,7 +1613,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 39.0, 565.550049, 66.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 994.333374, 155.033203, 66.0, 35.0 ],
+					"presentation_rect" : [ 40.0, 749.033203, 66.0, 35.0 ],
 					"style" : "",
 					"textcolor" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
@@ -1603,18 +1622,17 @@
 , 			{
 				"box" : 				{
 					"bubble" : 1,
-					"bubbleside" : 3,
 					"id" : "obj-7",
-					"linecount" : 10,
+					"linecount" : 8,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 384.5, 370.0, 145.0 ],
+					"patching_rect" : [ 40.0, 384.5, 370.0, 118.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 11,
-					"presentation_rect" : [ 664.666687, 93.533203, 318.0, 158.0 ],
+					"presentation_linecount" : 8,
+					"presentation_rect" : [ 229.0, 707.033203, 458.833374, 118.0 ],
 					"style" : "",
-					"text" : "*In case you want to run the previous trial again, please enter the number of the previous trialNr - 1.\ne.g., If you want to start from Block 2 Trial 8, enter \"2\" for Block and \"7\" for Trial Nr.\n\n*If you want to run the first trial again, please enter \"0\". e.g., If you want to start from Block 1 Trial 1, enter \"1\" for Block and \"0\" for TrialNr.\n\nAfter you set the correct number, press the RESET button.",
+					"text" : "*In case you want to run the previous trial again, please enter the number of the previous trialNr - 1.\ne.g., If you want to start from Block 2 Trial 8, enter \"2\" for Block and \"7\" for Trial Nr.\n*If you want to run the first trial again, please enter \"0\".\ne.g., If you want to start from Block 1 Trial 1, enter \"1\" for Block and \"0\" for TrialNr.\nAfter you set the correct number, press the RESET button.",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
@@ -1639,7 +1657,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 912.437561, 272.30011, 72.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 528.300049, 181.033203, 127.0, 20.0 ],
+					"presentation_rect" : [ 559.833374, 218.033203, 127.0, 20.0 ],
 					"style" : "",
 					"text" : "Current trial"
 				}
@@ -1668,7 +1686,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 489.25, 293.86676, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 40.0, 155.033203, 100.016602, 100.016602 ],
+					"presentation_rect" : [ 40.0, 192.033203, 100.016602, 100.016602 ],
 					"style" : ""
 				}
 
@@ -1684,7 +1702,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 268.333374, 81.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 287.300049, 205.033203, 128.0, 49.0 ],
+					"presentation_rect" : [ 287.300049, 242.033203, 128.0, 49.0 ],
 					"style" : "",
 					"textcolor" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
@@ -1698,7 +1716,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 232.483398, 81.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 287.300049, 181.049805, 127.0, 20.0 ],
+					"presentation_rect" : [ 287.300049, 218.049805, 127.0, 20.0 ],
 					"style" : "",
 					"text" : "\bBlock"
 				}
@@ -1715,7 +1733,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 40.0, 140.000031, 81.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 152.0, 205.033203, 127.0, 49.0 ],
+					"presentation_rect" : [ 152.0, 242.033203, 127.0, 49.0 ],
 					"style" : "",
 					"textcolor" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
@@ -1800,7 +1818,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-29",
-					"items" : [ "Digital Piano", ",", "Scarlett 6i6 USB", ",", "to Max 1", ",", "to Max 2" ],
+					"items" : [ "Digital Piano", ",", "to Max 1", ",", "to Max 2", ",", "Scarlett 6i6 USB #2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1933,7 +1951,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 489.25, 873.633423, 435.041718, 349.5 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 994.333374, 511.016602, 457.0, 347.0 ],
+					"presentation_rect" : [ 700.0, 439.041504, 457.0, 347.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -1948,7 +1966,7 @@
 					"patching_rect" : [ 520.25, 293.86676, 157.5, 47.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 3,
-					"presentation_rect" : [ 40.0, 101.033203, 100.016602, 47.0 ],
+					"presentation_rect" : [ 40.0, 138.033203, 100.016602, 47.0 ],
 					"style" : "",
 					"text" : "Data recoring\nOn - Blue /\nOff - Black"
 				}
@@ -1996,7 +2014,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 957.5, 877.0, 436.0, 305.133453 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 994.333374, 195.041504, 455.0, 307.0 ],
+					"presentation_rect" : [ 700.0, 86.041504, 455.0, 347.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -2024,7 +2042,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 106.666687, 81.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 152.0, 181.033203, 127.0, 20.0 ],
+					"presentation_rect" : [ 152.0, 218.033203, 127.0, 20.0 ],
 					"style" : "",
 					"text" : "SubNr"
 				}
@@ -2116,7 +2134,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 825.520874, 257.633423, 81.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 528.300049, 205.033203, 128.0, 49.0 ],
+					"presentation_rect" : [ 559.833374, 242.033203, 128.0, 49.0 ],
 					"style" : ""
 				}
 
@@ -3256,8 +3274,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3399,8 +3417,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
 				}
 ,
 				"parentstyle" : "",
