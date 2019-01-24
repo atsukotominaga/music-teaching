@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 56.0, 1103.0, 960.0 ],
+		"rect" : [ 34.0, 79.0, 1612.0, 937.0 ],
 		"bgcolor" : [ 0.701961, 0.415686, 0.886275, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -1074,15 +1074,15 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-16", 3 ],
-					"source" : [ "obj-12", 3 ]
+					"destination" : [ "obj-62", 0 ],
+					"source" : [ "obj-12", 2 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-62", 0 ],
-					"source" : [ "obj-12", 2 ]
+					"destination" : [ "obj-65", 0 ],
+					"source" : [ "obj-12", 3 ]
 				}
 
 			}
