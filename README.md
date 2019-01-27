@@ -21,7 +21,7 @@ Teaching behaviour in musical skill transmission
 ### Environment
 All of the programme scripts were tested in the following environment.
 
-ProductName:	Mac OS X
+ProductName:	Mac OS X  
 ProductVersion:	10.14.3
 
 ### Max
