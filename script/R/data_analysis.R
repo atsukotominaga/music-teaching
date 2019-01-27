@@ -5,7 +5,7 @@
 #  Documentation
 ####################################
 # Created: 5/12/2018
-# Modified: 09/01/2019
+# Modified: 22/01/2019
 # This script aggregate and plot data.
 # GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
 
@@ -268,7 +268,7 @@ plot_kot_leg <- ggplot(data = kot_leg, aes(x = Skill, y = mean, fill = Condition
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 35)) + 
+  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 45)) + 
   theme_classic()
 
 plot_kot_sta <- ggplot(data = kot_sta, aes(x = Skill, y = mean, fill = Condition)) +
