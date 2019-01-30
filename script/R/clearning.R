@@ -1,0 +1,158 @@
+#!/usr/bin/Rscript
+#rm(list=ls(all=TRUE)) - clear all in Environment
+
+####################################
+#  Documentation
+####################################
+# Created: 30/01/2019
+# Modifed: 30/01/2019
+# This script organises raw data and removes pitch errors from it.
+# GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
+
+####################################
+#  Requirements
+####################################
+# !!! Set working directory to file source location !!!
+
+# Install and load required packages
+if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+
+# Create necessary folders if not exist
+# csv
+if (!file.exists("csv")){
+  dir.create("csv")
+}
+
+####################################
+# Reading & Clearning data
+####################################
+# Create a list of data files
+lf <- list.files('./data', pattern = 'txt')
+
+# Create raw_data - merge all data files into one
+raw_data <- data.frame()
+for (i in 1:length(lf)){
+  data_i <- read.csv(file.path('./data', lf[i]), header = F, sep = " ", dec = '.')
+  raw_data <- rbind(raw_data, data_i)
+  }
+
+# Add column namesls
+colnames(raw_data) <- c('NoteNr', 'TimeStamp', 'Pitch', 'Velocity', 'Key_OnOff', 'Device', 
+                        'SubNr', 'BlockNr', 'TrialNr', 'Skill', 'Condition', 'Image')
+
+# Clean raw_data
+raw_data$NoteNr <- as.numeric(gsub(",", "", raw_data$NoteNr))
+raw_data$Image <- gsub(";", "", raw_data$Image)
+
+# Sort by SubNr, BlockNr, TrialNr
+raw_data <- raw_data[order(raw_data$SubNr, raw_data$BlockNr, raw_data$TrialNr),]
+raw_data$RowNr <- c(1:nrow(raw_data))
+raw_data <- raw_data[c(13, 1:12)]
+
+####################################
+# Detect pitch errors
+####################################
+# Only MIDI onsets and offsets
+df_all <- raw_data %>% dplyr::filter(Key_OnOff != 10)
+
+# Only MIDI onsets
+df_onset <- raw_data %>% dplyr::filter(Key_OnOff == 1)
+
+# Read ideal performance
+df_ideal <- read.csv('./ideal.csv')
+
+# Find pitch errors and missing data
+ls_error <- list() # List - SubNr/BlockNr/TrialNr for pitch errors
+ls_miss <- list() # List - SubNr/BlockNr/TrialNr for missing data
+for (subnr in unique(df_onset$SubNr)){
+  print(sprintf('----- SubNr %i -----', subnr))
+  for (block in unique(df_onset$BlockNr)){
+    for (trial in unique(df_onset$TrialNr)){
+      # Extract each trial for each participant
+      df_current <- df_onset %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
+      if (nrow(df_current) != 0){ # if data_current is NOT empty
+        # NoteNr is 67 - detect pitch errors
+        if (length(df_current$NoteNr) == length(df_ideal$NoteNr)){
+          for (note in 1:length(df_current$NoteNr)){
+            if (df_current[note,]$Pitch != df_ideal[note,]$IdealPerformance){
+              ls_error <- c(ls_error, list(c(subnr, block, trial)))
+              print(sprintf('Error - SubNr/BlockNr/TrialNr: %i/%i/%i', subnr, block, trial))
+            }
+          }
+          # NoteNr is NOT 67 - discard the current trial
+        } else {
+          ls_error <- c(ls_error, list(c(subnr, block, trial)))
+          print(sprintf('Error - SubNr/BlockNr/TrialNr: %i/%i/%i', subnr, block, trial))
+        }
+      } else if (nrow(df_current) == 0){
+        ls_miss <- c(ls_miss, list(c(subnr, block, trial)))
+        print(sprintf('Missing - SubNr/BlockNr/TrialNr: %i/%i/%i', subnr, block, trial))
+      }
+    }
+  }
+}
+
+# Create data with pitch errors
+df_error <- data.frame()
+for (error in 1:length(ls_error)){
+  # # of errors of onsets and offsets
+  df_error <- rbind(df_error, df_all %>%
+                      dplyr::filter(SubNr == ls_error[[error]][1] & BlockNr == ls_error[[error]][2] & TrialNr == ls_error[[error]][3]))
+}
+
+# Calculate error rate
+error_rate <- c()
+for (subnr in unique(df_all$SubNr)){
+  error = 0
+  for (row in 1:length(ls_error)){
+    if (subnr  == ls_error[[row]][1]){
+      error = error + 1
+    }
+  }
+  error_rate <- c(error_rate, error/32)
+}
+df_error_rate <- data.frame(unique(df_all$SubNr), error_rate)
+colnames(df_error_rate) <- c('SubNr', 'ErrorRate') # Add label names
+
+# Descriptive stats for error rate
+desc_error_rate <- list('Mean' = mean(df_error_rate$ErrorRate), 'SD' = sd(df_error_rate$ErrorRate))
+print('Error rate - mean and sd')
+print(str(desc_error_rate))
+
+# Mark pitch errors for data_all
+df_all$Error <- 0
+for (error in 1:length(ls_error)){
+  df_all$Error[df_all$SubNr == ls_error[[error]][1] & df_all$BlockNr == ls_error[[error]][2] & df_all$TrialNr == ls_error[[error]][3]] <- 1
+}
+
+# Create data without pitch errors
+data_analysis <- df_all %>% dplyr::filter(Error != 1)
+
+####################################
+# Export csv files
+####################################
+# Export a csv file for raw_data
+write.csv(raw_data, file = './csv/raw_data.csv', row.names = F)
+# Create data only containing metronome sounds
+
+# Export a csv file for data_metro
+df_metro <- raw_data %>% dplyr::filter(Key_OnOff == 10)
+write.csv(df_metro, file = './csv/data_metro.csv', row.names = F)
+
+# Export a csv file for data_error
+write.csv(df_error, file = './csv/data_error.csv', row.names = F)
+
+# Export a csv file for data_error_rate
+write.csv(df_error_rate, file = './csv/error_rate.csv', row.names = F)
+
+# Export a csv file for data_analysis
+write.csv(data_analysis, file = './csv/data_analysis.csv', row.names = F)
+
+# # Data for each participant
+# for (i in unique(data_analysis$SubNr)){
+#   data_i <- data_analysis %>% dplyr::filter(SubNr == i)
+#   var_name <- paste('data_', toString(i), sep = "")
+#   assign(var_name, data_i)
+#   # Export csv files for each participant
+#   write.csv(data_i, file = paste('./', var_name, '.csv', sep = ''))
+# }
