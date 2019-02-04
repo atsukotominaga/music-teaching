@@ -40,6 +40,7 @@ df_exc <- read.csv('./csv/data_errorRate.csv', header = T, sep = ",", dec = '.')
 # Exclude participants
 include <- df_exc$SubNr[df_exc$Exclude == 'include']
 
+# Data frame with only included participants
 df_analysis <- data.frame()
 for (subnr in include){
   df_current <- df_all %>% dplyr::filter(SubNr == subnr)
