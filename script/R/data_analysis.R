@@ -5,7 +5,6 @@
 #  Documentation
 ####################################
 # Created: 30/01/2019
-# Modified: 30/01/2019
 # This script aggregate and plot data.
 # GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
 
@@ -35,19 +34,20 @@ if (!file.exists("plot/png/")){
 ####################################
 ### Reading and formatting data
 ####################################
-df <- read.csv('./csv/data_analysis.csv', header = T, sep = ",", dec = '.')
+df_all <- read.csv('./csv/data_analysis.csv', header = T, sep = ",", dec = '.')
+df_exc <- read.csv('./csv/data_errorRate.csv', header = T, sep = ",", dec = '.')
 
-exclude <- c(1, 2, 3, 5, 7, 8) # Exclude participants who has over 10% erorr rate
-include <- c(4, 6, 9)
+# Exclude participants
+include <- df_exc$SubNr[df_exc$Exclude == 'include']
 
 df_analysis <- data.frame()
 for (subnr in include){
-  df_current <- df %>% dplyr::filter(SubNr == subnr)
+  df_current <- df_all %>% dplyr::filter(SubNr == subnr)
   df_analysis <- rbind(df_analysis, df_current)
 }
 
 ####################################
-### Inter-Onset intervals - tempoChange
+### Inter-Onset intervals
 ####################################
 # Calculate IOIs
 df_ioi <- df_analysis %>% dplyr::filter(Key_OnOff == 1)
@@ -92,7 +92,7 @@ plot_ioi <- ggplot(data = ioi, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 210)) + 
+  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(0, 200)) + 
   theme_classic()
 
 plot_ioi_seq <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
@@ -155,16 +155,16 @@ ls_staccato <- list(c(9:15), c(25:31), c(34:40), c(50:56))
 
 # Legato
 df_kot$Articulation <- NA
-for (i in 1:length(ls_legato)){
-  for (j in 1:length(ls_legato[[i]])){
-    df_kot$Articulation[df_kot$Interval == ls_legato[[i]][j]] <- 'Legato'
+for (phrase in 1:length(ls_legato)){
+  for (note in 1:length(ls_legato[[phrase]])){
+    df_kot$Articulation[df_kot$Skill == 'articulation' & df_kot$Interval == ls_legato[[phrase]][note]] <- 'Legato'
   }
 }
 
 # Staccato
-for (i in 1:length(ls_staccato)){
-  for (j in 1:length(ls_staccato[[i]])){
-    df_kot$Articulation[df_kot$Interval == ls_staccato[[i]][j]] <- 'Staccato'
+for (phrase in 1:length(ls_staccato)){
+  for (note in 1:length(ls_staccato[[phrase]])){
+    df_kot$Articulation[df_kot$Skill == 'articulation' & df_kot$Interval == ls_staccato[[phrase]][note]] <- 'Staccato'
   }
 }
 
@@ -173,12 +173,8 @@ for (i in 1:length(ls_staccato)){
 kot <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Interval != 32 & df_kot$Interval != 33 & df_kot$Interval != 65 & df_kot$Interval != 66),
                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
-# Average for legato
-kot_leg <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Legato'),
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-
-# Average for staccato
-kot_sta <- aggregate(KOT~Condition*Skill, data = subset(df_kot, df_kot$Skill == 'articulation' & df_kot$Articulation == 'Staccato'),
+# Average for legato and staccato
+kot_art <- aggregate(KOT~Condition*Skill*Articulation, data = subset(df_kot),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
 # Average for each note
@@ -188,8 +184,7 @@ kot_seq[,4][kot_seq$Interval == 32 | kot_seq$Interval == 33 | kot_seq$Interval =
 
 # Descriptive stats
 kot <- cbind(kot, as.data.frame(kot[,3]))
-kot_leg <- cbind(kot_leg, as.data.frame(kot_leg[,3]))
-kot_sta <- cbind(kot_sta, as.data.frame(kot_sta[,3]))
+kot_art <- cbind(kot_art, as.data.frame(kot_art[,4]))
 kot_seq <- cbind(kot_seq, as.data.frame(kot_seq[,4]))
 
 # Add a grouping name
@@ -208,21 +203,14 @@ plot_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(-70, 25)) + 
+  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-70, 25)) + 
   theme_classic()
 
-plot_kot_leg <- ggplot(data = kot_leg, aes(x = Skill, y = mean, fill = Condition)) +
+plot_kot_art <- ggplot(data = kot_art, aes(x = Articulation, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(0, 45)) + 
-  theme_classic()
-
-plot_kot_sta <- ggplot(data = kot_sta, aes(x = Skill, y = mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
-                width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-150, 30)) + 
+  labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(0, 40)) + 
   theme_classic()
 
 plot_kot_seq <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
@@ -245,15 +233,13 @@ plot_kot_seq_f <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Con
 # Save plots 
 # eps files
 ggsave('./plot/eps/plot_kot.eps', plot = plot_kot, dpi = 600, width = 5, height = 4)
-ggsave('./plot/eps/plot_kot_leg.eps', plot = plot_kot_leg, dpi = 600, width = 5, height = 4)
-ggsave('./plot/eps/plot_kot_sta.eps', plot = plot_kot_sta, dpi = 600, width = 5, height = 4)
+ggsave('./plot/eps/plot_kot_art.eps', plot = plot_kot_art, dpi = 600, width = 5, height = 4)
 ggsave('./plot/eps/plot_kot_seq.eps', plot = plot_kot_seq, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_kot_seq_f.eps', plot = plot_kot_seq_f, dpi = 600, width = 15, height = 4)
 
 # png files
 ggsave('./plot/png/plot_kot.png', plot = plot_kot, dpi = 600, width = 5, height = 4)
-ggsave('./plot/png/plot_kot_leg.png', plot = plot_kot_leg, dpi = 600, width = 5, height = 4)
-ggsave('./plot/png/plot_kot_sta.png', plot = plot_kot_sta, dpi = 600, width = 5, height = 4)
+ggsave('./plot/png/plot_kot_art.png', plot = plot_kot_art, dpi = 600, width = 5, height = 4)
 ggsave('./plot/png/plot_kot_seq.png', plot = plot_kot_seq, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_kot_seq_f.png', plot = plot_kot_seq_f, dpi = 600, width = 15, height = 4)
 
@@ -289,16 +275,16 @@ ls_piano <- list(c(9:16), c(25:32), c(34:41), c(50:57))
 
 # Forte
 df_vel$Dynamics <- NA
-for (i in 1:length(ls_forte)){
-  for (j in 1:length(ls_forte[[i]])){
-    df_vel$Dynamics[df_vel$Note == ls_forte[[i]][j]] <- 'Forte'
+for (phrase in 1:length(ls_forte)){
+  for (note in 1:length(ls_forte[[phrase]])){
+    df_vel$Dynamics[df_vel$Skill == 'dynamics' & df_vel$Note == ls_forte[[phrase]][note]] <- 'Forte'
   }
 }
 
 # Piano
-for (i in 1:length(ls_piano)){
-  for (j in 1:length(ls_piano[[i]])){
-    df_vel$Dynamics[df_vel$Note == ls_piano[[i]][j]] <- 'Piano'
+for (phrase in 1:length(ls_piano)){
+  for (note in 1:length(ls_piano[[phrase]])){
+    df_vel$Dynamics[df_vel$Skill == 'dynamics' & df_vel$Note == ls_piano[[phrase]][note]] <- 'Piano'
   }
 }
 
@@ -306,6 +292,11 @@ for (i in 1:length(ls_piano)){
 # Overall average
 vel <- aggregate(Velocity~Condition*Skill, data = subset(df_vel, df_ioi$Note != 33 & df_ioi$Note != 66 & df_ioi$Note != 67), 
                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
+# Average for forte and piano
+vel_dyn <- aggregate(Velocity~Condition*Skill*Dynamics, data = df_vel,
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+
 # Average for each note
 vel_seq <- aggregate(Velocity~Note*Condition*Skill, data = df_vel, 
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
@@ -314,25 +305,16 @@ vel_acc_seq <- aggregate(Acc~Interval*Condition*Skill, data = df_vel_acc,
                          FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 vel_acc_seq[,4][vel_acc_seq$Interval == 32 | vel_acc_seq$Interval == 33 | vel_acc_seq$Interval == 65 | vel_acc_seq$Interval == 66] <- NA
 
-# Average for legato
-vel_for <- aggregate(Velocity~Condition*Skill, data = subset(df_vel, df_vel$Skill == 'dynamics' & df_vel$Dynamics == 'Forte'),
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-
-# Average for staccato
-vel_pia <- aggregate(Velocity~Condition*Skill, data = subset(df_vel, df_vel$Skill == 'dynamics' & df_vel$Dynamics == 'Piano'),
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-
 # Aggregated data
 vel <- cbind(vel, as.data.frame(vel[,3]))
-vel_for <- cbind(vel_for, as.data.frame(vel_for[,3]))
-vel_pia <- cbind(vel_pia, as.data.frame(vel_pia[,3]))
+vel_dyn <- cbind(vel_dyn, as.data.frame(vel_dyn[,4]))
 vel_seq <- cbind(vel_seq, as.data.frame(vel_seq[,4]))
 vel_acc_seq <- cbind(vel_acc_seq, as.data.frame(vel_acc_seq[,4]))
 
 # Add a grouping name
 for (cond in 1:length(ls_grouping$Condition)){
   for (skill in 1:length(ls_grouping$Skill)){
-    vel$Grouping[vel$Condition == ls_grouping$Condition[cond] & vel$Skill == ls_grouping$Skill[j]] <- 
+    vel$Grouping[vel$Condition == ls_grouping$Condition[cond] & vel$Skill == ls_grouping$Skill[skill]] <- 
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
     vel_seq$Grouping[vel_seq$Condition == ls_grouping$Condition[cond] & vel_seq$Skill == ls_grouping$Skill[skill]] <- 
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
@@ -348,20 +330,14 @@ plot_vel <- ggplot(data = vel, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width = .2, position=position_dodge(.9)) + 
-  labs(y = "Velocity (0-127)") + coord_cartesian(ylim = c(40, 80)) + theme_classic()
-
-plot_vel_for <- ggplot(data = vel_for, aes(x = Skill, y = mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
-                width=.2, position = position_dodge(.9)) +
-  labs(y = "Velocity (0-127)") + coord_cartesian(ylim = c(0, 90)) + 
+  labs(y = "Velocity (0-127)") + coord_cartesian(ylim = c(0, 95)) + 
   theme_classic()
 
-plot_vel_pia <- ggplot(data = vel_pia, aes(x = Skill, y = mean, fill = Condition)) +
+plot_vel_dyn <- ggplot(data = vel_dyn, aes(x = Dynamics, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Velocity (0-127)") + coord_cartesian(ylim = c(0, 70)) + 
+  labs(y = "Velocity (0-127)") + #coord_cartesian(ylim = c(0, 95)) + 
   theme_classic()
 
 plot_vel_seq <- ggplot(data = vel_seq, aes(x = Note, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
@@ -402,6 +378,7 @@ plot_vel_acc_seq_f <- ggplot(data = vel_acc_seq, aes(x = Interval, y = mean, gro
 # Save plots
 # eps files
 ggsave('./plot/eps/plot_vel.eps', plot = plot_vel, dpi = 600, width = 5, height = 4)
+ggsave('./plot/eps/plot_vel_dyn.eps', plot = plot_vel_dyn, dpi = 600, width = 5, height = 4)
 ggsave('./plot/eps/plot_vel_seq.eps', plot = plot_vel_seq, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_vel_seq_f.eps', plot = plot_vel_seq_f, dpi = 600, width = 15, height = 4)
 ggsave('./plot/eps/plot_vel_acc_seq.eps', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4)
@@ -409,6 +386,7 @@ ggsave('./plot/eps/plot_vel_acc_seq_f.eps', plot = plot_vel_acc_seq_f, dpi = 600
 
 # png files
 ggsave('./plot/png/plot_vel.png', plot = plot_vel, dpi = 600, width = 5, height = 4)
+ggsave('./plot/png/plot_vel_dyn.png', plot = plot_vel_dyn, dpi = 600, width = 5, height = 4)
 ggsave('./plot/png/plot_vel_seq.png', plot = plot_vel_seq, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_vel_seq_f.png', plot = plot_vel_seq_f, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_vel_acc_seq.png', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4) 
