@@ -30,6 +30,10 @@ if (!file.exists("plot/eps/")){
 if (!file.exists("plot/png/")){
   dir.create("plot/png")
 }
+# scatter plots
+if (!file.exists("plot/scatter")){
+  dir.create("plot/scatter")
+}
 
 ####################################
 ### Reading and formatting data
@@ -85,7 +89,6 @@ for (cond in 1:length(ls_grouping$Condition)){
   }
 }
 
-
 ####################################
 ### IOIs plots
 ####################################
@@ -128,7 +131,6 @@ ggsave('./plot/eps/plot_ioi_seq_f.eps', plot = plot_ioi_seq_f, dpi = 600, width 
 ggsave('./plot/png/plot_ioi.png', plot = plot_ioi, dpi = 600, width = 5, height = 4)
 ggsave('./plot/png/plot_ioi_seq.png', plot = plot_ioi_seq, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_ioi_seq_f.png', plot = plot_ioi_seq_f, dpi = 600, width = 15, height = 4)
-
 
 ####################################
 ### Key Overlap Time - articulation
@@ -243,7 +245,6 @@ ggsave('./plot/png/plot_kot.png', plot = plot_kot, dpi = 600, width = 5, height 
 ggsave('./plot/png/plot_kot_art.png', plot = plot_kot_art, dpi = 600, width = 5, height = 4)
 ggsave('./plot/png/plot_kot_seq.png', plot = plot_kot_seq, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_kot_seq_f.png', plot = plot_kot_seq_f, dpi = 600, width = 15, height = 4)
-
 
 ####################################
 ### Velocity - dynamics
@@ -392,3 +393,106 @@ ggsave('./plot/png/plot_vel_seq.png', plot = plot_vel_seq, dpi = 600, width = 15
 ggsave('./plot/png/plot_vel_seq_f.png', plot = plot_vel_seq_f, dpi = 600, width = 15, height = 4)
 ggsave('./plot/png/plot_vel_acc_seq.png', plot = plot_vel_acc_seq, dpi = 600, width = 15, height = 4) 
 ggsave('./plot/png/plot_vel_acc_seq_f.png', plot = plot_vel_acc_seq_f, dpi = 600, width = 15, height = 4) 
+
+####################################
+### Scatter plots
+####################################
+# Create data frames for scatter plots
+# IOI
+ioi_scat <- aggregate(IOI~Interval*Condition*Skill*TrialNr, data = df_ioi, 
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+ioi_scat[,5][ioi_scat$Interval == 32 | ioi_scat$Interval == 33 | ioi_scat$Interval == 65 | ioi_scat$Interval == 66] <- NA
+
+# KOT
+kot_scat <- aggregate(KOT~Interval*Condition*Skill*TrialNr, data = df_kot, 
+                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+kot_scat[,5][kot_scat$Interval == 32 | kot_scat$Interval == 33 | kot_scat$Interval == 65 | kot_scat$Interval == 66] <- NA
+
+# Velocity
+vel_scat <- aggregate(Velocity~Note*Condition*Skill*TrialNr, data = df_vel, 
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+vel_scat[,5][vel_scat$Note == 33 | vel_scat$Note == 66 | vel_scat$Note == 67] <- NA
+
+# Create scatter plots for IOI
+for (cond in unique(ioi_scat$Condition)){
+  for (skill in unique(ioi_scat$Skill)){
+    filename <- paste('./plot/scatter/ioi_', cond, '_', skill, '_.png', sep = '')
+    df_current <- data.frame(Interval = c(1:66)) #Create a data frame with the interval label
+    for (trial in unique(ioi_scat$TrialNr)){
+      trial_current <- data.frame(ioi_scat$IOI[,2][ioi_scat$Condition == cond & ioi_scat$Skill == skill & ioi_scat$TrialNr == trial])
+      df_current <- cbind(df_current, trial_current[,1])
+    }
+    colnames(df_current) <- c('Interval', 'trial_1', 'trial_2', 'trial_3', 'trial_4', 'trial_5', 'trial_6', 'trial_7', 'trial_8')
+    #Calculate correlation coefficients
+    panel.cor <- function(x, y){
+      usr <- par("usr"); on.exit(par(usr))
+      par(usr = c(0, 1, 0, 1))
+      r <- round(cor(x, y, use = "complete.obs"), digits = 3)
+      txt <- paste0("R = ", r)
+      cex.cor <- 1.0/strwidth(txt)
+      text(0.5, 0.5, txt, cex = cex.cor * r)
+    }
+    lower.panel <- function(x, y){
+      points(x, y)
+    }
+    png(filename, units = 'px', width = 2048, height = 2048, res = 300)
+    pairs(df_current[2:9], upper.panel = panel.cor, lower.panel = lower.panel) 
+    dev.off()
+  }
+}
+
+# Create scatter plots for KOT
+for (cond in unique(kot_scat$Condition)){
+  for (skill in unique(kot_scat$Skill)){
+    filename <- paste('./plot/scatter/kot_', cond, '_', skill, '_.png', sep = '')
+    df_current <- data.frame(Interval = c(1:66)) #Create a data frame with the interval label
+    for (trial in unique(kot_scat$TrialNr)){
+      trial_current <- data.frame(kot_scat$KOT[,2][kot_scat$Condition == cond & kot_scat$Skill == skill & kot_scat$TrialNr == trial])
+      df_current <- cbind(df_current, trial_current[,1])
+    }
+    colnames(df_current) <- c('Interval', 'trial_1', 'trial_2', 'trial_3', 'trial_4', 'trial_5', 'trial_6', 'trial_7', 'trial_8')
+    #Calculate correlation coefficients
+    panel.cor <- function(x, y){
+      usr <- par("usr"); on.exit(par(usr))
+      par(usr = c(0, 1, 0, 1))
+      r <- round(cor(x, y, use = "complete.obs"), digits = 3)
+      txt <- paste0("R = ", r)
+      cex.cor <- 1.0/strwidth(txt)
+      text(0.5, 0.5, txt, cex = cex.cor * r)
+    }
+    lower.panel <- function(x, y){
+      points(x, y)
+    }
+    png(filename, units = 'px', width = 2048, height = 2048, res = 300)
+    pairs(df_current[2:9], upper.panel = panel.cor, lower.panel = lower.panel) 
+    dev.off()
+  }
+}
+
+# Create scatter plots for Velocity
+for (cond in unique(vel_scat$Condition)){
+  for (skill in unique(vel_scat$Skill)){
+    filename <- paste('./plot/scatter/vel_', cond, '_', skill, '_.png', sep = '')
+    df_current <- data.frame(Interval = c(1:67)) #Create a data frame with the interval label
+    for (trial in unique(vel_scat$TrialNr)){
+      trial_current <- data.frame(vel_scat$Velocity[,2][vel_scat$Condition == cond & vel_scat$Skill == skill & vel_scat$TrialNr == trial])
+      df_current <- cbind(df_current, trial_current[,1])
+    }
+    colnames(df_current) <- c('NoteNr', 'trial_1', 'trial_2', 'trial_3', 'trial_4', 'trial_5', 'trial_6', 'trial_7', 'trial_8')
+    #Calculate correlation coefficients
+    panel.cor <- function(x, y){
+      usr <- par("usr"); on.exit(par(usr))
+      par(usr = c(0, 1, 0, 1))
+      r <- round(cor(x, y, use = "complete.obs"), digits = 3)
+      txt <- paste0("R = ", r)
+      cex.cor <- 1.0/strwidth(txt)
+      text(0.5, 0.5, txt, cex = cex.cor * r)
+    }
+    lower.panel <- function(x, y){
+      points(x, y)
+    }
+    png(filename, units = 'px', width = 2048, height = 2048, res = 300)
+    pairs(df_current[2:9], upper.panel = panel.cor, lower.panel = lower.panel) 
+    dev.off()
+  }
+}
