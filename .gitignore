@@ -3,10 +3,10 @@
 debriefing.txt
 
 # R
+script/R/analysis/
 script/R/data/
 script/R/plot/
 script/R/csv/
-script/R/pilot/
 script/R/errorRate.txt
 script/R/.Rhistory
 script/R/.DS_Store
