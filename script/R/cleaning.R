@@ -26,18 +26,18 @@ if (!file.exists("csv")){
 # Reading & Clearning data
 ####################################
 # Create a list of data file names
-lf <- list.files('./data', pattern = 'txt')
+lf <- list.files("./data", pattern = "txt")
 
 # Create raw_data - merge all data files into one
 raw_data <- data.frame()
 for (i in 1:length(lf)){
-  data_i <- read.csv(file.path('./data', lf[i]), header = F, sep = " ", dec = '.')
+  data_i <- read.csv(file.path("./data", lf[i]), header = F, sep = " ", dec = ".")
   raw_data <- rbind(raw_data, data_i)
   }
 
 # Add column namesls
-colnames(raw_data) <- c('NoteNr', 'TimeStamp', 'Pitch', 'Velocity', 'Key_OnOff', 'Device', 
-                        'SubNr', 'BlockNr', 'TrialNr', 'Skill', 'Condition', 'Image')
+colnames(raw_data) <- c("NoteNr", "TimeStamp", "Pitch", "Velocity", "Key_OnOff", "Device", 
+                        "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")
 
 # Clean raw_data
 raw_data$NoteNr <- as.numeric(gsub(",", "", raw_data$NoteNr))
@@ -49,10 +49,31 @@ raw_data$RowNr <- c(1:nrow(raw_data))
 raw_data <- raw_data[c(13, 1:12)]
 
 # Correct labelling (due to a labelling error of the original study / see detail: TBC)
-df_a <- raw_data %>% dplyr::filter(grepl('stim_a', Image))
-df_a$Skill <- 'articulation'
-df_d <- raw_data %>% dplyr::filter(grepl('stim_d', Image))
-df_d$Skill <- 'dynamics'
+# articulation
+df_a <- raw_data %>% dplyr::filter(grepl("stim_a", Image))
+  # Check whether all labels of Skill are "articulation"
+for (subnr in unique(df_a$SubNr)){
+  for (block in unique(df_a$BlockNr[df_a$SubNr == subnr])){
+    print(sprintf("SubNr %i, BlockNr %i, Condition: %s, Skill: %s", subnr, block,
+                  unique(df_a$Condition[df_a$SubNr == subnr & df_a$BlockNr == block]), unique(df_a$Skill[df_a$SubNr == subnr & df_a$BlockNr == block])))
+  }
+}
+  # Correct miss labelling
+df_a$Skill <- "articulation"
+
+# dynamics
+df_d <- raw_data %>% dplyr::filter(grepl("stim_d", Image))
+  # Check whether all labels of Skill are "dynamics"
+for (subnr in unique(df_d$SubNr)){
+  for (block in unique(df_d$BlockNr[df_d$SubNr == subnr])){
+    print(sprintf("SubNr %i, BlockNr %i, Condition: %s, Skill: %s", subnr, block,
+                  unique(df_d$Condition[df_d$SubNr == subnr & df_d$BlockNr == block]), unique(df_d$Skill[df_d$SubNr == subnr & df_d$BlockNr == block])))
+  }
+}
+  # Correct miss labelling
+df_d$Skill <- "dynamics"
+
+# Bind data frames for articulation and dynamics
 df_all <- rbind(df_a, df_d)
 
 # Sort by RowNr
@@ -64,11 +85,12 @@ df_all <- df_all[order(df_all$RowNr),]
 # Whether each participants completed all blocks
 for (subnr in unique(df_all$SubNr)){
   df_current <- df_all %>% dplyr::filter(SubNr == subnr)
-  print(sprintf('----- SubNr %i -----', subnr))
+  print(sprintf("----- SubNr %i -----", subnr))
   if (all.equal(unique(df_current$BlockNr), c(1:4))){
-    print('No missing block')
-    print(unique(df_current$BlockNr))} else {
-      print('!!There may be a missing block!!')
+    print("No missing block")
+    print(unique(df_current$BlockNr))
+    } else {
+      print("There will be missing blocks")
       print(unique(df_current$BlockNr))
   }
 }
@@ -84,39 +106,45 @@ df_onset <- df_note %>% dplyr::filter(Key_OnOff == 1)
 df_offset <- df_note %>% dplyr::filter(Key_OnOff == 0)
 
 # Read ideal performance
-df_ideal <- read.csv('./ideal.csv')
+df_ideal <- read.csv("./ideal.csv")
 
 # Find pitch errors and missing data
 ls_error <- list() # List - SubNr/BlockNr/TrialNr for pitch errors
 ls_miss <- list() # List - SubNr/BlockNr/TrialNr for missing data
 for (subnr in unique(df_onset$SubNr)){
-  print(sprintf('----- SubNr %i -----', subnr))
+  print(sprintf("----- SubNr %i -----", subnr))
   for (block in unique(df_onset$BlockNr)){
     for (trial in unique(df_onset$TrialNr)){
       # Extract each trial for each participant
       current_onset <- df_onset %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
       current_offset <- df_offset %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
       if (nrow(current_onset) != 0){ # if data_current is NOT empty
-        # NoteNr (both onset and offset) is 67 - detect pitch errors
+        # NoteNr (both onsets and offsets) is 67 - detect pitch errors
         if (length(current_onset$NoteNr) == length(df_ideal$NoteNr) & length(current_offset$NoteNr) == length(df_ideal$NoteNr)){
-          for (note in 1:length(current_onset$NoteNr)){
+          counter = 0
+          for (note in 1:length(df_ideal$NoteNr)){
             if (current_onset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
-              counter = 0
               while (counter == 0){
                 ls_error <- c(ls_error, list(c(subnr, block, trial)))
-                print(sprintf('Error - SubNr/BlockNr/TrialNr: %i/%i/%i', subnr, block, trial))
+                print(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
+                counter = counter + 1
+                }
+            } else if (current_offset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
+              while (counter == 0){
+                ls_error <- c(ls_error, list(c(subnr, block, trial)))
+                print(sprintf("Pitch Error (offset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
                 counter = counter + 1
               }
             }
           }
-          # NoteNr (both onset and offset) is NOT 67 - discard the current trial
+          # NoteNr (both onsets and offsets) is NOT 67 - discard the current trial
         } else {
           ls_error <- c(ls_error, list(c(subnr, block, trial)))
-          print(sprintf('Error - SubNr/BlockNr/TrialNr: %i/%i/%i', subnr, block, trial))
+          print(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
         }
       } else if (nrow(current_onset) == 0){
         ls_miss <- c(ls_miss, list(c(subnr, block, trial)))
-        print(sprintf('Missing - SubNr/BlockNr/TrialNr: %i/%i/%i', subnr, block, trial))
+        print(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
       }
     }
   }
@@ -147,18 +175,18 @@ for (subnr in unique(df_note$SubNr)){
   error_rate <- rbind(error_rate, c(subnr, error, error/32))
 }
 df_errorRate <- data.frame(error_rate)
-colnames(df_errorRate) <- c('SubNr', 'N', 'ErrorRate')
+colnames(df_errorRate) <- c("SubNr", "N", "ErrorRate")
 
 # Determine excluded participants
-df_errorRate$Exclude <- 'include'
-df_errorRate$Exclude[df_errorRate$ErrorRate > 0.1] <- 'exclude'
+df_errorRate$Exclude <- "include"
+df_errorRate$Exclude[df_errorRate$ErrorRate > 0.1] <- "exclude"
 
 # Descriptive stats for error rate
 desc_errorRate <- aggregate(ErrorRate~Exclude, data = df_errorRate, 
                             FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 print(desc_errorRate)
 # Export error rate
-write.table(desc_errorRate, file = './errorRate.txt', row.names = F)
+write.table(desc_errorRate, file = "./errorRate.txt", row.names = F)
 
 # Mark pitch errors for data_all
 df_note$Error <- 0
@@ -173,27 +201,27 @@ data_analysis <- df_note %>% dplyr::filter(Error != 1)
 # Export csv files
 ####################################
 # Export a csv file for df_all
-write.csv(df_all, file = './csv/data_all.csv', row.names = F)
+write.csv(df_all, file = "./csv/data_all.csv", row.names = F)
 # Create data only containing metronome sounds
 
 # Export a csv file for data_metro
 df_metro <- df_all %>% dplyr::filter(Key_OnOff == 10)
-write.csv(df_metro, file = './csv/data_metro.csv', row.names = F)
+write.csv(df_metro, file = "./csv/data_metro.csv", row.names = F)
 
 # Export a csv file for data_error
-write.csv(df_error, file = './csv/data_error.csv', row.names = F)
+write.csv(df_error, file = "./csv/data_error.csv", row.names = F)
 
 # Export a csv file for data_error_rate
-write.csv(df_errorRate, file = './csv/data_errorRate.csv', row.names = F)
+write.csv(df_errorRate, file = "./csv/data_errorRate.csv", row.names = F)
 
 # Export a csv file for data_analysis
-write.csv(data_analysis, file = './csv/data_analysis.csv', row.names = F)
+write.csv(data_analysis, file = "./csv/data_analysis.csv", row.names = F)
 
-# # Data for each participant
-# for (i in unique(data_analysis$SubNr)){
-#   data_i <- data_analysis %>% dplyr::filter(SubNr == i)
-#   var_name <- paste('data_', toString(i), sep = "")
-#   assign(var_name, data_i)
-#   # Export csv files for each participant
-#   write.csv(data_i, file = paste('./', var_name, '.csv', sep = ''))
-# }
+# Data for each participant
+for (i in unique(data_analysis$SubNr)){
+  data_i <- data_analysis %>% dplyr::filter(SubNr == i)
+  var_name <- paste("data_", toString(i), sep = "")
+  assign(var_name, data_i)
+  # Export csv files for each participant
+  write.csv(data_i, file = paste("./csv/", var_name, ".csv", sep = ""))
+}
