@@ -40,14 +40,14 @@ ProductVersion:	10.14.3
 - practicePatch.maxpat: the Max patcher for practice trials.
 - imagePatch.maxpat: the Max patcher to show stimuli on the screen in front of a participant.
 
-##### SubPatchers
+#### SubPatchers
 - MIDInoteRecording: acquire and save MIDI data.
 - dataFileNaming: create a file name.
 - condFileReading: read a condition file to determine the order of conditions for each participant.
 
-##### Others
-image: contains experimental stimuli
-cond: contains a csv file and an excel file about the order of conditions for each participant.
+#### Others
+- image: contains experimental stimuli
+- cond: contains a csv file and an excel file about the order of conditions for each participant.
 
 ### R
 - cleaning.R: clean data and remove performance errors.
@@ -55,7 +55,7 @@ cond: contains a csv file and an excel file about the order of conditions for ea
 - ideal.csv: ideal performance data / used to remove performance errors.
 
 ### Rmd
-- instruction.Rmd: RMarkdown for a instruction sheet (html)
+- instruction.Rmd: RMarkdown for a instruction sheet for an experimenter (html)
 
 ### Jupyter notebook
 - image_generator.ipynb: Python script to generate experimental stimuli (png; see more information on jupyter notebook)
