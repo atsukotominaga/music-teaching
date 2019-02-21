@@ -1,5 +1,4 @@
-# The Sound of Teaching Music experiment
-## Overview
+# Overview
 This repo contains scripts and materials necessary for a Musical experiment with expert pianists.
 - script
     + Max 7 for an experimental programme
