@@ -1,6 +1,7 @@
 #General
 .DS_Store
 debriefing.txt
+advert/
 
 # R
 script/R/analysis/
