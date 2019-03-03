@@ -29,3 +29,13 @@ subNr	firstCond	secondCond	inst_1	inst_2	firstSkill	secondSkill	firstStimuli	sec
 28,	performing	teaching	inst_p	inst_t	articulation	dynamics	stim_a	stim_d;
 29,	performing	teaching	inst_p	inst_t	dynamics	articulation	stim_d	stim_a;
 30,	performing	teaching	inst_p	inst_t	dynamics	articulation	stim_d	stim_a;
+31,	teaching	performing	inst_t	inst_p	articulation	dynamics	stim_a	stim_d;
+32,	teaching	performing	inst_t	inst_p	dynamics	articulation	stim_d	stim_a;
+33,	performing	teaching	inst_p	inst_t	articulation	dynamics	stim_a	stim_d;
+34,	teaching	performing	inst_t	inst_p	articulation	dynamics	stim_a	stim_d;
+35,	teaching	performing	inst_t	inst_p	dynamics	articulation	stim_d	stim_a;
+36,	performing	teaching	inst_p	inst_t	articulation	dynamics	stim_a	stim_d;
+37,	teaching	performing	inst_t	inst_p	articulation	dynamics	stim_a	stim_d;
+38,	performing	teaching	inst_p	inst_t	articulation	dynamics	stim_a	stim_d;
+39,	teaching	performing	inst_t	inst_p	dynamics	articulation	stim_d	stim_a;
+40,	performing	teaching	inst_p	inst_t	dynamics	articulation	stim_d	stim_a;
