@@ -16,7 +16,7 @@ This repo contains scripts and materials necessary for a Musical experiment with
 The Sound of Teaching Music: Experts’ sound modulation for novices
 
 ### Open Science Framework
-[https://osf.io/wu5ge/](https://osf.io/wu5ge/)
+[https://osf.io/jchnd/](https://osf.io/jchnd/)
 
 ## Script
 ### Environment
