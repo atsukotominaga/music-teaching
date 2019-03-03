@@ -19,7 +19,7 @@ script/Rmd/instruction.html
 # Max
 script/Max/data/
 script/Max/midi/
-script/Max/cond/cb_before22.xlsx
+script/Max/cond/cb_checking.xlsx
 
 # python Jupyter notebook
 script/jupyter/.ipynb_checkpoints/image_generator-checkpoint.ipynb
