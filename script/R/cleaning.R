@@ -51,25 +51,26 @@ raw_data <- raw_data[c(13, 1:12)]
 # Correct labelling (due to a labelling error of the original study / see detail: TBC)
 # articulation
 df_a <- raw_data %>% dplyr::filter(grepl("stim_a", Image))
-  # Check whether all labels of Skill are "articulation"
-for (subnr in unique(df_a$SubNr)){
-  for (block in unique(df_a$BlockNr[df_a$SubNr == subnr])){
-    print(sprintf("SubNr %i, BlockNr %i, Condition: %s, Skill: %s", subnr, block,
-                  unique(df_a$Condition[df_a$SubNr == subnr & df_a$BlockNr == block]), unique(df_a$Skill[df_a$SubNr == subnr & df_a$BlockNr == block])))
-  }
-}
+#   # Check whether all labels of Skill are "articulation"
+# for (subnr in unique(df_a$SubNr)){
+#   for (block in unique(df_a$BlockNr[df_a$SubNr == subnr])){
+#     print(sprintf("SubNr %i, BlockNr %i, Condition: %s, Skill: %s", subnr, block,
+#                   unique(df_a$Condition[df_a$SubNr == subnr & df_a$BlockNr == block]), unique(df_a$Skill[df_a$SubNr == subnr & df_a$BlockNr == block])))
+#   }
+# }
   # Correct miss labelling
 df_a$Skill <- "articulation"
 
+# Correct labelling (due to a labelling error of the original study / see detail: TBC)
 # dynamics
 df_d <- raw_data %>% dplyr::filter(grepl("stim_d", Image))
-  # Check whether all labels of Skill are "dynamics"
-for (subnr in unique(df_d$SubNr)){
-  for (block in unique(df_d$BlockNr[df_d$SubNr == subnr])){
-    print(sprintf("SubNr %i, BlockNr %i, Condition: %s, Skill: %s", subnr, block,
-                  unique(df_d$Condition[df_d$SubNr == subnr & df_d$BlockNr == block]), unique(df_d$Skill[df_d$SubNr == subnr & df_d$BlockNr == block])))
-  }
-}
+#   # Check whether all labels of Skill are "dynamics"
+# for (subnr in unique(df_d$SubNr)){
+#   for (block in unique(df_d$BlockNr[df_d$SubNr == subnr])){
+#     print(sprintf("SubNr %i, BlockNr %i, Condition: %s, Skill: %s", subnr, block,
+#                   unique(df_d$Condition[df_d$SubNr == subnr & df_d$BlockNr == block]), unique(df_d$Skill[df_d$SubNr == subnr & df_d$BlockNr == block])))
+#   }
+# }
   # Correct miss labelling
 df_d$Skill <- "dynamics"
 
@@ -123,12 +124,14 @@ for (subnr in unique(df_onset$SubNr)){
         if (length(current_onset$NoteNr) == length(df_ideal$NoteNr) & length(current_offset$NoteNr) == length(df_ideal$NoteNr)){
           counter = 0
           for (note in 1:length(df_ideal$NoteNr)){
+            # Onset errors
             if (current_onset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
               while (counter == 0){
                 ls_error <- c(ls_error, list(c(subnr, block, trial)))
                 print(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
                 counter = counter + 1
-                }
+              }
+              # Offset errors
             } else if (current_offset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
               while (counter == 0){
                 ls_error <- c(ls_error, list(c(subnr, block, trial)))
@@ -164,7 +167,7 @@ ls_error <- append(ls_error, ls_miss)
 ls_error <- unique(ls_error)
 
 # Calculate error rate
-error_rate <- data.frame()
+df_er <- data.frame()
 for (subnr in unique(df_note$SubNr)){
   error = 0
   for (row in 1:length(ls_error)){
@@ -172,21 +175,20 @@ for (subnr in unique(df_note$SubNr)){
       error = error + 1
     }
   }
-  error_rate <- rbind(error_rate, c(subnr, error, error/32))
+  df_er <- rbind(df_er, c(subnr, error, error/32))
 }
-df_errorRate <- data.frame(error_rate)
-colnames(df_errorRate) <- c("SubNr", "N", "ErrorRate")
+colnames(df_er) <- c("SubNr", "N", "ErrorRate")
 
 # Determine excluded participants
-df_errorRate$Exclude <- "include"
-df_errorRate$Exclude[df_errorRate$ErrorRate > 0.1] <- "exclude"
+df_er$Exclude <- "include"
+df_er$Exclude[df_er$ErrorRate > 0.1] <- "exclude"
 
 # Descriptive stats for error rate
-desc_errorRate <- aggregate(ErrorRate~Exclude, data = df_errorRate, 
+desc_er <- aggregate(ErrorRate~Exclude, data = df_er, 
                             FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-print(desc_errorRate)
+print(desc_er)
 # Export error rate
-write.table(desc_errorRate, file = "./errorRate.txt", row.names = F)
+write.table(desc_er, file = "./errorRate.txt", row.names = F)
 
 # Mark pitch errors for data_all
 df_note$Error <- 0
@@ -202,17 +204,17 @@ data_analysis <- df_note %>% dplyr::filter(Error != 1)
 ####################################
 # Export a csv file for df_all
 write.csv(df_all, file = "./csv/data_all.csv", row.names = F)
-# Create data only containing metronome sounds
 
-# Export a csv file for data_metro
+# Create data only containing metronome sounds
 df_metro <- df_all %>% dplyr::filter(Key_OnOff == 10)
+# Export a csv file for data_metro
 write.csv(df_metro, file = "./csv/data_metro.csv", row.names = F)
 
 # Export a csv file for data_error
 write.csv(df_error, file = "./csv/data_error.csv", row.names = F)
 
 # Export a csv file for data_error_rate
-write.csv(df_errorRate, file = "./csv/data_errorRate.csv", row.names = F)
+write.csv(df_er, file = "./csv/data_errorRate.csv", row.names = F)
 
 # Export a csv file for data_analysis
 write.csv(data_analysis, file = "./csv/data_analysis.csv", row.names = F)
