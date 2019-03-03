@@ -51,6 +51,10 @@ for (subnr in include){
   df_analysis <- rbind(df_analysis, df_current)
 }
 
+# # Data frame for each individual
+# subnr = 18
+# df_analysis <- df_all %>% dplyr::filter(SubNr == subnr)
+
 ####################################
 ### Inter-Onset intervals
 ####################################
@@ -96,7 +100,7 @@ plot_ioi <- ggplot(data = ioi, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(0, 200)) + 
+  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 250)) + 
   theme_classic()
 
 plot_ioi_seq <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
@@ -206,7 +210,7 @@ plot_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean KOT (ms)") + coord_cartesian(ylim = c(-70, 25)) + 
+  labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(-70, 25)) + 
   theme_classic()
 
 plot_kot_art <- ggplot(data = kot_art, aes(x = Articulation, y = mean, fill = Condition)) +
@@ -253,16 +257,16 @@ ggsave('./plot/png/plot_kot_seq_f.png', plot = plot_kot_seq_f, dpi = 600, width 
 df_vel <- df_analysis %>% dplyr::filter(Key_OnOff == 1)
 df_vel$Acc <- diff(c(0, df_vel$Velocity))
 
-# Remove the first note for pilot data
-df_vel_acc <- data.frame()
-for (subnr in unique(df_vel$SubNr)){
-  for (block in unique(df_vel$BlockNr[df_vel$SubNr == subnr])){
-    for (trial in unique(df_vel$TrialNr[df_vel$SubNr == subnr & df_vel$BlockNr == block])){
-      df_current <- df_vel %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
-      df_vel_acc <- rbind(df_vel_acc, subset(df_current, df_current$NoteNr != min(df_current$NoteNr)))
-    }
-  }
-}
+# # Remove the first note for pilot data
+# df_vel_acc <- data.frame()
+# for (subnr in unique(df_vel$SubNr)){
+#   for (block in unique(df_vel$BlockNr[df_vel$SubNr == subnr])){
+#     for (trial in unique(df_vel$TrialNr[df_vel$SubNr == subnr & df_vel$BlockNr == block])){
+#       df_current <- df_vel %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
+#       df_vel_acc <- rbind(df_vel_acc, subset(df_current, df_current$NoteNr != min(df_current$NoteNr)))
+#     }
+#   }
+# }
 
 # Remove the first note
 df_vel_acc <- df_vel %>% dplyr::filter(NoteNr != 17)
@@ -332,7 +336,7 @@ plot_vel <- ggplot(data = vel, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width = .2, position=position_dodge(.9)) + 
-  labs(y = "Velocity (0-127)") + coord_cartesian(ylim = c(0, 95)) + 
+  labs(y = "Velocity (0-127)") + coord_cartesian(ylim = c(20, 80)) + 
   theme_classic()
 
 plot_vel_dyn <- ggplot(data = vel_dyn, aes(x = Dynamics, y = mean, fill = Condition)) +
@@ -416,7 +420,7 @@ vel_scat[,5][vel_scat$Note == 33 | vel_scat$Note == 66 | vel_scat$Note == 67] <-
 # Create scatter plots for IOI
 for (cond in unique(ioi_scat$Condition)){
   for (skill in unique(ioi_scat$Skill)){
-    filename <- paste('./plot/scatter/ioi_', cond, '_', skill, '_.png', sep = '')
+    filename <- paste('./plot/scatter/ioi_', cond, '_', skill, '.png', sep = '')
     df_current <- data.frame(Interval = c(1:66)) #Create a data frame with the interval label
     for (trial in unique(ioi_scat$TrialNr)){
       trial_current <- data.frame(ioi_scat$IOI[,2][ioi_scat$Condition == cond & ioi_scat$Skill == skill & ioi_scat$TrialNr == trial])
@@ -444,7 +448,7 @@ for (cond in unique(ioi_scat$Condition)){
 # Create scatter plots for KOT
 for (cond in unique(kot_scat$Condition)){
   for (skill in unique(kot_scat$Skill)){
-    filename <- paste('./plot/scatter/kot_', cond, '_', skill, '_.png', sep = '')
+    filename <- paste('./plot/scatter/kot_', cond, '_', skill, '.png', sep = '')
     df_current <- data.frame(Interval = c(1:66)) #Create a data frame with the interval label
     for (trial in unique(kot_scat$TrialNr)){
       trial_current <- data.frame(kot_scat$KOT[,2][kot_scat$Condition == cond & kot_scat$Skill == skill & kot_scat$TrialNr == trial])
@@ -472,7 +476,7 @@ for (cond in unique(kot_scat$Condition)){
 # Create scatter plots for Velocity
 for (cond in unique(vel_scat$Condition)){
   for (skill in unique(vel_scat$Skill)){
-    filename <- paste('./plot/scatter/vel_', cond, '_', skill, '_.png', sep = '')
+    filename <- paste('./plot/scatter/vel_', cond, '_', skill, '.png', sep = '')
     df_current <- data.frame(Interval = c(1:67)) #Create a data frame with the interval label
     for (trial in unique(vel_scat$TrialNr)){
       trial_current <- data.frame(vel_scat$Velocity[,2][vel_scat$Condition == cond & vel_scat$Skill == skill & vel_scat$TrialNr == trial])
