@@ -9,8 +9,11 @@ script/R/data/
 script/R/plot/
 script/R/csv/
 script/R/errorRate.txt
+script/R/error.txt
+script/R/missingBlock.txt
 script/R/.Rhistory
 script/R/.DS_Store
+
 
 # Rmd
 script/Rmd/.Rhistory
