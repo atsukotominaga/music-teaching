@@ -51,27 +51,13 @@ raw_data <- raw_data[c(13, 1:12)]
 # Correct labelling (due to a labelling error of the original study / see detail: TBC)
 # articulation
 df_a <- raw_data %>% dplyr::filter(grepl("stim_a", Image))
-#   # Check whether all labels of Skill are "articulation"
-# for (subnr in unique(df_a$SubNr)){
-#   for (block in unique(df_a$BlockNr[df_a$SubNr == subnr])){
-#     print(sprintf("SubNr %i, BlockNr %i, Condition: %s, Skill: %s", subnr, block,
-#                   unique(df_a$Condition[df_a$SubNr == subnr & df_a$BlockNr == block]), unique(df_a$Skill[df_a$SubNr == subnr & df_a$BlockNr == block])))
-#   }
-# }
-  # Correct miss labelling
+  # Correct wrong labelling
 df_a$Skill <- "articulation"
 
 # Correct labelling (due to a labelling error of the original study / see detail: TBC)
 # dynamics
 df_d <- raw_data %>% dplyr::filter(grepl("stim_d", Image))
-#   # Check whether all labels of Skill are "dynamics"
-# for (subnr in unique(df_d$SubNr)){
-#   for (block in unique(df_d$BlockNr[df_d$SubNr == subnr])){
-#     print(sprintf("SubNr %i, BlockNr %i, Condition: %s, Skill: %s", subnr, block,
-#                   unique(df_d$Condition[df_d$SubNr == subnr & df_d$BlockNr == block]), unique(df_d$Skill[df_d$SubNr == subnr & df_d$BlockNr == block])))
-#   }
-# }
-  # Correct miss labelling
+  # Correct wrong labelling
 df_d$Skill <- "dynamics"
 
 # Bind data frames for articulation and dynamics
@@ -83,14 +69,19 @@ df_all <- df_all[order(df_all$RowNr),]
 ####################################
 # Check BlockNr
 ####################################
-# Whether each participants completed all blocks
+# Whether each participants completed all conditions
 for (subnr in unique(df_all$SubNr)){
   df_current <- df_all %>% dplyr::filter(SubNr == subnr)
+  write(sprintf("----- SubNr %i -----", subnr), file = "./missingBlock.txt", append = TRUE) # Export the results as a txt file
   print(sprintf("----- SubNr %i -----", subnr))
   if (all.equal(unique(df_current$BlockNr), c(1:4))){
+    write("No missing block", file = "./missingBlock.txt", append = TRUE)
+    write(unique(df_current$BlockNr), file = "./missingBlock.txt", append = TRUE)
     print("No missing block")
     print(unique(df_current$BlockNr))
     } else {
+      write("There will be missing blocks", file = "./missingBlock.txt", append = TRUE)
+      write(unique(df_current$BlockNr), file = "./missingBlock.txt", append = TRUE)
       print("There will be missing blocks")
       print(unique(df_current$BlockNr))
   }
@@ -113,6 +104,7 @@ df_ideal <- read.csv("./ideal.csv")
 ls_error <- list() # List - SubNr/BlockNr/TrialNr for pitch errors
 ls_miss <- list() # List - SubNr/BlockNr/TrialNr for missing data
 for (subnr in unique(df_onset$SubNr)){
+  write(sprintf("----- SubNr %i -----", subnr), file = "./error.txt", append = TRUE) # Export the results as a txt file
   print(sprintf("----- SubNr %i -----", subnr))
   for (block in unique(df_onset$BlockNr)){
     for (trial in unique(df_onset$TrialNr)){
@@ -128,6 +120,7 @@ for (subnr in unique(df_onset$SubNr)){
             if (current_onset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
               while (counter == 0){
                 ls_error <- c(ls_error, list(c(subnr, block, trial)))
+                write(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./error.txt", append = TRUE)
                 print(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
                 counter = counter + 1
               }
@@ -135,6 +128,7 @@ for (subnr in unique(df_onset$SubNr)){
             } else if (current_offset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
               while (counter == 0){
                 ls_error <- c(ls_error, list(c(subnr, block, trial)))
+                write(sprintf("Pitch Error (offset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./error.txt", append = TRUE)
                 print(sprintf("Pitch Error (offset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
                 counter = counter + 1
               }
@@ -143,10 +137,12 @@ for (subnr in unique(df_onset$SubNr)){
           # NoteNr (both onsets and offsets) is NOT 67 - discard the current trial
         } else {
           ls_error <- c(ls_error, list(c(subnr, block, trial)))
+          write(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial, note), file = "./error.txt", append = TRUE)
           print(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
         }
       } else if (nrow(current_onset) == 0){
         ls_miss <- c(ls_miss, list(c(subnr, block, trial)))
+        write(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial), file = "./error.txt", append = TRUE)
         print(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
       }
     }
@@ -162,9 +158,9 @@ for (error in 1:length(ls_error)){
 }
 
 # Append ls_miss to ls_error
-ls_error <- append(ls_error, ls_miss)
+ls_remove <- rbind(ls_error, ls_miss)
 # Remove duplication if exists
-ls_error <- unique(ls_error)
+ls_remove <- unique(ls_remove)
 
 # Calculate error rate
 df_er <- data.frame()
