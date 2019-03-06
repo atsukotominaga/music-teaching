@@ -149,51 +149,74 @@ for (subnr in unique(df_onset$SubNr)){
   }
 }
 
-# Create data with pitch errors
-df_error <- data.frame()
-for (error in 1:length(ls_error)){
-  # # of errors of onsets and offsets
-  df_error <- rbind(df_error, df_note %>%
-                      dplyr::filter(SubNr == ls_error[[error]][1] & BlockNr == ls_error[[error]][2] & TrialNr == ls_error[[error]][3]))
-}
-
-# Append ls_miss to ls_error
-ls_remove <- rbind(ls_error, ls_miss)
+# Create a list of removed trials
+ls_remove <- c(ls_error, ls_miss)
 # Remove duplication if exists
 ls_remove <- unique(ls_remove)
 
+# Create a data frame with pitch errors
+df_error <- data.frame()
+for (error in 1:length(ls_remove)){
+  # # of errors of onsets and offsets
+  df_error <- rbind(df_error, df_note %>%
+                      dplyr::filter(SubNr == ls_remove[[error]][1] & BlockNr == ls_remove[[error]][2] & TrialNr == ls_remove[[error]][3]))
+}
+
 # Calculate error rate
-df_er <- data.frame()
+df_errorRate <- data.frame()
 for (subnr in unique(df_note$SubNr)){
   error = 0
-  for (row in 1:length(ls_error)){
-    if (subnr  == ls_error[[row]][1]){
+  for (row in 1:length(ls_remove)){
+    if (subnr  == ls_remove[[row]][1]){
       error = error + 1
     }
   }
-  df_er <- rbind(df_er, c(subnr, error, error/32))
+  df_errorRate <- rbind(df_errorRate, c(subnr, error, error/32))
 }
-colnames(df_er) <- c("SubNr", "N", "ErrorRate")
+colnames(df_errorRate) <- c("SubNr", "N", "ErrorRate")
 
-# Determine excluded participants
-df_er$Exclude <- "include"
-df_er$Exclude[df_er$ErrorRate > 0.1] <- "exclude"
+# Determine excluded participants - Less than 10%
+df_errorRate$LessThan10 <- "include"
+df_errorRate$LessThan10[df_errorRate$ErrorRate > 0.1] <- "exclude"
+
+# Determine excluded participants - Within mean + 2SD
+mean_errorRate <- mean(df_errorRate$N)/32
+sd_errorRate <- sd(df_errorRate$N)/32
+df_errorRate$SD <- "include"
+df_errorRate$SD[df_errorRate$ErrorRate > mean_errorRate+2*sd_errorRate] <- "exclude"
+
+# Determine excluded participants - 75% percentile
+percentile75 <- quantile(df_errorRate$ErrorRate, .75)
+df_errorRate$Percentile <- "include"
+df_errorRate$Percentile[df_errorRate$ErrorRate >= percentile75] <- "exclude"
 
 # Descriptive stats for error rate
-desc_er <- aggregate(ErrorRate~Exclude, data = df_er, 
-                            FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-print(desc_er)
+desc_errorRate_LessThan10 <- aggregate(ErrorRate~LessThan10, data = df_errorRate, FUN = function(x){c(N = length(x), mean = mean(x), median = median(x), sd = sd(x))})
+desc_errorRate_SD <- aggregate(ErrorRate~SD, data = df_errorRate, FUN = function(x){c(N = length(x), mean = mean(x), median = median(x), sd = sd(x))})
+desc_errorRate_Percentile <- aggregate(ErrorRate~Percentile, data = df_errorRate, FUN = function(x){c(N = length(x), mean = mean(x), median = median(x), sd = sd(x))})
+desc_errorRate <- as.data.frame(rbind(desc_errorRate_LessThan10[,2], desc_errorRate_SD[,2], desc_errorRate_Percentile[,2]))
+# Add a labelling
+desc_errorRate$RowNr <- c(1:6)
+#desc_errorRate$Criterion <- NA
+desc_errorRate$Decision <- "include"
+desc_errorRate$Criterion[desc_errorRate$RowNr == 1 | desc_errorRate$RowNr == 2] <- "LessThan10"
+desc_errorRate$Criterion[desc_errorRate$RowNr == 3 | desc_errorRate$RowNr == 4] <- "Within +2SD"
+desc_errorRate$Criterion[desc_errorRate$RowNr == 5 | desc_errorRate$RowNr == 6] <- "75% Percentile"
+desc_errorRate$Decision[desc_errorRate$RowNr == 1 | desc_errorRate$RowNr == 3 | desc_errorRate$RowNr == 5] <- "exclude"
+# Change the order of colnames
+desc_errorRate <- desc_errorRate[c(5, 7, 6, 1:4)]
+print(desc_errorRate)
 # Export error rate
-write.table(desc_er, file = "./errorRate.txt", row.names = F)
+write.csv(desc_errorRate, file = "./csv/errorRate.csv", row.names = TRUE)
 
 # Mark pitch errors for data_all
 df_note$Error <- 0
 for (error in 1:length(ls_error)){
-  df_note$Error[df_note$SubNr == ls_error[[error]][1] & df_note$BlockNr == ls_error[[error]][2] & df_note$TrialNr == ls_error[[error]][3]] <- 1
+  df_note$Error[df_note$SubNr == ls_remove[[error]][1] & df_note$BlockNr == ls_remove[[error]][2] & df_note$TrialNr == ls_remove[[error]][3]] <- 1
 }
 
 # Create data without pitch errors
-data_analysis <- df_note %>% dplyr::filter(Error != 1)
+df_analysis <- df_note %>% dplyr::filter(Error != 1)
 
 ####################################
 # Export csv files
@@ -203,23 +226,23 @@ write.csv(df_all, file = "./csv/data_all.csv", row.names = F)
 
 # Create data only containing metronome sounds
 df_metro <- df_all %>% dplyr::filter(Key_OnOff == 10)
-# Export a csv file for data_metro
+# Export a csv file for df_metro
 write.csv(df_metro, file = "./csv/data_metro.csv", row.names = F)
 
-# Export a csv file for data_error
+# Export a csv file for df_error
 write.csv(df_error, file = "./csv/data_error.csv", row.names = F)
 
-# Export a csv file for data_error_rate
-write.csv(df_er, file = "./csv/data_errorRate.csv", row.names = F)
+# Export a csv file for df_errorRate
+write.csv(df_errorRate, file = "./csv/data_errorRate.csv", row.names = F)
 
 # Export a csv file for data_analysis
-write.csv(data_analysis, file = "./csv/data_analysis.csv", row.names = F)
+write.csv(df_analysis, file = "./csv/data_analysis.csv", row.names = F)
 
-# Data for each participant
-for (i in unique(data_analysis$SubNr)){
-  data_i <- data_analysis %>% dplyr::filter(SubNr == i)
-  var_name <- paste("data_", toString(i), sep = "")
-  assign(var_name, data_i)
-  # Export csv files for each participant
-  write.csv(data_i, file = paste("./csv/", var_name, ".csv", sep = ""))
-}
+# # Data for each participant
+# for (i in unique(data_analysis$SubNr)){
+#   data_i <- data_analysis %>% dplyr::filter(SubNr == i)
+#   var_name <- paste("data_", toString(i), sep = "")
+#   assign(var_name, data_i)
+#   # Export csv files for each participant
+#   write.csv(data_i, file = paste("./csv/", var_name, ".csv", sep = ""))
+# }
