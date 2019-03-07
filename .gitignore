@@ -4,12 +4,9 @@ others/
 
 # R
 script/R/analysis/
-script/R/data/
 script/R/plot/
-script/R/csv/
-script/R/errorRate.txt
-script/R/error.txt
-script/R/missingBlock.txt
+script/R/processed/
+script/R/raw_data/
 script/R/.Rhistory
 script/R/.DS_Store
 
