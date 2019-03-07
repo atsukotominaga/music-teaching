@@ -1,7 +1,6 @@
 #General
 .DS_Store
-debriefing.txt
-advert/
+others/
 
 # R
 script/R/analysis/
@@ -29,7 +28,3 @@ script/jupyter/stimuli/removed/
 
 # lilypond
 script/lilypond/removed/
-
-# Lab's PC
-script/Max/data\ crash/
-script/Max/data_backup/
