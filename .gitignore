@@ -14,7 +14,6 @@ script/R/missingBlock.txt
 script/R/.Rhistory
 script/R/.DS_Store
 
-
 # Rmd
 script/Rmd/.Rhistory
 script/Rmd/instruction.html
@@ -30,3 +29,7 @@ script/jupyter/stimuli/removed/
 
 # lilypond
 script/lilypond/removed/
+
+# Lab's PC
+script/Max/data_crash/
+script/Max/data_backup/

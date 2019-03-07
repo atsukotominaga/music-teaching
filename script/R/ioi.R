@@ -34,7 +34,7 @@ df_all <- read.csv('./csv/data_analysis.csv', header = T, sep = ",", dec = '.')
 df_exc <- read.csv('./csv/data_errorRate.csv', header = T, sep = ",", dec = '.')
 
 # Exclude participants
-include <- df_exc$SubNr[df_exc$Exclude == 'include']
+include <- df_exc$SubNr[df_exc$LessThan10 == 'include']
 
 # Data frame with only included participants
 df_analysis <- data.frame()
