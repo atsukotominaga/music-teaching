@@ -31,5 +31,5 @@ script/jupyter/stimuli/removed/
 script/lilypond/removed/
 
 # Lab's PC
-script/Max/data_crash/
+script/Max/data\ crash/
 script/Max/data_backup/
