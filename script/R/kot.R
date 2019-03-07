@@ -16,6 +16,7 @@
 # Install and load required packages
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("RColorBrewer")) {install.packages("RColorBrewer"); require("RColorBrewer")}
 
 # Create necessary folders if not exist
 # plot
@@ -30,11 +31,11 @@ if (!file.exists("plot/kot/")){
 ####################################
 # Reading and formatting data
 ####################################
-df_all <- read.csv('./csv/data_analysis.csv', header = T, sep = ",", dec = '.')
-df_exc <- read.csv('./csv/data_errorRate.csv', header = T, sep = ",", dec = '.')
+df_all <- read.csv("./processed/data_analysis.csv", header = T, sep = ",", dec = ".") # clear data without pitch errors
+df_exc <- read.csv("./processed/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
 
 # Exclude participants
-include <- df_exc$SubNr[df_exc$LessThan10 == 'include']
+include <- df_exc$SubNr[df_exc$SD == "include"]
 
 # Data frame with only included participants
 df_analysis <- data.frame()
@@ -140,11 +141,11 @@ kot_sub$Order[kot_sub$Skill == "articulation"] <- 1
 kot_sub$Order[kot_sub$Skill == "dynamics"] <- 2
 
 # # Add a grouping name
-# ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+# ls_grouping <- list(Condition = c("performing", "teaching"), Skill = c("articulation", "dynamics"))
 # for (cond in 1:length(ls_grouping$Condition)){
 #   for (skill in 1:length(ls_grouping$Skill)){
 #     kot_seq$Grouping[kot_seq$Condition == ls_grouping$Condition[cond] & kot_seq$Skill == ls_grouping$Skill[skill]] <-
-#       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
+#       paste(ls_grouping$Condition[cond], "-", ls_grouping$Skill[skill], sep = "")
 #   }
 # }
 
@@ -156,6 +157,7 @@ p_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
   labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(-70, 25)) + 
+  scale_fill_brewer(palette = "Set1") +
   theme_classic()
 
 p_kot_sub <- ggplot(data = kot_sub, aes(x = reorder(SubSkill, Order), y = mean, fill = Condition)) +
@@ -163,6 +165,7 @@ p_kot_sub <- ggplot(data = kot_sub, aes(x = reorder(SubSkill, Order), y = mean, 
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(0, 40)) + 
+  scale_fill_brewer(palette = "Set1") +
   theme_classic()
 
 p_kot_seq_f <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -171,7 +174,8 @@ p_kot_seq_f <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Condit
   facet_grid(Skill ~ .) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
+  labs(x = "Interval", y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
+  scale_color_brewer(palette = "Set1") +
   theme_classic()
 
 # plot all graphs
@@ -180,13 +184,13 @@ p_kot_seq_f <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Condit
 #   geom_point() +
 #   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
 #                 position = position_dodge(.05)) + 
-#   labs(x = 'Interval', y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
+#   labs(x = "Interval", y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
 #   theme_classic()
 
 # Save plots 
 # png files
-ggsave('./plot/kot/p_kot.png', plot = p_kot, dpi = 600, width = 5, height = 4)
-ggsave('./plot/kot/p_kot_sub.png', plot = p_kot_sub, dpi = 600, width = 5, height = 4)
-ggsave('./plot/kot/p_kot_seq_f.png', plot = p_kot_seq_f, dpi = 600, width = 15, height = 4)
+ggsave("./plot/kot/p_kot.png", plot = p_kot, dpi = 600, width = 5, height = 4)
+ggsave("./plot/kot/p_kot_sub.png", plot = p_kot_sub, dpi = 600, width = 5, height = 4)
+ggsave("./plot/kot/p_kot_seq_f.png", plot = p_kot_seq_f, dpi = 600, width = 15, height = 4)
 
-# ggsave('./plot/kot/p_kot_seq.png', plot = p_kot_seq, dpi = 600, width = 15, height = 4)
+# ggsave("./plot/kot/p_kot_seq.png", plot = p_kot_seq, dpi = 600, width = 15, height = 4)

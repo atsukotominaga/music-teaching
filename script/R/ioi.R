@@ -16,6 +16,7 @@
 # Install and load required packages
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("RColorBrewer")) {install.packages("RColorBrewer"); require("RColorBrewer")}
 
 # Create necessary folders if not exist
 # plot
@@ -30,11 +31,12 @@ if (!file.exists("plot/ioi/")){
 ####################################
 # Reading and formatting data
 ####################################
-df_all <- read.csv('./csv/data_analysis.csv', header = T, sep = ",", dec = '.')
-df_exc <- read.csv('./csv/data_errorRate.csv', header = T, sep = ",", dec = '.')
+# Read processed csv files
+df_all <- read.csv("./processed/data_analysis.csv", header = T, sep = ",", dec = ".") # clear data without pitch errors
+df_exc <- read.csv("./processed/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
 
 # Exclude participants
-include <- df_exc$SubNr[df_exc$LessThan10 == 'include']
+include <- df_exc$SubNr[df_exc$SD == "include"]
 
 # Data frame with only included participants
 df_analysis <- data.frame()
@@ -42,10 +44,6 @@ for (subnr in include){
   df_current <- df_all %>% dplyr::filter(SubNr == subnr)
   df_analysis <- rbind(df_analysis, df_current)
 }
-
-# # Data frame for each individual
-# subnr = 18
-# df_analysis <- df_all %>% dplyr::filter(SubNr == subnr)
 
 ####################################
 # Inter-Onset intervals
@@ -74,17 +72,6 @@ ioi_seq[,4][ioi_seq$Interval == 32 | ioi_seq$Interval == 33 | ioi_seq$Interval =
 ioi <- cbind(ioi, as.data.frame(ioi[,3]))
 ioi_seq <- cbind(ioi_seq, as.data.frame(ioi_seq[,4]))
 
-# # Add a grouping name
-# ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
-# for (cond in 1:length(ls_grouping$Condition)){
-#   for (skill in 1:length(ls_grouping$Skill)){
-#     ioi$Grouping[ioi$Condition == ls_grouping$Condition[cond] & ioi$Skill == ls_grouping$Skill[skill]] <-
-#       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-#     ioi_seq$Grouping[ioi_seq$Condition == ls_grouping$Condition[cond] & ioi_seq$Skill == ls_grouping$Skill[skill]] <-
-#       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-#   }
-# }
-
 ####################################
 ### IOIs plots
 ####################################
@@ -92,35 +79,23 @@ p_ioi <- ggplot(data = ioi, aes(x = Skill, y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 250)) + 
+  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(160, 230)) +
+  scale_fill_brewer(palette = "Set1") +
   theme_classic()
 
 p_ioi_seq_f <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Condition, shape = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
-  geom_hline(yintercept = 188, linetype = 'dashed') + # Tempo
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
   facet_grid(Skill ~ .) +
-  annotate('text', 0, 188, label = 'Tempo (80bpm)', vjust = -1) +
+  annotate("text", 0, 188, label = "Tempo (80bpm)", vjust = -1) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = 'Interval', y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
+  labs(x = "Interval", y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
+  scale_color_brewer(palette = "Set1") +
   theme_classic()
-
-# plot all graphs
-# plot_ioi_seq <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Grouping, shape = Grouping, colour = Grouping)) +
-#   geom_line() +
-#   geom_point() +
-#   geom_hline(yintercept = 188, linetype = 'dashed') + # Tempo
-#   geom_hline(data = ioi, aes(yintercept = mean, colour = Grouping), linetype = 'dashed') + # Mean IOI for each grouping
-#   annotate('text', 0, 188, label = 'Tempo (80bpm)', vjust = -1) +
-#   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
-#                 position = position_dodge(.05)) + 
-#   labs(x = 'Interval', y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
-#   theme_classic()
 
 # Save plots
 # png files
-ggsave('./plot/ioi/p_ioi.png', plot = p_ioi, dpi = 600, width = 5, height = 4)
-ggsave('./plot/ioi/p_ioi_seq_f.png', plot = p_ioi_seq_f, dpi = 600, width = 15, height = 4)
-
-# ggsave('./plot/ioi/p_ioi_seq.png', plot = p_ioi_seq, dpi = 600, width = 15, height = 4)
+ggsave("./plot/ioi/p_ioi.png", plot = p_ioi, dpi = 600, width = 5, height = 4)
+ggsave("./plot/ioi/p_ioi_seq_f.png", plot = p_ioi_seq_f, dpi = 600, width = 15, height = 4)

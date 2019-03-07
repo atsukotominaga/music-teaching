@@ -16,6 +16,7 @@
 ### Install and load required packages
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("RColorBrewer")) {install.packages("RColorBrewer"); require("RColorBrewer")}
 
 ### Create necessary folders if not exist
 # plot
@@ -30,11 +31,11 @@ if (!file.exists("plot/velocity/")){
 ####################################
 # Reading and formatting data
 ####################################
-df_all <- read.csv("./csv/data_analysis.csv", header = T, sep = ",", dec = ".")
-df_exc <- read.csv("./csv/data_errorRate.csv", header = T, sep = ",", dec = ".")
+df_all <- read.csv("./processed/data_analysis.csv", header = T, sep = ",", dec = ".") # clear data without pitch errors
+df_exc <- read.csv("./processed/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
 
 ### Exclude participants
-include <- df_exc$SubNr[df_exc$LessThan10 == "include"]
+include <- df_exc$SubNr[df_exc$SD == "include"]
 
 ### Data frame with only included participants
 df_analysis <- data.frame()
@@ -184,6 +185,8 @@ vel_acc_seq <- cbind(vel_acc_seq, as.data.frame(vel_acc_seq[,4]))
 # Add order info
 vel_sub$Order[vel_sub$Skill == "articulation"] <- 1
 vel_sub$Order[vel_sub$Skill == "dynamics"] <- 2
+vel_first$Order[vel_sub$Skill == "articulation"] <- 1
+vel_first$Order[vel_sub$Skill == "dynamics"] <- 2
 vel_acc_first$Order[vel_acc_first$Skill == "articulation"] <- 1
 vel_acc_first$Order[vel_acc_first$Skill == "dynamics"] <- 2
 
@@ -208,6 +211,7 @@ p_vel <- ggplot(data = vel, aes(x = Skill, y = mean, fill = Condition)) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width = .2, position=position_dodge(.9)) + 
   labs(y = "Velocity (0-127)") + coord_cartesian(ylim = c(40, 80)) + 
+  scale_fill_brewer(palette = "Set1") +
   theme_classic()
 
 # Average velocity for each sub-skill
@@ -216,14 +220,16 @@ p_vel_sub <- ggplot(data = vel_sub, aes(x = reorder(SubSkill, Order), y = mean, 
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "SubSkill", y = "Velocity (0-127)") + coord_cartesian(ylim = c(40, 90)) + 
+  scale_fill_brewer(palette = "Set1") +
   theme_classic()
 
 # Average velocity (only first-note) for each sub-skill
-p_vel_first <- ggplot(data = vel_first, aes(x = SubSkill, y = mean, fill = Condition)) +
+p_vel_first <- ggplot(data = vel_first, aes(x = reorder(SubSkill, Order), y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Velocity (0-127)") + coord_cartesian(ylim = c(40, 90)) + 
+  labs(x = "SubSkill", y = "Velocity (0-127)") + coord_cartesian(ylim = c(40, 90)) + 
+  scale_fill_brewer(palette = "Set1") +
   theme_classic()
 
 # Average velocity (only first-interval / skill change - e.g., legato to staccato) for each sub-skill
@@ -232,6 +238,7 @@ p_vel_acc_first <- ggplot(data = vel_acc_first, aes(x = reorder(SubSkill, Order)
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "Skill change", y = "Acceleration") + #coord_cartesian(ylim = c(0, 20)) + 
+  scale_fill_brewer(palette = "Set1") +
   theme_classic()
 
 # plot graphs for each skill
@@ -242,6 +249,7 @@ p_vel_seq_f <- ggplot(data = vel_seq, aes(x = Note, y = mean, group = Condition,
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
                 position = position_dodge(0.05)) + 
   labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1)) +
+  scale_color_brewer(palette="Set1") +
   theme_classic()
 
 p_vel_acc_seq_f <- ggplot(data = vel_acc_seq, aes(x = Interval, y = mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -251,6 +259,7 @@ p_vel_acc_seq_f <- ggplot(data = vel_acc_seq, aes(x = Interval, y = mean, group 
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
                 position = position_dodge(.05)) + 
   labs(x = "Interval", y = "Acceleration") + scale_x_continuous(breaks=seq(1,66,1)) +
+  scale_color_brewer(palette="Set1") +
   theme_classic()
 
 # plot all graphs
