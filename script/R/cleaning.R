@@ -212,7 +212,7 @@ print(desc_errorRate)
 write.csv(desc_errorRate, file = "./processed/errorRate.csv", row.names = TRUE)
 
 # Histograms
-hist_error_LessThan10 <- ggplot(df_errorRate, aes(x = ErrorRate, fill = LessThan10)) + geom_histogram(binwidth = .01) +
+hist_error_LessThan10 <- ggplot(df_errorRate, aes(x = ErrorRate, fill = LessThan10)) + geom_histogram(position = "identity", binwidth = .01) +
   geom_vline(aes(xintercept = mean(ErrorRate)), color = "black", linetype = "dashed", size = .5) + # mean line
   annotate(geom = "text", x = mean(df_errorRate$ErrorRate)+.05, y = 9, label="Mean", color = "black") +
   geom_vline(aes(xintercept = median(ErrorRate)), color = "black", linetype = "dotted", size = .5) + # median line
@@ -222,7 +222,7 @@ hist_error_LessThan10 <- ggplot(df_errorRate, aes(x = ErrorRate, fill = LessThan
   scale_fill_manual(values=wes_palette(n = 2, name = "GrandBudapest2")) +
   theme_classic()
 
-hist_error_SD <- ggplot(df_errorRate, aes(x = ErrorRate, fill = SD)) + geom_histogram(binwidth = .01) +
+hist_error_SD <- ggplot(df_errorRate, aes(x = ErrorRate, fill = SD)) + geom_histogram(position = "identity", binwidth = .01) +
   geom_vline(aes(xintercept = mean(ErrorRate)), color = "black", linetype = "dashed", size = .5) + # mean line
   annotate(geom = "text", x = mean(df_errorRate$ErrorRate)+.05, y = 9, label="Mean", color = "black") +
   geom_vline(aes(xintercept = median(ErrorRate)), color = "black", linetype = "dotted", size = .5) + # median line
