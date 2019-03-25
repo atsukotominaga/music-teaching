@@ -157,7 +157,7 @@ for (subskill in unique(df_subset$SubSkill)){
 print(sprintf("Remove %i trials beyond +- 3SD", nrow(df_subset)-nrow(df_trim_sd)))
 
 # Sort by RowNr
-df_trim_sd <- df_trim[order(df_trim$RowNr),]
+df_trim_sd <- df_trim_sd[order(df_trim_sd$RowNr),]
 
 p_hist_sd <- ggplot(df_trim_sd, aes(x = KOT, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
