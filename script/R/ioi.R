@@ -196,9 +196,12 @@ df_trim_ioi <- read.csv("./trimmed/data_ioi.csv", header = T, sep = ",", dec = "
 # Overall average
 ioi <- aggregate(IOI~Condition*Skill, data = df_trim_ioi,
                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-
+# Overall average for skill change
+ioi_change <- aggregate(IOI~Condition*Skill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 |
+                                                                          df_trim_ioi$Interval == 41 | df_trim_ioi$Interval == 49 | df_trim_ioi$Interval == 57),
+                            FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 # Average for SubSkill
-ioi_change <- aggregate(IOI~Condition*Skill*SubSkill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 |
+ioi_change_sub <- aggregate(IOI~Condition*Skill*SubSkill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 |
                                                                    df_trim_ioi$Interval == 41 | df_trim_ioi$Interval == 49 | df_trim_ioi$Interval == 57),
                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
@@ -212,7 +215,7 @@ for (subnr in unique(df_trim_ioi$SubNr)){
   for (block in unique(df_trim_ioi$BlockNr)){
     cond = as.character(unique(df_trim_ioi$Condition[df_trim_ioi$SubNr == subnr & df_trim_ioi$BlockNr == block]))
     skill = as.character(unique(df_trim_ioi$Skill[df_trim_ioi$SubNr == subnr & df_trim_ioi$BlockNr == block]))
-    for (trial in unique(df_trim_sd$TrialNr)){
+    for (trial in unique(df_trim_ioi$TrialNr)){
       df_current <- df_trim_ioi %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
       df_var <- rbind(df_var, data.frame(subnr, block, trial, cond, skill, sd(df_current$IOI)/mean(df_current$IOI)))
     }
@@ -227,7 +230,8 @@ ioi_var_trial <- aggregate(Variability~TrialNr*Condition*Skill, data = df_var,
 
 # Descriptive stats
 ioi <- cbind(ioi, as.data.frame(ioi[,3]))
-ioi_change <- cbind(ioi_change, as.data.frame(ioi_change[,4]))
+ioi_change <- cbind(ioi_change, as.data.frame(ioi_change[,3]))
+ioi_change_sub <- cbind(ioi_change_sub, as.data.frame(ioi_change_sub[,4]))
 ioi_seq <- cbind(ioi_seq, as.data.frame(ioi_seq[,4]))
 ioi_var <- cbind(ioi_var, as.data.frame(ioi_var[,3]))
 ioi_var_trial <- cbind(ioi_var_trial, as.data.frame(ioi_var_trial[,4]))
@@ -240,6 +244,8 @@ for (cond in 1:length(ls_grouping$Condition)){
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
     ioi_change$Grouping[ioi_change$Condition == ls_grouping$Condition[cond] & ioi_change$Skill == ls_grouping$Skill[skill]] <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
+    ioi_change_sub$Grouping[ioi_change_sub$Condition == ls_grouping$Condition[cond] & ioi_change_sub$Skill == ls_grouping$Skill[skill]] <-
+      paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
     ioi_seq$Grouping[ioi_seq$Condition == ls_grouping$Condition[cond] & ioi_seq$Skill == ls_grouping$Skill[skill]] <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
     ioi_var$Grouping[ioi_var$Condition == ls_grouping$Condition[cond] & ioi_var$Skill == ls_grouping$Skill[skill]] <-
@@ -250,8 +256,10 @@ for (cond in 1:length(ls_grouping$Condition)){
 }
 
 # Add order info
-ioi_change$Order[ioi_change$Skill == "articulation"] <- 1
-ioi_change$Order[ioi_change$Skill == "dynamics"] <- 2
+ioi_change_sub$Order[ioi_change_sub$Skill == "articulation"] <- 1
+ioi_change_sub$Order[ioi_change_sub$Skill == "dynamics"] <- 2
+ioi_var$Order[ioi_var$Skill == "articulation"] <- 1
+ioi_var$Order[ioi_var$Skill == "dynamics"] <- 2
 
 ####################################
 ### Plots
@@ -264,13 +272,22 @@ p_ioi <- ggplot(data = ioi, aes(x = Skill, y = mean, fill = Condition)) +
   theme_classic()
 p_ioi
 
-p_ioi_change <- ggplot(data = ioi_change, aes(x = reorder(SubSkill, Order), y = mean, fill = Condition)) +
+p_ioi_change <- ggplot(data = ioi_change, aes(x = Skill, y = mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+                width=.2, position = position_dodge(.9)) +
+  labs(x = "Skill", y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 250)) +
+  theme_classic()
+p_ioi_change
+
+p_ioi_change_sub <- ggplot(data = ioi_change_sub, aes(x = reorder(SubSkill, Order), y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "SubSkill", y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 250)) +
   theme_classic()
-p_ioi_change
+p_ioi_change_sub
+
 
 p_ioi_seq <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Condition, shape = Condition, colour = Condition)) +
   geom_line() +
@@ -284,11 +301,11 @@ p_ioi_seq <- ggplot(data = ioi_seq, aes(x = Interval, y = mean, group = Conditio
   theme_classic()
 p_ioi_seq
 
-p_ioi_var <- ggplot(data = ioi_var, aes(x = Skill, y = mean, fill = Condition)) +
+p_ioi_var <- ggplot(data = ioi_var, aes(x = reorder(Skill, Order), y = mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
                 width=.2, position = position_dodge(.9)) +
-  labs(y = "Mean CV (SD/mean IOI)") +
+  labs(x = "Skill", y = "Mean CV (SD/mean IOI)") + coord_cartesian(ylim = c(0, .1)) +
   theme_classic()
 p_ioi_var
 
@@ -305,6 +322,7 @@ p_ioi_var_trial
 # png files
 ggsave("./plot/ioi/p_ioi.png", plot = p_ioi, dpi = 600, width = 5, height = 4)
 ggsave("./plot/ioi/p_ioi_change.png", plot = p_ioi_change, dpi = 600, width = 5, height = 4)
+ggsave("./plot/ioi/p_ioi_change_sub.png", plot = p_ioi_change_sub, dpi = 600, width = 5, height = 4)
 ggsave("./plot/ioi/p_ioi_seq.png", plot = p_ioi_seq, dpi = 600, width = 15, height = 4)
 ggsave("./plot/ioi/p_ioi_var.png", plot = p_ioi_var, dpi = 600, width = 5, height = 4)
 ggsave("./plot/ioi/p_ioi_var_trial.png", plot = p_ioi_var_trial, dpi = 600, width = 10, height = 4)
@@ -327,9 +345,24 @@ print(ioi_anova)
 ioi_posthoc <- aov(IOI~Condition*Skill, data = df_trim_ioi)
 print(TukeyHSD(ioi_posthoc))
 
-# Two-way ANOVA
 # ioi_change
 ioi_change_anova <- ezANOVA(
+  data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 | 
+                  df_trim_ioi$Interval == 41 | df_trim_ioi$Interval == 49 | df_trim_ioi$Interval == 57)
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, Skill)
+  , type = 3
+  , detailed = TRUE
+)
+print(ioi_change_anova)
+
+ioi_change_posthoc <- aov(IOI~Condition*Skill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 | 
+                                                            df_trim_ioi$Interval == 41 | df_trim_ioi$Interval == 49 | df_trim_ioi$Interval == 57))
+print(TukeyHSD(ioi_change_posthoc))
+
+# ioi_change_subskill
+ioi_change_sub_anova <- ezANOVA(
   data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 | 
                   df_trim_ioi$Interval == 41 | df_trim_ioi$Interval == 49 | df_trim_ioi$Interval == 57)
   , dv = .(IOI)
@@ -338,11 +371,11 @@ ioi_change_anova <- ezANOVA(
   , type = 3
   , detailed = TRUE
 )
-print(ioi_change_anova)
+print(ioi_change_sub_anova)
 
-ioi_change_posthoc <- aov(IOI~Condition*SubSkill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 | 
-                                                            df_trim_ioi$Interval == 41 | df_trim_ioi$Interval == 49 | df_trim_ioi$Interval == 57))
-print(TukeyHSD(ioi_change_posthoc))
+ioi_change_sub_posthoc <- aov(IOI~Condition*SubSkill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 | 
+                                                                  df_trim_ioi$Interval == 41 | df_trim_ioi$Interval == 49 | df_trim_ioi$Interval == 57))
+print(TukeyHSD(ioi_change_sub_posthoc))
 
 # ioi_var
 ioi_var_anova <- ezANOVA(
