@@ -110,9 +110,9 @@ for (phrase in 1:length(ls_piano)){
   }
 }
 
-# Define LtoS and FtoP
+# Define Skill Change (LtoS, FtoP)
 change_1 <- c(8, 24, 49)
-# Define StoL and PtoF
+# Define Skill Change (StoL, PtoF)
 change_2 <- c(16, 41, 57)
 
 for (number in change_1){
@@ -154,7 +154,7 @@ for (subskill in unique(df_subset$SubSkill)){
   df_current <- df_subset %>% dplyr::filter(SubSkill == subskill & KOT < upper & KOT > lower)
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
-print(sprintf("Remove %i trials beyond +- 3SD", nrow(df_subset)-nrow(df_trim)))
+print(sprintf("Remove %i trials beyond +- 3SD", nrow(df_subset)-nrow(df_trim_sd)))
 
 # Sort by RowNr
 df_trim_sd <- df_trim[order(df_trim$RowNr),]
@@ -315,7 +315,7 @@ ggsave("./plot/kot/p_kot_var_trial.png", plot = p_kot_var_trial, dpi = 600, widt
 ### Statistics
 ####################################
 # Two-way ANOVA
-# ioi
+# kot
 kot_anova <- ezANOVA(
   data = df_trim_kot
   , dv = .(KOT)
