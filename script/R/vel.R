@@ -372,7 +372,6 @@ print(vel_anova)
 vel_posthoc <- aov(Velocity~Condition*Skill, data = df_trim_vel)
 print(TukeyHSD(vel_posthoc))
 
-# Two-way ANOVA
 # vel_sub
 vel_sub_anova <- ezANOVA(
   data = df_trim_vel
@@ -386,6 +385,21 @@ print(vel_sub_anova)
 
 vel_sub_posthoc <- aov(Velocity~Condition*SubSkill, data = df_trim_vel)
 print(TukeyHSD(vel_sub_posthoc))
+
+# vel_first
+vel_first_anova <- ezANOVA(
+  data = subset(df_trim_vel, df_trim_vel$Note == 1 | df_trim_vel$Note == 9 | df_trim_vel$Note == 17 | df_trim_vel$Note == 25
+                      | df_trim_vel$Note == 34 | df_trim_vel$Note == 42 | df_trim_vel$Note == 50 | df_trim_vel$Note == 58)
+  , dv = .(Velocity)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill)
+  , type = 3
+  , detailed = TRUE
+)
+print(vel_first_anova)
+
+vel_firts_posthoc <- aov(Velocity~Condition*SubSkill, data = df_trim_vel)
+print(TukeyHSD(vel_first_posthoc))
 
 # vel_acc_change
 vel_acc_change_anova <- ezANOVA(
