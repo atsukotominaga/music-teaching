@@ -241,7 +241,7 @@ vel <- aggregate(Velocity~Condition*Skill, data = df_trim_vel,
                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 
 # Average for SubSkill
-vel_sub <- aggregate(Velocity~Condition*Skill*SubSkill, data = df_trim_sd,
+vel_sub <- aggregate(Velocity~Condition*Skill*SubSkill, data = df_trim_vel,
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 vel_acc_change <- aggregate(Acc~Condition*Skill*SubSkill, data = subset(df_trim_vel_acc, df_trim_vel_acc$Interval == 8 | df_trim_vel_acc$Interval == 16 | df_trim_vel_acc$Interval == 24 | df_trim_vel_acc$Interval == 41
                                                                         | df_trim_vel_acc$Interval == 49 | df_trim_vel_acc$Interval == 57),
@@ -368,9 +368,12 @@ vel_anova <- ezANOVA(
   , detailed = TRUE
 )
 print(vel_anova)
+write.csv(vel_anova$ANOVA, file = "./stats/vel_anova.csv")
 
+# posthoc comparison
 vel_posthoc <- aov(Velocity~Condition*Skill, data = df_trim_vel)
-print(TukeyHSD(vel_posthoc))
+vel_posthoc <- TukeyHSD(vel_posthoc)
+write.csv(vel_posthoc$`Condition:Skill`, file = "./stats/vel_posthoc.csv")
 
 # vel_sub
 vel_sub_anova <- ezANOVA(
@@ -382,24 +385,26 @@ vel_sub_anova <- ezANOVA(
   , detailed = TRUE
 )
 print(vel_sub_anova)
+write.csv(vel_sub_anova$ANOVA, file = "./stats/vel_sub_anova.csv")
 
 vel_sub_posthoc <- aov(Velocity~Condition*SubSkill, data = df_trim_vel)
-print(TukeyHSD(vel_sub_posthoc))
+vel_sub_posthoc <- TukeyHSD(vel_sub_posthoc)
+write.csv(vel_sub_posthoc$`Condition:SubSkill`, file = "./stats/vel_sub_posthoc.csv")
 
-# vel_first
-vel_first_anova <- ezANOVA(
-  data = subset(df_trim_vel, df_trim_vel$Note == 1 | df_trim_vel$Note == 9 | df_trim_vel$Note == 17 | df_trim_vel$Note == 25
-                      | df_trim_vel$Note == 34 | df_trim_vel$Note == 42 | df_trim_vel$Note == 50 | df_trim_vel$Note == 58)
-  , dv = .(Velocity)
-  , wid = .(SubNr)
-  , within = .(Condition, SubSkill)
-  , type = 3
-  , detailed = TRUE
-)
-print(vel_first_anova)
-
-vel_firts_posthoc <- aov(Velocity~Condition*SubSkill, data = df_trim_vel)
-print(TukeyHSD(vel_first_posthoc))
+# # vel_first CONSIDER LATER should be firstEnd?
+# vel_first_anova <- ezANOVA(
+#   data = subset(df_trim_vel, df_trim_vel$Note == 1 | df_trim_vel$Note == 9 | df_trim_vel$Note == 17 | df_trim_vel$Note == 25
+#                       | df_trim_vel$Note == 34 | df_trim_vel$Note == 42 | df_trim_vel$Note == 50 | df_trim_vel$Note == 58)
+#   , dv = .(Velocity)
+#   , wid = .(SubNr)
+#   , within = .(Condition, SubSkill)
+#   , type = 3
+#   , detailed = TRUE
+# )
+# print(vel_first_anova)
+# 
+# vel_firts_posthoc <- aov(Velocity~Condition*SubSkill, data = df_trim_vel)
+# print(TukeyHSD(vel_first_posthoc))
 
 # vel_acc_change
 vel_acc_change_anova <- ezANOVA(
@@ -412,24 +417,14 @@ vel_acc_change_anova <- ezANOVA(
   , detailed = TRUE
 )
 print(vel_acc_change_anova)
+write.csv(vel_acc_change_anova$ANOVA, file = "./stats/vel_acc_change_anova.csv")
+write.csv(vel_acc_change_anova$`Mauchly's Test for Sphericity`, file = "./stats/vel_acc_change_anova_mau.csv")
+write.csv(vel_acc_change_anova$`Sphericity Corrections`, file = "./stats/vel_acc_change_anova_sph.csv")
 
 vel_acc_change_posthoc <- aov(Acc~Condition*SubSkill, data = subset(df_trim_vel_acc, df_trim_vel_acc$Interval == 8 | df_trim_vel_acc$Interval == 16 | df_trim_vel_acc$Interval == 24 | 
                                                                       df_trim_vel_acc$Interval == 41 | df_trim_vel_acc$Interval == 49 | df_trim_vel_acc$Interval == 57))
-print(TukeyHSD(vel_acc_change_posthoc))
-
-# # kot_var
-# kot_var_anova <- ezANOVA(
-#   data = df_var[complete.cases(df_var),]
-#   , dv = .(Variability)
-#   , wid = .(SubNr)
-#   , within = .(Condition, Skill)
-#   , type = 3
-#   , detailed = TRUE
-# )
-# print(kot_var_anova)
-# 
-# kot_var_posthoc <- aov(Variability~Condition*Skill, data = df_var[complete.cases(df_var),])
-# print(TukeyHSD(kot_var_posthoc))
+vel_acc_change_posthoc <- TukeyHSD(vel_acc_change_posthoc)
+write.csv(vel_acc_change_posthoc$`Condition:SubSkill`, file = "./stats/vel_acc_change_posthoc.csv")
 
 #Normality
 q_plot_vel <- ggplot(df_trim_vel, aes(sample = Velocity, shape = SubSkill, color = SubSkill)) +
