@@ -8,6 +8,7 @@ script/R/plot/
 script/R/processed/
 script/R/raw_data/
 script/R/trimmed/
+script/R/stats/
 script/R/.Rhistory
 script/R/.DS_Store
 
