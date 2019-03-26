@@ -39,6 +39,11 @@ if (!file.exists("trimmed")){
   dir.create("trimmed")
 }
 
+# stats
+if (!file.exists("stats")){
+  dir.create("stats")
+}
+
 ####################################
 # Reading and formatting data
 ####################################
@@ -341,9 +346,13 @@ ioi_anova <- ezANOVA(
   , detailed = TRUE
 )
 print(ioi_anova)
+write.csv(ioi_anova$ANOVA, file = "./stats/ioi_anova.csv")
 
+# posthoc comparison
 ioi_posthoc <- aov(IOI~Condition*Skill, data = df_trim_ioi)
-print(TukeyHSD(ioi_posthoc))
+ioi_posthoc <- TukeyHSD(ioi_posthoc)
+print(ioi_posthoc)
+write.csv(ioi_posthoc$`Condition:Skill`, file = "./stats/ioi_posthoc.csv")
 
 # ioi_change
 ioi_change_anova <- ezANOVA(
@@ -356,10 +365,14 @@ ioi_change_anova <- ezANOVA(
   , detailed = TRUE
 )
 print(ioi_change_anova)
+write.csv(ioi_change_anova$ANOVA, file = "./stats/ioi_change_anova.csv")
 
-ioi_change_posthoc <- aov(IOI~Condition*Skill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 | 
+# posthoc comparison
+ioi_change_posthoc <- aov(IOI~Condition*Skill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 |
                                                             df_trim_ioi$Interval == 41 | df_trim_ioi$Interval == 49 | df_trim_ioi$Interval == 57))
-print(TukeyHSD(ioi_change_posthoc))
+ioi_change_posthoc <- TukeyHSD(ioi_change_posthoc)
+print(ioi_change_posthoc)
+write.csv(ioi_change_posthoc$`Condition:Skill`, file = "./stats/ioi_change_posthoc.csv")
 
 # ioi_change_subskill
 ioi_change_sub_anova <- ezANOVA(
@@ -372,10 +385,13 @@ ioi_change_sub_anova <- ezANOVA(
   , detailed = TRUE
 )
 print(ioi_change_sub_anova)
+write.csv(ioi_change_sub_anova$ANOVA, file = "./stats/ioi_change_sub_anova.csv")
 
-ioi_change_sub_posthoc <- aov(IOI~Condition*SubSkill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 | 
+ioi_change_sub_posthoc <- aov(IOI~Condition*SubSkill, data = subset(df_trim_ioi, df_trim_ioi$Interval == 8 | df_trim_ioi$Interval == 16 | df_trim_ioi$Interval == 24 |
                                                                   df_trim_ioi$Interval == 41 | df_trim_ioi$Interval == 49 | df_trim_ioi$Interval == 57))
-print(TukeyHSD(ioi_change_sub_posthoc))
+ioi_change_sub_posthoc <- TukeyHSD(ioi_change_sub_posthoc)
+print(ioi_change_sub_posthoc)
+write.csv(ioi_change_sub_posthoc$`Condition:SubSkill`, file = "./stats/ioi_change_sub_posthoc.csv")
 
 # ioi_var
 ioi_var_anova <- ezANOVA(
@@ -387,9 +403,13 @@ ioi_var_anova <- ezANOVA(
   , detailed = TRUE
 )
 print(ioi_var_anova)
+write.csv(ioi_var_anova$ANOVA, file = "./stats/ioi_var_anova.csv")
 
+# posthoc comparison
 ioi_var_posthoc <- aov(Variability~Condition*Skill, data = df_var[complete.cases(df_var),])
-print(TukeyHSD(ioi_var_posthoc))
+ioi_var_posthoc <- TukeyHSD(ioi_var_posthoc)
+print(ioi_var_posthoc)
+write.csv(ioi_var_posthoc$`Condition:Skill`, file = "./stats/ioi_var_posthoc.csv")
 
 # Normality
 q_plot <- ggplot(df_trim_ioi, aes(sample = IOI, shape = Grouping, color = Grouping)) +
