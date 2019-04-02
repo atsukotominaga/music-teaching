@@ -5,7 +5,7 @@ others/
 # R
 script/R/analysis/
 script/R/plot/
-script/R/processed/
+script/R/filtered/
 script/R/raw_data/
 script/R/trimmed/
 script/R/stats/
