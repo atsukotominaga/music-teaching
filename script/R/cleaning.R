@@ -50,17 +50,17 @@ raw_data <- raw_data[order(raw_data$SubNr, raw_data$BlockNr, raw_data$TrialNr),]
 raw_data$RowNr <- c(1:nrow(raw_data))
 raw_data <- raw_data[c(13, 1:12)]
 
-# Assign the order number (1: teaching first, 2: performing)
-# teaching first (assign 1)
-raw_data$Order[raw_data$BlockNr == 1 & raw_data$Condition == "teaching"] <- 1
-raw_data$Order[raw_data$BlockNr == 2 & raw_data$Condition == "teaching"] <- 1
-raw_data$Order[raw_data$BlockNr == 3 & raw_data$Condition == "performing"] <- 1
-raw_data$Order[raw_data$BlockNr == 4 & raw_data$Condition == "performing"] <- 1
-# perforing first (assign 2)
-raw_data$Order[raw_data$BlockNr == 1 & raw_data$Condition == "performing"] <- 2
-raw_data$Order[raw_data$BlockNr == 2 & raw_data$Condition == "performing"] <- 2
-raw_data$Order[raw_data$BlockNr == 3 & raw_data$Condition == "teaching"] <- 2
-raw_data$Order[raw_data$BlockNr == 4 & raw_data$Condition == "teaching"] <- 2
+# Assign info for the order of the condition
+# teaching first
+raw_data$Order[raw_data$BlockNr == 1 & raw_data$Condition == "teaching"] <- "teaching-first"
+raw_data$Order[raw_data$BlockNr == 2 & raw_data$Condition == "teaching"] <- "teaching-first"
+raw_data$Order[raw_data$BlockNr == 3 & raw_data$Condition == "performing"] <- "teaching-first"
+raw_data$Order[raw_data$BlockNr == 4 & raw_data$Condition == "performing"] <- "teaching-first"
+# perforing first
+raw_data$Order[raw_data$BlockNr == 1 & raw_data$Condition == "performing"] <- "performing-first"
+raw_data$Order[raw_data$BlockNr == 2 & raw_data$Condition == "performing"] <- "performing-first"
+raw_data$Order[raw_data$BlockNr == 3 & raw_data$Condition == "teaching"] <- "performing-first"
+raw_data$Order[raw_data$BlockNr == 4 & raw_data$Condition == "teaching"] <- "performing-first"
 
 ### Optional
 # Correct labelling (due to a labelling error of the original study / see detail: TBC)
