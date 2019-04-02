@@ -19,9 +19,9 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("wesanderson")) {install.packages("wesanderson"); require("wesanderson")}
 
 # Create necessary folders if not exist
-# csv
-if (!file.exists("processed")){
-  dir.create("processed")
+# filtered - all of the outputs will be stored in this folder
+if (!file.exists("filtered")){
+  dir.create("filtered")
 }
 
 ####################################
@@ -50,6 +50,19 @@ raw_data <- raw_data[order(raw_data$SubNr, raw_data$BlockNr, raw_data$TrialNr),]
 raw_data$RowNr <- c(1:nrow(raw_data))
 raw_data <- raw_data[c(13, 1:12)]
 
+# Assign the order number (1: teaching first, 2: performing)
+# teaching first (assign 1)
+raw_data$Order[raw_data$BlockNr == 1 & raw_data$Condition == "teaching"] <- 1
+raw_data$Order[raw_data$BlockNr == 2 & raw_data$Condition == "teaching"] <- 1
+raw_data$Order[raw_data$BlockNr == 3 & raw_data$Condition == "performing"] <- 1
+raw_data$Order[raw_data$BlockNr == 4 & raw_data$Condition == "performing"] <- 1
+# perforing first (assign 2)
+raw_data$Order[raw_data$BlockNr == 1 & raw_data$Condition == "performing"] <- 2
+raw_data$Order[raw_data$BlockNr == 2 & raw_data$Condition == "performing"] <- 2
+raw_data$Order[raw_data$BlockNr == 3 & raw_data$Condition == "teaching"] <- 2
+raw_data$Order[raw_data$BlockNr == 4 & raw_data$Condition == "teaching"] <- 2
+
+### Optional
 # Correct labelling (due to a labelling error of the original study / see detail: TBC)
 # articulation
 df_a <- raw_data %>% dplyr::filter(grepl("stim_a", Image))
@@ -74,16 +87,16 @@ df_all <- df_all[order(df_all$RowNr),]
 # Whether each participants completed all conditions
 for (subnr in unique(df_all$SubNr)){
   df_current <- df_all %>% dplyr::filter(SubNr == subnr)
-  write(sprintf("----- SubNr %i -----", subnr), file = "./processed/missingBlock.txt", append = TRUE) # Export the results as a txt file
+  write(sprintf("----- SubNr %i -----", subnr), file = "./filtered/missingBlock.txt", append = TRUE) # Export the results as a txt file
   print(sprintf("----- SubNr %i -----", subnr))
   if (all.equal(unique(df_current$BlockNr), c(1:4))){
-    write("No missing block", file = "./processed/missingBlock.txt", append = TRUE)
-    write(unique(df_current$BlockNr), file = "./processed/missingBlock.txt", append = TRUE)
+    write("No missing block", file = "./filtered/missingBlock.txt", append = TRUE)
+    write(unique(df_current$BlockNr), file = "./filtered/missingBlock.txt", append = TRUE)
     print("No missing block")
     print(unique(df_current$BlockNr))
     } else {
-      write("There will be missing blocks", file = "./processed/missingBlock.txt", append = TRUE)
-      write(unique(df_current$BlockNr), file = "./processed/missingBlock.txt", append = TRUE)
+      write("There will be missing blocks", file = "./filtered/missingBlock.txt", append = TRUE)
+      write(unique(df_current$BlockNr), file = "./filtered/missingBlock.txt", append = TRUE)
       print("There will be missing blocks")
       print(unique(df_current$BlockNr))
   }
@@ -106,7 +119,7 @@ df_ideal <- read.csv("./ideal.csv")
 ls_error <- list() # List - SubNr/BlockNr/TrialNr for pitch errors
 ls_miss <- list() # List - SubNr/BlockNr/TrialNr for missing data
 for (subnr in unique(df_onset$SubNr)){
-  write(sprintf("----- SubNr %i -----", subnr), file = "./processed/errorMessage.txt", append = TRUE) # Export the results as a txt file
+  write(sprintf("----- SubNr %i -----", subnr), file = "./filtered/errorMessage.txt", append = TRUE) # Export the results as a txt file
   print(sprintf("----- SubNr %i -----", subnr))
   for (block in unique(df_onset$BlockNr)){
     for (trial in unique(df_onset$TrialNr)){
@@ -122,7 +135,7 @@ for (subnr in unique(df_onset$SubNr)){
             if (current_onset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
               while (counter == 0){
                 ls_error <- c(ls_error, list(c(subnr, block, trial)))
-                write(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./processed/errorMessage.txt", append = TRUE)
+                write(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./filtered/errorMessage.txt", append = TRUE)
                 print(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
                 counter = counter + 1
               }
@@ -130,7 +143,7 @@ for (subnr in unique(df_onset$SubNr)){
             } else if (current_offset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
               while (counter == 0){
                 ls_error <- c(ls_error, list(c(subnr, block, trial)))
-                write(sprintf("Pitch Error (offset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./processed/errorMessage.txt", append = TRUE)
+                write(sprintf("Pitch Error (offset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./filtered/errorMessage.txt", append = TRUE)
                 print(sprintf("Pitch Error (offset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
                 counter = counter + 1
               }
@@ -139,12 +152,12 @@ for (subnr in unique(df_onset$SubNr)){
           # NoteNr (both onsets and offsets) is NOT 67 - discard the current trial
         } else {
           ls_error <- c(ls_error, list(c(subnr, block, trial)))
-          write(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial, note), file = "./processed/errorMessage.txt", append = TRUE)
+          write(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial, note), file = "./filtered/errorMessage.txt", append = TRUE)
           print(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
         }
       } else if (nrow(current_onset) == 0){
         ls_miss <- c(ls_miss, list(c(subnr, block, trial)))
-        write(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial), file = "./processed/errorMessage.txt", append = TRUE)
+        write(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial), file = "./filtered/errorMessage.txt", append = TRUE)
         print(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
       }
     }
@@ -177,6 +190,9 @@ for (subnr in unique(df_note$SubNr)){
 }
 colnames(df_errorRate) <- c("SubNr", "N", "ErrorRate")
 
+####################################
+# Exclude participants
+####################################
 # Determine excluded participants - Less than 10%
 df_errorRate$LessThan10 <- "include"
 df_errorRate$LessThan10[df_errorRate$ErrorRate > 0.1] <- "exclude"
@@ -209,9 +225,20 @@ desc_errorRate$Decision[desc_errorRate$RowNr == 1 | desc_errorRate$RowNr == 3 | 
 desc_errorRate <- desc_errorRate[c(5, 7, 6, 1:4)]
 print(desc_errorRate)
 # Export error rate
-write.csv(desc_errorRate, file = "./processed/errorRate.csv", row.names = TRUE)
+write.csv(desc_errorRate, file = "./filtered/errorRate.csv", row.names = TRUE)
 
+# Mark pitch errors for data_all
+df_note$Error <- 0
+for (error in 1:length(ls_error)){
+  df_note$Error[df_note$SubNr == ls_remove[[error]][1] & df_note$BlockNr == ls_remove[[error]][2] & df_note$TrialNr == ls_remove[[error]][3]] <- 1
+}
+
+# Create data without pitch errors
+df_analysis <- df_note %>% dplyr::filter(Error != 1)
+
+####################################
 # Histograms
+####################################
 hist_error_LessThan10 <- ggplot(df_errorRate, aes(x = ErrorRate, fill = LessThan10)) + geom_histogram(position = "identity", binwidth = .01) +
   geom_vline(aes(xintercept = mean(ErrorRate)), color = "black", linetype = "dashed", size = .5) + # mean line
   annotate(geom = "text", x = mean(df_errorRate$ErrorRate)+.05, y = 9, label="Mean", color = "black") +
@@ -243,38 +270,29 @@ hist_error_Percentile <- ggplot(df_errorRate, aes(x = ErrorRate, fill = Percenti
   theme_classic()
 
 # Export png files
-ggsave("./processed/hist_error_LessThan10.png", plot = hist_error_LessThan10, dpi = 600, width = 5, height = 5)
-ggsave("./processed/hist_error_SD.png", plot = hist_error_SD, dpi = 600, width = 5, height = 5)
-ggsave("./processed/hist_error_Percentile.png", plot = hist_error_Percentile, dpi = 600, width = 5, height = 5)
-
-# Mark pitch errors for data_all
-df_note$Error <- 0
-for (error in 1:length(ls_error)){
-  df_note$Error[df_note$SubNr == ls_remove[[error]][1] & df_note$BlockNr == ls_remove[[error]][2] & df_note$TrialNr == ls_remove[[error]][3]] <- 1
-}
-
-# Create data without pitch errors
-df_analysis <- df_note %>% dplyr::filter(Error != 1)
+ggsave("./filtered/hist_error_LessThan10.png", plot = hist_error_LessThan10, dpi = 600, width = 5, height = 5)
+ggsave("./filtered/hist_error_SD.png", plot = hist_error_SD, dpi = 600, width = 5, height = 5)
+ggsave("./filtered/hist_error_Percentile.png", plot = hist_error_Percentile, dpi = 600, width = 5, height = 5)
 
 ####################################
 # Export csv files
 ####################################
 # Export a csv file for df_all
-write.csv(df_all, file = "./processed/data_all.csv", row.names = F)
+write.csv(df_all, file = "./filtered/data_all.csv", row.names = F)
 
 # Create data only containing metronome sounds
 df_metro <- df_all %>% dplyr::filter(Key_OnOff == 10)
 # Export a csv file for df_metro
-write.csv(df_metro, file = "./processed/data_metro.csv", row.names = F)
+write.csv(df_metro, file = "./filtered/data_metro.csv", row.names = F)
 
 # Export a csv file for df_error
-write.csv(df_error, file = "./processed/data_error.csv", row.names = F)
+write.csv(df_error, file = "./filtered/data_error.csv", row.names = F)
 
 # Export a csv file for df_errorRate
-write.csv(df_errorRate, file = "./processed/data_errorRate.csv", row.names = F)
+write.csv(df_errorRate, file = "./filtered/data_errorRate.csv", row.names = F)
 
 # Export a csv file for data_analysis
-write.csv(df_analysis, file = "./processed/data_analysis.csv", row.names = F)
+write.csv(df_analysis, file = "./filtered/data_analysis.csv", row.names = F)
 
 # # Data for each participant
 # for (i in unique(data_analysis$SubNr)){
@@ -282,5 +300,5 @@ write.csv(df_analysis, file = "./processed/data_analysis.csv", row.names = F)
 #   var_name <- paste("data_", toString(i), sep = "")
 #   assign(var_name, data_i)
 #   # Export csv files for each participant
-#   write.csv(data_i, file = paste("./processed/", var_name, ".csv", sep = ""))
+#   write.csv(data_i, file = paste("./filtered/", var_name, ".csv", sep = ""))
 # }
