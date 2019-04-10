@@ -42,11 +42,6 @@ if (!file.exists("plot/ioi/withOrder")){
   dir.create("plot/ioi/withOrder")
 }
 
-# trimmed
-if (!file.exists("trimmed")){
-  dir.create("trimmed")
-}
-
 # stats
 if (!file.exists("stats")){
   dir.create("stats")
@@ -63,162 +58,11 @@ if (!file.exists("stats/withOrder")){
 ####################################
 # Reading and formatting data
 ####################################
-# Read filtered csv files
-df_all <- read.csv("./filtered/data_analysis.csv", header = T, sep = ",", dec = ".") # clear data without pitch errors
-df_exc <- read.csv("./filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
-
-# Exclude participants with more than 10% errors
-include <- df_exc$SubNr[df_exc$LessThan10 == "include"]
-
-# Data frame with only included participants
-df_analysis <- data.frame()
-for (subnr in include){
-  df_current <- df_all %>% dplyr::filter(SubNr == subnr)
-  df_analysis <- rbind(df_analysis, df_current)
-}
-
-####################################
-# Inter-Onset intervals
-####################################
-# Calculate IOIs
-df_ioi <- df_analysis %>% dplyr::filter(Key_OnOff == 1)
-df_ioi$IOI <- diff(c(0, df_ioi$TimeStamp))
-
-# Remove the first note
-df_ioi <- df_ioi %>% dplyr::filter(NoteNr != 17)
-
-# Assign a sequence number for each tone
-df_ioi$Interval <- rep(1:66, length(df_ioi$NoteNr)/66)
-
-### Define SubSkills
-# For intervals
-ls_legato <- list(c(1:7), c(17:23), c(42:48), c(58:64))
-ls_staccato <- list(c(9:15), c(25:31), c(34:40), c(50:56))
-ls_forte <- list(c(1:7), c(17:23), c(42:48), c(58:64))
-ls_piano <- list(c(9:15), c(25:31), c(34:40), c(50:56))
-
-# For intervals
-# Legato
-df_ioi$SubSkill <- NA
-for (phrase in 1:length(ls_legato)){
-  for (note in 1:length(ls_legato[[phrase]])){
-    df_ioi$SubSkill[df_ioi$Skill == "articulation" & df_ioi$Interval == ls_legato[[phrase]][note]] <- "Legato"
-  }
-}
-# Staccato
-for (phrase in 1:length(ls_staccato)){
-  for (note in 1:length(ls_staccato[[phrase]])){
-    df_ioi$SubSkill[df_ioi$Skill == "articulation" & df_ioi$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
-  }
-}
-
-# Forte
-for (phrase in 1:length(ls_forte)){
-  for (note in 1:length(ls_forte[[phrase]])){
-    df_ioi$SubSkill[df_ioi$Skill == "dynamics" & df_ioi$Interval == ls_forte[[phrase]][note]] <- "Forte"
-  }
-}
-# Piano
-for (phrase in 1:length(ls_piano)){
-  for (note in 1:length(ls_piano[[phrase]])){
-    df_ioi$SubSkill[df_ioi$Skill == "dynamics" & df_ioi$Interval == ls_piano[[phrase]][note]] <- "Piano"
-  }
-}
-
-# Define Skill Change (LtoS, FtoP)
-change_1 <- c(8, 24, 49)
-# Define Skill Change (StoL, PtoF)
-change_2 <- c(16, 41, 57)
-
-for (number in change_1){
-  df_ioi$SubSkill[df_ioi$Skill == "articulation" & df_ioi$Interval == number] <- "LtoS"
-  df_ioi$SubSkill[df_ioi$Skill == "dynamics" & df_ioi$Interval == number] <- "FtoP"
-}
-for (number in change_2){
-  df_ioi$SubSkill[df_ioi$Skill == "articulation" & df_ioi$Interval == number] <- "StoL"
-  df_ioi$SubSkill[df_ioi$Skill == "dynamics" & df_ioi$Interval == number] <- "PtoF"
-}
-
-# Add a grouping name
-ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
-for (cond in 1:length(ls_grouping$Condition)){
-  for (skill in 1:length(ls_grouping$Skill)){
-    df_ioi$Grouping[df_ioi$Condition == ls_grouping$Condition[cond] & df_ioi$Skill == ls_grouping$Skill[skill]] <-
-      paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-  }
-}
-
-####################################
-# Remove outliers
-####################################
-# Exclude irrelevant notes
-df_subset <- subset(df_ioi, df_ioi$Interval != 32 & df_ioi$Interval != 33 & df_ioi$Interval != 65 & df_ioi$Interval != 66)
-
-# Draw histogram
-p_hist <- ggplot(df_subset, aes(x = IOI, fill = Grouping)) +
-  geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
-  theme_classic()
-
-# Exclude deviated participants (>+3/<-3SD)
-ioi_subject <- aggregate(IOI~SubNr, data = df_subset,
-                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-ioi_subject <- cbind(ioi_subject, as.data.frame(ioi_subject[,2]))
-mean = mean(ioi_subject$mean)
-sd = sd(ioi_subject$mean)
-exclude = c() # excluded participants
-for (subnr in unique(ioi_subject$SubNr)){
-  if (ioi_subject$mean[ioi_subject$SubNr == subnr] > mean+3*sd | 
-      ioi_subject$mean[ioi_subject$SubNr == subnr] < mean-3*sd){
-    exclude = c(exclude, subnr)
-    print(sprintf("Exclude participant %i", subnr))
-  }
-}
-
-# Exclude participants based on IOIs
-for (subject in exclude){
-  df_exc$LessThan10[df_exc$SubNr == subject] <- "exclude"
-  df_exc$SD[df_exc$SubNr == subject] <- "exclude"
-  df_exc$Percentile[df_exc$SubNr == subject] <- "exclude"
-}
-
-if (length(exclude) != 0){ # if a vector is not 0
-  for (subnr in exclude){
-    df_trim <- df_subset %>% dplyr::filter(SubNr != subnr)
-  } 
-} else {
-  df_trim <- df_subset
-}
-
-# Updated data_errorRate.csv
-write.csv(df_exc, file = "./filtered/data_errorRate_updated.csv", row.names = F)
-
-# Exclude ioi > +- 3SD (across conditions)
-upper <- mean(df_subset$IOI)+3*sd(df_subset$IOI)
-lower <- mean(df_subset$IOI)-3*sd(df_subset$IOI)
-df_trim_sd <- df_trim %>% dplyr::filter(IOI < upper & IOI > lower)
-print(sprintf("Remove %i trials beyond +- 3SD", nrow(df_trim)-nrow(df_trim_sd)))
-
-p_hist_sd <- ggplot(df_trim_sd, aes(x = IOI, fill = Grouping)) +
-  geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
-  theme_classic()
-
-p_box_sd <- ggboxplot(df_trim_sd, x = "Skill", y = "IOI", color = "Condition")
-p_box_sd <- ggpar(p_box_sd, ylab = "IOI (ms)")
-
-# Save plots
-# png files
-ggsave("./plot/ioi/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
-ggsave("./plot/ioi/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./plot/ioi/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
-
-# Export a csv file for df_trimmed
-write.csv(df_trim_sd, file = "./trimmed/data_ioi.csv", row.names = F)
+df_trim_ioi <- read.csv("./trimmed/data_ioi.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
 
 ####################################
 # Aggregate data
 ####################################
-df_trim_ioi <- read.csv("./trimmed/data_ioi.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
-
 # Overall average
 ioi <- aggregate(IOI~Condition*Skill, data = df_trim_ioi,
                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
