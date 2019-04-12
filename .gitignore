@@ -1,2 +1,5 @@
-# Ignore midi files
+# ignore midi files
 script/lilypond/*midi
+
+# ignore pdf files
+script/lilypond/*pdf
