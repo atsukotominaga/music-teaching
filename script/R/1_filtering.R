@@ -6,7 +6,7 @@
 ####################################
 # Created: 30/01/2019
 # This script organises raw data and removes pitch errors from it.
-# GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
+# GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R 
 
 ####################################
 #  Requirements
@@ -215,7 +215,7 @@ desc_errorRate <- as.data.frame(rbind(desc_errorRate_LessThan10[,2:3], desc_erro
 desc_errorRate <- desc_errorRate[c(2,1)]
 print(desc_errorRate)
 # Export error rate
-write.csv(desc_errorRate, file = "./1_filtered/errorRate.csv", row.names = TRUE)
+write.csv(desc_errorRate, file = "./1_filtered/errorRate.csv", row.names = F)
 
 # Mark pitch errors for data_all
 df_note$Error <- 0
