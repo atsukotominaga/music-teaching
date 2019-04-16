@@ -3,12 +3,12 @@
 others/
 
 # R
+script/R/raw_data/
 script/R/analysis/
 script/R/plot/
-script/R/filtered/
-script/R/raw_data/
-script/R/trimmed/
-script/R/stats/
+script/R/1_filtered/
+script/R/2_trimmed/
+script/R/3_stats/
 script/R/.Rhistory
 script/R/.DS_Store
 
