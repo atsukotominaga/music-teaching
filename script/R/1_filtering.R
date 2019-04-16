@@ -19,7 +19,7 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("wesanderson")) {install.packages("wesanderson"); require("wesanderson")}
 
 # Create necessary folders if not exist
-# filtered - all of the outputs will be stored in this folder
+# 1_filtered - all of the outputs will be stored in this folder
 if (!file.exists("1_filtered")){
   dir.create("1_filtered")
 }
