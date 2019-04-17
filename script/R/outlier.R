@@ -6,7 +6,7 @@
 ####################################
 # Created: 10/04/2019
 # This script removes outliers
-# GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
+# GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R 
 
 ####################################
 #  Requirements
@@ -21,36 +21,35 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 
 # Create necessary folders if not exist
-# plot
-if (!file.exists("plot")){
-  dir.create("plot")
-}
-# ioi
-if (!file.exists("plot/ioi/")){
-  dir.create("plot/ioi")
-}
-# kot
-if (!file.exists("plot/kot/")){
-  dir.create("plot/kot")
-}
-# vel
-if (!file.exists("plot/vel/")){
-  dir.create("plot/vel")
+
+# 2_trimmed
+if (!file.exists("2_trimmed")){
+  dir.create("2_trimmed")
 }
 
-# trimmed
-if (!file.exists("trimmed")){
-  dir.create("trimmed")
+# 2_trimmed/plot
+if (!file.exists("2_trimmed/plot")){
+  dir.create("2_trimmed/plot")
 }
-
-
+# 2_trimmed/plot/ioi
+if (!file.exists("2_trimmed/plot/ioi/")){
+  dir.create("2_trimmed/plot/ioi")
+}
+# 2_trimmed/plot/kot
+if (!file.exists("2_trimmed/plot/kot/")){
+  dir.create("2_trimmed/plot/kot")
+}
+# 2_trimmed/plot/vel
+if (!file.exists("2_trimmed/plot/vel/")){
+  dir.create("2_trimmed/plot/vel")
+}
 
 ####################################
 # Reading and formatting data
 ####################################
 # Read filtered csv files
-df_all <- read.csv("./filtered/data_analysis.csv", header = T, sep = ",", dec = ".") # clear data without pitch errors
-df_exc <- read.csv("./filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
+df_all <- read.csv("./1_filtered/data_analysis.csv", header = T, sep = ",", dec = ".") # clear data without pitch errors
+df_exc <- read.csv("./1_filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
 
 # Exclude participants with more than 10% errors
 include <- df_exc$SubNr[df_exc$LessThan10 == "include"]
@@ -61,6 +60,26 @@ for (subnr in include){
   df_current <- df_all %>% dplyr::filter(SubNr == subnr)
   df_analysis <- rbind(df_analysis, df_current)
 }
+
+####################################
+# Define SubSkills
+####################################
+# For intervals
+ls_legato <- list(c(1:7), c(17:23), c(42:48), c(58:64))
+ls_staccato <- list(c(9:15), c(25:31), c(34:40), c(50:56))
+ls_forte <- list(c(1:7), c(17:23), c(42:48), c(58:64))
+ls_piano <- list(c(9:15), c(25:31), c(34:40), c(50:56))
+
+# For each note (only for velocity)
+ls_legato_2 <- list(c(1:8), c(17:24), c(42:49), c(58:65))
+ls_staccato_2 <- list(c(9:16), c(25:32), c(34:41), c(50:57))
+ls_forte_2 <- list(c(1:8), c(17:24), c(42:49), c(58:65))
+ls_piano_2 <- list(c(9:16), c(25:32), c(34:41), c(50:57))
+
+# Define Skill Change (LtoS, FtoP)
+change_1 <- c(8, 24, 49)
+# Define Skill Change (StoL, PtoF)
+change_2 <- c(16, 41, 57)
 
 ####################################
 # Inter-Onset intervals
@@ -74,13 +93,6 @@ df_ioi <- df_ioi %>% dplyr::filter(NoteNr != 17)
 
 # Assign a sequence number for each tone
 df_ioi$Interval <- rep(1:66, length(df_ioi$NoteNr)/66)
-
-# Define SubSkills
-# For intervals
-ls_legato <- list(c(1:7), c(17:23), c(42:48), c(58:64))
-ls_staccato <- list(c(9:15), c(25:31), c(34:40), c(50:56))
-ls_forte <- list(c(1:7), c(17:23), c(42:48), c(58:64))
-ls_piano <- list(c(9:15), c(25:31), c(34:40), c(50:56))
 
 # Asssign SubSkills
 df_ioi$SubSkill <- NA
@@ -109,11 +121,6 @@ for (phrase in 1:length(ls_piano)){
     df_ioi$SubSkill[df_ioi$Skill == "dynamics" & df_ioi$Interval == ls_piano[[phrase]][note]] <- "Piano"
   }
 }
-
-# Define Skill Change (LtoS, FtoP)
-change_1 <- c(8, 24, 49)
-# Define Skill Change (StoL, PtoF)
-change_2 <- c(16, 41, 57)
 
 # Assign Skill Change
 for (number in change_1){
@@ -160,7 +167,7 @@ for (subnr in unique(ioi_subject$SubNr)){
   }
 }
 
-# Exclude participants based on IOIs
+# Exclude participants based on IOI deviation
 for (subject in exclude){
   df_exc$LessThan10[df_exc$SubNr == subject] <- "exclude"
   df_exc$SD[df_exc$SubNr == subject] <- "exclude"
@@ -176,13 +183,16 @@ if (length(exclude) != 0){ # if a vector is not 0
 }
 
 # Updated data_errorRate.csv
-write.csv(df_exc, file = "./filtered/data_errorRate_updated.csv", row.names = F)
+write.csv(df_exc, file = "./1_filtered/data_errorRate_updated.csv", row.names = F)
 
-# Exclude ioi > +- 3SD (across conditions)
+# Exclude ioi > +- 3SD (across the conditions)
 upper <- mean(df_subset$IOI)+3*sd(df_subset$IOI)
 lower <- mean(df_subset$IOI)-3*sd(df_subset$IOI)
 df_trim_sd <- df_trim %>% dplyr::filter(IOI < upper & IOI > lower)
-print(sprintf("Remove %i trials beyond +- 3SD", nrow(df_trim)-nrow(df_trim_sd)))
+removed <- nrow(df_trim)-nrow(df_trim_sd)
+proportion <- round(removed/nrow(df_trim), 5)
+write(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed, proportion), file = "./2_trimmed/outlier.txt", append = T) # Export the results as a txt file
+print(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed, proportion))
 
 p_hist_sd <- ggplot(df_trim_sd, aes(x = IOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
@@ -193,17 +203,17 @@ p_box_sd <- ggpar(p_box_sd, ylab = "IOI (ms)")
 
 # Save plots
 # png files
-ggsave("./plot/ioi/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
-ggsave("./plot/ioi/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./plot/ioi/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed/plot/ioi/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed/plot/ioi/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed/plot/ioi/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for df_trimmed
-write.csv(df_trim_sd, file = "./trimmed/data_ioi.csv", row.names = F)
+write.csv(df_trim_sd, file = "./2_trimmed/data_ioi.csv", row.names = F)
 
 ####################################
 # Key Overlap Time - articulation
 ####################################
-df_exc <- read.csv("./filtered/data_errorRate_updated.csv", header = T, sep = ",", dec = ".") # exclusion criteria
+df_exc <- read.csv("./1_filtered/data_errorRate_updated.csv", header = T, sep = ",", dec = ".") # exclusion criteria
 
 # Exclude participants
 include <- df_exc$SubNr[df_exc$LessThan10 == "include"]
@@ -222,7 +232,7 @@ df_offset <- df_analysis %>% dplyr::filter(Key_OnOff == 0)
 df_onset$KOT <- NA
 for (row in 1:length(df_onset$NoteNr)){
   if (row < length(df_onset$NoteNr)){
-    df_onset$KOT[row+1] <- df_offset$TimeStamp[row] - df_onset$TimeStamp[row+1]
+    df_onset$KOT[row+1] <- df_offset$TimeStamp[row] - df_onset$TimeStamp[row+1] # offset(n) - onset(n+1)
   }
 }
 
@@ -283,7 +293,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers
 ####################################
 df_subset <- subset(df_kot, df_kot$Interval != 32 & df_kot$Interval != 33 & df_kot$Interval != 65 & df_kot$Interval != 66) # Exclude irrelevant notes
-
+ 
 # Draw histogram and
 p_hist <- ggplot(df_subset, aes(x = KOT, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
@@ -300,7 +310,10 @@ for (subskill in unique(df_subset$SubSkill)){
   df_current <- df_subset %>% dplyr::filter(SubSkill == subskill & KOT < upper & KOT > lower)
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
-print(sprintf("Remove %i trials beyond +- 3SD", nrow(df_subset)-nrow(df_trim_sd)))
+removed <- nrow(df_subset)-nrow(df_trim_sd)
+proportion <- removed/nrow(df_subset)
+write(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed, proportion), file = "./2_trimmed/outlier.txt", append = T)
+print(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed, proportion))
 
 # Sort by RowNr
 df_trim_sd <- df_trim_sd[order(df_trim_sd$RowNr),]
@@ -314,12 +327,12 @@ p_box_sd <- ggpar(p_box_sd, ylab = "KOT (ms)")
 
 # Save plots
 # png files
-ggsave("./plot/kot/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
-ggsave("./plot/kot/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./plot/kot/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed//plot/kot/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed//plot/kot/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed//plot/kot/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for df_trimmed
-write.csv(df_trim_sd, file = "./trimmed/data_kot.csv", row.names = F)
+write.csv(df_trim_sd, file = "./2_trimmed/data_kot.csv", row.names = F)
 
 ####################################
 # Velocity - dynamics
@@ -336,15 +349,8 @@ df_vel$Acc <- NULL # Remove Acc from df_vel
 df_vel$Note <- rep(1:67, length(df_vel$NoteNr)/67) # for vel_seq
 df_vel_acc$Interval <- rep(1:66, length(df_vel_acc$NoteNr)/66) # for vel_acc_seq
 
-# Define SubSkills
-# For each note (for df_vel)
-ls_legato_2 <- list(c(1:8), c(17:24), c(42:49), c(58:65))
-ls_staccato_2 <- list(c(9:16), c(25:32), c(34:41), c(50:57))
-ls_forte_2 <- list(c(1:8), c(17:24), c(42:49), c(58:65))
-ls_piano_2 <- list(c(9:16), c(25:32), c(34:41), c(50:57))
-
 # Assign SubSkills
-# For each note (only for df_vel)
+# For each note
 df_vel$SubSkill <- NA
 # Legato
 for (phrase in 1:length(ls_legato_2)){
@@ -451,7 +457,10 @@ for (subskill in unique(df_subset$SubSkill)){
   df_current <- df_subset %>% dplyr::filter(SubSkill == subskill & Velocity < upper & Velocity > lower)
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
-print(sprintf("Velocity - Remove %i trials beyond +- 3SD", nrow(df_subset)-nrow(df_trim_sd)))
+removed <- nrow(df_subset)-nrow(df_trim_sd)
+proportion <- removed/nrow(df_subset)
+write(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed, proportion), file = "./2_trimmed/outlier.txt", append = T)
+print(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed, proportion))
 
 # Exclude vel_acc > +- 3SD (within a given condition)
 vel_subskill_acc <- aggregate(Acc~SubSkill, data = df_subset_acc,
@@ -464,7 +473,10 @@ for (subskill in unique(df_subset_acc$SubSkill)){
   df_current <- df_subset_acc %>% dplyr::filter(SubSkill == subskill & Acc < upper & Acc > lower)
   df_trim_sd_acc <- rbind(df_trim_sd_acc, df_current)
 }
-print(sprintf("Acc - Remove %i trials beyond +- 3SD", nrow(df_subset_acc)-nrow(df_trim_sd_acc)))
+removed <- nrow(df_subset_acc)-nrow(df_trim_sd_acc)
+proportion <- removed/nrow(df_subset_acc)
+write(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed, proportion), file = "./2_trimmed/outlier.txt", append = T)
+print(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed, proportion))
 
 p_hist_sd <- ggplot(df_trim_sd, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
@@ -481,13 +493,13 @@ p_box_sd_acc <- ggboxplot(df_trim_sd_acc, x = "Skill", y = "Acc", color = "Condi
 p_box_sd_acc <- ggpar(p_box_sd_acc, ylab = "Acceleration")
 
 # png files
-ggsave("./plot/vel/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
-ggsave("./plot/vel/p_hist_acc.png", plot = p_hist_acc, dpi = 600, width = 5, height = 4)
-ggsave("./plot/vel/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./plot/vel/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
-ggsave("./plot/vel/p_hist_sd_acc.png", plot = p_hist_sd_acc, dpi = 600, width = 5, height = 4)
-ggsave("./plot/vel/p_box_sd_acc.png", plot = p_box_sd_acc, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed/plot/vel/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed/plot/vel/p_hist_acc.png", plot = p_hist_acc, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed/plot/vel/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed/plot/vel/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed/plot/vel/p_hist_sd_acc.png", plot = p_hist_sd_acc, dpi = 600, width = 5, height = 4)
+ggsave("./2_trimmed/plot/vel/p_box_sd_acc.png", plot = p_box_sd_acc, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for df_trimmed
-write.csv(df_trim_sd, file = "./trimmed/data_vel.csv", row.names = F)
-write.csv(df_trim_sd_acc, file = "./trimmed/data_vel_acc.csv", row.names = F)
+write.csv(df_trim_sd, file = "./2_trimmed/data_vel.csv", row.names = F)
+write.csv(df_trim_sd_acc, file = "./2_trimmed/data_vel_acc.csv", row.names = F)
