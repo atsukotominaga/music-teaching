@@ -21,7 +21,6 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 
 # Create necessary folders if not exist
-
 # 2_trimmed
 if (!file.exists("2_trimmed")){
   dir.create("2_trimmed")
