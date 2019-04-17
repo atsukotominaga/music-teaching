@@ -1,5 +1,5 @@
 #!/usr/bin/Rscript
-#rm(list=ls(all=TRUE)) - clear all in Environment
+#rm(list=ls(all=T)) - clear all in Environment
 
 ####################################
 #  Documentation
@@ -86,16 +86,16 @@ df_all <- df_all[order(df_all$RowNr),]
 # Whether each participants completed all conditions
 for (subnr in unique(df_all$SubNr)){
   df_current <- df_all %>% dplyr::filter(SubNr == subnr)
-  write(sprintf("----- SubNr %i -----", subnr), file = "./1_filtered/missingBlock.txt", append = TRUE) # Export the results as a txt file
+  write(sprintf("----- SubNr %i -----", subnr), file = "./1_filtered/missingBlock.txt", append = T) # Export the results as a txt file
   print(sprintf("----- SubNr %i -----", subnr))
   if (all.equal(unique(df_current$BlockNr), c(1:4))){
-    write("No missing block", file = "./1_filtered/missingBlock.txt", append = TRUE)
-    write(unique(df_current$BlockNr), file = "./1_filtered/missingBlock.txt", append = TRUE)
+    write("No missing block", file = "./1_filtered/missingBlock.txt", append = T)
+    write(unique(df_current$BlockNr), file = "./1_filtered/missingBlock.txt", append = T)
     print("No missing block")
     print(unique(df_current$BlockNr))
     } else {
-      write("There will be missing blocks", file = "./1_filtered/missingBlock.txt", append = TRUE)
-      write(unique(df_current$BlockNr), file = "./1_filtered/missingBlock.txt", append = TRUE)
+      write("There will be missing blocks", file = "./1_filtered/missingBlock.txt", append = T)
+      write(unique(df_current$BlockNr), file = "./1_filtered/missingBlock.txt", append = T)
       print("There will be missing blocks")
       print(unique(df_current$BlockNr))
   }
@@ -118,7 +118,7 @@ df_ideal <- read.csv("./ideal.csv")
 ls_error <- list() # List - SubNr/BlockNr/TrialNr for pitch errors
 ls_miss <- list() # List - SubNr/BlockNr/TrialNr for missing data
 for (subnr in unique(df_onset$SubNr)){
-  write(sprintf("----- SubNr %i -----", subnr), file = "./1_filtered/errorMessage.txt", append = TRUE) # Export the results as a txt file
+  write(sprintf("----- SubNr %i -----", subnr), file = "./1_filtered/errorMessage.txt", append = T) # Export the results as a txt file
   print(sprintf("----- SubNr %i -----", subnr))
   for (block in unique(df_onset$BlockNr)){
     for (trial in unique(df_onset$TrialNr)){
@@ -134,7 +134,7 @@ for (subnr in unique(df_onset$SubNr)){
             if (current_onset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
               while (counter == 0){
                 ls_error <- c(ls_error, list(c(subnr, block, trial)))
-                write(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./1_filtered/errorMessage.txt", append = TRUE)
+                write(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./1_filtered/errorMessage.txt", append = T)
                 print(sprintf("Pitch Error (onset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
                 counter = counter + 1
               }
@@ -142,7 +142,7 @@ for (subnr in unique(df_onset$SubNr)){
             } else if (current_offset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
               while (counter == 0){
                 ls_error <- c(ls_error, list(c(subnr, block, trial)))
-                write(sprintf("Pitch Error (offset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./1_filtered/errorMessage.txt", append = TRUE)
+                write(sprintf("Pitch Error (offset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note), file = "./1_filtered/errorMessage.txt", append = T)
                 print(sprintf("Pitch Error (offset) - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
                 counter = counter + 1
               }
@@ -151,12 +151,12 @@ for (subnr in unique(df_onset$SubNr)){
           # NoteNr (either onsets or offsets) is NOT 67 - discard the current trial
         } else {
           ls_error <- c(ls_error, list(c(subnr, block, trial)))
-          write(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial, note), file = "./1_filtered/errorMessage.txt", append = TRUE)
+          write(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial, note), file = "./1_filtered/errorMessage.txt", append = T)
           print(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
         }
       } else if (nrow(current_onset) == 0){ # if data_current is empty
         ls_miss <- c(ls_miss, list(c(subnr, block, trial)))
-        write(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial), file = "./1_filtered/errorMessage.txt", append = TRUE)
+        write(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial), file = "./1_filtered/errorMessage.txt", append = T)
         print(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
       }
     }
