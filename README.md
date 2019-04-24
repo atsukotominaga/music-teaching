@@ -66,8 +66,8 @@ All of the programme scripts were written and tested in the following environmen
 - ly files: sheet music compiled by lilypond (output:pdf)
 
 ## Material
-### Photoshop
-- instruction: contains psd files for instructions for participants
+### Instruction
+- psd files for instructions for participants
 
 ### Checklist
-- for an experimenter to check each procedure during testing
+- a xlsx file to check each procedure during testing (for an experimenter)
