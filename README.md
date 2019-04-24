@@ -27,8 +27,8 @@ All of the programme scripts were written and tested in the following environmen
 - ProductName:	Mac OS X  
 - ProductVersion:	10.14.3
 
-### Max
-#### Prerequisite
+## Max
+### Prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 7.
 - The Shell package is used to generate necessary folders to store collected data. If it does not work in your environment, please create the following 4 folders manually.
     + data (path: ~/script/Max/data)
@@ -36,33 +36,33 @@ All of the programme scripts were written and tested in the following environmen
     + midi (path: ~/script/Max/midi)
         + practice (path: ~/script/Max/midi/practice) - within the midi folder
         
-#### Patchers
+### Patchers
 - mainPatch.maxpat: the main Max patcher for the experiment.
 - practicePatch.maxpat: the Max patcher for practice trials.
 - imagePatch.maxpat: the Max patcher to show stimuli on the screen in front of a participant.
 
-#### SubPatchers
+### SubPatchers
 - MIDInoteRecording: acquire and save MIDI data.
 - dataFileNaming: create a file name.
 - condFileReading: read a condition file to determine the order of conditions for each participant.
 
-#### Others
+### Others
 - image: contains experimental stimuli
 - cond: contains a csv file and an excel file about the order of conditions for each participant.
 
-### R
+## R
 - cleaning.R: clean data and remove performance errors.
 - data_analysis.R: aggregate data and plot them. (+ Stats / not yet)
 - ideal.csv: ideal performance data / used to remove performance errors.
 
-### Rmd
+## Rmd
 - instruction.Rmd: RMarkdown for a instruction sheet for an experimenter (output:html)
 
-### Jupyter notebook
+## Jupyter notebook
 - image_generator.ipynb: Python script to generate experimental stimuli (output:png - see more information on jupyter notebook)
 - image: used for stimuli generation
 
-### Lilypond
+## Lilypond
 - ly files: sheet music compiled by lilypond (output:pdf)
 
 ## Material
@@ -70,4 +70,4 @@ All of the programme scripts were written and tested in the following environmen
 - psd files for instructions for participants
 
 ### Checklist
-- a xlsx file to check each procedure during testing (for an experimenter)
+- an xlsx file to check each procedure during testing (for an experimenter)
