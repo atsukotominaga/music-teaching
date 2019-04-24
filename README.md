@@ -1,13 +1,15 @@
-# Overview
+# The Sound of Teaching Music project
 This repo contains scripts and materials necessary for a Musical experiment with expert pianists.
-- script
+
+## Overview
+- [script](#Script)
     + Max 7 for an experimental programme
     + R for data analysis
     + Rmd for generating an instruction sheet for an experimenter (html)
     + Jupyter notebook for generating stimuli (png)
     + Lilypond for generating sheet music (pdf)
     
-- material
+- [material](#Material)
     + Photoshop files for stimuli (psd)
     + Checklist (xlsx)
 
@@ -22,8 +24,8 @@ The Sound of Teaching Music: Experts’ sound modulation for novices
 ### Environment
 All of the programme scripts were written and tested in the following environment.
 
-ProductName:	Mac OS X  
-ProductVersion:	10.14.3
+- ProductName:	Mac OS X  
+- ProductVersion:	10.14.3
 
 ### Max
 #### Prerequisite
