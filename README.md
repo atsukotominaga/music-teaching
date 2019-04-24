@@ -10,7 +10,7 @@ This repo contains scripts and materials necessary for a Musical experiment with
     + Lilypond for generating sheet music (output:pdf)
     
 - [material](#Material)
-    + Photoshop files for stimuli (psd)
+    + Instruction (psd)
     + Checklist (xlsx)
 
 ## Project
