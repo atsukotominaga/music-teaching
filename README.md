@@ -5,9 +5,9 @@ This repo contains scripts and materials necessary for a Musical experiment with
 - [script](#Script)
     + Max 7 for an experimental programme
     + R for data analysis
-    + Rmd for generating an instruction sheet for an experimenter (html)
-    + Jupyter notebook for generating stimuli (png)
-    + Lilypond for generating sheet music (pdf)
+    + Rmd for generating an instruction sheet for an experimenter (output:html)
+    + Jupyter notebook for generating stimuli (output:png)
+    + Lilypond for generating sheet music (output:pdf)
     
 - [material](#Material)
     + Photoshop files for stimuli (psd)
@@ -56,14 +56,14 @@ All of the programme scripts were written and tested in the following environmen
 - ideal.csv: ideal performance data / used to remove performance errors.
 
 ### Rmd
-- instruction.Rmd: RMarkdown for a instruction sheet for an experimenter (html)
+- instruction.Rmd: RMarkdown for a instruction sheet for an experimenter (output:html)
 
 ### Jupyter notebook
-- image_generator.ipynb: Python script to generate experimental stimuli (png; see more information on jupyter notebook)
+- image_generator.ipynb: Python script to generate experimental stimuli (output:png - see more information on jupyter notebook)
 - image: used for stimuli generation
 
 ### Lilypond
-- ly files: sheet music compiled by lilypond (pdf)
+- ly files: sheet music compiled by lilypond (output:pdf)
 
 ## Material
 ### Photoshop
