@@ -5,7 +5,7 @@
 #  Documentation
 ####################################
 # Created: 30/01/2019
-# This script organises raw data and removes pitch errors from it.
+# This script organises raw data and removes pitch errors.
 # GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R 
 
 ####################################
@@ -63,7 +63,7 @@ raw_data$Order[raw_data$BlockNr == 3 & raw_data$Condition == "teaching"] <- "per
 raw_data$Order[raw_data$BlockNr == 4 & raw_data$Condition == "teaching"] <- "performing-first"
 
 ### Optional
-# Correct labelling (due to a labelling error of the original study / see detail: TBC)
+# Correct labelling (due to a labelling error of the original study / see details: TBC)
 # articulation
 df_a <- raw_data %>% dplyr::filter(grepl("stim_a", Image))
   # Correct wrong labelling
@@ -84,6 +84,7 @@ df_all <- df_all[order(df_all$RowNr),]
 # Check BlockNr
 ####################################
 # Whether each participants completed all conditions
+exclude <- c()
 for (subnr in unique(df_all$SubNr)){
   df_current <- df_all %>% dplyr::filter(SubNr == subnr)
   write(sprintf("----- SubNr %i -----", subnr), file = "./1_filtered/missingBlock.txt", append = T) # Export the results as a txt file
@@ -94,11 +95,19 @@ for (subnr in unique(df_all$SubNr)){
     print("No missing block")
     print(unique(df_current$BlockNr))
     } else {
+      exclude <- c(exclude, subnr) # Detect those who haven't completed all of the blocks
       write("There will be missing blocks", file = "./1_filtered/missingBlock.txt", append = T)
       write(unique(df_current$BlockNr), file = "./1_filtered/missingBlock.txt", append = T)
       print("There will be missing blocks")
       print(unique(df_current$BlockNr))
   }
+}
+
+# Exclude those who haven't completed all of the blocks
+if (length(exclude) != 0){ # if a vector is not 0
+  for (subnr in exclude){
+    df_all <- df_all %>% dplyr::filter(SubNr != subnr)
+  } 
 }
 
 ####################################
@@ -122,13 +131,13 @@ for (subnr in unique(df_onset$SubNr)){
   print(sprintf("----- SubNr %i -----", subnr))
   for (block in unique(df_onset$BlockNr)){
     for (trial in unique(df_onset$TrialNr)){
-      # Extract each trial for each participant
+      # Extract each trial for the current participant
       current_onset <- df_onset %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
       current_offset <- df_offset %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
       if (nrow(current_onset) != 0){ # if data_current is NOT empty
         # NoteNr (both onsets and offsets) is 67 - detect pitch errors
         if (length(current_onset$NoteNr) == length(df_ideal$NoteNr) & length(current_offset$NoteNr) == length(df_ideal$NoteNr)){
-          counter = 0 # set counter so that the following loop will terminate once it finds one error in a given trial
+          counter = 0 # set counter so that the following while loop will terminate once it finds one error in a given trial
           for (note in 1:length(df_ideal$NoteNr)){
             # Onset errors
             if (current_onset[note,]$Pitch != df_ideal[note,]$IdealPerformance){
@@ -151,7 +160,7 @@ for (subnr in unique(df_onset$SubNr)){
           # NoteNr (either onsets or offsets) is NOT 67 - discard the current trial
         } else {
           ls_error <- c(ls_error, list(c(subnr, block, trial)))
-          write(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial, note), file = "./1_filtered/errorMessage.txt", append = T)
+          write(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial), file = "./1_filtered/errorMessage.txt", append = T)
           print(sprintf("NoteNr Error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
         }
       } else if (nrow(current_onset) == 0){ # if data_current is empty
@@ -168,7 +177,7 @@ ls_remove <- c(ls_error, ls_miss)
 # Remove duplication if exists
 ls_remove <- unique(ls_remove)
 # Create a data frame of removed trials
-df_removed <- t(data.frame(ls_remove))
+df_removed <- t(data.frame(ls_remove)) # transpose
 colnames(df_removed) <- c("SubNr", "BlockNr", "TrialNr")
 rownames(df_removed) <- c(1:nrow(df_removed))
 
@@ -181,7 +190,7 @@ for (subnr in unique(df_note$SubNr)){
       error = error + 1
     }
   }
-  df_errorRate <- rbind(df_errorRate, c(subnr, error, error/32))
+  df_errorRate <- rbind(df_errorRate, c(subnr, error, error/32)) # total trial number is 32 (8 trials * 4 blocks)
 }
 colnames(df_errorRate) <- c("SubNr", "N", "ErrorRate")
 
@@ -213,7 +222,10 @@ desc_errorRate_Percentile$Criterion <- "75% Percentile"
 desc_errorRate <- as.data.frame(rbind(desc_errorRate_LessThan10[,2:3], desc_errorRate_SD[,2:3], desc_errorRate_Percentile[,2:3]))
 # Change the order of colnames
 desc_errorRate <- desc_errorRate[c(2,1)]
+# Add a decision (exclude vs. include)
+desc_errorRate$Decision <- rep(c("exclude", "include"), 3)
 print(desc_errorRate)
+
 # Export error rate
 write.csv(desc_errorRate, file = "./1_filtered/errorRate.csv", row.names = F)
 
@@ -289,12 +301,3 @@ write.csv(df_errorRate, file = "./1_filtered/data_errorRate.csv", row.names = F)
 
 # Export a csv file for data_analysis
 write.csv(df_analysis, file = "./1_filtered/data_analysis.csv", row.names = F)
-
-# # Data for each participant
-# for (i in unique(data_analysis$SubNr)){
-#   data_i <- data_analysis %>% dplyr::filter(SubNr == i)
-#   var_name <- paste("data_", toString(i), sep = "")
-#   assign(var_name, data_i)
-#   # Export csv files for each participant
-#   write.csv(data_i, file = paste("./1_filtered/", var_name, ".csv", sep = ""))
-# }
