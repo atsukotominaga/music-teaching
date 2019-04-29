@@ -5,7 +5,7 @@
 #  Documentation
 ####################################
 # Created: 10/04/2019
-# This script removes outliers
+# This script calculates each dependent variable (IOI, KOT, KV) and removes outliers
 # GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R 
 
 ####################################
@@ -69,7 +69,7 @@ ls_staccato <- list(c(9:15), c(25:31), c(34:40), c(50:56))
 ls_forte <- list(c(1:7), c(17:23), c(42:48), c(58:64))
 ls_piano <- list(c(9:15), c(25:31), c(34:40), c(50:56))
 
-# For each note (only for velocity)
+# For each note (velocity only)
 ls_legato_2 <- list(c(1:8), c(17:24), c(42:49), c(58:65))
 ls_staccato_2 <- list(c(9:16), c(25:32), c(34:41), c(50:57))
 ls_forte_2 <- list(c(1:8), c(17:24), c(42:49), c(58:65))
@@ -167,10 +167,9 @@ for (subnr in unique(ioi_subject$SubNr)){
 }
 
 # Exclude participants based on IOI deviation
+df_exc$Final <- df_exc$LessThan10
 for (subject in exclude){
-  df_exc$LessThan10[df_exc$SubNr == subject] <- "exclude"
-  df_exc$SD[df_exc$SubNr == subject] <- "exclude"
-  df_exc$Percentile[df_exc$SubNr == subject] <- "exclude"
+  df_exc$Final[df_exc$SubNr == subject] <- "exclude"
 }
 
 if (length(exclude) != 0){ # if a vector is not 0
@@ -181,17 +180,17 @@ if (length(exclude) != 0){ # if a vector is not 0
   df_trim <- df_subset
 }
 
-# Updated data_errorRate.csv
-write.csv(df_exc, file = "./1_filtered/data_errorRate_updated.csv", row.names = F)
+# Update a csv file for df_exc
+write.csv(df_exc, file = "./1_filtered/data_errorRate.csv", row.names = F)
 
 # Exclude ioi > +- 3SD (across the conditions)
 upper <- mean(df_subset$IOI)+3*sd(df_subset$IOI)
 lower <- mean(df_subset$IOI)-3*sd(df_subset$IOI)
 df_trim_sd <- df_trim %>% dplyr::filter(IOI < upper & IOI > lower)
-removed <- nrow(df_trim)-nrow(df_trim_sd)
-proportion <- round(removed/nrow(df_trim), 5)
-write(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed, proportion), file = "./2_trimmed/outlier.txt", append = T) # Export the results as a txt file
-print(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed, proportion))
+removed_ioi <- nrow(df_trim)-nrow(df_trim_sd)
+proportion_ioi <- round(removed_ioi/nrow(df_trim), 5)
+write(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed_ioi, proportion_ioi), file = "./2_trimmed/outlier.txt", append = T) # Export the results as a txt file
+print(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed_ioi, proportion_ioi))
 
 p_hist_sd <- ggplot(df_trim_sd, aes(x = IOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
@@ -212,10 +211,10 @@ write.csv(df_trim_sd, file = "./2_trimmed/data_ioi.csv", row.names = F)
 ####################################
 # Key Overlap Time - articulation
 ####################################
-df_exc <- read.csv("./1_filtered/data_errorRate_updated.csv", header = T, sep = ",", dec = ".") # exclusion criteria
+df_exc <- read.csv("./1_filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
 
 # Exclude participants
-include <- df_exc$SubNr[df_exc$LessThan10 == "include"]
+include <- df_exc$SubNr[df_exc$Final == "include"]
 
 # Data frame with only included participants
 df_analysis <- data.frame()
@@ -309,10 +308,10 @@ for (subskill in unique(df_subset$SubSkill)){
   df_current <- df_subset %>% dplyr::filter(SubSkill == subskill & KOT < upper & KOT > lower)
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
-removed <- nrow(df_subset)-nrow(df_trim_sd)
-proportion <- removed/nrow(df_subset)
-write(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed, proportion), file = "./2_trimmed/outlier.txt", append = T)
-print(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed, proportion))
+removed_kot <- nrow(df_subset)-nrow(df_trim_sd)
+proportion_kot <- removed_kot/nrow(df_subset)
+write(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed_kot, proportion_kot), file = "./2_trimmed/outlier.txt", append = T)
+print(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed_kot, proportion_kot))
 
 # Sort by RowNr
 df_trim_sd <- df_trim_sd[order(df_trim_sd$RowNr),]
@@ -334,8 +333,13 @@ ggsave("./2_trimmed//plot/kot/p_box_sd.png", plot = p_box_sd, dpi = 600, width =
 write.csv(df_trim_sd, file = "./2_trimmed/data_kot.csv", row.names = F)
 
 ####################################
-# Velocity - dynamics
+# Key Velocity - dynamics
 ####################################
+df_exc <- read.csv("./1_filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
+
+# Exclude participants
+include <- df_exc$SubNr[df_exc$Final == "include"]
+
 # Calculate Acc (acceleration - velocity difference between notes)
 df_vel <- df_analysis %>% dplyr::filter(Key_OnOff == 1)
 df_vel$Acc <- diff(c(0, df_vel$Velocity))
@@ -456,10 +460,10 @@ for (subskill in unique(df_subset$SubSkill)){
   df_current <- df_subset %>% dplyr::filter(SubSkill == subskill & Velocity < upper & Velocity > lower)
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
-removed <- nrow(df_subset)-nrow(df_trim_sd)
-proportion <- removed/nrow(df_subset)
-write(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed, proportion), file = "./2_trimmed/outlier.txt", append = T)
-print(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed, proportion))
+removed_kv <- nrow(df_subset)-nrow(df_trim_sd)
+proportion_kv <- removed/nrow(df_subset)
+write(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv), file = "./2_trimmed/outlier.txt", append = T)
+print(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv))
 
 # Exclude vel_acc > +- 3SD (within a given condition)
 vel_subskill_acc <- aggregate(Acc~SubSkill, data = df_subset_acc,
@@ -473,7 +477,7 @@ for (subskill in unique(df_subset_acc$SubSkill)){
   df_trim_sd_acc <- rbind(df_trim_sd_acc, df_current)
 }
 removed <- nrow(df_subset_acc)-nrow(df_trim_sd_acc)
-proportion <- removed/nrow(df_subset_acc)
+proportion <- removed_kv/nrow(df_subset_acc)
 write(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed, proportion), file = "./2_trimmed/outlier.txt", append = T)
 print(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed, proportion))
 
