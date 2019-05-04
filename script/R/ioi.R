@@ -273,29 +273,23 @@ ggsave("./3_stats/plot/ioi/p_ioi_var_tri.png", plot = p_ioi_var_tri, dpi = 600, 
 ####################################
 # Statistics
 ####################################
-# 1. Normality check
-ioi_norm <- data.frame(unlist(shapiro.test(ioi_stats$Mean)))
-ioi_ch_norm <- data.frame(unlist(shapiro.test(ioi_ch_stats$Mean)))
-ioi_ch_sub_norm <- data.frame(unlist(shapiro.test(ioi_ch_sub_stats$Mean)))
-ioi_seq_norm <- data.frame(unlist(shapiro.test(ioi_seq_stats$Mean)))
-ioi_var_norm <- data.frame(unlist(shapiro.test(ioi_var_stats$Mean)))
-ioi_var_tri_norm <- data.frame(unlist(shapiro.test(ioi_var_tri_stats$Mean)))
-
-# Transpose
-ioi_norm <- t(ioi_norm)
-ioi_ch_norm <- t(ioi_ch_norm)
-ioi_ch_sub_norm <- t(ioi_ch_sub_norm)
-ioi_seq_norm <- t(ioi_seq_norm)
-ioi_var_norm <- t(ioi_var_norm)
-ioi_var_tri_norm <- t(ioi_var_tri_norm)
-
-# Export the results
-write.csv(ioi_norm, file = "./3_stats/ioi/ioi_norm.csv", row.names = FALSE)
-write.csv(ioi_ch_norm, file = "./3_stats/ioi/ioi_ch_norm.csv", row.names = FALSE)
-write.csv(ioi_ch_sub_norm, file = "./3_stats/ioi/ioi_ch_sub_norm.csv", row.names = FALSE)
-write.csv(ioi_seq_norm, file = "./3_stats/ioi/ioi_seq_norm.csv", row.names = FALSE)
-write.csv(ioi_var_norm, file = "./3_stats/ioi/ioi_var_norm.csv", row.names = FALSE)
-write.csv(ioi_var_tri_norm, file = "./3_stats/ioi/ioi_var_tri_norm.csv", row.names = FALSE)
+# # 1. Normality check
+# ioi_norm <- data.frame(unlist(shapiro.test(ioi_stats$Mean)))
+# ioi_ch_norm <- data.frame(unlist(shapiro.test(ioi_ch_stats$Mean)))
+# ioi_ch_sub_norm <- data.frame(unlist(shapiro.test(ioi_ch_sub_stats$Mean)))
+# ioi_var_norm <- data.frame(unlist(shapiro.test(ioi_var_stats$Mean)))
+# 
+# # Transpose
+# ioi_norm <- t(ioi_norm)
+# ioi_ch_norm <- t(ioi_ch_norm)
+# ioi_ch_sub_norm <- t(ioi_ch_sub_norm)
+# ioi_var_norm <- t(ioi_var_norm)
+# 
+# # Export the results
+# write.csv(ioi_norm, file = "./3_stats/ioi/ioi_norm.csv", row.names = FALSE)
+# write.csv(ioi_ch_norm, file = "./3_stats/ioi/ioi_ch_norm.csv", row.names = FALSE)
+# write.csv(ioi_ch_sub_norm, file = "./3_stats/ioi/ioi_ch_sub_norm.csv", row.names = FALSE)
+# write.csv(ioi_var_norm, file = "./3_stats/ioi/ioi_var_norm.csv", row.names = FALSE)
 
 # Two-way ANOVA
 # ioi
