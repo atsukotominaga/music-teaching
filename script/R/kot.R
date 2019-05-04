@@ -53,182 +53,293 @@ df_kot$SubNr <- as.factor(df_kot$SubNr)
 ####################################
 # Aggregate data
 ####################################
-df_kot <- read.csv("./trimmed/data_kot.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+# 1. Overall KOT
+# For each individual
+kot <- aggregate(KOT~SubNr*Condition*Skill, data = df_kot,
+                 FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
+kot <- cbind(kot[,1:3], as.data.frame(kot[,4]))
+# Change colnames
+colnames(kot) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
 
-# Overall average
-kot <- aggregate(KOT~Condition*Skill*Order, data = df_kot,
-                 FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+# Group mean
+kot_stats <- aggregate(Mean~Condition*Skill, data = kot,
+                       FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_stats <- cbind(kot_stats[,1:2], as.data.frame(kot_stats[,3]))
+# Change colnames
+colnames(kot_stats) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 
-# Average for SubSkill
-kot_change <- aggregate(KOT~Condition*Skill*SubSkill*Order, data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 |
-                                                                      df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57),
-                        FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+# Checking values with ezStats
+kot_ezstats <- ezStats(
+  data = df_kot
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, Skill)
+  , type = 3
+  , check_args = TRUE
+)
 
-kot_sub <- aggregate(KOT~Condition*Skill*SubSkill*Order, data = subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 &
-                                                                   df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57),
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+# 2. Average KOT for skill changes
+# For each individual
+kot_ch <- aggregate(KOT~SubNr*Condition*Skill, data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 | df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57),
+                    FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_ch <- cbind(kot_ch[,1:3], as.data.frame(kot_ch[,4]))
+# Change colnames
+colnames(kot_ch) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
 
-kot_firstEnd <- aggregate(KOT~Condition*Skill*SubSkill*Order, data = subset(df_kot, df_kot$Interval == 1 | df_kot$Interval == 7 | df_kot$Interval == 9 | df_kot$Interval == 15 | df_kot$Interval == 17 | df_kot$Interval == 23
-                                                                      | df_kot$Interval == 25 | df_kot$Interval == 31 | df_kot$Interval == 34 | df_kot$Interval == 40 | df_kot$Interval == 42 | df_kot$Interval == 48
-                                                                      | df_kot$Interval == 50 | df_kot$Interval == 56 | df_kot$Interval == 58 | df_kot$Interval == 64),
-                          FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+# Group mean
+kot_ch_stats <- aggregate(Mean~Condition*Skill, data = kot_ch,
+                          FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_ch_stats <- cbind(kot_ch_stats[,1:2], as.data.frame(kot_ch_stats[,3]))
+# Change colnames
+colnames(kot_ch_stats) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 
-# Average for each note
-kot_seq <- aggregate(KOT~Interval*Condition*Skill*Order, data = df_kot, 
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+# Checking values with ezStats
+kot_ch_ezstats <- ezStats(
+  data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 | df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57)
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, Skill)
+  , type = 3
+  , check_args = TRUE
+)
 
-# Descriptive stats
-kot <- cbind(kot, as.data.frame(kot[,4]))
-kot_change <- cbind(kot_change, as.data.frame(kot_change[,5]))
-kot_sub <- cbind(kot_sub, as.data.frame(kot_sub[,5]))
-kot_firstEnd <- cbind(kot_firstEnd, as.data.frame(kot_firstEnd[,5]))
-kot_seq <- cbind(kot_seq, as.data.frame(kot_seq[,5]))
+# 3. Average KOT for each sub-skill change
+# For each individual
+kot_ch_sub <- aggregate(KOT~SubNr*Condition*Skill*SubSkill, data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 | df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57),
+                        FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_ch_sub <- cbind(kot_ch_sub[,1:4], as.data.frame(kot_ch_sub[,5]))
+# Change colnames
+colnames(kot_ch_sub) <- c("SubNr", "Condition", "Skill", "SubSkill", "N", "Mean", "SD")
 
-# Add a grouping name
-ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
-for (cond in 1:length(ls_grouping$Condition)){
-  for (skill in 1:length(ls_grouping$Skill)){
-    kot$Grouping[kot$Condition == ls_grouping$Condition[cond] & kot$Skill == ls_grouping$Skill[skill]] <-
-      paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-    kot_change$Grouping[kot_change$Condition == ls_grouping$Condition[cond] & kot_change$Skill == ls_grouping$Skill[skill]] <-
-      paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-    kot_sub$Grouping[kot_sub$Condition == ls_grouping$Condition[cond] & kot_sub$Skill == ls_grouping$Skill[skill]] <-
-      paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-    kot_firstEnd$Grouping[kot_firstEnd$Condition == ls_grouping$Condition[cond] & kot_firstEnd$Skill == ls_grouping$Skill[skill]] <-
-      paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-    kot_seq$Grouping[kot_seq$Condition == ls_grouping$Condition[cond] & kot_seq$Skill == ls_grouping$Skill[skill]] <-
-      paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-  }
-}
+# Group mean
+kot_ch_sub_stats <- aggregate(Mean~Condition*Skill*SubSkill, data = kot_ch_sub,
+                              FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_ch_sub_stats <- cbind(kot_ch_sub_stats[,1:3], as.data.frame(kot_ch_sub_stats[,4]))
+# Change colnames
+colnames(kot_ch_sub_stats) <- c("Condition", "Skill", "SubSkill", "N", "Mean", "SD", "SEM")
+
+# 4. Average KOT for each sub-skill
+# For each individual
+kot_sub <- aggregate(KOT~SubNr*Condition*Skill*SubSkill, data = subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57),
+                        FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_sub <- cbind(kot_sub[,1:4], as.data.frame(kot_sub[,5]))
+# Change colnames
+colnames(kot_sub) <- c("SubNr", "Condition", "Skill", "SubSkill", "N", "Mean", "SD")
+
+# Group mean
+kot_sub_stats <- aggregate(Mean~Condition*Skill*SubSkill, data = kot_sub,
+                              FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_sub_stats <- cbind(kot_sub_stats[,1:3], as.data.frame(kot_sub_stats[,4]))
+# Change colnames
+colnames(kot_sub_stats) <- c("Condition", "Skill", "SubSkill", "N", "Mean", "SD", "SEM")
+
+# Checking values with ezStats
+kot_sub_ezstats <- ezStats(
+  data = subset(df_kot, df_kot$Interval  != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57)
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill)
+  , type = 3
+  , check_args = TRUE
+)
+
+# 5. Average KOT for each note
+# For each individual
+kot_seq <- aggregate(KOT~SubNr*Condition*Skill*Interval, data = df_kot,
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_seq <- cbind(kot_seq[,1:4], as.data.frame(kot_seq[,5]))
+# Change colnames
+colnames(kot_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+kot_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = kot_seq,
+                           FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_seq_stats <- cbind(kot_seq_stats[,1:3], as.data.frame(kot_seq_stats[,4]))
+# Change colnames
+colnames(kot_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
 
 # Add order info
-kot_change$LabelOrder[kot_change$Skill == "articulation"] <- 1
-kot_change$LabelOrder[kot_change$Skill == "dynamics"] <- 2
-kot_sub$LabelOrder[kot_sub$Skill == "articulation"] <- 1
-kot_sub$LabelOrder[kot_sub$Skill == "dynamics"] <- 2
-kot_firstEnd$LabelOrder[kot_firstEnd$Skill == "articulation"] <- 1
-kot_firstEnd$LabelOrder[kot_firstEnd$Skill == "dynamics"] <- 2
+kot_ch_stats$LabelOrder[kot_ch_stats$Skill == "articulation"] <- 1
+kot_ch_stats$LabelOrder[kot_ch_stats$Skill == "dynamics"] <- 2
+kot_ch_sub_stats$LabelOrder[kot_ch_sub_stats$Skill == "articulation"] <- 1
+kot_ch_sub_stats$LabelOrder[kot_ch_sub_stats$Skill == "dynamics"] <- 2
+kot_sub_stats$LabelOrder[kot_sub_stats$Skill == "articulation"] <- 1
+kot_sub_stats$LabelOrder[kot_sub_stats$Skill == "dynamics"] <- 2
+
+# ####################################
+# # Diff between first/end and others
+# ####################################
+# # Define phrases
+# # For intervals
+# ls_legato <- list(c(1:7), c(17:23), c(42:48), c(58:64))
+# ls_staccato <- list(c(9:15), c(25:31), c(34:40), c(50:56))
+# ls_forte <- list(c(1:7), c(17:23), c(42:48), c(58:64))
+# ls_piano <- list(c(9:15), c(25:31), c(34:40), c(50:56))
+# 
+# # Difference between first+end and other notes within each phrase
+# df_diff <- data.frame()
+# df_diff_legato <- data.frame()
+# df_diff_staccato <- data.frame()
+# for (cond in unique(kot_seq$Condition)){
+#   for (skill in unique(kot_seq$Skill)){
+#     df_current <- kot_seq %>% dplyr::filter(kot_seq$Condition == cond & kot_seq$Skill == skill)
+#     if (skill == "articulation"){
+#       for (phrase in 1:length(ls_legato)){
+#         first <- df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][1]]
+#         end <- df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][7]]
+#         others <- mean(df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][2]],
+#                        df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][3]],
+#                        df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][4]],
+#                        df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][5]],
+#                        df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][6]])
+#         df_diff_legato <- data.frame(cond, skill, "Legato", phrase, mean(first, end)-others)
+#         colnames(df_diff_legato) <- c("Condition", "Skill", "SubSkill", "PhraseNo", "Diff")
+#         df_diff <- rbind(df_diff, df_diff_legato)
+#       }
+#       for (phrase in 1:length(ls_staccato)){
+#         first <- df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][1]]
+#         end <- df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][7]]
+#         others <- mean(df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][2]],
+#                        df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][3]],
+#                        df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][4]],
+#                        df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][5]],
+#                        df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][6]])
+#         df_diff_staccato <- data.frame(cond, skill, "Staccato", phrase, mean(first, end)-others)
+#         colnames(df_diff_staccato) <- c("Condition", "Skill", "SubSkill", "PhraseNo", "Diff")
+#         df_diff <- rbind(df_diff, df_diff_staccato)
+#       }
+#     }
+#   }
+# }
+# 
+# kot_diff <- aggregate(Diff~Condition*Skill*SubSkill, data = df_diff,
+#                       FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+# kot_diff <- cbind(kot_diff, as.data.frame(kot_diff[,4]))
+# 
+# p_kot_diff <- ggplot(data = kot_diff, aes(x = SubSkill, y = mean, fill = Condition)) +
+#   geom_bar(stat = "identity", position = position_dodge()) +
+#   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+#                 width=.2, position = position_dodge(.9)) +
+#   labs(y = "Difference (ms)") + #coord_cartesian(ylim = c(100, 250)) +
+#   theme_classic()
+# p_kot_diff
+# ggsave("./plot/kot/p_kot_diff.png", plot = p_kot_diff, dpi = 600, width = 5, height = 4)
 
 ####################################
 # Plots
 ####################################
-p_kot <- ggplot(data = kot, aes(x = Skill, y = mean, fill = Condition)) +
+p_kot <- ggplot(data = kot_stats, aes(x = Skill, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "Mean KOI (ms)") + #coord_cartesian(ylim = c(100, 250)) +
+  labs(y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_kot
 
-p_kot_change <- ggplot(data = kot_change, aes(x = reorder(SubSkill, LabelOrder), y = mean, fill = Condition)) +
+p_kot_ch <- ggplot(data = kot_ch_stats, aes(x = Skill, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  facet_wrap(Order ~ .) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 250)) +
+  labs(x = "Skill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
-p_kot_change
+p_kot_ch
 
-p_kot_sub <- ggplot(data = kot_sub, aes(x = reorder(SubSkill, LabelOrder), y = mean, fill = Condition)) +
+p_kot_ch_sub <- ggplot(data = kot_ch_sub_stats, aes(x = reorder(SubSkill, LabelOrder), y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  facet_wrap(Order ~ .) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 250)) +
+  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  theme_classic()
+p_kot_ch_sub
+
+p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = reorder(SubSkill, LabelOrder), y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_kot_sub
 
-p_kot_firstEnd <- ggplot(data = kot_firstEnd, aes(x = reorder(SubSkill, LabelOrder), y = mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
-                width=.2, position = position_dodge(.9)) +
-  facet_wrap(Order ~ .) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 250)) +
-  theme_classic()
-p_kot_firstEnd
-
-p_kot_seq <- ggplot(data = kot_seq, aes(x = Interval, y = mean, group = Condition, shape = Condition, colour = Condition)) +
+p_kot_seq <- ggplot(data = kot_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
-  facet_grid(Skill ~ Order) +
-  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width=.2,
-                position = position_dodge(.05)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  facet_grid(Skill ~ .) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
   labs(x = "Interval", y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
   theme_classic()
 p_kot_seq
 
 # Save plots
 # png files
-ggsave("./plot/kot/withOrder/p_kot.png", plot = p_kot, dpi = 600, width = 5, height = 4)
-ggsave("./plot/kot/withOrder/p_kot_change.png", plot = p_kot_change, dpi = 600, width = 5, height = 4)
-ggsave("./plot/kot/withOrder/p_kot_sub.png", plot = p_kot_sub, dpi = 600, width = 5, height = 4)
-ggsave("./plot/kot/withOrder/p_kot_firstEnd.png", plot = p_kot_firstEnd, dpi = 600, width = 5, height = 4)
-ggsave("./plot/kot/withOrder/p_kot_seq.png", plot = p_kot_seq, dpi = 600, width = 15, height = 7)
+ggsave("./3_stats/plot/kot/p_kot.png", plot = p_kot, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/kot/p_kot_ch.png", plot = p_kot_ch, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/kot/p_kot_ch_sub.png", plot = p_kot_ch_sub, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/kot/p_kot_sub.png", plot = p_kot_sub, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/kot/p_kot_seq.png", plot = p_kot_seq, dpi = 600, width = 15, height = 4)
 
 ####################################
-# Statistics
+### Statistics
 ####################################
+# # 1. Normality check
+# kot_ch_sub_norm <- data.frame(unlist(by(kot_ch_sub$Mean, kot_ch_sub$SubSkill, shapiro.test)))
+# colnames(kot_ch_sub_norm) <- c("LtoS", "StoL", "FtoP", "PtoF")
+# 
+# kot_sub_norm <- data.frame(cbind(unlist(shapiro.test(kot_sub$Mean[kot_sub$SubSkill == "Legato"])),
+#                       unlist(shapiro.test(kot_sub$Mean[kot_sub$SubSkill == "Staccato"])),
+#                       unlist(shapiro.test(kot_sub$Mean[kot_sub$SubSkill == "Forte"])),
+#                       unlist(shapiro.test(kot_sub$Mean[kot_sub$SubSkill == "Piano"]))))
+# 
+# colnames(kot_sub_norm) <- c("Legato", "Staccato", "Forte", "Piano")
+# 
+# # Transpose
+# kot_norm <- t(kot_norm)
+# kot_ch_norm <- t(kot_ch_norm)
+# kot_ch_sub_norm <- t(kot_ch_sub_norm)
+# kot_sub_norm <- t(kot_sub_norm)
+# 
+# # Export the results
+# write.csv(kot_norm, file = "./3_stats/kot/kot_norm.csv", row.names = FALSE)
+# write.csv(kot_ch_norm, file = "./3_stats/kot/kot_ch_norm.csv", row.names = FALSE)
+# write.csv(kot_ch_sub_norm, file = "./3_stats/kot/kot_ch_sub_norm.csv", row.names = FALSE)
+# write.csv(kot_sub_norm, file = "./3_stats/kot/kot_sub_norm.csv", row.names = FALSE)
+
 # Two-way ANOVA
-# kot
-kot_anova <- ezANOVA(
-  data = df_kot
+# kot_ch_sub
+kot_ch_sub_aov <- ezANOVA(
+  data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 & df_kot$Interval == 24 & 
+                  df_kot$Interval == 41 & df_kot$Interval == 49 & df_kot$Interval == 57)
   , dv = .(KOT)
   , wid = .(SubNr)
-  , between = .(Order)
-  , within = .(Condition, Skill)
-  , type = 3
-  , detailed = TRUE
-)
-print(kot_anova)
-write.csv(kot_anova$ANOVA, file = "./stats/withOrder/kot_anova.csv")
-
-# posthoc comparison
-kot_posthoc <- aov(KOT~Condition*Skill, data = df_kot)
-kot_posthoc <-TukeyHSD(kot_posthoc)
-write.csv(kot_posthoc$`Condition:Skill`, file = "./stats/withOrder/kot_posthoc.csv")
-
-# kot_change
-kot_change_anova <- ezANOVA(
-  data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 | 
-                  df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57)
-  , dv = .(KOT)
-  , wid = .(SubNr)
-  , between = .(Order)
   , within = .(Condition, SubSkill)
   , type = 3
   , detailed = TRUE
 )
-print(kot_change_anova)
-write.csv(kot_change_anova$ANOVA, file = "./stats/withOrder/kot_change_anova.csv")
-write.csv(kot_change_anova$`Mauchly's Test for Sphericity`, file = "./stats/withOrder/kot_change_anova_mau.csv")
-write.csv(kot_change_anova$`Sphericity Corrections`, file = "./stats/withOrder/kot_change_anova_sph.csv")
-
-# posthoc comparison
-kot_change_posthoc <- aov(KOT~Condition*Skill, data = df_kot)
-kot_change_posthoc <-TukeyHSD(kot_change_posthoc)
-write.csv(kot_change_posthoc$`Condition:Skill`, file = "./stats/withOrder/kot_change_posthoc.csv")
+print(kot_ch_sub_aov)
+write.csv(kot_ch_sub_aov$ANOVA, file = "./3_stats/kot/kot_sub_aov.csv")
 
 # kot_sub
-kot_sub_anova <- ezANOVA(
+kot_sub_aov <- ezANOVA(
   data = subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & 
                   df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57)
   , dv = .(KOT)
   , wid = .(SubNr)
-  , between = .(Order)
   , within = .(Condition, SubSkill)
   , type = 3
   , detailed = TRUE
 )
-print(kot_sub_anova)
-write.csv(kot_sub_anova$ANOVA, file = "./stats/withOrder/kot_sub_anova.csv")
-write.csv(kot_sub_anova$`Mauchly's Test for Sphericity`, file = "./stats/withOrder/kot_sub_anova_mau.csv")
-write.csv(kot_sub_anova$`Sphericity Corrections`, file = "./stats/withOrder/kot_sub_anova_sph.csv")
+print(kot_sub_aov)
+write.csv(kot_sub_aov$ANOVA, file = "./3_stats/kot/kot_sub_aov.csv")
+write.csv(kot_sub_aov$`Mauchly's Test for Sphericity`, file = "./3_stats/kot/kot_sub_aov_mau.csv")
+write.csv(kot_sub_aov$`Sphericity Corrections`, file = "./3_stats/kot/kot_sub_aov_sph.csv")
 
-kot_sub_posthoc <- aov(KOT~Condition*SubSkill, data = subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & 
+# posthoc comparison
+kot_sub_ph <- aov(KOT~Condition*SubSkill, data = subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & 
                                                                df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57))
-kot_sub_posthoc <- TukeyHSD(kot_sub_posthoc)
-write.csv(kot_sub_posthoc$`Condition:SubSkill`, file = "./stats/withOrder/kot_sub_posthoc.csv")
+kot_sub_ph <- TukeyHSD(kot_sub_ph)
+print(kot_sub_ph)
+write.csv(kot_sub_ph$`Condition:SubSkill`, file = "./3_stats/kot/kot_sub_ph.csv")
 
 # kot_firstEnd
 kot_firstEnd_anova <- ezANOVA(
@@ -237,19 +348,28 @@ kot_firstEnd_anova <- ezANOVA(
                 | df_kot$Interval == 50 | df_kot$Interval == 56 | df_kot$Interval == 58 | df_kot$Interval == 64)
   , dv = .(KOT)
   , wid = .(SubNr)
-  , between = .(Order)
   , within = .(Condition, SubSkill)
   , type = 3
   , detailed = TRUE
 )
 print(kot_firstEnd_anova)
-write.csv(kot_firstEnd_anova$ANOVA, file = "./stats/withOrder/kot_firstEnd_anova.csv")
-write.csv(kot_firstEnd_anova$`Mauchly's Test for Sphericity`, file = "./stats/withOrder/kot_firstEnd_anova_mau.csv")
-write.csv(kot_firstEnd_anova$`Sphericity Corrections`, file = "./stats/withOrder/kot_firstEnd_anova_sph.csv")
+write.csv(kot_firstEnd_anova$ANOVA, file = "./stats/withoutOrder/kot_firstEnd_anova.csv")
+write.csv(kot_firstEnd_anova$`Mauchly's Test for Sphericity`, file = "./stats/withoutOrder/kot_firstEnd_anova_mau.csv")
+write.csv(kot_firstEnd_anova$`Sphericity Corrections`, file = "./stats/withoutOrder/kot_firstEnd_anova_sph.csv")
 
 # posthoc comparison
 kot_firstEnd_posthoc <- aov(KOT~Condition*SubSkill, data = subset(df_kot, df_kot$Interval == 1 | df_kot$Interval == 7 | df_kot$Interval == 9 | df_kot$Interval == 15 | df_kot$Interval == 17 | df_kot$Interval == 23
-                                                                  | df_kot$Interval == 25 | df_kot$Interval == 31 | df_kot$Interval == 34 | df_kot$Interval == 40 | df_kot$Interval == 42 | df_kot$Interval == 48
-                                                                  | df_kot$Interval == 50 | df_kot$Interval == 56 | df_kot$Interval == 58 | df_kot$Interval == 64))
+                                                               | df_kot$Interval == 25 | df_kot$Interval == 31 | df_kot$Interval == 34 | df_kot$Interval == 40 | df_kot$Interval == 42 | df_kot$Interval == 48
+                                                               | df_kot$Interval == 50 | df_kot$Interval == 56 | df_kot$Interval == 58 | df_kot$Interval == 64))
 kot_firstEnd_posthoc <-TukeyHSD(kot_firstEnd_posthoc)
-write.csv(kot_firstEnd_posthoc$`Condition:SubSkill`, file = "./stats/withOrder/kot_firstEnd_posthoc.csv")
+write.csv(kot_firstEnd_posthoc$`Condition:SubSkill`, file = "./stats/withoutOrder/kot_firstEnd_posthoc.csv")
+
+### Normality
+q_plot <- ggplot(subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & 
+                          df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57), aes(sample = KOT, shape = SubSkill, color = SubSkill)) +
+  stat_qq() + theme_classic()
+q_plot
+
+# Save plots
+# png files
+ggsave("./plot/kot/q_plot.png", plot = q_plot, dpi = 600, width = 5, height = 4)
