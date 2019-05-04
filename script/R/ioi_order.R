@@ -34,7 +34,7 @@ if (!file.exists("3_stats/order/")){
   dir.create("3_stats/order")
 }
 
-# 3_stats/order/ioi
+# 3_stats/order/ioi - store csv files
 if (!file.exists("3_stats/order/ioi")){
   dir.create("3_stats/order/ioi")
 }
@@ -43,7 +43,7 @@ if (!file.exists("3_stats/order/ioi")){
 if (!file.exists("3_stats/order/plot")){
   dir.create("3_stats/order/plot")
 }
-# 3_stats/order/plot/ioi
+# 3_stats/order/plot/ioi - store png files
 if (!file.exists("3_stats/order/plot/ioi/")){
   dir.create("3_stats/order/plot/ioi")
 }

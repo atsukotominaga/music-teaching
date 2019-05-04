@@ -29,7 +29,7 @@ if (!file.exists("3_stats")){
   dir.create("3_stats")
 }
 
-# 3_stats/ioi
+# 3_stats/ioi - store csv files
 if (!file.exists("3_stats/ioi")){
   dir.create("3_stats/ioi")
 }
@@ -38,7 +38,7 @@ if (!file.exists("3_stats/ioi")){
 if (!file.exists("3_stats/plot")){
   dir.create("3_stats/plot")
 }
-# 3_stats/ioi
+# 3_stats/ioi - store png files
 if (!file.exists("3_stats/plot/ioi/")){
   dir.create("3_stats/plot/ioi")
 }
