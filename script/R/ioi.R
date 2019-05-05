@@ -269,27 +269,21 @@ ggsave("./3_stats/plot/ioi/p_ioi_ch_sub.png", plot = p_ioi_ch_sub, dpi = 600, wi
 ggsave("./3_stats/plot/ioi/p_ioi_seq.png", plot = p_ioi_seq, dpi = 600, width = 15, height = 4)
 ggsave("./3_stats/plot/ioi/p_ioi_var.png", plot = p_ioi_var, dpi = 600, width = 5, height = 4)
 ggsave("./3_stats/plot/ioi/p_ioi_var_tri.png", plot = p_ioi_var_tri, dpi = 600, width = 10, height = 4)
- 
+
 ####################################
 # Statistics
 ####################################
-# # 1. Normality check
-# ioi_norm <- data.frame(unlist(shapiro.test(ioi_stats$Mean)))
-# ioi_ch_norm <- data.frame(unlist(shapiro.test(ioi_ch_stats$Mean)))
-# ioi_ch_sub_norm <- data.frame(unlist(shapiro.test(ioi_ch_sub_stats$Mean)))
-# ioi_var_norm <- data.frame(unlist(shapiro.test(ioi_var_stats$Mean)))
-# 
-# # Transpose
-# ioi_norm <- t(ioi_norm)
-# ioi_ch_norm <- t(ioi_ch_norm)
-# ioi_ch_sub_norm <- t(ioi_ch_sub_norm)
-# ioi_var_norm <- t(ioi_var_norm)
-# 
-# # Export the results
-# write.csv(ioi_norm, file = "./3_stats/ioi/ioi_norm.csv", row.names = FALSE)
-# write.csv(ioi_ch_norm, file = "./3_stats/ioi/ioi_ch_norm.csv", row.names = FALSE)
-# write.csv(ioi_ch_sub_norm, file = "./3_stats/ioi/ioi_ch_sub_norm.csv", row.names = FALSE)
-# write.csv(ioi_var_norm, file = "./3_stats/ioi/ioi_var_norm.csv", row.names = FALSE)
+# 1. Normality check
+ioi_norm <- by(ioi$Mean, list(ioi$Condition, ioi$Skill), shapiro.test)
+ioi_ch_norm <- by(ioi_ch$Mean, list(ioi_ch$Condition, ioi$Skill), shapiro.test)
+ioi_ch_sub_norm <- by(ioi_ch_sub$Mean, list(ioi_ch_sub$Condition, ioi_ch_sub$Skill), shapiro.test)
+ioi_var_norm <- by(ioi_var$Mean, list(ioi_var$Condition, ioi_var$Skill), shapiro.test)
+
+# Export the results
+write.table(ioi_norm, file = "./3_stats/ioi/ioi_norm.txt", row.names = FALSE)
+write.table(ioi_ch_norm, file = "./3_stats/ioi/ioi_ch_norm.txt", row.names = FALSE)
+write.table(ioi_ch_sub_norm, file = "./3_stats/ioi/ioi_ch_sub_norm.txt", row.names = FALSE)
+write.table(ioi_var_norm, file = "./3_stats/ioi/ioi_var_norm.txt", row.names = FALSE)
 
 # Two-way ANOVA
 # ioi
@@ -332,7 +326,7 @@ write.csv(ioi_ch_ph$`Condition:Skill`, file = "./3_stats/ioi/ioi_ch_ph.csv")
 
 # ioi_ch_sub
 ioi_ch_sub_aov <- ezANOVA(
-  data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | 
+  data = subset(df_ioi, df_ioi$SubNr != 12 | df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | 
                   df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
   , dv = .(IOI)
   , wid = .(SubNr)
@@ -367,3 +361,5 @@ ioi_var_ph <- aov(Variability~Condition*Skill, data = df_var[complete.cases(df_v
 ioi_var_ph <- TukeyHSD(ioi_var_ph)
 print(ioi_var_ph)
 write.csv(ioi_var_ph$`Condition:Skill`, file = "./3_stats/ioi/ioi_var_ph.csv")
+
+# Add analysis without SubNr 12
