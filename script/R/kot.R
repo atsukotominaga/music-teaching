@@ -114,7 +114,7 @@ colnames(kot_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "
 kot_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = kot_seq,
                            FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
 kot_seq_stats <- cbind(kot_seq_stats[,1:3], as.data.frame(kot_seq_stats[,4]))
-# Change colnames
+# Change colnames for each interval
 colnames(kot_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
 
 # 4. The beginning or the ending note of each phrase vs. other notes
@@ -140,7 +140,7 @@ df_kot_phrase$Boundary <- as.factor(df_kot_phrase$Boundary)
 
 # For each participant
 kot_phrase <- aggregate(KOT~SubNr*Condition*Skill*SubSkill*Boundary, data = df_kot_phrase,
-                        FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+                        FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
 kot_phrase <- cbind(kot_phrase[,1:5], kot_phrase[,6])
 # Change colnames
 colnames(kot_phrase) <- c("SubNr", "Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD")
