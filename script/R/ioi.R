@@ -298,12 +298,6 @@ ioi_aov <- ezANOVA(
 print(ioi_aov)
 write.csv(ioi_aov$ANOVA, file = "./3_stats/ioi/ioi_aov.csv")
 
-# posthoc comparison
-ioi_ph <- aov(IOI~Condition*Skill, data = df_ioi)
-ioi_ph <- TukeyHSD(ioi_ph)
-print(ioi_ph)
-write.csv(ioi_ph$`Condition:Skill`, file = "./3_stats/ioi/ioi_ph.csv")
-
 # ioi_ch
 ioi_ch_aov <- ezANOVA(
   data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | 
@@ -317,16 +311,9 @@ ioi_ch_aov <- ezANOVA(
 print(ioi_ch_aov)
 write.csv(ioi_ch_aov$ANOVA, file = "./3_stats/ioi/ioi_ch_aov.csv")
 
-# posthoc comparison
-ioi_ch_ph <- aov(IOI~Condition*Skill, data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 |
-                                                            df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57))
-ioi_ch_ph <- TukeyHSD(ioi_ch_ph)
-print(ioi_ch_ph)
-write.csv(ioi_ch_ph$`Condition:Skill`, file = "./3_stats/ioi/ioi_ch_ph.csv")
-
 # ioi_ch_sub
 ioi_ch_sub_aov <- ezANOVA(
-  data = subset(df_ioi, df_ioi$SubNr != 12 | df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | 
+  data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | 
                   df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
   , dv = .(IOI)
   , wid = .(SubNr)
@@ -336,13 +323,6 @@ ioi_ch_sub_aov <- ezANOVA(
 )
 print(ioi_ch_sub_aov)
 write.csv(ioi_ch_sub_aov$ANOVA, file = "./3_stats/ioi/ioi_ch_sub_aov.csv")
-
-# posthoc comparison
-ioi_ch_sub_ph <- aov(IOI~Condition*SubSkill, data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 |
-                                                                  df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57))
-ioi_ch_sub_ph <- TukeyHSD(ioi_ch_sub_ph)
-print(ioi_ch_sub_ph)
-write.csv(ioi_ch_sub_ph$`Condition:SubSkill`, file = "./3_stats/ioi/ioi_ch_sub_ph.csv")
 
 # ioi_var
 ioi_var_aov <- ezANOVA(
@@ -355,11 +335,5 @@ ioi_var_aov <- ezANOVA(
 )
 print(ioi_var_aov)
 write.csv(ioi_var_aov$ANOVA, file = "./3_stats/ioi/ioi_var_aov.csv")
-
-# posthoc comparison
-ioi_var_ph <- aov(Variability~Condition*Skill, data = df_var[complete.cases(df_var),])
-ioi_var_ph <- TukeyHSD(ioi_var_ph)
-print(ioi_var_ph)
-write.csv(ioi_var_ph$`Condition:Skill`, file = "./3_stats/ioi/ioi_var_ph.csv")
 
 # Add analysis without SubNr 12
