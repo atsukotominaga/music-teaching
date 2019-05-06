@@ -9,6 +9,7 @@ script/R/plot/
 script/R/1_filtered/
 script/R/2_trimmed/
 script/R/3_stats/
+script/R/BadPianists/
 script/R/.Rhistory
 script/R/.DS_Store
 
