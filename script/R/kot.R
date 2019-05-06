@@ -117,70 +117,106 @@ kot_seq_stats <- cbind(kot_seq_stats[,1:3], as.data.frame(kot_seq_stats[,4]))
 # Change colnames
 colnames(kot_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
 
+# 4. The beginning or the ending note of each phrase vs. other notes
+# Define phrases
+ls_phrase <- list(c(1:7), c(9:15), c(17:23), c(25:31), c(34:40), c(42:48), c(50:56), c(58:64))
+
+# Extract data without change points
+df_phrase <- df_kot %>% dplyr::filter(Interval != 8 & Interval != 16 & Interval != 24 & Interval != 41 & Interval != 49 & Interval != 57)
+
+# Assess whether a given note is the beginnning or the ending of a phrase (Yes / No)
+df_phrase$Boundary <- NA
+for (phrase in 1:length(ls_phrase)){
+  for (note in 1:length(ls_phrase[[phrase]])){
+    if (note == 1 | note == 7){ # the beginning of the ending of each phrase
+      df_phrase$Boundary[df_phrase$Interval == ls_phrase[[phrase]][note]] <- "Yes"
+    } else {
+      df_phrase$Boundary[df_phrase$Interval == ls_phrase[[phrase]][note]] <- "No"
+    }
+  }
+}
+# Boundary as a factor
+df_phrase$Boundary <- as.factor(df_phrase$Boundary)
+
+# For each participant
+kot_phrase <- aggregate(KOT~SubNr*Condition*Skill*SubSkill*Boundary, data = df_phrase,
+                        FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+kot_phrase <- cbind(kot_phrase[,1:5], kot_phrase[,6])
+# Change colnames
+colnames(kot_phrase) <- c("SubNr", "Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD")
+
+# Group mean
+kot_phrase_stats <- aggregate(Mean~Condition*Skill*SubSkill*Boundary, data = kot_phrase,
+                              FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_phrase_stats <- cbind(kot_phrase_stats[,1:4], kot_phrase_stats[,5])
+# Change colnames
+colnames(kot_phrase_stats) <- c("Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD", "SEM")
+
+# Checking values with ezStats
+kot_phrase_ezstats <- ezStats(
+  data = df_phrase
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill, Boundary)
+  , type = 3
+  , check_args = TRUE
+)
+
+# 5. The beginning or the ending note of each phrase vs. middle two notes
+# Extract data without change points
+df_phrase2 <- df_kot %>% dplyr::filter(Interval != 8 & Interval != 16 & Interval != 24 & Interval != 41 & Interval != 49 & Interval != 57)
+
+# Assess whether a given note is the beginnning or the ending of a phrase (Yes / No)
+df_phrase2$Boundary <- NA
+for (phrase in 1:length(ls_phrase)){
+  for (note in 1:length(ls_phrase[[phrase]])){
+    if (note == 1 | note == 7){ # the beginning of the ending of each phrase
+      df_phrase2$Boundary[df_phrase2$Interval == ls_phrase[[phrase]][note]] <- "Yes"
+    } else if (note == 3 | note == 4){
+      df_phrase2$Boundary[df_phrase2$Interval == ls_phrase[[phrase]][note]] <- "No"
+    }
+  }
+}
+# Boundary as a factor
+df_phrase2$Boundary <- as.factor(df_phrase2$Boundary)
+
+# For each participant
+kot_phrase2 <- aggregate(KOT~SubNr*Condition*Skill*SubSkill*Boundary, data = df_phrase2,
+                        FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+kot_phrase2 <- cbind(kot_phrase2[,1:5], kot_phrase2[,6])
+# Change colnames
+colnames(kot_phrase2) <- c("SubNr", "Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD")
+
+# Group mean
+kot_phrase2_stats <- aggregate(Mean~Condition*Skill*SubSkill*Boundary, data = kot_phrase2,
+                              FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_phrase2_stats <- cbind(kot_phrase2_stats[,1:4], kot_phrase2_stats[,5])
+# Change colnames
+colnames(kot_phrase2_stats) <- c("Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD", "SEM")
+
+# Checking values with ezStats
+kot_phrase2_ezstats <- ezStats(
+  data = df_phrase2[complete.cases(df_phrase2),]
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill, Boundary)
+  , type = 3
+  , check_args = TRUE
+)
+
 # Add order info
 kot_sub_stats$LabelOrder[kot_sub_stats$Skill == "articulation"] <- 1
 kot_sub_stats$LabelOrder[kot_sub_stats$Skill == "dynamics"] <- 2
 kot_ch_sub_stats$LabelOrder[kot_ch_sub_stats$Skill == "articulation"] <- 1
 kot_ch_sub_stats$LabelOrder[kot_ch_sub_stats$Skill == "dynamics"] <- 2
-
-# ####################################
-# # Diff between first/end and others
-# ####################################
-# # Define phrases
-# # For intervals
-# ls_legato <- list(c(1:7), c(17:23), c(42:48), c(58:64))
-# ls_staccato <- list(c(9:15), c(25:31), c(34:40), c(50:56))
-# ls_forte <- list(c(1:7), c(17:23), c(42:48), c(58:64))
-# ls_piano <- list(c(9:15), c(25:31), c(34:40), c(50:56))
-# 
-# # Difference between first+end and other notes within each phrase
-# df_diff <- data.frame()
-# df_diff_legato <- data.frame()
-# df_diff_staccato <- data.frame()
-# for (cond in unique(kot_seq$Condition)){
-#   for (skill in unique(kot_seq$Skill)){
-#     df_current <- kot_seq %>% dplyr::filter(kot_seq$Condition == cond & kot_seq$Skill == skill)
-#     if (skill == "articulation"){
-#       for (phrase in 1:length(ls_legato)){
-#         first <- df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][1]]
-#         end <- df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][7]]
-#         others <- mean(df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][2]],
-#                        df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][3]],
-#                        df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][4]],
-#                        df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][5]],
-#                        df_current$KOT[,2][df_current$Interval == ls_legato[[phrase]][6]])
-#         df_diff_legato <- data.frame(cond, skill, "Legato", phrase, mean(first, end)-others)
-#         colnames(df_diff_legato) <- c("Condition", "Skill", "SubSkill", "PhraseNo", "Diff")
-#         df_diff <- rbind(df_diff, df_diff_legato)
-#       }
-#       for (phrase in 1:length(ls_staccato)){
-#         first <- df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][1]]
-#         end <- df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][7]]
-#         others <- mean(df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][2]],
-#                        df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][3]],
-#                        df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][4]],
-#                        df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][5]],
-#                        df_current$KOT[,2][df_current$Interval == ls_staccato[[phrase]][6]])
-#         df_diff_staccato <- data.frame(cond, skill, "Staccato", phrase, mean(first, end)-others)
-#         colnames(df_diff_staccato) <- c("Condition", "Skill", "SubSkill", "PhraseNo", "Diff")
-#         df_diff <- rbind(df_diff, df_diff_staccato)
-#       }
-#     }
-#   }
-# }
-# 
-# kot_diff <- aggregate(Diff~Condition*Skill*SubSkill, data = df_diff,
-#                       FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-# kot_diff <- cbind(kot_diff, as.data.frame(kot_diff[,4]))
-# 
-# p_kot_diff <- ggplot(data = kot_diff, aes(x = SubSkill, y = mean, fill = Condition)) +
-#   geom_bar(stat = "identity", position = position_dodge()) +
-#   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
-#                 width=.2, position = position_dodge(.9)) +
-#   labs(y = "Difference (ms)") + #coord_cartesian(ylim = c(100, 250)) +
-#   theme_classic()
-# p_kot_diff
-# ggsave("./plot/kot/p_kot_diff.png", plot = p_kot_diff, dpi = 600, width = 5, height = 4)
+kot_phrase_stats$LabelOrder[kot_phrase_stats$Skill == "articulation"] <- 1
+kot_phrase_stats$LabelOrder[kot_phrase_stats$Skill == "dynamics"] <- 2
+kot_phrase_stats$LabelOrder2[kot_phrase_stats$Boundary == "Yes"] <- 1
+kot_phrase_stats$LabelOrder2[kot_phrase_stats$Boundary == "No"] <- 2
+kot_phrase2_stats$LabelOrder[kot_phrase2_stats$Skill == "articulation"] <- 1
+kot_phrase2_stats$LabelOrder[kot_phrase2_stats$Skill == "dynamics"] <- 2
+kot_phrase2_stats$LabelOrder2[kot_phrase2_stats$Boundary == "Yes"] <- 1
+kot_phrase2_stats$LabelOrder2[kot_phrase2_stats$Boundary == "No"] <- 2
 
 ####################################
 # Plots
@@ -212,11 +248,31 @@ p_kot_seq <- ggplot(data = kot_seq_stats, aes(x = Interval, y = Mean, group = Co
   theme_classic()
 p_kot_seq
 
+p_kot_phrase <- ggplot(data = kot_phrase_stats, aes(x = reorder(SubSkill, LabelOrder), y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  facet_grid(. ~ reorder(Boundary, LabelOrder2)) +
+  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  theme_classic()
+p_kot_phrase
+
+p_kot_phrase2 <- ggplot(data = kot_phrase2_stats, aes(x = reorder(SubSkill, LabelOrder), y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  facet_grid(. ~ reorder(Boundary, LabelOrder2)) +
+  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  theme_classic()
+p_kot_phrase2
+
 # Save plots
 # png files
 ggsave("./3_stats/plot/kot/p_kot_sub.png", plot = p_kot_sub, dpi = 600, width = 5, height = 4)
 ggsave("./3_stats/plot/kot/p_kot_ch_sub.png", plot = p_kot_ch_sub, dpi = 600, width = 5, height = 4)
 ggsave("./3_stats/plot/kot/p_kot_seq.png", plot = p_kot_seq, dpi = 600, width = 15, height = 4)
+ggsave("./3_stats/plot/kot/p_kot_phrase.png", plot = p_kot_phrase, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/kot/p_kot_phrase2.png", plot = p_kot_phrase2, dpi = 600, width = 5, height = 4)
 
 ####################################
 ### Statistics
@@ -224,10 +280,12 @@ ggsave("./3_stats/plot/kot/p_kot_seq.png", plot = p_kot_seq, dpi = 600, width = 
 # 1. Normality check
 kot_sub_norm <- by(kot_sub$Mean, list(kot_sub$Condition, kot_sub$SubSkill), shapiro.test)
 kot_ch_sub_norm <- by(kot_ch_sub$Mean, list(kot_ch_sub$Condition, kot_ch_sub$SubSkill), shapiro.test)
+kot_phrase_norm <- by(kot_phrase$Mean, list(kot_phrase$Condition, kot_phrase$SubSkill, kot_phrase$Boundary), shapiro.test)
 
 # Export the results
-write.csv(kot_sub_norm, file = "./3_stats/kot/kot_sub_norm.txt", row.names = FALSE)
-write.csv(kot_ch_sub_norm, file = "./3_stats/kot/kot_ch_sub_norm.txt", row.names = FALSE)
+write.table(kot_sub_norm, file = "./3_stats/kot/kot_sub_norm.txt")
+write.table(kot_ch_sub_norm, file = "./3_stats/kot/kot_ch_sub_norm.txt")
+#write.table(kot_phrase_norm, file = "./3_stats/kot/kot_phrase_norm.txt")
 
 # Two-way ANOVA
 # kot_sub
@@ -264,3 +322,27 @@ kot_ch_sub_aov <- ezANOVA(
 )
 print(kot_ch_sub_aov)
 write.csv(kot_ch_sub_aov$ANOVA, file = "./3_stats/kot/kot_sub_aov.csv")
+
+# kot_phrase
+kot_phrase_aov <- ezANOVA(
+  data = df_phrase
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill, Boundary)
+  , type = 3
+  , detailed = TRUE
+)
+print(kot_phrase_aov)
+write.csv(kot_phrase_aov$ANOVA, file = "./3_stats/kot/kot_phrase_aov.csv")
+
+# kot_phrase2
+kot_phrase2_aov <- ezANOVA(
+  data = df_phrase2[complete.cases(df_phrase2),]
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill, Boundary)
+  , type = 3
+  , detailed = TRUE
+)
+print(kot_phrase2_aov)
+write.csv(kot_phrase2_aov$ANOVA, file = "./3_stats/kot/kot_phrase2_aov.csv")
