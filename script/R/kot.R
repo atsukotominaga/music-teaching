@@ -122,24 +122,24 @@ colnames(kot_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD"
 ls_phrase <- list(c(1:7), c(9:15), c(17:23), c(25:31), c(34:40), c(42:48), c(50:56), c(58:64))
 
 # Extract data without change points
-df_phrase <- df_kot %>% dplyr::filter(Interval != 8 & Interval != 16 & Interval != 24 & Interval != 41 & Interval != 49 & Interval != 57)
+df_kot_phrase <- df_kot %>% dplyr::filter(Interval != 8 & Interval != 16 & Interval != 24 & Interval != 41 & Interval != 49 & Interval != 57)
 
 # Assess whether a given note is the beginnning or the ending of a phrase (Yes / No)
-df_phrase$Boundary <- NA
+df_kot_phrase$Boundary <- NA
 for (phrase in 1:length(ls_phrase)){
   for (note in 1:length(ls_phrase[[phrase]])){
     if (note == 1 | note == 7){ # the beginning of the ending of each phrase
-      df_phrase$Boundary[df_phrase$Interval == ls_phrase[[phrase]][note]] <- "Yes"
+      df_kot_phrase$Boundary[df_kot_phrase$Interval == ls_phrase[[phrase]][note]] <- "Yes"
     } else {
-      df_phrase$Boundary[df_phrase$Interval == ls_phrase[[phrase]][note]] <- "No"
+      df_kot_phrase$Boundary[df_kot_phrase$Interval == ls_phrase[[phrase]][note]] <- "No"
     }
   }
 }
 # Boundary as a factor
-df_phrase$Boundary <- as.factor(df_phrase$Boundary)
+df_kot_phrase$Boundary <- as.factor(df_kot_phrase$Boundary)
 
 # For each participant
-kot_phrase <- aggregate(KOT~SubNr*Condition*Skill*SubSkill*Boundary, data = df_phrase,
+kot_phrase <- aggregate(KOT~SubNr*Condition*Skill*SubSkill*Boundary, data = df_kot_phrase,
                         FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 kot_phrase <- cbind(kot_phrase[,1:5], kot_phrase[,6])
 # Change colnames
@@ -154,7 +154,7 @@ colnames(kot_phrase_stats) <- c("Condition", "Skill", "SubSkill", "Boundary", "N
 
 # Checking values with ezStats
 kot_phrase_ezstats <- ezStats(
-  data = df_phrase
+  data = df_kot_phrase
   , dv = .(KOT)
   , wid = .(SubNr)
   , within = .(Condition, SubSkill, Boundary)
@@ -164,24 +164,24 @@ kot_phrase_ezstats <- ezStats(
 
 # 5. The beginning or the ending note of each phrase vs. middle two notes
 # Extract data without change points
-df_phrase2 <- df_kot %>% dplyr::filter(Interval != 8 & Interval != 16 & Interval != 24 & Interval != 41 & Interval != 49 & Interval != 57)
+df_kot_phrase2 <- df_kot %>% dplyr::filter(Interval != 8 & Interval != 16 & Interval != 24 & Interval != 41 & Interval != 49 & Interval != 57)
 
 # Assess whether a given note is the beginnning or the ending of a phrase (Yes / No)
-df_phrase2$Boundary <- NA
+df_kot_phrase2$Boundary <- NA
 for (phrase in 1:length(ls_phrase)){
   for (note in 1:length(ls_phrase[[phrase]])){
     if (note == 1 | note == 7){ # the beginning of the ending of each phrase
-      df_phrase2$Boundary[df_phrase2$Interval == ls_phrase[[phrase]][note]] <- "Yes"
+      df_kot_phrase2$Boundary[df_kot_phrase2$Interval == ls_phrase[[phrase]][note]] <- "Yes"
     } else if (note == 3 | note == 4){
-      df_phrase2$Boundary[df_phrase2$Interval == ls_phrase[[phrase]][note]] <- "No"
+      df_kot_phrase2$Boundary[df_kot_phrase2$Interval == ls_phrase[[phrase]][note]] <- "No"
     }
   }
 }
 # Boundary as a factor
-df_phrase2$Boundary <- as.factor(df_phrase2$Boundary)
+df_kot_phrase2$Boundary <- as.factor(df_kot_phrase2$Boundary)
 
 # For each participant
-kot_phrase2 <- aggregate(KOT~SubNr*Condition*Skill*SubSkill*Boundary, data = df_phrase2,
+kot_phrase2 <- aggregate(KOT~SubNr*Condition*Skill*SubSkill*Boundary, data = df_kot_phrase2,
                         FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 kot_phrase2 <- cbind(kot_phrase2[,1:5], kot_phrase2[,6])
 # Change colnames
@@ -196,7 +196,7 @@ colnames(kot_phrase2_stats) <- c("Condition", "Skill", "SubSkill", "Boundary", "
 
 # Checking values with ezStats
 kot_phrase2_ezstats <- ezStats(
-  data = df_phrase2[complete.cases(df_phrase2),]
+  data = df_kot_phrase2[complete.cases(df_kot_phrase2),]
   , dv = .(KOT)
   , wid = .(SubNr)
   , within = .(Condition, SubSkill, Boundary)
@@ -325,7 +325,7 @@ write.csv(kot_ch_sub_aov$ANOVA, file = "./3_stats/kot/kot_sub_aov.csv")
 
 # kot_phrase
 kot_phrase_aov <- ezANOVA(
-  data = df_phrase
+  data = df_kot_phrase
   , dv = .(KOT)
   , wid = .(SubNr)
   , within = .(Condition, SubSkill, Boundary)
@@ -337,7 +337,7 @@ write.csv(kot_phrase_aov$ANOVA, file = "./3_stats/kot/kot_phrase_aov.csv")
 
 # kot_phrase2
 kot_phrase2_aov <- ezANOVA(
-  data = df_phrase2[complete.cases(df_phrase2),]
+  data = df_kot_phrase2[complete.cases(df_kot_phrase2),]
   , dv = .(KOT)
   , wid = .(SubNr)
   , within = .(Condition, SubSkill, Boundary)
