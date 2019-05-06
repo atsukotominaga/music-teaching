@@ -5,7 +5,7 @@
 #  Documentation
 ####################################
 # Created: 26/02/2019
-# This script aggregate and plot data (IOI)
+# This script aggregates, plots data (IOI) and runs statistical tests
 # GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
 
 ####################################
