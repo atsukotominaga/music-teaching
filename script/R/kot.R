@@ -226,8 +226,8 @@ kot_sub_norm <- by(kot_sub$Mean, list(kot_sub$Condition, kot_sub$SubSkill), shap
 kot_ch_sub_norm <- by(kot_ch_sub$Mean, list(kot_ch_sub$Condition, kot_ch_sub$SubSkill), shapiro.test)
 
 # Export the results
-write.csv(kot_sub_norm, file = "./3_stats/kot/kot_sub_norm.csv", row.names = FALSE)
-write.csv(kot_ch_sub_norm, file = "./3_stats/kot/kot_ch_sub_norm.csv", row.names = FALSE)
+write.csv(kot_sub_norm, file = "./3_stats/kot/kot_sub_norm.txt", row.names = FALSE)
+write.csv(kot_ch_sub_norm, file = "./3_stats/kot/kot_ch_sub_norm.txt", row.names = FALSE)
 
 # Two-way ANOVA
 # kot_sub
