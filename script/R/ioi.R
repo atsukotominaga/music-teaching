@@ -18,9 +18,8 @@
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 # plot
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
-if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 # statistics
-if (!require("car")) {install.packages("car"); require("car")}
+if (!require("stats")) {install.packages("stats"); require("stats")}
 if (!require("ez")) {install.packages("ez"); require("ez")}
 
 # Create necessary folders if not exist
