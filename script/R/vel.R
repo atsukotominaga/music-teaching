@@ -133,72 +133,106 @@ vel_acc_seq_stats <- cbind(vel_acc_seq_stats[,1:3], as.data.frame(vel_acc_seq_st
 # Change colnames
 colnames(vel_acc_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
 
+# 5. The beginning or the ending note of each phrase vs. other notes
+# Define phrases for each note
+ls_phrase2 <- list(c(1:8), c(9:116), c(17:24), c(25:32), c(34:41), c(42:49), c(50:57), c(58:65))
+
+# Extract data without change points
+df_vel_phrase <- df_vel
+
+# Assess whether a given note is the beginnning or the ending of a phrase (Yes / No)
+df_vel_phrase$Boundary <- NA
+for (phrase in 1:length(ls_phrase2)){
+  for (note in 1:length(ls_phrase2[[phrase]])){
+    if (note == 1 | note == 8){ # the beginning of the ending of each phrase
+      df_vel_phrase$Boundary[df_vel_phrase$Note == ls_phrase2[[phrase]][note]] <- "Yes"
+    } else {
+      df_vel_phrase$Boundary[df_vel_phrase$Note == ls_phrase2[[phrase]][note]] <- "No"
+    }
+  }
+}
+# Boundary as a factor
+df_vel_phrase$Boundary <- as.factor(df_vel_phrase$Boundary)
+
+# For each participant
+vel_phrase <- aggregate(Velocity~SubNr*Condition*Skill*SubSkill*Boundary, data = df_vel_phrase,
+                        FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
+vel_phrase <- cbind(vel_phrase[,1:5], vel_phrase[,6])
+# Change colnames
+colnames(vel_phrase) <- c("SubNr", "Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD")
+
+# Group mean
+vel_phrase_stats <- aggregate(Mean~Condition*Skill*SubSkill*Boundary, data = vel_phrase,
+                              FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_phrase_stats <- cbind(vel_phrase_stats[,1:4], vel_phrase_stats[,5])
+# Change colnames
+colnames(vel_phrase_stats) <- c("Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD", "SEM")
+
+# Checking values with ezStats
+vel_phrase_ezstats <- ezStats(
+  data = df_vel_phrase
+  , dv = .(Velocity)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill, Boundary)
+  , type = 3
+  , check_args = TRUE
+)
+
+# 6. The beginning or the ending note of each phrase vs. middle two notes
+# Extract data without change points
+df_vel_phrase2 <- df_vel
+
+# Assess whether a given note is the beginnning or the ending of a phrase (Yes / No)
+df_vel_phrase2$Boundary <- NA
+for (phrase in 1:length(ls_phrase2)){
+  for (note in 1:length(ls_phrase2[[phrase]])){
+    if (note == 1 | note == 8){ # the beginning of the ending of each phrase
+      df_vel_phrase2$Boundary[df_vel_phrase2$Note == ls_phrase2[[phrase]][note]] <- "Yes"
+    } else if (note == 4 | note == 5){
+      df_vel_phrase2$Boundary[df_vel_phrase2$Note == ls_phrase2[[phrase]][note]] <- "No"
+    }
+  }
+}
+# Boundary as a factor
+df_vel_phrase2$Boundary <- as.factor(df_vel_phrase2$Boundary)
+
+# For each participant
+vel_phrase2 <- aggregate(Velocity~SubNr*Condition*Skill*SubSkill*Boundary, data = df_vel_phrase2,
+                         FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
+vel_phrase2 <- cbind(vel_phrase2[,1:5], vel_phrase2[,6])
+# Change colnames
+colnames(vel_phrase2) <- c("SubNr", "Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD")
+
+# Group mean
+vel_phrase2_stats <- aggregate(Mean~Condition*Skill*SubSkill*Boundary, data = vel_phrase2,
+                               FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_phrase2_stats <- cbind(vel_phrase2_stats[,1:4], vel_phrase2_stats[,5])
+# Change colnames
+colnames(vel_phrase2_stats) <- c("Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD", "SEM")
+
+# Checking values with ezStats
+vel_phrase2_ezstats <- ezStats(
+  data = df_vel_phrase2[complete.cases(df_vel_phrase2),]
+  , dv = .(Velocity)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill, Boundary)
+  , type = 3
+  , check_args = TRUE
+)
+
 # Add order info
 vel_sub_stats$LabelOrder[vel_sub_stats$Skill == "articulation"] <- 1
 vel_sub_stats$LabelOrder[vel_sub_stats$Skill == "dynamics"] <- 2
 vel_ch_sub_stats$LabelOrder[vel_ch_sub_stats$Skill == "articulation"] <- 1
 vel_ch_sub_stats$LabelOrder[vel_ch_sub_stats$Skill == "dynamics"] <- 2
-
-####################################
-# Diff between first/end and others
-####################################
-# # Define phrases
-# # For each note
-# ls_legato <- list(c(1:8), c(17:24), c(42:49), c(58:65))
-# ls_staccato <- list(c(9:16), c(25:32), c(34:41), c(50:57))
-# ls_forte <- list(c(1:8), c(17:24), c(42:49), c(58:65))
-# ls_piano <- list(c(9:16), c(25:32), c(34:41), c(50:57))
-
-# # Difference between first+end and other notes within each phrase
-# df_diff <- data.frame()
-# df_diff_forte <- data.frame()
-# df_diff_piano <- data.frame()
-# for (cond in unique(vel_seq$Condition)){
-#   for (skill in unique(vel_seq$Skill)){
-#     df_current <- vel_seq %>% dplyr::filter(vel_seq$Condition == cond & vel_seq$Skill == skill)
-#     if (skill == "dynamics"){
-#       for (phrase in 1:length(ls_forte)){
-#         first <- df_current$Velocity[,2][df_current$Note == ls_forte[[phrase]][1]]
-#         end <- df_current$Velocity[,2][df_current$Note == ls_forte[[phrase]][8]]
-#         others <- mean(df_current$Velocity[,2][df_current$Note == ls_forte[[phrase]][2]],
-#                        df_current$Velocity[,2][df_current$Note == ls_forte[[phrase]][3]],
-#                        df_current$Velocity[,2][df_current$Note == ls_forte[[phrase]][4]],
-#                        df_current$Velocity[,2][df_current$Note == ls_forte[[phrase]][5]],
-#                        df_current$Velocity[,2][df_current$Note == ls_forte[[phrase]][6]],
-#                        df_current$Velocity[,2][df_current$Note == ls_forte[[phrase]][7]])
-#         df_diff_forte <- data.frame(cond, skill, "Forte", phrase, mean(first, end)-others)
-#         colnames(df_diff_forte) <- c("Condition", "Skill", "SubSkill", "PhraseNo", "Diff")
-#         df_diff <- rbind(df_diff, df_diff_forte)
-#       }
-#       for (phrase in 1:length(ls_piano)){
-#         first <- df_current$Velocity[,2][df_current$Note == ls_piano[[phrase]][1]]
-#         end <- df_current$Velocity[,2][df_current$Note == ls_piano[[phrase]][8]]
-#         others <- mean(df_current$Velocity[,2][df_current$Note == ls_piano[[phrase]][2]],
-#                        df_current$Velocity[,2][df_current$Note == ls_piano[[phrase]][3]],
-#                        df_current$Velocity[,2][df_current$Note == ls_piano[[phrase]][4]],
-#                        df_current$Velocity[,2][df_current$Note == ls_piano[[phrase]][5]],
-#                        df_current$Velocity[,2][df_current$Note == ls_piano[[phrase]][6]],
-#                        df_current$Velocity[,2][df_current$Note == ls_piano[[phrase]][7]])
-#         df_diff_piano <- data.frame(cond, skill, "Piano", phrase, mean(first, end)-others)
-#         colnames(df_diff_piano) <- c("Condition", "Skill", "SubSkill", "PhraseNo", "Diff")
-#         df_diff <- rbind(df_diff, df_diff_piano)
-#       }
-#     }
-#   }
-# }
-# 
-# vel_diff <- aggregate(Diff~Condition*Skill*SubSkill, data = df_diff,
-#                       FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-# vel_diff <- cbind(vel_diff, as.data.frame(vel_diff[,4]))
-# 
-# p_vel_diff <- ggplot(data = vel_diff, aes(x = SubSkill, y = mean, fill = Condition)) +
-#   geom_bar(stat = "identity", position = position_dodge()) +
-#   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem),
-#                 width=.2, position = position_dodge(.9)) +
-#   labs(y = "Difference") + #coord_cartesian(ylim = c(100, 250)) +
-#   theme_classic()
-# p_vel_diff
-# ggsave("./plot/vel/p_vel_diff.png", plot = p_vel_diff, dpi = 600, width = 5, height = 4)
+vel_phrase_stats$LabelOrder[vel_phrase_stats$Skill == "articulation"] <- 1
+vel_phrase_stats$LabelOrder[vel_phrase_stats$Skill == "dynamics"] <- 2
+vel_phrase_stats$LabelOrder2[vel_phrase_stats$Boundary == "Yes"] <- 1
+vel_phrase_stats$LabelOrder2[vel_phrase_stats$Boundary == "No"] <- 2
+vel_phrase2_stats$LabelOrder[vel_phrase2_stats$Skill == "articulation"] <- 1
+vel_phrase2_stats$LabelOrder[vel_phrase2_stats$Skill == "dynamics"] <- 2
+vel_phrase2_stats$LabelOrder2[vel_phrase2_stats$Boundary == "Yes"] <- 1
+vel_phrase2_stats$LabelOrder2[vel_phrase2_stats$Boundary == "No"] <- 2
 
 ####################################
 # Velocity plots
@@ -239,12 +273,32 @@ p_vel_acc_seq <- ggplot(data = vel_acc_seq_stats, aes(x = Interval, y = Mean, gr
   theme_classic()
 p_vel_acc_seq
 
+p_vel_phrase <- ggplot(data = vel_phrase_stats, aes(x = reorder(SubSkill, LabelOrder), y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  facet_grid(. ~ reorder(Boundary, LabelOrder2)) +
+  labs(x = "SubSkill", y = "Velocity (0-127)") + #coord_cartesian(ylim = c(100, 230)) +
+  theme_classic()
+p_vel_phrase
+
+p_vel_phrase2 <- ggplot(data = vel_phrase2_stats, aes(x = reorder(SubSkill, LabelOrder), y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  facet_grid(. ~ reorder(Boundary, LabelOrder2)) +
+  labs(x = "SubSkill", y = "Velocity (0-127)") + #coord_cartesian(ylim = c(100, 230)) +
+  theme_classic()
+p_vel_phrase2
+
 # Save plots
 # png files
 ggsave("./3_stats/plot/vel/p_vel_sub.png", plot = p_vel_sub, dpi = 600, width = 5, height = 4)
 ggsave("./3_stats/plot/vel/p_vel_ch_sub.png", plot = p_vel_ch_sub, dpi = 600, width = 5, height = 4)
 ggsave("./3_stats/plot/vel/p_vel_seq.png", plot = p_vel_seq, dpi = 600, width = 15, height = 4)
 ggsave("./3_stats/plot/vel/p_vel_acc_seq.png", plot = p_vel_acc_seq, dpi = 600, width = 15, height = 4) 
+ggsave("./3_stats/plot/vel/p_vel_phrase.png", plot = p_vel_phrase, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/vel/p_vel_phrase2.png", plot = p_vel_phrase2, dpi = 600, width = 5, height = 4)
 
 ####################################
 # Statistics
@@ -299,3 +353,27 @@ vel_ch_sub_ph <- aov(Acc~Condition*SubSkill, data = subset(df_vel_acc, df_vel_ac
 vel_ch_sub_ph <- TukeyHSD(vel_ch_sub_ph)
 print(vel_ch_sub_ph)
 write.csv(vel_ch_sub_ph$`Condition:SubSkill`, file = "./3_stats/vel/vel_ch_sub_ph.csv")
+
+# vel_phrase
+vel_phrase_aov <- ezANOVA(
+  data = df_vel_phrase
+  , dv = .(Velocity)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill, Boundary)
+  , type = 3
+  , detailed = TRUE
+)
+print(vel_phrase_aov)
+write.csv(vel_phrase_aov$ANOVA, file = "./3_stats/vel/vel_phrase_aov.csv")
+
+# vel_phrase2
+vel_phrase2_aov <- ezANOVA(
+  data = df_vel_phrase2[complete.cases(df_vel_phrase2),]
+  , dv = .(Velocity)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill, Boundary)
+  , type = 3
+  , detailed = TRUE
+)
+print(vel_phrase2_aov)
+write.csv(vel_phrase2_aov$ANOVA, file = "./3_stats/vel/vel_phrase2_aov.csv")
