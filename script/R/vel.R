@@ -297,8 +297,8 @@ ggsave("./3_stats/plot/vel/p_vel_sub.png", plot = p_vel_sub, dpi = 600, width = 
 ggsave("./3_stats/plot/vel/p_vel_ch_sub.png", plot = p_vel_ch_sub, dpi = 600, width = 5, height = 4)
 ggsave("./3_stats/plot/vel/p_vel_seq.png", plot = p_vel_seq, dpi = 600, width = 15, height = 4)
 ggsave("./3_stats/plot/vel/p_vel_acc_seq.png", plot = p_vel_acc_seq, dpi = 600, width = 15, height = 4) 
-ggsave("./3_stats/plot/vel/p_vel_phrase.png", plot = p_vel_phrase, dpi = 600, width = 5, height = 4)
-ggsave("./3_stats/plot/vel/p_vel_phrase2.png", plot = p_vel_phrase2, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/vel/p_vel_phrase.png", plot = p_vel_phrase, dpi = 600, width = 7, height = 4)
+ggsave("./3_stats/plot/vel/p_vel_phrase2.png", plot = p_vel_phrase2, dpi = 600, width = 7, height = 4)
 
 ####################################
 # Statistics

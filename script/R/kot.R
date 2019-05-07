@@ -271,8 +271,8 @@ p_kot_phrase2
 ggsave("./3_stats/plot/kot/p_kot_sub.png", plot = p_kot_sub, dpi = 600, width = 5, height = 4)
 ggsave("./3_stats/plot/kot/p_kot_ch_sub.png", plot = p_kot_ch_sub, dpi = 600, width = 5, height = 4)
 ggsave("./3_stats/plot/kot/p_kot_seq.png", plot = p_kot_seq, dpi = 600, width = 15, height = 4)
-ggsave("./3_stats/plot/kot/p_kot_phrase.png", plot = p_kot_phrase, dpi = 600, width = 5, height = 4)
-ggsave("./3_stats/plot/kot/p_kot_phrase2.png", plot = p_kot_phrase2, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/kot/p_kot_phrase.png", plot = p_kot_phrase, dpi = 600, width = 7, height = 4)
+ggsave("./3_stats/plot/kot/p_kot_phrase2.png", plot = p_kot_phrase2, dpi = 600, width = 7, height = 4)
 
 ####################################
 ### Statistics
