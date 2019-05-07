@@ -5,15 +5,15 @@
 #  Documentation
 ####################################
 # Created: 26/02/2019
-# This script aggregate and plot data (Velocity)
-# GitHub repo (private): https://github.com/atsukotominaga/expertpiano/tree/master/script/R 
+# This script aggregates, plots data (KV) and runs statistical tests
+# GitHub repo (private): https://github.com/atsukotominaga/teaching_v1.0/script/R 
 
 ####################################
 #  Requirements
 ####################################
-### !!! Set working directory to file source location !!!
-
 # Install and load required packages
+# directory
+if (!require("here")) {install.packages("here"); require("here")}
 # data manipulation
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 # plot
@@ -21,6 +21,9 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 # statistics
 if (!require("stats")) {install.packages("stats"); require("stats")}
 if (!require("ez")) {install.packages("ez"); require("ez")}
+
+# Set working directory to file source location - here assumes that ~/teaching_v1.0/ is the top level of this script
+setwd(here("script", "R"))
 
 # Create necessary folders if not exist
 # 3_stats
