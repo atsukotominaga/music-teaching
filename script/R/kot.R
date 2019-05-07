@@ -1,5 +1,5 @@
 #!/usr/bin/Rscript
-#rm(list=ls(all=TRUE)) - clear all in Environment
+rm(list=ls(all=TRUE)) # clear all in Environment
 
 ####################################
 #  Documentation
