@@ -18,6 +18,7 @@ if (!require("here")) {install.packages("here"); require("here")}
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 # plot
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
 # statistics
 if (!require("stats")) {install.packages("stats"); require("stats")}
 if (!require("ez")) {install.packages("ez"); require("ez")}
@@ -245,6 +246,11 @@ p_vel_sub <- ggplot(data = vel_sub_stats, aes(x = reorder(SubSkill, LabelOrder),
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "SubSkill", y = "Velocity (0-127)") + coord_cartesian(ylim = c(50, 90)) + 
+  geom_signif(y_position=c(mean(vel_sub_stats$Mean[vel_sub_stats$SubSkill == "Legato"])+mean(vel_sub_stats$SEM[vel_sub_stats$SubSkill == "Legato"])+2,
+                           mean(vel_sub_stats$Mean[vel_sub_stats$SubSkill == "Staccato"])+mean(vel_sub_stats$SEM[vel_sub_stats$SubSkill == "Staccato"])+3.3,
+                           mean(vel_sub_stats$Mean[vel_sub_stats$SubSkill == "Forte"])+mean(vel_sub_stats$SEM[vel_sub_stats$SubSkill == "Forte"])+2,
+                           mean(vel_sub_stats$Mean[vel_sub_stats$SubSkill == "Piano"])+mean(vel_sub_stats$SEM[vel_sub_stats$SubSkill == "Piano"])+2),
+              xmin=c(0.8, 1.8, 2.8, 3.8), xmax=c(1.2, 2.2, 3.2, 4.2), annotation=c("*", "***", "***", "n.s."), tip_length=0) +
   theme_classic()
 p_vel_sub
 
@@ -253,6 +259,11 @@ p_vel_ch_sub <- ggplot(data = vel_ch_sub_stats, aes(x = reorder(SubSkill, LabelO
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "Skill change", y = "Acceleration") + coord_cartesian(ylim = c(-20, 30)) + 
+  geom_signif(y_position=c(mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "Legato"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "Legato"])+2,
+                           mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "Staccato"])+mean(vel_ch_ub_stats$SEM[vel_ch_sub_stats$SubSkill == "Staccato"])+2,
+                           mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "Forte"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "Forte"])+2,
+                           mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "Piano"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "Piano"])+2),
+              xmin=c(0.8, 1.8, 2.8, 3.8), xmax=c(1.2, 2.2, 3.2, 4.2), annotation=c("**", "n.s.", "*", "***"), tip_length=0) +
   theme_classic()
 p_vel_ch_sub
 

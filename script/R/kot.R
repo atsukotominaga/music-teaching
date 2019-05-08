@@ -18,6 +18,7 @@ if (!require("here")) {install.packages("here"); require("here")}
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 # plot
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
 # statistics
 if (!require("stats")) {install.packages("stats"); require("stats")}
 if (!require("ez")) {install.packages("ez"); require("ez")}
@@ -229,7 +230,11 @@ p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = reorder(SubSkill, LabelOrder),
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "SubSkill", y = "Mean KOT (ms)") +
+  geom_signif(y_position=c(25, -122), xmin=c(0.8, 1.8), xmax=c(1.2, 2.2),
+              annotation=c("***", "***"), tip_length=0) + # for articulation
+  geom_signif(y_position=c(40, 5), xmin=c(2.8, 3.8), xmax=c(3.2, 4.2),
+              annotation=c("n.s.", "n.s."), tip_length=0) + # for dynamics
   theme_classic()
 p_kot_sub
 
