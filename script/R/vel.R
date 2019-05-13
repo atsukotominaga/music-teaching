@@ -259,10 +259,10 @@ p_vel_ch_sub <- ggplot(data = vel_ch_sub_stats, aes(x = reorder(SubSkill, LabelO
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "Skill change", y = "Acceleration") + coord_cartesian(ylim = c(-20, 30)) + 
-  geom_signif(y_position=c(mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "Legato"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "Legato"])+2,
-                           mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "Staccato"])+mean(vel_ch_ub_stats$SEM[vel_ch_sub_stats$SubSkill == "Staccato"])+2,
-                           mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "Forte"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "Forte"])+2,
-                           mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "Piano"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "Piano"])+2),
+  geom_signif(y_position=c(mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "LtoS"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "LtoS"])+3.3,
+                           mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "StoL"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "StoL"])+2,
+                           mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "FtoP"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "FtoP"])+2,
+                           mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$SubSkill == "PtoF"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$SubSkill == "PtoF"])+3.3),
               xmin=c(0.8, 1.8, 2.8, 3.8), xmax=c(1.2, 2.2, 3.2, 4.2), annotation=c("**", "n.s.", "*", "***"), tip_length=0) +
   theme_classic()
 p_vel_ch_sub
