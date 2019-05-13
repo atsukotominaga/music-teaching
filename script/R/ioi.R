@@ -12,8 +12,6 @@ rm(list=ls(all=TRUE)) # clear all in Environment
 #  Requirements
 ####################################
 # Install and load required packages
-# directory
-if (!require("here")) {install.packages("here"); require("here")}
 # data manipulation
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 # plot
@@ -21,9 +19,6 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 # statistics
 if (!require("stats")) {install.packages("stats"); require("stats")}
 if (!require("ez")) {install.packages("ez"); require("ez")}
-
-# Set working directory to file source location - here assumes that ~/teaching_v1.0/ is the top level of this script
-setwd(here("script", "R"))
 
 # Create necessary folders if not exist
 # 3_stats
@@ -200,11 +195,102 @@ ioi_var_tri_stats <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_var_tri,
 ioi_var_tri_stats <- cbind(ioi_var_tri_stats[,1:3], as.data.frame(ioi_var_tri_stats[,4]))
 colnames(ioi_var_tri_stats) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "SD", "SEM")
 
+# 6. The intervals related to subskill changes vs. other intervals
+df_ioi_comp <- df_ioi
+
+# Define phrases
+ls_phrase <- list(c(1:7), c(9:15), c(17:23), c(25:31), c(34:40), c(42:48), c(50:56), c(58:64))
+
+# Assess whether a given interval is on sub-skill change points or not
+df_ioi_comp$Change <- "Yes"
+for (phrase in 1:length(ls_phrase)){
+  for (interval in 1:length(ls_phrase[[phrase]])){
+    df_ioi_comp$Change[df_ioi_comp$Interval == ls_phrase[[phrase]][interval]] <- "No"
+  }
+}
+# Change as a factor
+df_ioi_comp$Change <- as.factor(df_ioi_comp$Change)
+
+# For each participant
+ioi_comp <- aggregate(IOI~SubNr*Condition*Skill*Change, data = df_ioi_comp,
+                         FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+ioi_comp <- cbind(ioi_comp[,1:4], ioi_comp[,5])
+# Change colnames
+colnames(ioi_comp) <- c("SubNr", "Condition", "Skill", "Change", "N", "Mean", "SD")
+
+# Group mean
+ioi_comp_stats <- aggregate(Mean~Condition*Skill*Change, data = ioi_comp,
+                               FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_comp_stats <- cbind(ioi_comp_stats[,1:3], ioi_comp_stats[,4])
+# Change colnames
+colnames(ioi_comp_stats) <- c("Condition", "Skill", "Change", "N", "Mean", "SD", "SEM")
+
+# Checking values with ezStats
+ioi_comp_ezstats <- ezStats(
+  data = df_ioi_comp
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, Skill, Change)
+  , type = 3
+  , check_args = TRUE
+)
+
+# 7. The intervals related to subskill changes vs. middle intervals
+df_ioi_comp2 <- df_ioi
+
+# Define phrases
+ls_phrase <- list(c(1:7), c(9:15), c(17:23), c(25:31), c(34:40), c(42:48), c(50:56), c(58:64))
+
+# Assess whether a given interval is on sub-skill change points or not
+df_ioi_comp2$Change <- NA
+df_ioi_comp2$Change[df_ioi_comp2$Interval == 8 | df_ioi_comp2$Interval == 16 | df_ioi_comp2$Interval == 24 | df_ioi_comp2$Interval == 41 | df_ioi_comp2$Interval == 49 | df_ioi_comp2$Interval == 57] <- "Yes"
+for (phrase in 1:length(ls_phrase)){
+  for (interval in 1:length(ls_phrase[[phrase]])){
+    if (interval == 4){
+      df_ioi_comp2$Change[df_ioi_comp2$Interval == ls_phrase[[phrase]][interval]] <- "No"
+    }
+  }
+}
+# Change as a factor
+df_ioi_comp2$Change <- as.factor(df_ioi_comp2$Change)
+
+# For each participant
+ioi_comp2 <- aggregate(IOI~SubNr*Condition*Skill*Change, data = df_ioi_comp2,
+                      FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+ioi_comp2 <- cbind(ioi_comp[,1:4], ioi_comp2[,5])
+# Change colnames
+colnames(ioi_comp2) <- c("SubNr", "Condition", "Skill", "Change", "N", "Mean", "SD")
+
+# Group mean
+ioi_comp2_stats <- aggregate(Mean~Condition*Skill*Change, data = ioi_comp2,
+                            FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_comp2_stats <- cbind(ioi_comp2_stats[,1:3], ioi_comp2_stats[,4])
+# Change colnames
+colnames(ioi_comp2_stats) <- c("Condition", "Skill", "Change", "N", "Mean", "SD", "SEM")
+
+# Checking values with ezStats
+ioi_comp2_ezstats <- ezStats(
+  data = df_ioi_comp2[complete.cases(df_ioi_comp2),]
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, Skill, Change)
+  , type = 3
+  , check_args = TRUE
+)
+
 # Add order info
 ioi_ch_sub_stats$LabelOrder[ioi_ch_sub_stats$Skill == "articulation"] <- 1
 ioi_ch_sub_stats$LabelOrder[ioi_ch_sub_stats$Skill == "dynamics"] <- 2
 ioi_var_stats$LabelOrder[ioi_var_stats$Skill == "articulation"] <- 1
 ioi_var_stats$LabelOrder[ioi_var_stats$Skill == "dynamics"] <- 2
+ioi_comp_stats$LabelOrder[ioi_comp_stats$Skill == "articulation"] <- 1
+ioi_comp_stats$LabelOrder[ioi_comp_stats$Skill == "dynamics"] <- 2
+ioi_comp_stats$LabelOrder2[ioi_comp_stats$Change == "Yes"] <- 1
+ioi_comp_stats$LabelOrder2[ioi_comp_stats$Change == "No"] <- 2
+ioi_comp2_stats$LabelOrder[ioi_comp2_stats$Skill == "articulation"] <- 1
+ioi_comp2_stats$LabelOrder[ioi_comp2_stats$Skill == "dynamics"] <- 2
+ioi_comp2_stats$LabelOrder2[ioi_comp2_stats$Change == "Yes"] <- 1
+ioi_comp2_stats$LabelOrder2[ioi_comp2_stats$Change == "No"] <- 2
 
 ####################################
 # Plots
@@ -263,6 +349,24 @@ p_ioi_var_tri <- ggplot(data = ioi_var_tri_stats, aes(x = TrialNr, y = Mean, sha
   theme_classic()
 p_ioi_var_tri
 
+p_ioi_comp <- ggplot(data = ioi_comp_stats, aes(x = reorder(Skill, LabelOrder), y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  facet_grid(. ~ reorder(Change, LabelOrder2)) +
+  labs(x = "Skill", y = "Mean IOI (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  theme_classic()
+p_ioi_comp
+
+p_ioi_comp2 <- ggplot(data = ioi_comp2_stats, aes(x = reorder(Skill, LabelOrder), y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  facet_grid(. ~ reorder(Change, LabelOrder2)) +
+  labs(x = "Skill", y = "Mean IOI (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  theme_classic()
+p_ioi_comp2
+
 # Save plots
 # png files
 ggsave("./3_stats/plot/ioi/p_ioi.png", plot = p_ioi, dpi = 600, width = 5, height = 4)
@@ -271,6 +375,8 @@ ggsave("./3_stats/plot/ioi/p_ioi_ch_sub.png", plot = p_ioi_ch_sub, dpi = 600, wi
 ggsave("./3_stats/plot/ioi/p_ioi_seq.png", plot = p_ioi_seq, dpi = 600, width = 15, height = 4)
 ggsave("./3_stats/plot/ioi/p_ioi_var.png", plot = p_ioi_var, dpi = 600, width = 5, height = 4)
 ggsave("./3_stats/plot/ioi/p_ioi_var_tri.png", plot = p_ioi_var_tri, dpi = 600, width = 10, height = 4)
+ggsave("./3_stats/plot/ioi/p_ioi_comp.png", plot = p_ioi_comp, dpi = 600, width = 7, height = 4)
+ggsave("./3_stats/plot/ioi/p_ioi_comp2.png", plot = p_ioi_comp2, dpi = 600, width = 7, height = 4)
 
 ####################################
 # Statistics
@@ -280,6 +386,8 @@ ioi_norm <- by(ioi$Mean, list(ioi$Condition, ioi$Skill), shapiro.test)
 ioi_ch_norm <- by(ioi_ch$Mean, list(ioi_ch$Condition, ioi$Skill), shapiro.test)
 ioi_ch_sub_norm <- by(ioi_ch_sub$Mean, list(ioi_ch_sub$Condition, ioi_ch_sub$Skill), shapiro.test)
 ioi_var_norm <- by(ioi_var$Mean, list(ioi_var$Condition, ioi_var$Skill), shapiro.test)
+ioi_comp_norm <- by(ioi_comp$Mean, list(ioi_comp$Condition, ioi_comp$Skill, ioi_comp$Change), shapiro.test)
+ioi_comp2_norm <- by(ioi_comp2$Mean, list(ioi_comp2$Condition, ioi_comp2$Skill, ioi_comp2$Change), shapiro.test)
 
 # Export the results
 write.table(ioi_norm, file = "./3_stats/ioi/ioi_norm.txt", row.names = FALSE)
@@ -337,5 +445,29 @@ ioi_var_aov <- ezANOVA(
 )
 print(ioi_var_aov)
 write.csv(ioi_var_aov$ANOVA, file = "./3_stats/ioi/ioi_var_aov.csv")
+
+# ioi_comp
+ioi_comp_aov <- ezANOVA(
+  data = df_ioi_comp
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, Skill, Change)
+  , type = 3
+  , detailed = TRUE
+)
+print(ioi_comp_aov)
+write.csv(ioi_comp_aov$ANOVA, file = "./3_stats/ioi/ioi_comp_aov.csv")
+
+# ioi_comp
+ioi_comp2_aov <- ezANOVA(
+  data = df_ioi_comp2[complete.cases(df_ioi_comp2),]
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, Skill, Change)
+  , type = 3
+  , detailed = TRUE
+)
+print(ioi_comp2_aov)
+write.csv(ioi_comp2_aov$ANOVA, file = "./3_stats/ioi/ioi_comp2_aov.csv")
 
 # Add analysis without SubNr 12
