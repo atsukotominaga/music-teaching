@@ -12,8 +12,6 @@ rm(list=ls(all=TRUE)) # clear all in Environment
 #  Requirements
 ####################################
 # Install and load required packages
-# directory
-if (!require("here")) {install.packages("here"); require("here")}
 # data manipulation
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 # plot
@@ -22,9 +20,6 @@ if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
 # statistics
 if (!require("stats")) {install.packages("stats"); require("stats")}
 if (!require("ez")) {install.packages("ez"); require("ez")}
-
-# Set working directory to file source location - here assumes that ~/teaching_v1.0/ is the top level of this script
-setwd(here("script", "R"))
 
 # Create necessary folders if not exist
 # 3_stats
@@ -129,14 +124,14 @@ ls_phrase <- list(c(1:7), c(9:15), c(17:23), c(25:31), c(34:40), c(42:48), c(50:
 # Extract data without change points
 df_kot_phrase <- df_kot %>% dplyr::filter(Interval != 8 & Interval != 16 & Interval != 24 & Interval != 41 & Interval != 49 & Interval != 57)
 
-# Assess whether a given note is the beginnning or the ending of a phrase (Yes / No)
+# Assess whether a given interval is the beginnning or the ending of a phrase (Yes / No)
 df_kot_phrase$Boundary <- NA
 for (phrase in 1:length(ls_phrase)){
-  for (note in 1:length(ls_phrase[[phrase]])){
-    if (note == 1 | note == 7){ # the beginning of the ending of each phrase
-      df_kot_phrase$Boundary[df_kot_phrase$Interval == ls_phrase[[phrase]][note]] <- "Yes"
+  for (interval in 1:length(ls_phrase[[phrase]])){
+    if (interval == 1 | interval == 7){ # the beginning of the ending of each phrase
+      df_kot_phrase$Boundary[df_kot_phrase$Interval == ls_phrase[[phrase]][interval]] <- "Yes"
     } else {
-      df_kot_phrase$Boundary[df_kot_phrase$Interval == ls_phrase[[phrase]][note]] <- "No"
+      df_kot_phrase$Boundary[df_kot_phrase$Interval == ls_phrase[[phrase]][interval]] <- "No"
     }
   }
 }
@@ -171,14 +166,14 @@ kot_phrase_ezstats <- ezStats(
 # Extract data without change points
 df_kot_phrase2 <- df_kot %>% dplyr::filter(Interval != 8 & Interval != 16 & Interval != 24 & Interval != 41 & Interval != 49 & Interval != 57)
 
-# Assess whether a given note is the beginnning or the ending of a phrase (Yes / No)
+# Assess whether a given interval is the beginnning or the ending of a phrase (Yes / No)
 df_kot_phrase2$Boundary <- NA
 for (phrase in 1:length(ls_phrase)){
-  for (note in 1:length(ls_phrase[[phrase]])){
-    if (note == 1 | note == 7){ # the beginning of the ending of each phrase
-      df_kot_phrase2$Boundary[df_kot_phrase2$Interval == ls_phrase[[phrase]][note]] <- "Yes"
-    } else if (note == 3 | note == 4){
-      df_kot_phrase2$Boundary[df_kot_phrase2$Interval == ls_phrase[[phrase]][note]] <- "No"
+  for (interval in 1:length(ls_phrase[[phrase]])){
+    if (interval == 1 | interval == 7){ # the beginning of the ending of each phrase
+      df_kot_phrase2$Boundary[df_kot_phrase2$Interval == ls_phrase[[phrase]][interval]] <- "Yes"
+    } else if (interval == 3 | interval == 4){
+      df_kot_phrase2$Boundary[df_kot_phrase2$Interval == ls_phrase[[phrase]][interval]] <- "No"
     }
   }
 }
