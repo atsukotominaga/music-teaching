@@ -134,9 +134,9 @@ colnames(vel_acc_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", 
 
 # 5. The beginning or the ending note of each phrase vs. other notes
 # Define phrases for each note
-ls_phrase2 <- list(c(1:8), c(9:116), c(17:24), c(25:32), c(34:41), c(42:49), c(50:57), c(58:65))
+ls_phrase2 <- list(c(1:8), c(9:16), c(17:24), c(25:32), c(34:41), c(42:49), c(50:57), c(58:65))
 
-# Extract data without change points
+# Create a new data frame
 df_vel_phrase <- df_vel
 
 # Assess whether a given note is the beginnning or the ending of a phrase (Yes / No)
@@ -315,10 +315,15 @@ ggsave("./3_stats/plot/vel/p_vel_phrase2.png", plot = p_vel_phrase2, dpi = 600, 
 # 1. Normality check
 vel_sub_norm <- by(vel_sub$Mean, list(vel_sub$Condition, vel_sub$SubSkill), shapiro.test)
 vel_ch_sub_norm <- by(vel_ch_sub$Mean, list(vel_ch_sub$Condition, vel_ch_sub$SubSkill), shapiro.test)
+vel_phrase_norm <- by(vel_phrase$Mean, list(vel_phrase$Condition, vel_phrase$SubSkill, vel_phrase$Boundary), shapiro.test)
+vel_phrase2_norm <- by(vel_phrase2$Mean, list(vel_phrase2$Condition, vel_phrase2$SubSkill, vel_phrase2$Boundary), shapiro.test)
 
 # Export the results
-write.csv(vel_sub_norm, file = "./3_stats/vel/vel_sub_norm.txt", row.names = FALSE)
-write.csv(vel_ch_sub_norm, file = "./3_stats/vel/vel_ch_sub_norm.txt", row.names = FALSE)
+write.csv(vel_sub_norm, file = "./3_stats/vel/vel_sub_norm.csv", row.names = TRUE)
+write.csv(vel_ch_sub_norm, file = "./3_stats/vel/vel_ch_sub_norm.csv", row.names = TRUE)
+#write.csv(vel_phrase_norm, file = "./3_stats/kot/vel_phrase_norm.csv", row.names = TRUE)
+#write.csv(vel_phrase2_norm, file = "./3_stats/kot/vel_phrase2_norm.csv", row.names = TRUE)
+# No violation!
 
 # Two-way ANOVA
 # vel_sub
