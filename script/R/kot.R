@@ -182,7 +182,7 @@ df_kot_phrase2$Boundary <- as.factor(df_kot_phrase2$Boundary)
 
 # For each participant
 kot_phrase2 <- aggregate(KOT~SubNr*Condition*Skill*SubSkill*Boundary, data = df_kot_phrase2,
-                        FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+                        FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
 kot_phrase2 <- cbind(kot_phrase2[,1:5], kot_phrase2[,6])
 # Change colnames
 colnames(kot_phrase2) <- c("SubNr", "Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD")
@@ -237,7 +237,7 @@ p_kot_ch_sub <- ggplot(data = kot_ch_sub_stats, aes(x = reorder(SubSkill, LabelO
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "SubSkill", y = "Mean KOT (ms)") +
   theme_classic()
 p_kot_ch_sub
 
@@ -257,7 +257,7 @@ p_kot_phrase <- ggplot(data = kot_phrase_stats, aes(x = reorder(SubSkill, LabelO
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Boundary, LabelOrder2)) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "SubSkill", y = "Mean KOT (ms)") +
   theme_classic()
 p_kot_phrase
 
@@ -285,11 +285,19 @@ ggsave("./3_stats/plot/kot/p_kot_phrase2.png", plot = p_kot_phrase2, dpi = 600, 
 kot_sub_norm <- by(kot_sub$Mean, list(kot_sub$Condition, kot_sub$SubSkill), shapiro.test)
 kot_ch_sub_norm <- by(kot_ch_sub$Mean, list(kot_ch_sub$Condition, kot_ch_sub$SubSkill), shapiro.test)
 kot_phrase_norm <- by(kot_phrase$Mean, list(kot_phrase$Condition, kot_phrase$SubSkill, kot_phrase$Boundary), shapiro.test)
+kot_phrase2_norm <- by(kot_phrase2$Mean, list(kot_phrase2$Condition, kot_phrase2$SubSkill, kot_phrase2$Boundary), shapiro.test)
 
 # Export the results
-write.table(kot_sub_norm, file = "./3_stats/kot/kot_sub_norm.txt")
-write.table(kot_ch_sub_norm, file = "./3_stats/kot/kot_ch_sub_norm.txt")
-#write.table(kot_phrase_norm, file = "./3_stats/kot/kot_phrase_norm.txt")
+write.csv(kot_sub_norm, file = "./3_stats/kot/kot_sub_norm.csv")
+write.csv(kot_ch_sub_norm, file = "./3_stats/kot/kot_ch_sub_norm.csv")
+#write.csv(kot_phrase_norm, file = "./3_stats/kot/kot_phrase_norm.csv")
+#write.csv(kot_phrase2_norm, file = "./3_stats/kot/kot_phrase2_norm.csv")
+
+# Draw qqnorm when there is the violation of Normality
+qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$SubSkill == "FtoP"])
+qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$SubSkill == "FtoP"])
+qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$SubSkill == "PtoF"])
+qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$SubSkill == "PtoF"])
 
 # Two-way ANOVA
 # kot_sub
