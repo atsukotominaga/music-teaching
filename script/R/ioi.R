@@ -394,15 +394,20 @@ write.csv(ioi_norm, file = "./3_stats/ioi/ioi_norm.csv", row.names = TRUE)
 write.csv(ioi_ch_norm, file = "./3_stats/ioi/ioi_ch_norm.csv", row.names = TRUE)
 write.csv(ioi_ch_sub_norm, file = "./3_stats/ioi/ioi_ch_sub_norm.csv", row.names = TRUE)
 write.csv(ioi_var_norm, file = "./3_stats/ioi/ioi_var_norm.csv", row.names = TRUE)
-write.csv(ioi_comp_norm, file = "./3_stats/ioi/ioi_comp_norm.csv", row.names = TRUE)
-write.csv(ioi_comp2_norm, file = "./3_stats/ioi/ioi_comp22_norm.csv", row.names = TRUE)
+#write.csv(ioi_comp_norm, file = "./3_stats/ioi/ioi_comp_norm.csv", row.names = TRUE)
+#write.csv(ioi_comp2_norm, file = "./3_stats/ioi/ioi_comp2_norm.csv", row.names = TRUE)
 
 # Draw qqnorm when there is the violation of Normality
+qqnorm(ioi_var$Mean[ioi_var$Condition == "performing" & ioi_var$Skill == "dynamics"])
+qqnorm(ioi_var$Mean[ioi_var$Condition == "teaching" & ioi_var$Skill == "dynamics"])
+qqnorm(ioi_var$Mean[ioi_var$Condition == "teaching" & ioi_var$Skill == "articulation"])
 qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Skill == "articulation" & ioi_comp$Change == "Yes"])
 qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Skill == "dynamics" & ioi_comp$Change == "Yes"])
+qqnorm(ioi_comp2$Mean[ioi_comp2$Condition == "teaching" & ioi_comp2$Skill == "articulation" & ioi_comp2$Change == "Yes"])
+qqnorm(ioi_comp2$Mean[ioi_comp2$Condition == "teaching" & ioi_comp2$Skill == "dynamics" & ioi_comp2$Change == "Yes"])
 # SubNr 12 distorted the normality
 
-# Two-way ANOVA
+# 2. Two-way ANOVA
 # ioi
 ioi_aov <- ezANOVA(
   data = df_ioi
@@ -478,6 +483,8 @@ print(ioi_comp2_aov)
 write.csv(ioi_comp2_aov$ANOVA, file = "./3_stats/ioi/ioi_comp2_aov.csv")
 
 # Add analysis without SubNr 12
+# 1. Normality check
+ioi_var_exc12_norm <- 
 # ioi_comp_exc12
 ioi_comp_exc12_aov <- ezANOVA(
   data = subset(df_ioi_comp, df_ioi_comp$SubNr != 12)
