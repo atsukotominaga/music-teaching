@@ -195,13 +195,13 @@ ioi_var_tri_stats <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_var_tri,
 ioi_var_tri_stats <- cbind(ioi_var_tri_stats[,1:3], as.data.frame(ioi_var_tri_stats[,4]))
 colnames(ioi_var_tri_stats) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "SD", "SEM")
 
-# 6. The intervals related to subskill changes vs. other intervals (Yes / No)
+# 6. The intervals related to subskill changes vs. other intervals
 df_ioi_comp <- df_ioi
 
 # Define phrases
 ls_phrase <- list(c(1:7), c(9:15), c(17:23), c(25:31), c(34:40), c(42:48), c(50:56), c(58:64))
 
-# Assess whether a given interval is on sub-skill change points or not
+# Assess whether a given interval is on sub-skill change points or not (Yes / No)
 df_ioi_comp$Change <- "Yes"
 for (phrase in 1:length(ls_phrase)){
   for (interval in 1:length(ls_phrase[[phrase]])){
@@ -235,13 +235,13 @@ ioi_comp_ezstats <- ezStats(
   , check_args = TRUE
 )
 
-# 7. The intervals related to subskill changes vs. middle intervals (Yes / No)
+# 7. The intervals related to subskill changes vs. middle intervals
 df_ioi_comp2 <- df_ioi
 
 # Define phrases
 ls_phrase <- list(c(1:7), c(9:15), c(17:23), c(25:31), c(34:40), c(42:48), c(50:56), c(58:64))
 
-# Assess whether a given interval is on sub-skill change points or not
+# Assess whether a given interval is on sub-skill change points or not (Yes / No)
 df_ioi_comp2$Change <- NA
 df_ioi_comp2$Change[df_ioi_comp2$Interval == 8 | df_ioi_comp2$Interval == 16 | df_ioi_comp2$Interval == 24 | df_ioi_comp2$Interval == 41 | df_ioi_comp2$Interval == 49 | df_ioi_comp2$Interval == 57] <- "Yes"
 for (phrase in 1:length(ls_phrase)){
