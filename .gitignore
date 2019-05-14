@@ -11,6 +11,7 @@ script/R/2_trimmed/
 script/R/3_stats/
 script/R/BadPianists/
 script/R/.Rhistory
+script/R/.RData
 script/R/.DS_Store
 
 # Rmd
