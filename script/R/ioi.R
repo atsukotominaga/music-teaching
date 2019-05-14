@@ -195,7 +195,7 @@ ioi_var_tri_stats <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_var_tri,
 ioi_var_tri_stats <- cbind(ioi_var_tri_stats[,1:3], as.data.frame(ioi_var_tri_stats[,4]))
 colnames(ioi_var_tri_stats) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "SD", "SEM")
 
-# 6. The intervals related to subskill changes vs. other intervals
+# 6. The intervals related to subskill changes vs. other intervals (Yes / No)
 df_ioi_comp <- df_ioi
 
 # Define phrases
@@ -235,7 +235,7 @@ ioi_comp_ezstats <- ezStats(
   , check_args = TRUE
 )
 
-# 7. The intervals related to subskill changes vs. middle intervals
+# 7. The intervals related to subskill changes vs. middle intervals (Yes / No)
 df_ioi_comp2 <- df_ioi
 
 # Define phrases
