@@ -307,7 +307,7 @@ p_ioi_ch <- ggplot(data = ioi_ch_stats, aes(x = Skill, y = Mean, fill = Conditio
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "Skill", y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "Skill", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_ioi_ch
 
@@ -315,7 +315,7 @@ p_ioi_ch_sub <- ggplot(data = ioi_ch_sub_stats, aes(x = reorder(SubSkill, LabelO
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "SubSkill", y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "SubSkill", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_ioi_ch_sub
 
@@ -327,7 +327,7 @@ p_ioi_seq <- ggplot(data = ioi_seq_stats, aes(x = Interval, y = Mean, group = Co
   annotate("text", 0, 188, label = "Tempo (80bpm)", vjust = -1) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Mean IOI (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
+  labs(x = "Interval", y = "IOI (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
   theme_classic()
 p_ioi_seq
 
@@ -335,7 +335,7 @@ p_ioi_var <- ggplot(data = ioi_var_stats, aes(x = reorder(Skill, LabelOrder), y 
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "Skill", y = "Mean CV (SD/mean IOI)") + coord_cartesian(ylim = c(0, .1)) +
+  labs(x = "Skill", y = "CV (SD/mean IOI)") + coord_cartesian(ylim = c(0, .1)) +
   theme_classic()
 p_ioi_var
 
@@ -345,7 +345,7 @@ p_ioi_var_tri <- ggplot(data = ioi_var_tri_stats, aes(x = TrialNr, y = Mean, sha
   facet_grid(Skill ~ .) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Trial Number", y = "Mean CV (SD/mean IOI)") + scale_x_continuous(breaks=seq(1,8,1)) +
+  labs(x = "Trial Number", y = "CV (SD/mean IOI)") + scale_x_continuous(breaks=seq(1,8,1)) +
   theme_classic()
 p_ioi_var_tri
 
@@ -354,7 +354,7 @@ p_ioi_comp <- ggplot(data = ioi_comp_stats, aes(x = reorder(Skill, LabelOrder), 
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Change, LabelOrder2)) +
-  labs(x = "Skill", y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "Skill", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_ioi_comp
 
@@ -363,7 +363,7 @@ p_ioi_comp2 <- ggplot(data = ioi_comp2_stats, aes(x = reorder(Skill, LabelOrder)
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Change, LabelOrder2)) +
-  labs(x = "Skill", y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "Skill", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_ioi_comp2
 

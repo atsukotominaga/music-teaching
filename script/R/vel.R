@@ -278,7 +278,7 @@ p_vel_acc_seq <- ggplot(data = vel_acc_seq_stats, aes(x = Interval, y = Mean, gr
   facet_grid(Skill ~ .) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Acceleration") + scale_x_continuous(breaks=seq(1,66,1)) +
+  labs(x = "Interval", y = "Acceleration (0-127)") + scale_x_continuous(breaks=seq(1,66,1)) +
   theme_classic()
 p_vel_acc_seq
 

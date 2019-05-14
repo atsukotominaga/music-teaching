@@ -225,7 +225,7 @@ p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = reorder(SubSkill, LabelOrder),
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") +
+  labs(x = "SubSkill", y = "KOT (ms)") +
   geom_signif(y_position=c(25, -122), xmin=c(0.8, 1.8), xmax=c(1.2, 2.2),
               annotation=c("***", "***"), tip_length=0) + # for articulation
   geom_signif(y_position=c(40, 5), xmin=c(2.8, 3.8), xmax=c(3.2, 4.2),
@@ -237,7 +237,7 @@ p_kot_ch_sub <- ggplot(data = kot_ch_sub_stats, aes(x = reorder(SubSkill, LabelO
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") +
+  labs(x = "SubSkill", y = "KOT (ms)") +
   theme_classic()
 p_kot_ch_sub
 
@@ -248,7 +248,7 @@ p_kot_seq <- ggplot(data = kot_seq_stats, aes(x = Interval, y = Mean, group = Co
   facet_grid(Skill ~ .) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Mean KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
+  labs(x = "Interval", y = "KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
   theme_classic()
 p_kot_seq
 
@@ -257,7 +257,7 @@ p_kot_phrase <- ggplot(data = kot_phrase_stats, aes(x = reorder(SubSkill, LabelO
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Boundary, LabelOrder2)) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") +
+  labs(x = "SubSkill", y = "KOT (ms)") +
   theme_classic()
 p_kot_phrase
 
@@ -266,7 +266,7 @@ p_kot_phrase2 <- ggplot(data = kot_phrase2_stats, aes(x = reorder(SubSkill, Labe
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Boundary, LabelOrder2)) +
-  labs(x = "SubSkill", y = "Mean KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "SubSkill", y = "KOT (ms)") + #coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_kot_phrase2
 
