@@ -213,7 +213,7 @@ df_ioi_comp$Change <- as.factor(df_ioi_comp$Change)
 
 # For each participant
 ioi_comp <- aggregate(IOI~SubNr*Condition*Skill*Change, data = df_ioi_comp,
-                         FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+                         FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
 ioi_comp <- cbind(ioi_comp[,1:4], ioi_comp[,5])
 # Change colnames
 colnames(ioi_comp) <- c("SubNr", "Condition", "Skill", "Change", "N", "Mean", "SD")
@@ -256,7 +256,7 @@ df_ioi_comp2$Change <- as.factor(df_ioi_comp2$Change)
 
 # For each participant
 ioi_comp2 <- aggregate(IOI~SubNr*Condition*Skill*Change, data = df_ioi_comp2,
-                      FUN = function(x){c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+                      FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
 ioi_comp2 <- cbind(ioi_comp[,1:4], ioi_comp2[,5])
 # Change colnames
 colnames(ioi_comp2) <- c("SubNr", "Condition", "Skill", "Change", "N", "Mean", "SD")
@@ -354,7 +354,7 @@ p_ioi_comp <- ggplot(data = ioi_comp_stats, aes(x = reorder(Skill, LabelOrder), 
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Change, LabelOrder2)) +
-  labs(x = "Skill", y = "Mean IOI (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "Skill", y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_ioi_comp
 
@@ -363,7 +363,7 @@ p_ioi_comp2 <- ggplot(data = ioi_comp2_stats, aes(x = reorder(Skill, LabelOrder)
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Change, LabelOrder2)) +
-  labs(x = "Skill", y = "Mean IOI (ms)") + #coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "Skill", y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_ioi_comp2
 
@@ -390,10 +390,17 @@ ioi_comp_norm <- by(ioi_comp$Mean, list(ioi_comp$Condition, ioi_comp$Skill, ioi_
 ioi_comp2_norm <- by(ioi_comp2$Mean, list(ioi_comp2$Condition, ioi_comp2$Skill, ioi_comp2$Change), shapiro.test)
 
 # Export the results
-write.table(ioi_norm, file = "./3_stats/ioi/ioi_norm.txt", row.names = FALSE)
-write.table(ioi_ch_norm, file = "./3_stats/ioi/ioi_ch_norm.txt", row.names = FALSE)
-write.table(ioi_ch_sub_norm, file = "./3_stats/ioi/ioi_ch_sub_norm.txt", row.names = FALSE)
-write.table(ioi_var_norm, file = "./3_stats/ioi/ioi_var_norm.txt", row.names = FALSE)
+write.csv(ioi_norm, file = "./3_stats/ioi/ioi_norm.csv", row.names = TRUE)
+write.csv(ioi_ch_norm, file = "./3_stats/ioi/ioi_ch_norm.csv", row.names = TRUE)
+write.csv(ioi_ch_sub_norm, file = "./3_stats/ioi/ioi_ch_sub_norm.csv", row.names = TRUE)
+write.csv(ioi_var_norm, file = "./3_stats/ioi/ioi_var_norm.csv", row.names = TRUE)
+write.csv(ioi_comp_norm, file = "./3_stats/ioi/ioi_comp_norm.csv", row.names = TRUE)
+write.csv(ioi_comp2_norm, file = "./3_stats/ioi/ioi_comp22_norm.csv", row.names = TRUE)
+
+# Draw qqnorm when there is the violation of Normality
+qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Skill == "articulation" & ioi_comp$Change == "Yes"])
+qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Skill == "dynamics" & ioi_comp$Change == "Yes"])
+# SubNr 12 distorted the normality
 
 # Two-way ANOVA
 # ioi
@@ -458,7 +465,7 @@ ioi_comp_aov <- ezANOVA(
 print(ioi_comp_aov)
 write.csv(ioi_comp_aov$ANOVA, file = "./3_stats/ioi/ioi_comp_aov.csv")
 
-# ioi_comp
+# ioi_comp2
 ioi_comp2_aov <- ezANOVA(
   data = df_ioi_comp2[complete.cases(df_ioi_comp2),]
   , dv = .(IOI)
@@ -471,3 +478,26 @@ print(ioi_comp2_aov)
 write.csv(ioi_comp2_aov$ANOVA, file = "./3_stats/ioi/ioi_comp2_aov.csv")
 
 # Add analysis without SubNr 12
+# ioi_comp_exc12
+ioi_comp_exc12_aov <- ezANOVA(
+  data = subset(df_ioi_comp, df_ioi_comp$SubNr != 12)
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, Skill, Change)
+  , type = 3
+  , detailed = TRUE
+)
+print(ioi_comp_exc12_aov)
+write.csv(ioi_comp_exc12_aov$ANOVA, file = "./3_stats/ioi/ioi_comp_exc12_aov.csv")
+
+# ioi_comp2_exc12
+ioi_comp2_exc12_aov <- ezANOVA(
+  data = subset(df_ioi_comp2[complete.cases(df_ioi_comp2),], df_ioi_comp2[complete.cases(df_ioi_comp2),]$SubNr != 12)
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, Skill, Change)
+  , type = 3
+  , detailed = TRUE
+)
+print(ioi_comp2_exc12_aov)
+write.csv(ioi_comp2_exc12_aov$ANOVA, file = "./3_stats/ioi/ioi_comp2_exc12_aov.csv")
