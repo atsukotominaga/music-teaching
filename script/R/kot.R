@@ -287,12 +287,6 @@ kot_ch_sub_norm <- by(kot_ch_sub$Mean, list(kot_ch_sub$Condition, kot_ch_sub$Sub
 kot_phrase_norm <- by(kot_phrase$Mean, list(kot_phrase$Condition, kot_phrase$SubSkill, kot_phrase$Boundary), shapiro.test)
 kot_phrase2_norm <- by(kot_phrase2$Mean, list(kot_phrase2$Condition, kot_phrase2$SubSkill, kot_phrase2$Boundary), shapiro.test)
 
-# Export the results
-write.csv(kot_sub_norm, file = "./3_stats/kot/kot_sub_norm.csv", row.names = TRUE)
-write.csv(kot_ch_sub_norm, file = "./3_stats/kot/kot_ch_sub_norm.csv", row.names = TRUE)
-#write.csv(kot_phrase_norm, file = "./3_stats/kot/kot_phrase_norm.csv", row.names = TRUE)
-#write.csv(kot_phrase2_norm, file = "./3_stats/kot/kot_phrase2_norm.csv", row.names = TRUE)
-
 # Draw qqnorm when there is the violation of Normality
 qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$SubSkill == "FtoP"])
 qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$SubSkill == "FtoP"])
