@@ -49,7 +49,7 @@ df_kot <- read.csv("./2_trimmed/data_kot.csv", header = T, sep = ",", dec = ".")
 # SubNr as a factor
 df_kot$SubNr <- as.factor(df_kot$SubNr)
 
-# Include only articulation
+# Include only dynamics
 df_kot <- df_kot %>% dplyr::filter(Skill == "dynamics")
 
 ####################################

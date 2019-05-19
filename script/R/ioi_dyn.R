@@ -48,7 +48,7 @@ df_ioi <- read.csv("./2_trimmed/data_ioi.csv", header = T, sep = ",", dec = ".")
 # SubNr as a factor
 df_ioi$SubNr <- as.factor(df_ioi$SubNr)
 
-# Include only articulation
+# Include only dynamics
 df_ioi <- df_ioi %>% dplyr::filter(Skill == "dynamics")
 
 ####################################
