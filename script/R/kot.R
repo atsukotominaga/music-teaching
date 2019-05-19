@@ -244,7 +244,6 @@ p_kot_ch_sub
 p_kot_seq <- ggplot(data = kot_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
-  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
   facet_grid(Skill ~ .) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
