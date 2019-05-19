@@ -318,13 +318,6 @@ vel_ch_sub_norm <- by(vel_ch_sub$Mean, list(vel_ch_sub$Condition, vel_ch_sub$Sub
 vel_phrase_norm <- by(vel_phrase$Mean, list(vel_phrase$Condition, vel_phrase$SubSkill, vel_phrase$Boundary), shapiro.test)
 vel_phrase2_norm <- by(vel_phrase2$Mean, list(vel_phrase2$Condition, vel_phrase2$SubSkill, vel_phrase2$Boundary), shapiro.test)
 
-# Export the results
-write.csv(vel_sub_norm, file = "./3_stats/vel/vel_sub_norm.csv", row.names = TRUE)
-write.csv(vel_ch_sub_norm, file = "./3_stats/vel/vel_ch_sub_norm.csv", row.names = TRUE)
-#write.csv(vel_phrase_norm, file = "./3_stats/kot/vel_phrase_norm.csv", row.names = TRUE)
-#write.csv(vel_phrase2_norm, file = "./3_stats/kot/vel_phrase2_norm.csv", row.names = TRUE)
-# No violation!
-
 # Two-way ANOVA
 # vel_sub
 vel_sub_aov <- ezANOVA(
