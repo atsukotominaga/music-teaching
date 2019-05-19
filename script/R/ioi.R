@@ -383,14 +383,6 @@ ioi_var_norm <- by(ioi_var$Mean, list(ioi_var$Condition, ioi_var$Skill), shapiro
 ioi_comp_norm <- by(ioi_comp$Mean, list(ioi_comp$Condition, ioi_comp$Skill, ioi_comp$Change), shapiro.test)
 ioi_comp2_norm <- by(ioi_comp2$Mean, list(ioi_comp2$Condition, ioi_comp2$Skill, ioi_comp2$Change), shapiro.test)
 
-# Export the results
-write.csv(ioi_norm, file = "./3_stats/ioi/ioi_norm.csv", row.names = TRUE)
-write.csv(ioi_ch_norm, file = "./3_stats/ioi/ioi_ch_norm.csv", row.names = TRUE)
-write.csv(ioi_ch_sub_norm, file = "./3_stats/ioi/ioi_ch_sub_norm.csv", row.names = TRUE)
-write.csv(ioi_var_norm, file = "./3_stats/ioi/ioi_var_norm.csv", row.names = TRUE)
-#write.csv(ioi_comp_norm, file = "./3_stats/ioi/ioi_comp_norm.csv", row.names = TRUE)
-#write.csv(ioi_comp2_norm, file = "./3_stats/ioi/ioi_comp2_norm.csv", row.names = TRUE)
-
 # Draw qqnorm when there is the violation of Normality
 qqnorm(ioi_var$Mean[ioi_var$Condition == "performing" & ioi_var$Skill == "dynamics"])
 qqnorm(ioi_var$Mean[ioi_var$Condition == "teaching" & ioi_var$Skill == "dynamics"])
@@ -399,7 +391,6 @@ qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Skill == "artic
 qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Skill == "dynamics" & ioi_comp$Change == "Yes"])
 qqnorm(ioi_comp2$Mean[ioi_comp2$Condition == "teaching" & ioi_comp2$Skill == "articulation" & ioi_comp2$Change == "Yes"])
 qqnorm(ioi_comp2$Mean[ioi_comp2$Condition == "teaching" & ioi_comp2$Skill == "dynamics" & ioi_comp2$Change == "Yes"])
-# SubNr 12 distorted the normality
 
 # 2. Two-way ANOVA
 # ioi
