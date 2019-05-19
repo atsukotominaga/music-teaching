@@ -36,7 +36,7 @@ if (!file.exists("3_stats/plot")){
   dir.create("3_stats/plot")
 }
 # 3_stats/ioi - store png files
-if (!file.exists("3_stats/plot/ioi/")){
+if (!file.exists("3_stats/plot/ioi")){
   dir.create("3_stats/plot/ioi")
 }
 
