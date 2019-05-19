@@ -198,16 +198,10 @@ colnames(ioi_var_tri_stats) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "
 # 6. The intervals related to subskill changes vs. other intervals
 df_ioi_comp <- df_ioi
 
-# Define phrases
-ls_phrase <- list(c(1:7), c(9:15), c(17:23), c(25:31), c(34:40), c(42:48), c(50:56), c(58:64))
-
 # Assess whether a given interval is on sub-skill change points or not (Yes / No)
-df_ioi_comp$Change <- "Yes"
-for (phrase in 1:length(ls_phrase)){
-  for (interval in 1:length(ls_phrase[[phrase]])){
-    df_ioi_comp$Change[df_ioi_comp$Interval == ls_phrase[[phrase]][interval]] <- "No"
-  }
-}
+df_ioi_comp$Change <- "No"
+df_ioi_comp$Change[df_ioi_comp$Interval == 8 | df_ioi_comp$Interval == 16 | df_ioi_comp$Interval == 24 | df_ioi_comp$Interval == 41 | df_ioi_comp$Interval == 49 | df_ioi_comp$Interval == 57] <- "Yes"
+
 # Change as a factor
 df_ioi_comp$Change <- as.factor(df_ioi_comp$Change)
 
@@ -481,30 +475,3 @@ ioi_comp2_aov <- ezANOVA(
 )
 print(ioi_comp2_aov)
 write.csv(ioi_comp2_aov$ANOVA, file = "./3_stats/ioi/ioi_comp2_aov.csv")
-
-# Add analysis without SubNr 12
-# 1. Normality check
-ioi_var_exc12_norm <- 
-# ioi_comp_exc12
-ioi_comp_exc12_aov <- ezANOVA(
-  data = subset(df_ioi_comp, df_ioi_comp$SubNr != 12)
-  , dv = .(IOI)
-  , wid = .(SubNr)
-  , within = .(Condition, Skill, Change)
-  , type = 3
-  , detailed = TRUE
-)
-print(ioi_comp_exc12_aov)
-write.csv(ioi_comp_exc12_aov$ANOVA, file = "./3_stats/ioi/ioi_comp_exc12_aov.csv")
-
-# ioi_comp2_exc12
-ioi_comp2_exc12_aov <- ezANOVA(
-  data = subset(df_ioi_comp2[complete.cases(df_ioi_comp2),], df_ioi_comp2[complete.cases(df_ioi_comp2),]$SubNr != 12)
-  , dv = .(IOI)
-  , wid = .(SubNr)
-  , within = .(Condition, Skill, Change)
-  , type = 3
-  , detailed = TRUE
-)
-print(ioi_comp2_exc12_aov)
-write.csv(ioi_comp2_exc12_aov$ANOVA, file = "./3_stats/ioi/ioi_comp2_exc12_aov.csv")
