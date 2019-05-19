@@ -4,7 +4,7 @@ rm(list=ls(all=TRUE)) # clear all in Environment
 ####################################
 #  Documentation
 ####################################
-# Created: 18/05/2019
+# Created: 19/05/2019
 # This script aggregates, plots data (IOI) and runs statistical tests
 # GitHub repo (private): https://github.com/atsukotominaga/teaching_v1.0/script/R 
 
