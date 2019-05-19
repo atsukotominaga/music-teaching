@@ -5,7 +5,7 @@ rm(list=ls(all=TRUE)) # clear all in Environment
 #  Documentation
 ####################################
 # Created: 26/02/2019
-# This script aggregates, plots data (KV) and runs statistical tests
+# This script aggregates, plots data (KV) and runs statistical tests for articulation
 # GitHub repo (private): https://github.com/atsukotominaga/teaching_v1.0/script/R 
 
 ####################################
