@@ -326,7 +326,7 @@ kot_ch_sub_aov <- ezANOVA(
   , detailed = TRUE
 )
 print(kot_ch_sub_aov)
-write.csv(kot_ch_sub_aov$ANOVA, file = "./3_stats/kot/kot_sub_aov.csv")
+write.csv(kot_ch_sub_aov$ANOVA, file = "./3_stats/kot/kot_ch_sub_aov.csv")
 
 # kot_phrase
 kot_phrase_aov <- ezANOVA(
