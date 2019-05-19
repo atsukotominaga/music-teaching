@@ -28,8 +28,8 @@ if (!file.exists("3_stats")){
 }
 
 # 3_stats/kot - store csv files
-if (!file.exists("3_stats/kot_art")){
-  dir.create("3_stats/kot_art")
+if (!file.exists("3_stats/kot_dyn")){
+  dir.create("3_stats/kot_dyn")
 }
 
 # 3_stats/plot
@@ -37,8 +37,8 @@ if (!file.exists("3_stats/plot")){
   dir.create("3_stats/plot")
 }
 # 3_stats/plot/kot - store png files
-if (!file.exists("3_stats/plot/kot_art")){
-  dir.create("3_stats/plot/kot_art")
+if (!file.exists("3_stats/plot/kot_dyn")){
+  dir.create("3_stats/plot/kot_dyn")
 }
 
 ####################################
@@ -50,7 +50,7 @@ df_kot <- read.csv("./2_trimmed/data_kot.csv", header = T, sep = ",", dec = ".")
 df_kot$SubNr <- as.factor(df_kot$SubNr)
 
 # Include only articulation
-df_kot <- df_kot %>% dplyr::filter(Skill == "articulation")
+df_kot <- df_kot %>% dplyr::filter(Skill == "dynamics")
 
 ####################################
 # Aggregate data
@@ -177,8 +177,6 @@ p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = SubSkill, y = Mean, fill = Con
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "SubSkill", y = "KOT (ms)") +
-  geom_signif(y_position=c(25, -122), xmin=c(0.8, 1.8), xmax=c(1.2, 2.2),
-              annotation=c("***", "***"), tip_length=0) + # for articulation
   theme_classic()
 p_kot_sub
 
@@ -210,10 +208,10 @@ p_kot_phrase
 
 # Save plots
 # png files
-ggsave("./3_stats/plot/kot_art/p_kot_sub.png", plot = p_kot_sub, dpi = 600, width = 5, height = 4)
-ggsave("./3_stats/plot/kot_art/p_kot_ch_sub.png", plot = p_kot_ch_sub, dpi = 600, width = 5, height = 4)
-ggsave("./3_stats/plot/kot_art/p_kot_seq.png", plot = p_kot_seq, dpi = 600, width = 15, height = 4)
-ggsave("./3_stats/plot/kot_art/p_kot_phrase.png", plot = p_kot_phrase, dpi = 600, width = 7, height = 4)
+ggsave("./3_stats/plot/kot_dyn/p_kot_sub.png", plot = p_kot_sub, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/kot_dyn/p_kot_ch_sub.png", plot = p_kot_ch_sub, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/kot_dyn/p_kot_seq.png", plot = p_kot_seq, dpi = 600, width = 15, height = 4)
+ggsave("./3_stats/plot/kot_dyn/p_kot_phrase.png", plot = p_kot_phrase, dpi = 600, width = 7, height = 4)
 
 ####################################
 ### Statistics
@@ -224,7 +222,10 @@ kot_ch_sub_norm <- by(kot_ch_sub$Mean, list(kot_ch_sub$Condition, kot_ch_sub$Sub
 kot_phrase_norm <- by(kot_phrase$Mean, list(kot_phrase$Condition, kot_phrase$SubSkill, kot_phrase$Boundary), shapiro.test)
 
 # Draw qqnorm when there is the violation of Normality
-# Violation!
+qq1 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$SubSkill == "FtoP"])
+qq2 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$SubSkill == "FtoP"])
+qq3 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$SubSkill == "PtoF"])
+qq4 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$SubSkill == "PtoF"])
 
 # Two-way ANOVA
 # kot_sub
@@ -238,14 +239,6 @@ kot_sub_aov <- ezANOVA(
   , detailed = TRUE
 )
 print(kot_sub_aov)
-write.csv(kot_sub_aov$ANOVA, file = "./3_stats/kot_art/kot_sub_aov.csv")
-
-# posthoc comparison
-kot_sub_ph <- aov(KOT~Condition*SubSkill, data = subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & 
-                                                               df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57))
-kot_sub_ph <- TukeyHSD(kot_sub_ph)
-print(kot_sub_ph)
-write.csv(kot_sub_ph$`Condition:SubSkill`, file = "./3_stats/kot_art/kot_sub_ph.csv")
 
 # kot_ch_sub
 kot_ch_sub_aov <- ezANOVA(
@@ -258,7 +251,7 @@ kot_ch_sub_aov <- ezANOVA(
   , detailed = TRUE
 )
 print(kot_ch_sub_aov)
-write.csv(kot_ch_sub_aov$ANOVA, file = "./3_stats/kot_art/kot_sub_aov.csv")
+write.csv(kot_ch_sub_aov$ANOVA, file = "./3_stats/kot_dyn/kot_sub_aov.csv")
 
 # kot_phrase
 kot_phrase_aov <- ezANOVA(
@@ -270,4 +263,4 @@ kot_phrase_aov <- ezANOVA(
   , detailed = TRUE
 )
 print(kot_phrase_aov)
-write.csv(kot_phrase_aov$ANOVA, file = "./3_stats/kot_art/kot_phrase_aov.csv")
+write.csv(kot_phrase_aov$ANOVA, file = "./3_stats/kot_dyn/kot_phrase_aov.csv")
