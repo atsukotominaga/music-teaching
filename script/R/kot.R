@@ -37,7 +37,7 @@ if (!file.exists("3_stats/plot")){
   dir.create("3_stats/plot")
 }
 # 3_stats/plot/kot - store png files
-if (!file.exists("3_stats/plot/kot/")){
+if (!file.exists("3_stats/plot/kot")){
   dir.create("3_stats/plot/kot")
 }
 
@@ -226,11 +226,11 @@ p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = reorder(SubSkill, LabelOrder),
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "SubSkill", y = "KOT (ms)") +
-  geom_signif(y_position=c(mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Legato"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Legato"])+2,
-                           mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Staccato"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Staccato"])+2,
-                           mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Forte"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Forte"])+2,
-                           mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Piano"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Piano"])+2),
-              xmin=c(0.8, 1.8, 2.8, 3.3), xmax=c(1.2, 2.2, 3.2, 4.2),
+  geom_signif(y_position=c(mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Legato"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Legato"])+5,
+                           mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Staccato"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Staccato"])+7,
+                           mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Forte"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Forte"])+5,
+                           mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Piano"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Piano"])+7),
+              xmin=c(0.8, 1.8, 2.8, 3.8), xmax=c(1.2, 2.2, 3.2, 4.2),
               annotation=c("***", "***", "n.s.", "n.s."), tip_length=0) + # for articulation
   theme_classic()
 p_kot_sub
