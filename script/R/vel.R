@@ -37,7 +37,7 @@ if (!file.exists("3_stats/plot")){
   dir.create("3_stats/plot")
 }
 # 3_stats/vel - store png files
-if (!file.exists("3_stats/plot/vel/")){
+if (!file.exists("3_stats/plot/vel")){
   dir.create("3_stats/plot/vel")
 }
 
@@ -317,6 +317,9 @@ vel_sub_norm <- by(vel_sub$Mean, list(vel_sub$Condition, vel_sub$SubSkill), shap
 vel_ch_sub_norm <- by(vel_ch_sub$Mean, list(vel_ch_sub$Condition, vel_ch_sub$SubSkill), shapiro.test)
 vel_phrase_norm <- by(vel_phrase$Mean, list(vel_phrase$Condition, vel_phrase$SubSkill, vel_phrase$Boundary), shapiro.test)
 vel_phrase2_norm <- by(vel_phrase2$Mean, list(vel_phrase2$Condition, vel_phrase2$SubSkill, vel_phrase2$Boundary), shapiro.test)
+
+# Draw qqnorm when there is the violation of Normality
+# Violation!
 
 # Two-way ANOVA
 # vel_sub
