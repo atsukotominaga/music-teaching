@@ -181,7 +181,7 @@ ioi_var_ezstats <- ezStats(
   , check_args = TRUE
 )
 
-# Variability for each trial
+# 6. Variability for each trial
 # For each individual
 ioi_var_tri <- aggregate(Variability~SubNr*Condition*Skill*TrialNr, data = df_var,
                          FUN = function(x){c(N = length(x), mean = mean(x))})
@@ -195,7 +195,7 @@ ioi_var_tri_stats <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_var_tri,
 ioi_var_tri_stats <- cbind(ioi_var_tri_stats[,1:3], as.data.frame(ioi_var_tri_stats[,4]))
 colnames(ioi_var_tri_stats) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "SD", "SEM")
 
-# 6. The intervals related to subskill changes vs. other intervals
+# 7. The intervals related to subskill changes vs. other intervals
 df_ioi_comp <- df_ioi
 
 # Assess whether a given interval is on sub-skill change points or not (Yes / No)
@@ -229,7 +229,7 @@ ioi_comp_ezstats <- ezStats(
   , check_args = TRUE
 )
 
-# 7. The intervals related to subskill changes vs. middle intervals
+# 8. The intervals related to subskill changes vs. middle intervals
 df_ioi_comp2 <- df_ioi
 
 # Define phrases
@@ -384,6 +384,10 @@ ioi_comp_norm <- by(ioi_comp$Mean, list(ioi_comp$Condition, ioi_comp$Skill, ioi_
 ioi_comp2_norm <- by(ioi_comp2$Mean, list(ioi_comp2$Condition, ioi_comp2$Skill, ioi_comp2$Change), shapiro.test)
 
 # Draw qqnorm when there is the violation of Normality
+qqnorm(ioi_ch$Mean[ioi_ch$Condition == "teaching" & ioi_ch$Skill == "articulation"])
+qqnorm(ioi_ch$Mean[ioi_ch$Condition == "teaching" & ioi_ch$Skill == "dynamics"])
+qqnorm(ioi_ch_sub$Mean[ioi_ch_sub$Condition == "teaching" & ioi_ch_sub$Skill == "articulation"])
+qqnorm(ioi_ch_sub$Mean[ioi_ch_sub$Condition == "teaching" & ioi_ch_sub$Skill == "dynamics"])
 qqnorm(ioi_var$Mean[ioi_var$Condition == "performing" & ioi_var$Skill == "dynamics"])
 qqnorm(ioi_var$Mean[ioi_var$Condition == "teaching" & ioi_var$Skill == "dynamics"])
 qqnorm(ioi_var$Mean[ioi_var$Condition == "teaching" & ioi_var$Skill == "articulation"])
