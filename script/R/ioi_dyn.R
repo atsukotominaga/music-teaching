@@ -5,7 +5,7 @@ rm(list=ls(all=TRUE)) # clear all in Environment
 #  Documentation
 ####################################
 # Created: 19/05/2019
-# This script aggregates, plots data (IOI) and runs statistical tests
+# This script aggregates, plots data (IOI) and runs statistical tests for dynamics
 # GitHub repo (private): https://github.com/atsukotominaga/teaching_v1.0/script/R 
 
 ####################################
@@ -27,16 +27,16 @@ if (!file.exists("3_stats")){
 }
 
 # 3_stats/ioi_dyn - store csv files
-if (!file.exists("3_stats/ioi_dyn/")){
+if (!file.exists("3_stats/ioi_dyn")){
   dir.create("3_stats/ioi_dyn/")
 }
 
 # 3_stats/plot
-if (!file.exists("3_stats/plot/")){
+if (!file.exists("3_stats/plot")){
   dir.create("3_stats/plot/")
 }
 # 3_stats/ioi_dyn - store png files
-if (!file.exists("3_stats/plot/ioi_dyn/")){
+if (!file.exists("3_stats/plot/ioi_dyn")){
   dir.create("3_stats/plot/ioi_dyn")
 }
 
@@ -186,7 +186,7 @@ ioi_var_ezstats <- ezStats(
   , check_args = TRUE
 )
 
-# Variability for each trial
+# 6. Variability for each trial
 # For each individual
 ioi_var_tri <- aggregate(Variability~SubNr*Condition*Skill*TrialNr, data = df_var,
                          FUN = function(x){c(N = length(x), mean = mean(x))})
@@ -200,7 +200,7 @@ ioi_var_tri_stats <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_var_tri,
 ioi_var_tri_stats <- cbind(ioi_var_tri_stats[,1:3], as.data.frame(ioi_var_tri_stats[,4]))
 colnames(ioi_var_tri_stats) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "SD", "SEM")
 
-# 6. The intervals related to subskill changes vs. other intervals
+# 7. The intervals related to subskill changes vs. other intervals
 df_ioi_comp <- df_ioi
 
 # Assess whether a given interval is on sub-skill change points or not (Yes / No)
@@ -326,7 +326,8 @@ ioi_comp_norm <- by(ioi_comp$Mean, list(ioi_comp$Condition, ioi_comp$Change), sh
 qq1 <- qqnorm(ioi_ch$Mean[ioi_ch$Condition == "teaching"])
 qq2 <- qqnorm(ioi_ch_sub$Mean[ioi_ch_sub$Condition == "teaching"])
 qq3 <- qqnorm(ioi_var$Mean[ioi_var$Condition == "performing"])
-qq4 <- qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Change == "Yes"])
+qq4 <- qqnorm(ioi_var$Mean[ioi_var$Condition == "teaching"])
+qq5 <- qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Change == "Yes"])
 
 # 2. Two-way ANOVA
 # ioi
@@ -341,31 +342,31 @@ ioi_aov <- ezANOVA(
 print(ioi_aov)
 write.csv(ioi_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_aov.csv")
 
-# # ioi_ch
-# ioi_ch_aov <- ezANOVA(
-#   data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | 
-#                   df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
-#   , dv = .(IOI)
-#   , wid = .(SubNr)
-#   , within = .(Condition)
-#   , type = 3
-#   , detailed = TRUE
-# )
-# print(ioi_ch_aov)
-# write.csv(ioi_ch_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_ch_aov.csv")
-# 
-# # ioi_ch_sub
-# ioi_ch_sub_aov <- ezANOVA(
-#   data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | 
-#                   df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
-#   , dv = .(IOI)
-#   , wid = .(SubNr)
-#   , within = .(Condition, SubSkill)
-#   , type = 3
-#   , detailed = TRUE
-# )
-# print(ioi_ch_sub_aov)
-# write.csv(ioi_ch_sub_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_ch_sub_aov.csv")
+# ioi_ch
+ioi_ch_aov <- ezANOVA(
+  data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 |
+                  df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition)
+  , type = 3
+  , detailed = TRUE
+)
+print(ioi_ch_aov)
+write.csv(ioi_ch_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_ch_aov.csv")
+
+# ioi_ch_sub
+ioi_ch_sub_aov <- ezANOVA(
+  data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 |
+                  df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, SubSkill)
+  , type = 3
+  , detailed = TRUE
+)
+print(ioi_ch_sub_aov)
+write.csv(ioi_ch_sub_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_ch_sub_aov.csv")
 
 # ioi_var
 ioi_var_aov <- ezANOVA(
