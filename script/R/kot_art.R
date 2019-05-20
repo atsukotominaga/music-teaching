@@ -177,9 +177,9 @@ p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = SubSkill, y = Mean, fill = Con
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "SubSkill", y = "KOT (ms)") +
-  geom_signif(y_position=c(mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Legato"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Legato"])+2,
-                           mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Staccato"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Staccato"])+2),
-              xmin=c(0.8, 1.8), xmax=c(1.2, 2.2), annotation=c("***", "***"), tip_length=0) + # for articulation
+  geom_signif(y_position=c(mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Legato"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Legato"])+6,
+                           mean(kot_sub_stats$Mean[kot_sub_stats$SubSkill == "Staccato"])+mean(kot_sub_stats$SEM[kot_sub_stats$SubSkill == "Staccato"])+7),
+              xmin=c(0.8, 1.8), xmax=c(1.2, 2.2), annotation=c("***", "***"), tip_length=0) +
   theme_classic()
 p_kot_sub
 
