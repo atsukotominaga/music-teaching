@@ -306,15 +306,3 @@ vel_phrase_aov <- ezANOVA(
 )
 print(vel_phrase_aov)
 write.csv(vel_phrase_aov$ANOVA, file = "./3_stats/vel_art/vel_phrase_aov.csv")
-
-# vel_phrase2
-vel_phrase2_aov <- ezANOVA(
-  data = df_vel_phrase2[complete.cases(df_vel_phrase2),]
-  , dv = .(Velocity)
-  , wid = .(SubNr)
-  , within = .(Condition, SubSkill, Boundary)
-  , type = 3
-  , detailed = TRUE
-)
-print(vel_phrase2_aov)
-write.csv(vel_phrase2_aov$ANOVA, file = "./3_stats/vel_art/vel_phrase2_aov.csv")
