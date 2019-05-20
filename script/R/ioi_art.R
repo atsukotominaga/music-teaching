@@ -5,7 +5,7 @@ rm(list=ls(all=TRUE)) # clear all in Environment
 #  Documentation
 ####################################
 # Created: 19/05/2019
-# This script aggregates, plots data (IOI) and runs statistical tests - for articulation
+# This script aggregates, plots data (IOI) and runs statistical tests for articulation
 # GitHub repo (private): https://github.com/atsukotominaga/teaching_v1.0/script/R
 
 ####################################
@@ -186,7 +186,7 @@ ioi_var_ezstats <- ezStats(
   , check_args = TRUE
 )
 
-# Variability for each trial
+# 6. Variability for each trial
 # For each individual
 ioi_var_tri <- aggregate(Variability~SubNr*Condition*Skill*TrialNr, data = df_var,
                          FUN = function(x){c(N = length(x), mean = mean(x))})
@@ -200,7 +200,7 @@ ioi_var_tri_stats <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_var_tri,
 ioi_var_tri_stats <- cbind(ioi_var_tri_stats[,1:3], as.data.frame(ioi_var_tri_stats[,4]))
 colnames(ioi_var_tri_stats) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "SD", "SEM")
 
-# 6. The intervals related to subskill changes vs. other intervals
+# 7. The intervals related to subskill changes vs. other intervals
 df_ioi_comp <- df_ioi
 
 # Assess whether a given interval is on sub-skill change points or not (Yes / No)
