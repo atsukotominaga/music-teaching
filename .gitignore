@@ -1,5 +1,7 @@
-# ignore midi files
+# Lilypond
 script/lilypond/*midi
-
-# ignore pdf files
 script/lilypond/*pdf
+
+# Max
+script/Max/data
+script/Max/midi
