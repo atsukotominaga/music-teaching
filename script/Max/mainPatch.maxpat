@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 1714.0, -962.0, 2492.0, 1350.0 ],
+		"rect" : [ 34.0, 56.0, 1852.0, 1110.0 ],
 		"bgcolor" : [ 0.862745, 0.870588, 0.878431, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
@@ -2030,7 +2030,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 40.0, 40.333328, 286.0, 33.0 ],
 					"style" : "",
-					"text" : "expertpiano - Experiment"
+					"text" : "Experiment 1"
 				}
 
 			}
