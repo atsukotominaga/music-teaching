@@ -61,7 +61,7 @@ for (subnr in include){
 }
 
 ####################################
-# Define SubSkills
+# Define Subcomponents
 ####################################
 # For intervals
 ls_legato <- list(c(1:7), c(17:23), c(42:48), c(58:64))
@@ -93,42 +93,42 @@ df_ioi <- df_ioi %>% dplyr::filter(NoteNr != 17)
 # Assign a sequence number for each tone
 df_ioi$Interval <- rep(1:66, length(df_ioi$NoteNr)/66)
 
-# Asssign SubSkills
-df_ioi$SubSkill <- NA
+# Asssign Subcomponents
+df_ioi$Subcomponent <- NA
 # Legato
 for (phrase in 1:length(ls_legato)){
   for (note in 1:length(ls_legato[[phrase]])){
-    df_ioi$SubSkill[df_ioi$Skill == "articulation" & df_ioi$Interval == ls_legato[[phrase]][note]] <- "Legato"
+    df_ioi$Subcomponent[df_ioi$Skill == "articulation" & df_ioi$Interval == ls_legato[[phrase]][note]] <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    df_ioi$SubSkill[df_ioi$Skill == "articulation" & df_ioi$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+    df_ioi$Subcomponent[df_ioi$Skill == "articulation" & df_ioi$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte)){
   for (note in 1:length(ls_forte[[phrase]])){
-    df_ioi$SubSkill[df_ioi$Skill == "dynamics" & df_ioi$Interval == ls_forte[[phrase]][note]] <- "Forte"
+    df_ioi$Subcomponent[df_ioi$Skill == "dynamics" & df_ioi$Interval == ls_forte[[phrase]][note]] <- "Forte"
   }
 }
 # Piano
 for (phrase in 1:length(ls_piano)){
   for (note in 1:length(ls_piano[[phrase]])){
-    df_ioi$SubSkill[df_ioi$Skill == "dynamics" & df_ioi$Interval == ls_piano[[phrase]][note]] <- "Piano"
+    df_ioi$Subcomponent[df_ioi$Skill == "dynamics" & df_ioi$Interval == ls_piano[[phrase]][note]] <- "Piano"
   }
 }
 
 # Assign Skill Change
 for (number in change_1){
-  df_ioi$SubSkill[df_ioi$Skill == "articulation" & df_ioi$Interval == number] <- "LtoS"
-  df_ioi$SubSkill[df_ioi$Skill == "dynamics" & df_ioi$Interval == number] <- "FtoP"
+  df_ioi$Subcomponent[df_ioi$Skill == "articulation" & df_ioi$Interval == number] <- "LtoS"
+  df_ioi$Subcomponent[df_ioi$Skill == "dynamics" & df_ioi$Interval == number] <- "FtoP"
 }
 for (number in change_2){
-  df_ioi$SubSkill[df_ioi$Skill == "articulation" & df_ioi$Interval == number] <- "StoL"
-  df_ioi$SubSkill[df_ioi$Skill == "dynamics" & df_ioi$Interval == number] <- "PtoF"
+  df_ioi$Subcomponent[df_ioi$Skill == "articulation" & df_ioi$Interval == number] <- "StoL"
+  df_ioi$Subcomponent[df_ioi$Skill == "dynamics" & df_ioi$Interval == number] <- "PtoF"
 }
 
 # Add a grouping name
@@ -240,42 +240,42 @@ df_kot <- df_onset %>% dplyr::filter(NoteNr != 17)
 # Assign a sequence number for each tone
 df_kot$Interval <- rep(1:66, length(df_kot$NoteNr)/66)
 
-# Assign SubSkills
-df_kot$SubSkill <- NA
+# Assign Subcomponents
+df_kot$Subcomponent <- NA
 # Legato
 for (phrase in 1:length(ls_legato)){
   for (note in 1:length(ls_legato[[phrase]])){
-    df_kot$SubSkill[df_kot$Skill == "articulation" & df_kot$Interval == ls_legato[[phrase]][note]] <- "Legato"
+    df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == ls_legato[[phrase]][note]] <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    df_kot$SubSkill[df_kot$Skill == "articulation" & df_kot$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+    df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte)){
   for (note in 1:length(ls_forte[[phrase]])){
-    df_kot$SubSkill[df_kot$Skill == "dynamics" & df_kot$Interval == ls_forte[[phrase]][note]] <- "Forte"
+    df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == ls_forte[[phrase]][note]] <- "Forte"
   }
 }
 # Piano
 for (phrase in 1:length(ls_piano)){
   for (note in 1:length(ls_piano[[phrase]])){
-    df_kot$SubSkill[df_kot$Skill == "dynamics" & df_kot$Interval == ls_piano[[phrase]][note]] <- "Piano"
+    df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == ls_piano[[phrase]][note]] <- "Piano"
   }
 }
 
 # Assign Skill Change
 for (number in change_1){
-  df_kot$SubSkill[df_kot$Skill == "articulation" & df_kot$Interval == number] <- "LtoS"
-  df_kot$SubSkill[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "FtoP"
+  df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == number] <- "LtoS"
+  df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "FtoP"
 }
 for (number in change_2){
-  df_kot$SubSkill[df_kot$Skill == "articulation" & df_kot$Interval == number] <- "StoL"
-  df_kot$SubSkill[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "PtoF"
+  df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == number] <- "StoL"
+  df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "PtoF"
 }
 
 # Add a grouping name
@@ -298,14 +298,14 @@ p_hist <- ggplot(df_subset, aes(x = KOT, fill = Grouping)) +
   theme_classic()
 
 # Exclude kot > +- 3SD (within a given condition)
-kot_subskill <- aggregate(KOT~SubSkill, data = df_subset,
+kot_subcomponent <- aggregate(KOT~Subcomponent, data = df_subset,
                           FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-kot_subskill <- cbind(kot_subskill, as.data.frame(kot_subskill[,2]))
+kot_subcomponent <- cbind(kot_subcomponent, as.data.frame(kot_subcomponent[,2]))
 df_trim_sd <- data.frame()
-for (subskill in unique(df_subset$SubSkill)){
-  upper = kot_subskill$mean[kot_subskill$SubSkill == subskill]+3*kot_subskill$sd[kot_subskill$SubSkill == subskill]
-  lower = kot_subskill$mean[kot_subskill$SubSkill == subskill]-3*kot_subskill$sd[kot_subskill$SubSkill == subskill]
-  df_current <- df_subset %>% dplyr::filter(SubSkill == subskill & KOT < upper & KOT > lower)
+for (subcomponent in unique(df_subset$Subcomponent)){
+  upper = kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]+3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
+  lower = kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]-3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
+  df_current <- df_subset %>% dplyr::filter(Subcomponent == subcomponent & KOT < upper & KOT > lower)
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
 removed_kot <- nrow(df_subset)-nrow(df_trim_sd)
@@ -352,74 +352,74 @@ df_vel$Acc <- NULL # Remove Acc from df_vel
 df_vel$Note <- rep(1:67, length(df_vel$NoteNr)/67) # for vel_seq
 df_vel_acc$Interval <- rep(1:66, length(df_vel_acc$NoteNr)/66) # for vel_acc_seq
 
-# Assign SubSkills
+# Assign Subcomponents
 # For each note
-df_vel$SubSkill <- NA
+df_vel$Subcomponent <- NA
 # Legato
 for (phrase in 1:length(ls_legato_2)){
   for (note in 1:length(ls_legato_2[[phrase]])){
-    df_vel$SubSkill[df_vel$Skill == "articulation" & df_vel$Note == ls_legato_2[[phrase]][note]] <- "Legato"
+    df_vel$Subcomponent[df_vel$Skill == "articulation" & df_vel$Note == ls_legato_2[[phrase]][note]] <- "Legato"
   }
 }
 
 # Staccato
 for (phrase in 1:length(ls_staccato_2)){
   for (note in 1:length(ls_staccato_2[[phrase]])){
-    df_vel$SubSkill[df_vel$Skill == "articulation" & df_vel$Note == ls_staccato_2[[phrase]][note]] <- "Staccato"
+    df_vel$Subcomponent[df_vel$Skill == "articulation" & df_vel$Note == ls_staccato_2[[phrase]][note]] <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte_2)){
   for (note in 1:length(ls_forte_2[[phrase]])){
-    df_vel$SubSkill[df_vel$Skill == "dynamics" & df_vel$Note == ls_forte_2[[phrase]][note]] <- "Forte"
+    df_vel$Subcomponent[df_vel$Skill == "dynamics" & df_vel$Note == ls_forte_2[[phrase]][note]] <- "Forte"
   }
 }
 
 # Piano
 for (phrase in 1:length(ls_piano_2)){
   for (note in 1:length(ls_piano_2[[phrase]])){
-    df_vel$SubSkill[df_vel$Skill == "dynamics" & df_vel$Note == ls_piano_2[[phrase]][note]] <- "Piano"
+    df_vel$Subcomponent[df_vel$Skill == "dynamics" & df_vel$Note == ls_piano_2[[phrase]][note]] <- "Piano"
   }
 }
 
-# Assign SubSkills
+# Assign Subcomponents
 # For intervals
-df_vel_acc$SubSkill <- NA
+df_vel_acc$Subcomponent <- NA
 # Legato
 for (phrase in 1:length(ls_legato)){
   for (note in 1:length(ls_legato[[phrase]])){
-    df_vel_acc$SubSkill[df_vel_acc$Skill == "articulation" & df_vel_acc$Interval == ls_legato[[phrase]][note]] <- "Legato"
+    df_vel_acc$Subcomponent[df_vel_acc$Skill == "articulation" & df_vel_acc$Interval == ls_legato[[phrase]][note]] <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    df_vel_acc$SubSkill[df_vel_acc$Skill == "articulation" & df_vel_acc$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+    df_vel_acc$Subcomponent[df_vel_acc$Skill == "articulation" & df_vel_acc$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte)){
   for (note in 1:length(ls_forte[[phrase]])){
-    df_vel_acc$SubSkill[df_vel_acc$Skill == "dynamics" & df_vel_acc$Interval == ls_forte[[phrase]][note]] <- "Forte"
+    df_vel_acc$Subcomponent[df_vel_acc$Skill == "dynamics" & df_vel_acc$Interval == ls_forte[[phrase]][note]] <- "Forte"
   }
 }
 # Piano
 for (phrase in 1:length(ls_piano)){
   for (note in 1:length(ls_piano[[phrase]])){
-    df_vel_acc$SubSkill[df_vel_acc$Skill == "dynamics" & df_vel_acc$Interval == ls_piano[[phrase]][note]] <- "Piano"
+    df_vel_acc$Subcomponent[df_vel_acc$Skill == "dynamics" & df_vel_acc$Interval == ls_piano[[phrase]][note]] <- "Piano"
   }
 }
 
 # Assign Skill Change
 for (i in change_1){
-  df_vel_acc$SubSkill[df_vel_acc$Skill == "articulation" & df_vel_acc$Interval == i] <- "LtoS"
-  df_vel_acc$SubSkill[df_vel_acc$Skill == "dynamics" & df_vel_acc$Interval == i] <- "FtoP"
+  df_vel_acc$Subcomponent[df_vel_acc$Skill == "articulation" & df_vel_acc$Interval == i] <- "LtoS"
+  df_vel_acc$Subcomponent[df_vel_acc$Skill == "dynamics" & df_vel_acc$Interval == i] <- "FtoP"
 }
 for (i in change_2){
-  df_vel_acc$SubSkill[df_vel_acc$Skill == "articulation" & df_vel_acc$Interval == i] <- "StoL"
-  df_vel_acc$SubSkill[df_vel_acc$Skill == "dynamics" & df_vel_acc$Interval == i] <- "PtoF"
+  df_vel_acc$Subcomponent[df_vel_acc$Skill == "articulation" & df_vel_acc$Interval == i] <- "StoL"
+  df_vel_acc$Subcomponent[df_vel_acc$Skill == "dynamics" & df_vel_acc$Interval == i] <- "PtoF"
 }
 
 # Add a grouping name
@@ -450,14 +450,14 @@ p_hist_acc <- ggplot(df_subset_acc, aes(x = Acc, fill = Grouping)) +
   theme_classic()
 
 # Exclude vel > +- 3SD (within a given condition)
-vel_subskill <- aggregate(Velocity~SubSkill, data = df_subset,
+vel_subcomponent <- aggregate(Velocity~Subcomponent, data = df_subset,
                           FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-vel_subskill <- cbind(vel_subskill, as.data.frame(vel_subskill[,2]))
+vel_subcomponent <- cbind(vel_subcomponent, as.data.frame(vel_subcomponent[,2]))
 df_trim_sd <- data.frame()
-for (subskill in unique(df_subset$SubSkill)){
-  upper = vel_subskill$mean[vel_subskill$SubSkill == subskill]+3*vel_subskill$sd[vel_subskill$SubSkill == subskill]
-  lower = vel_subskill$mean[vel_subskill$SubSkill == subskill]-3*vel_subskill$sd[vel_subskill$SubSkill == subskill]
-  df_current <- df_subset %>% dplyr::filter(SubSkill == subskill & Velocity < upper & Velocity > lower)
+for (subcomponent in unique(df_subset$Subcomponent)){
+  upper = vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]+3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
+  lower = vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]-3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
+  df_current <- df_subset %>% dplyr::filter(Subcomponent == subcomponent & Velocity < upper & Velocity > lower)
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
 removed_kv <- nrow(df_subset)-nrow(df_trim_sd)
@@ -466,14 +466,14 @@ write(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_
 print(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv))
 
 # Exclude vel_acc > +- 3SD (within a given condition)
-vel_subskill_acc <- aggregate(Acc~SubSkill, data = df_subset_acc,
+vel_subcomponent_acc <- aggregate(Acc~Subcomponent, data = df_subset_acc,
                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-vel_subskill_acc <- cbind(vel_subskill_acc, as.data.frame(vel_subskill_acc[,2]))
+vel_subcomponent_acc <- cbind(vel_subcomponent_acc, as.data.frame(vel_subcomponent_acc[,2]))
 df_trim_sd_acc <- data.frame()
-for (subskill in unique(df_subset_acc$SubSkill)){
-  upper = vel_subskill_acc$mean[vel_subskill_acc$SubSkill == subskill]+3*vel_subskill_acc$sd[vel_subskill_acc$SubSkill == subskill]
-  lower = vel_subskill_acc$mean[vel_subskill_acc$SubSkill == subskill]-3*vel_subskill_acc$sd[vel_subskill_acc$SubSkill == subskill]
-  df_current <- df_subset_acc %>% dplyr::filter(SubSkill == subskill & Acc < upper & Acc > lower)
+for (subcomponent in unique(df_subset_acc$Subcomponent)){
+  upper = vel_subcomponent_acc$mean[vel_subcomponent_acc$Subcomponent == subcomponent]+3*vel_subcomponent_acc$sd[vel_subcomponent_acc$Subcomponent == subcomponent]
+  lower = vel_subcomponent_acc$mean[vel_subcomponent_acc$Subcomponent == subcomponent]-3*vel_subcomponent_acc$sd[vel_subcomponent_acc$Subcomponent == subcomponent]
+  df_current <- df_subset_acc %>% dplyr::filter(Subcomponent == subcomponent & Acc < upper & Acc > lower)
   df_trim_sd_acc <- rbind(df_trim_sd_acc, df_current)
 }
 removed <- nrow(df_subset_acc)-nrow(df_trim_sd_acc)
