@@ -55,52 +55,52 @@ df_kot <- df_kot %>% dplyr::filter(Skill == "dynamics")
 ####################################
 # Aggregate data
 ####################################
-# 1. Average KOT for each sub-skill
+# 1. Average KOT for each subcomponent
 # For each individual
-kot_sub <- aggregate(KOT~SubNr*Condition*Skill*SubSkill, data = subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57),
+kot_sub <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent, data = subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 kot_sub <- cbind(kot_sub[,1:4], as.data.frame(kot_sub[,5]))
 # Change colnames
-colnames(kot_sub) <- c("SubNr", "Condition", "Skill", "SubSkill", "N", "Mean", "SD")
+colnames(kot_sub) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean", "SD")
 
 # Group mean
-kot_sub_stats <- aggregate(Mean~Condition*Skill*SubSkill, data = kot_sub,
+kot_sub_stats <- aggregate(Mean~Condition*Skill*Subcomponent, data = kot_sub,
                            FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
 kot_sub_stats <- cbind(kot_sub_stats[,1:3], as.data.frame(kot_sub_stats[,4]))
 # Change colnames
-colnames(kot_sub_stats) <- c("Condition", "Skill", "SubSkill", "N", "Mean", "SD", "SEM")
+colnames(kot_sub_stats) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
 
 # Checking values with ezStats
 kot_sub_ezstats <- ezStats(
   data = subset(df_kot, df_kot$Interval  != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57)
   , dv = .(KOT)
   , wid = .(SubNr)
-  , within = .(Condition, SubSkill)
+  , within = .(Condition, Subcomponent)
   , type = 3
   , check_args = TRUE
 )
 
-# 2. Average KOT for each sub-skill change
+# 2. Average KOT for each subcomponent change
 # For each individual
-kot_ch_sub <- aggregate(KOT~SubNr*Condition*Skill*SubSkill, data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 | df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57),
+kot_ch_sub <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent, data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 | df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57),
                         FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 kot_ch_sub <- cbind(kot_ch_sub[,1:4], as.data.frame(kot_ch_sub[,5]))
 # Change colnames
-colnames(kot_ch_sub) <- c("SubNr", "Condition", "Skill", "SubSkill", "N", "Mean", "SD")
+colnames(kot_ch_sub) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean", "SD")
 
 # Group mean
-kot_ch_sub_stats <- aggregate(Mean~Condition*Skill*SubSkill, data = kot_ch_sub,
+kot_ch_sub_stats <- aggregate(Mean~Condition*Skill*Subcomponent, data = kot_ch_sub,
                               FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
 kot_ch_sub_stats <- cbind(kot_ch_sub_stats[,1:3], as.data.frame(kot_ch_sub_stats[,4]))
 # Change colnames
-colnames(kot_ch_sub_stats) <- c("Condition", "Skill", "SubSkill", "N", "Mean", "SD", "SEM")
+colnames(kot_ch_sub_stats) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
 
 # Checking values with ezStats
 kot_ch_sub_ezstats <- ezStats(
   data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 | df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57)
   , dv = .(KOT)
   , wid = .(SubNr)
-  , within = .(Condition, SubSkill)
+  , within = .(Condition, Subcomponent)
   , type = 3
   , check_args = TRUE
 )
@@ -142,25 +142,25 @@ for (phrase in 1:length(ls_phrase)){
 df_kot_phrase$Boundary <- as.factor(df_kot_phrase$Boundary)
 
 # For each participant
-kot_phrase <- aggregate(KOT~SubNr*Condition*Skill*SubSkill*Boundary, data = df_kot_phrase,
+kot_phrase <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent*Boundary, data = df_kot_phrase,
                         FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
 kot_phrase <- cbind(kot_phrase[,1:5], kot_phrase[,6])
 # Change colnames
-colnames(kot_phrase) <- c("SubNr", "Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD")
+colnames(kot_phrase) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Boundary", "N", "Mean", "SD")
 
 # Group mean
-kot_phrase_stats <- aggregate(Mean~Condition*Skill*SubSkill*Boundary, data = kot_phrase,
+kot_phrase_stats <- aggregate(Mean~Condition*Skill*Subcomponent*Boundary, data = kot_phrase,
                               FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
 kot_phrase_stats <- cbind(kot_phrase_stats[,1:4], kot_phrase_stats[,5])
 # Change colnames
-colnames(kot_phrase_stats) <- c("Condition", "Skill", "SubSkill", "Boundary", "N", "Mean", "SD", "SEM")
+colnames(kot_phrase_stats) <- c("Condition", "Skill", "Subcomponent", "Boundary", "N", "Mean", "SD", "SEM")
 
 # Checking values with ezStats
 kot_phrase_ezstats <- ezStats(
   data = df_kot_phrase
   , dv = .(KOT)
   , wid = .(SubNr)
-  , within = .(Condition, SubSkill, Boundary)
+  , within = .(Condition, Subcomponent, Boundary)
   , type = 3
   , check_args = TRUE
 )
@@ -172,19 +172,19 @@ kot_phrase_stats$LabelOrder[kot_phrase_stats$Boundary == "No"] <- 2
 ####################################
 # Plots
 ####################################
-p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = SubSkill, y = Mean, fill = Condition)) +
+p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "SubSkill", y = "KOT (ms)") +
+  labs(x = "Subcomponent", y = "KOT (ms)") +
   theme_classic()
 p_kot_sub
 
-p_kot_ch_sub <- ggplot(data = kot_ch_sub_stats, aes(x = SubSkill, y = Mean, fill = Condition)) +
+p_kot_ch_sub <- ggplot(data = kot_ch_sub_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "SubSkill", y = "KOT (ms)") +
+  labs(x = "Subcomponent", y = "KOT (ms)") +
   theme_classic()
 p_kot_ch_sub
 
@@ -197,12 +197,12 @@ p_kot_seq <- ggplot(data = kot_seq_stats, aes(x = Interval, y = Mean, group = Co
   theme_classic()
 p_kot_seq
 
-p_kot_phrase <- ggplot(data = kot_phrase_stats, aes(x = SubSkill, y = Mean, fill = Condition)) +
+p_kot_phrase <- ggplot(data = kot_phrase_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Boundary, LabelOrder)) +
-  labs(x = "SubSkill", y = "KOT (ms)") +
+  labs(x = "Subcomponent", y = "KOT (ms)") +
   theme_classic()
 p_kot_phrase
 
@@ -217,15 +217,15 @@ ggsave("./3_stats/plot/kot_dyn/p_kot_phrase.png", plot = p_kot_phrase, dpi = 600
 ### Statistics
 ####################################
 # 1. Normality check
-kot_sub_norm <- by(kot_sub$Mean, list(kot_sub$Condition, kot_sub$SubSkill), shapiro.test)
-kot_ch_sub_norm <- by(kot_ch_sub$Mean, list(kot_ch_sub$Condition, kot_ch_sub$SubSkill), shapiro.test)
-kot_phrase_norm <- by(kot_phrase$Mean, list(kot_phrase$Condition, kot_phrase$SubSkill, kot_phrase$Boundary), shapiro.test)
+kot_sub_norm <- by(kot_sub$Mean, list(kot_sub$Condition, kot_sub$Subcomponent), shapiro.test)
+kot_ch_sub_norm <- by(kot_ch_sub$Mean, list(kot_ch_sub$Condition, kot_ch_sub$Subcomponent), shapiro.test)
+kot_phrase_norm <- by(kot_phrase$Mean, list(kot_phrase$Condition, kot_phrase$Subcomponent, kot_phrase$Boundary), shapiro.test)
 
 # Draw qqnorm when there is the violation of Normality
-qq1 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$SubSkill == "FtoP"])
-qq2 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$SubSkill == "FtoP"])
-qq3 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$SubSkill == "PtoF"])
-qq4 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$SubSkill == "PtoF"])
+qq1 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$Subcomponent == "FtoP"])
+qq2 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$Subcomponent == "FtoP"])
+qq3 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$Subcomponent == "PtoF"])
+qq4 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$Subcomponent == "PtoF"])
 
 # Two-way ANOVA
 # kot_sub
@@ -234,7 +234,7 @@ kot_sub_aov <- ezANOVA(
                   df_kot$Interval != 41 & df_kot$Interval != 49 & df_kot$Interval != 57)
   , dv = .(KOT)
   , wid = .(SubNr)
-  , within = .(Condition, SubSkill)
+  , within = .(Condition, Subcomponent)
   , type = 3
   , detailed = TRUE
 )
@@ -247,7 +247,7 @@ kot_ch_sub_aov <- ezANOVA(
                   df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57)
   , dv = .(KOT)
   , wid = .(SubNr)
-  , within = .(Condition, SubSkill)
+  , within = .(Condition, Subcomponent)
   , type = 3
   , detailed = TRUE
 )
@@ -259,7 +259,7 @@ kot_phrase_aov <- ezANOVA(
   data = df_kot_phrase
   , dv = .(KOT)
   , wid = .(SubNr)
-  , within = .(Condition, SubSkill, Boundary)
+  , within = .(Condition, Subcomponent, Boundary)
   , type = 3
   , detailed = TRUE
 )

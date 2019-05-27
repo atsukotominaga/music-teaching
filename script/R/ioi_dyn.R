@@ -104,27 +104,27 @@ ioi_ch_ezstats <- ezStats(
   , check_args = TRUE
 )
 
-# 3. Average tempo for each sub-skill change
+# 3. Average tempo for each subcomponent change
 # For each individual
-ioi_ch_sub <- aggregate(IOI~SubNr*Condition*Skill*SubSkill, data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57),
+ioi_ch_sub <- aggregate(IOI~SubNr*Condition*Skill*Subcomponent, data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57),
                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 ioi_ch_sub <- cbind(ioi_ch_sub[,1:4], as.data.frame(ioi_ch_sub[,5]))
 # Change colnames
-colnames(ioi_ch_sub) <- c("SubNr", "Condition", "Skill", "SubSkill", "N", "Mean", "SD")
+colnames(ioi_ch_sub) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean", "SD")
 
 # Group mean
-ioi_ch_sub_stats <- aggregate(Mean~Condition*Skill*SubSkill, data = ioi_ch_sub,
+ioi_ch_sub_stats <- aggregate(Mean~Condition*Skill*Subcomponent, data = ioi_ch_sub,
                           FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
 ioi_ch_sub_stats <- cbind(ioi_ch_sub_stats[,1:3], as.data.frame(ioi_ch_sub_stats[,4]))
 # Change colnames
-colnames(ioi_ch_sub_stats) <- c("Condition", "Skill", "SubSkill", "N", "Mean", "SD", "SEM")
+colnames(ioi_ch_sub_stats) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
 
 # Checking values with ezStats
 ioi_ch_sub_ezstats <- ezStats(
   data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
   , dv = .(IOI)
   , wid = .(SubNr)
-  , within = .(Condition, SubSkill)
+  , within = .(Condition, Subcomponent)
   , type = 3
   , check_args = TRUE
 )
@@ -200,10 +200,10 @@ ioi_var_tri_stats <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_var_tri,
 ioi_var_tri_stats <- cbind(ioi_var_tri_stats[,1:3], as.data.frame(ioi_var_tri_stats[,4]))
 colnames(ioi_var_tri_stats) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "SD", "SEM")
 
-# 7. The intervals related to subskill changes vs. other intervals
+# 7. The intervals related to Subcomponent changes vs. other intervals
 df_ioi_comp <- df_ioi
 
-# Assess whether a given interval is on sub-skill change points or not (Yes / No)
+# Assess whether a given interval is on subcomponent change points or not (Yes / No)
 df_ioi_comp$Change <- "No"
 df_ioi_comp$Change[df_ioi_comp$Interval == 8 | df_ioi_comp$Interval == 16 | df_ioi_comp$Interval == 24 | df_ioi_comp$Interval == 41 | df_ioi_comp$Interval == 49 | df_ioi_comp$Interval == 57] <- "Yes"
 
@@ -257,11 +257,11 @@ p_ioi_ch <- ggplot(data = ioi_ch_stats, aes(x = Skill, y = Mean, fill = Conditio
   theme_classic()
 p_ioi_ch
 
-p_ioi_ch_sub <- ggplot(data = ioi_ch_sub_stats, aes(x = SubSkill, y = Mean, fill = Condition)) +
+p_ioi_ch_sub <- ggplot(data = ioi_ch_sub_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "SubSkill", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "Subcomponent", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_ioi_ch_sub
 
@@ -361,7 +361,7 @@ ioi_ch_sub_aov <- ezANOVA(
                   df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
   , dv = .(IOI)
   , wid = .(SubNr)
-  , within = .(Condition, SubSkill)
+  , within = .(Condition, Subcomponent)
   , type = 3
   , detailed = TRUE
 )
