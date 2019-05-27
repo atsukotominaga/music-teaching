@@ -66,13 +66,13 @@ All of the programme scripts were written and tested in the following environmen
 ## Rmd
 > For generating an instruction sheet
 
-- instruction.Rmd: RMarkdown for a instruction sheet for an experimenter >> output: html file
+- instruction.Rmd:  a instruction sheet for an experimenter >> output: html file
 - image: figures used in the instruction sheet
 
 ## Jupyter notebook
 > For generating stimuli
 
-- image_generator.ipynb: Python script to generate experimental stimuli (see more information on jupyter notebook) >> outputs: stimuli and practice folders
+- image_generator.ipynb: generate experimental stimuli (see more information on jupyter notebook) >> outputs: stimuli and practice folders
 - image: used for stimuli generation
 
 ## Lilypond
