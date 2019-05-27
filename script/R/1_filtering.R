@@ -63,7 +63,7 @@ raw_data$Order[raw_data$BlockNr == 3 & raw_data$Condition == "teaching"] <- "per
 raw_data$Order[raw_data$BlockNr == 4 & raw_data$Condition == "teaching"] <- "performing-first"
 
 ### Optional
-# Correct labelling (due to a labelling error of the original study / see details: TBC)
+# Correct labelling (due to a labelling error of the original study / see details on the github repo)
 # articulation
 df_a <- raw_data %>% dplyr::filter(grepl("stim_a", Image))
   # Correct wrong labelling
