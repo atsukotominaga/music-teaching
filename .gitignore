@@ -5,13 +5,10 @@ others/
 # R
 script/R/raw_data/
 script/R/analysis/
-script/R/plot/
 script/R/1_filtered/
 script/R/2_trimmed/
 script/R/3_stats/
-script/R/BadPianists/
 script/R/.Rhistory
-script/R/.RData
 script/R/.DS_Store
 
 # Rmd
@@ -23,9 +20,9 @@ script/Max/data/
 script/Max/midi/
 script/Max/cond/cb_checking.xlsx
 
-# python Jupyter notebook
+# Jupyter notebook
 script/jupyter/.ipynb_checkpoints/image_generator-checkpoint.ipynb
-script/jupyter/stimuli/removed/
 
-# lilypond
+# Removed stimuli (tempo change)
+script/jupyter/stimuli/removed/
 script/lilypond/removed/
