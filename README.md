@@ -76,7 +76,7 @@ All of the programme scripts were written and tested in the following environmen
 - image: used for stimuli generation
 
 ## Lilypond
-> For generating sheet music (output:pdf)
+> For generating sheet music
 
 - ly files: sheet music compiled by lilypond >> outputs: pdf files
 
