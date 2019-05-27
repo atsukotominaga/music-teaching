@@ -1,9 +1,6 @@
 # The Sound of Teaching Music project
 This repo contains scripts and materials necessary for a Musical experiment with expert pianists.
 
-### Title
-The Sound of Teaching Music: Experts’ sound modulation for novices
-
 ### Open Science Framework
 [https://osf.io/35ryj/](https://osf.io/35ryj/)
 
@@ -20,8 +17,8 @@ The Sound of Teaching Music: Experts’ sound modulation for novices
     + Instruction (psd)
     + Checklist (xlsx)
 
-## Script
-### Environment
+# Script
+## Environment
 All of the programme scripts were written and tested in the following environment.
 
 - ProductName:	Mac OS X  
@@ -39,9 +36,9 @@ All of the programme scripts were written and tested in the following environmen
         + practice (path: ~/script/Max/midi/practice) - within the midi folder
         
 ### Patchers
-- mainPatch.maxpat: the main Max patcher for the experiment.
-- practicePatch.maxpat: the Max patcher for practice trials.
-- imagePatch.maxpat: the Max patcher to show stimuli on the screen in front of a participant.
+- mainPatch.maxpat: for the experiment.
+- practicePatch.maxpat: for practice trials.
+- imagePatch.maxpat: display stimuli on the screen in front of a participant.
 
 ### SubPatchers
 - MIDInoteRecording: acquire and save MIDI data.
@@ -55,29 +52,36 @@ All of the programme scripts were written and tested in the following environmen
 ## R
 > For data analysis
 
-- cleaning.R: clean data and remove performance errors.
-- data_analysis.R: aggregate data and plot them. (+ Stats / not yet)
+- 1_filtering.R: clean data and remove performance errors. >> outputs: 1_filtered folder
+    + In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 65.
+- 2_trimming.R: calculate dependent variables and remove outliers. >> outputs: 2_trimmed folder
+- ioi_art.R: data analysis for IOIs with articulation **>> outputs: 3_stats folder
+- ioi_dyn.R: data analysis for IOIs with dynamics >> outputs: 3_stats folder
+- kot_art.R: data analysis for KOT with articulation >> outputs: 3_stats folder
+- kot_dyn.R: data analysis for KOT with dynamics >> outputs: 3_stats folder
+- vel_art.R: data analysis for KV with articulation >> outputs: 3_stats folder
+- vel_art.R: data analysis for KV with dynamics >> outputs: 3_stats folder
 - ideal.csv: ideal performance data / used to remove performance errors.
 
 ## Rmd
-> For generating an instruction sheet (output:html)
+> For generating an instruction sheet
 
-- instruction.Rmd: RMarkdown for a instruction sheet for an experimenter (output:html)
+- instruction.Rmd: RMarkdown for a instruction sheet for an experimenter >> output: html file
+- image: figures used in the instruction sheet
 
 ## Jupyter notebook
-> For generating stimuli (output:png)
+> For generating stimuli
 
-- image_generator.ipynb: Python script to generate experimental stimuli (output:png - see more information on jupyter notebook)
+- image_generator.ipynb: Python script to generate experimental stimuli (see more information on jupyter notebook) >> outputs: stimuli and practice folders
 - image: used for stimuli generation
 
 ## Lilypond
 > For generating sheet music (output:pdf)
 
-- ly files: sheet music compiled by lilypond (output:pdf)
+- ly files: sheet music compiled by lilypond >> outputs: pdf files
 
-## Material
-### Instruction
-- psd files for making instruction images
+# Material
 
-### Checklist
-- an xlsx file to check each procedure during testing (for an experimenter)
+- instruction: psd files for making instruction images >> outputs: png files
+- cropped: original sheet music
+- checklist.xlsx: a list to check each procedure during testing (for an experimenter)
