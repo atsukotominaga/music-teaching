@@ -215,6 +215,7 @@ p_vel_seq <- ggplot(data = vel_seq_stats, aes(x = Note, y = Mean, group = Condit
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(0.05)) + 
+  facet_grid(Skill ~ .) + 
   labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1)) +
   theme_classic()
 p_vel_seq

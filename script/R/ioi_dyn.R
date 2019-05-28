@@ -272,6 +272,7 @@ p_ioi_seq <- ggplot(data = ioi_seq_stats, aes(x = Interval, y = Mean, group = Co
   annotate("text", 0, 188, label = "Tempo (80bpm)", vjust = -1) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
+  facet_grid(Skill ~ .) + 
   labs(x = "Interval", y = "IOI (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
   theme_classic()
 p_ioi_seq

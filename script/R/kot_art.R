@@ -196,6 +196,7 @@ p_kot_seq <- ggplot(data = kot_seq_stats, aes(x = Interval, y = Mean, group = Co
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
+  facet_grid(Skill ~ .) + 
   labs(x = "Interval", y = "KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
   theme_classic()
 p_kot_seq
