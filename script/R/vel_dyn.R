@@ -203,7 +203,7 @@ p_vel_ch_sub <- ggplot(data = vel_ch_sub_stats, aes(x = Subcomponent, y = Mean, 
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "Skill change", y = "Acceleration") + coord_cartesian(ylim = c(-20, 30)) + 
+  labs(x = "Subcomponent change", y = "Difference (0-127)") + coord_cartesian(ylim = c(-20, 30)) + 
   geom_signif(y_position=c(mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$Subcomponent == "FtoP"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$Subcomponent == "FtoP"])+2,
                            mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$Subcomponent == "PtoF"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$Subcomponent == "PtoF"])+3.3),
               xmin=c(0.8, 1.8), xmax=c(1.2, 2.2), annotation=c("*", "***"), tip_length=0) +
@@ -224,7 +224,7 @@ p_vel_acc_seq <- ggplot(data = vel_acc_seq_stats, aes(x = Interval, y = Mean, gr
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Acceleration (0-127)") + scale_x_continuous(breaks=seq(1,66,1)) +
+  labs(x = "Interval", y = "Difference (0-127)") + scale_x_continuous(breaks=seq(1,66,1)) +
   theme_classic()
 p_vel_acc_seq
 

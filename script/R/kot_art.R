@@ -187,7 +187,7 @@ p_kot_ch_sub <- ggplot(data = kot_ch_sub_stats, aes(x = Subcomponent, y = Mean, 
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "Subcomponent", y = "KOT (ms)") +
+  labs(x = "Subcomponent change", y = "KOT (ms)") +
   theme_classic()
 p_kot_ch_sub
 

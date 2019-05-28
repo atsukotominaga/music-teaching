@@ -184,7 +184,7 @@ p_kot_ch_sub <- ggplot(data = kot_ch_sub_stats, aes(x = Subcomponent, y = Mean, 
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "Subcomponent", y = "KOT (ms)") +
+  labs(x = "Subcomponent change", y = "KOT (ms)") +
   theme_classic()
 p_kot_ch_sub
 
@@ -220,12 +220,12 @@ ggsave("./3_stats/plot/kot_dyn/p_kot_phrase.png", plot = p_kot_phrase, dpi = 600
 kot_sub_norm <- by(kot_sub$Mean, list(kot_sub$Condition, kot_sub$Subcomponent), shapiro.test)
 kot_ch_sub_norm <- by(kot_ch_sub$Mean, list(kot_ch_sub$Condition, kot_ch_sub$Subcomponent), shapiro.test)
 kot_phrase_norm <- by(kot_phrase$Mean, list(kot_phrase$Condition, kot_phrase$Subcomponent, kot_phrase$Boundary), shapiro.test)
-
-# Draw qqnorm when there is the violation of Normality
-qq1 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$Subcomponent == "FtoP"])
-qq2 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$Subcomponent == "FtoP"])
-qq3 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$Subcomponent == "PtoF"])
-qq4 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$Subcomponent == "PtoF"])
+# 
+# # Draw qqnorm when there is the violation of Normality
+# qq1 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$Subcomponent == "FtoP"])
+# qq2 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$Subcomponent == "FtoP"])
+# qq3 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "performing" & kot_ch_sub$Subcomponent == "PtoF"])
+# qq4 <- qqnorm(kot_ch_sub$Mean[kot_ch_sub$Condition == "teaching" & kot_ch_sub$Subcomponent == "PtoF"])
 
 # Two-way ANOVA
 # kot_sub

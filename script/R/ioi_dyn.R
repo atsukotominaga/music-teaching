@@ -79,7 +79,7 @@ ioi_ezstats <- ezStats(
   , check_args = TRUE
 )
 
-# 2. Average tempo for skill changes
+# 2. Average tempo for subcomponent changes
 # For each individual
 ioi_ch <- aggregate(IOI~SubNr*Condition*Skill, data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 | df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57),
                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -200,7 +200,7 @@ ioi_var_tri_stats <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_var_tri,
 ioi_var_tri_stats <- cbind(ioi_var_tri_stats[,1:3], as.data.frame(ioi_var_tri_stats[,4]))
 colnames(ioi_var_tri_stats) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "SD", "SEM")
 
-# 7. The intervals related to Subcomponent changes vs. other intervals
+# 7. The intervals related to subcomponent changes vs. other intervals
 df_ioi_comp <- df_ioi
 
 # Assess whether a given interval is on subcomponent change points or not (Yes / No)
@@ -261,7 +261,7 @@ p_ioi_ch_sub <- ggplot(data = ioi_ch_sub_stats, aes(x = Subcomponent, y = Mean, 
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "Subcomponent", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
+  labs(x = "Subcomponent change", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
   theme_classic()
 p_ioi_ch_sub
 
@@ -322,12 +322,12 @@ ioi_ch_sub_norm <- by(ioi_ch_sub$Mean, list(ioi_ch_sub$Condition), shapiro.test)
 ioi_var_norm <- by(ioi_var$Mean, list(ioi_var$Condition), shapiro.test)
 ioi_comp_norm <- by(ioi_comp$Mean, list(ioi_comp$Condition, ioi_comp$Change), shapiro.test)
 
-# Draw qqnorm when there is the violation of Normality
-qq1 <- qqnorm(ioi_ch$Mean[ioi_ch$Condition == "teaching"])
-qq2 <- qqnorm(ioi_ch_sub$Mean[ioi_ch_sub$Condition == "teaching"])
-qq3 <- qqnorm(ioi_var$Mean[ioi_var$Condition == "performing"])
-qq4 <- qqnorm(ioi_var$Mean[ioi_var$Condition == "teaching"])
-qq5 <- qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Change == "Yes"])
+# # Draw qqnorm when there is the violation of Normality
+# qq1 <- qqnorm(ioi_ch$Mean[ioi_ch$Condition == "teaching"])
+# qq2 <- qqnorm(ioi_ch_sub$Mean[ioi_ch_sub$Condition == "teaching"])
+# qq3 <- qqnorm(ioi_var$Mean[ioi_var$Condition == "performing"])
+# qq4 <- qqnorm(ioi_var$Mean[ioi_var$Condition == "teaching"])
+# qq5 <- qqnorm(ioi_comp$Mean[ioi_comp$Condition == "teaching" & ioi_comp$Change == "Yes"])
 
 # 2. Two-way ANOVA
 # ioi
