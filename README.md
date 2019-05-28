@@ -14,8 +14,6 @@ This repo contains scripts and materials necessary for a Musical experiment with
     + [Rmd (Instruction sheet)](#Rmd)
     
 - [Material](#Material)
-    + Instruction (psd)
-    + Checklist (xlsx)
 
 # Script
 ## Environment
