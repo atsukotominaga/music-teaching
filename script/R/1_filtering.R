@@ -212,12 +212,12 @@ percentile75 <- quantile(df_errorRate$ErrorRate, .75)
 df_errorRate$Percentile <- "include"
 df_errorRate$Percentile[df_errorRate$ErrorRate > percentile75] <- "exclude"
 
-# Descriptive stats for error rate
-desc_errorRate_LessThan10 <- aggregate(ErrorRate~LessThan10, data = df_errorRate, FUN = function(x){c(N = length(x), mean = mean(x), median = median(x), sd = sd(x))})
+# Descriptive stats for error rate (Note: use biased standard deviations to summarise the current sample)
+desc_errorRate_LessThan10 <- aggregate(ErrorRate~LessThan10, data = df_errorRate, FUN = function(x){c(N = length(x), mean = mean(x), median = median(x), sd = sd(x)*(length(x)-1)/length(x))})
 desc_errorRate_LessThan10$Criterion <- "LessThan10"
-desc_errorRate_SD <- aggregate(ErrorRate~SD, data = df_errorRate, FUN = function(x){c(N = length(x), mean = mean(x), median = median(x), sd = sd(x))})
+desc_errorRate_SD <- aggregate(ErrorRate~SD, data = df_errorRate, FUN = function(x){c(N = length(x), mean = mean(x), median = median(x), sd = sd(x)*(length(x)-1)/length(x))})
 desc_errorRate_SD$Criterion <- "Within +2SD"
-desc_errorRate_Percentile <- aggregate(ErrorRate~Percentile, data = df_errorRate, FUN = function(x){c(N = length(x), mean = mean(x), median = median(x), sd = sd(x))})
+desc_errorRate_Percentile <- aggregate(ErrorRate~Percentile, data = df_errorRate, FUN = function(x){c(N = length(x), mean = mean(x), median = median(x), sd = sd(x)*(length(x)-1)/length(x))})
 desc_errorRate_Percentile$Criterion <- "75% Percentile"
 desc_errorRate <- as.data.frame(rbind(desc_errorRate_LessThan10[,2:3], desc_errorRate_SD[,2:3], desc_errorRate_Percentile[,2:3]))
 # Change the order of colnames
@@ -232,7 +232,7 @@ write.csv(desc_errorRate, file = "./1_filtered/errorRate.csv", row.names = F)
 # Mark pitch errors for data_all
 df_note$Error <- 0
 for (error in 1:length(ls_error)){
-  df_note$Error[df_note$SubNr == ls_remove[[error]][1] & df_note$BlockNr == ls_remove[[error]][2] & df_note$TrialNr == ls_remove[[error]][3]] <- 1
+  df_note$Error[df_note$SubNr == ls_error[[error]][1] & df_note$BlockNr == ls_error[[error]][2] & df_note$TrialNr == ls_error[[error]][3]] <- 1
 }
 
 # Create data without pitch errors
