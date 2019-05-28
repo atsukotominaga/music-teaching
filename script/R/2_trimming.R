@@ -172,9 +172,10 @@ for (subject in exclude){
   df_exc$Final[df_exc$SubNr == subject] <- "exclude"
 }
 
+df_trim <- data.frame()
 if (length(exclude) != 0){ # if a vector is not 0
   for (subnr in exclude){
-    df_trim <- df_subset %>% dplyr::filter(SubNr != subnr)
+    df_trim <- rbind(df_trim, df_subset %>% dplyr::filter(SubNr != subnr))
   } 
 } else {
   df_trim <- df_subset
@@ -184,8 +185,8 @@ if (length(exclude) != 0){ # if a vector is not 0
 write.csv(df_exc, file = "./1_filtered/data_errorRate.csv", row.names = F)
 
 # Exclude ioi > +- 3SD (across the conditions)
-upper <- mean(df_subset$IOI)+3*sd(df_subset$IOI)
-lower <- mean(df_subset$IOI)-3*sd(df_subset$IOI)
+upper <- mean(df_trim$IOI)+3*sd(df_subset$IOI)
+lower <- mean(df_trim$IOI)-3*sd(df_subset$IOI)
 df_trim_sd <- df_trim %>% dplyr::filter(IOI < upper & IOI > lower)
 removed_ioi <- nrow(df_trim)-nrow(df_trim_sd)
 proportion_ioi <- round(removed_ioi/nrow(df_trim), 5)
@@ -461,7 +462,7 @@ for (subcomponent in unique(df_subset$Subcomponent)){
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
 removed_kv <- nrow(df_subset)-nrow(df_trim_sd)
-proportion_kv <- removed/nrow(df_subset)
+proportion_kv <- removed_kv/nrow(df_subset)
 write(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv), file = "./2_trimmed/outlier.txt", append = T)
 print(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv))
 
@@ -476,17 +477,17 @@ for (subcomponent in unique(df_subset_acc$Subcomponent)){
   df_current <- df_subset_acc %>% dplyr::filter(Subcomponent == subcomponent & Acc < upper & Acc > lower)
   df_trim_sd_acc <- rbind(df_trim_sd_acc, df_current)
 }
-removed <- nrow(df_subset_acc)-nrow(df_trim_sd_acc)
-proportion <- removed_kv/nrow(df_subset_acc)
-write(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed, proportion), file = "./2_trimmed/outlier.txt", append = T)
-print(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed, proportion))
+removed_acc <- nrow(df_subset_acc)-nrow(df_trim_sd_acc)
+proportion <- removed_acc/nrow(df_subset_acc)
+write(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed_acc, proportion), file = "./2_trimmed/outlier.txt", append = T)
+print(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed_acc, proportion))
 
 p_hist_sd <- ggplot(df_trim_sd, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
 
 p_box_sd <- ggboxplot(df_trim_sd, x = "Skill", y = "Velocity", color = "Condition")
-p_box_sd <- ggpar(p_box_sd, ylab = "Velocity (1-127)")
+p_box_sd <- ggpar(p_box_sd, ylab = "Velocity (0-127)")
 
 p_hist_sd_acc <- ggplot(df_trim_sd_acc, aes(x = Acc, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
