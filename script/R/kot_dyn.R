@@ -246,18 +246,18 @@ kot_sub_aov <- ezANOVA(
 print(kot_sub_aov)
 write.csv(kot_sub_aov$ANOVA, file = "./3_stats/kot_dyn/kot_sub_aov.csv")
 
-# kot_ch_sub
-kot_ch_sub_aov <- ezANOVA(
-  data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 | 
-                  df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57)
-  , dv = .(KOT)
-  , wid = .(SubNr)
-  , within = .(Condition, Subcomponent)
-  , type = 3
-  , detailed = TRUE
-)
-print(kot_ch_sub_aov)
-write.csv(kot_ch_sub_aov$ANOVA, file = "./3_stats/kot_dyn/kot_ch_sub_aov.csv")
+# # kot_ch_sub
+# kot_ch_sub_aov <- ezANOVA(
+#   data = subset(df_kot, df_kot$Interval == 8 | df_kot$Interval == 16 | df_kot$Interval == 24 | 
+#                   df_kot$Interval == 41 | df_kot$Interval == 49 | df_kot$Interval == 57)
+#   , dv = .(KOT)
+#   , wid = .(SubNr)
+#   , within = .(Condition, Subcomponent)
+#   , type = 3
+#   , detailed = TRUE
+# )
+# print(kot_ch_sub_aov)
+# write.csv(kot_ch_sub_aov$ANOVA, file = "./3_stats/kot_dyn/kot_ch_sub_aov.csv")
 
 # kot_phrase
 kot_phrase_aov <- ezANOVA(
