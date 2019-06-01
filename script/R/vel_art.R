@@ -228,9 +228,10 @@ p_vel_acc_seq <- ggplot(data = vel_acc_seq_stats, aes(x = Interval, y = Mean, gr
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
+  facet_grid(Skill ~ .) + 
   labs(x = "Interval", y = "Difference (0-127)") + scale_x_continuous(breaks=seq(1,66,1)) +
   theme_classic() +
-  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
+  theme(text = element_text(size = 15, family = "Helvetica Neue LT Std 57 Condensed"))
 p_vel_acc_seq
 
 p_vel_phrase <- ggplot(data = vel_phrase_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
