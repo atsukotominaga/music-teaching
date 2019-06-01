@@ -196,7 +196,8 @@ p_vel_sub <- ggplot(data = vel_sub_stats, aes(x = Subcomponent, y = Mean, fill =
   geom_signif(y_position=c(mean(vel_sub_stats$Mean[vel_sub_stats$Subcomponent == "Forte"])+mean(vel_sub_stats$SEM[vel_sub_stats$Subcomponent == "Forte"])+2,
                            mean(vel_sub_stats$Mean[vel_sub_stats$Subcomponent == "Piano"])+mean(vel_sub_stats$SEM[vel_sub_stats$Subcomponent == "Piano"])+2),
               xmin=c(0.8, 1.8), xmax=c(1.2, 2.2), annotation=c("***", "n.s."), tip_length=0) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_vel_sub
 
 p_vel_ch_sub <- ggplot(data = vel_ch_sub_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
@@ -207,7 +208,8 @@ p_vel_ch_sub <- ggplot(data = vel_ch_sub_stats, aes(x = Subcomponent, y = Mean, 
   geom_signif(y_position=c(mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$Subcomponent == "FtoP"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$Subcomponent == "FtoP"])+2,
                            mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$Subcomponent == "PtoF"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$Subcomponent == "PtoF"])+3.3),
               xmin=c(0.8, 1.8), xmax=c(1.2, 2.2), annotation=c("*", "***"), tip_length=0) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_vel_ch_sub
 
 p_vel_seq <- ggplot(data = vel_seq_stats, aes(x = Note, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -217,7 +219,8 @@ p_vel_seq <- ggplot(data = vel_seq_stats, aes(x = Note, y = Mean, group = Condit
                 position = position_dodge(0.05)) + 
   facet_grid(Skill ~ .) + 
   labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 15, family = "Helvetica Neue LT Std 57 Condensed"))
 p_vel_seq
 
 p_vel_acc_seq <- ggplot(data = vel_acc_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -226,7 +229,8 @@ p_vel_acc_seq <- ggplot(data = vel_acc_seq_stats, aes(x = Interval, y = Mean, gr
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
   labs(x = "Interval", y = "Difference (0-127)") + scale_x_continuous(breaks=seq(1,66,1)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 15, family = "Helvetica Neue LT Std 57 Condensed"))
 p_vel_acc_seq
 
 p_vel_phrase <- ggplot(data = vel_phrase_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
@@ -235,7 +239,8 @@ p_vel_phrase <- ggplot(data = vel_phrase_stats, aes(x = Subcomponent, y = Mean, 
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Boundary, LabelOrder)) +
   labs(x = "Subcomponent", y = "Velocity (0-127)") + #coord_cartesian(ylim = c(100, 230)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_vel_phrase
 
 # Save plots

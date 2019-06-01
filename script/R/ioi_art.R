@@ -246,7 +246,8 @@ p_ioi <- ggplot(data = ioi_stats, aes(x = Skill, y = Mean, fill = Condition)) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_ioi
 
 p_ioi_ch <- ggplot(data = ioi_ch_stats, aes(x = Skill, y = Mean, fill = Condition)) +
@@ -254,7 +255,8 @@ p_ioi_ch <- ggplot(data = ioi_ch_stats, aes(x = Skill, y = Mean, fill = Conditio
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "Skill", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_ioi_ch
 
 p_ioi_ch_sub <- ggplot(data = ioi_ch_sub_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
@@ -262,7 +264,8 @@ p_ioi_ch_sub <- ggplot(data = ioi_ch_sub_stats, aes(x = Subcomponent, y = Mean, 
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "Subcomponent change", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_ioi_ch_sub
 
 p_ioi_seq <- ggplot(data = ioi_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -270,12 +273,13 @@ p_ioi_seq <- ggplot(data = ioi_seq_stats, aes(x = Interval, y = Mean, group = Co
   geom_point() +
   geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
   #facet_grid(Skill ~ .) +
-  annotate("text", 0, 188, label = "Tempo (80bpm)", vjust = -1) +
+  annotate("text", 2, 188, label = "Tempo (80bpm)", vjust = -1, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
   facet_grid(Skill ~ .) + 
   labs(x = "Interval", y = "IOI (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 15, family = "Helvetica Neue LT Std 57 Condensed"))
 p_ioi_seq
 
 p_ioi_var <- ggplot(data = ioi_var_stats, aes(x = Skill, y = Mean, fill = Condition)) +
@@ -283,7 +287,8 @@ p_ioi_var <- ggplot(data = ioi_var_stats, aes(x = Skill, y = Mean, fill = Condit
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "Skill", y = "CV (SD/mean IOI)") + coord_cartesian(ylim = c(0, .075)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_ioi_var
 
 p_ioi_var_tri <- ggplot(data = ioi_var_tri_stats, aes(x = TrialNr, y = Mean, shape = Condition, colour = Condition)) +
@@ -293,7 +298,8 @@ p_ioi_var_tri <- ggplot(data = ioi_var_tri_stats, aes(x = TrialNr, y = Mean, sha
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
   labs(x = "Trial Number", y = "CV (SD/mean IOI)") + scale_x_continuous(breaks=seq(1,8,1)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_ioi_var_tri
 
 p_ioi_comp <- ggplot(data = ioi_comp_stats, aes(x = reorder(Change, LabelOrder), y = Mean, fill = Condition)) +
@@ -301,7 +307,8 @@ p_ioi_comp <- ggplot(data = ioi_comp_stats, aes(x = reorder(Change, LabelOrder),
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "Skill", y = "IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_ioi_comp
 
 # Save plots

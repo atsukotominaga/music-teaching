@@ -177,7 +177,8 @@ p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = Subcomponent, y = Mean, fill =
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "Subcomponent", y = "KOT (ms)") +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_kot_sub
 
 p_kot_ch_sub <- ggplot(data = kot_ch_sub_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
@@ -185,7 +186,8 @@ p_kot_ch_sub <- ggplot(data = kot_ch_sub_stats, aes(x = Subcomponent, y = Mean, 
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(x = "Subcomponent change", y = "KOT (ms)") +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_kot_ch_sub
 
 p_kot_seq <- ggplot(data = kot_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -195,7 +197,8 @@ p_kot_seq <- ggplot(data = kot_seq_stats, aes(x = Interval, y = Mean, group = Co
                 position = position_dodge(.05)) + 
   facet_grid(Skill ~ .) + 
   labs(x = "Interval", y = "KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1)) +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 15, family = "Helvetica Neue LT Std 57 Condensed"))
 p_kot_seq
 
 p_kot_phrase <- ggplot(data = kot_phrase_stats, aes(x = Subcomponent, y = Mean, fill = Condition)) +
@@ -204,7 +207,8 @@ p_kot_phrase <- ggplot(data = kot_phrase_stats, aes(x = Subcomponent, y = Mean, 
                 width=.2, position = position_dodge(.9)) +
   facet_grid(. ~ reorder(Boundary, LabelOrder)) +
   labs(x = "Subcomponent", y = "KOT (ms)") +
-  theme_classic()
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_kot_phrase
 
 # Save plots
