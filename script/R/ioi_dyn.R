@@ -350,31 +350,31 @@ ioi_aov <- ezANOVA(
 print(ioi_aov)
 write.csv(ioi_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_aov.csv")
 
-# ioi_ch
-ioi_ch_aov <- ezANOVA(
-  data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 |
-                  df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
-  , dv = .(IOI)
-  , wid = .(SubNr)
-  , within = .(Condition)
-  , type = 3
-  , detailed = TRUE
-)
-print(ioi_ch_aov)
-write.csv(ioi_ch_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_ch_aov.csv")
-
-# ioi_ch_sub
-ioi_ch_sub_aov <- ezANOVA(
-  data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 |
-                  df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
-  , dv = .(IOI)
-  , wid = .(SubNr)
-  , within = .(Condition, Subcomponent)
-  , type = 3
-  , detailed = TRUE
-)
-print(ioi_ch_sub_aov)
-write.csv(ioi_ch_sub_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_ch_sub_aov.csv")
+# # ioi_ch
+# ioi_ch_aov <- ezANOVA(
+#   data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 |
+#                   df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
+#   , dv = .(IOI)
+#   , wid = .(SubNr)
+#   , within = .(Condition)
+#   , type = 3
+#   , detailed = TRUE
+# )
+# print(ioi_ch_aov)
+# write.csv(ioi_ch_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_ch_aov.csv")
+# 
+# # ioi_ch_sub
+# ioi_ch_sub_aov <- ezANOVA(
+#   data = subset(df_ioi, df_ioi$Interval == 8 | df_ioi$Interval == 16 | df_ioi$Interval == 24 |
+#                   df_ioi$Interval == 41 | df_ioi$Interval == 49 | df_ioi$Interval == 57)
+#   , dv = .(IOI)
+#   , wid = .(SubNr)
+#   , within = .(Condition, Subcomponent)
+#   , type = 3
+#   , detailed = TRUE
+# )
+# print(ioi_ch_sub_aov)
+# write.csv(ioi_ch_sub_aov$ANOVA, file = "./3_stats/ioi_dyn/ioi_ch_sub_aov.csv")
 
 # ioi_var
 ioi_var_aov <- ezANOVA(
