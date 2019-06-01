@@ -195,7 +195,7 @@ p_vel_sub <- ggplot(data = vel_sub_stats, aes(x = Subcomponent, y = Mean, fill =
   labs(x = "Subcomponent", y = "Velocity (0-127)") + coord_cartesian(ylim = c(50, 80)) + 
   geom_signif(y_position=c(mean(vel_sub_stats$Mean[vel_sub_stats$Subcomponent == "Legato"])+mean(vel_sub_stats$SEM[vel_sub_stats$Subcomponent == "Legato"])+2,
                            mean(vel_sub_stats$Mean[vel_sub_stats$Subcomponent == "Staccato"])+mean(vel_sub_stats$SEM[vel_sub_stats$Subcomponent == "Staccato"])+3.3),
-              xmin=c(0.8, 1.8), xmax=c(1.2, 2.2), annotation=c("*", "***"), tip_length=0) +
+              xmin = c(0.8, 1.8), xmax = c(1.2, 2.2), annotation = c("*", "***"), tip_length = 0, textsize = 10, family = "Helvetica Neue LT Std 57 Condensed") +
   theme_classic() +
   theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_vel_sub
@@ -207,7 +207,7 @@ p_vel_ch_sub <- ggplot(data = vel_ch_sub_stats, aes(x = Subcomponent, y = Mean, 
   labs(x = "Subcomponent change", y = "Difference (0-127)") + coord_cartesian(ylim = c(-20, 30)) + 
   geom_signif(y_position=c(mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$Subcomponent == "LtoS"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$Subcomponent == "LtoS"])+3.3,
                            mean(vel_ch_sub_stats$Mean[vel_ch_sub_stats$Subcomponent == "StoL"])+mean(vel_ch_sub_stats$SEM[vel_ch_sub_stats$Subcomponent == "StoL"])+2),
-              xmin=c(0.8, 1.8), xmax=c(1.2, 2.2), annotation=c("***", "n.s."), tip_length=0) +
+              xmin=c(0.8, 1.8), xmax=c(1.2, 2.2), annotation=c("***", "n.s."), tip_length=0, textsize = 10, family = "Helvetica Neue LT Std 57 Condensed") +
   theme_classic() +
   theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_vel_ch_sub

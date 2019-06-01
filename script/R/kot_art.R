@@ -176,10 +176,10 @@ p_kot_sub <- ggplot(data = kot_sub_stats, aes(x = Subcomponent, y = Mean, fill =
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "Subcomponent", y = "KOT (ms)") +
+  labs(x = "Subcomponent", y = "KOT (ms)") + coord_cartesian(ylim = c(-140, 40)) +
   geom_signif(y_position=c(mean(kot_sub_stats$Mean[kot_sub_stats$Subcomponent == "Legato"])+mean(kot_sub_stats$SEM[kot_sub_stats$Subcomponent == "Legato"])+6,
                            mean(kot_sub_stats$Mean[kot_sub_stats$Subcomponent == "Staccato"])+mean(kot_sub_stats$SEM[kot_sub_stats$Subcomponent == "Staccato"])+7),
-              xmin=c(0.8, 1.8), xmax=c(1.2, 2.2), annotation=c("***", "***"), tip_length=0) +
+              xmin = c(0.8, 1.8), xmax = c(1.2, 2.2), annotation = c("***", "***"), tip_length = 0, textsize = 10, family = "Helvetica Neue LT Std 57 Condensed") +
   theme_classic() +
   theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_kot_sub
