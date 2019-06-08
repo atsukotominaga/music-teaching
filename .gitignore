@@ -5,3 +5,5 @@ script/lilypond/*pdf
 # Max
 script/Max/data
 script/Max/midi
+script/Max/cond
+script/Max/.DS_Store
