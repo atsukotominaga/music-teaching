@@ -1,3 +1,5 @@
+*.DS_Store
+
 # Lilypond
 script/lilypond/*midi
 script/lilypond/*pdf
@@ -6,4 +8,6 @@ script/lilypond/*pdf
 script/Max/data
 script/Max/midi
 script/Max/cond
-script/Max/.DS_Store
+
+# R
+script/R/.Rapp.history
