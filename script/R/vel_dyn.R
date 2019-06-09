@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/usr/local/bin/R
 rm(list=ls(all=TRUE)) # clear all in Environment
 
 ####################################
