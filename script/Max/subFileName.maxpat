@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 1954.0, -962.0, 2190.0, 1350.0 ],
+		"rect" : [ 336.0, 79.0, 2190.0, 1350.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -38,6 +38,18 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-13",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 664.0, 471.0, 54.0, 22.0 ],
+					"text" : "delay 10"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-7",
 					"maxclass" : "newobj",
@@ -71,7 +83,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 802.0, 506.0, 401.0, 22.0 ],
-					"text" : "exp2_subNr_blockNr_trialNr_cond_skill_sheet_682019173029.mid"
+					"text" : "exp2_1_1_1_teaching_articulation_stim_a_692019171314.mid"
 				}
 
 			}
@@ -81,7 +93,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1112.0, 741.0, 91.0, 20.0 ],
+					"patching_rect" : [ 1112.0, 770.0, 91.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 18.0, 148.0, 91.0, 20.0 ],
 					"text" : "MIDI recording"
@@ -103,13 +115,16 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-121",
+					"linecount" : 3,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 802.0, 717.0, 401.0, 22.0 ],
+					"patching_rect" : [ 802.0, 717.0, 401.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 117.0, 148.0, 401.0, 22.0 ]
+					"presentation_linecount" : 3,
+					"presentation_rect" : [ 117.0, 148.0, 401.0, 49.0 ],
+					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/midi/exp2_1_1_0_teaching_articulation_stim_a_692019171314.mid\""
 				}
 
 			}
@@ -166,7 +181,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 545.0, 741.0, 67.0, 20.0 ],
+					"patching_rect" : [ 545.0, 770.0, 67.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 18.0, 63.5, 67.0, 20.0 ],
 					"text" : "MIDI data"
@@ -188,13 +203,16 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-105",
+					"linecount" : 3,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 211.0, 714.5, 401.0, 22.0 ],
+					"patching_rect" : [ 211.0, 714.5, 401.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 117.0, 62.5, 401.0, 22.0 ]
+					"presentation_linecount" : 3,
+					"presentation_rect" : [ 117.0, 62.5, 401.0, 49.0 ],
+					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/data/exp2_1_1_1_teaching_articulation_stim_a_692019171314.txt\""
 				}
 
 			}
@@ -262,11 +280,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-93",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 211.0, 566.5, 401.0, 22.0 ]
+					"patching_rect" : [ 211.0, 566.5, 401.0, 35.0 ],
+					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/\""
 				}
 
 			}
@@ -290,7 +310,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 211.0, 507.0, 401.0, 22.0 ],
-					"text" : "exp2_subNr_blockNr_trialNr_cond_skill_sheet_682019173029.txt"
+					"text" : "exp2_1_1_1_teaching_articulation_stim_a_692019171314.txt"
 				}
 
 			}
@@ -314,7 +334,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1094.0, 279.0, 50.0, 22.0 ],
-					"text" : "0"
+					"text" : "2"
 				}
 
 			}
@@ -325,7 +345,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1026.0, 279.0, 50.0, 22.0 ]
+					"patching_rect" : [ 1026.0, 279.0, 50.0, 22.0 ],
+					"text" : "1"
 				}
 
 			}
@@ -336,7 +357,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 964.0, 279.0, 50.0, 22.0 ]
+					"patching_rect" : [ 964.0, 279.0, 50.0, 22.0 ],
+					"text" : "1"
 				}
 
 			}
@@ -395,7 +417,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 737.0, 279.0, 115.0, 22.0 ]
+					"patching_rect" : [ 737.0, 279.0, 115.0, 22.0 ],
+					"text" : "stim_a"
 				}
 
 			}
@@ -406,7 +429,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 605.0, 279.0, 115.0, 22.0 ]
+					"patching_rect" : [ 605.0, 279.0, 115.0, 22.0 ],
+					"text" : "articulation"
 				}
 
 			}
@@ -417,7 +441,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 473.0, 279.0, 115.0, 22.0 ]
+					"patching_rect" : [ 473.0, 279.0, 115.0, 22.0 ],
+					"text" : "teaching"
 				}
 
 			}
@@ -1177,6 +1202,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-99", 0 ],
+					"source" : [ "obj-13", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-17", 1 ],
 					"order" : 0,
 					"source" : [ "obj-14", 0 ]
@@ -1926,6 +1958,14 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-13", 0 ],
+					"order" : 2,
+					"source" : [ "obj-80", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-79", 0 ],
 					"order" : 5,
 					"source" : [ "obj-80", 0 ]
@@ -1936,14 +1976,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-93", 0 ],
 					"order" : 4,
-					"source" : [ "obj-80", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-99", 0 ],
-					"order" : 2,
 					"source" : [ "obj-80", 0 ]
 				}
 

@@ -39,6 +39,18 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-22",
+					"maxclass" : "number",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 1002.0, 330.0, 50.0, 22.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"bgmode" : 1,
 					"border" : 0,
 					"clickthrough" : 0,
@@ -52,9 +64,9 @@
 					"numinlets" : 0,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 58.0, 1129.0, 307.0, 179.0 ],
+					"patching_rect" : [ 58.0, 1129.0, 555.0, 177.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 1201.0, 15.0, 307.0, 227.0 ],
+					"presentation_rect" : [ 628.0, 404.0, 555.0, 181.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -68,10 +80,10 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1198.0, 132.0, 235.0, 133.0 ],
+					"patching_rect" : [ 1213.0, 69.0, 235.0, 133.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 8,
-					"presentation_rect" : [ 15.0, 222.0, 235.0, 133.0 ],
+					"presentation_rect" : [ 374.0, 48.0, 235.0, 133.0 ],
 					"text" : "* In case you want to run the previous trial(N) again, please enter the number of N-1 to reset trialNr.\n\ne.g., if you want to run the 1st trial again, please enter \"0\".\nif you want to run the 4th trial again, please enter \"3\".",
 					"textcolor" : [ 0.986246049404144, 0.007120788097382, 0.027434188872576, 1.0 ]
 				}
@@ -117,7 +129,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 58.0, 973.0, 555.0, 132.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 628.0, 281.0, 555.0, 132.0 ],
+					"presentation_rect" : [ 628.0, 257.0, 555.0, 132.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -346,14 +358,15 @@
 , 			{
 				"box" : 				{
 					"fontface" : 1,
+					"fontsize" : 24.0,
 					"id" : "obj-27",
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1101.0, 150.0, 52.0, 22.0 ],
+					"patching_rect" : [ 1101.0, 75.0, 92.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 81.0, 361.5, 51.0, 22.0 ],
+					"presentation_rect" : [ 400.0, 187.5, 94.0, 35.0 ],
 					"text" : "RESET",
 					"textcolor" : [ 0.988903880119324, 0.400471746921539, 0.399960249662399, 1.0 ]
 				}
@@ -373,15 +386,16 @@
 			}
 , 			{
 				"box" : 				{
+					"fontsize" : 24.0,
 					"id" : "obj-21",
 					"maxclass" : "number",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 1132.0, 180.0, 50.0, 22.0 ],
+					"patching_rect" : [ 1132.0, 122.0, 70.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 138.0, 361.5, 50.0, 22.0 ]
+					"presentation_rect" : [ 507.0, 187.5, 70.0, 35.0 ]
 				}
 
 			}
@@ -405,9 +419,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 1326.0, 486.75, 438.0, 304.5 ],
-					"pic" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/image/black.png",
+					"pic" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/image/1__stim_a.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 628.0, 458.75, 555.0, 355.5 ]
+					"presentation_rect" : [ 13.0, 233.5, 588.0, 351.5 ]
 				}
 
 			}
@@ -1319,6 +1333,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-158", 0 ],
+					"order" : 1,
+					"source" : [ "obj-143", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-22", 0 ],
+					"order" : 0,
 					"source" : [ "obj-143", 1 ]
 				}
 
@@ -1699,6 +1722,13 @@
 				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "condfile.csv",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/cond",
+				"patcherrelativepath" : "./cond",
+				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
