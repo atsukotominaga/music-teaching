@@ -39,18 +39,6 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
-					"id" : "obj-22",
-					"maxclass" : "number",
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "bang" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 1002.0, 330.0, 50.0, 22.0 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"bgmode" : 1,
 					"border" : 0,
 					"clickthrough" : 0,
@@ -64,9 +52,9 @@
 					"numinlets" : 0,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 58.0, 1129.0, 555.0, 177.0 ],
+					"patching_rect" : [ 58.0, 1252.0, 555.0, 177.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 628.0, 404.0, 555.0, 181.0 ],
+					"presentation_rect" : [ 628.0, 529.0, 555.0, 181.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -127,9 +115,9 @@
 					"numinlets" : 7,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 58.0, 973.0, 555.0, 132.0 ],
+					"patching_rect" : [ 58.0, 1096.0, 555.0, 132.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 628.0, 257.0, 555.0, 132.0 ],
+					"presentation_rect" : [ 628.0, 382.0, 555.0, 132.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -150,9 +138,9 @@
 					"numoutlets" : 2,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 58.0, 707.0, 555.0, 227.0 ],
+					"patching_rect" : [ 58.0, 707.0, 555.0, 360.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 628.0, 15.0, 555.0, 227.0 ],
+					"presentation_rect" : [ 628.0, 15.0, 555.0, 352.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -279,7 +267,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1326.0, 276.0, 298.0, 49.0 ],
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/\""
 				}
 
 			}
@@ -380,7 +368,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1101.0, 210.0, 50.0, 22.0 ],
-					"text" : "5"
+					"text" : "3"
 				}
 
 			}
@@ -414,12 +402,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-8",
+					"jspainterfile" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/display.maxpat",
 					"maxclass" : "fpic",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 1326.0, 486.75, 438.0, 304.5 ],
-					"pic" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/image/1__stim_a.png",
+					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/image/black.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 13.0, 233.5, 588.0, 351.5 ]
 				}
@@ -636,7 +625,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-111",
-					"items" : [ "to Max 1", ",", "to Max 2" ],
+					"items" : [ "IAC Driver IAC Bus 1", ",", "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1333,15 +1322,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-158", 0 ],
-					"order" : 1,
-					"source" : [ "obj-143", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-22", 0 ],
-					"order" : 0,
 					"source" : [ "obj-143", 1 ]
 				}
 
@@ -1705,30 +1685,23 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "subFileName.maxpat",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subMIDIRec.maxpat",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subCond.maxpat",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "condfile.csv",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/cond",
-				"patcherrelativepath" : "./cond",
-				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
@@ -1891,8 +1864,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1919,8 +1892,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
