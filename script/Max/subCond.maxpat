@@ -56,8 +56,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 646.0, 824.0, 150.0, 20.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 153.0, 131.0, 150.0, 20.0 ],
 					"text" : "current condition"
 				}
 
@@ -69,10 +67,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 506.0, 823.0, 131.0, 22.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 131.0, 131.0, 22.0 ],
-					"text" : "N/A"
+					"patching_rect" : [ 506.0, 823.0, 131.0, 22.0 ]
 				}
 
 			}
@@ -118,8 +113,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 335.0, 822.0, 150.0, 20.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 153.0, 95.0, 150.0, 20.0 ],
 					"text" : "current stimulus"
 				}
 
@@ -133,8 +126,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 199.0, 821.0, 131.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 95.0, 131.0, 22.0 ],
-					"text" : "8_t_stim_a.png"
+					"presentation_rect" : [ 15.0, 57.0, 131.0, 22.0 ]
 				}
 
 			}
@@ -145,6 +137,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 199.0, 868.0, 54.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 155.0, 57.0, 54.0, 22.0 ],
 					"text" : "s picture"
 				}
 
@@ -308,8 +302,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 121.0, 502.0, 50.0, 22.0 ],
-					"text" : "inst_p"
+					"patching_rect" : [ 121.0, 502.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -320,8 +313,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 21.0, 502.0, 50.0, 22.0 ],
-					"text" : "inst_t"
+					"patching_rect" : [ 21.0, 502.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -344,8 +336,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 921.0, 301.0, 150.0, 33.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 284.0, 60.0, 223.0, 20.0 ],
 					"text" : "2nd condition for the current participant"
 				}
 
@@ -357,10 +347,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 823.0, 301.0, 84.0, 22.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 194.0, 60.0, 84.0, 22.0 ],
-					"text" : "performing"
+					"patching_rect" : [ 823.0, 301.0, 84.0, 22.0 ]
 				}
 
 			}
@@ -371,10 +358,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 563.0, 299.0, 84.0, 22.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 59.0, 84.0, 22.0 ],
-					"text" : "teaching"
+					"patching_rect" : [ 563.0, 299.0, 84.0, 22.0 ]
 				}
 
 			}
@@ -385,8 +369,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 661.0, 300.0, 150.0, 20.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 105.0, 60.0, 150.0, 20.0 ],
 					"text" : "1st condition"
 				}
 
@@ -421,8 +403,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 338.0, 377.0, 84.0, 22.0 ],
-					"text" : "stim_m"
+					"patching_rect" : [ 338.0, 377.0, 84.0, 22.0 ]
 				}
 
 			}
@@ -433,8 +414,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 338.0, 295.0, 84.0, 22.0 ],
-					"text" : "mixed"
+					"patching_rect" : [ 338.0, 295.0, 84.0, 22.0 ]
 				}
 
 			}
@@ -445,8 +425,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 240.0, 377.0, 84.0, 22.0 ],
-					"text" : "stim_d"
+					"patching_rect" : [ 240.0, 377.0, 84.0, 22.0 ]
 				}
 
 			}
@@ -457,8 +436,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 139.0, 377.0, 84.0, 22.0 ],
-					"text" : "stim_a"
+					"patching_rect" : [ 139.0, 377.0, 84.0, 22.0 ]
 				}
 
 			}
@@ -513,8 +491,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 240.0, 295.0, 84.0, 22.0 ],
-					"text" : "dynamics"
+					"patching_rect" : [ 240.0, 295.0, 84.0, 22.0 ]
 				}
 
 			}
@@ -525,8 +502,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 139.0, 295.0, 84.0, 22.0 ],
-					"text" : "articulation"
+					"patching_rect" : [ 139.0, 295.0, 84.0, 22.0 ]
 				}
 
 			}
@@ -572,7 +548,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 183.0, 212.0, 540.0, 20.0 ],
+					"patching_rect" : [ 165.0, 212.0, 509.0, 20.0 ],
 					"text" : "1stCond, 2ndCond, inst_1, inst_2, 1stSkill, 2ndSkill, 3rdSkill, 1stImage, 2ndImage, 3rdImage"
 				}
 
@@ -1302,6 +1278,20 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-50", 0 ],
+					"source" : [ "obj-57", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-51", 0 ],
+					"source" : [ "obj-58", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-57", 0 ],
 					"source" : [ "obj-60", 0 ]
 				}
@@ -1459,7 +1449,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "condfile.csv",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/cond",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
@@ -1620,8 +1610,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1648,8 +1638,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
