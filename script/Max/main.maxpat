@@ -39,6 +39,32 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontsize" : 20.0,
+					"id" : "obj-43",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1326.0, 797.0, 232.0, 29.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 13.0, 253.0, 207.0, 29.0 ],
+					"text" : "Display"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-23",
+					"maxclass" : "number",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 982.0, 274.0, 50.0, 22.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"bgmode" : 1,
 					"border" : 0,
 					"clickthrough" : 0,
@@ -52,9 +78,9 @@
 					"numinlets" : 0,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
-					"patching_rect" : [ 58.0, 1252.0, 555.0, 177.0 ],
+					"patching_rect" : [ 58.0, 1252.0, 555.0, 107.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 628.0, 529.0, 555.0, 181.0 ],
+					"presentation_rect" : [ 628.0, 529.0, 555.0, 110.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -191,7 +217,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 941.0, 210.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 88.0, 184.5, 150.0, 20.0 ],
+					"presentation_rect" : [ 88.0, 192.5, 150.0, 20.0 ],
 					"text" : "Trial No."
 				}
 
@@ -204,7 +230,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 138.0, 176.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 88.0, 145.5, 150.0, 20.0 ],
+					"presentation_rect" : [ 88.0, 150.5, 150.0, 20.0 ],
 					"text" : "Block No."
 				}
 
@@ -368,7 +394,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1101.0, 210.0, 50.0, 22.0 ],
-					"text" : "3"
+					"text" : "4"
 				}
 
 			}
@@ -408,9 +434,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 1326.0, 486.75, 438.0, 304.5 ],
-					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/image/black.png",
+					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/image/4_t_stim_m.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 13.0, 233.5, 588.0, 351.5 ]
+					"presentation_rect" : [ 13.0, 286.5, 588.0, 352.5 ]
 				}
 
 			}
@@ -461,7 +487,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 864.0, 210.0, 72.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 13.0, 177.0, 70.0, 35.0 ],
+					"presentation_rect" : [ 13.0, 185.0, 70.0, 35.0 ],
 					"textcolor" : [ 0.996078431372549, 0.996078431372549, 0.996078431372549, 1.0 ]
 				}
 
@@ -541,7 +567,6 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-123",
-					"int" : 1,
 					"maxclass" : "gswitch",
 					"numinlets" : 3,
 					"numoutlets" : 1,
@@ -787,7 +812,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 58.0, 176.0, 72.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 13.0, 138.0, 70.0, 35.0 ],
+					"presentation_rect" : [ 13.0, 143.0, 70.0, 35.0 ],
 					"textcolor" : [ 1.0, 1.0, 0.400000035762787, 1.0 ]
 				}
 
@@ -1308,6 +1333,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-140", 0 ],
+					"order" : 1,
+					"source" : [ "obj-137", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-23", 0 ],
+					"order" : 0,
 					"source" : [ "obj-137", 0 ]
 				}
 
@@ -1702,6 +1736,13 @@
 				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "condfile.csv",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/cond",
+				"patcherrelativepath" : "./cond",
+				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
