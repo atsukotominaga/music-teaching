@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 336.0, 79.0, 2190.0, 1350.0 ],
+		"rect" : [ 34.0, 56.0, 1852.0, 1110.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -83,7 +83,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 802.0, 506.0, 401.0, 22.0 ],
-					"text" : "exp2_1_1_1_teaching_articulation_stim_a_692019171314.mid"
+					"text" : "exp2_1_2_1_teaching_dynamics_stim_d_612201922539.mid"
 				}
 
 			}
@@ -124,7 +124,7 @@
 					"presentation" : 1,
 					"presentation_linecount" : 3,
 					"presentation_rect" : [ 117.0, 148.0, 401.0, 49.0 ],
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/midi/exp2_1_1_0_teaching_articulation_stim_a_692019171314.mid\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/midi/exp2_4_1_1_performing_dynamics_stim_d_612201922539.mid\""
 				}
 
 			}
@@ -134,7 +134,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1059.0, 101.0, 150.0, 20.0 ],
+					"patching_rect" : [ 1049.0, 100.0, 150.0, 20.0 ],
 					"text" : "update time for each trial"
 				}
 
@@ -212,7 +212,7 @@
 					"presentation" : 1,
 					"presentation_linecount" : 3,
 					"presentation_rect" : [ 117.0, 62.5, 401.0, 49.0 ],
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/data/exp2_1_1_1_teaching_articulation_stim_a_692019171314.txt\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/data/exp2_1_2_1_teaching_dynamics_stim_d_612201922539.txt\""
 				}
 
 			}
@@ -286,7 +286,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 211.0, 566.5, 401.0, 35.0 ],
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/\""
 				}
 
 			}
@@ -310,7 +310,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 211.0, 507.0, 401.0, 22.0 ],
-					"text" : "exp2_1_1_1_teaching_articulation_stim_a_692019171314.txt"
+					"text" : "exp2_1_2_1_teaching_dynamics_stim_d_612201922539.txt"
 				}
 
 			}
@@ -321,7 +321,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "bang", "bang", "bang" ],
-					"patching_rect" : [ 1177.0, 314.0, 44.0, 22.0 ],
+					"patching_rect" : [ 1165.0, 342.0, 44.0, 22.0 ],
 					"text" : "t b b b"
 				}
 
@@ -334,7 +334,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1094.0, 279.0, 50.0, 22.0 ],
-					"text" : "2"
+					"presentation" : 1,
+					"presentation_rect" : [ 18.0, 307.0, 50.0, 22.0 ],
+					"text" : "1"
 				}
 
 			}
@@ -346,7 +348,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1026.0, 279.0, 50.0, 22.0 ],
-					"text" : "1"
+					"presentation" : 1,
+					"presentation_rect" : [ 18.0, 273.0, 50.0, 22.0 ],
+					"text" : "2"
 				}
 
 			}
@@ -358,6 +362,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 964.0, 279.0, 50.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 18.0, 239.0, 50.0, 22.0 ],
 					"text" : "1"
 				}
 
@@ -370,6 +376,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1094.0, 239.0, 50.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 80.0, 307.0, 50.0, 22.0 ],
 					"text" : "r trialNr"
 				}
 
@@ -382,6 +390,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1026.0, 239.0, 59.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 80.0, 273.0, 59.0, 22.0 ],
 					"text" : "r blockNr"
 				}
 
@@ -394,6 +404,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 964.0, 239.0, 50.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 80.0, 239.0, 50.0, 22.0 ],
 					"text" : "r subNr"
 				}
 
@@ -418,7 +430,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 737.0, 279.0, 115.0, 22.0 ],
-					"text" : "stim_a"
+					"presentation" : 1,
+					"presentation_rect" : [ 156.0, 307.0, 115.0, 22.0 ],
+					"text" : "stim_d"
 				}
 
 			}
@@ -430,7 +444,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 605.0, 279.0, 115.0, 22.0 ],
-					"text" : "articulation"
+					"presentation" : 1,
+					"presentation_rect" : [ 156.0, 273.0, 115.0, 22.0 ],
+					"text" : "dynamics"
 				}
 
 			}
@@ -442,6 +458,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 473.0, 279.0, 115.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 156.0, 239.0, 115.0, 22.0 ],
 					"text" : "teaching"
 				}
 
@@ -454,6 +472,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 737.0, 239.0, 47.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 285.0, 307.0, 47.0, 22.0 ],
 					"text" : "r sheet"
 				}
 
@@ -466,6 +486,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 605.0, 239.0, 38.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 285.0, 273.0, 38.0, 22.0 ],
 					"text" : "r skill"
 				}
 
@@ -478,6 +500,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 473.0, 239.0, 44.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 285.0, 239.0, 44.0, 22.0 ],
 					"text" : "r cond"
 				}
 
@@ -1173,6 +1197,14 @@
 				"patchline" : 				{
 					"destination" : [ "obj-127", 0 ],
 					"order" : 2,
+					"source" : [ "obj-116", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-93", 0 ],
+					"order" : 3,
 					"source" : [ "obj-116", 0 ]
 				}
 
@@ -1913,7 +1945,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-40", 0 ],
-					"midpoints" : [ 1211.5, 125.0, 261.5, 125.0 ],
+					"midpoints" : [ 1199.5, 125.0, 261.5, 125.0 ],
 					"source" : [ "obj-77", 2 ]
 				}
 
