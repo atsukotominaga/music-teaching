@@ -1,4 +1,8 @@
+ls
 *.DS_Store
+
+# material
+material/cropped/*pdf
 
 # Lilypond
 script/lilypond/*midi
@@ -7,11 +11,12 @@ script/lilypond/*pdf
 # Max
 script/Max/data
 script/Max/midi
+# add later
 script/Max/cond
 
 # R
 script/R/.Rapp.history
 script/R/.Rhistory
 
-# Python
-script/python/stimuli
+# local folders
+script/lilypond/old
