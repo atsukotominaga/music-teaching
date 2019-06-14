@@ -1,0 +1,256 @@
+<style type="text/css">
+/* Whole document: */
+body{
+  font-family: Helvetica;
+  font-size: 14pt;
+}
+span{
+  color:red
+}
+</style>
+
+# Instruction
+Author: Atsuko Tominaga - 17/06/2019 (teaching_v2.0)
+
+## PARTICIPANT RECRUITMENT:
+
+- Have more than 10 years experience in piano performance or currently studying piano performance at music school
+- Basic English skills
+
+## BEFORE PARTICIPANT ARRIVES:
+- Devices
+1. Connect the audio interface (Focusrite Scarlett 6i6) to Macbook Pro.
+2. Connect two headphones to the audio interface.
+3. Connect the piano to the audio interface.
+4. Turn on the piano, the audio interface and the screen in front of the piano.
+5. Open “Focusrite Control” app <img src="./image/focusriteControl.jpg" width="50"/> and click “Load from device”.
+
+<img src="./image/01.png" width="500">
+<img src="./image/02.png">
+
+6. Go to “Device Settings” and click “LINE” for Analogue 1.
+
+<img src="./image/03.png">
+
+If you don’t see the images above, go to **File >> Preset >> select “Analogue + Digital”**.
+Adjust the volume of the headphone so that it sounds naturally.
+
+### Max
+
+1. Go to **Desktop >> Max alias >> open the "main.maxpat", the “practicePatch.maxpat” and the “display.maxpat”**. <span>Check the name of patchers later!</span>
+2. Move the window of the “display.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode.
+3. Read the instruction on the “main.maxpat" and the "practicePatch.maxpat". <span>Check the name of patchers later!</span>
+4. Also check whether the piano sounds come from the headphone and MIDI inputs are correctly responded (Pitch and Velocity should change according to key presses on MIDIRecording subpatchers).
+5. If the sound of the metronome and the piano does not come from the computer speaker, go to **System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”**.
+6. If you cannot still solve the problem above, please quit Max and relaunch it again.
+7. Click the “inst_1” button to show a general instruction on the “display.maxpat”.
+8. Enter SubNr for the current participant.
+
+### Practice Patch <span># Add later!</span>
+image
+
+### Main Patch <span># Add later</span>
+image
+
+### Experimental Design <span>
+1. First part (as we did in teaching-v1.0)
+
+|Condition 1 (teaching / performing)|
+|-----------------------------------|
+|1st Stimulus (articulation / dynamics) - Block 1|
+|2nd Stimulus (dynamics / articulation) - Block 2|
+
+|Condition 2 (performing / teaching)|
+|-----------------------------------|
+|1st Stimulus (articulation / dynamics) - Block 3|
+|2nd Stimulus (dynamics / articulation) - Block 4|
+
+---
+2. Second part
+
+|Condition 1 (teaching / performing)|
+|-----------------------------------|
+|3rd Stimulus (mixed) - Block 5|
+
+|Condition 2 (performing / teaching)|
+|-----------------------------------|
+|3rd Stimulus (mixed) - Block 6|
+
+* The order of the conditions is counterbalanced across participants.
+* The order of the skills is counterbalanced across participants, but it is fixed within one condition (e.g., if a participant start with articulation and move on dynamics in the first condition, he/she will perform in the same order.)
+* After finised the first part, start the second part.
+
+## WHEN PARTICIPANT ARRIVES:
+
+- *Italic*: Verbal instruction
+- >: **What to do**
+- Please use a checklist to make sure you don't forget each procedure.
+
+### 1. Introduction
+
+*Thank you for participating in the experiment. The aim of the experiment is to investigate how people play a piece of music expressively. The experiment is going to last about one hour.*
+
+*If you have any questions or concerns, please ask the experimenter at any time about the nature of the study or the methods we are using. Also, you have the right to withdraw from the experiment at any time.*
+
+*Before we start the experiment, please read the information sheet carefully and fill it out if you agree to take part in the study.*
+
+> **Collect the informed consent form**
+
+### 2. Practice session
+
+> **Open practicePatch**
+
+> **Click “inst_1”**
+
+<img src="./image/inst_1.png">
+
+> **Click “stim_n”**
+
+<img src="./image/prac_stim_n.png">
+
+> **Click “Metro”**
+
+*Please practise until you feel that you comfortably perform the piece without pitch errors. After practice, we will have a brief test to make sure you can perform the piece. Also, you don't have to memorise the piece as you can see sheet music in front of you. Let me know when you are ready for the brief test.*
+
+> **Let the participant practise the piece**
+
+**Click "inst_2"**
+
+<img src="./image/inst_2.png">
+
+> **Check whether he or she can produce the sound without pitch errors twice consecutively**
+
+**Click "stim_n"]**
+
+- If he or she cannot perform the piece within **5 attempts**, he or she cannot continue the experiment.
+
+### 3. Experiment
+
+- Participants whose SubNr is odd start from the teaching condition whereas those whose SubNr is even start from the performing condition.
+- Please see the order of the stimuli (i.e., starting from articulation or dynamics) on the practicePatcher.
+
+#### 1) Teaching condition
+1. 1st Stimulus
+
+*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask the experimenter now. If you don't have any question, I will give you the sound of the metronome and please perform the piece according to the notation.*
+
+> **Open .maxpat** <span>add later!</span>
+
+> **Click 1st Stimulus**
+
+> **Explain the musical notation**
+
+Definition (based on Wikipedia)
+
+- Legato: musical notes are played smoothly and connected
+- Staccato: musical notes have shortened duration and are separated from each other
+- Forte: louder sound
+- Piano: quieter sound
+
+<img src="./image/prac_stim_a.png">
+
+> **Check the participant to play the piece expressively without pitch errors twice consecutively**
+
+*Thank you. Do you have any questions?*
+
+> **Click “inst_t”**
+
+<img src="./image/inst_t.png">
+
+> **Close practicePatch**
+
+> **Open main.maxpat**
+
+> **1 - 8 trials**
+
+2. 2nd Stimulus
+
+*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
+
+**Open .maxpat** <span>add later!</span>
+
+> **Click 2nd Stimuli**
+
+> **Explain the musical notation**
+
+<img src="./image/prac_stim_d.png">
+
+> **Check the participant to play the piece expressively without pitch errors twice consecutively**
+
+*Thank you. Do you have any questions?*
+
+> **Click “inst_t”**
+
+> **Close .maxpat** <span>add later!</span>
+
+> **Open main.maxpat**
+
+> **1 - 8 trials**
+
+*Thank you. Next, you will perform the same piece again but in a different condition.*
+
+#### 2) Performing condition
+1. 1st Stimulus
+
+*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
+
+> **Open practicePatch**
+
+> **Click 1st Stimulus**
+
+> **Explain the musical notation]**
+
+**Check the participant to play the piece expressively without pitch errors twice consecutively**
+
+*Thank you. Do you have any questions?*
+
+> **Click “inst_p”**
+
+<img src="./image/inst_p.png">
+
+> **Close .maxpat** <span>add later!</span>
+
+> **Open main.maxpat**
+
+> **1 - 8 trials**
+
+2. 2nd Stimulus
+
+*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
+
+**Open practicePatch**
+
+**Click 2nd Stimulus**
+
+**Explain the musical notation]**
+
+> **Check the participant to play the piece expressively without pitch errors twice consecutively**
+
+*Thank you. Do you have any questions?*
+
+> **Click “inst_p”**
+
+> **Close .maxpat** <span>add later!</span>
+
+> **Open main.maxpat**
+
+> **1 - 8 trials**
+
+### Questionnaire
+
+*Thank you. This is the end of the experiment. Lastly, could you please fill in the questionnaire?*
+
+> **Collect the short questionnaire**
+
+*Thank you for coming today and please feel free to contact me if you have any questions about my study.*
+
+## AFTER PARTICIPANT LEAVES:
+1. Check whether data were recorded correctly. If not, leave a memo on the checklist.
+2. Quit Max.
+3. Turn off the piano, the audio interface and the screen in front of the piano.
+
+## Notes
+- If participants ask whether they can use different fingerings, please let them know that they can play as they like.
+- If participants ask whether they should keep the tempo or not, please let them know that they can play as they like, but keep in mind the metronome tells you the original tempo of this piece.
+- If participants ask anything related to detailed information about each skill (e.g., deeper legato? normal/subito forte?), just ask them to play as they like.
+- If participants start playing before the metronome beats, please record the same trial again.
