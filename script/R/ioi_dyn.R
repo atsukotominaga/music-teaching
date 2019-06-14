@@ -272,7 +272,7 @@ p_ioi_seq <- ggplot(data = ioi_seq_stats, aes(x = Interval, y = Mean, group = Co
   geom_line() +
   geom_point() +
   geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
-  annotate("text", 2, 188, label = "Tempo (80bpm)", vjust = -1, vjust = -1, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  annotate("text", 2, 188, label = "Tempo (80bpm)", vjust = -1, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
   facet_grid(Skill ~ .) + 
