@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 0.0, 0.0, 640.0, 480.0 ],
+		"rect" : [ 34.0, 56.0, 1587.0, 1110.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -38,6 +38,18 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-6",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 790.25, 100.5, 54.0, 22.0 ],
+					"text" : "delay 10"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-3",
 					"maxclass" : "newobj",
@@ -91,8 +103,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 578.0, 306.0, 47.0, 22.0 ],
-					"text" : "image/"
+					"patching_rect" : [ 578.0, 306.0, 46.0, 22.0 ],
+					"text" : "stimuli/"
 				}
 
 			}
@@ -134,13 +146,11 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-67",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 518.0, 229.5, 356.699950999999999, 35.0 ],
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v1.0/script/Max/\""
+					"patching_rect" : [ 518.0, 229.5, 356.699950999999999, 22.0 ]
 				}
 
 			}
@@ -151,7 +161,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 790.25, 74.5, 47.0, 20.0 ],
+					"patching_rect" : [ 790.25, 42.333359000000002, 47.0, 20.0 ],
 					"text" : "Path"
 				}
 
@@ -163,7 +173,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 790.25, 100.5, 60.0, 22.0 ],
+					"patching_rect" : [ 790.25, 68.333359000000002, 60.0, 22.0 ],
 					"text" : "loadbang"
 				}
 
@@ -366,7 +376,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-17", 0 ],
+					"destination" : [ "obj-6", 0 ],
 					"source" : [ "obj-20", 0 ]
 				}
 
@@ -447,6 +457,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-67", 0 ],
 					"source" : [ "obj-5", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-17", 0 ],
+					"source" : [ "obj-6", 0 ]
 				}
 
 			}

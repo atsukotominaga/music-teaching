@@ -10,9 +10,9 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 79.0, 2092.0, 1327.0 ],
+		"rect" : [ 34.0, 56.0, 1852.0, 1110.0 ],
 		"bglocked" : 0,
-		"openinpresentation" : 0,
+		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
 		"default_fontface" : 0,
 		"default_fontname" : "Arial",
@@ -38,6 +38,21 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"autofit" : 1,
+					"id" : "obj-22",
+					"maxclass" : "fpic",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "jit_matrix" ],
+					"patching_rect" : [ 1326.0, 495.0, 492.0, 292.0 ],
+					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/stimuli/3_t_stim_d.png",
+					"presentation" : 1,
+					"presentation_rect" : [ 13.0, 288.0, 596.0, 351.0 ]
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"fontsize" : 20.0,
 					"id" : "obj-43",
@@ -279,8 +294,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1386.0, 378.0, 47.0, 22.0 ],
-					"text" : "image/"
+					"patching_rect" : [ 1386.0, 378.0, 46.0, 22.0 ],
+					"text" : "stimuli/"
 				}
 
 			}
@@ -394,7 +409,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1101.0, 210.0, 50.0, 22.0 ],
-					"text" : "4"
+					"text" : "0"
 				}
 
 			}
@@ -422,21 +437,6 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1326.0, 455.25, 73.0, 22.0 ],
 					"text" : "prepend pic"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-8",
-					"jspainterfile" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/display.maxpat",
-					"maxclass" : "fpic",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "jit_matrix" ],
-					"patching_rect" : [ 1326.0, 486.75, 438.0, 304.5 ],
-					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/image/4_t_stim_m.png",
-					"presentation" : 1,
-					"presentation_rect" : [ 13.0, 286.5, 588.0, 352.5 ]
 				}
 
 			}
@@ -567,6 +567,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-123",
+					"int" : 1,
 					"maxclass" : "gswitch",
 					"numinlets" : 3,
 					"numoutlets" : 1,
@@ -1031,7 +1032,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 571.0, 225.0, 24.0, 24.0 ]
+					"patching_rect" : [ 571.0, 225.0, 24.0, 24.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 257.0, 108.5, 104.0, 104.0 ]
 				}
 
 			}
@@ -1129,7 +1132,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-8", 0 ],
+					"destination" : [ "obj-22", 0 ],
 					"source" : [ "obj-10", 0 ]
 				}
 
@@ -1743,6 +1746,13 @@
 				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "3_t_stim_d.png",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/stimuli",
+				"patcherrelativepath" : "./stimuli",
+				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
