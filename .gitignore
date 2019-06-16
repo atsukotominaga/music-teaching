@@ -11,8 +11,6 @@ script/lilypond/*pdf
 # Max
 script/Max/data
 script/Max/midi
-# add later
-script/Max/cond
 
 # R
 script/R/.Rapp.history
