@@ -53,7 +53,7 @@ image
 image
 
 ### Experimental Design <span>
-1. First part (as we did in teaching-v1.0)
+1. [First part](#I.-First-part) as we did in teaching-v1.0
 
 |Condition 1 (teaching / performing)|
 |-----------------------------------|
@@ -66,7 +66,7 @@ image
 |2nd Stimulus (dynamics / articulation) - Block 4|
 
 ---
-2. Second part
+2. [Second part](#II.-Second-part)
 
 |Condition 1 (teaching / performing)|
 |-----------------------------------|
@@ -78,7 +78,7 @@ image
 
 * The order of the conditions is counterbalanced across participants.
 * The order of the skills is counterbalanced across participants, but it is fixed within one condition (e.g., if a participant start with articulation and move on dynamics in the first condition, he/she will perform in the same order.)
-* After finised the first part, start the second part.
+* After finished the first part, start the second part.
 
 ## WHEN PARTICIPANT ARRIVES:
 
@@ -86,8 +86,7 @@ image
 - >: **What to do**
 - Please use a checklist to make sure you don't forget each procedure.
 
-### 1. Introduction
-
+### Introduction
 *Thank you for participating in the experiment. The aim of the experiment is to investigate how people play a piece of music expressively. The experiment is going to last about one hour.*
 
 *If you have any questions or concerns, please ask the experimenter at any time about the nature of the study or the methods we are using. Also, you have the right to withdraw from the experiment at any time.*
@@ -96,7 +95,13 @@ image
 
 > **Collect the informed consent form**
 
-### 2. Practice session
+### Warm-up session
+*Now, you are going to play what you practised during the experiment. Before we start testing, I would like you to practise your favourite pieces / exercises so that you can get to used to the digital piano. When you think that you can comfortably perform music with this piano, please let me know.*
+
+> **Let participants practise their favourite pieces**
+
+## I. First part
+### Practice session
 
 > **Open practicePatch**
 
@@ -114,20 +119,20 @@ image
 
 > **Let the participant practise the piece**
 
-**Click "inst_2"**
+> **Click "inst_2"**
 
 <img src="./image/inst_2.png">
 
 > **Check whether he or she can produce the sound without pitch errors twice consecutively**
 
-**Click "stim_n"]**
+> **Click "stim_n"**
 
 - If he or she cannot perform the piece within **5 attempts**, he or she cannot continue the experiment.
 
-### 3. Experiment
+### Experiment
 
-- Participants whose SubNr is odd start from the teaching condition whereas those whose SubNr is even start from the performing condition.
-- Please see the order of the stimuli (i.e., starting from articulation or dynamics) on the practicePatcher.
+- <span>Participants whose SubNr is odd start from the teaching condition whereas those whose SubNr is even start from the performing condition.</span>
+- <span>Please see the order of the stimuli (i.e., starting from articulation or dynamics) on the practicePatcher.</span>
 
 #### 1) Teaching condition
 1. 1st Stimulus
@@ -139,6 +144,8 @@ image
 > **Click 1st Stimulus**
 
 > **Explain the musical notation**
+
+> **Ask participants to practice until they feel they comfortably perform the piece**
 
 Definition (based on Wikipedia)
 
@@ -173,6 +180,8 @@ Definition (based on Wikipedia)
 
 > **Explain the musical notation**
 
+> **Ask participants to practice until they feel they comfortably perform the piece**
+
 <img src="./image/prac_stim_d.png">
 
 > **Check the participant to play the piece expressively without pitch errors twice consecutively**
@@ -198,7 +207,9 @@ Definition (based on Wikipedia)
 
 > **Click 1st Stimulus**
 
-> **Explain the musical notation]**
+> **Explain the musical notation**
+
+> **Ask participants to practice until they feel they comfortably perform the piece**
 
 **Check the participant to play the piece expressively without pitch errors twice consecutively**
 
@@ -218,11 +229,13 @@ Definition (based on Wikipedia)
 
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 
-**Open practicePatch**
+> **Open practicePatch**
 
-**Click 2nd Stimulus**
+> **Click 2nd Stimulus**
 
-**Explain the musical notation]**
+> **Explain the musical notation**
+
+> **Ask participants to practice until they feel they comfortably perform the piece**
 
 > **Check the participant to play the piece expressively without pitch errors twice consecutively**
 
@@ -236,7 +249,69 @@ Definition (based on Wikipedia)
 
 > **1 - 8 trials**
 
-### Questionnaire
+## II. Second part
+#### 1) Teaching condition
+1. 3rd Stimulus
+
+*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
+
+> **Open .maxpat** <span>add later!</span>
+
+> **Click 3st Stimulus**
+
+<img src="./image/prac_stim_m.png">
+
+> **Explain the musical notation**
+
+> **Ask participants to practice until they feel they comfortably perform the piece**
+
+Definition (based on Wikipedia)
+
+- Legato: musical notes are played smoothly and connected
+- Staccato: musical notes have shortened duration and are separated from each other
+- Forte: louder sound
+- Piano: quieter sound
+
+> **Check the participant to play the piece expressively without pitch errors twice consecutively**
+
+*Thank you. Do you have any questions?*
+
+> **Click “inst_t”**
+
+> **Close practicePatch**
+
+> **Open main.maxpat**
+
+> **1 - 8 trials**
+
+*Thank you. Next, you will perform the same piece again but in a different condition.*
+
+#### 2) Performing condition
+1. 3rd Stimulus
+
+*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
+
+> **Open practicePatch**
+
+> **Click 1st Stimulus**
+
+> **Explain the musical notation**
+
+> **Ask participants to practice until they feel they comfortably perform the piece**
+
+**Check the participant to play the piece expressively without pitch errors twice consecutively**
+
+*Thank you. Do you have any questions?*
+
+> **Click “inst_p”**
+
+> **Close .maxpat** <span>add later!</span>
+
+> **Open main.maxpat**
+
+> **1 - 8 trials**
+
+## Questionnaire
 
 *Thank you. This is the end of the experiment. Lastly, could you please fill in the questionnaire?*
 
