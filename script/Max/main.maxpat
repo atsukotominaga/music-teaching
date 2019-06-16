@@ -2,15 +2,15 @@
 	"patcher" : 	{
 		"fileversion" : 1,
 		"appversion" : 		{
-			"major" : 8,
-			"minor" : 0,
+			"major" : 7,
+			"minor" : 3,
 			"revision" : 5,
-			"architecture" : "x64",
+			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"classnamespace" : "box",
-		"rect" : [ 34.0, 56.0, 1852.0, 1110.0 ],
+		"rect" : [ 34.0, 56.0, 1103.0, 960.0 ],
+		"editing_bgcolor" : [ 0.873151, 0.873319, 0.873123, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -46,7 +46,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 1326.0, 495.0, 492.0, 292.0 ],
-					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/stimuli/3_t_stim_d.png",
+					"pic" : "Macintosh HD:/Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli/black.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 13.0, 288.0, 596.0, 351.0 ]
 				}
@@ -62,19 +62,8 @@
 					"patching_rect" : [ 1326.0, 797.0, 232.0, 29.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 13.0, 253.0, 207.0, 29.0 ],
+					"style" : "",
 					"text" : "Display"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-23",
-					"maxclass" : "number",
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"outlettype" : [ "", "bang" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 982.0, 274.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -86,7 +75,7 @@
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
 					"id" : "obj-14",
-					"jspainterfile" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/subCond.maxpat",
+					"jspainterfile" : "subCond.maxpat",
 					"lockeddragscroll" : 0,
 					"maxclass" : "bpatcher",
 					"name" : "subCond.maxpat",
@@ -113,8 +102,9 @@
 					"presentation" : 1,
 					"presentation_linecount" : 8,
 					"presentation_rect" : [ 374.0, 48.0, 235.0, 133.0 ],
+					"style" : "",
 					"text" : "* In case you want to run the previous trial(N) again, please enter the number of N-1 to reset trialNr.\n\ne.g., if you want to run the 1st trial again, please enter \"0\".\nif you want to run the 4th trial again, please enter \"3\".",
-					"textcolor" : [ 0.986246049404144, 0.007120788097382, 0.027434188872576, 1.0 ]
+					"textcolor" : [ 0.986246, 0.007121, 0.027434, 1.0 ]
 				}
 
 			}
@@ -125,6 +115,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 912.0, 736.0, 76.0, 20.0 ],
+					"style" : "",
 					"text" : "current input"
 				}
 
@@ -137,6 +128,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 570.0, 602.0, 54.0, 22.0 ],
+					"style" : "",
 					"text" : "pack 0 0"
 				}
 
@@ -149,7 +141,7 @@
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
 					"id" : "obj-15",
-					"jspainterfile" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/subMIDIRec.maxpat",
+					"jspainterfile" : "subMIDIRec.maxpat",
 					"lockeddragscroll" : 0,
 					"maxclass" : "bpatcher",
 					"name" : "subMIDIRec.maxpat",
@@ -195,6 +187,7 @@
 					"patching_rect" : [ 15.0, 48.0, 342.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 48.0, 342.0, 20.0 ],
+					"style" : "",
 					"text" : "Private repo: https://github.com/atsukotominaga/teaching-v2.0"
 				}
 
@@ -209,6 +202,7 @@
 					"patching_rect" : [ 15.0, 15.0, 241.0, 29.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 15.0, 241.0, 29.0 ],
+					"style" : "",
 					"text" : "Experiment 2"
 				}
 
@@ -220,6 +214,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1403.0, 455.25, 159.0, 20.0 ],
+					"style" : "",
 					"text" : "show images on the screen"
 				}
 
@@ -233,6 +228,7 @@
 					"patching_rect" : [ 941.0, 210.0, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 88.0, 192.5, 150.0, 20.0 ],
+					"style" : "",
 					"text" : "Trial No."
 				}
 
@@ -246,6 +242,7 @@
 					"patching_rect" : [ 138.0, 176.0, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 88.0, 150.5, 150.0, 20.0 ],
+					"style" : "",
 					"text" : "Block No."
 				}
 
@@ -259,6 +256,7 @@
 					"patching_rect" : [ 138.0, 105.0, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 88.0, 108.5, 150.0, 20.0 ],
+					"style" : "",
 					"text" : "Participant No."
 				}
 
@@ -271,6 +269,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1446.0, 378.0, 54.0, 22.0 ],
+					"style" : "",
 					"text" : "r picture"
 				}
 
@@ -283,6 +282,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1326.0, 413.0, 139.0, 22.0 ],
+					"style" : "",
 					"text" : "sprintf symout %s%s%s"
 				}
 
@@ -295,6 +295,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1386.0, 378.0, 46.0, 22.0 ],
+					"style" : "",
 					"text" : "stimuli/"
 				}
 
@@ -308,7 +309,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1326.0, 276.0, 298.0, 49.0 ],
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/\""
+					"style" : "",
+					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/\""
 				}
 
 			}
@@ -321,6 +323,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 1555.0, 244.0, 69.0, 22.0 ],
 					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
+					"style" : "",
 					"text" : "thispatcher"
 				}
 
@@ -333,6 +336,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1555.0, 213.0, 34.0, 22.0 ],
+					"style" : "",
 					"text" : "path"
 				}
 
@@ -344,6 +348,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1736.0, 219.0, 56.0, 22.0 ],
+					"style" : "",
 					"text" : "s picture"
 				}
 
@@ -356,6 +361,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1736.0, 189.0, 62.0, 22.0 ],
+					"style" : "",
 					"text" : "black.png"
 				}
 
@@ -368,6 +374,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "bang" ],
 					"patching_rect" : [ 1540.0, 150.0, 34.0, 22.0 ],
+					"style" : "",
 					"text" : "t b b"
 				}
 
@@ -380,6 +387,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 1540.0, 111.0, 60.0, 22.0 ],
+					"style" : "",
 					"text" : "loadbang"
 				}
 
@@ -396,8 +404,9 @@
 					"patching_rect" : [ 1101.0, 75.0, 92.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 400.0, 187.5, 94.0, 35.0 ],
+					"style" : "",
 					"text" : "RESET",
-					"textcolor" : [ 0.988903880119324, 0.400471746921539, 0.399960249662399, 1.0 ]
+					"textcolor" : [ 0.988904, 0.400472, 0.39996, 1.0 ]
 				}
 
 			}
@@ -409,6 +418,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1101.0, 210.0, 50.0, 22.0 ],
+					"style" : "",
 					"text" : "0"
 				}
 
@@ -424,7 +434,8 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 1132.0, 122.0, 70.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 507.0, 187.5, 70.0, 35.0 ]
+					"presentation_rect" : [ 507.0, 187.5, 70.0, 35.0 ],
+					"style" : ""
 				}
 
 			}
@@ -436,6 +447,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1326.0, 455.25, 73.0, 22.0 ],
+					"style" : "",
 					"text" : "prepend pic"
 				}
 
@@ -448,6 +460,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 903.0, 150.0, 72.0, 22.0 ],
+					"style" : "",
 					"text" : "loadmess 0"
 				}
 
@@ -458,7 +471,8 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 875.0, 283.0, 52.0, 22.0 ],
+					"patching_rect" : [ 875.0, 315.0, 52.0, 22.0 ],
+					"style" : "",
 					"text" : "s trialNr"
 				}
 
@@ -471,6 +485,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "int" ],
 					"patching_rect" : [ 864.0, 253.0, 30.0, 22.0 ],
+					"style" : "",
 					"text" : "t b i"
 				}
 
@@ -488,7 +503,8 @@
 					"patching_rect" : [ 864.0, 210.0, 72.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 13.0, 185.0, 70.0, 35.0 ],
-					"textcolor" : [ 0.996078431372549, 0.996078431372549, 0.996078431372549, 1.0 ]
+					"style" : "",
+					"textcolor" : [ 0.996078, 0.996078, 0.996078, 1.0 ]
 				}
 
 			}
@@ -500,6 +516,7 @@
 					"numoutlets" : 4,
 					"outlettype" : [ "int", "", "", "int" ],
 					"patching_rect" : [ 864.0, 180.0, 71.0, 22.0 ],
+					"style" : "",
 					"text" : "counter 1 8"
 				}
 
@@ -512,6 +529,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 825.0, 795.0, 150.0, 33.0 ],
+					"style" : "",
 					"text" : "allow key presses after the metronome"
 				}
 
@@ -524,6 +542,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 479.0, 652.0, 29.5, 22.0 ],
+					"style" : "",
 					"text" : "0"
 				}
 
@@ -536,6 +555,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "bang" ],
 					"patching_rect" : [ 479.0, 315.0, 32.0, 22.0 ],
+					"style" : "",
 					"text" : "t b b"
 				}
 
@@ -547,8 +567,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 780.0, 855.0, 24.0, 24.0 ]
+					"patching_rect" : [ 780.0, 855.0, 24.0, 24.0 ],
+					"style" : ""
 				}
 
 			}
@@ -560,7 +580,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 515.75, 652.0, 24.0, 24.0 ]
+					"patching_rect" : [ 515.75, 652.0, 24.0, 24.0 ],
+					"style" : ""
 				}
 
 			}
@@ -573,7 +594,8 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 780.0, 795.0, 41.0, 32.0 ]
+					"patching_rect" : [ 780.0, 795.0, 41.0, 32.0 ],
+					"style" : ""
 				}
 
 			}
@@ -584,6 +606,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 825.0, 900.0, 95.0, 22.0 ],
+					"style" : "",
 					"text" : "print midiNoteIn"
 				}
 
@@ -596,6 +619,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 825.0, 872.0, 76.0, 22.0 ],
+					"style" : "",
 					"text" : "pack 0 0 0 0"
 				}
 
@@ -608,6 +632,7 @@
 					"numoutlets" : 4,
 					"outlettype" : [ "int", "int", "int", "int" ],
 					"patching_rect" : [ 825.0, 840.0, 50.5, 22.0 ],
+					"style" : "",
 					"text" : "xnotein"
 				}
 
@@ -620,6 +645,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"patching_rect" : [ 802.0, 765.0, 42.0, 22.0 ],
+					"style" : "",
 					"text" : "midiin"
 				}
 
@@ -632,6 +658,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 960.0, 690.0, 150.0, 33.0 ],
+					"style" : "",
 					"text" : "choose Digital Piano as an instrument"
 				}
 
@@ -644,6 +671,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 945.0, 645.0, 56.0, 22.0 ],
+					"style" : "",
 					"text" : "delay 10"
 				}
 
@@ -651,13 +679,14 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-111",
-					"items" : [ "IAC Driver IAC Bus 1", ",", "to Max 1", ",", "to Max 2" ],
+					"items" : [ "IAC Driver Bus 1", ",", "Digital Piano", ",", "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "int", "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 810.0, 735.0, 100.0, 22.0 ]
+					"patching_rect" : [ 810.0, 735.0, 100.0, 22.0 ],
+					"style" : ""
 				}
 
 			}
@@ -669,6 +698,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 840.0, 690.0, 119.0, 22.0 ],
+					"style" : "",
 					"text" : "symbol Digital Piano"
 				}
 
@@ -681,6 +711,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 810.0, 645.0, 52.0, 22.0 ],
+					"style" : "",
 					"text" : "midiinfo"
 				}
 
@@ -693,6 +724,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 810.0, 615.0, 121.0, 22.0 ],
+					"style" : "",
 					"text" : "loadmess controllers"
 				}
 
@@ -704,6 +736,7 @@
 					"numinlets" : 3,
 					"numoutlets" : 0,
 					"patching_rect" : [ 735.0, 504.0, 67.0, 22.0 ],
+					"style" : "",
 					"text" : "noteout 10"
 				}
 
@@ -716,6 +749,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "int", "int" ],
 					"patching_rect" : [ 735.0, 480.0, 69.0, 22.0 ],
+					"style" : "",
 					"text" : "unpack 0 0"
 				}
 
@@ -728,6 +762,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 735.0, 456.0, 34.0, 22.0 ],
+					"style" : "",
 					"text" : "60 0"
 				}
 
@@ -740,6 +775,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 735.0, 432.0, 60.0, 22.0 ],
+					"style" : "",
 					"text" : "loadbang"
 				}
 
@@ -752,6 +788,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 735.0, 396.0, 150.0, 33.0 ],
+					"style" : "",
 					"text" : "solve a metronome delay for the first beat"
 				}
 
@@ -764,6 +801,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 945.0, 615.0, 60.0, 22.0 ],
+					"style" : "",
 					"text" : "loadbang"
 				}
 
@@ -775,6 +813,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 639.5, 105.0, 150.0, 20.0 ],
+					"style" : "",
 					"text" : "assign a start/stop key"
 				}
 
@@ -786,6 +825,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 58.0, 219.0, 59.0, 22.0 ],
+					"style" : "",
 					"text" : "s blockNr"
 				}
 
@@ -797,6 +837,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 58.0, 150.0, 52.0, 22.0 ],
+					"style" : "",
 					"text" : "s subNr"
 				}
 
@@ -814,7 +855,8 @@
 					"patching_rect" : [ 58.0, 176.0, 72.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 13.0, 143.0, 70.0, 35.0 ],
-					"textcolor" : [ 1.0, 1.0, 0.400000035762787, 1.0 ]
+					"style" : "",
+					"textcolor" : [ 1.0, 1.0, 0.4, 1.0 ]
 				}
 
 			}
@@ -831,7 +873,8 @@
 					"patching_rect" : [ 58.0, 105.0, 72.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 13.0, 101.0, 70.0, 35.0 ],
-					"textcolor" : [ 1.0, 1.0, 0.400000035762787, 1.0 ]
+					"style" : "",
+					"textcolor" : [ 1.0, 1.0, 0.4, 1.0 ]
 				}
 
 			}
@@ -843,6 +886,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 570.0, 360.0, 69.0, 22.0 ],
+					"style" : "",
 					"text" : "delay 3000"
 				}
 
@@ -855,6 +899,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "bang" ],
 					"patching_rect" : [ 345.0, 315.0, 34.0, 22.0 ],
+					"style" : "",
 					"text" : "t b b"
 				}
 
@@ -867,6 +912,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 479.0, 270.0, 120.0, 22.0 ],
+					"style" : "",
 					"text" : "if $i1 == 0 then bang"
 				}
 
@@ -878,6 +924,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 639.5, 566.0, 150.0, 20.0 ],
+					"style" : "",
 					"text" : "\b10: percussion sound"
 				}
 
@@ -890,6 +937,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "" ],
 					"patching_rect" : [ 513.5, 401.0, 36.0, 22.0 ],
+					"style" : "",
 					"text" : "sel 8"
 				}
 
@@ -902,6 +950,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 513.5, 427.0, 33.0, 22.0 ],
+					"style" : "",
 					"text" : "stop"
 				}
 
@@ -913,6 +962,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 653.0, 397.0, 75.0, 20.0 ],
+					"style" : "",
 					"text" : "metronome"
 				}
 
@@ -924,6 +974,7 @@
 					"numinlets" : 3,
 					"numoutlets" : 0,
 					"patching_rect" : [ 570.0, 566.0, 67.0, 22.0 ],
+					"style" : "",
 					"text" : "noteout 10"
 				}
 
@@ -936,6 +987,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "float", "float" ],
 					"patching_rect" : [ 570.0, 530.0, 103.0, 22.0 ],
+					"style" : "",
 					"text" : "makenote 60 100"
 				}
 
@@ -948,6 +1000,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 605.0, 495.0, 29.5, 22.0 ],
+					"style" : "",
 					"text" : "31"
 				}
 
@@ -960,6 +1013,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 570.0, 495.0, 29.5, 22.0 ],
+					"style" : "",
 					"text" : "34"
 				}
 
@@ -972,6 +1026,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "bang", "bang", "" ],
 					"patching_rect" : [ 570.0, 459.0, 46.0, 22.0 ],
+					"style" : "",
 					"text" : "sel 1 5"
 				}
 
@@ -984,6 +1039,7 @@
 					"numoutlets" : 4,
 					"outlettype" : [ "int", "", "", "int" ],
 					"patching_rect" : [ 570.0, 427.0, 71.0, 22.0 ],
+					"style" : "",
 					"text" : "counter 1 8"
 				}
 
@@ -996,6 +1052,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"patching_rect" : [ 570.0, 397.0, 81.0, 22.0 ],
+					"style" : "",
 					"text" : "tempo 60 1 4"
 				}
 
@@ -1008,6 +1065,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 345.0, 270.0, 120.0, 22.0 ],
+					"style" : "",
 					"text" : "if $i1 == 1 then bang"
 				}
 
@@ -1020,6 +1078,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 675.0, 165.0, 79.0, 33.0 ],
+					"style" : "",
 					"text" : "Start: A key\nStop: D key"
 				}
 
@@ -1034,7 +1093,8 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 571.0, 225.0, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 257.0, 108.5, 104.0, 104.0 ]
+					"presentation_rect" : [ 257.0, 108.5, 104.0, 104.0 ],
+					"style" : ""
 				}
 
 			}
@@ -1046,6 +1106,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 630.0, 195.0, 29.5, 22.0 ],
+					"style" : "",
 					"text" : "0"
 				}
 
@@ -1058,6 +1119,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 571.0, 195.0, 29.5, 22.0 ],
+					"style" : "",
 					"text" : "1"
 				}
 
@@ -1070,6 +1132,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 630.0, 165.0, 43.0, 22.0 ],
+					"style" : "",
 					"text" : "STOP"
 				}
 
@@ -1082,6 +1145,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 571.0, 165.0, 49.0, 22.0 ],
+					"style" : "",
 					"text" : "START"
 				}
 
@@ -1094,6 +1158,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "bang", "bang", "bang" ],
 					"patching_rect" : [ 571.0, 135.0, 44.0, 22.0 ],
+					"style" : "",
 					"text" : "t b b b"
 				}
 
@@ -1106,6 +1171,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "bang", "bang", "" ],
 					"patching_rect" : [ 571.0, 105.0, 66.0, 22.0 ],
+					"style" : "",
 					"text" : "sel 97 100"
 				}
 
@@ -1118,6 +1184,7 @@
 					"numoutlets" : 4,
 					"outlettype" : [ "int", "int", "int", "int" ],
 					"patching_rect" : [ 571.0, 75.0, 50.5, 22.0 ],
+					"style" : "",
 					"text" : "key"
 				}
 
@@ -1336,15 +1403,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-140", 0 ],
-					"order" : 1,
-					"source" : [ "obj-137", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-23", 0 ],
-					"order" : 0,
 					"source" : [ "obj-137", 0 ]
 				}
 
@@ -1722,37 +1780,37 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "subFileName.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subMIDIRec.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subCond.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "condfile.csv",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/cond",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
-				"name" : "3_t_stim_d.png",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/stimuli",
+				"name" : "black.png",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli",
 				"patcherrelativepath" : "./stimuli",
-				"type" : "PNG",
+				"type" : "PNG ",
 				"implicit" : 1
 			}
 , 			{
@@ -1800,8 +1858,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1950,8 +2008,7 @@
 				"parentstyle" : "",
 				"multi" : 0
 			}
- ],
-		"editing_bgcolor" : [ 0.873151183128357, 0.873318791389465, 0.873122990131378, 1.0 ]
+ ]
 	}
 
 }
