@@ -21,7 +21,7 @@ bg = Image.new("RGB",(2560, 1440),"black") # Black 2560 px x 1440 px
 savename = "./stimuli/black.png"
 bg.save(savename, quality = 100)
 
-ls_file = os.listdir("./cropped/") # Read the list of image files
+ls_file = [f for f in os.listdir("./cropped/") if f.endswith('.png')] # Read the list of image files
 
 for image in ls_file:
     fontpath = "System/Library/Fonts/HelveticaNeue.ttc" # !!!Set the location of a font file!!!
@@ -54,6 +54,8 @@ for image in ls_file:
 print("Stimuli: Done!")
 
 #%% Practice Stimuli
+# Outputs: prac_stim_(a, d, m, n).png
+
 ls_file = os.listdir("./cropped/practice/") # Read the list of image files
 
 # Create a practice folder if not exist (save created pictures into the folder)
@@ -64,7 +66,6 @@ for image in ls_file:
     fontpath = "System/Library/Fonts/HelveticaNeue.ttc" # !!!Set the location of a font file!!!
     font = ImageFont.truetype(fontpath, 120) # Fonttype and fontsize
     bg = Image.new("RGB",(2560, 1440),"black") # Background - Black 2560 px x 1440 px
-    wh = Image.new("RGB",(2250, 600), "white") # White square 2250 px x 600px
     imgname = "./cropped/practice/" + image
     img = Image.open(imgname) # Open a stimulus image
     # Make copies of each image and combine them for each condition
