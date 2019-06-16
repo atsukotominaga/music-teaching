@@ -2,12 +2,15 @@
 
 # Created: 12/06/2019
 # This script generates images for each trial
+
+#%% Experimental Stimuli
 # Outputs: trialNr(1:8)_cond(t, p)_stim_(a, d, m).png
 
 # Import necessary packages
 import os
 from PIL import Image, ImageDraw, ImageFont
 
+#%%
 # Create a stimuli folder if not exist (save created stimuli into the folder)
 if not os.path.exists("stimuli"):
     os.makedirs("stimuli")
@@ -48,5 +51,33 @@ for image in ls_file:
                 savename = "./stimuli/" + str(i+1) + "_" + 'p' + "_" + image
                 stim_current.save(savename, quality = 100)
 
-print("Done!")
+print("Stimuli: Done!")
 
+#%% Practice Stimuli
+ls_file = os.listdir("./cropped/practice/") # Read the list of image files
+
+# Create a practice folder if not exist (save created pictures into the folder)
+if not os.path.exists("practice"):
+    os.makedirs("practice")
+    
+for image in ls_file:
+    fontpath = "System/Library/Fonts/HelveticaNeue.ttc" # !!!Set the location of a font file!!!
+    font = ImageFont.truetype(fontpath, 120) # Fonttype and fontsize
+    bg = Image.new("RGB",(2560, 1440),"black") # Background - Black 2560 px x 1440 px
+    wh = Image.new("RGB",(2250, 600), "white") # White square 2250 px x 600px
+    imgname = "./cropped/practice/" + image
+    img = Image.open(imgname) # Open a stimulus image
+    # Make copies of each image and combine them for each condition
+    stim = bg.copy()
+    img_copy = img.copy()
+    stim.paste(img_copy, (154, 320))
+    if image == "stim_n.png":
+        draw_current = ImageDraw.Draw(stim)
+        draw_current.text((300, 120),"Please practice the piece as notated.", fill = "yellow", font = font)
+        savename = "./practice/" + "prac_" + image
+        stim.save(savename, quality = 100)
+    else:
+        savename = "./practice/" + "prac_" + image
+        stim.save(savename, quality = 100)
+
+print("Practice: Done!")
