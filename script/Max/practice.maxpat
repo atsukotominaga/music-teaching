@@ -222,7 +222,7 @@
 					"jspainterfile" : "subMIDIRec.maxpat",
 					"lockeddragscroll" : 0,
 					"maxclass" : "bpatcher",
-					"name" : "subMIDIRec.maxpat",
+					"name" : "praMIDIRec.maxpat",
 					"numinlets" : 7,
 					"numoutlets" : 0,
 					"offset" : [ 0.0, 0.0 ],
@@ -241,10 +241,10 @@
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
 					"id" : "obj-4",
-					"jspainterfile" : "subFileName.maxpat",
+					"jspainterfile" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/praFileName.maxpat",
 					"lockeddragscroll" : 0,
 					"maxclass" : "bpatcher",
-					"name" : "subFileName.maxpat",
+					"name" : "praFileName.maxpat",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"offset" : [ 0.0, 0.0 ],
@@ -1802,14 +1802,14 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "subFileName.maxpat",
+				"name" : "praFileName.maxpat",
 				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
-				"name" : "subMIDIRec.maxpat",
+				"name" : "praMIDIRec.maxpat",
 				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
