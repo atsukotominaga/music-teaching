@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 0.0, 0.0, 640.0, 480.0 ],
+		"rect" : [ 84.0, 129.0, 640.0, 480.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -560,7 +560,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1359.0, 181.0, 113.0, 22.0 ]
+					"patching_rect" : [ 1359.0, 181.0, 113.0, 22.0 ],
+					"text" : "black.png"
 				}
 
 			}
@@ -582,7 +583,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1101.0, 181.0, 113.0, 22.0 ]
+					"patching_rect" : [ 1101.0, 181.0, 113.0, 22.0 ],
+					"text" : "N/A"
 				}
 
 			}
@@ -1744,15 +1746,15 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
 				"multi" : 0
 			}
  ],
-		"bgcolor" : [ 0.800000071525574, 0.800000071525574, 0.799999952316284, 1.0 ]
+		"bgcolor" : [ 0.901960849761963, 0.901960849761963, 0.901960730552673, 1.0 ]
 	}
 
 }
