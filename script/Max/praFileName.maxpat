@@ -177,8 +177,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 18.0, 18.0, 154.0, 29.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 2,
-					"presentation_rect" : [ 18.0, 18.0, 99.0, 51.0 ],
+					"presentation_rect" : [ 18.0, 18.0, 163.0, 29.0 ],
 					"text" : "Pra - File name"
 				}
 
