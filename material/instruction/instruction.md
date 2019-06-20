@@ -11,6 +11,7 @@ span{
 
 # Instruction
 Author: Atsuko Tominaga - 17/06/2019 (teaching_v2.0)
+- SOMBY MusicLab iMac
 
 ## PARTICIPANT RECRUITMENT:
 
@@ -18,6 +19,7 @@ Author: Atsuko Tominaga - 17/06/2019 (teaching_v2.0)
 - Basic English skills
 
 ## BEFORE PARTICIPANT ARRIVES:
+- Turn off WiFi connection
 - Devices
 1. Connect the audio interface (Focusrite Scarlett 6i6) to Macbook Pro.
 2. Connect two headphones to the audio interface.
@@ -37,20 +39,22 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 ### Max
 
-1. Go to **Desktop >> Max alias >> open the "main.maxpat", the “practicePatch.maxpat” and the “display.maxpat”**. <span>Check the name of patchers later!</span>
-2. Move the window of the “display.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode.
-3. Read the instruction on the “main.maxpat" and the "practicePatch.maxpat". <span>Check the name of patchers later!</span>
-4. Also check whether the piano sounds come from the headphone and MIDI inputs are correctly responded (Pitch and Velocity should change according to key presses on MIDIRecording subpatchers).
+1. Go to **Desktop >> Atsuko_teaching-v2.0 >> open the "main.maxpat", the “practice.maxpat” and the “display.maxpat”**.
+2. Move the window of the “display.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode. If there is a toobar surrounding the display, get rid of it by pressing cmd+8 (not F8).
+3. Read the instruction on the “main.maxpat" and the "practice.maxpat".
+4. Also check whether the piano sounds come from the headphone and <span>MIDI inputs are correctly responded (Pitch and Velocity should change according to key presses on MIDIRecording subpatchers)</span>.
 5. If the sound of the metronome and the piano does not come from the computer speaker, go to **System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”**.
 6. If you cannot still solve the problem above, please quit Max and relaunch it again.
 7. Click the “inst_1” button to show a general instruction on the “display.maxpat”.
 8. Enter SubNr for the current participant.
 
-### Practice Patch <span># Add later!</span>
-image
+### Practice Patch
 
-### Main Patch <span># Add later</span>
-image
+<img src="./image/praPatch.png">
+
+### Main Patch
+
+<img src="./image/mainPatch.png">
 
 ### Experimental Design <span>
 1. [First part](#I.-First-part) as we did in teaching-v1.0
@@ -96,26 +100,26 @@ image
 > **Collect the informed consent form**
 
 ### Warm-up session
-*Now, you are going to play what you practised during the experiment. Before we start testing, I would like you to practise your favourite pieces / exercises so that you can get to used to the digital piano. When you think that you can comfortably perform music with this piano, please let me know.*
+*Now, you are going to play what you practised during the experiment. Before we start testing, I would like you to practise your favourite pieces / exercises so that you can get used to the digital piano. When you think that you can comfortably perform music with this piano, please let me know.*
 
 > **Let participants practise their favourite pieces**
 
 ## I. First part
 ### Practice session
 
-> **Open practicePatch**
+> **Open practice.maxpat**
 
 > **Click “inst_1”**
 
 <img src="./image/inst_1.png">
 
-> **Click “stim_n”**
+> **Click “Non expression”**
 
 <img src="./image/prac_stim_n.png">
 
 > **Click “Metro”**
 
-*Please practise until you feel that you comfortably perform the piece without pitch errors. After practice, we will have a brief test to make sure you can perform the piece. Also, you don't have to memorise the piece as you can see sheet music in front of you. Let me know when you are ready for the brief test.*
+*Please practise until you feel that you comfortably perform the piece without pitch errors. After practice, we will have a brief test to make sure you can perform the piece. Let me know when you are ready for the brief test.*
 
 > **Let the participant practise the piece**
 
@@ -125,23 +129,23 @@ image
 
 > **Check whether he or she can produce the sound without pitch errors twice consecutively**
 
-> **Click "stim_n"**
+> **Click "Non expression"**
 
 - If he or she cannot perform the piece within **5 attempts**, he or she cannot continue the experiment.
 
 ### Experiment
 
 - <span>Participants whose SubNr is odd start from the teaching condition whereas those whose SubNr is even start from the performing condition.</span>
-- <span>Please see the order of the stimuli (i.e., starting from articulation or dynamics) on the practicePatcher.</span>
+- <span>Please see the order of the stimuli (i.e., starting from articulation or dynamics) on the practice.maxpat.</span>
 
 #### 1) Teaching condition
 1. 1st Stimulus
 
 *You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask the experimenter now. If you don't have any question, I will give you the sound of the metronome and please perform the piece according to the notation.*
 
-> **Open .maxpat** <span>add later!</span>
+> **Open practice.maxpat**
 
-> **Click 1st Stimulus**
+> **Enter the block number 1 (and sheet music will be displayed)**
 
 > **Explain the musical notation**
 
@@ -164,7 +168,7 @@ Definition (based on Wikipedia)
 
 <img src="./image/inst_t.png">
 
-> **Close practicePatch**
+> **Close practice.maxpat**
 
 > **Open main.maxpat**
 
@@ -174,9 +178,9 @@ Definition (based on Wikipedia)
 
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 
-**Open .maxpat** <span>add later!</span>
+**Open practice.maxpat**
 
-> **Click 2nd Stimuli**
+> **Enter the block number 2 (and sheet music will be displayed)**
 
 > **Explain the musical notation**
 
@@ -190,7 +194,7 @@ Definition (based on Wikipedia)
 
 > **Click “inst_t”**
 
-> **Close .maxpat** <span>add later!</span>
+> **Close practice.maxpat**
 
 > **Open main.maxpat**
 
@@ -203,9 +207,9 @@ Definition (based on Wikipedia)
 
 *You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 
-> **Open practicePatch**
+> **Open practice.maxpat**
 
-> **Click 1st Stimulus**
+> **Enter the block number 3 (and sheet music will be displayed)**
 
 > **Explain the musical notation**
 
@@ -219,7 +223,7 @@ Definition (based on Wikipedia)
 
 <img src="./image/inst_p.png">
 
-> **Close .maxpat** <span>add later!</span>
+> **Close practice.maxpat**
 
 > **Open main.maxpat**
 
@@ -229,9 +233,9 @@ Definition (based on Wikipedia)
 
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 
-> **Open practicePatch**
+> **Open practice.maxpat**
 
-> **Click 2nd Stimulus**
+> **Enter the block number 4 (and sheet music will be displayed)**
 
 > **Explain the musical notation**
 
@@ -243,7 +247,7 @@ Definition (based on Wikipedia)
 
 > **Click “inst_p”**
 
-> **Close .maxpat** <span>add later!</span>
+> **Close pracitce.maxpat**
 
 > **Open main.maxpat**
 
@@ -255,9 +259,9 @@ Definition (based on Wikipedia)
 
 *You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 
-> **Open .maxpat** <span>add later!</span>
+> **Open practice.maxpat**
 
-> **Click 3st Stimulus**
+> **Enter the block number 5 (and sheet music will be displayed)**
 
 <img src="./image/prac_stim_m.png">
 
@@ -278,7 +282,7 @@ Definition (based on Wikipedia)
 
 > **Click “inst_t”**
 
-> **Close practicePatch**
+> **Close practice.maxpat**
 
 > **Open main.maxpat**
 
@@ -291,9 +295,9 @@ Definition (based on Wikipedia)
 
 *You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
 
-> **Open practicePatch**
+> **Open practice.maxpat**
 
-> **Click 1st Stimulus**
+> **Enter the block number 6 (and sheet music will be displayed)**
 
 > **Explain the musical notation**
 
@@ -305,7 +309,7 @@ Definition (based on Wikipedia)
 
 > **Click “inst_p”**
 
-> **Close .maxpat** <span>add later!</span>
+> **Close practice.maxpat**
 
 > **Open main.maxpat**
 
