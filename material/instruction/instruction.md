@@ -10,7 +10,7 @@ span{
 </style>
 
 # Instruction
-Author: Atsuko Tominaga - 17/06/2019 (teaching_v2.0)
+Author: Atsuko Tominaga - 23/06/2019 (teaching_v2.0)
 - SOMBY MusicLab iMac
 
 ## PARTICIPANT RECRUITMENT:
@@ -57,8 +57,6 @@ Adjust the volume of the headphone so that it sounds naturally.
 <img src="./image/mainPatch.png">
 
 ### Experimental Design <span>
-1. [First part](#I.-First-part) as we did in teaching-v1.0
-
 |Condition 1 (teaching / performing)|
 |-----------------------------------|
 |1st Stimulus (articulation / dynamics) - Block 1|
@@ -69,20 +67,8 @@ Adjust the volume of the headphone so that it sounds naturally.
 |1st Stimulus (articulation / dynamics) - Block 3|
 |2nd Stimulus (dynamics / articulation) - Block 4|
 
----
-2. [Second part](#II.-Second-part)
-
-|Condition 1 (teaching / performing)|
-|-----------------------------------|
-|3rd Stimulus (mixed) - Block 5|
-
-|Condition 2 (performing / teaching)|
-|-----------------------------------|
-|3rd Stimulus (mixed) - Block 6|
-
 * The order of the conditions is counterbalanced across participants.
 * The order of the skills is counterbalanced across participants, but it is fixed within one condition (e.g., if a participant start with articulation and move on dynamics in the first condition, he/she will perform in the same order.)
-* After finished the first part, start the second part.
 
 ## WHEN PARTICIPANT ARRIVES:
 
@@ -102,9 +88,13 @@ Adjust the volume of the headphone so that it sounds naturally.
 ### Warm-up session
 *Now, you are going to play what you practised during the experiment. Before we start testing, I would like you to practise your favourite pieces / exercises so that you can get used to the digital piano. When you think that you can comfortably perform music with this piano, please let me know.*
 
-> **Let participants practise their favourite pieces**
+> **Experiment should leave the room / Let participants practise their favourite pieces alone**
 
-## I. First part
+### Pre-check session
+*Please perform the piece you memorise for this experiment.*
+
+> **Check whether they memorised the piece correctly.**
+
 ### Practice session
 
 > **Open practice.maxpat**
@@ -117,7 +107,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 <img src="./image/prac_stim_n.png">
 
-> **Click “Metro”**
+> **Click “Metro” / Ask participants to choose one of the favourite tempi**
 
 *Please practise until you feel that you comfortably perform the piece without pitch errors. After practice, we will have a brief test to make sure you can perform the piece. Let me know when you are ready for the brief test.*
 
@@ -248,68 +238,6 @@ Definition (based on Wikipedia)
 > **Click “inst_p”**
 
 > **Close pracitce.maxpat**
-
-> **Open main.maxpat**
-
-> **1 - 8 trials**
-
-## II. Second part
-#### 1) Teaching condition
-1. 3rd Stimulus
-
-*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
-
-> **Open practice.maxpat**
-
-> **Enter the block number 5 (and sheet music will be displayed)**
-
-<img src="./image/prac_stim_m.png">
-
-> **Explain the musical notation**
-
-> **Ask participants to practice until they feel they comfortably perform the piece**
-
-Definition (based on Wikipedia)
-
-- Legato: musical notes are played smoothly and connected
-- Staccato: musical notes have shortened duration and are separated from each other
-- Forte: louder sound
-- Piano: quieter sound
-
-> **Check the participant to play the piece expressively without pitch errors twice consecutively**
-
-*Thank you. Do you have any questions?*
-
-> **Click “inst_t”**
-
-> **Close practice.maxpat**
-
-> **Open main.maxpat**
-
-> **1 - 8 trials**
-
-*Thank you. Next, you will perform the same piece again but in a different condition.*
-
-#### 2) Performing condition
-1. 3rd Stimulus
-
-*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
-
-> **Open practice.maxpat**
-
-> **Enter the block number 6 (and sheet music will be displayed)**
-
-> **Explain the musical notation**
-
-> **Ask participants to practice until they feel they comfortably perform the piece**
-
-**Check the participant to play the piece expressively without pitch errors twice consecutively**
-
-*Thank you. Do you have any questions?*
-
-> **Click “inst_p”**
-
-> **Close practice.maxpat**
 
 > **Open main.maxpat**
 
