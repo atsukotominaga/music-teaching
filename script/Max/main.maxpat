@@ -39,12 +39,90 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"bubble" : 1,
+					"fontface" : 1,
+					"id" : "obj-61",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 648.0, 262.5, 156.0, 37.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 284.0, 120.0, 156.0, 37.0 ],
+					"text" : "Please enter Metro for each participant",
+					"textcolor" : [ 0.986246049404144, 0.007120788097382, 0.027434188872576, 1.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontsize" : 24.0,
+					"id" : "obj-60",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 774.0, 308.5, 50.0, 35.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 141.0, 122.0, 50.0, 35.0 ],
+					"text" : "120"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontsize" : 24.0,
+					"id" : "obj-55",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 712.25, 308.5, 50.0, 35.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 78.25, 122.0, 50.0, 35.0 ],
+					"text" : "110"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontsize" : 24.0,
+					"id" : "obj-51",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 648.0, 308.5, 50.0, 35.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 15.0, 122.0, 50.0, 35.0 ],
+					"text" : "100"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontsize" : 24.0,
+					"id" : "obj-47",
+					"maxclass" : "number",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 648.0, 345.5, 70.0, 35.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 206.0, 122.0, 70.0, 35.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-35",
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 903.0, 281.0, 29.5, 22.0 ],
+					"patching_rect" : [ 903.0, 281.0, 30.0, 22.0 ],
 					"text" : "0"
 				}
 
@@ -113,7 +191,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 571.0, 28.0, 308.0, 33.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 137.0, 308.0, 33.0 ],
+					"presentation_rect" : [ 15.0, 204.0, 308.0, 33.0 ],
 					"text" : "Start - A key / Stop - D key"
 				}
 
@@ -126,7 +204,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 598.0, 227.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 180.0, 150.0, 20.0 ],
+					"presentation_rect" : [ 15.0, 247.0, 150.0, 20.0 ],
 					"text" : "ON (Blue) / OFF (Gray)"
 				}
 
@@ -154,7 +232,7 @@
 					"patching_rect" : [ 1326.0, 495.0, 492.0, 292.0 ],
 					"pic" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli/black.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 324.0, 596.0, 351.0 ]
+					"presentation_rect" : [ 15.0, 391.0, 596.0, 351.0 ]
 				}
 
 			}
@@ -167,7 +245,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1326.0, 797.0, 232.0, 29.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 682.0, 207.0, 29.0 ],
+					"presentation_rect" : [ 15.0, 749.0, 207.0, 29.0 ],
 					"text" : "Display"
 				}
 
@@ -189,7 +267,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 58.0, 1252.0, 555.0, 107.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 630.0, 565.0, 555.0, 110.0 ],
+					"presentation_rect" : [ 631.0, 634.0, 555.0, 110.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -206,7 +284,7 @@
 					"patching_rect" : [ 1213.0, 69.0, 235.0, 133.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 8,
-					"presentation_rect" : [ 386.0, 130.0, 235.0, 133.0 ],
+					"presentation_rect" : [ 386.0, 197.0, 235.0, 133.0 ],
 					"text" : "* In case you want to run the previous trial(N) again, please enter the number of N-1 to reset trialNr.\n\ne.g., if you want to run the 1st trial again, please enter \"0\".\nif you want to run the 4th trial again, please enter \"3\".",
 					"textcolor" : [ 0.986246, 0.007121, 0.027434, 1.0 ]
 				}
@@ -252,7 +330,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 58.0, 1096.0, 555.0, 132.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 630.0, 418.0, 555.0, 132.0 ],
+					"presentation_rect" : [ 631.0, 487.0, 555.0, 132.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -275,7 +353,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 58.0, 707.0, 555.0, 360.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 630.0, 51.0, 555.0, 352.0 ],
+					"presentation_rect" : [ 631.0, 120.0, 555.0, 352.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -326,7 +404,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 941.0, 210.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 200.0, 285.0, 150.0, 20.0 ],
+					"presentation_rect" : [ 200.0, 352.0, 150.0, 20.0 ],
 					"text" : "Trial No."
 				}
 
@@ -489,7 +567,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1101.0, 75.0, 92.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 410.0, 277.5, 94.0, 35.0 ],
+					"presentation_rect" : [ 410.0, 344.5, 94.0, 35.0 ],
 					"text" : "RESET",
 					"textcolor" : [ 0.988904, 0.400472, 0.39996, 1.0 ]
 				}
@@ -518,7 +596,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 1132.0, 122.0, 70.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 517.0, 277.5, 70.0, 35.0 ]
+					"presentation_rect" : [ 517.0, 344.5, 70.0, 35.0 ]
 				}
 
 			}
@@ -581,7 +659,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 864.0, 210.0, 72.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 125.0, 277.5, 70.0, 35.0 ],
+					"presentation_rect" : [ 125.0, 344.5, 70.0, 35.0 ],
 					"textcolor" : [ 0.996078, 0.996078, 0.996078, 1.0 ]
 				}
 
@@ -685,11 +763,11 @@
 				"box" : 				{
 					"id" : "obj-119",
 					"maxclass" : "newobj",
-					"numinlets" : 4,
+					"numinlets" : 5,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 825.0, 872.0, 76.0, 22.0 ],
-					"text" : "pack 0 0 0 0"
+					"patching_rect" : [ 825.0, 872.0, 84.0, 22.0 ],
+					"text" : "pack 0 0 0 0 0"
 				}
 
 			}
@@ -744,7 +822,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-111",
-					"items" : [ "to Max 1", ",", "to Max 2", ",", "Scarlett 6i6 USB", ",", "Digital Piano" ],
+					"items" : [ "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1088,8 +1166,8 @@
 					"numinlets" : 4,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 570.0, 397.0, 81.0, 22.0 ],
-					"text" : "tempo 60 1 4"
+					"patching_rect" : [ 570.0, 397.0, 85.0, 22.0 ],
+					"text" : "tempo 100 1 4"
 				}
 
 			}
@@ -1127,7 +1205,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 571.0, 225.0, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 208.5, 104.0, 104.0 ]
+					"presentation_rect" : [ 15.0, 275.5, 104.0, 104.0 ]
 				}
 
 			}
@@ -1673,6 +1751,22 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-119", 4 ],
+					"order" : 0,
+					"source" : [ "obj-47", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-32", 1 ],
+					"order" : 1,
+					"source" : [ "obj-47", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-32", 0 ],
 					"source" : [ "obj-49", 0 ]
 				}
@@ -1703,6 +1797,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-47", 0 ],
+					"source" : [ "obj-51", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-54", 0 ],
 					"source" : [ "obj-52", 0 ]
 				}
@@ -1721,6 +1822,13 @@
 					"destination" : [ "obj-57", 0 ],
 					"order" : 1,
 					"source" : [ "obj-54", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-47", 0 ],
+					"source" : [ "obj-55", 0 ]
 				}
 
 			}
@@ -1767,6 +1875,13 @@
 					"destination" : [ "obj-23", 0 ],
 					"order" : 1,
 					"source" : [ "obj-6", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-47", 0 ],
+					"source" : [ "obj-60", 0 ]
 				}
 
 			}
@@ -1928,8 +2043,8 @@
 , 			{
 				"name" : "dac",
 				"default" : 				{
-					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ],
-					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ]
+					"bgcolor" : [ 0.681193, 0.750541, 0.758255, 1.0 ],
+					"color" : [ 0.92549, 0.364706, 0.341176, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1997,8 +2112,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
-					"fontsize" : [ 12.059008 ]
+					"fontsize" : [ 12.059008 ],
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -2071,8 +2186,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
 				}
 ,
 				"parentstyle" : "",
