@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 548.0, 126.0, 1452.0, 1110.0 ],
+		"rect" : [ 567.0, 132.0, 1452.0, 1110.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -54,7 +54,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1056.0, 495.0, 150.0, 20.0 ],
+					"patching_rect" : [ 1048.5, 495.0, 150.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 290.0, 140.5, 150.0, 20.0 ],
 					"text" : "Metronome",
@@ -80,7 +80,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 896.5, 364.5, 58.0, 22.0 ],
+					"patching_rect" : [ 889.0, 364.5, 58.0, 22.0 ],
 					"text" : "loadbang"
 				}
 
@@ -92,7 +92,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1013.5, 389.0, 75.0, 22.0 ],
+					"patching_rect" : [ 1006.0, 389.0, 75.0, 22.0 ],
 					"text" : "0.2 0.2 0.2 1"
 				}
 
@@ -104,7 +104,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 896.5, 389.0, 89.0, 22.0 ],
+					"patching_rect" : [ 889.0, 389.0, 89.0, 22.0 ],
 					"text" : "0.98 0.01 0.5 1"
 				}
 
@@ -122,7 +122,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 896.5, 417.5, 304.0, 23.0 ],
+					"patching_rect" : [ 889.0, 417.5, 304.0, 23.0 ],
 					"text_width" : 60.0
 				}
 
@@ -134,7 +134,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1013.5, 364.5, 47.0, 22.0 ],
+					"patching_rect" : [ 1006.0, 364.5, 47.0, 22.0 ],
 					"text" : "r metro"
 				}
 
@@ -291,7 +291,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 896.5, 448.5, 156.0, 37.0 ],
+					"patching_rect" : [ 889.0, 448.5, 156.0, 37.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
 					"presentation_rect" : [ 358.0, 132.0, 156.0, 37.0 ],
@@ -318,10 +318,11 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1002.5, 487.5, 50.0, 35.0 ],
+					"patching_rect" : [ 995.0, 487.5, 50.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 152.0, 134.0, 50.0, 35.0 ],
-					"text" : "120"
+					"text" : "120",
+					"textjustification" : 1
 				}
 
 			}
@@ -343,10 +344,11 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 949.5, 488.0, 50.0, 35.0 ],
+					"patching_rect" : [ 942.0, 488.0, 50.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 98.0, 134.0, 50.0, 35.0 ],
-					"text" : "110"
+					"text" : "110",
+					"textjustification" : 1
 				}
 
 			}
@@ -368,10 +370,11 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 896.5, 488.0, 50.0, 35.0 ],
+					"patching_rect" : [ 889.0, 488.0, 50.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 44.0, 134.0, 50.0, 35.0 ],
-					"text" : "100"
+					"text" : "100",
+					"textjustification" : 1
 				}
 
 			}
@@ -385,7 +388,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 896.5, 531.5, 70.0, 35.0 ],
+					"patching_rect" : [ 889.0, 531.5, 70.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 215.0, 132.0, 70.0, 35.0 ]
 				}
@@ -448,7 +451,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 369.0, 61.5, 156.0, 37.0 ],
+					"patching_rect" : [ 261.0, 81.5, 156.0, 37.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
 					"presentation_rect" : [ 358.0, 89.0, 156.0, 37.0 ],
@@ -506,7 +509,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 1326.0, 495.0, 492.0, 292.0 ],
-					"pic" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli/0_t_stim_a.png",
+					"pic" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli/black.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 15.0, 391.0, 596.0, 351.0 ]
 				}
@@ -1017,6 +1020,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-123",
+					"int" : 1,
 					"maxclass" : "gswitch",
 					"numinlets" : 3,
 					"numoutlets" : 1,
@@ -2399,6 +2403,13 @@
 				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "black.png",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli",
+				"patcherrelativepath" : "./stimuli",
+				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
