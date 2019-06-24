@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 0,
-			"revision" : 5,
+			"revision" : 6,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -537,7 +537,7 @@
 			}
 , 			{
 				"box" : 				{
-					"bgcolor" : [ 0.2, 0.2, 0.2, 1.0 ],
+					"bgcolor" : [ 0.98, 0.01, 0.5, 1.0 ],
 					"fontface" : 0,
 					"fontsize" : 24.0,
 					"id" : "obj-91",
@@ -555,7 +555,7 @@
 			}
 , 			{
 				"box" : 				{
-					"bgcolor" : [ 0.2, 0.2, 0.2, 1.0 ],
+					"bgcolor" : [ 0.98, 0.01, 0.5, 1.0 ],
 					"fontface" : 0,
 					"fontsize" : 24.0,
 					"id" : "obj-89",
@@ -784,7 +784,6 @@
 					"patching_rect" : [ 1970.0, 546.0, 70.0, 31.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 187.0, 369.0, 70.0, 31.0 ],
-					"text" : "inst_p",
 					"textjustification" : 1
 				}
 
@@ -810,7 +809,6 @@
 					"patching_rect" : [ 1970.0, 486.0, 70.0, 31.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 187.0, 324.5, 70.0, 31.0 ],
-					"text" : "inst_t",
 					"textjustification" : 1
 				}
 
@@ -932,7 +930,6 @@
 					"patching_rect" : [ 2191.0, 263.0, 150.0, 31.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 282.0, 367.5, 138.0, 31.0 ],
-					"text" : "dynamics",
 					"textjustification" : 1
 				}
 
@@ -958,7 +955,6 @@
 					"patching_rect" : [ 2191.0, 203.0, 150.0, 31.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 282.0, 300.0, 138.0, 31.0 ],
-					"text" : "articulation",
 					"textjustification" : 1
 				}
 
@@ -1143,7 +1139,6 @@
 					"patching_rect" : [ 1970.0, 386.0, 70.0, 31.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 187.0, 534.5, 70.0, 31.0 ],
-					"text" : "inst_p",
 					"textjustification" : 1
 				}
 
@@ -1169,7 +1164,6 @@
 					"patching_rect" : [ 1970.0, 326.0, 70.0, 31.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 187.0, 494.0, 70.0, 31.0 ],
-					"text" : "inst_t",
 					"textjustification" : 1
 				}
 
@@ -1299,8 +1293,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 2163.0, 936.0, 131.0, 22.0 ],
-					"text" : "prac_stim_n.png"
+					"patching_rect" : [ 2163.0, 936.0, 131.0, 22.0 ]
 				}
 
 			}
@@ -1674,7 +1667,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 1326.0, 495.0, 492.0, 292.0 ],
-					"pic" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli/prac_stim_n.png",
+					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/stimuli/black.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 559.0, 408.0, 596.0, 351.0 ]
 				}
@@ -1749,11 +1742,11 @@
 				"box" : 				{
 					"id" : "obj-13",
 					"maxclass" : "newobj",
-					"numinlets" : 2,
+					"numinlets" : 3,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 570.0, 602.0, 54.0, 22.0 ],
-					"text" : "pack 0 0"
+					"patching_rect" : [ 570.0, 602.0, 64.0, 22.0 ],
+					"text" : "pack 0 0 0"
 				}
 
 			}
@@ -1898,7 +1891,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1326.0, 276.0, 298.0, 49.0 ],
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/\""
 				}
 
 			}
@@ -2218,7 +2211,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-111",
-					"items" : [ "to Max 1", ",", "to Max 2", ",", "Scarlett 6i6 USB", ",", "Digital Piano" ],
+					"items" : [ "IAC Driver IAC Bus 1", ",", "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -3155,6 +3148,14 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-13", 2 ],
+					"order" : 3,
+					"source" : [ "obj-162", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-215", 0 ],
 					"order" : 2,
 					"source" : [ "obj-162", 0 ]
@@ -3164,7 +3165,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-32", 1 ],
-					"order" : 3,
+					"order" : 4,
 					"source" : [ "obj-162", 0 ]
 				}
 
@@ -3476,7 +3477,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-13", 1 ],
-					"order" : 0,
+					"order" : 1,
 					"source" : [ "obj-40", 1 ]
 				}
 
@@ -3492,7 +3493,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-41", 1 ],
-					"order" : 1,
+					"order" : 0,
 					"source" : [ "obj-40", 1 ]
 				}
 
@@ -3863,35 +3864,35 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "praFileName.maxpat",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "praMIDIRec.maxpat",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "praCond.maxpat",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "condfile.csv",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/cond",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
-				"name" : "prac_stim_n.png",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli",
+				"name" : "black.png",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/stimuli",
 				"patcherrelativepath" : "./stimuli",
 				"type" : "PNG",
 				"implicit" : 1
@@ -4084,8 +4085,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
