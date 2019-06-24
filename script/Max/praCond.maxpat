@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 0,
-			"revision" : 5,
+			"revision" : 6,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -69,17 +69,6 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 351.0, 119.0, 150.0, 20.0 ],
 					"text" : "Add for instruction"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-9",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 451.0, 141.0, 45.0, 22.0 ],
-					"text" : "s skill3"
 				}
 
 			}
@@ -526,7 +515,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 165.0, 212.0, 509.0, 20.0 ],
-					"text" : "1stCond, 2ndCond, inst_1, inst_2, 1stSkill, 2ndSkill, 3rdSkill, 1stImage, 2ndImage, 3rdImage"
+					"text" : "1stCond, 2ndCond, inst_1, inst_2, 1stSkill, 2ndSkill, 1stImage, 2ndImage"
 				}
 
 			}
@@ -535,10 +524,10 @@
 					"id" : "obj-37",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
-					"numoutlets" : 10,
-					"outlettype" : [ "", "", "", "", "", "", "", "", "", "" ],
-					"patching_rect" : [ 15.0, 212.0, 141.0, 22.0 ],
-					"text" : "unpack s s s s s s s s s s"
+					"numoutlets" : 8,
+					"outlettype" : [ "", "", "", "", "", "", "", "" ],
+					"patching_rect" : [ 15.0, 212.0, 122.0, 22.0 ],
+					"text" : "unpack s s s s s s s s"
 				}
 
 			}
@@ -561,13 +550,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-35",
-					"linecount" : 3,
+					"linecount" : 4,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1138.0, 478.0, 325.0, 49.0 ],
-					"text" : "read \"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/cond/condfile.csv\""
+					"patching_rect" : [ 1138.0, 478.0, 325.0, 62.0 ],
+					"text" : "read \"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/cond/condfile.csv\""
 				}
 
 			}
@@ -610,13 +599,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-29",
-					"linecount" : 3,
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1138.0, 263.0, 325.0, 49.0 ],
-					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/\""
+					"patching_rect" : [ 1138.0, 263.0, 325.0, 35.0 ],
+					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/\""
 				}
 
 			}
@@ -1076,14 +1065,14 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-55", 1 ],
-					"source" : [ "obj-37", 7 ]
+					"source" : [ "obj-37", 6 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-56", 1 ],
-					"source" : [ "obj-37", 8 ]
+					"source" : [ "obj-37", 7 ]
 				}
 
 			}
@@ -1138,13 +1127,6 @@
 					"destination" : [ "obj-77", 0 ],
 					"order" : 1,
 					"source" : [ "obj-37", 3 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-9", 0 ],
-					"source" : [ "obj-37", 6 ]
 				}
 
 			}
@@ -1403,7 +1385,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "condfile.csv",
-				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/cond",
+				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
@@ -1564,8 +1546,8 @@
 , 			{
 				"name" : "scope~001",
 				"default" : 				{
-					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
-					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ]
+					"accentcolor" : [ 0.439216, 0.447059, 0.47451, 1.0 ],
+					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1592,8 +1574,8 @@
 , 			{
 				"name" : "texteditGold",
 				"default" : 				{
-					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ],
-					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ]
+					"bgcolor" : [ 0.764706, 0.592157, 0.101961, 0.68 ],
+					"textcolor_inverse" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 ,
 				"parentstyle" : "",
