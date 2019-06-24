@@ -13,8 +13,9 @@ script/Max/data
 script/Max/midi
 
 # R
-script/R/.Rapp.history
 script/R/.Rhistory
+data/
+filtered/
 
 # local folders
 script/lilypond/old
