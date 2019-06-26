@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 0,
-			"revision" : 6,
+			"revision" : 5,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -39,13 +39,29 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontface" : 1,
+					"id" : "obj-173",
+					"linecount" : 4,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 45.0, 413.0, 151.0, 60.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 15.0, 90.0, 569.0, 20.0 ],
+					"text" : "Pink color indicates that you have to enter required information for the current participant!",
+					"textcolor" : [ 0.986246049404144, 0.007120788097382, 0.027434188872576, 1.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-36",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1048.5, 495.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 290.0, 140.5, 150.0, 20.0 ],
+					"presentation_rect" : [ 291.0, 176.5, 150.0, 20.0 ],
 					"text" : "Metronome",
 					"textcolor" : [ 0.996078431372549, 0.996078431372549, 0.996078431372549, 1.0 ]
 				}
@@ -262,17 +278,6 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-48",
-					"maxclass" : "attrui",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 1066.0, 737.0, 150.0, 22.0 ]
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
 					"id" : "obj-61",
@@ -283,9 +288,9 @@
 					"patching_rect" : [ 889.0, 448.5, 156.0, 37.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 358.0, 132.0, 156.0, 37.0 ],
+					"presentation_rect" : [ 359.0, 168.0, 156.0, 37.0 ],
 					"text" : "Please enter Metro for each participant",
-					"textcolor" : [ 0.986246049404144, 0.007120788097382, 0.027434188872576, 1.0 ]
+					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 
 			}
@@ -309,7 +314,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 995.0, 487.5, 50.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 152.0, 134.0, 50.0, 35.0 ],
+					"presentation_rect" : [ 153.0, 170.0, 50.0, 35.0 ],
 					"text" : "120",
 					"textjustification" : 1
 				}
@@ -335,7 +340,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 942.0, 488.0, 50.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 98.0, 134.0, 50.0, 35.0 ],
+					"presentation_rect" : [ 99.0, 170.0, 50.0, 35.0 ],
 					"text" : "110",
 					"textjustification" : 1
 				}
@@ -361,7 +366,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 889.0, 488.0, 50.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 44.0, 134.0, 50.0, 35.0 ],
+					"presentation_rect" : [ 45.0, 170.0, 50.0, 35.0 ],
 					"text" : "100",
 					"textjustification" : 1
 				}
@@ -379,7 +384,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 889.0, 531.5, 70.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 215.0, 132.0, 70.0, 35.0 ]
+					"presentation_rect" : [ 216.0, 168.0, 70.0, 35.0 ]
 				}
 
 			}
@@ -443,9 +448,9 @@
 					"patching_rect" : [ 261.0, 81.5, 156.0, 37.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 358.0, 89.0, 156.0, 37.0 ],
+					"presentation_rect" : [ 359.0, 125.0, 156.0, 37.0 ],
 					"text" : "Please enter SubNr and BlockNr",
-					"textcolor" : [ 0.986246049404144, 0.007120788097382, 0.027434188872576, 1.0 ]
+					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
 
 			}
@@ -459,7 +464,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 571.0, 28.0, 308.0, 33.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 204.0, 308.0, 33.0 ],
+					"presentation_rect" : [ 16.0, 240.0, 308.0, 33.0 ],
 					"text" : "Start - A key / Stop - D key"
 				}
 
@@ -472,7 +477,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 598.0, 227.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 247.0, 150.0, 20.0 ],
+					"presentation_rect" : [ 16.0, 283.0, 150.0, 20.0 ],
 					"text" : "ON (Blue) / OFF (Gray)"
 				}
 
@@ -498,9 +503,9 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 1326.0, 495.0, 492.0, 292.0 ],
-					"pic" : "Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/stimuli/black.png",
+					"pic" : "Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli/black.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 391.0, 596.0, 351.0 ]
+					"presentation_rect" : [ 16.0, 427.0, 596.0, 351.0 ]
 				}
 
 			}
@@ -513,7 +518,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1326.0, 797.0, 232.0, 29.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 749.0, 207.0, 29.0 ],
+					"presentation_rect" : [ 16.0, 785.0, 207.0, 29.0 ],
 					"text" : "Display"
 				}
 
@@ -535,7 +540,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 58.0, 1252.0, 555.0, 107.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 631.0, 634.0, 555.0, 110.0 ],
+					"presentation_rect" : [ 632.0, 670.0, 555.0, 110.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -552,7 +557,7 @@
 					"patching_rect" : [ 1213.0, 69.0, 235.0, 133.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 8,
-					"presentation_rect" : [ 386.0, 197.0, 235.0, 133.0 ],
+					"presentation_rect" : [ 387.0, 233.0, 235.0, 133.0 ],
 					"text" : "* In case you want to run the previous trial(N) again, please enter the number of N-1 to reset trialNr.\n\ne.g., if you want to run the 1st trial again, please enter \"0\".\nif you want to run the 4th trial again, please enter \"3\".",
 					"textcolor" : [ 0.986246, 0.007121, 0.027434, 1.0 ]
 				}
@@ -598,7 +603,7 @@
 					"offset" : [ 0.0, 0.0 ],
 					"patching_rect" : [ 58.0, 1096.0, 555.0, 132.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 631.0, 487.0, 555.0, 132.0 ],
+					"presentation_rect" : [ 632.0, 523.0, 555.0, 132.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -621,7 +626,7 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 58.0, 707.0, 555.0, 360.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 631.0, 120.0, 555.0, 352.0 ],
+					"presentation_rect" : [ 632.0, 156.0, 555.0, 352.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -672,7 +677,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 941.0, 210.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 200.0, 352.0, 150.0, 20.0 ],
+					"presentation_rect" : [ 201.0, 388.0, 150.0, 20.0 ],
 					"text" : "Trial No."
 				}
 
@@ -685,7 +690,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 138.0, 336.0, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 290.0, 97.5, 150.0, 20.0 ],
+					"presentation_rect" : [ 291.0, 133.5, 150.0, 20.0 ],
 					"text" : "Block No.",
 					"textcolor" : [ 0.996078431372549, 0.996078431372549, 0.996078431372549, 1.0 ]
 				}
@@ -699,7 +704,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 138.0, 164.5, 150.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 119.0, 97.5, 150.0, 20.0 ],
+					"presentation_rect" : [ 120.0, 133.5, 150.0, 20.0 ],
 					"text" : "Participant No.",
 					"textcolor" : [ 0.996078431372549, 0.996078431372549, 0.996078431372549, 1.0 ]
 				}
@@ -750,7 +755,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1326.0, 276.0, 298.0, 49.0 ],
-					"text" : "\"Macintosh HD:/Users/atsukotominaga/OneDrive - Central European University/Project/teaching-v2.0/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/\""
 				}
 
 			}
@@ -837,9 +842,10 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1101.0, 75.0, 92.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 410.0, 344.5, 94.0, 35.0 ],
+					"presentation_rect" : [ 411.0, 380.5, 94.0, 35.0 ],
 					"text" : "RESET",
-					"textcolor" : [ 0.988904, 0.400472, 0.39996, 1.0 ]
+					"textcolor" : [ 0.988904, 0.400472, 0.39996, 1.0 ],
+					"textjustification" : 1
 				}
 
 			}
@@ -866,7 +872,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 1132.0, 122.0, 70.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 517.0, 344.5, 70.0, 35.0 ]
+					"presentation_rect" : [ 518.0, 380.5, 70.0, 35.0 ]
 				}
 
 			}
@@ -929,7 +935,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 864.0, 210.0, 72.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 125.0, 344.5, 70.0, 35.0 ],
+					"presentation_rect" : [ 126.0, 380.5, 70.0, 35.0 ],
 					"textcolor" : [ 0.996078, 0.996078, 0.996078, 1.0 ]
 				}
 
@@ -1093,7 +1099,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-111",
-					"items" : [ "IAC Driver IAC Bus 1", ",", "to Max 1", ",", "to Max 2" ],
+					"items" : [ "Scarlett 6i6 USB", ",", "Digital Piano", ",", "to Max 1", ",", "to Max 2" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1256,7 +1262,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 58.0, 336.0, 72.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 215.0, 90.0, 70.0, 35.0 ],
+					"presentation_rect" : [ 216.0, 126.0, 70.0, 35.0 ],
 					"textcolor" : [ 0.996078431372549, 0.996078431372549, 0.996078431372549, 1.0 ]
 				}
 
@@ -1274,7 +1280,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 58.0, 164.5, 72.0, 35.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 44.0, 89.0, 70.0, 35.0 ],
+					"presentation_rect" : [ 45.0, 125.0, 70.0, 35.0 ],
 					"textcolor" : [ 0.996078431372549, 0.996078431372549, 0.996078431372549, 1.0 ]
 				}
 
@@ -1478,7 +1484,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 571.0, 225.0, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 275.5, 104.0, 104.0 ]
+					"presentation_rect" : [ 16.0, 311.5, 104.0, 104.0 ]
 				}
 
 			}
@@ -1576,9 +1582,9 @@
 					"mode" : 1,
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 45.0, 75.0, 333.0, 326.0 ],
+					"patching_rect" : [ 45.0, 75.0, 334.0, 336.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 14.0, 76.0, 521.0, 114.0 ],
+					"presentation_rect" : [ 15.0, 112.0, 521.0, 114.0 ],
 					"proportion" : 0.5
 				}
 
@@ -2376,35 +2382,35 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "subFileName.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subMIDIRec.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "subCond.maxpat",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "condfile.csv",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/cond",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/cond",
 				"patcherrelativepath" : "./cond",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "black.png",
-				"bootpath" : "~/OneDrive - Central European University/Project/teaching-v2.0/script/Max/stimuli",
+				"bootpath" : "~/Desktop/Atsuko/teaching-v2.0/script/Max/stimuli",
 				"patcherrelativepath" : "./stimuli",
 				"type" : "PNG",
 				"implicit" : 1
@@ -2523,8 +2529,8 @@
 , 			{
 				"name" : "newobjYellow-1",
 				"default" : 				{
-					"fontsize" : [ 12.059008 ],
-					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ]
+					"accentcolor" : [ 0.82517, 0.78181, 0.059545, 1.0 ],
+					"fontsize" : [ 12.059008 ]
 				}
 ,
 				"parentstyle" : "",
