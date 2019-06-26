@@ -20,7 +20,8 @@ Author: Atsuko Tominaga - 23/06/2019 (teaching_v2.0)
 
 ## BEFORE PARTICIPANT ARRIVES:
 - Turn off WiFi connection
-- Devices
+
+### Devices
 1. Connect the audio interface (Focusrite Scarlett 6i6) to Macbook Pro.
 2. Connect two headphones to the audio interface.
 3. Connect the piano to the audio interface.
@@ -40,7 +41,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 ### Max
 
 1. Go to **Desktop >> Atsuko_teaching-v2.0 >> open the "main.maxpat", the “practice.maxpat” and the “display.maxpat”**.
-2. Move the window of the “display.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode. If there is a toobar surrounding the display, get rid of it by pressing cmd+8 (not F8).
+2. Move the window of the “display.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode. <span>If there is a toobar surrounding the display, get rid of it by pressing cmd+8 (not F8)</span>.
 3. Read the instruction on the “main.maxpat" and the "practice.maxpat".
 4. Also check whether the piano sounds come from the headphone and <span>MIDI inputs are correctly responded (Pitch and Velocity should change according to key presses on MIDIRecording subpatchers)</span>.
 5. If the sound of the metronome and the piano does not come from the computer speaker, go to **System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”**.
@@ -52,9 +53,31 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 <img src="./image/praPatch.png">
 
+* Enter SubNr, BlockNr (0 for practice) (and preferred tempo (100, 110, 120) later).
+* Once you entered SubNr, the order of the conditions/skills will be automatically filled.
+
+The left panel indicates the procedure of the experiment.
+1. For practice, click "Non expression" to display sheet music.
+2. Ask participants to choose one of the preferred tempi. When you click one of the options, the sound of a metronome starts playing. 
+3. Enter the preferred tempo.
+
+- Start Recording (J key)
+- Stop Recording (L key)
+- Reset button (see the instruction on the patcher)
+- inst_1: the first instruction
+- inst_2: the second instruction
+- inst_t: teaching instruction
+- inst_p: performing instruction
+- Pitch Error Detection: Both onset and offset should be correct. Otherwise, repeat a trial again (up to 5 times).
+
+
 ### Main Patch
 
 <img src="./image/mainPatch.png">
+
+- Start Recording (A key)
+- Stop Recording (D key)
+- Reset button (see the instruction on the patcher)
 
 ### Experimental Design <span>
 |Condition 1 (teaching / performing)|
@@ -107,11 +130,11 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 <img src="./image/prac_stim_n.png">
 
-> **Click “Metro” / Ask participants to choose one of the favourite tempi**
+> **Ask participants to choose one of the favourite tempi**
 
 *Please practise until you feel that you comfortably perform the piece without pitch errors. After practice, we will have a brief test to make sure you can perform the piece. Let me know when you are ready for the brief test.*
 
-> **Let the participant practise the piece**
+> **Let the participant practise the piece (100, 110, 120 bpm)**
 
 > **Click "inst_2"**
 
@@ -121,7 +144,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 > **Click "Non expression"**
 
-- If he or she cannot perform the piece within **5 attempts**, he or she cannot continue the experiment.
+- If he or she cannot perform the piece without errors within **5 attempts**, leave a memo and continue the experiment.
 
 ### Experiment
 
