@@ -1,9 +1,6 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style type="text/css">
 /* Whole document: */
-body{
-  font-family: Helvetica;
-  font-size: 14pt;
-}
 span{
   color:red
 }
