@@ -10,12 +10,12 @@ span{
 </style>
 
 # Instruction
-Author: Atsuko Tominaga - 23/06/2019 (teaching_v2.0)
+Author: Atsuko Tominaga - 27/06/2019 (teaching_v2.0)
 - SOMBY MusicLab iMac
 
 ## PARTICIPANT RECRUITMENT:
 
-- Have more than 10 years experience in piano performance or currently studying piano performance at music school
+- Pianists who are currently studying piano performance/teaching at music school / have already had a degree in piano performance/teaching
 - Basic English skills
 
 ## BEFORE PARTICIPANT ARRIVES:
@@ -46,7 +46,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 4. Also check whether the piano sounds come from the headphone and <span>MIDI inputs are correctly responded (Pitch and Velocity should change according to key presses on MIDIRecording subpatchers)</span>.
 5. If the sound of the metronome and the piano does not come from the computer speaker, go to **System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”**.
 6. If you cannot still solve the problem above, please quit Max and relaunch it again.
-7. Click the “inst_1” button to show a general instruction on the “display.maxpat”.
+7. Click the “inst_1” button on the practice.maxpat to show a general instruction on the “display.maxpat”.
 8. Enter SubNr for the current participant.
 
 ### Practice Patch
@@ -91,7 +91,7 @@ The left panel indicates the procedure of the experiment.
 |2nd Stimulus (dynamics / articulation) - Block 4|
 
 * The order of the conditions is counterbalanced across participants.
-* The order of the skills is counterbalanced across participants, but it is fixed within one condition (e.g., if a participant start with articulation and move on dynamics in the first condition, he/she will perform in the same order.)
+* The order of the skills is counterbalanced across participants, but it is fixed within one condition (e.g., if a participant start with articulation and move on dynamics in the first condition, he/she will perform in the same order in the second condition.)
 
 ## WHEN PARTICIPANT ARRIVES:
 
@@ -111,24 +111,14 @@ The left panel indicates the procedure of the experiment.
 ### Warm-up session
 *Now, you are going to play what you practised during the experiment. Before we start testing, I would like you to practise your favourite pieces / exercises so that you can get used to the digital piano. When you think that you can comfortably perform music with this piano, please let me know.*
 
-> **Experiment should leave the room / Let participants practise their favourite pieces alone**
+> **Experimenter should leave the room / Let participants practise their favourite pieces alone**
 
 ### Pre-check session
-*Please perform the piece you memorise for this experiment.*
-
-> **Check whether they memorised the piece correctly.**
-
-### Practice session
-
 > **Open practice.maxpat**
 
 > **Click “inst_1”**
 
 <img src="./image/inst_1.png">
-
-> **Click “Non expression”**
-
-<img src="./image/prac_stim_n.png">
 
 > **Ask participants to choose one of the favourite tempi**
 
@@ -141,8 +131,6 @@ The left panel indicates the procedure of the experiment.
 <img src="./image/inst_2.png">
 
 > **Check whether he or she can produce the sound without pitch errors twice consecutively**
-
-> **Click "Non expression"**
 
 - If he or she cannot perform the piece without errors within **5 attempts**, leave a memo and continue the experiment.
 
@@ -162,7 +150,7 @@ The left panel indicates the procedure of the experiment.
 
 > **Explain the musical notation**
 
-> **Ask participants to practice until they feel they comfortably perform the piece**
+<span>> **Ask participants to practice until they feel they comfortably perform the piece**</span>
 
 Definition (based on Wikipedia)
 
@@ -197,7 +185,7 @@ Definition (based on Wikipedia)
 
 > **Explain the musical notation**
 
-> **Ask participants to practice until they feel they comfortably perform the piece**
+<span>> **Ask participants to practice until they feel they comfortably perform the piece**</span>
 
 <img src="./image/prac_stim_d.png">
 
@@ -226,7 +214,7 @@ Definition (based on Wikipedia)
 
 > **Explain the musical notation**
 
-> **Ask participants to practice until they feel they comfortably perform the piece**
+<span>> **Ask participants to practice until they feel they comfortably perform the piece**</span>
 
 **Check the participant to play the piece expressively without pitch errors twice consecutively**
 
@@ -252,7 +240,7 @@ Definition (based on Wikipedia)
 
 > **Explain the musical notation**
 
-> **Ask participants to practice until they feel they comfortably perform the piece**
+<span>> **Ask participants to practice until they feel they comfortably perform the piece**</span>
 
 > **Check the participant to play the piece expressively without pitch errors twice consecutively**
 
