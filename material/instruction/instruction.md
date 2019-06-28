@@ -1,5 +1,9 @@
 <style type="text/css">
 /* Whole document: */
+body{
+  font-family: Helvetica;
+  font-size: 14pt;
+}
 span{
   color:red
 }
@@ -22,14 +26,14 @@ Author: Atsuko Tominaga - 27/06/2019 (teaching_v2.0)
 2. Connect two headphones to the audio interface.
 3. Connect the piano to the audio interface.
 4. Turn on the piano, the audio interface and the screen in front of the piano.
-5. Open “Focusrite Control” app <img src="./image/focusriteControl.jpg" width="50"/> and click “Load from device”.
+5. Open “Focusrite Control” app <img src="./image/focusriteControl.jpg" width="3%"/> and click “Load from device”.
 
-<img src="./image/01.png" width="500">
-<img src="./image/02.png">
+<img src="./image/01.png" width="30%">
+<img src="./image/02.png" width="1024">
 
 6. Go to “Device Settings” and click “LINE” for Analogue 1.
 
-<img src="./image/03.png">
+<img src="./image/03.png" width="1024">
 
 If you don’t see the images above, go to **File >> Preset >> select “Analogue + Digital”**.
 Adjust the volume of the headphone so that it sounds naturally.
@@ -47,7 +51,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 ### Practice Patch
 
-<img src="./image/praPatch.png">
+<img src="./image/praPatch.png" width="1024">
 
 * Enter SubNr, BlockNr (0 for practice) (and preferred tempo (100, 110, 120) later).
 * Once you entered SubNr, the order of the conditions/skills will be automatically filled.
@@ -69,7 +73,7 @@ The left panel indicates the procedure of the experiment.
 
 ### Main Patch
 
-<img src="./image/mainPatch.png">
+<img src="./image/mainPatch.png" width="1024">
 
 - Start Recording (A key)
 - Stop Recording (D key)
@@ -114,7 +118,7 @@ The left panel indicates the procedure of the experiment.
 
 > **Click “inst_1”**
 
-<img src="./image/inst_1.png">
+<img src="./image/inst_1.png" width="1024">
 
 > **Ask participants to choose one of the favourite tempi**
 
@@ -124,7 +128,7 @@ The left panel indicates the procedure of the experiment.
 
 > **Click "inst_2"**
 
-<img src="./image/inst_2.png">
+<img src="./image/inst_2.png" width="1024">
 
 > **Check whether he or she can produce the sound without pitch errors twice consecutively**
 
@@ -155,7 +159,7 @@ Definition (based on Wikipedia)
 - Forte: louder sound
 - Piano: quieter sound
 
-<img src="./image/prac_stim_a.png">
+<img src="./image/prac_stim_a.png" width="1024">
 
 > **Check the participant to play the piece expressively without pitch errors twice consecutively**
 
@@ -163,7 +167,7 @@ Definition (based on Wikipedia)
 
 > **Click “inst_t”**
 
-<img src="./image/inst_t.png">
+<img src="./image/inst_t.png" width="1024">
 
 > **Close practice.maxpat**
 
@@ -183,7 +187,7 @@ Definition (based on Wikipedia)
 
 <span>> **Ask participants to practice until they feel they comfortably perform the piece**</span>
 
-<img src="./image/prac_stim_d.png">
+<img src="./image/prac_stim_d.png" width="1024">
 
 > **Check the participant to play the piece expressively without pitch errors twice consecutively**
 
@@ -218,7 +222,7 @@ Definition (based on Wikipedia)
 
 > **Click “inst_p”**
 
-<img src="./image/inst_p.png">
+<img src="./image/inst_p.png" width="1024">
 
 > **Close practice.maxpat**
 
