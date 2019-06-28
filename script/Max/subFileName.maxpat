@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 56.0, 1612.0, 960.0 ],
+		"rect" : [ 34.0, 79.0, 1612.0, 960.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -61,7 +61,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1480.0, 1065.5, 150.0, 33.0 ],
-					"text" : "\bCreate a error folder inside the data folder"
+					"text" : "\bCreate an error folder inside the data folder"
 				}
 
 			}

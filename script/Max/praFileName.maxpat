@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 608.0, 426.0, 1612.0, 960.0 ],
+		"rect" : [ 324.0, 177.0, 1612.0, 960.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -61,7 +61,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1486.0, 1076.0, 150.0, 33.0 ],
-					"text" : "\bCreate a practice file inside the data folder"
+					"text" : "\bCreate an error folder inside the data folder"
 				}
 
 			}
@@ -830,7 +830,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 2061.0, 824.0, 150.0, 33.0 ],
-					"text" : "\bCreate a practice file inside the midi file"
+					"text" : "\bCreate a practice folder inside the midi folder"
 				}
 
 			}
@@ -906,7 +906,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1486.0, 834.0, 150.0, 33.0 ],
-					"text" : "\bCreate a practice file inside the data folder"
+					"text" : "\bCreate a practice folder inside the data folder"
 				}
 
 			}
@@ -965,7 +965,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 2063.0, 579.0, 150.0, 20.0 ],
-					"text" : "create a midi file"
+					"text" : "create a midi folder"
 				}
 
 			}
@@ -1064,7 +1064,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1482.0, 586.0, 150.0, 20.0 ],
-					"text" : "create a data file"
+					"text" : "create a data folder"
 				}
 
 			}
