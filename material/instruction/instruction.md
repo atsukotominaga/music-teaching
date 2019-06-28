@@ -40,6 +40,10 @@ Adjust the volume of the headphone so that it sounds naturally.
 
 ### Max
 
+#### <span> EXPERIMENT.maxpat (controller) during the experiment! (Desktop >> Atsuko_teaching-v2.0)</span>
+
+<img src="./image/controller.png" width="50%">
+
 1. Go to **Desktop >> Atsuko_teaching-v2.0 >> open the "main.maxpat", the “practice.maxpat” and the “display.maxpat”**.
 2. Move the window of the “display.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode. <span>If there is a toobar surrounding the display, get rid of it by pressing cmd+8 (not F8)</span>.
 3. Read the instruction on the “main.maxpat" and the "practice.maxpat".
@@ -109,7 +113,7 @@ The left panel indicates the procedure of the experiment.
 > **Collect the informed consent form**
 
 ### Warm-up session
-*Now, you are going to play what you practised during the experiment. Before we start testing, I would like you to practise your favourite pieces / exercises so that you can get used to the digital piano. When you think that you can comfortably perform music with this piano, please let me know.*
+*Now, you are going to play what you practised during the experiment. Before we start testing, I would like you to practise your favourite pieces / exercises so that you can get used to the digital piano. I am going to leave the room, so when you think that you can comfortably perform music with this piano, please let me know.*
 
 > **Experimenter should leave the room / Let participants practise their favourite pieces alone**
 
@@ -120,11 +124,13 @@ The left panel indicates the procedure of the experiment.
 
 <img src="./image/inst_1.png" width="1024">
 
-> **Ask participants to choose one of the favourite tempi**
+> **Ask participants to choose one of the favourite tempi (100, 110, 120 bpm)**
+
+<span>In each beat, there should be two 8th notes! Please check participants understand the tempo correctly.</span>
 
 *Please practise until you feel that you comfortably perform the piece without pitch errors. After practice, we will have a brief test to make sure you can perform the piece. Let me know when you are ready for the brief test.*
 
-> **Let the participant practise the piece (100, 110, 120 bpm)**
+> **Let the participant practise the piece**
 
 > **Click "inst_2"**
 
@@ -142,7 +148,7 @@ The left panel indicates the procedure of the experiment.
 #### 1) Teaching condition
 1. 1st Stimulus
 
-*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask the experimenter now. If you don't have any question, I will give you the sound of the metronome and please perform the piece according to the notation.*
+*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask the experimenter now.*
 
 > **Open practice.maxpat**
 
@@ -161,6 +167,8 @@ Definition (based on Wikipedia)
 
 <img src="./image/prac_stim_a.png" width="1024">
 
+*If you don't have any question, I will give you the sound of the metronome and please perform the piece according to the notation.*
+
 > **Check the participant to play the piece expressively without pitch errors twice consecutively**
 
 *Thank you. Do you have any questions?*
@@ -177,9 +185,9 @@ Definition (based on Wikipedia)
 
 2. 2nd Stimulus
 
-*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
+*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation and practise it until you feel you comfortably perform the piece with the expression.*
 
-**Open practice.maxpat**
+> **Open practice.maxpat**
 
 > **Enter the block number 2 (and sheet music will be displayed)**
 
@@ -203,10 +211,12 @@ Definition (based on Wikipedia)
 
 *Thank you. Next, you will perform the same piece again but in a different condition.*
 
+### --- Take a brief break (2 min)!!! ---
+
 #### 2) Performing condition
 1. 1st Stimulus
 
-*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
+*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and practise it until you feel you comfortably perform the piece with the expression.*
 
 > **Open practice.maxpat**
 
@@ -232,7 +242,7 @@ Definition (based on Wikipedia)
 
 2. 2nd Stimulus
 
-*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation.*
+*Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation and practise it until you feel you comfortably perform the piece with the expression.*
 
 > **Open practice.maxpat**
 
@@ -260,7 +270,7 @@ Definition (based on Wikipedia)
 
 > **Collect the short questionnaire**
 
-*Thank you for coming today and please feel free to contact me if you have any questions about my study.*
+*Thank you for coming today and please feel free to contact me if you have any questions about our study.*
 
 ## AFTER PARTICIPANT LEAVES:
 1. Check whether data were recorded correctly. If not, leave a memo on the checklist.
