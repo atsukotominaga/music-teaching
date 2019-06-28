@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 1232.0, 693.0, 349.0, 518.0 ],
+		"rect" : [ 316.0, 339.0, 349.0, 518.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -61,7 +61,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 254.0, 587.0, 51.0, 22.0 ],
+					"patching_rect" : [ 234.0, 440.0, 51.0, 22.0 ],
 					"text" : "pcontrol"
 				}
 
@@ -73,7 +73,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 254.0, 548.0, 79.0, 22.0 ],
+					"patching_rect" : [ 234.0, 401.0, 79.0, 22.0 ],
 					"text" : "prepend load"
 				}
 
@@ -85,7 +85,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 254.0, 510.0, 120.0, 22.0 ],
+					"patching_rect" : [ 234.0, 363.0, 120.0, 22.0 ],
 					"text" : "sprintf symout %s%s"
 				}
 
@@ -108,7 +108,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 65.0, 384.0, 148.0, 42.0 ],
+					"patching_rect" : [ 45.0, 237.0, 148.0, 42.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 93.5, 405.0, 148.0, 42.0 ],
 					"text" : "Display",
@@ -134,7 +134,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 65.0, 311.0, 148.0, 42.0 ],
+					"patching_rect" : [ 45.0, 164.0, 148.0, 42.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 93.5, 314.0, 148.0, 42.0 ],
 					"text" : "Practice",
@@ -160,7 +160,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 65.0, 239.0, 148.0, 42.0 ],
+					"patching_rect" : [ 45.0, 92.0, 148.0, 42.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 93.5, 229.0, 148.0, 42.0 ],
 					"text" : "Main",
@@ -175,7 +175,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 441.0, 461.0, 88.0, 22.0 ],
+					"patching_rect" : [ 421.0, 314.0, 88.0, 22.0 ],
 					"text" : "display.maxpat"
 				}
 
@@ -187,7 +187,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 340.0, 461.0, 93.0, 22.0 ],
+					"patching_rect" : [ 320.0, 314.0, 93.0, 22.0 ],
 					"text" : "practice.maxpat"
 				}
 
@@ -199,7 +199,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 254.0, 357.0, 79.0, 22.0 ],
+					"patching_rect" : [ 234.0, 210.0, 79.0, 22.0 ],
 					"text" : "loadmess set"
 				}
 
@@ -211,7 +211,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 468.0, 229.0, 61.0, 22.0 ],
+					"patching_rect" : [ 463.0, 141.0, 61.0, 22.0 ],
 					"text" : "delay 100"
 				}
 
@@ -224,7 +224,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 254.0, 384.0, 298.0, 49.0 ],
+					"patching_rect" : [ 234.0, 237.0, 298.0, 49.0 ],
 					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/\""
 				}
 
@@ -236,7 +236,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 483.0, 352.0, 69.0, 22.0 ],
+					"patching_rect" : [ 463.0, 205.0, 69.0, 22.0 ],
 					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
 					"text" : "thispatcher"
 				}
@@ -249,20 +249,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 483.0, 321.0, 34.0, 22.0 ],
+					"patching_rect" : [ 463.0, 174.0, 34.0, 22.0 ],
 					"text" : "path"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-31",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 2,
-					"outlettype" : [ "bang", "bang" ],
-					"patching_rect" : [ 468.0, 258.0, 34.0, 22.0 ],
-					"text" : "t b b"
 				}
 
 			}
@@ -273,7 +261,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 468.0, 200.0, 60.0, 22.0 ],
+					"patching_rect" : [ 463.0, 112.0, 60.0, 22.0 ],
 					"text" : "loadbang"
 				}
 
@@ -285,7 +273,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 254.0, 461.0, 77.0, 22.0 ],
+					"patching_rect" : [ 234.0, 314.0, 77.0, 22.0 ],
 					"text" : "main.maxpat"
 				}
 
@@ -296,7 +284,7 @@
 					"maxclass" : "panel",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 422.0, 468.0, 128.0, 128.0 ],
+					"patching_rect" : [ 55.0, 334.0, 128.0, 128.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 52.0, 37.0, 236.0, 447.0 ]
 				}
@@ -370,13 +358,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-44", 0 ],
-					"source" : [ "obj-31", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-18", 1 ],
 					"order" : 0,
 					"source" : [ "obj-4", 0 ]
@@ -430,7 +411,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-31", 0 ],
+					"destination" : [ "obj-44", 0 ],
 					"source" : [ "obj-8", 0 ]
 				}
 
