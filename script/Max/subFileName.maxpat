@@ -2,16 +2,15 @@
 	"patcher" : 	{
 		"fileversion" : 1,
 		"appversion" : 		{
-			"major" : 7,
-			"minor" : 3,
+			"major" : 8,
+			"minor" : 0,
 			"revision" : 5,
-			"architecture" : "x86",
+			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
+		"classnamespace" : "box",
 		"rect" : [ 34.0, 56.0, 1612.0, 960.0 ],
-		"bgcolor" : [ 0.988904, 0.400472, 0.39996, 1.0 ],
-		"editing_bgcolor" : [ 0.873151, 0.873319, 0.873123, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -40,13 +39,88 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-15",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "bang" ],
+					"patching_rect" : [ 1443.0, 1071.0, 35.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"shell" : "(default)"
+					}
+,
+					"text" : "shell"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-36",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1480.0, 1065.5, 150.0, 33.0 ],
+					"text" : "\bCreate a error folder inside the data folder"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-39",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1443.0, 966.5, 87.0, 22.0 ],
+					"text" : "prepend mkdir"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-47",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1443.0, 1002.0, 468.699950999999999, 22.0 ],
+					"text" : "mkdir /Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/data/error"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-48",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1546.0, 905.5, 37.0, 22.0 ],
+					"text" : "/error"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-53",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1443.0, 936.0, 122.0, 22.0 ],
+					"text" : "sprintf symout %s%s"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-4",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 1165.0, 311.0, 56.0, 22.0 ],
-					"style" : "",
 					"text" : "delay 10"
 				}
 
@@ -59,7 +133,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1861.0, 85.0, 150.0, 33.0 ],
-					"style" : "",
 					"text" : "send a bang after loadmess"
 				}
 
@@ -72,7 +145,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1587.0, 142.0, 154.0, 33.0 ],
-					"style" : "",
 					"text" : "send a bang after all other messages were filled"
 				}
 
@@ -83,8 +155,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 2520.666748, 36.0, 150.0, 20.0 ],
-					"style" : "",
+					"patching_rect" : [ 2520.666748000000098, 36.0, 150.0, 20.0 ],
 					"text" : "Clear all message boxes"
 				}
 
@@ -96,8 +167,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 1376.0, 596.0, 24.0, 24.0 ],
-					"style" : ""
+					"parameter_enable" : 0,
+					"patching_rect" : [ 1376.0, 596.0, 24.0, 24.0 ]
 				}
 
 			}
@@ -109,7 +180,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 1376.0, 640.0, 56.0, 22.0 ],
-					"style" : "",
 					"text" : "delay 10"
 				}
 
@@ -122,7 +192,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 1748.0, 153.0, 63.0, 22.0 ],
-					"style" : "",
 					"text" : "delay 500"
 				}
 
@@ -135,7 +204,6 @@
 					"numoutlets" : 4,
 					"outlettype" : [ "bang", "bang", "bang", "bang" ],
 					"patching_rect" : [ 1793.0, 118.0, 54.0, 22.0 ],
-					"style" : "",
 					"text" : "t b b b b"
 				}
 
@@ -148,7 +216,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 1793.0, 85.0, 63.0, 22.0 ],
-					"style" : "",
 					"text" : "delay 100"
 				}
 
@@ -160,8 +227,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 2520.666748, 61.0, 81.0, 22.0 ],
-					"style" : "",
+					"patching_rect" : [ 2520.666748000000098, 61.0, 81.0, 22.0 ],
 					"text" : "loadmess set"
 				}
 
@@ -174,7 +240,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 664.0, 471.0, 54.0, 22.0 ],
-					"style" : "",
 					"text" : "delay 10"
 				}
 
@@ -189,7 +254,6 @@
 					"patching_rect" : [ 18.0, 18.0, 99.0, 29.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 18.0, 18.0, 99.0, 29.0 ],
-					"style" : "",
 					"text" : "File name"
 				}
 
@@ -201,8 +265,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 802.0, 506.0, 401.0, 22.0 ],
-					"style" : ""
+					"patching_rect" : [ 802.0, 506.0, 401.0, 22.0 ]
 				}
 
 			}
@@ -215,7 +278,6 @@
 					"patching_rect" : [ 1112.0, 770.0, 91.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 18.0, 148.0, 91.0, 20.0 ],
-					"style" : "",
 					"text" : "MIDI recording"
 				}
 
@@ -228,8 +290,7 @@
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 802.0, 797.0, 30.0, 30.0 ],
-					"style" : ""
+					"patching_rect" : [ 802.0, 797.0, 30.0, 30.0 ]
 				}
 
 			}
@@ -242,8 +303,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 802.0, 717.0, 401.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 117.0, 148.0, 401.0, 22.0 ],
-					"style" : ""
+					"presentation_rect" : [ 117.0, 148.0, 401.0, 22.0 ]
 				}
 
 			}
@@ -254,7 +314,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1049.0, 100.0, 150.0, 20.0 ],
-					"style" : "",
 					"text" : "update time for each trial"
 				}
 
@@ -267,7 +326,6 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 802.0, 437.0, 407.0, 22.0 ],
-					"style" : "",
 					"text" : "combine exp2 _ subNr _ blockNr _ trialNr _ cond _ skill _ sheet _ time .mid"
 				}
 
@@ -280,7 +338,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 802.0, 678.0, 139.0, 22.0 ],
-					"style" : "",
 					"text" : "sprintf symout %s%s%s"
 				}
 
@@ -293,7 +350,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 862.0, 642.5, 36.0, 22.0 ],
-					"style" : "",
 					"text" : "midi/"
 				}
 
@@ -307,7 +363,6 @@
 					"patching_rect" : [ 545.0, 770.0, 67.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 18.0, 63.5, 67.0, 20.0 ],
-					"style" : "",
 					"text" : "MIDI data"
 				}
 
@@ -320,8 +375,7 @@
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 211.0, 794.5, 30.0, 30.0 ],
-					"style" : ""
+					"patching_rect" : [ 211.0, 794.5, 30.0, 30.0 ]
 				}
 
 			}
@@ -334,8 +388,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 211.0, 714.5, 401.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 117.0, 62.5, 401.0, 22.0 ],
-					"style" : ""
+					"presentation_rect" : [ 117.0, 62.5, 401.0, 22.0 ]
 				}
 
 			}
@@ -347,7 +400,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 211.0, 671.5, 139.0, 22.0 ],
-					"style" : "",
 					"text" : "sprintf symout %s%s%s"
 				}
 
@@ -360,7 +412,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 271.0, 636.0, 37.0, 22.0 ],
-					"style" : "",
 					"text" : "data/"
 				}
 
@@ -372,8 +423,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 664.0, 507.0, 24.0, 24.0 ],
-					"style" : ""
+					"parameter_enable" : 0,
+					"patching_rect" : [ 664.0, 507.0, 24.0, 24.0 ]
 				}
 
 			}
@@ -386,7 +437,6 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 664.0, 573.0, 69.0, 22.0 ],
 					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
-					"style" : "",
 					"text" : "thispatcher"
 				}
 
@@ -399,7 +449,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 664.0, 541.0, 34.0, 22.0 ],
-					"style" : "",
 					"text" : "path"
 				}
 
@@ -413,8 +462,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 211.0, 566.5, 401.0, 35.0 ],
-					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/\""
 				}
 
 			}
@@ -426,7 +474,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 664.0, 437.0, 81.0, 22.0 ],
-					"style" : "",
 					"text" : "loadmess set"
 				}
 
@@ -438,8 +485,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 211.0, 507.0, 401.0, 22.0 ],
-					"style" : ""
+					"patching_rect" : [ 211.0, 507.0, 401.0, 22.0 ]
 				}
 
 			}
@@ -451,7 +497,6 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "bang", "bang", "bang" ],
 					"patching_rect" : [ 1165.0, 342.0, 44.0, 22.0 ],
-					"style" : "",
 					"text" : "t b b b"
 				}
 
@@ -465,8 +510,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1094.0, 279.0, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 18.0, 307.0, 50.0, 22.0 ],
-					"style" : ""
+					"presentation_rect" : [ 18.0, 307.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -479,8 +523,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1026.0, 279.0, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 18.0, 273.0, 50.0, 22.0 ],
-					"style" : ""
+					"presentation_rect" : [ 18.0, 273.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -493,8 +536,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 964.0, 279.0, 50.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 18.0, 239.0, 50.0, 22.0 ],
-					"style" : ""
+					"presentation_rect" : [ 18.0, 239.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -508,7 +550,6 @@
 					"patching_rect" : [ 1094.0, 239.0, 50.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 80.0, 307.0, 50.0, 22.0 ],
-					"style" : "",
 					"text" : "r trialNr"
 				}
 
@@ -523,7 +564,6 @@
 					"patching_rect" : [ 1026.0, 239.0, 59.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 80.0, 273.0, 59.0, 22.0 ],
-					"style" : "",
 					"text" : "r blockNr"
 				}
 
@@ -538,7 +578,6 @@
 					"patching_rect" : [ 964.0, 239.0, 50.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 80.0, 239.0, 50.0, 22.0 ],
-					"style" : "",
 					"text" : "r subNr"
 				}
 
@@ -551,7 +590,6 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 211.0, 437.0, 401.0, 22.0 ],
-					"style" : "",
 					"text" : "combine exp2 _ subNr _ blockNr _ trialNr _ cond _ skill _ sheet _ time .txt"
 				}
 
@@ -565,8 +603,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 737.0, 279.0, 115.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 156.0, 307.0, 115.0, 22.0 ],
-					"style" : ""
+					"presentation_rect" : [ 156.0, 307.0, 115.0, 22.0 ]
 				}
 
 			}
@@ -579,8 +616,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 605.0, 279.0, 115.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 156.0, 273.0, 115.0, 22.0 ],
-					"style" : ""
+					"presentation_rect" : [ 156.0, 273.0, 115.0, 22.0 ]
 				}
 
 			}
@@ -593,8 +629,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 473.0, 279.0, 115.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 156.0, 239.0, 115.0, 22.0 ],
-					"style" : ""
+					"presentation_rect" : [ 156.0, 239.0, 115.0, 22.0 ]
 				}
 
 			}
@@ -608,7 +643,6 @@
 					"patching_rect" : [ 737.0, 239.0, 47.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 285.0, 307.0, 47.0, 22.0 ],
-					"style" : "",
 					"text" : "r sheet"
 				}
 
@@ -623,7 +657,6 @@
 					"patching_rect" : [ 605.0, 239.0, 38.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 285.0, 273.0, 38.0, 22.0 ],
-					"style" : "",
 					"text" : "r skill"
 				}
 
@@ -638,7 +671,6 @@
 					"patching_rect" : [ 473.0, 239.0, 44.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 285.0, 239.0, 44.0, 22.0 ],
-					"style" : "",
 					"text" : "r cond"
 				}
 
@@ -651,7 +683,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 473.0, 178.0, 81.0, 22.0 ],
-					"style" : "",
 					"text" : "loadmess set"
 				}
 
@@ -664,7 +695,6 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 211.0, 297.0, 121.0, 22.0 ],
-					"style" : "",
 					"text" : "combine m d y h m s"
 				}
 
@@ -677,7 +707,6 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "int", "int", "int" ],
 					"patching_rect" : [ 294.5, 261.5, 79.0, 22.0 ],
-					"style" : "",
 					"text" : "unpack 0 0 0"
 				}
 
@@ -690,7 +719,6 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "int", "int", "int" ],
 					"patching_rect" : [ 211.0, 261.5, 79.0, 22.0 ],
-					"style" : "",
 					"text" : "unpack 0 0 0"
 				}
 
@@ -703,7 +731,6 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "list", "list", "int" ],
 					"patching_rect" : [ 211.0, 224.0, 186.0, 22.0 ],
-					"style" : "",
 					"text" : "date"
 				}
 
@@ -716,7 +743,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 252.0, 189.0, 33.0, 22.0 ],
-					"style" : "",
 					"text" : "time"
 				}
 
@@ -729,7 +755,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 211.0, 189.0, 34.0, 22.0 ],
-					"style" : "",
 					"text" : "date"
 				}
 
@@ -742,7 +767,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 211.0, 90.0, 60.0, 22.0 ],
-					"style" : "",
 					"text" : "loadbang"
 				}
 
@@ -754,7 +778,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1793.0, 25.0, 150.0, 20.0 ],
-					"style" : "",
 					"text" : "create data/midi folders"
 				}
 
@@ -767,7 +790,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 2098.0, 395.5, 234.0, 33.0 ],
-					"style" : "",
 					"text" : "remove before : (see details in regular expression)"
 				}
 
@@ -780,7 +802,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1517.0, 395.5, 234.0, 33.0 ],
-					"style" : "",
 					"text" : "remove before : (see details in regular expression)"
 				}
 
@@ -793,7 +814,10 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"patching_rect" : [ 2024.0, 824.0, 35.0, 22.0 ],
-					"style" : "",
+					"saved_object_attributes" : 					{
+						"shell" : "(default)"
+					}
+,
 					"text" : "shell"
 				}
 
@@ -806,8 +830,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 2061.0, 824.0, 150.0, 33.0 ],
-					"style" : "",
-					"text" : "\bCreate a practice file inside the midi file"
+					"text" : "\bCreate a practice folder inside the midi file"
 				}
 
 			}
@@ -819,7 +842,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2024.0, 717.5, 87.0, 22.0 ],
-					"style" : "",
 					"text" : "prepend mkdir"
 				}
 
@@ -832,8 +854,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2024.0, 760.0, 467.0, 22.0 ],
-					"style" : "",
-					"text" : "mkdir /Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/midi/practice"
+					"text" : "mkdir /Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/midi/practice"
 				}
 
 			}
@@ -845,7 +866,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2127.0, 656.5, 56.0, 22.0 ],
-					"style" : "",
 					"text" : "/practice"
 				}
 
@@ -858,7 +878,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2024.0, 688.0, 122.0, 22.0 ],
-					"style" : "",
 					"text" : "sprintf symout %s%s"
 				}
 
@@ -871,7 +890,10 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"patching_rect" : [ 1443.0, 829.0, 35.0, 22.0 ],
-					"style" : "",
+					"saved_object_attributes" : 					{
+						"shell" : "(default)"
+					}
+,
 					"text" : "shell"
 				}
 
@@ -883,9 +905,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1486.0, 834.0, 150.0, 33.0 ],
-					"style" : "",
-					"text" : "\bCreate a practice file inside the data folder"
+					"patching_rect" : [ 1482.0, 829.0, 150.0, 33.0 ],
+					"text" : "\bCreate a practice folder inside the data folder"
 				}
 
 			}
@@ -897,7 +918,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1443.0, 724.5, 87.0, 22.0 ],
-					"style" : "",
 					"text" : "prepend mkdir"
 				}
 
@@ -909,9 +929,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1443.0, 760.0, 468.699951, 22.0 ],
-					"style" : "",
-					"text" : "mkdir /Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/data/practice"
+					"patching_rect" : [ 1443.0, 760.0, 468.699950999999999, 22.0 ],
+					"text" : "mkdir /Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/data/practice"
 				}
 
 			}
@@ -923,7 +942,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1546.0, 663.5, 56.0, 22.0 ],
-					"style" : "",
 					"text" : "/practice"
 				}
 
@@ -936,7 +954,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1443.0, 694.0, 122.0, 22.0 ],
-					"style" : "",
 					"text" : "sprintf symout %s%s"
 				}
 
@@ -948,8 +965,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 2063.0, 579.0, 150.0, 20.0 ],
-					"style" : "",
-					"text" : "create a midi file"
+					"text" : "create a midi folder"
 				}
 
 			}
@@ -961,7 +977,10 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"patching_rect" : [ 2024.0, 579.0, 35.0, 22.0 ],
-					"style" : "",
+					"saved_object_attributes" : 					{
+						"shell" : "(default)"
+					}
+,
 					"text" : "shell"
 				}
 
@@ -974,8 +993,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2024.0, 523.0, 422.0, 22.0 ],
-					"style" : "",
-					"text" : "mkdir /Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/midi"
+					"text" : "mkdir /Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/midi"
 				}
 
 			}
@@ -987,7 +1005,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2024.0, 490.0, 87.0, 22.0 ],
-					"style" : "",
 					"text" : "prepend mkdir"
 				}
 
@@ -1000,8 +1017,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2024.0, 338.0, 476.0, 22.0 ],
-					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/midi\""
+					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/midi\""
 				}
 
 			}
@@ -1013,8 +1029,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2024.0, 438.0, 390.0, 22.0 ],
-					"style" : "",
-					"text" : "/Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/midi"
+					"text" : "/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/midi"
 				}
 
 			}
@@ -1026,7 +1041,6 @@
 					"numoutlets" : 5,
 					"outlettype" : [ "", "", "", "", "" ],
 					"patching_rect" : [ 2024.0, 401.0, 72.0, 22.0 ],
-					"style" : "",
 					"text" : "regexp :(.+)"
 				}
 
@@ -1039,7 +1053,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2024.0, 286.0, 122.0, 22.0 ],
-					"style" : "",
 					"text" : "sprintf symout %s%s"
 				}
 
@@ -1051,8 +1064,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 1482.0, 586.0, 150.0, 20.0 ],
-					"style" : "",
-					"text" : "create a data file"
+					"text" : "create a data folder"
 				}
 
 			}
@@ -1064,7 +1076,10 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"patching_rect" : [ 1443.0, 586.0, 35.0, 22.0 ],
-					"style" : "",
+					"saved_object_attributes" : 					{
+						"shell" : "(default)"
+					}
+,
 					"text" : "shell"
 				}
 
@@ -1077,8 +1092,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1443.0, 523.0, 424.0, 22.0 ],
-					"style" : "",
-					"text" : "mkdir /Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/data"
+					"text" : "mkdir /Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/data"
 				}
 
 			}
@@ -1090,7 +1104,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1443.0, 485.0, 87.0, 22.0 ],
-					"style" : "",
 					"text" : "prepend mkdir"
 				}
 
@@ -1103,8 +1116,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1443.0, 338.0, 478.0, 22.0 ],
-					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/data\""
+					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/data\""
 				}
 
 			}
@@ -1116,8 +1128,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1443.0, 438.0, 390.0, 22.0 ],
-					"style" : "",
-					"text" : "/Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/data"
+					"text" : "/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/data"
 				}
 
 			}
@@ -1129,7 +1140,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1443.0, 278.0, 122.0, 22.0 ],
-					"style" : "",
 					"text" : "sprintf symout %s%s"
 				}
 
@@ -1142,7 +1152,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 2148.0, 286.0, 33.0, 22.0 ],
-					"style" : "",
 					"text" : "midi"
 				}
 
@@ -1155,7 +1164,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1567.0, 278.0, 34.0, 22.0 ],
-					"style" : "",
 					"text" : "data"
 				}
 
@@ -1168,7 +1176,6 @@
 					"numoutlets" : 5,
 					"outlettype" : [ "", "", "", "", "" ],
 					"patching_rect" : [ 1443.0, 401.0, 72.0, 22.0 ],
-					"style" : "",
 					"text" : "regexp :(.+)"
 				}
 
@@ -1181,8 +1188,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1443.0, 218.0, 454.0, 22.0 ],
-					"style" : "",
-					"text" : "\"Macintosh HD:/Users/musiclabmacbook/Desktop/Atsuko/teaching-v2.0/script/Max/\""
+					"text" : "\"Macintosh HD:/Users/musiclabimac/Desktop/Atsuko/teaching-v2.0/script/Max/\""
 				}
 
 			}
@@ -1195,7 +1201,6 @@
 					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 1828.0, 187.0, 69.0, 22.0 ],
 					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
-					"style" : "",
 					"text" : "thispatcher"
 				}
 
@@ -1208,7 +1213,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1828.0, 153.0, 34.0, 22.0 ],
-					"style" : "",
 					"text" : "path"
 				}
 
@@ -1221,7 +1225,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"patching_rect" : [ 1793.0, 53.0, 60.0, 22.0 ],
-					"style" : "",
 					"text" : "loadbang"
 				}
 
@@ -1235,8 +1238,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 103.0, 90.0, 30.0, 30.0 ],
-					"style" : ""
+					"patching_rect" : [ 103.0, 90.0, 30.0, 30.0 ]
 				}
 
 			}
@@ -1389,8 +1391,16 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-81", 0 ],
+					"destination" : [ "obj-48", 0 ],
 					"order" : 1,
+					"source" : [ "obj-14", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-81", 0 ],
+					"order" : 2,
 					"source" : [ "obj-14", 0 ]
 				}
 
@@ -1430,7 +1440,15 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-2", 0 ],
-					"order" : 1,
+					"order" : 2,
+					"source" : [ "obj-19", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-53", 0 ],
+					"order" : 0,
 					"source" : [ "obj-19", 0 ]
 				}
 
@@ -1438,7 +1456,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-71", 0 ],
-					"order" : 0,
+					"order" : 1,
 					"source" : [ "obj-19", 0 ]
 				}
 
@@ -1567,8 +1585,16 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-85", 0 ],
+					"destination" : [ "obj-47", 0 ],
 					"order" : 1,
+					"source" : [ "obj-33", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-85", 0 ],
+					"order" : 2,
 					"source" : [ "obj-33", 0 ]
 				}
 
@@ -1601,6 +1627,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-41", 0 ],
 					"source" : [ "obj-38", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-47", 1 ],
+					"source" : [ "obj-39", 0 ]
 				}
 
 			}
@@ -1694,6 +1727,20 @@
 				"patchline" : 				{
 					"destination" : [ "obj-33", 0 ],
 					"source" : [ "obj-45", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-15", 0 ],
+					"source" : [ "obj-47", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-53", 1 ],
+					"source" : [ "obj-48", 0 ]
 				}
 
 			}
@@ -1795,6 +1842,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-39", 0 ],
+					"source" : [ "obj-53", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-116", 8 ],
 					"order" : 0,
 					"source" : [ "obj-56", 0 ]
@@ -1883,7 +1937,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-11", 0 ],
-					"order" : 8,
+					"order" : 9,
 					"source" : [ "obj-63", 0 ]
 				}
 
@@ -1891,7 +1945,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-19", 0 ],
-					"order" : 6,
+					"order" : 7,
 					"source" : [ "obj-63", 0 ]
 				}
 
@@ -1899,7 +1953,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-24", 0 ],
-					"order" : 7,
+					"order" : 8,
 					"source" : [ "obj-63", 0 ]
 				}
 
@@ -1930,8 +1984,16 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-47", 0 ],
+					"order" : 4,
+					"source" : [ "obj-63", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-8", 0 ],
-					"order" : 5,
+					"order" : 6,
 					"source" : [ "obj-63", 0 ]
 				}
 
@@ -1939,7 +2001,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-85", 0 ],
-					"order" : 4,
+					"order" : 5,
 					"source" : [ "obj-63", 0 ]
 				}
 
@@ -2186,6 +2248,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-53", 0 ],
+					"source" : [ "obj-82", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-85", 1 ],
 					"source" : [ "obj-84", 0 ]
 				}
@@ -2375,7 +2444,9 @@
 				"parentstyle" : "",
 				"multi" : 0
 			}
- ]
+ ],
+		"bgcolor" : [ 0.988904, 0.400472, 0.39996, 1.0 ],
+		"editing_bgcolor" : [ 0.873151, 0.873319, 0.873123, 1.0 ]
 	}
 
 }
