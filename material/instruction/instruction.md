@@ -140,6 +140,8 @@ The left panel indicates the procedure of the experiment.
 
 - If he or she cannot perform the piece without errors within **5 attempts**, leave a memo and continue the experiment.
 
+> **Close practice.maxpat**
+
 ### Experiment
 
 - <span>Participants whose SubNr is odd start from the teaching condition whereas those whose SubNr is even start from the performing condition.</span>
@@ -148,7 +150,7 @@ The left panel indicates the procedure of the experiment.
 #### 1) Teaching condition
 1. 1st Stimulus
 
-*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask the experimenter now.*
+*You are now going to perform the piece in an expressive style indicated by the musical notation. I will show sheet music with the musical notation on the screen in front of you. Please read the notation and if you have any question, please ask the experimenter now. Please read the notation and practise it until you feel you comfortably perform the piece with the expression*
 
 > **Open practice.maxpat**
 
@@ -167,8 +169,6 @@ Definition (based on Wikipedia)
 
 <img src="./image/prac_stim_a.png" width="1024">
 
-*If you don't have any question, I will give you the sound of the metronome and please perform the piece according to the notation.*
-
 > **Check the participant to play the piece expressively without pitch errors twice consecutively**
 
 *Thank you. Do you have any questions?*
@@ -182,6 +182,8 @@ Definition (based on Wikipedia)
 > **Open main.maxpat**
 
 > **1 - 8 trials**
+
+> **Close main.maxpat**
 
 2. 2nd Stimulus
 
@@ -208,6 +210,8 @@ Definition (based on Wikipedia)
 > **Open main.maxpat**
 
 > **1 - 8 trials**
+
+> **Close main.maxpat**
 
 *Thank you. Next, you will perform the same piece again but in a different condition.*
 
@@ -240,6 +244,8 @@ Definition (based on Wikipedia)
 
 > **1 - 8 trials**
 
+> **Close main.maxpat**
+
 2. 2nd Stimulus
 
 *Thank you. Now, we are moving on to the different musical notation. Again, I will show sheet music with the musical notation on the screen in front of you. Please read the notation and practise it until you feel you comfortably perform the piece with the expression.*
@@ -263,6 +269,8 @@ Definition (based on Wikipedia)
 > **Open main.maxpat**
 
 > **1 - 8 trials**
+
+> **Close main.maxpat**
 
 ## Questionnaire
 
