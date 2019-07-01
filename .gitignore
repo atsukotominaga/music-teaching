@@ -11,6 +11,7 @@ script/lilypond/*pdf
 # Max
 script/Max/data
 script/Max/midi
+script/Max/docs
 
 # R
 *.Rhistory
