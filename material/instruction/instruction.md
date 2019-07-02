@@ -289,4 +289,5 @@ Definition (based on Wikipedia)
 - If participants ask whether they can use different fingerings, please let them know that they can play as they like.
 - If participants ask whether they should keep the tempo or not, please let them know that they can play as they like, but keep in mind the metronome tells you the original tempo of this piece.
 - If participants ask anything related to detailed information about each skill (e.g., deeper legato? normal/subito forte?), just ask them to play as they like.
+- If participants ask whether they should implement previous skill (e.g., articulation) to the current skill (e.g., dynamics), please let them know that they should implement one skill as indicated.
 - If participants start playing before the metronome beats, please record the same trial again.
