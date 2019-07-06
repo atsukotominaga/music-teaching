@@ -47,7 +47,7 @@ Adjust the volume of the headphone so that it sounds naturally.
 1. Go to **Desktop >> Atsuko_teaching-v2.0 >> open the "main.maxpat", the “practice.maxpat” and the “display.maxpat”**.
 2. Move the window of the “display.maxpat” to the right (on the screen in front of the piano”) and press F for a fullscreen mode. <span>If there is a toobar surrounding the display, get rid of it by pressing cmd+8 (not F8)</span>.
 3. Read the instruction on the “main.maxpat" and the "practice.maxpat".
-4. Also check whether the piano sounds come from the headphone and <span>MIDI inputs are correctly responded (Pitch and Velocity should change according to key presses on MIDIRecording subpatchers)</span>.
+4. Also check whether the piano sounds come from the headphone and <span>MIDI inputs are correctly responded (**Please press J for practice.maxpat / A for main.maxpat before you press a key because both patchers do not accept any key press before the metronome (Added 06/07/19)**. After the metronome sound, Pitch and Velocity on MIDIRecording subpatchers should change according to key presses)</span>.
 5. If the sound of the metronome and the piano does not come from the computer speaker, go to **System Preference >> Sound >> Output >> select “Scarllet 6i6 USB”**.
 6. If you cannot still solve the problem above, please quit Max and relaunch it again.
 7. Click the “inst_1” button on the practice.maxpat to show a general instruction on the “display.maxpat”.
