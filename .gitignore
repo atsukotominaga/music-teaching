@@ -1,4 +1,3 @@
-ls
 *.DS_Store
 
 # material
@@ -11,12 +10,13 @@ script/lilypond/*pdf
 # Max
 script/Max/data
 script/Max/midi
-script/Max/docs
 
 # R
 *.Rhistory
 script/R/data/
 script/R/filtered/
 
-# local folders
+# my local folders
 script/lilypond/old
+script/Max/docs
+script/Max/backup
