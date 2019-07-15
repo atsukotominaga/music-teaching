@@ -19,6 +19,3 @@ SubNr Cond1 Cond2 Inst1 Inst2 Skill1 Skill2 Image1 Image2
 18, performing teaching inst_p inst_t articulation dynamics stim_a stim_d;
 19, teaching performing inst_t inst_p dynamics articulation stim_d stim_a;
 20, performing teaching inst_p inst_t dynamics articulation stim_d stim_a;
-21, teaching performing inst_t inst_p dynamics articulation stim_d stim_a;
-22, performing teaching inst_p inst_t articulation dynamics stim_a stim_d;
-23, teaching performing inst_t inst_p dynamics articulation stim_d stim_a;
