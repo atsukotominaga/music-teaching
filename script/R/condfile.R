@@ -25,6 +25,7 @@ df$Image2 <- paste(df$Image2, ";", sep = "")
 # Add more participants - 15/07/19
 df_add01 <- rbind(df[3,], df[6,], df[7,])
 df_add01$SubNr <- c("21,", "22,", "23,")
+df <- rbind(df, df_add01)
 
 # Export df to csv
 write.table(df, file = "./condfile.csv", row.names = FALSE, quote = FALSE, sep = " ")
