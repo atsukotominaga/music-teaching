@@ -111,10 +111,10 @@ p_kor_sub <- ggplot(data = kor_sub_stats, aes(x = Subcomponent, y = Mean, fill =
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "Subcomponent", y = "KOR (ms)") + #coord_cartesian(ylim = c(-140, 40)) +
-  #geom_signif(y_position=c(mean(kor_sub_stats$Mean[kor_sub_stats$Subcomponent == "Legato"])+mean(kor_sub_stats$SEM[kor_sub_stats$Subcomponent == "Legato"])+6,
-  #                         mean(kor_sub_stats$Mean[kor_sub_stats$Subcomponent == "Staccato"])+mean(kor_sub_stats$SEM[kor_sub_stats$Subcomponent == "Staccato"])+7),
-  #            xmin = c(0.8, 1.8), xmax = c(1.2, 2.2), annotation = c("***", "***"), tip_length = 0, textsize = 10, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(x = "Subcomponent", y = "KOR (ms)") + coord_cartesian(ylim = c(-0.8, 0.2)) +
+  geom_signif(y_position=c(mean(kor_sub_stats$Mean[kor_sub_stats$Subcomponent == "Legato"])+mean(kor_sub_stats$SEM[kor_sub_stats$Subcomponent == "Legato"]+0.05),
+                           mean(kor_sub_stats$Mean[kor_sub_stats$Subcomponent == "Staccato"])+mean(kor_sub_stats$SEM[kor_sub_stats$Subcomponent == "Staccato"]+0.05)),
+              xmin = c(0.8, 1.8), xmax = c(1.2, 2.2), annotation = c("***", "***"), tip_length = 0, textsize = 10, family = "Helvetica Neue LT Std 57 Condensed") +
   theme_classic() +
   theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_kor_sub
