@@ -16,6 +16,7 @@ rm(list=ls(all=TRUE)) # clear all in Environment
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 # plot
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
 # statistics
 if (!require("stats")) {install.packages("stats"); require("stats")}
 if (!require("ez")) {install.packages("ez"); require("ez")}
@@ -246,6 +247,8 @@ p_ioi <- ggplot(data = ioi_stats, aes(x = Skill, y = Mean, fill = Condition)) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
+  geom_signif(y_position=c(mean(ioi_stats$Mean)+mean(ioi_stats$SEM)+5),
+              xmin = 0.8, xmax = 1.2, annotation = "n.s.", tip_length = 0, textsize = 10, family = "Helvetica Neue LT Std 57 Condensed") +
   theme_classic() +
   theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_ioi
