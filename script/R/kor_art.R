@@ -104,6 +104,21 @@ kor_sub_ezstats <- ezStats(
   , check_args = TRUE
 )
 
+# 2. Average KOR for each note
+# For each individual
+kor_seq <- aggregate(KOR~SubNr*Condition*Skill*Interval, data = df_kor,
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kor_seq <- cbind(kor_seq[,1:4], as.data.frame(kor_seq[,5]))
+# Change colnames
+colnames(kor_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+kor_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = kor_seq,
+                           FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kor_seq_stats <- cbind(kor_seq_stats[,1:3], as.data.frame(kor_seq_stats[,4]))
+# Change colnames for each interval
+colnames(kor_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+
 ####################################
 # Plots
 ####################################
@@ -111,7 +126,7 @@ p_kor_sub <- ggplot(data = kor_sub_stats, aes(x = Subcomponent, y = Mean, fill =
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
-  labs(x = "Subcomponent", y = "KOR (ms)") + coord_cartesian(ylim = c(-0.8, 0.2)) +
+  labs(x = "Subcomponent", y = "KOR") + coord_cartesian(ylim = c(-0.8, 0.2)) +
   geom_signif(y_position=c(mean(kor_sub_stats$Mean[kor_sub_stats$Subcomponent == "Legato"])+mean(kor_sub_stats$SEM[kor_sub_stats$Subcomponent == "Legato"]+0.05),
                            mean(kor_sub_stats$Mean[kor_sub_stats$Subcomponent == "Staccato"])+mean(kor_sub_stats$SEM[kor_sub_stats$Subcomponent == "Staccato"]+0.05)),
               xmin = c(0.8, 1.8), xmax = c(1.2, 2.2), annotation = c("***", "***"), tip_length = 0, textsize = 10, family = "Helvetica Neue LT Std 57 Condensed") +
@@ -119,11 +134,27 @@ p_kor_sub <- ggplot(data = kor_sub_stats, aes(x = Subcomponent, y = Mean, fill =
   theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
 p_kor_sub
 
+p_kor_seq <- ggplot(data = kor_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  facet_grid(Skill ~ .) + 
+  labs(x = "Interval", y = "KOR") + scale_x_continuous(breaks=seq(1,66,1)) +
+  theme_classic() +
+  theme(text = element_text(size = 15, family = "Helvetica Neue LT Std 57 Condensed"))
+p_kor_seq
+
+# Save plots
+# png files
+ggsave("./3_stats/plot/kor_art/p_kor_sub.png", plot = p_kor_sub, dpi = 600, width = 5, height = 4)
+ggsave("./3_stats/plot/kor_art/p_kor_seq.png", plot = p_kor_seq, dpi = 600, width = 15, height = 4)
+
 ####################################
 ### Statistics
 ####################################
 # Two-way ANOVA
-# kot_sub
+# kor_sub
 kor_sub_aov <- ezANOVA(
   data = subset(df_kor, df_kor$Interval != 8 & df_kor$Interval != 16 & df_kor$Interval != 24 & 
                   df_kor$Interval != 41 & df_kor$Interval != 49 & df_kor$Interval != 57)
