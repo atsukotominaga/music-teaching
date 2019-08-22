@@ -119,3 +119,54 @@ ls_remove <- unique(ls_remove)
 df_removed <- t(data.frame(ls_remove)) # transpose
 colnames(df_removed) <- c("SubNr", "BlockNr", "TrialNr")
 rownames(df_removed) <- c(1:nrow(df_removed))
+
+# calculate error rate
+df_errorRate <- data.frame()
+for (subnr in unique(df_all$SubNr)){
+  error = 0
+  for (row in 1:length(ls_remove)){
+    if (subnr == ls_remove[[row]][1]){
+      error = error + 1
+    }
+  }
+  df_errorRate <- rbind(df_errorRate, c(subnr, error, error/32)) # total trial number is 32 (8 trials * 4 blocks)
+}
+colnames(df_errorRate) <- c("SubNr", "N", "ErrorRate")
+
+# mark error
+# Mark pitch errors for data_all
+df_all$Error <- 0
+for (error in 1:length(ls_error)){
+  df_all$Error[df_all$SubNr == ls_error[[error]][1] & df_all$BlockNr == ls_error[[error]][2] & df_all$TrialNr == ls_error[[error]][3]] <- 1
+}
+
+# create data without pitch errors
+df_analysis <- df_all %>% dplyr::filter(Error != 1)
+
+# create data only with pitch errors
+df_error <- df_all %>% dplyr::filter(Error == 1)
+
+# exclude participants - later
+
+####################################
+# Export csv files
+####################################
+# Export a csv file for df_all
+write.csv(df_all, file = "./1iltered/data_all.csv", row.names = F)
+
+# Create data only containing metronome sounds
+df_metro <- raw_data %>% dplyr::filter(Pitch == 31 | Pitch == 34)
+# Export a csv file for df_metro
+write.csv(df_metro, file = "./filtered/data_metro.csv", row.names = F)
+
+# Export a csv file for df_removed
+write.csv(df_removed, file = "./filtered/data_removed.csv", row.names = F)
+
+# Export a csv file for df_error
+write.csv(df_error, file = "./filtered/data_error.csv", row.names = F)
+
+# Export a csv file for df_errorRate
+write.csv(df_errorRate, file = "./filtered/data_errorRate.csv", row.names = F)
+
+# Export a csv file for data_analysis
+write.csv(df_analysis, file = "./filtered/data_analysis.csv", row.names = F)
