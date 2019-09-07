@@ -65,6 +65,7 @@ ioi <- cbind(ioi[,1:5], as.data.frame(ioi[,6]))
 # Change colnames
 colnames(ioi) <- c("SubNr", "BlockNr", "TrialNr", "Condition", "Skill", "N", "Mean", "SD")
 
+# Calculate KOR for each interval
 df_kor <- data.frame()
 for (subnr in unique(df_kot$SubNr)){
   for (block in unique(df_kot$BlockNr[df_kot$SubNr == subnr])){
@@ -93,11 +94,13 @@ kor_sub_stats <- aggregate(Mean~Condition*Skill*Subcomponent, data = kor_sub,
 kor_sub_stats <- cbind(kor_sub_stats[,1:3], as.data.frame(kor_sub_stats[,4]))
 # Change colnames
 colnames(kor_sub_stats) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
+# Expoert summary stats
+capture.output(kor_sub_stats, file = "./3_stats/kor_art/summary_stats.txt")
 
 # Checking values with ezStats
 kor_sub_ezstats <- ezStats(
-  data = subset(df_kor, df_kor$Interval  != 8 & df_kor$Interval != 16 & df_kor$Interval != 24 & df_kor$Interval != 41 & df_kor$Interval != 49 & df_kor$Interval != 57)
-  , dv = .(KOR)
+  data = kor_sub
+  , dv = .(Mean)
   , wid = .(SubNr)
   , within = .(Condition, Subcomponent)
   , type = 3
@@ -167,9 +170,12 @@ kor_sub_aov <- ezANOVA(
 print(kor_sub_aov)
 write.csv(kor_sub_aov$ANOVA, file = "./3_stats/kor_art/kor_sub_aov.csv")
 
+# aov
+kor_sub_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_sub)
+capture.output(summary(kor_sub_aov_2), file = "./3_stats/kor_art/kor_sub_aov_2.txt")
+
 # posthoc comparison
-kor_sub_ph <- aov(KOR~Condition*Subcomponent, data = subset(df_kor, df_kor$Interval != 8 & df_kor$Interval != 16 & df_kor$Interval != 24 & 
-                                                              df_kor$Interval != 41 & df_kor$Interval != 49 & df_kor$Interval != 57))
+kor_sub_ph <- aov(Mean~Condition*Subcomponent, kor_sub)
 kor_sub_ph <- TukeyHSD(kor_sub_ph)
 print(kor_sub_ph)
 write.csv(kor_sub_ph$`Condition:Subcomponent`, file = "./3_stats/kor_art/kor_sub_ph.csv")
