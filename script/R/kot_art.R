@@ -69,6 +69,8 @@ kot_sub_stats <- aggregate(Mean~Condition*Skill*Subcomponent, data = kot_sub,
 kot_sub_stats <- cbind(kot_sub_stats[,1:3], as.data.frame(kot_sub_stats[,4]))
 # Change colnames
 colnames(kot_sub_stats) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
+# Export summary stats
+capture.output(kot_sub_stats, file = "./3_stats/kot_art/summary_stats.txt")
 
 # Checking values with ezStats
 kot_sub_ezstats <- ezStats(
@@ -245,6 +247,10 @@ kot_sub_aov <- ezANOVA(
 )
 print(kot_sub_aov)
 write.csv(kot_sub_aov$ANOVA, file = "./3_stats/kot_art/kot_sub_aov.csv")
+
+# aov
+kot_sub_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kot_sub)
+capture.output(summary(kot_sub_aov_2), file = "./3_stats/kot_art/kot_sub_aov_2.txt")
 
 # posthoc comparison
 kot_sub_ph <- aov(KOT~Condition*Subcomponent, data = subset(df_kot, df_kot$Interval != 8 & df_kot$Interval != 16 & df_kot$Interval != 24 & 

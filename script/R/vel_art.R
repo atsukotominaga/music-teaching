@@ -72,6 +72,8 @@ vel_sub_stats <- aggregate(Mean~Condition*Skill*Subcomponent, data = vel_sub,
 vel_sub_stats <- cbind(vel_sub_stats[,1:3], as.data.frame(vel_sub_stats[,4]))
 # Change colnames
 colnames(vel_sub_stats) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
+# Export summary stats
+capture.output(vel_sub_stats, file = "./3_stats/vel_art/summary_stats.txt")
 
 # Checking values with ezStats
 vel_sub_ezstats <- ezStats(
@@ -97,6 +99,8 @@ vel_ch_sub_stats <- aggregate(Mean~Condition*Skill*Subcomponent, data = vel_ch_s
 vel_ch_sub_stats <- cbind(vel_ch_sub_stats[,1:3], as.data.frame(vel_ch_sub_stats[,4]))
 # Change colnames
 colnames(vel_ch_sub_stats) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
+# Export summary stats
+capture.output(vel_ch_sub_stats, file = "./3_stats/vel_art/summary_stats_2.txt")
 
 # Checking values with ezStats
 vel_ch_sub_ezstats <- ezStats(
@@ -276,6 +280,10 @@ vel_sub_aov <- ezANOVA(
 print(vel_sub_aov)
 write.csv(vel_sub_aov$ANOVA, file = "./3_stats/vel_art/vel_sub_aov.csv")
 
+# aov
+vel_sub_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = vel_sub)
+capture.output(summary(vel_sub_aov_2), file = "./3_stats/vel_art/vel_sub_aov_2.txt")
+
 # posthoc comparison
 vel_sub_ph <- aov(Velocity~Condition*Subcomponent, data = df_vel)
 vel_sub_ph <- TukeyHSD(vel_sub_ph)
@@ -294,6 +302,10 @@ vel_ch_sub_aov <- ezANOVA(
 )
 print(vel_ch_sub_aov)
 write.csv(vel_ch_sub_aov$ANOVA, file = "./3_stats/vel_art/vel_ch_sub_aov.csv")
+
+# aov
+vel_ch_sub_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = vel_ch_sub)
+capture.output(summary(vel_sub_aov_3), file = "./3_stats/vel_art/vel_ch_sub_aov_2.txt")
 
 # posthoc comparison
 vel_ch_sub_ph <- aov(Acc~Condition*Subcomponent, data = subset(df_vel_acc, df_vel_acc$Interval == 8 | df_vel_acc$Interval == 16 | df_vel_acc$Interval == 24 |

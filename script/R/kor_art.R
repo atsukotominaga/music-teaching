@@ -94,7 +94,7 @@ kor_sub_stats <- aggregate(Mean~Condition*Skill*Subcomponent, data = kor_sub,
 kor_sub_stats <- cbind(kor_sub_stats[,1:3], as.data.frame(kor_sub_stats[,4]))
 # Change colnames
 colnames(kor_sub_stats) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
-# Expoert summary stats
+# Export summary stats
 capture.output(kor_sub_stats, file = "./3_stats/kor_art/summary_stats.txt")
 
 # Checking values with ezStats

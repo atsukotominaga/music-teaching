@@ -69,6 +69,8 @@ ioi_stats <- aggregate(Mean~Condition*Skill, data = ioi,
 ioi_stats <- cbind(ioi_stats[,1:2], as.data.frame(ioi_stats[,3]))
 # Change colnames
 colnames(ioi_stats) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
+# Export summary stats
+capture.output(ioi_stats, file = "./3_stats/ioi_art/summary_stats.txt")
 
 # Checking values with ezStats
 ioi_ezstats <- ezStats(
@@ -247,7 +249,7 @@ p_ioi <- ggplot(data = ioi_stats, aes(x = Skill, y = Mean, fill = Condition)) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 230)) +
-  geom_signif(y_position=c(mean(ioi_stats$Mean)+mean(ioi_stats$SEM)+5),
+  geom_signif(y_position=c(mean(ioi_stats$Mean)+mean(ioi_stats$SEM)+15),
               xmin = 0.8, xmax = 1.2, annotation = "*", tip_length = 0, textsize = 10, family = "Helvetica Neue LT Std 57 Condensed") +
   theme_classic() +
   theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
@@ -352,6 +354,10 @@ ioi_aov <- ezANOVA(
 )
 print(ioi_aov)
 write.csv(ioi_aov$ANOVA, file = "./3_stats/ioi_art/ioi_aov.csv")
+
+# aov
+ioi_aov_2 <- aov(Mean ~ Condition + Error(SubNr/Condition), data = ioi)
+capture.output(summary(ioi_aov_2), file = "./3_stats/ioi_art/ioi_aov_2.txt")
 
 # # ioi_ch
 # ioi_ch_aov <- ezANOVA(
