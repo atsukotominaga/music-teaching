@@ -1,0 +1,164 @@
+---
+title: 'Analysis: The Sound of Teaching Music 1'
+output:
+  html_notebook: default
+editor_options: 
+  chunk_output_type: inline
+---
+
+##### Description: This is a summary of all analyses for "The Sound of Teaching Music 1".
+
+##### R Notebook:
+- Execute a chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*.
+- Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+- When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+- The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+# Outline
+
+
+```{r setup, include = FALSE}
+# Install and load required packages
+# data manipulation
+if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+# plot
+if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
+# statistics
+if (!require("stats")) {install.packages("stats"); require("stats")}
+if (!require("ez")) {install.packages("ez"); require("ez")}
+```
+
+## Interonset intervals (IOIs)
+```{r extract, include = FALSE}
+df_ioi <- read.csv("./trimmed/data_ioi.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+
+# SubNr as a factor
+df_ioi$SubNr <- as.factor(df_ioi$SubNr)
+
+# Include only articulation
+df_ioi_art <- df_ioi %>% dplyr::filter(Skill == "articulation")
+# Include only dynamics
+df_ioi_dyn <- df_ioi %>% dplyr::filter(Skill == "dynamics")
+```
+
+### Articulation
+#### 1. Aggregated data for each individual
+```{r ioi_art, echo = FALSE}
+# Aggregate data
+ioi_art <- aggregate(IOI~SubNr*Condition*Skill, data = df_ioi_art,
+                 FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
+ioi_art <- cbind(ioi_art[,1:3], as.data.frame(ioi_art[,4]))
+# Change colnames
+colnames(ioi_art) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
+print(ioi_art)
+```
+
+#### Plot
+- Error bars show the SD of the mean
+```{r ioi_art_plot,  echo = FALSE}
+# Graph
+p_ioi_art <- ggplot(data = ioi_art, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  annotate("text", 18, 188, label = "Tempo (80bpm)", vjust = -2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "Mean IOI (ms)") +
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
+plot(p_ioi_art)
+```
+
+#### 2. Aggregated data for each condition
+```{r ioi_art_all, echo = FALSE}
+# Group mean
+ioi_art_all <- aggregate(Mean~Condition*Skill, data = ioi_art,
+                       FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_art_all <- cbind(ioi_art_all[,1:2], as.data.frame(ioi_art_all[,3]))
+# Change colnames
+colnames(ioi_art_all) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
+print(ioi_art_all)
+```
+
+#### Plot
+- Error bars show the SEM of the mean
+```{r ioi_art_all_plot, echo = FALSE}
+p_ioi_art_all <- ggplot(data = ioi_art_all, aes(x = Skill, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  annotate("text", 1, 188, label = "Tempo (80bpm)", vjust = -2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 210)) +
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
+p_ioi_art_all
+```
+
+#### 3. Phrase boundaries for each individual 
+```{r ioi_art_ch, echo = FALSE}
+# Define phrase boundaries
+df_ioi_art$Boundary <- "No"
+df_ioi_art$Boundary[df_ioi_art$Interval == 8 | df_ioi_art$Interval == 16 | df_ioi_art$Interval == 24 | df_ioi_art$Interval == 41 | df_ioi_art$Interval == 49 | df_ioi_art$Interval == 57] <- "Yes"
+
+# For each individual
+ioi_art_ch <- aggregate(IOI~SubNr*Condition*Skill*Boundary, data = df_ioi_art,
+                    FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+ioi_art_ch <- cbind(ioi_art_ch[,1:4], as.data.frame(ioi_art_ch[,5]))
+# Change colnames
+colnames(ioi_art_ch) <- c("SubNr", "Condition", "Skill", "Boundary", "N", "Mean", "SD")
+print(ioi_art_ch)
+```
+
+##### Plot
+- Error bars show the SD of the mean
+```{r ioi_art_ch_plot, echo = FALSE}
+p_ioi_art_ch <- ggplot(data = ioi_art_ch, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  facet_grid(Boundary ~ .) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  annotate("text", 18, 188, label = "Tempo (80bpm)", vjust = -2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 280)) +
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
+p_ioi_art_ch
+```
+
+### Phrase boundaries for each condition
+```{r ioi_art_ch_all, echo = FALSE}
+# Group mean
+ioi_art_ch_all <- aggregate(Mean~Condition*Skill*Boundary, data = ioi_art_ch,
+                       FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_art_ch_all <- cbind(ioi_art_ch_all[,1:3], as.data.frame(ioi_art_ch_all[,4]))
+# Change colnames
+colnames(ioi_art_ch_all) <- c("Condition", "Skill", "Boundary", "N", "Mean", "SD", "SEM")
+print(ioi_art_ch_all)
+```
+
+#### Plot
+- Error bars show the SEM of the mean
+```{r ioi_art_ch_all_plot, echo = FALSE}
+p_ioi_art_ch_all <- ggplot(data = ioi_art_ch_all, aes(x = Skill, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  annotate("text", 1, 188, label = "Tempo (80bpm)", vjust = 2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  facet_grid(. ~ Boundary) +
+  labs(y = "Mean IOI (ms)") + coord_cartesian(ylim = c(100, 250)) +
+  theme_classic() +
+  theme(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"))
+p_ioi_art_ch_all
+```
+
+## Key-Overlap time/ratio (KOT/KOR)
+```{r}
+
+```
+
+## Key Velocity (KV)
+
+
