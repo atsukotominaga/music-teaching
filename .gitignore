@@ -1,5 +1,6 @@
 #General
-.DS_Store
+*DS_Store
+*Rhistory
 others/
 
 # R
@@ -8,12 +9,11 @@ script/R/analysis/
 script/R/1_filtered/
 script/R/2_trimmed/
 script/R/3_stats/
-script/R/.Rhistory
-script/R/.DS_Store
 
 # Rmd
-script/Rmd/.Rhistory
 script/Rmd/instruction.html
+script/R/old_analysis
+script/RNotebook/trimmed
 
 # Max
 script/Max/data/
