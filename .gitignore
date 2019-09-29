@@ -12,7 +12,6 @@ script/R/2_trimmed/
 script/R/3_stats/
 
 # Rmd
-script/Rmd/instruction.html
 script/R/old_analysis
 script/RNotebook/trimmed
 
