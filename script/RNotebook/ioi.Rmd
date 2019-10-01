@@ -63,6 +63,7 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
 # statistics
 if (!require("stats")) {install.packages("stats"); require("stats")}
+if (!require("effsize")) {install.packages("effsize"); require("effsize")}
 if (!require("ez")) {install.packages("ez"); require("ez")}
 
 # ggplots
@@ -100,6 +101,7 @@ print(ioi_art)
 ##### Bar chart
 - Error bars show SD of the mean
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_art_bar,  echo = FALSE}
 p_ioi_art <- ggplot(data = ioi_art, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -129,6 +131,7 @@ print(ioi_art_all)
 ##### Bar chart
 - Error bars show SEM of the mean
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_art_all_bar, echo = FALSE}
 p_ioi_art_all <- ggplot(data = ioi_art_all, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -143,6 +146,7 @@ p_ioi_art_all
 
 ##### Box plot
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_art_all_box, echo = FALSE}
 p_ioi_art_all_box <- ggplot(data = ioi_art, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -162,23 +166,16 @@ ioi_art_norm <- by(ioi_art$Mean, list(ioi_art$Condition), shapiro.test)
 print(ioi_art_norm)
 ```
 
-##### Two-way ANOVA (ez)
-```{r stats1, echo = FALSE, message = FALSE}
-ioi_art_aov <- ezANOVA(
-  data = df_ioi_art
-  , dv = .(IOI)
-  , wid = .(SubNr)
-  , within = .(Condition)
-  , type = 3
-  , detailed = TRUE
-)
-print(ioi_art_aov)
+##### Paired t-test
+```{r stats1, echo = FALSE}
+ioi_art_ttest <- t.test(ioi_art$Mean[ioi_art$Condition == "teaching"], ioi_art$Mean[ioi_art$Condition == "performing"], paired = TRUE)
+print(ioi_art_ttest)
 ```
 
-##### Two-way ANOVA (aov)
-```{r stats2, echo = FALSE, message = FALSE}
-ioi_art_aov_2 <- aov(Mean ~ Condition + Error(SubNr/Condition), data = ioi_art)
-print(summary(ioi_art_aov_2))
+##### Effect size
+```{r stats2, echo = FALSE}
+ioi_art_cohend <- cohen.d(ioi_art$Mean, ioi_art$Condition, paired = TRUE)
+print(ioi_art_cohend)
 ```
 
 ### 3. Phrase boundaries - individual{#art_ind_phrase}
@@ -202,6 +199,7 @@ print(ioi_art_ch)
 ##### Bar chart
 - Error bars show SD of the mean
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_art_ch_bar, echo = FALSE}
 p_ioi_art_ch <- ggplot(data = ioi_art_ch, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -231,6 +229,7 @@ print(ioi_art_ch_all)
 #### Plot
 - Error bars show SEM of the mean
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_art_ch_all_bar, echo = FALSE}
 p_ioi_art_ch_all_bar <- ggplot(data = ioi_art_ch_all, aes(x = Boundary, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -245,6 +244,7 @@ p_ioi_art_ch_all_bar
 
 ##### Box plot
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_art_ch_all_box, echo = FALSE}
 p_ioi_art_ch_box <- ggplot(data = ioi_art_ch, aes(x = Boundary, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -272,7 +272,9 @@ ioi_art_ch_aov <- ezANOVA(
   , type = 3
   , detailed = TRUE
 )
-print(ioi_art_ch_aov)
+ioi_art_ch_aov$ANOVA$F <- round(ioi_art_ch_aov$ANOVA$F, 4)
+ioi_art_ch_aov$ANOVA$p <- round(ioi_art_ch_aov$ANOVA$p, 4)
+print(ioi_art_ch_aov$ANOVA)
 ```
 
 ##### Two-way ANOVA (aov)
@@ -298,6 +300,7 @@ print(ioi_art_trial)
 #### Plot
 ##### Line graph
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_art_trial_line, echo = FALSE, fig.height = 8}
 p_ioi_art_trial <- ggplot(data = ioi_art_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
@@ -324,6 +327,7 @@ print(ioi_art_trial_all)
 #### Plot
 ##### Line graph
 - Error bars show SEM of the mean
+
 ```{r ioi_art_trial_all_line, echo = FALSE}
 p_ioi_art_trial_all <- ggplot(data = ioi_art_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
@@ -369,6 +373,7 @@ print(ioi_art_var)
 #### Plot
 ##### Bar graph
 - Error bars show SD of the mean
+
 ```{r ioi_art_var_bar, echo = FALSE}
 p_ioi_art_var <- ggplot(data = ioi_art_var, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -394,6 +399,7 @@ print(ioi_art_var_all)
 #### Plot
 ##### Bar graph
 - Error bars show SEM of the mean
+
 ```{r ioi_art_var_all_bar, echo = FALSE}
 p_ioi_art_var_all <- ggplot(data = ioi_art_var_all, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -421,24 +427,16 @@ ioi_art_var_norm <- by(ioi_art_var$Mean, list(ioi_art_var$Condition), shapiro.te
 print(ioi_art_var_norm)
 ```
 
-##### Two-way ANOVA (ez)
+##### Paired t-test
 ```{r stats5, echo = FALSE}
-ioi_art_var_aov <- ezANOVA(
-  data = df_ioi_art_var
-  , dv = .(Variability)
-  , wid = .(SubNr)
-  , within = .(Condition)
-  , type = 3
-  , detailed = TRUE
-)
-print(ioi_art_var_aov)
+ioi_art_var_ttest <- t.test(ioi_art_var$Mean[ioi_art_var$Condition == "teaching"], ioi_art_var$Mean[ioi_art_var$Condition == "performing"], paired = TRUE)
+print(ioi_art_var_ttest)
 ```
 
-##### Two-way ANOVA (aov)
+##### Effect size
 ```{r stats6, echo = FALSE}
-ioi_art_var_aov_2 <- with(ioi_art_var,
-  aov(Mean ~ Condition + Error(SubNr/Condition)))
-print(summary(ioi_art_var_aov_2))
+ioi_art_var_cohend <- cohen.d(ioi_art_var$Mean, ioi_art_var$Condition, paired = TRUE)
+print(ioi_art_var_cohend)
 ```
 
 ### 9. Variability trial-by-trial - individual{#art_ind_var_trial}
@@ -481,6 +479,7 @@ print(ioi_art_var_trial_all)
 #### Plot
 ##### Line graph
 - Error bars show SEM of the mean
+
 ```{r ioi_art_var_trial_all_line, echo = FALSE}
 p_ioi_art_var_trial_all <- ggplot(data = ioi_art_var_trial_all, 
                                   aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
@@ -520,13 +519,15 @@ Participants varied their tempo more in the performing condition.
 There seems no effect of TrialNr?
 
 #### 10. Variability trial-by-trial - group
-There seems no effect of TrialNr?
+Variability reduced over the trials
 
 ###########
 ###########
+
 ## IOI-Dynamics
 ### 1. All - individual{#dyn_ind_all}
 - Average IOIs for each participant.
+
 ```{r ioi_dyn, echo = FALSE}
 # For each individual
 ioi_dyn <- aggregate(IOI~SubNr*Condition*Skill, data = df_ioi_dyn,
@@ -541,6 +542,7 @@ print(ioi_dyn)
 ##### Bar chart
 - Error bars show SD of the mean
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_dyn_bar,  echo = FALSE}
 p_ioi_dyn <- ggplot(data = ioi_dyn, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -570,6 +572,7 @@ print(ioi_dyn_all)
 ##### Bar chart
 - Error bars show SEM of the mean
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_dyn_all_bar, echo = FALSE}
 p_ioi_dyn_all <- ggplot(data = ioi_dyn_all, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -584,6 +587,7 @@ p_ioi_dyn_all
 
 ##### Box plot
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_dyn_all_box, echo = FALSE}
 p_ioi_dyn_all_box <- ggplot(data = ioi_dyn, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -603,23 +607,15 @@ ioi_dyn_norm <- by(ioi_dyn$Mean, list(ioi_dyn$Condition), shapiro.test)
 print(ioi_dyn_norm)
 ```
 
-##### Two-way ANOVA (ez)
-```{r stats7, echo = FALSE, message = FALSE}
-ioi_dyn_aov <- ezANOVA(
-  data = df_ioi_dyn
-  , dv = .(IOI)
-  , wid = .(SubNr)
-  , within = .(Condition)
-  , type = 3
-  , detailed = TRUE
-)
-print(ioi_dyn_aov)
+```{r stats7, echo = FALSE}
+ioi_dyn_ttest <- t.test(ioi_dyn$Mean[ioi_dyn$Condition == "teaching"], ioi_dyn$Mean[ioi_dyn$Condition == "performing"], paired = TRUE)
+print(ioi_dyn_ttest)
 ```
 
-##### Two-way ANOVA (aov)
+##### Effect size
 ```{r stats8, echo = FALSE, message = FALSE}
-ioi_dyn_aov_2 <- aov(Mean ~ Condition + Error(SubNr/Condition), data = ioi_dyn)
-print(summary(ioi_dyn_aov_2))
+ioi_dyn_cohend <- cohen.d(ioi_dyn$Mean, ioi_dyn$Condition, paired = TRUE)
+print(ioi_dyn_cohend)
 ```
 
 ### 3. Phrase boundaries - individual{#dyn_ind_phrase}
@@ -643,6 +639,7 @@ print(ioi_dyn_ch)
 ##### Bar chart
 - Error bars show SD of the mean
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_dyn_ch_bar, echo = FALSE}
 p_ioi_dyn_ch <- ggplot(data = ioi_dyn_ch, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -673,6 +670,7 @@ print(ioi_dyn_ch_all)
 ##### Bar chart
 - Error bars show SEM of the mean
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_dyn_ch_all_bar, echo = FALSE}
 p_ioi_dyn_ch_all_bar <- ggplot(data = ioi_dyn_ch_all, aes(x = Boundary, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -687,6 +685,7 @@ p_ioi_dyn_ch_all_bar
 
 ##### Box plot
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_dyn_ch_all_box, echo = FALSE}
 p_ioi_dyn_ch_box <- ggplot(data = ioi_dyn_ch, aes(x = Boundary, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -714,6 +713,8 @@ ioi_dyn_ch_aov <- ezANOVA(
   , type = 3
   , detailed = TRUE
 )
+ioi_dyn_ch_aov$ANOVA$F <- round(ioi_dyn_ch_aov$ANOVA$F, 4)
+ioi_dyn_ch_aov$ANOVA$p <- round(ioi_dyn_ch_aov$ANOVA$p, 4)
 print(ioi_dyn_ch_aov)
 ```
 
@@ -740,6 +741,7 @@ print(ioi_dyn_trial)
 #### Plot
 ##### Line graph
 - A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_dyn_trial_line, echo = FALSE, fig.height = 8}
 p_ioi_dyn_trial <- ggplot(data = ioi_dyn_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
@@ -766,6 +768,7 @@ print(ioi_dyn_trial_all)
 #### Plot
 ##### Line graph
 - Error bars show SEM of the mean
+
 ```{r ioi_dyn_trial_all_line, echo = FALSE}
 p_ioi_dyn_trial_all <- ggplot(data = ioi_dyn_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
@@ -811,6 +814,7 @@ print(ioi_dyn_var)
 #### Plot
 ##### Bar graph
 - Error bars show SD of the mean
+
 ```{r ioi_dyn_var_bar, echo = FALSE}
 p_ioi_dyn_var <- ggplot(data = ioi_dyn_var, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -863,24 +867,14 @@ ioi_dyn_var_norm <- by(ioi_dyn_var$Mean, list(ioi_dyn_var$Condition), shapiro.te
 print(ioi_dyn_var_norm)
 ```
 
-##### Two-way ANOVA (ez)
 ```{r stats11, echo = FALSE}
-ioi_dyn_var_aov <- ezANOVA(
-  data = df_ioi_dyn_var
-  , dv = .(Variability)
-  , wid = .(SubNr)
-  , within = .(Condition)
-  , type = 3
-  , detailed = TRUE
-)
-print(ioi_dyn_var_aov)
+ioi_dyn_var_ttest <- t.test(ioi_dyn_var$Mean[ioi_dyn_var$Condition == "teaching"], ioi_dyn_var$Mean[ioi_dyn_var$Condition == "performing"], paired = TRUE)
+print(ioi_dyn_var_ttest)
 ```
 
-##### Two-way ANOVA (aov)
 ```{r stats12, echo = FALSE}
-ioi_dyn_var_aov_2 <- with(ioi_dyn_var,
-  aov(Mean ~ Condition + Error(SubNr/Condition)))
-print(summary(ioi_dyn_var_aov_2))
+ioi_dyn_var_cohend <- cohen.d(ioi_dyn_var$Mean, ioi_dyn_var$Condition, paired = TRUE)
+print(ioi_dyn_var_cohend)
 ```
 
 ### 9. Variability trial-by-trial - individual{#dyn_ind_var_trial}
@@ -923,6 +917,7 @@ print(ioi_dyn_var_trial_all)
 #### Plot
 ##### Line graph
 - Error bars show SEM of the mean
+
 ```{r ioi_dyn_var_trial_all_line, echo = FALSE}
 p_ioi_dyn_var_trial_all <- ggplot(data = ioi_dyn_var_trial_all, 
                                   aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
@@ -962,4 +957,4 @@ Participants did not vary their tempo depending on the conditions.
 There seems no effect of TrialNr?
 
 #### 10. Variability trial-by-trial - group
-There seems no effect of TrialNr?
+Variability reduced over the trials
