@@ -6,7 +6,7 @@ editor_options:
   chunk_output_type: inline
 ---
 
-##### Description: This is a summary of all analyses for "The Sound of Teaching Music 1".
+##### Description: This is a summary of all analyses for a tempo.
 
 # Outline - Interonset intervals (IOIs)
 ### [Experimental Design](#design)
@@ -257,7 +257,7 @@ p_ioi_art_ch_box
 
 #### Statistics
 ##### Normality check
-```{r norrmality2, echo = FALSE}
+```{r normality2, echo = FALSE}
 ioi_art_ch_norm <- by(ioi_art_ch$Mean, list(ioi_art_ch$Condition, ioi_art_ch$Boundary), shapiro.test)
 print(ioi_art_ch_norm)
 ```
@@ -422,7 +422,7 @@ p_ioi_art_var_box
 
 #### Statistics
 ##### Normality check
-```{r norrmality3, echo = FALSE}
+```{r normality3, echo = FALSE}
 ioi_art_var_norm <- by(ioi_art_var$Mean, list(ioi_art_var$Condition), shapiro.test)
 print(ioi_art_var_norm)
 ```
@@ -613,7 +613,7 @@ print(ioi_dyn_ttest)
 ```
 
 ##### Effect size
-```{r stats8, echo = FALSE, message = FALSE}
+```{r stats8, echo = FALSE}
 ioi_dyn_cohend <- cohen.d(ioi_dyn$Mean, ioi_dyn$Condition, paired = TRUE)
 print(ioi_dyn_cohend)
 ```
@@ -698,7 +698,7 @@ p_ioi_dyn_ch_box
 
 #### Statistics
 ##### Normality check
-```{r norrmality5, echo = FALSE}
+```{r normality5, echo = FALSE}
 ioi_dyn_ch_norm <- by(ioi_dyn_ch$Mean, list(ioi_dyn_ch$Condition, ioi_dyn_ch$Boundary), shapiro.test)
 print(ioi_dyn_ch_norm)
 ```
@@ -862,7 +862,7 @@ p_ioi_dyn_var_box
 
 #### Statistics
 ##### Normality check
-```{r norrmality6, echo = FALSE}
+```{r normality6, echo = FALSE}
 ioi_dyn_var_norm <- by(ioi_dyn_var$Mean, list(ioi_dyn_var$Condition), shapiro.test)
 print(ioi_dyn_var_norm)
 ```
