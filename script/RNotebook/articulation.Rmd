@@ -62,7 +62,6 @@ editor_options:
 
 ### Main predictions
 Participants will exaggerate legato and staccato more while teaching.
-Participants will exaggerate forte and piano more while teaching.
 
 ```{r setup, include = FALSE}
 # packages
@@ -91,13 +90,6 @@ df_ioi$SubNr <- as.factor(df_ioi$SubNr)
 # SubNr as a factor
 df_ioi$SubNr <- as.factor(df_ioi$SubNr)
 df_kot$SubNr <- as.factor(df_kot$SubNr)
-
-# For each individual, each block, each trial
-ioi <- aggregate(IOI~SubNr*BlockNr*TrialNr*Condition*Skill, data = df_ioi,
-                 FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
-ioi <- cbind(ioi[,1:5], as.data.frame(ioi[,6]))
-# Change colnames
-colnames(ioi) <- c("SubNr", "BlockNr", "TrialNr", "Condition", "Skill", "N", "Mean", "SD")
 
 # Calculate KOR for each interval
 df_kor <- data.frame()
@@ -446,6 +438,9 @@ p_kor_art_trial_all_staccato <- ggplot(data = subset(kor_art_trial_all, kor_art_
   labs(x = "Trial", y = "KOR", subtitle = "KOR: Articulation/Staccato") + scale_x_continuous(breaks=seq(1,8,1))
 p_kor_art_trial_all_staccato
 ```
+
+###########
+###########
 
 ## Key-Overlap Time (KOT) - Dynamics
 ### 1. All - individual{#kot_dyn_ind_all}
