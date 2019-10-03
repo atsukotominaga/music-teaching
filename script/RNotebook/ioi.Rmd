@@ -27,8 +27,6 @@ editor_options:
    + [Variability all](#art_group_var_all)
    + [Variability trial-by-trial](#art_group_var_trial)
 
-- [Summary](#art_summary)
- 
 ### [Dynamics](#ioi-dynamics)
 
 - Individual results
@@ -44,8 +42,6 @@ editor_options:
    + [Trial by trial](#dyn_group_trial)
    + [Variability all](#dyn_group_var_all)
    + [Variability trial-by-trial](#dyn_group_var_trial)
-
-- [Summary](#dyn_summary)
 
 ## Experimental Design{#design}
 - Independent variables: Condition (2 levels: teaching vs. performing) x Skill (2 levels: articulation vs. dynamics)
@@ -490,37 +486,6 @@ p_ioi_art_var_trial_all <- ggplot(data = ioi_art_var_trial_all,
 p_ioi_art_var_trial_all
 ```
 
-### Summary (IOI:articulation){#art_summary}
-#### 1. All - individual
-Some participants exhibited a strong tendency for slow demonstration while teaching.
-
-#### 2. All - group
-Participants played slower while teaching.
-
-#### 3. Phrase boundaries - individual
-Some participants played slower particularly at phrase boundaries.
-
-#### 4. Phrase boundaries - group
-Participants played slower while teaching / at phrase boundaries. However, there was no interaction.
-
-#### 5. Trial by trial - individual
-There seems no effect of TrialNr?
-
-#### 6. Trial by trial - group
-There seems no effect of TrialNr?
-
-#### 7. Variability all - individual
-Some participants showed a strong tendency to fluctuate (in terms of IOIs) in the performing condition.
-
-#### 8. Variability all - group
-Participants varied their tempo more in the performing condition.
-
-#### 9. Variability trial-by-trial - individual
-There seems no effect of TrialNr?
-
-#### 10. Variability trial-by-trial - group
-Variability reduced over the trials
-
 ###########
 ###########
 
@@ -927,34 +892,3 @@ p_ioi_dyn_var_trial_all <- ggplot(data = ioi_dyn_var_trial_all,
   labs(x = "Trial", y = "Variability (SD/mean IOI)", subtitle = "IOI: Dynamics") + scale_x_continuous(breaks=seq(1,8,1))
 p_ioi_dyn_var_trial_all
 ```
-
-### Summary (IOI:dynamics){#dyn_summary}
-#### 1. All - individual
-Some participants exhibited a strong tendency for slow demonstration while teaching.
-
-#### 2. All - group
-Participants did not play more slowly during teaching.
-
-#### 3. Phrase boundaries - individual
-Some participants played slower particularly at phrase boundaries.
-
-#### 4. Phrase boundaries - group
-Participants played slower at phrase boundaries. However, there was no effect of the condition or interaction.
-
-#### 5. Trial by trial - individual
-There seems no effect of TrialNr?
-
-#### 6. Trial by trial - group
-There seems no effect of TrialNr?
-
-#### 7. Variability all - individual
-Some participants showed a strong tendency to fluctuate (in terms of IOIs) in the performing condition.
-
-#### 8. Variability all - group
-Participants did not vary their tempo depending on the conditions.
-
-#### 9. Variability trial-by-trial - individual
-There seems no effect of TrialNr?
-
-#### 10. Variability trial-by-trial - group
-Variability reduced over the trials
