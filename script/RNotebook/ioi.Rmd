@@ -275,8 +275,7 @@ print(ioi_art_ch_aov$ANOVA)
 
 ##### Two-way ANOVA (aov)
 ```{r stats4, echo = FALSE}
-ioi_art_ch_aov_2 <- with(ioi_art_ch,
-  aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary))))
+ioi_art_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_art_ch)
 print(summary(ioi_art_ch_aov_2))
 ```
 
@@ -685,8 +684,7 @@ print(ioi_dyn_ch_aov)
 
 ##### Two-way ANOVA (aov)
 ```{r stats10, echo = FALSE}
-ioi_dyn_ch_aov_2 <- with(ioi_dyn_ch,
-  aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary))))
+ioi_dyn_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_dyn_ch)
 print(summary(ioi_dyn_ch_aov_2))
 ```
 

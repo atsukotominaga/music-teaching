@@ -202,8 +202,7 @@ print(kot_art_aov$ANOVA)
 
 ##### Two-way ANOVA (aov)
 ```{r stats2, echo = FALSE}
-kot_art_aov_2 <- with(kot_art,
-                      aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent))))
+kot_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kot_art)
 print(summary(kot_art_aov_2))
 ```
 
@@ -366,8 +365,7 @@ print(kor_art_aov$ANOVA)
 
 ##### Two-way ANOVA (aov)
 ```{r stats4, echo = FALSE}
-kor_art_aov_2 <- with(kor_art,
-                      aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent))))
+kor_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_art)
 print(summary(kor_art_aov_2))
 ```
 
@@ -532,8 +530,7 @@ print(kot_dyn_aov$ANOVA)
 
 ##### Two-way ANOVA (aov)
 ```{r stats6, echo = FALSE}
-kot_dyn_aov_2 <- with(kot_dyn,
-                      aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent))))
+kot_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kot_dyn)
 print(summary(kot_dyn_aov_2))
 ```
 
@@ -695,8 +692,7 @@ print(kor_dyn_aov$ANOVA)
 
 ##### Two-way ANOVA (aov)
 ```{r stats8, echo = FALSE}
-kor_dyn_aov_2 <- with(kor_dyn,
-                      aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent))))
+kor_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_dyn)
 print(summary(kor_dyn_aov_2))
 ```
 
@@ -734,7 +730,7 @@ p_kor_dyn_trial_piano
 ```
 
 ### 4. Trial by trial - group{#kor_dyn_group_trial}
-- Average KOR d for each trial for each condition.
+- Average KOR for each trial for each condition.
 
 ```{r kor_dyn_trial_all, echo = FALSE}
 # Group mean
