@@ -14,34 +14,40 @@ editor_options:
 ### [Articulation](#ioi-articulation)
 
 - Individual results
-   + [All](#art_ind_all)
-   + [Phrase bondaries](#art_ind_phrase)
-   + [Trial by trial](#art_ind_trial)
-   + [Variability all](#art_ind_var_all)
-   + [Variability trial-by-trial](#art_ind_var_trial)
+  + [All](#art_ind_all)
+  + [Phrase bondaries](#art_ind_phrase)
+  + [Trial by trial](#art_ind_trial)
+  + [Variability all](#art_ind_var_all)
+  + [Variability trial-by-trial](#art_ind_var_trial)
  
 - Group results and stats (if available)
-   + [All](#art_group_all)
-   + [Phrase bondaries](#art_group_phrase)
-   + [Trial by trial](#art_group_trial)
-   + [Variability all](#art_group_var_all)
-   + [Variability trial-by-trial](#art_group_var_trial)
+  + [All](#art_group_all)
+  + [Phrase bondaries](#art_group_phrase)
+  + [Trial by trial](#art_group_trial)
+  + [Variability all](#art_group_var_all)
+  + [Variability trial-by-trial](#art_group_var_trial)
+   
+- Order analysis (teaching/performing first?)
+  + [All](#art_order_group_all)
 
 ### [Dynamics](#ioi-dynamics)
 
 - Individual results
-   + [All](#dyn_ind_all)
-   + [Phrase bondaries](#dyn_ind_phrase)
-   + [Trial by trial](#dyn_ind_trial)
-   + [Variability all](#dyn_ind_var_all)
-   + [Variability trial-by-trial](#dyn_ind_var_trial)
+  + [All](#dyn_ind_all)
+  + [Phrase bondaries](#dyn_ind_phrase)
+  + [Trial by trial](#dyn_ind_trial)
+  + [Variability all](#dyn_ind_var_all)
+  + [Variability trial-by-trial](#dyn_ind_var_trial)
  
 - Group results and stats (if available)
-   + [All](#dyn_group_all)
-   + [Phrase bondaries](#dyn_group_phrase)
-   + [Trial by trial](#dyn_group_trial)
-   + [Variability all](#dyn_group_var_all)
-   + [Variability trial-by-trial](#dyn_group_var_trial)
+  + [All](#dyn_group_all)
+  + [Phrase bondaries](#dyn_group_phrase)
+  + [Trial by trial](#dyn_group_trial)
+  + [Variability all](#dyn_group_var_all)
+  + [Variability trial-by-trial](#dyn_group_var_trial)
+  
+- Order analysis (teaching/performing first?)
+  + [All](#dyn_order_group_all)
 
 ## Experimental Design{#design}
 - Independent variables: Condition (2 levels: teaching vs. performing) x Skill (2 levels: articulation vs. dynamics)
@@ -803,6 +809,7 @@ print(ioi_dyn_var_all)
 #### Plot
 ##### Bar graph
 - Error bars show SEM of the mean
+
 ```{r ioi_dyn_var_all_bar, echo = FALSE}
 p_ioi_dyn_var_all <- ggplot(data = ioi_dyn_var_all, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -889,4 +896,165 @@ p_ioi_dyn_var_trial_all <- ggplot(data = ioi_dyn_var_trial_all,
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
   labs(x = "Trial", y = "Variability (SD/mean IOI)", subtitle = "IOI: Dynamics") + scale_x_continuous(breaks=seq(1,8,1))
 p_ioi_dyn_var_trial_all
+```
+
+###########
+###########
+
+## IOI-Order-Articulation
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#art_order_group_all}
+```{r ioi_art_order_all, echo = FALSE}
+# For each participant
+ioi_art_order <- aggregate(IOI~SubNr*Condition*Skill*Order, data = df_ioi_art,
+                                     FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x)), 4)})
+ioi_art_order <- cbind(ioi_art_order[,1:4], as.data.frame(ioi_art_order[,5]))
+# Change colnames
+colnames(ioi_art_order) <- c("SubNr", "Condition", "Skill", "Order", "N", "Mean", "SD")
+
+# Group mean
+ioi_art_order_all <- aggregate(Mean~Condition*Skill*Order, data = ioi_art_order,
+                                     FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_art_order_all <- cbind(ioi_art_order_all[,1:3], as.data.frame(ioi_art_order_all[,4]))
+# Change colnames
+colnames(ioi_art_order_all) <- c("Condition", "Skill", "Order", "N", "Mean", "SD", "SEM")
+print(ioi_art_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r ioi_art_order_all_bar, echo = FALSE}
+p_ioi_art_order_all <- ggplot(data = ioi_art_order_all, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge()) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  facet_wrap(Order ~ .) +
+  labs(y = "IOI (ms)", subtitle = "IOI: Articulation") + coord_cartesian(ylim = c(120, 210)) +
+  theme(legend.position = "None")
+p_ioi_art_order_all
+```
+
+##### Box plot
+```{r ioi_art_order_all_box, echo = FALSE}
+p_ioi_art_order_all_box <- ggplot(data = ioi_art_order, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  facet_wrap(Order ~ .) +
+  labs(y = "IOI (ms)", subtitle = "IOI: Articulation") +
+  theme(legend.position = "None")
+p_ioi_art_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality7, echo = FALSE}
+# Normality check
+ioi_art_order_norm <- by(ioi_art_order$Mean, list(ioi_art_order$Condition, ioi_art_order$Order), shapiro.test)
+print(ioi_art_order_norm)
+```
+
+##### Two-way ANOVA (ez)
+```{r stats13, echo = FALSE}
+ioi_art_order_aov <- ezANOVA(
+  data = df_ioi_art
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition)
+  , type = 3
+  , detailed = TRUE
+)
+ioi_art_order_aov$ANOVA$F <- round(ioi_art_order_aov$ANOVA$F, 4)
+ioi_art_order_aov$ANOVA$p <- round(ioi_art_order_aov$ANOVA$p, 4)
+print(ioi_art_order_aov)
+```
+
+##### Two-way ANOVA (aov)
+```{r stats14, echo = FALSE}
+ioi_art_order_aov_2 <- aov(Mean ~ Condition*Order + Error(SubNr/Condition) + Order, data = ioi_art_order)
+print(summary(ioi_art_order_aov_2))
+```
+
+## IOI-Order-Dynamics
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#dyn_order_group_all}
+```{r ioi_dyn_order_all, echo = FALSE}
+# For each pdynicipant
+ioi_dyn_order <- aggregate(IOI~SubNr*Condition*Skill*Order, data = df_ioi_dyn,
+                                     FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x)), 4)})
+ioi_dyn_order <- cbind(ioi_dyn_order[,1:4], as.data.frame(ioi_dyn_order[,5]))
+# Change colnames
+colnames(ioi_dyn_order) <- c("SubNr", "Condition", "Skill", "Order", "N", "Mean", "SD")
+
+# Group mean
+ioi_dyn_order_all <- aggregate(Mean~Condition*Skill*Order, data = ioi_dyn_order,
+                                     FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_dyn_order_all <- cbind(ioi_dyn_order_all[,1:3], as.data.frame(ioi_dyn_order_all[,4]))
+# Change colnames
+colnames(ioi_dyn_order_all) <- c("Condition", "Skill", "Order", "N", "Mean", "SD", "SEM")
+print(ioi_dyn_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r ioi_dyn_order_all_bar, echo = FALSE}
+p_ioi_dyn_order_all <- ggplot(data = ioi_dyn_order_all, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge()) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  facet_wrap(Order ~ .) +
+  labs(y = "IOI (ms)", subtitle = "IOI: Dynamics") + coord_cartesian(ylim = c(120, 210)) +
+  theme(legend.position = "None")
+p_ioi_dyn_order_all
+```
+
+##### Box plot
+```{r ioi_dyn_order_all_box, echo = FALSE}
+p_ioi_dyn_order_all_box <- ggplot(data = ioi_dyn_order, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  facet_wrap(Order ~ .) +
+  labs(y = "IOI (ms)", subtitle = "IOI: Dynamics") +
+  theme(legend.position = "None")
+p_ioi_dyn_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality8, echo = FALSE}
+# Normality check
+ioi_dyn_order_norm <- by(ioi_dyn_order$Mean, list(ioi_dyn_order$Condition, ioi_dyn_order$Order), shapiro.test)
+print(ioi_dyn_order_norm)
+```
+
+##### Two-way ANOVA (ez)
+```{r stats15, echo = FALSE}
+ioi_dyn_order_aov <- ezANOVA(
+  data = df_ioi_dyn
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition)
+  , type = 3
+  , detailed = TRUE
+)
+ioi_dyn_order_aov$ANOVA$F <- round(ioi_dyn_order_aov$ANOVA$F, 4)
+ioi_dyn_order_aov$ANOVA$p <- round(ioi_dyn_order_aov$ANOVA$p, 4)
+print(ioi_dyn_order_aov)
+```
+
+##### Two-way ANOVA (aov)
+```{r stats16, echo = FALSE}
+ioi_dyn_order_aov_2 <- aov(Mean ~ Condition*Order + Error(SubNr/Condition) + Order, data = ioi_dyn_order)
+print(summary(ioi_dyn_order_aov_2))
 ```
