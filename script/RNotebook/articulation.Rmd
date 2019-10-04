@@ -15,46 +15,53 @@ editor_options:
 
 #### KOT
 - Individual results
-   + [All](#kot_art_ind_all)
-   + [Trial by trial](#kot_art_ind_trial)
+  + [All](#kot_art_ind_all)
+  + [Trial by trial](#kot_art_ind_trial)
  
 - Group results and stats (if available)
-   + [All](#kot_art_group_all)
-   + [Trial by trial](#kot_art_group_trial)
+  + [All](#kot_art_group_all)
+  + [Trial by trial](#kot_art_group_trial)
+  
+- Order analysis (teaching/performing first?)
+  + [All](#kot_art_order_group_all)
 
 #### KOR
 - Individual results
-   + [All](#kor_art_ind_all)
-   + [Trial by trial](#kor_art_ind_trial)
+  + [All](#kor_art_ind_all)
+  + [Trial by trial](#kor_art_ind_trial)
  
 - Group results and stats (if available)
-   + [All](#kor_art_group_all)
-   + [Trial by trial](#kor_art_group_trial)
+  + [All](#kor_art_group_all)
+  + [Trial by trial](#kor_art_group_trial)
 
-- [Summary](#art_summary)
- 
+- Order analysis (teaching/performing first?)
+  + [All](#kor_art_order_group_all)
+
 ### [Dynamics](#kot-dynamics)
 
 #### KOT
 - Individual results
-   + [All](#kot_dyn_ind_all)
-   + [Trial by trial](#kot_dyn_ind_trial)
+  + [All](#kot_dyn_ind_all)
+  + [Trial by trial](#kot_dyn_ind_trial)
 
 - Group results and stats (if available)
-   + [All](#kot_dyn_group_all)
-   + [Trial by trial](#kot_dyn_group_trial)
+  + [All](#kot_dyn_group_all)
+  + [Trial by trial](#kot_dyn_group_trial)
+  
+- Order analysis (teaching/performing first?)
+  + [All](#kot_dyn_order_group_all)
 
 #### KOR
 - Individual results
-   + [All](#kor_dyn_ind_all)
-   + [Trial by trial](#kor_dyn_ind_trial)
+  + [All](#kor_dyn_ind_all)
+  + [Trial by trial](#kor_dyn_ind_trial)
  
 - Group results and stats (if available)
-   + [All](#kor_dyn_group_all)
-   + [Trial by trial](#kor_dyn_group_trial)
+  + [All](#kor_dyn_group_all)
+  + [Trial by trial](#kor_dyn_group_trial)
 
-
-- [Summary](#dyn_summary)
+- Order analysis (teaching/performing first?)
+  + [All](#kor_dyn_order_group_all)
 
 ## Experimental Design{#design}
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: legato vs. staccato / forte vs. piano)
@@ -91,7 +98,15 @@ df_ioi$SubNr <- as.factor(df_ioi$SubNr)
 df_ioi$SubNr <- as.factor(df_ioi$SubNr)
 df_kot$SubNr <- as.factor(df_kot$SubNr)
 
+# For each individual, each block, each trial
+ioi <- aggregate(IOI~SubNr*BlockNr*TrialNr*Condition*Skill, data = df_ioi,
+                 FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
+ioi <- cbind(ioi[,1:5], as.data.frame(ioi[,6]))
+# Change colnames
+colnames(ioi) <- c("SubNr", "BlockNr", "TrialNr", "Condition", "Skill", "N", "Mean", "SD")
+
 # Calculate KOR for each interval
+
 df_kor <- data.frame()
 for (subnr in unique(df_kot$SubNr)){
   for (block in unique(df_kot$BlockNr[df_kot$SubNr == subnr])){
@@ -464,7 +479,7 @@ p_kot_dyn <- ggplot(data = kot_dyn, aes(x = SubNr, y = Mean, fill = Condition)) 
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
                 width = .2, position = position_dodge(.9)) +
   facet_grid(Subcomponent ~ .) +
-  labs(y = "KOT (ms)", subtitle = "KOT: Articulation")
+  labs(y = "KOT (ms)", subtitle = "KOT: Dynamics")
 p_kot_dyn
 ```
 
@@ -762,4 +777,284 @@ p_kor_dyn_trial_all_piano <- ggplot(data = subset(kor_dyn_trial_all, kor_dyn_tri
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
   labs(x = "Trial", y = "KOR", subtitle = "KOR: Dynamics/Piano") + scale_x_continuous(breaks=seq(1,8,1))
 p_kor_dyn_trial_all_piano
+```
+
+###########
+###########
+
+## KOT-Order-Articulation
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#kot_art_order_group_all}
+```{r kot_art_order_all, echo = FALSE}
+# For each participant
+kot_art_order <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_kot_art, df_kot_art$Interval != 8 & df_kot_art$Interval != 16 & df_kot_art$Interval != 24 & df_kot_art$Interval != 41 & df_kot_art$Interval != 49 & df_kot_art$Interval != 57), FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x)), 4)})
+kot_art_order <- cbind(kot_art_order[,1:5], as.data.frame(kot_art_order[,6]))
+# Change colnames
+colnames(kot_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+
+# Group mean
+kot_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = kot_art_order,
+                                     FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_art_order_all <- cbind(kot_art_order_all[,1:4], as.data.frame(kot_art_order_all[,5]))
+# Change colnames
+colnames(kot_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
+print(kot_art_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r kot_art_order_all_bar, echo = FALSE}
+p_kot_art_order_all <- ggplot(data = kot_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Articulation")
+p_kot_art_order_all
+```
+
+##### Box plot
+```{r kot_art_order_all_box, echo = FALSE}
+p_kot_art_order_all_box <- ggplot(data = kot_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KOT", subtitle = "KOT: Articulation")
+p_kot_art_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality5, echo = FALSE}
+# Normality check
+kot_art_order$Subcomponent <- factor(kot_art_order$Subcomponent)
+kot_art_order_norm <- by(kot_art_order$Mean, list(kot_art_order$Condition, kot_art_order$Subcomponent, kot_art_order$Order), shapiro.test)
+print(kot_art_order_norm)
+```
+
+##### Three-way ANOVA (ez)
+```{r stats9, echo = FALSE}
+kot_art_order_aov <- ezANOVA(
+  data = df_kot_art
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+kot_art_order_aov$ANOVA$F <- round(kot_art_order_aov$ANOVA$F, 4)
+kot_art_order_aov$ANOVA$p <- round(kot_art_order_aov$ANOVA$p, 4)
+print(kot_art_order_aov)
+```
+
+
+## KOR-Order-Articulation
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#kor_art_order_group_all}
+```{r kor_art_order_all, echo = FALSE}
+# For each participant
+kor_art_order <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_kor_art, df_kor_art$Interval != 8 & df_kor_art$Interval != 16 & df_kor_art$Interval != 24 & df_kor_art$Interval != 41 & df_kor_art$Interval != 49 & df_kor_art$Interval != 57), FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x)), 4)})
+kor_art_order <- cbind(kor_art_order[,1:5], as.data.frame(kor_art_order[,6]))
+# Change colnames
+colnames(kor_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+
+# Group mean
+kor_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = kor_art_order,
+                                     FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kor_art_order_all <- cbind(kor_art_order_all[,1:4], as.data.frame(kor_art_order_all[,5]))
+# Change colnames
+colnames(kor_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
+print(kor_art_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r kor_art_order_all_bar, echo = FALSE}
+p_kor_art_order_all <- ggplot(data = kor_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KOR", subtitle = "KOR: Articulation")
+p_kor_art_order_all
+```
+
+##### Box plot
+```{r kor_art_order_all_box, echo = FALSE}
+p_kor_art_order_all_box <- ggplot(data = kor_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KOR", subtitle = "KOR: Articulation")
+p_kor_art_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality6, echo = FALSE}
+# Normality check
+kor_art_order$Subcomponent <- factor(kor_art_order$Subcomponent)
+kor_art_order_norm <- by(kor_art_order$Mean, list(kor_art_order$Condition, kor_art_order$Subcomponent, kor_art_order$Order), shapiro.test)
+print(kor_art_order_norm)
+```
+
+##### Three-way ANOVA (ez)
+```{r stats10, echo = FALSE}
+kor_art_order_aov <- ezANOVA(
+  data = df_kor_art
+  , dv = .(KOR)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+kor_art_order_aov$ANOVA$F <- round(kor_art_order_aov$ANOVA$F, 4)
+kor_art_order_aov$ANOVA$p <- round(kor_art_order_aov$ANOVA$p, 4)
+print(kor_art_order_aov)
+```
+
+## KOT-Order-Dynamics
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#kot_dyn_order_group_all}
+```{r kot_dyn_order_all, echo = FALSE}
+# For each participant
+kot_dyn_order <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_kot_dyn, df_kot_dyn$Interval != 8 & df_kot_dyn$Interval != 16 & df_kot_dyn$Interval != 24 & df_kot_dyn$Interval != 41 & df_kot_dyn$Interval != 49 & df_kot_dyn$Interval != 57), FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x)), 4)})
+kot_dyn_order <- cbind(kot_dyn_order[,1:5], as.data.frame(kot_dyn_order[,6]))
+# Change colnames
+colnames(kot_dyn_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+
+# Group mean
+kot_dyn_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = kot_dyn_order,
+                                     FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_dyn_order_all <- cbind(kot_dyn_order_all[,1:4], as.data.frame(kot_dyn_order_all[,5]))
+# Change colnames
+colnames(kot_dyn_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
+print(kot_dyn_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r kot_dyn_order_all_bar, echo = FALSE}
+p_kot_dyn_order_all <- ggplot(data = kot_dyn_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Dynamics")
+p_kot_dyn_order_all
+```
+
+##### Box plot
+```{r kot_dyn_order_all_box, echo = FALSE}
+p_kot_dyn_order_all_box <- ggplot(data = kot_dyn_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KOY", subtitle = "KOT: Dynamics")
+p_kot_dyn_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality7, echo = FALSE}
+# Normality check
+kot_dyn_order$Subcomponent <- factor(kot_dyn_order$Subcomponent)
+kot_dyn_order_norm <- by(kot_dyn_order$Mean, list(kot_dyn_order$Condition, kot_dyn_order$Subcomponent, kot_dyn_order$Order), shapiro.test)
+print(kot_dyn_order_norm)
+```
+
+##### Three-way ANOVA (ez)
+```{r stats11, echo = FALSE}
+kot_dyn_order_aov <- ezANOVA(
+  data = df_kot_dyn
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+kot_dyn_order_aov$ANOVA$F <- round(kot_dyn_order_aov$ANOVA$F, 4)
+kot_dyn_order_aov$ANOVA$p <- round(kot_dyn_order_aov$ANOVA$p, 4)
+print(kot_dyn_order_aov)
+```
+
+## KOR-Order-Dynamics
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#kor_dyn_order_group_all}
+```{r kor_dyn_order_all, echo = FALSE}
+# For each participant
+kor_dyn_order <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_kor_dyn, df_kor_dyn$Interval != 8 & df_kor_dyn$Interval != 16 & df_kor_dyn$Interval != 24 & df_kor_dyn$Interval != 41 & df_kor_dyn$Interval != 49 & df_kor_dyn$Interval != 57), FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x)), 4)})
+kor_dyn_order <- cbind(kor_dyn_order[,1:5], as.data.frame(kor_dyn_order[,6]))
+# Change colnames
+colnames(kor_dyn_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+
+# Group mean
+kor_dyn_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = kor_dyn_order,
+                                     FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kor_dyn_order_all <- cbind(kor_dyn_order_all[,1:4], as.data.frame(kor_dyn_order_all[,5]))
+# Change colnames
+colnames(kor_dyn_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
+print(kor_dyn_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r kor_dyn_order_all_bar, echo = FALSE}
+p_kor_dyn_order_all <- ggplot(data = kor_dyn_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KOR", subtitle = "KOR: Dynamics")
+p_kor_dyn_order_all
+```
+
+##### Box plot
+```{r kor_dyn_order_all_box, echo = FALSE}
+p_kor_dyn_order_all_box <- ggplot(data = kor_dyn_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KOR", subtitle = "KOR: Dynamics")
+p_kor_dyn_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality8, echo = FALSE}
+# Normality check
+kor_dyn_order$Subcomponent <- factor(kor_dyn_order$Subcomponent)
+kor_dyn_order_norm <- by(kor_dyn_order$Mean, list(kor_dyn_order$Condition, kor_dyn_order$Subcomponent, kor_dyn_order$Order), shapiro.test)
+print(kor_dyn_order_norm)
+```
+
+##### Three-way ANOVA (ez)
+```{r stats12, echo = FALSE}
+kor_dyn_order_aov <- ezANOVA(
+  data = df_kor_dyn
+  , dv = .(KOR)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+kor_dyn_order_aov$ANOVA$F <- round(kor_dyn_order_aov$ANOVA$F, 4)
+kor_dyn_order_aov$ANOVA$p <- round(kor_dyn_order_aov$ANOVA$p, 4)
+print(kor_dyn_order_aov)
 ```
