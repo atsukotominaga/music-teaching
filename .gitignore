@@ -10,9 +10,10 @@ script/R/analysis/
 script/R/1_filtered/
 script/R/2_trimmed/
 script/R/3_stats/
-
-# Rmd
 script/R/old_analysis
+
+# RNotebook
+script/RNotebook/filtered
 script/RNotebook/trimmed
 
 # Max
