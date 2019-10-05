@@ -15,39 +15,53 @@ editor_options:
 
 #### KV
 - Individual results
-   + [All](#vel_dyn_ind_all)
-   + [Trial by trial](#vel_dyn_ind_trial)
+  + [All](#vel_dyn_ind_all)
+  + [Trial by trial](#vel_dyn_ind_trial)
 
 - Group results and stats (if available)
-   + [All](#vel_dyn_group_all)
-   + [Trial by trial](#vel_dyn_group_trial)
+  + [All](#vel_dyn_group_all)
+  + [Trial by trial](#vel_dyn_group_trial)
+  
+- Order analysis (teaching/performing first?)
+  + [All](#vel_dyn_order_group_all)
 
 #### KV-Diff
 - Individual results
-   + [All](#vel_acc_dyn_ind_all)
-   + [Trial by trial](#vel_acc_dyn_ind_trial)
+  + [All](#vel_acc_dyn_ind_all)
+  + [Trial by trial](#vel_acc_dyn_ind_trial)
 
 - Group results and stats (if available)
-   + [All](#vel_acc_dyn_group_all)
-   + [Trial by trial](#vel_acc_dyn_group_trial)
+  + [All](#vel_acc_dyn_group_all)
+  + [Trial by trial](#vel_acc_dyn_group_trial)
+
+- Order analysis (teaching/performing first?)
+  + [All](#vel_acc_dyn_order_group_all)
 
 ### [Articulation](#vel_articulation)
+
+#### KV
 - Individual results
-   + [All](#vel_art_ind_all)
-   + [Trial by trial](#vel_art_ind_trial)
+  + [All](#vel_art_ind_all)
+  + [Trial by trial](#vel_art_ind_trial)
 
 - Group results and stats (if available)
-   + [All](#vel_art_group_all)
-   + [Trial by trial](#vel_art_group_trial)
+  + [All](#vel_art_group_all)
+  + [Trial by trial](#vel_art_group_trial)
+  
+- Order analysis (teaching/performing first?)
+  + [All](#vel_art_order_group_all)
 
 #### KV-Diff
 - Individual results
-   + [All](#vel_acc_art_ind_all)
-   + [Trial by trial](#vel_acc_art_ind_trial)
+  + [All](#vel_acc_art_ind_all)
+  + [Trial by trial](#vel_acc_art_ind_trial)
 
 - Group results and stats (if available)
-   + [All](#vel_acc_art_group_all)
-   + [Trial by trial](#vel_acc_art_group_trial)
+  + [All](#vel_acc_art_group_all)
+  + [Trial by trial](#vel_acc_art_group_trial)
+  
+- Order analysis (teaching/performing first?)
+  + [All](#vel_acc_art_order_group_all)
 
 ## Experimental Design{#design}
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: forte vs. piano / legato vs. staccato)
@@ -140,7 +154,7 @@ p_vel_dyn_all <- ggplot(data = vel_dyn_all, aes(x = Subcomponent, y = Mean, fill
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width = .2, position = position_dodge(.9)) +
-  labs(y = "KV (1-127)", subtitle = "KV: Dynamics") + coord_cartesian(ylim = c(40, 100))
+  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") + coord_cartesian(ylim = c(40, 100))
 p_vel_dyn_all
 ```
 
@@ -733,3 +747,286 @@ p_vel_acc_art_trial_all_stol <- ggplot(data = subset(vel_acc_art_trial_all, vel_
 p_vel_acc_art_trial_all_stol
 ```
 
+
+###########
+###########
+
+## KV-Order-Dynamics
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#vel_dyn_order_group_all}
+```{r vel_dyn_order_all, echo = all}
+# For each participant
+vel_dyn_order <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent*Order, data = df_vel_dyn,
+                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+vel_dyn_order <- cbind(vel_dyn_order[,1:5], as.data.frame(vel_dyn_order[,6]))
+# Change colnames
+colnames(vel_dyn_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+
+# Group mean
+vel_dyn_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_dyn_order,
+                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_dyn_order_all <- cbind(vel_dyn_order_all[,1:4], as.data.frame(vel_dyn_order_all[,5]))
+# Change colnames
+colnames(vel_dyn_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
+print(vel_dyn_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r vel_dyn_order_all_bar, echo = FALSE}
+p_vel_dyn_order_all <- ggplot(data = vel_dyn_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") + coord_cartesian(ylim = c(40, 100))
+p_vel_dyn_order_all
+```
+
+##### Box plot
+```{r vel_dyn_order_all_box, echo = FALSE}
+p_vel_dyn_order_all_box <- ggplot(data = vel_dyn_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") 
+p_vel_dyn_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality5, echo = FALSE}
+# Normality check
+vel_dyn_order$Subcomponent <- factor(vel_dyn_order$Subcomponent)
+vel_dyn_order_norm <- by(vel_dyn_order$Mean, list(vel_dyn_order$Condition, vel_dyn_order$Subcomponent, vel_dyn_order$Order), shapiro.test)
+print(vel_dyn_order_norm)
+```
+
+##### Three-way ANOVA (ez)
+```{r stats9, echo = FALSE}
+vel_dyn_order_aov <- ezANOVA(
+  data = df_vel_dyn
+  , dv = .(Velocity)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+vel_dyn_order_aov$ANOVA$F <- round(vel_dyn_order_aov$ANOVA$F, 4)
+vel_dyn_order_aov$ANOVA$p <- round(vel_dyn_order_aov$ANOVA$p, 4)
+print(vel_dyn_order_aov)
+```
+
+## KV-Diff-Order-Dynamics
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#vel_acc_dyn_order_group_all}
+```{r vel_acc_dyn_order_all, echo = all}
+# For each participant
+vel_acc_dyn_order <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF"),
+                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+vel_acc_dyn_order <- cbind(vel_acc_dyn_order[,1:5], as.data.frame(vel_acc_dyn_order[,6]))
+# Change colnames
+colnames(vel_acc_dyn_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+
+# Group mean
+vel_acc_dyn_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_acc_dyn_order,
+                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_acc_dyn_order_all <- cbind(vel_acc_dyn_order_all[,1:4], as.data.frame(vel_acc_dyn_order_all[,5]))
+# Change colnames
+colnames(vel_acc_dyn_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
+print(vel_acc_dyn_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r vel_acc_dyn_order_all_bar, echo = FALSE}
+p_vel_acc_dyn_order_all <- ggplot(data = vel_acc_dyn_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KV (0-127)", subtitle = "KV: Dynamics")
+p_vel_acc_dyn_order_all
+```
+
+##### Box plot
+```{r vel_acc_dyn_order_all_box, echo = FALSE}
+p_vel_acc_dyn_order_all_box <- ggplot(data = vel_acc_dyn_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") 
+p_vel_acc_dyn_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality6, echo = FALSE}
+# Normality check
+vel_acc_dyn_order$Subcomponent <- factor(vel_acc_dyn_order$Subcomponent)
+vel_acc_dyn_order_norm <- by(vel_acc_dyn_order$Mean, list(vel_acc_dyn_order$Condition, vel_acc_dyn_order$Subcomponent, vel_acc_dyn_order$Order), shapiro.test)
+print(vel_acc_dyn_order_norm)
+```
+
+##### Three-way ANOVA (ez)
+```{r stats10, echo = FALSE}
+vel_acc_dyn_order_aov <- ezANOVA(
+  data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF")
+  , dv = .(Acc)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+vel_acc_dyn_order_aov$ANOVA$F <- round(vel_acc_dyn_order_aov$ANOVA$F, 4)
+vel_acc_dyn_order_aov$ANOVA$p <- round(vel_acc_dyn_order_aov$ANOVA$p, 4)
+print(vel_acc_dyn_order_aov)
+```
+
+## KV-Order-Articulation
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#vel_art_order_group_all}
+```{r vel_art_order_all, echo = all}
+# For each participant
+vel_art_order <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent*Order, data = df_vel_art,
+                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+vel_art_order <- cbind(vel_art_order[,1:5], as.data.frame(vel_art_order[,6]))
+# Change colnames
+colnames(vel_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+
+# Group mean
+vel_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_art_order,
+                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_art_order_all <- cbind(vel_art_order_all[,1:4], as.data.frame(vel_art_order_all[,5]))
+# Change colnames
+colnames(vel_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
+print(vel_art_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r vel_art_order_all_bar, echo = FALSE}
+p_vel_art_order_all <- ggplot(data = vel_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") + coord_cartesian(ylim = c(40, 100))
+p_vel_art_order_all
+```
+
+##### Box plot
+```{r vel_art_order_all_box, echo = FALSE}
+p_vel_art_order_all_box <- ggplot(data = vel_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") 
+p_vel_art_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality7, echo = FALSE}
+# Normality check
+vel_art_order$Subcomponent <- factor(vel_art_order$Subcomponent)
+vel_art_order_norm <- by(vel_art_order$Mean, list(vel_art_order$Condition, vel_art_order$Subcomponent, vel_art_order$Order), shapiro.test)
+print(vel_art_order_norm)
+```
+
+##### Three-way ANOVA (ez)
+```{r stats11, echo = FALSE}
+vel_art_order_aov <- ezANOVA(
+  data = df_vel_art
+  , dv = .(Velocity)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+vel_art_order_aov$ANOVA$F <- round(vel_art_order_aov$ANOVA$F, 4)
+vel_art_order_aov$ANOVA$p <- round(vel_art_order_aov$ANOVA$p, 4)
+print(vel_art_order_aov)
+```
+
+## KV-Diff-Order-Articulation
+- Investigate whether there is any order effect of the conditions.
+
+### 1. All{#vel_acc_art_order_group_all}
+```{r vel_acc_art_order_all, echo = all}
+# For each participant
+vel_acc_art_order <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL"),
+                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+vel_acc_art_order <- cbind(vel_acc_art_order[,1:5], as.data.frame(vel_acc_art_order[,6]))
+# Change colnames
+colnames(vel_acc_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+
+# Group mean
+vel_acc_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_acc_art_order,
+                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_acc_art_order_all <- cbind(vel_acc_art_order_all[,1:4], as.data.frame(vel_acc_art_order_all[,5]))
+# Change colnames
+colnames(vel_acc_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
+print(vel_acc_art_order_all)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r vel_acc_art_order_all_bar, echo = FALSE}
+p_vel_acc_art_order_all <- ggplot(data = vel_acc_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KV (0-127)", subtitle = "KV: Dynamics")
+p_vel_acc_art_order_all
+```
+
+##### Box plot
+```{r vel_acc_art_order_all_box, echo = FALSE}
+p_vel_acc_art_order_all_box <- ggplot(data = vel_acc_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
+  facet_wrap(Order ~ .) +
+  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") 
+p_vel_acc_art_order_all_box
+```
+
+#### Statistics
+##### Normality check
+```{r normality8, echo = FALSE}
+# Normality check
+vel_acc_art_order$Subcomponent <- factor(vel_acc_art_order$Subcomponent)
+vel_acc_art_order_norm <- by(vel_acc_art_order$Mean, list(vel_acc_art_order$Condition, vel_acc_art_order$Subcomponent, vel_acc_art_order$Order), shapiro.test)
+print(vel_acc_art_order_norm)
+```
+
+##### Three-way ANOVA (ez)
+```{r stats12, echo = FALSE}
+vel_acc_art_order_aov <- ezANOVA(
+  data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL")
+  , dv = .(Acc)
+  , wid = .(SubNr)
+  , between = .(Order)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+vel_acc_art_order_aov$ANOVA$F <- round(vel_acc_art_order_aov$ANOVA$F, 4)
+vel_acc_art_order_aov$ANOVA$p <- round(vel_acc_art_order_aov$ANOVA$p, 4)
+print(vel_acc_art_order_aov)
+```
