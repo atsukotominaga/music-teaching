@@ -221,6 +221,29 @@ kot_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subc
 print(summary(kot_art_aov_2))
 ```
 
+### Post-hoc (direct comparison)
+```{r post-hoc1, echo = FALSE}
+ttest_legato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Legato"], paired = TRUE)
+ttest_staccato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Staccato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Staccato"], paired = TRUE)
+
+print(ttest_legato)
+print(ttest_staccato)
+```
+
+### Post-hoc (pairwise t test)
+```{r post-hoc2, echo = FALSE}
+# Create a group label for a post-hoc test
+kot_art$Group[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"] <- "Performing-Legato" 
+kot_art$Group[kot_art$Condition == "performing" & kot_art$Subcomponent == "Staccato"] <- "Performing-Staccato"
+kot_art$Group[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Legato"] <- "Teaching-Legato"
+kot_art$Group[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Staccato"] <- "Teaching-Staccato"
+# pairwise comparison
+kot_art_pairwise <- pairwise.t.test(kot_art$Mean, kot_art$Group, paired = TRUE, p.adjust.method = "BH")
+kot_art_pairwise$p.value <- round(kot_art_pairwise$p.value, 4)
+print(kot_art_pairwise)
+```
+
+
 ### 3. Trial by trial - individual{#kot_art_ind_trial}
 - Average KOT for each trial for each participant.
 
@@ -382,6 +405,28 @@ print(kor_art_aov$ANOVA)
 ```{r stats4, echo = FALSE}
 kor_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_art)
 print(summary(kor_art_aov_2))
+```
+
+### Post-hoc (direct comparison)
+```{r post-hoc3, echo = FALSE}
+ttest_legato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Legato"], paired = TRUE)
+ttest_staccato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Staccato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Staccato"], paired = TRUE)
+
+print(ttest_legato)
+print(ttest_staccato)
+```
+
+### Post-hoc (pairwise t test)
+```{r post-hoc4, echo = FALSE}
+# Create a group label for a post-hoc test
+kor_art$Group[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"] <- "Performing-Legato" 
+kor_art$Group[kor_art$Condition == "performing" & kor_art$Subcomponent == "Staccato"] <- "Performing-Staccato"
+kor_art$Group[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Legato"] <- "Teaching-Legato"
+kor_art$Group[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Staccato"] <- "Teaching-Staccato"
+# pairwise comparison
+kor_art_pairwise <- pairwise.t.test(kor_art$Mean, kor_art$Group, paired = TRUE, p.adjust.method = "BH")
+kor_art_pairwise$p.value <- round(kor_art_pairwise$p.value, 4)
+print(kor_art_pairwise)
 ```
 
 ### 3. Trial by trial - individual{#kor_art_ind_trial}
