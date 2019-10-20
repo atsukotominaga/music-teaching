@@ -1010,7 +1010,7 @@ p_kot_dyn_order_all_box <- ggplot(data = kot_dyn_order, aes(x = Subcomponent, y 
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
   facet_wrap(Order ~ .) +
-  labs(y = "KOY", subtitle = "KOT: Dynamics")
+  labs(y = "KOT (ms)", subtitle = "KOT: Dynamics")
 p_kot_dyn_order_all_box
 ```
 
