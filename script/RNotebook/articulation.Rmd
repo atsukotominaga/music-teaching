@@ -160,6 +160,7 @@ p_kot_art
 - Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
 ```{r kot_art_all, echo = FALSE}
+# Group mean
 kot_art_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = kot_art,
                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
 kot_art_all <- cbind(kot_art_all[,1:3], as.data.frame(kot_art_all[,4]))
@@ -223,11 +224,11 @@ print(summary(kot_art_aov_2))
 
 ### Post-hoc (direct comparison)
 ```{r post-hoc1, echo = FALSE}
-ttest_legato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Legato"], paired = TRUE)
-ttest_staccato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Staccato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Staccato"], paired = TRUE)
+kot_ttest_legato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Legato"], paired = TRUE)
+kot_ttest_staccato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Staccato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Staccato"], paired = TRUE)
 
-print(ttest_legato)
-print(ttest_staccato)
+print(kot_ttest_legato)
+print(kot_ttest_staccato)
 ```
 
 ### Post-hoc (pairwise t test)
@@ -346,6 +347,7 @@ p_kor_art
 - Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
 ```{r kor_art_all, echo = FALSE}
+# Group mean
 kor_art_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = kor_art,
                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
 kor_art_all <- cbind(kor_art_all[,1:3], as.data.frame(kor_art_all[,4]))
@@ -409,11 +411,11 @@ print(summary(kor_art_aov_2))
 
 ### Post-hoc (direct comparison)
 ```{r post-hoc3, echo = FALSE}
-ttest_legato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Legato"], paired = TRUE)
-ttest_staccato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Staccato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Staccato"], paired = TRUE)
+kor_ttest_legato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Legato"], paired = TRUE)
+kor_ttest_staccato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Staccato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Staccato"], paired = TRUE)
 
-print(ttest_legato)
-print(ttest_staccato)
+print(kor_ttest_legato)
+print(kor_ttest_staccato)
 ```
 
 ### Post-hoc (pairwise t test)
@@ -533,6 +535,7 @@ p_kot_dyn
 - Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
 ```{r kot_dyn_all, echo = FALSE}
+# Group mean
 kot_dyn_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = kot_dyn,
                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
 kot_dyn_all <- cbind(kot_dyn_all[,1:3], as.data.frame(kot_dyn_all[,4]))
@@ -695,6 +698,7 @@ p_kor_dyn
 - Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
 ```{r kor_dyn_all, echo = FALSE}
+# Group mean
 kor_dyn_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = kor_dyn,
                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
 kor_dyn_all <- cbind(kor_dyn_all[,1:3], as.data.frame(kor_dyn_all[,4]))
