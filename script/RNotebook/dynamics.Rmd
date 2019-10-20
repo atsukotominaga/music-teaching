@@ -199,6 +199,28 @@ vel_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subc
 print(summary(vel_dyn_aov_2))
 ```
 
+### Post-hoc (direct comparison)
+```{r post-hoc1, echo = FALSE}
+vel_ttest_forte <- t.test(vel_dyn$Mean[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Forte"], vel_dyn$Mean[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Forte"], paired = TRUE)
+vel_ttest_piano <- t.test(vel_dyn$Mean[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Piano"], vel_dyn$Mean[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Piano"], paired = TRUE)
+
+print(vel_ttest_forte)
+print(vel_ttest_piano)
+```
+
+### Post-hoc (pairwise t test)
+```{r post-hoc2, echo = FALSE}
+# Create a group label for a post-hoc test
+vel_dyn$Group[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Forte"] <- "Performing-Forte" 
+vel_dyn$Group[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Piano"] <- "Performing-Piano"
+vel_dyn$Group[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Forte"] <- "Teaching-Forte"
+vel_dyn$Group[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Piano"] <- "Teaching-Piano"
+# pairwise comparison
+vel_dyn_pairwise <- pairwise.t.test(vel_dyn$Mean, vel_dyn$Group, paired = TRUE, p.adjust.method = "BH")
+vel_dyn_pairwise$p.value <- round(vel_dyn_pairwise$p.value, 4)
+print(vel_dyn_pairwise)
+```
+
 ### 3. Trial by trial - individual{#vel_dyn_ind_trial}
 - Average KV for each trial for each participant.
 
@@ -291,7 +313,7 @@ p_vel_acc_dyn <- ggplot(data = vel_acc_dyn, aes(x = SubNr, y = Mean, fill = Cond
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
                 width = .2, position = position_dodge(.9)) +
   facet_grid(Subcomponent ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Dynamics")
+  labs(y = "Difference", subtitle = "KV-Diff: Dynamics")
 p_vel_acc_dyn
 ```
 
@@ -359,6 +381,29 @@ vel_acc_dyn_aov_2 <- with(vel_acc_dyn,
 print(summary(vel_acc_dyn_aov_2))
 ```
 
+### Post-hoc (direct comparison)
+```{r post-hoc3, echo = FALSE}
+vel_acc_ttest_forte <- t.test(vel_acc_dyn$Mean[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "FtoP"], vel_acc_dyn$Mean[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "FtoP"], paired = TRUE)
+vel_acc_ttest_piano <- t.test(vel_acc_dyn$Mean[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "PtoF"], vel_acc_dyn$Mean[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "PtoF"], paired = TRUE)
+vel_acc_ttest_piano$p.value <- sprintf('%.6f', vel_acc_ttest_piano$p.value)
+
+print(vel_acc_ttest_forte)
+print(vel_acc_ttest_piano)
+```
+
+### Post-hoc (pairwise t test)
+```{r post-hoc4, echo = FALSE}
+# Create a group label for a post-hoc test
+vel_acc_dyn$Group[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "FtoP"] <- "Performing-FtoP" 
+vel_acc_dyn$Group[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "PtoF"] <- "Performing-PtoF"
+vel_acc_dyn$Group[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "FtoP"] <- "Teaching-FtoP"
+vel_acc_dyn$Group[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "PtoF"] <- "Teaching-PtoF"
+# pairwise comparison
+vel_acc_dyn_pairwise <- pairwise.t.test(vel_acc_dyn$Mean, vel_acc_dyn$Group, paired = TRUE, p.adjust.method = "BH")
+vel_acc_dyn_pairwise$p.value <- round(vel_acc_dyn_pairwise$p.value, 4)
+print(vel_acc_dyn_pairwise)
+```
+
 ### 3. Trial by trial - individual{#vel_acc_dyn_ind_trial}
 - Average KV-Diff for each trial for each participant.
 
@@ -423,7 +468,7 @@ p_vel_acc_dyn_trial_all_ptof <- ggplot(data = subset(vel_acc_dyn_trial_all, vel_
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
-  labs(x = "Trial", y = "KOR", subtitle = "KOR: Dynamics/Piano to Forte") + scale_x_continuous(breaks=seq(1,8,1))
+  labs(x = "Trial", y = "Difference", subtitle = "KV-Diff: Dynamics/Piano to Forte") + scale_x_continuous(breaks=seq(1,8,1))
 p_vel_acc_dyn_trial_all_ptof
 ```
 
@@ -480,7 +525,7 @@ p_vel_art_all <- ggplot(data = vel_art_all, aes(x = Subcomponent, y = Mean, fill
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width = .2, position = position_dodge(.9)) +
-  labs(y = "KV (1-127)", subtitle = "KV: Articulation") + coord_cartesian(ylim = c(40, 100))
+  labs(y = "KV (0-127)", subtitle = "KV: Articulation") + coord_cartesian(ylim = c(40, 100))
 p_vel_art_all
 ```
 
@@ -522,6 +567,28 @@ print(vel_art_aov$ANOVA)
 ```{r stats6, echo = FALSE}
 vel_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = vel_art)
 print(summary(vel_art_aov_2))
+```
+
+### Post-hoc (direct comparison)
+```{r post-hoc5, echo = FALSE}
+vel_ttest_legato <- t.test(vel_art$Mean[vel_art$Condition == "performing" & vel_art$Subcomponent == "Legato"], vel_art$Mean[vel_art$Condition == "teaching" & vel_art$Subcomponent == "Legato"], paired = TRUE)
+vel_ttest_staccato <- t.test(vel_art$Mean[vel_art$Condition == "performing" & vel_art$Subcomponent == "Staccato"], vel_art$Mean[vel_art$Condition == "teaching" & vel_art$Subcomponent == "Staccato"], paired = TRUE)
+
+print(vel_ttest_legato)
+print(vel_ttest_staccato)
+```
+
+### Post-hoc (pairwise t test)
+```{r post-hoc6, echo = FALSE}
+# Create a group label for a post-hoc test
+vel_art$Group[vel_art$Condition == "performing" & vel_art$Subcomponent == "Legato"] <- "Performing-Legato" 
+vel_art$Group[vel_art$Condition == "performing" & vel_art$Subcomponent == "Staccato"] <- "Performing-Staccato"
+vel_art$Group[vel_art$Condition == "teaching" & vel_art$Subcomponent == "Legato"] <- "Teaching-Legato"
+vel_art$Group[vel_art$Condition == "teaching" & vel_art$Subcomponent == "Staccato"] <- "Teaching-Staccato"
+# pairwise comparison
+vel_art_pairwise <- pairwise.t.test(vel_art$Mean, vel_art$Group, paired = TRUE, p.adjust.method = "BH")
+vel_art_pairwise$p.value <- round(vel_art_pairwise$p.value, 4)
+print(vel_art_pairwise)
 ```
 
 ### 3. Trial by trial - individual{#vel_art_ind_trial}
@@ -616,7 +683,7 @@ p_vel_acc_art <- ggplot(data = vel_acc_art, aes(x = SubNr, y = Mean, fill = Cond
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
                 width = .2, position = position_dodge(.9)) +
   facet_grid(Subcomponent ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Articulaion")
+  labs(y = "Difference", subtitle = "KV-Diff: Articulaion")
 p_vel_acc_art
 ```
 
@@ -639,7 +706,7 @@ p_vel_acc_art_all <- ggplot(data = vel_acc_art_all, aes(x = Subcomponent, y = Me
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width = .2, position = position_dodge(.9)) +
-  labs(y = "Difference", subtitle = "KV: Articulation")
+  labs(y = "Difference", subtitle = "KV-Diff: Articulation")
 p_vel_acc_art_all
 ```
 
@@ -649,7 +716,7 @@ p_vel_acc_art_all
 p_vel_acc_art_all_box <- ggplot(data = vel_acc_art, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
-  labs(y = "Difference", subtitle = "KV-Diff: Dynamics")
+  labs(y = "Difference", subtitle = "KV-Diff: Articulation")
 p_vel_acc_art_all_box
 ```
 
@@ -675,6 +742,28 @@ vel_acc_art_aov <- ezANOVA(
 vel_acc_art_aov$ANOVA$F <- round(vel_acc_art_aov$ANOVA$F, 4)
 vel_acc_art_aov$ANOVA$p <- round(vel_acc_art_aov$ANOVA$p, 4)
 print(vel_acc_art_aov$ANOVA)
+```
+
+### Post-hoc (direct comparison)
+```{r post-hoc7, echo = FALSE}
+vel_acc_ttest_legato <- t.test(vel_acc_art$Mean[vel_acc_art$Condition == "performing" & vel_acc_art$Subcomponent == "LtoS"], vel_acc_art$Mean[vel_acc_art$Condition == "teaching" & vel_acc_art$Subcomponent == "LtoS"], paired = TRUE)
+vel_acc_ttest_staccato <- t.test(vel_acc_art$Mean[vel_acc_art$Condition == "performing" & vel_acc_art$Subcomponent == "StoL"], vel_acc_art$Mean[vel_acc_art$Condition == "teaching" & vel_acc_art$Subcomponent == "StoL"], paired = TRUE)
+
+print(vel_acc_ttest_legato)
+print(vel_acc_ttest_staccato)
+```
+
+### Post-hoc (pairwise t test)
+```{r post-hoc8, echo = FALSE}
+# Create a group label for a post-hoc test
+vel_acc_art$Group[vel_acc_art$Condition == "performing" & vel_acc_art$Subcomponent == "LtoS"] <- "Performing-LtoS" 
+vel_acc_art$Group[vel_acc_art$Condition == "performing" & vel_acc_art$Subcomponent == "StoL"] <- "Performing-StoL"
+vel_acc_art$Group[vel_acc_art$Condition == "teaching" & vel_acc_art$Subcomponent == "LtoS"] <- "Teaching-LtoS"
+vel_acc_art$Group[vel_acc_art$Condition == "teaching" & vel_acc_art$Subcomponent == "StoL"] <- "Teaching-StoL"
+# pairwise comparison
+vel_acc_art_pairwise <- pairwise.t.test(vel_acc_art$Mean, vel_acc_art$Group, paired = TRUE, p.adjust.method = "BH")
+vel_acc_art_pairwise$p.value <- round(vel_acc_art_pairwise$p.value, 4)
+print(vel_acc_art_pairwise)
 ```
 
 ##### Two-way ANOVA (aov)
@@ -856,7 +945,7 @@ p_vel_acc_dyn_order_all <- ggplot(data = vel_acc_dyn_order_all, aes(x = Subcompo
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width = .2, position = position_dodge(.9)) +
   facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Dynamics")
+  labs(y = "Difference", subtitle = "KV-Diff: Dynamics")
 p_vel_acc_dyn_order_all
 ```
 
@@ -866,7 +955,7 @@ p_vel_acc_dyn_order_all_box <- ggplot(data = vel_acc_dyn_order, aes(x = Subcompo
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
   facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") 
+  labs(y = "Difference", subtitle = "KV-Diff: Dynamics") 
 p_vel_acc_dyn_order_all_box
 ```
 
@@ -926,7 +1015,7 @@ p_vel_art_order_all <- ggplot(data = vel_art_order_all, aes(x = Subcomponent, y 
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width = .2, position = position_dodge(.9)) +
   facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") + coord_cartesian(ylim = c(40, 100))
+  labs(y = "KV (0-127)", subtitle = "KV: Articulation") + coord_cartesian(ylim = c(40, 100))
 p_vel_art_order_all
 ```
 
@@ -936,7 +1025,7 @@ p_vel_art_order_all_box <- ggplot(data = vel_art_order, aes(x = Subcomponent, y 
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
   facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") 
+  labs(y = "KV (0-127)", subtitle = "KV: Articulation") 
 p_vel_art_order_all_box
 ```
 
@@ -996,7 +1085,7 @@ p_vel_acc_art_order_all <- ggplot(data = vel_acc_art_order_all, aes(x = Subcompo
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width = .2, position = position_dodge(.9)) +
   facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Dynamics")
+  labs(y = "Difference", subtitle = "KV-Diff: Articulation")
 p_vel_acc_art_order_all
 ```
 
@@ -1006,7 +1095,7 @@ p_vel_acc_art_order_all_box <- ggplot(data = vel_acc_art_order, aes(x = Subcompo
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
   facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") 
+  labs(y = "Difference", subtitle = "KV: Articulation") 
 p_vel_acc_art_order_all_box
 ```
 
