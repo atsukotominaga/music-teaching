@@ -222,16 +222,21 @@ kot_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subc
 print(summary(kot_art_aov_2))
 ```
 
-### Post-hoc (direct comparison)
+##### Post-hoc (direct comparison)
 ```{r post-hoc1, echo = FALSE}
 kot_ttest_legato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Legato"], paired = TRUE)
 kot_ttest_staccato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Staccato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Staccato"], paired = TRUE)
+# Effect size
+kot_ttest_legato_cohend <- cohen.d(kot_art$Mean[kot_art$Subcomponent == "Legato"], kot_art$Condition[kot_art$Subcomponent == "Legato"], paired = TRUE)
+kot_ttest_staccato_cohend <- cohen.d(kot_art$Mean[kot_art$Subcomponent == "Staccato"], kot_art$Condition[kot_art$Subcomponent == "Staccato"], paired = TRUE)
 
 print(kot_ttest_legato)
 print(kot_ttest_staccato)
+print(kot_ttest_legato_cohend)
+print(kot_ttest_staccato_cohend)
 ```
 
-### Post-hoc (pairwise t test)
+##### Post-hoc (pairwise t test)
 ```{r post-hoc2, echo = FALSE}
 # Create a group label for a post-hoc test
 kot_art$Group[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"] <- "Performing-Legato" 
@@ -409,16 +414,21 @@ kor_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subc
 print(summary(kor_art_aov_2))
 ```
 
-### Post-hoc (direct comparison)
+##### Post-hoc (direct comparison)
 ```{r post-hoc3, echo = FALSE}
 kor_ttest_legato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Legato"], paired = TRUE)
 kor_ttest_staccato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Staccato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Staccato"], paired = TRUE)
+# Effect size
+kor_ttest_legato_cohend <- cohen.d(kor_art$Mean[kor_art$Subcomponent == "Legato"], kor_art$Condition[kor_art$Subcomponent == "Legato"], paired = TRUE)
+kor_ttest_staccato_cohend <- cohen.d(kor_art$Mean[kor_art$Subcomponent == "Staccato"], kor_art$Condition[kor_art$Subcomponent == "Staccato"], paired = TRUE)
 
 print(kor_ttest_legato)
 print(kor_ttest_staccato)
+print(kor_ttest_legato_cohend)
+print(kor_ttest_staccato_cohend)
 ```
 
-### Post-hoc (pairwise t test)
+##### Post-hoc (pairwise t test)
 ```{r post-hoc4, echo = FALSE}
 # Create a group label for a post-hoc test
 kor_art$Group[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"] <- "Performing-Legato" 

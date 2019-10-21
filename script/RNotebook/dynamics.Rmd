@@ -199,16 +199,21 @@ vel_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subc
 print(summary(vel_dyn_aov_2))
 ```
 
-### Post-hoc (direct comparison)
+##### Post-hoc (direct comparison)
 ```{r post-hoc1, echo = FALSE}
 vel_ttest_forte <- t.test(vel_dyn$Mean[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Forte"], vel_dyn$Mean[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Forte"], paired = TRUE)
 vel_ttest_piano <- t.test(vel_dyn$Mean[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Piano"], vel_dyn$Mean[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Piano"], paired = TRUE)
+# Effect size
+vel_ttest_forte_cohend <- cohen.d(vel_dyn$Mean[vel_dyn$Subcomponent == "Forte"], vel_dyn$Condition[vel_dyn$Subcomponent == "Forte"], paired = TRUE)
+vel_ttest_piano_cohend <- cohen.d(vel_dyn$Mean[vel_dyn$Subcomponent == "Piano"], vel_dyn$Condition[vel_dyn$Subcomponent == "Piano"], paired = TRUE)
 
 print(vel_ttest_forte)
 print(vel_ttest_piano)
+print(vel_ttest_forte_cohend)
+print(vel_ttest_piano_cohend)
 ```
 
-### Post-hoc (pairwise t test)
+##### Post-hoc (pairwise t test)
 ```{r post-hoc2, echo = FALSE}
 # Create a group label for a post-hoc test
 vel_dyn$Group[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Forte"] <- "Performing-Forte" 
@@ -381,16 +386,21 @@ vel_acc_dyn_aov_2 <- with(vel_acc_dyn,
 print(summary(vel_acc_dyn_aov_2))
 ```
 
-### Post-hoc (direct comparison)
+##### Post-hoc (direct comparison)
 ```{r post-hoc3, echo = FALSE}
 vel_acc_ttest_ftop <- t.test(vel_acc_dyn$Mean[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "FtoP"], vel_acc_dyn$Mean[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "FtoP"], paired = TRUE)
 vel_acc_ttest_ptof <- t.test(vel_acc_dyn$Mean[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "PtoF"], vel_acc_dyn$Mean[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "PtoF"], paired = TRUE)
+# Effect size
+vel_acc_ttest_ftop_cohend <- cohen.d(vel_acc_dyn$Mean[vel_acc_dyn$Subcomponent == "FtoP"], vel_acc_dyn$Condition[vel_acc_dyn$Subcomponent == "FtoP"], paired = TRUE)
+vel_acc_ttest_ptof_cohend <- cohen.d(vel_acc_dyn$Mean[vel_acc_dyn$Subcomponent == "PtoF"], vel_acc_dyn$Condition[vel_acc_dyn$Subcomponent == "PtoF"], paired = TRUE)
 
 print(vel_acc_ttest_ftop)
 print(vel_acc_ttest_ptof)
+print(vel_acc_ttest_ftop_cohend)
+print(vel_acc_ttest_ptof_cohend)
 ```
 
-### Post-hoc (pairwise t test)
+##### Post-hoc (pairwise t test)
 ```{r post-hoc4, echo = FALSE}
 # Create a group label for a post-hoc test
 vel_acc_dyn$Group[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "FtoP"] <- "Performing-FtoP" 
@@ -568,16 +578,21 @@ vel_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subc
 print(summary(vel_art_aov_2))
 ```
 
-### Post-hoc (direct comparison)
+##### Post-hoc (direct comparison)
 ```{r post-hoc5, echo = FALSE}
 vel_ttest_legato <- t.test(vel_art$Mean[vel_art$Condition == "performing" & vel_art$Subcomponent == "Legato"], vel_art$Mean[vel_art$Condition == "teaching" & vel_art$Subcomponent == "Legato"], paired = TRUE)
 vel_ttest_staccato <- t.test(vel_art$Mean[vel_art$Condition == "performing" & vel_art$Subcomponent == "Staccato"], vel_art$Mean[vel_art$Condition == "teaching" & vel_art$Subcomponent == "Staccato"], paired = TRUE)
+# Effect size
+vel_ttest_legato_cohend <- cohen.d(vel_art$Mean[vel_art$Subcomponent == "Legato"], vel_art$Condition[vel_art$Subcomponent == "Legato"], paired = TRUE)
+vel_ttest_staccato_cohend <- cohen.d(vel_art$Mean[vel_art$Subcomponent == "Staccato"], vel_art$Condition[vel_art$Subcomponent == "Staccato"], paired = TRUE)
 
 print(vel_ttest_legato)
 print(vel_ttest_staccato)
+print(vel_ttest_legato_cohend)
+print(vel_ttest_staccato_cohend)
 ```
 
-### Post-hoc (pairwise t test)
+##### Post-hoc (pairwise t test)
 ```{r post-hoc6, echo = FALSE}
 # Create a group label for a post-hoc test
 vel_art$Group[vel_art$Condition == "performing" & vel_art$Subcomponent == "Legato"] <- "Performing-Legato" 
@@ -743,16 +758,21 @@ vel_acc_art_aov$ANOVA$p <- round(vel_acc_art_aov$ANOVA$p, 4)
 print(vel_acc_art_aov$ANOVA)
 ```
 
-### Post-hoc (direct comparison)
+##### Post-hoc (direct comparison)
 ```{r post-hoc7, echo = FALSE}
-vel_acc_ttest_legato <- t.test(vel_acc_art$Mean[vel_acc_art$Condition == "performing" & vel_acc_art$Subcomponent == "LtoS"], vel_acc_art$Mean[vel_acc_art$Condition == "teaching" & vel_acc_art$Subcomponent == "LtoS"], paired = TRUE)
-vel_acc_ttest_staccato <- t.test(vel_acc_art$Mean[vel_acc_art$Condition == "performing" & vel_acc_art$Subcomponent == "StoL"], vel_acc_art$Mean[vel_acc_art$Condition == "teaching" & vel_acc_art$Subcomponent == "StoL"], paired = TRUE)
+vel_acc_ttest_ltos <- t.test(vel_acc_art$Mean[vel_acc_art$Condition == "performing" & vel_acc_art$Subcomponent == "LtoS"], vel_acc_art$Mean[vel_acc_art$Condition == "teaching" & vel_acc_art$Subcomponent == "LtoS"], paired = TRUE)
+vel_acc_ttest_stol <- t.test(vel_acc_art$Mean[vel_acc_art$Condition == "performing" & vel_acc_art$Subcomponent == "StoL"], vel_acc_art$Mean[vel_acc_art$Condition == "teaching" & vel_acc_art$Subcomponent == "StoL"], paired = TRUE)
+# Effect size
+vel_acc_ttest_ltos_cohend <- cohen.d(vel_acc_art$Mean[vel_acc_art$Subcomponent == "LtoS"], vel_acc_art$Condition[vel_acc_art$Subcomponent == "LtoS"], paired = TRUE)
+vel_acc_ttest_stol_cohend <- cohen.d(vel_acc_art$Mean[vel_acc_art$Subcomponent == "StoL"], vel_acc_art$Condition[vel_acc_art$Subcomponent == "StoL"], paired = TRUE)
 
-print(vel_acc_ttest_legato)
-print(vel_acc_ttest_staccato)
+print(vel_acc_ttest_ltos)
+print(vel_acc_ttest_stol)
+print(vel_acc_ttest_ltos_cohend)
+print(vel_acc_ttest_stol_cohend)
 ```
 
-### Post-hoc (pairwise t test)
+##### Post-hoc (pairwise t test)
 ```{r post-hoc8, echo = FALSE}
 # Create a group label for a post-hoc test
 vel_acc_art$Group[vel_acc_art$Condition == "performing" & vel_acc_art$Subcomponent == "LtoS"] <- "Performing-LtoS" 
