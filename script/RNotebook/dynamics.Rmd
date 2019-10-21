@@ -383,12 +383,11 @@ print(summary(vel_acc_dyn_aov_2))
 
 ### Post-hoc (direct comparison)
 ```{r post-hoc3, echo = FALSE}
-vel_acc_ttest_forte <- t.test(vel_acc_dyn$Mean[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "FtoP"], vel_acc_dyn$Mean[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "FtoP"], paired = TRUE)
-vel_acc_ttest_piano <- t.test(vel_acc_dyn$Mean[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "PtoF"], vel_acc_dyn$Mean[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "PtoF"], paired = TRUE)
-vel_acc_ttest_piano$p.value <- sprintf('%.6f', vel_acc_ttest_piano$p.value)
+vel_acc_ttest_ftop <- t.test(vel_acc_dyn$Mean[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "FtoP"], vel_acc_dyn$Mean[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "FtoP"], paired = TRUE)
+vel_acc_ttest_ptof <- t.test(vel_acc_dyn$Mean[vel_acc_dyn$Condition == "performing" & vel_acc_dyn$Subcomponent == "PtoF"], vel_acc_dyn$Mean[vel_acc_dyn$Condition == "teaching" & vel_acc_dyn$Subcomponent == "PtoF"], paired = TRUE)
 
-print(vel_acc_ttest_forte)
-print(vel_acc_ttest_piano)
+print(vel_acc_ttest_ftop)
+print(vel_acc_ttest_ptof)
 ```
 
 ### Post-hoc (pairwise t test)
