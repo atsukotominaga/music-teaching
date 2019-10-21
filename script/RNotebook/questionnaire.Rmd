@@ -14,6 +14,7 @@ editor_options:
 # Read csv files
 df <- read.csv("./questionnaire.csv", header = T, sep = ",", dec = ".")
 df_exc <- read.csv("./filtered/data_errorRate.csv", header = T, sep = ",", dec = ".")
+include <- df_exc$SubNr[df_exc$Final == "include"]
 
 # Change colnames
 colnames(df) <- c("TimeStamp", "SubNr", "Age", "Gender", "FirstLang", "SecondLang", "DominantHand", "NormalVision", "NormalHearing", "Desc1", "Desc2",
@@ -39,14 +40,13 @@ tempo_dev <- total-exp_error-pitch_error-length(include)
 total_exc <- exp_error+pitch_error+tempo_dev
 
 excluded_participants <- data.frame(cbind(total, total_exc, exp_error, pitch_error, tempo_dev))
-colnames(excluded_participants) <- c("Total participants", "Total excluded", "Experimental error", "Pitch error", "Tempo deviation")
+colnames(excluded_participants) <- c("Total", "Excluded participants", "Experimental error", "Pitch error", "Tempo deviation")
 print(excluded_participants)
 ```
 
 #### Number of included participants
 ```{r included, echo = FALSE}
 # Data frame with only included participants
-include <- df_exc$SubNr[df_exc$Final == "include"]
 df_demo <- data.frame()
 for (subnr in include){
   df_current <- df %>% dplyr::filter(SubNr == subnr)
@@ -57,7 +57,7 @@ for (subnr in include){
 included <- nrow(df_demo)
 male <- nrow(subset(df_demo, df_demo$Gender == "Male"))
 female <- nrow(subset(df_demo, df_demo$Gender == "Female"))
-experience_m <- round(mean(df_demo$PianoTotalPractice), 0)
+experience_m <- round(mean(df_demo$PianoTotalPractice), 1)
 experience_sd <- round(sd(df_demo$PianoTotalPractice)*sqrt((length(df_demo$PianoTotalPractice)-1)/length(df_demo$PianoTotalPractice)), 2) #biased sd for the current data
 
 included_participants <- data.frame(cbind(total, included, male, female, experience_m, experience_sd))
