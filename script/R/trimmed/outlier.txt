@@ -1,0 +1,5 @@
+IOI: Remove 6 trials beyond +- 3SD / 0.000160 percent
+IOI: Remove 6 trials beyond +- 3SD / 0.000160 percent
+KOT: Remove 280 trials beyond +- 3SD / 0.007452 percent
+Velocity - Remove 165 trials beyond +- 3SD / 0.004254 percent
+VelocityAcc - Remove 278 trials beyond +- 3SD / 0.007399 percent
