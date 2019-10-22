@@ -6,8 +6,8 @@ This repo contains scripts and materials necessary for a musical experiment with
 - [Script](#Script)
     + [Max (Experiment)](#Max)
     + [R (Filtering/Trimming)](#R)
-    + [R Notebook(Data analysis)](#R-Notebook)
-    + [R Markdown (Instruction sheet)](#Rmd)
+    + [R Notebooks(Data analysis)](#R-Notebooks)
+    + [R Markdown (Instruction sheet)](#R-Markdown)
     + [Lilypond (Stimuli - sheet music)](#Lilypond)
     + [Jupyter notebnook (Stimuli - image processing)](#Jupyter-notebook)
     
@@ -49,7 +49,7 @@ You need raw_data folder to run the scripts below (get the folder from [OSF](htt
     + In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 65.
 - trimming.R: calculate dependent variables and remove outliers. >> output: trimmed folder
 
-## R Notebook
+## R Notebooks
 You need filtered and trimmed folders to run the scripts below (outputs from filtering.R and trimming.R)
 - ioi.Rmd: analysis and plots for IOIs >> output: html file
 - articulation.Rmd: analysis and plots for KOT/KOR >> output: html file
