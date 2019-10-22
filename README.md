@@ -7,9 +7,9 @@ This repo contains scripts and materials necessary for a musical experiment with
     + [Max (Experiment)](#Max)
     + [R (Filtering/Trimming)](#R)
     + [R Notebook(Data analysis)](#R-Notebook)
+    + [R Markdown (Instruction sheet)](#Rmd)
     + [Lilypond (Stimuli - sheet music)](#Lilypond)
     + [Jupyter notebnook (Stimuli - image processing)](#Jupyter-notebook)
-    + [Rmd (Instruction sheet)](#Rmd)
     
 - [Material](#Material)
 
@@ -58,16 +58,16 @@ You need filtered and trimmed folders to run the scripts below (outputs from fil
 You need questionnaire.csv to run the script below (get the file from [OSF](https://osf.io/35ryj/))
 - questionnaire.Rmd
 
+## R Markdown
+- instruction.Rmd: a instruction sheet for an experimenter >> output: html file
+- image: figures used in the instruction sheet
+
 ## Lilypond
 - ly files: sheet music compiled by lilypond >> output: pdf files
 
 ## Jupyter notebook
 - image_generator.ipynb: generate experimental stimuli (see more information on jupyter notebook) >> output: stimuli and practice folders
 - image: used for stimuli generation
-
-## Rmd
-- instruction.Rmd: a instruction sheet for an experimenter >> output: html file
-- image: figures used in the instruction sheet
 
 # Material
 
