@@ -6,7 +6,6 @@ others/
 
 # R
 script/R/raw_data/
-script/R/analysis/
 script/R/filtered/
 script/R/trimmed/
 script/R/old_analysis
@@ -14,6 +13,7 @@ script/R/old_analysis
 # RNotebook
 script/RNotebook/filtered
 script/RNotebook/trimmed
+script/RNotebook/*csv
 
 # Max
 script/Max/data/
