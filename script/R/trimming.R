@@ -21,26 +21,26 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 
 # Create necessary folders if not exist
-# 2_trimmed
-if (!file.exists("2_trimmed")){
-  dir.create("2_trimmed")
+# trimmed
+if (!file.exists("trimmed")){
+  dir.create("trimmed")
 }
 
-# 2_trimmed/plot
-if (!file.exists("2_trimmed/plot")){
-  dir.create("2_trimmed/plot")
+# trimmed/plot
+if (!file.exists("trimmed/plot")){
+  dir.create("trimmed/plot")
 }
-# 2_trimmed/plot/ioi
-if (!file.exists("2_trimmed/plot/ioi/")){
-  dir.create("2_trimmed/plot/ioi")
+# trimmed/plot/ioi
+if (!file.exists("trimmed/plot/ioi/")){
+  dir.create("trimmed/plot/ioi")
 }
-# 2_trimmed/plot/kot
-if (!file.exists("2_trimmed/plot/kot/")){
-  dir.create("2_trimmed/plot/kot")
+# trimmed/plot/kot
+if (!file.exists("trimmed/plot/kot/")){
+  dir.create("trimmed/plot/kot")
 }
-# 2_trimmed/plot/vel
-if (!file.exists("2_trimmed/plot/vel/")){
-  dir.create("2_trimmed/plot/vel")
+# trimmed/plot/vel
+if (!file.exists("trimmed/plot/vel/")){
+  dir.create("trimmed/plot/vel")
 }
 
 ####################################
@@ -190,7 +190,7 @@ lower <- mean(df_trim$IOI)-3*sd(df_subset$IOI)
 df_trim_sd <- df_trim %>% dplyr::filter(IOI < upper & IOI > lower)
 removed_ioi <- nrow(df_trim)-nrow(df_trim_sd)
 proportion_ioi <- round(removed_ioi/nrow(df_trim), 5)
-write(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed_ioi, proportion_ioi), file = "./2_trimmed/outlier.txt", append = T) # Export the results as a txt file
+write(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed_ioi, proportion_ioi), file = "./trimmed/outlier.txt", append = T) # Export the results as a txt file
 print(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed_ioi, proportion_ioi))
 
 p_hist_sd <- ggplot(df_trim_sd, aes(x = IOI, fill = Grouping)) +
@@ -202,12 +202,12 @@ p_box_sd <- ggpar(p_box_sd, ylab = "IOI (ms)")
 
 # Save plots
 # png files
-ggsave("./2_trimmed/plot/ioi/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
-ggsave("./2_trimmed/plot/ioi/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./2_trimmed/plot/ioi/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/ioi/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/ioi/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/ioi/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for df_trimmed
-write.csv(df_trim_sd, file = "./2_trimmed/data_ioi.csv", row.names = F)
+write.csv(df_trim_sd, file = "./trimmed/data_ioi.csv", row.names = F)
 
 ####################################
 # Key Overlap Time - articulation
@@ -311,7 +311,7 @@ for (subcomponent in unique(df_subset$Subcomponent)){
 }
 removed_kot <- nrow(df_subset)-nrow(df_trim_sd)
 proportion_kot <- removed_kot/nrow(df_subset)
-write(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed_kot, proportion_kot), file = "./2_trimmed/outlier.txt", append = T)
+write(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed_kot, proportion_kot), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed_kot, proportion_kot))
 
 # Sort by RowNr
@@ -326,12 +326,12 @@ p_box_sd <- ggpar(p_box_sd, ylab = "KOT (ms)")
 
 # Save plots
 # png files
-ggsave("./2_trimmed//plot/kot/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
-ggsave("./2_trimmed//plot/kot/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./2_trimmed//plot/kot/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed//plot/kot/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed//plot/kot/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed//plot/kot/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for df_trimmed
-write.csv(df_trim_sd, file = "./2_trimmed/data_kot.csv", row.names = F)
+write.csv(df_trim_sd, file = "./trimmed/data_kot.csv", row.names = F)
 
 ####################################
 # Key Velocity - dynamics
@@ -463,7 +463,7 @@ for (subcomponent in unique(df_subset$Subcomponent)){
 }
 removed_kv <- nrow(df_subset)-nrow(df_trim_sd)
 proportion_kv <- removed_kv/nrow(df_subset)
-write(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv), file = "./2_trimmed/outlier.txt", append = T)
+write(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv))
 
 # Exclude vel_acc > +- 3SD (within a given condition)
@@ -479,7 +479,7 @@ for (subcomponent in unique(df_subset_acc$Subcomponent)){
 }
 removed_acc <- nrow(df_subset_acc)-nrow(df_trim_sd_acc)
 proportion <- removed_acc/nrow(df_subset_acc)
-write(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed_acc, proportion), file = "./2_trimmed/outlier.txt", append = T)
+write(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed_acc, proportion), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed_acc, proportion))
 
 p_hist_sd <- ggplot(df_trim_sd, aes(x = Velocity, fill = Grouping)) +
@@ -497,13 +497,13 @@ p_box_sd_acc <- ggboxplot(df_trim_sd_acc, x = "Skill", y = "Acc", color = "Condi
 p_box_sd_acc <- ggpar(p_box_sd_acc, ylab = "Acceleration")
 
 # png files
-ggsave("./2_trimmed/plot/vel/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
-ggsave("./2_trimmed/plot/vel/p_hist_acc.png", plot = p_hist_acc, dpi = 600, width = 5, height = 4)
-ggsave("./2_trimmed/plot/vel/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./2_trimmed/plot/vel/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
-ggsave("./2_trimmed/plot/vel/p_hist_sd_acc.png", plot = p_hist_sd_acc, dpi = 600, width = 5, height = 4)
-ggsave("./2_trimmed/plot/vel/p_box_sd_acc.png", plot = p_box_sd_acc, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/vel/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/vel/p_hist_acc.png", plot = p_hist_acc, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/vel/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/vel/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/vel/p_hist_sd_acc.png", plot = p_hist_sd_acc, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/vel/p_box_sd_acc.png", plot = p_box_sd_acc, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for df_trimmed
-write.csv(df_trim_sd, file = "./2_trimmed/data_vel.csv", row.names = F)
-write.csv(df_trim_sd_acc, file = "./2_trimmed/data_vel_acc.csv", row.names = F)
+write.csv(df_trim_sd, file = "./trimmed/data_vel.csv", row.names = F)
+write.csv(df_trim_sd_acc, file = "./trimmed/data_vel_acc.csv", row.names = F)
