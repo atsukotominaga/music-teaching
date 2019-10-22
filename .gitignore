@@ -7,9 +7,8 @@ others/
 # R
 script/R/raw_data/
 script/R/analysis/
-script/R/1_filtered/
-script/R/2_trimmed/
-script/R/3_stats/
+script/R/filtered/
+script/R/trimmed/
 script/R/old_analysis
 
 # RNotebook
