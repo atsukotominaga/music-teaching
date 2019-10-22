@@ -36,6 +36,8 @@ editor_options:
 
 - Order analysis (teaching/performing first?)
   + [All](#vel_acc_dyn_order_group_all)
+  
+- [Sequence plot](#sequence_dyn)
 
 ### [Articulation](#vel_articulation)
 
@@ -62,6 +64,8 @@ editor_options:
   
 - Order analysis (teaching/performing first?)
   + [All](#vel_acc_art_order_group_all)
+
+- [Sequence plot](#sequence_art)
 
 ## Experimental Design{#design}
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: forte vs. piano / legato vs. staccato)
@@ -1141,4 +1145,103 @@ vel_acc_art_order_aov <- ezANOVA(
 vel_acc_art_order_aov$ANOVA$F <- round(vel_acc_art_order_aov$ANOVA$F, 4)
 vel_acc_art_order_aov$ANOVA$p <- round(vel_acc_art_order_aov$ANOVA$p, 4)
 print(vel_acc_art_order_aov)
+```
+
+## Sequence plot
+#### Dynamics{#sequence_dyn}
+```{r seq_dyn, fig.width = 15, fig.height = 5, echo = FALSE}
+# Average vel_dynocity for each note
+# For each participant
+vel_dyn_seq <- aggregate(Velocity~SubNr*Condition*Skill*Note, data = df_vel_dyn, 
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+vel_dyn_seq <- cbind(vel_dyn_seq[,1:4], as.data.frame(vel_dyn_seq[,5]))
+# Change colnames
+colnames(vel_dyn_seq) <- c("SubNr", "Condition", "Skill", "Note", "N", "Mean", "SD")
+
+# Group mean
+vel_dyn_seq_stats <- aggregate(Mean~Condition*Skill*Note, data = vel_dyn_seq,
+                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_dyn_seq_stats <- cbind(vel_dyn_seq_stats[,1:3], as.data.frame(vel_dyn_seq_stats[,4]))
+# Change colnames
+colnames(vel_dyn_seq_stats) <- c("Condition", "Skill", "Note", "N", "Mean", "SD", "SEM")
+
+# Average acceleration for each note
+# For each participant
+vel_dyn_acc_seq <- aggregate(Acc~SubNr*Condition*Skill*Interval, data = df_vel_acc_dyn, 
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+vel_dyn_acc_seq <- cbind(vel_dyn_acc_seq[,1:4], as.data.frame(vel_dyn_acc_seq[,5]))
+# Change colnames
+colnames(vel_dyn_acc_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+vel_dyn_acc_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = vel_dyn_acc_seq,
+                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_dyn_acc_seq_stats <- cbind(vel_dyn_acc_seq_stats[,1:3], as.data.frame(vel_dyn_acc_seq_stats[,4]))
+# Change colnames
+colnames(vel_dyn_acc_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+
+p_vel_dyn_seq <- ggplot(data = vel_dyn_seq_stats, aes(x = Note, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(0.05)) + 
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1))
+p_vel_dyn_seq
+
+p_vel_dyn_acc_seq <- ggplot(data = vel_dyn_acc_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1))
+p_vel_dyn_acc_seq
+```
+
+#### Articulation{#sequence_art}
+```{r seq_art, fig.width = 15, fig.height = 5, echo = FALSE}
+# Average vel_artocity for each note
+# For each participant
+vel_art_seq <- aggregate(Velocity~SubNr*Condition*Skill*Note, data = df_vel_art, 
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+vel_art_seq <- cbind(vel_art_seq[,1:4], as.data.frame(vel_art_seq[,5]))
+# Change colnames
+colnames(vel_art_seq) <- c("SubNr", "Condition", "Skill", "Note", "N", "Mean", "SD")
+
+# Group mean
+vel_art_seq_stats <- aggregate(Mean~Condition*Skill*Note, data = vel_art_seq,
+                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_art_seq_stats <- cbind(vel_art_seq_stats[,1:3], as.data.frame(vel_art_seq_stats[,4]))
+# Change colnames
+colnames(vel_art_seq_stats) <- c("Condition", "Skill", "Note", "N", "Mean", "SD", "SEM")
+
+# Average acceleration for each note
+# For each participant
+vel_art_acc_seq <- aggregate(Acc~SubNr*Condition*Skill*Interval, data = df_vel_acc_art, 
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+vel_art_acc_seq <- cbind(vel_art_acc_seq[,1:4], as.data.frame(vel_art_acc_seq[,5]))
+# Change colnames
+colnames(vel_art_acc_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+vel_art_acc_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = vel_art_acc_seq,
+                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+vel_art_acc_seq_stats <- cbind(vel_art_acc_seq_stats[,1:3], as.data.frame(vel_art_acc_seq_stats[,4]))
+# Change colnames
+colnames(vel_art_acc_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+
+p_vel_art_seq <- ggplot(data = vel_art_seq_stats, aes(x = Note, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(0.05)) + 
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1))
+p_vel_art_seq
+
+p_vel_art_acc_seq <- ggplot(data = vel_art_acc_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1))
+p_vel_art_acc_seq
 ```

@@ -29,6 +29,8 @@ editor_options:
    
 - Order analysis (teaching/performing first?)
   + [All](#art_order_group_all)
+  
+- [Sequence plot](#sequence_art)
 
 ### [Dynamics](#ioi-dynamics)
 
@@ -48,6 +50,8 @@ editor_options:
   
 - Order analysis (teaching/performing first?)
   + [All](#dyn_order_group_all)
+
+- [Sequence plot](#sequence_dyn)
 
 ## Experimental Design{#design}
 - Independent variables: Condition (2 levels: teaching vs. performing) x Skill (2 levels: articulation vs. dynamics)
@@ -1057,4 +1061,59 @@ print(ioi_dyn_order_aov)
 ```{r stats16, echo = FALSE}
 ioi_dyn_order_aov_2 <- aov(Mean ~ Condition*Order + Error(SubNr/Condition) + Order, data = ioi_dyn_order)
 print(summary(ioi_dyn_order_aov_2))
+```
+
+## Sequence plot
+#### Articulation{#sequence_art}
+```{r seq_art, fig.width = 15, fig.height = 5, echo = FALSE}
+# For each individual
+ioi_art_seq <- aggregate(IOI~SubNr*Condition*Skill*Interval, data = df_ioi_art,
+                                 FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+ioi_art_seq <- cbind(ioi_art_seq[,1:4], as.data.frame(ioi_art_seq[,5]))
+# Change colnames
+colnames(ioi_art_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+ioi_art_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = ioi_art_seq,
+                           FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_art_seq_stats <- cbind(ioi_art_seq_stats[,1:3], as.data.frame(ioi_art_seq_stats[,4]))
+# Change colnames
+colnames(ioi_art_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+
+p_ioi_art_seq <- ggplot(data = ioi_art_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  annotate("text", 2, 188, label = "Tempo (80bpm)", vjust = -1, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "IOI (ms)") + scale_x_continuous(breaks=seq(1,66,1))
+p_ioi_art_seq
+```
+
+#### Dynamics{#sequence_dyn}
+```{r seq_dyn, fig.width = 15, fig.height = 5, echo = FALSE}
+# For each individual
+ioi_dyn_seq <- aggregate(IOI~SubNr*Condition*Skill*Interval, data = df_ioi_dyn,
+                                 FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+ioi_dyn_seq <- cbind(ioi_dyn_seq[,1:4], as.data.frame(ioi_dyn_seq[,5]))
+# Change colnames
+colnames(ioi_dyn_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+ioi_dyn_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = ioi_dyn_seq,
+                           FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_dyn_seq_stats <- cbind(ioi_dyn_seq_stats[,1:3], as.data.frame(ioi_dyn_seq_stats[,4]))
+# Change colnames
+colnames(ioi_dyn_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+
+p_ioi_dyn_seq <- ggplot(data = ioi_dyn_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  annotate("text", 2, 188, label = "Tempo (80bpm)", vjust = -1, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "IOI (ms)") + scale_x_continuous(breaks=seq(1,66,1))
+p_ioi_dyn_seq
 ```
