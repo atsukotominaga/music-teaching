@@ -13,7 +13,7 @@ script/Max/midi
 
 # R
 *.Rhistory
-script/R/data/
+script/R/raw_data/
 script/R/filtered/
 
 # my local folders
