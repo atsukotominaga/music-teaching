@@ -1,4 +1,6 @@
 *.DS_Store
+*.Rhistory
+*html
 
 # material
 material/cropped/*pdf
@@ -12,9 +14,11 @@ script/Max/data
 script/Max/midi
 
 # R
-*.Rhistory
 script/R/raw_data/
 script/R/filtered/
+
+# RNotebook
+script/RNotebook/filtered/
 
 # my local folders
 material/lilypond/david
