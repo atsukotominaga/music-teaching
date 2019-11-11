@@ -1,5 +1,19 @@
-# A follow-up study: [The Sound of Teaching Music project](https://github.com/atsukotominaga/teaching-v1.0)
-## Script
+This repo contains scripts and materials necessary for a musical experiment with expert pianists.
+
+Open Science Framework: [https://osf.io/35ryj/](https://osf.io/35ryj/)
+
+# Overview
+- [Script](#script)
+    + Max
+    + R
+    + R Notebooks
+    + Lilypond
+    + Python
+
+- [Material](#material)
+
+
+# Script
 
 ### Max
 Experimental programmes
@@ -11,7 +25,7 @@ Stimuli generator
 Data analysis
 Counterbalance sheet generator
 
-## Material
+# Material
 ### Lilypond
 Sheet music
 
