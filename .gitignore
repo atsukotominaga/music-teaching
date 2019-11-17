@@ -1,3 +1,4 @@
+ls
 *.DS_Store
 *.Rhistory
 *html
@@ -14,8 +15,9 @@ script/Max/data
 script/Max/midi
 
 # R
-script/R/raw_data/
-script/R/filtered/
+script/R/old/
+script/R/filter/raw_data/
+script/R/filter/filtered/
 
 # RNotebook
 script/RNotebook/filtered/
