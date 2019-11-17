@@ -60,22 +60,14 @@ df_all <- raw_data %>% dplyr::filter(Pitch != 31 & Pitch != 34)
 
 # onset and offset
 df_onset <- df_all %>% dplyr::filter(Key_OnOff == 1)
-#df_offset <- df_all %>% dplyr::filter(Key_OnOff == 0)
 
 # calculate IOIs
 df_onset$IOI <- diff(c(0, df_onset$TimeStamp))
-#df_offset$IOI <- diff(c(0, df_offset$TimeStamp))
 
 # remove the first note
 df_onset_ioi <- df_onset %>% dplyr::filter(NoteNr != 17)
-#df_offset_ioi <- df_offset %>% dplyr::filter(NoteNr != 19)
 
-# parse ideal.txt into three parts
-df_ideal_1 <- df_ideal %>% dplyr::filter(RowNr <= 28)
-df_ideal_2 <- df_ideal %>% dplyr::filter(RowNr > 28 & RowNr <= 52)
-df_ideal_3 <- df_ideal %>% dplyr::filter(RowNr > 52)
-
-# pitch remove function (pitch_remover)
+# define pitch remove function (pitch_remover)
 pitch_remover <- function(onset, ideal){
   for (subnr in unique(df_all$SubNr)){
     write(sprintf("---SubNr %i---", subnr), file = "./filtered/errormes.txt", append = T) #export the results to a text file
@@ -120,13 +112,21 @@ ls_miss <- list()
 pitch_remover(df_onset, df_ideal)
 
 # create a list of removed trials
-ls_remove_onset <- c(ls_error_onset, ls_miss)
+ls_removed_onset <- c(ls_error_onset, ls_miss)
 # Remove duplication if exists
-ls_remove_onset <- unique(ls_remove_onset)
+ls_removed_onset <- unique(ls_remove_onset)
 # Create a data frame of removed trials
-df_removed_onset <- t(data.frame(ls_remove_onset)) # transpose
+df_removed_onset <- t(data.frame(ls_removed_onset)) # transpose
 colnames(df_removed_onset) <- c("SubNr", "BlockNr", "TrialNr")
 rownames(df_removed_onset) <- c(1:nrow(df_removed_onset))
+
+# Mark trails with errors by the first filtering
+df_onset$Error1 <- 0
+df_onset_ioi$Error1 <- 0
+for (error in 1:length(ls_removed_onset)){
+  df_onset$Error1[df_onset$SubNr == ls_removed_onset[[error]][1] & df_onset$BlockNr == ls_removed_onset[[error]][2] & df_onset$TrialNr == ls_removed_onset[[error]][3]] <- 1
+  df_onset_ioi$Error1[df_onset_ioi$SubNr == ls_removed_onset[[error]][1] & df_onset_ioi$BlockNr == ls_removed_onset[[error]][2] & df_onset_ioi$TrialNr == ls_removed_onset[[error]][3]] <- 1
+}
 
 ####################################
 # Export csv files
@@ -138,6 +138,12 @@ write.csv(df_all, file = "./filtered/data_all.csv", row.names = F)
 df_metro <- raw_data %>% dplyr::filter(Pitch == 31 | Pitch == 34)
 # Export a csv file for df_metro
 write.csv(df_metro, file = "./filtered/data_metro.csv", row.names = F)
+
+# Export a csv file for df_onset
+write.csv(df_onset, file = "./filtered/data_onset.csv", row.names = F)
+
+# Export a csv file for df_onset_ioi
+write.csv(df_onset_ioi, file = "./filtered/data_onset_ioi.csv", row.names = F)
 
 # Export a csv file for df_removed
 write.csv(df_removed_onset, file = "./filtered/data_removed_onset.csv", row.names = F)
