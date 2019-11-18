@@ -5,8 +5,8 @@ Open Science Framework: [https://osf.io/35ryj/](https://osf.io/35ryj/)
 # Overview
 - [Script](#script)
     + Max
-    + R
-    + R Notebooks
+    + [R](#R)
+    + [R Notebooks](#R-Notebooks)
     + Lilypond
     + Python
 
@@ -22,8 +22,11 @@ Experimental programmes
 Stimuli generator
 
 ### R
-Data analysis
-Counterbalance sheet generator
+- filter: removing pitch errors (first-filtering) >> outputs: csv files
+- condfile: counterbalance sheet generator
+
+### R Notebooks
+- manual_filtering: removing pitch errors manually (second-filtering)
 
 # Material
 ### Lilypond
