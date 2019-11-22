@@ -111,7 +111,7 @@ for (i in 1:nrow(removed_more)){
     print("----- First check -----")
     current <- manual(removed_more, current)
     print("----- Correction check -----")
-    manual(removed_more, current)
+    manual_more(removed_more, current)
     continue <- menu(c("y", "n", "discard"), title = "Continue removing errors?")
   }
   if (continue != 3){
@@ -147,32 +147,6 @@ for (i in 1:nrow(df_removed_onset_updated)){
   print(graph)
   corrected <- editData(current, viewer = "pane")
   df_rescued_onset_less <- rbind(df_rescued_onset_less, corrected)
-}
-
-# Insert NA rows
-print("----- Inspect data -----")
-df_removed_onset_equal <- subset(df_removed_onset, df_removed_onset$errorType == "Equal")
-df_rescued_onset_equal <- data.frame()
-for (i in 1:nrow(df_removed_onset_equal)){
-  current <- df_onset %>% dplyr::filter(SubNr == df_removed_onset_equal[i,1] & BlockNr == df_removed_onset_equal[i,2] & TrialNr == df_removed_onset_equal[i,3])
-  current$RowNr <- c(1:nrow(current))
-  table <- data.frame("RowNr" = c(1:length(df_ideal$Pitch)))
-  table$Observed <- current$Pitch
-  table$Ideal <- df_ideal$Pitch
-  table$Diff[table$Observed == table$Ideal] <- 0
-  table$Diff[table$Observed != table$Ideal] <- 1
-  print(table)
-  graph <- ggplot() +
-    geom_line(data = table, aes(x = RowNr, y = Observed), colour = "#F8766D") +
-    geom_line(data = table, aes(x = RowNr, y = Ideal), colour = "#00BFC4") +
-    geom_point(data = table, aes(x = RowNr, y = Observed), colour = "#F8766D") +
-    geom_point(data = table, aes(x = RowNr, y = Ideal), colour = "#00BFC4") +
-    scale_x_continuous("RowNr", table$RowNr) +
-    coord_fixed(ratio = 1/5) +
-    labs(title = sprintf("SubNr: %i, BlockNr: %i, TrialNr: %i", df_removed_onset_equal[i,1], df_removed_onset_equal[i,2], df_removed_onset_equal[i,3]), y = "Pitch")
-  print(graph)
-  corrected <- editData(current, viewer = "pane")
-  df_rescued_onset_equal <- rbind(df_rescued_onset_equal, corrected)
 }
 
 # insert NA row and then edit dataframe
