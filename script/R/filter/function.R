@@ -115,7 +115,7 @@ fill_by_na <- function(vector, num){ # num should be the output of diff_length
 }
 
 # manual removal
-manual <- function(removed, data){
+manual_more <- function(removed, data){
   data$RowNr <- c(1:nrow(data))
   length_diff <- diff_length(data$Pitch, df_ideal$Pitch)
   data$Ideal <- fill_by_na(df_ideal$Pitch, length_diff)
