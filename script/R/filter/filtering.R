@@ -70,25 +70,23 @@ df_all <- raw_data %>% dplyr::filter(Pitch != 31 & Pitch != 34)
 df_onset <- df_all %>% dplyr::filter(Key_OnOff == 1)
 df_offset <- df_all %>% dplyr::filter(Key_OnOff == 0)
 
-# calculate IOIs
-df_onset$IOI <- diff(c(0, df_onset$TimeStamp))
-
 # 1. FIRST FILTERING (AUTOMATIC)
 ### ONSET ###
 # detect pitch errors
-ls_removed_onset <- pitch_remover(df_onset)
+ls_removed_onset <- pitch_remover(df_onset, df_ideal)
 
 # create a data frame of removed trials
 df_removed_onset <- data.frame(t(data.frame(ls_removed_onset))) # transpose
-colnames(df_removed_onset) <- c("SubNr", "BlockNr", "TrialNr")
+colnames(df_removed_onset) <- c("SubNr", "BlockNr", "TrialNr", "ErrorMes")
 rownames(df_removed_onset) <- c(1:nrow(df_removed_onset))
 
 # mark trails with errors by the first filtering
-# df_onset$Error1 <- 0
-# #df_onset_ioi$Error1 <- 0
-# for (error in 1:length(ls_removed_onset)){
-#   df_onset$Error1[df_onset$SubNr == ls_removed_onset[[error]][1] & df_onset$BlockNr == ls_removed_onset[[error]][2] & df_onset$TrialNr == ls_removed_onset[[error]][3]] <- 1
-# }
+df_onset$Error <- 0
+for (error in 1:length(ls_removed_onset)){
+  df_onset$Error[df_onset$SubNr == ls_removed_onset[[error]][1] & df_onset$BlockNr == ls_removed_onset[[error]][2] & df_onset$TrialNr == ls_removed_onset[[error]][3]] <- 1
+}
+
+df_correct_onset <- subset(df_onset, df_onset$Error == 0)
 
 # 2. SECOND FILTERING (MANUAL)
 ### ONSET ###
@@ -105,51 +103,77 @@ removed_more <- subset(df_removed_onset, df_removed_onset$errorType == "More") #
 df_corrected_more <- data.frame() #create data.frame to store corrected data
 for (i in 1:nrow(removed_more)){
   current <- df_onset %>% dplyr::filter(SubNr == removed_more[i,1] & BlockNr == removed_more[i,2] & TrialNr == removed_more[i,3])
-  counter <- 0
-  continue <- 1
-  while (continue == 1){
+  decision = 2
+  while (decision == 2){
+    print(sprintf("SubNr: %i, BlockNr: %i, TrialNr: %i", removed_more[i,1], removed_more[i,2], removed_more[i,3]))
     print("----- First check -----")
-    current <- manual(removed_more, current)
+    current <- manual(removed_more, current, df_ideal)
     print("----- Correction check -----")
-    manual_more(removed_more, current)
-    continue <- menu(c("y", "n", "discard"), title = "Continue removing errors?")
-  }
-  if (continue != 3){
-    df_corrected_more <- rbind(df_corrected_more, current[, -c(5:6)])
-  } else if (continue == 3){
-    removed_more$errorType[i] <- "Exclude"
-    removed_more$errorRowNr[i] <- "Exclude the trial (PitchError more than 5% (3 notes))"
+    manual(removed_more, current, df_ideal)
+    decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
+    if (decision == 1){
+      df_corrected_more <- rbind(df_corrected_more, current[, -c(5:6)])
+    } else if (decision == 3){
+      removed_more$errorType[i] <- "Other"
+      removed_more$errorRowNr[i] <- readline(prompt = "Reason?: ")
+    } else if (decision == 2){
+      print("----- Continue correction -----")
+    }
   }
 }
 
 # manual addition for missing notes
 print("----- Add NA to missing notes -----")
-df_removed_onset_less <- subset(df_removed_onset, df_removed_onset$errorType == "Less")
-df_rescued_onset_less <- data.frame()
-for (i in 1:nrow(df_removed_onset_updated)){
-  current <- df_onset %>% dplyr::filter(SubNr == df_removed_onset_errorType[i,1] & BlockNr == df_removed_onset_updated[i,2] & TrialNr == df_removed_onset_updated[i,3])
-  current$RowNr <- c(1:nrow(current))
-  length_diff <- diff_length(current$Pitch, df_ideal$Pitch)
-  table <- data.frame("RowNr" = c(1:length(df_ideal$Pitch)))
-  table$Observed <- fill_by_na(current$Pitch)
-  table$Ideal <- df_ideal$Pitch
-  table$Diff[table$Observed == table$Ideal] <- 0
-  table$Diff[table$Observed != table$Ideal] <- 1
-  print(table)
-  graph <- ggplot() +
-    geom_line(data = table, aes(x = RowNr, y = Observed), colour = "#F8766D") +
-    geom_line(data = table, aes(x = RowNr, y = Ideal), colour = "#00BFC4") +
-    geom_point(data = table, aes(x = RowNr, y = Observed), colour = "#F8766D") +
-    geom_point(data = table, aes(x = RowNr, y = Ideal), colour = "#00BFC4") +
-    scale_x_continuous("RowNr", table$RowNr) +
-    coord_fixed(ratio = 1/5) +
-    labs(title = sprintf("SubNr: %i, BlockNr: %i, TrialNr: %i", df_removed_onset_updated[i,1], df_removed_onset_updated[i,2], df_removed_onset_updated[i,3]), y = "Pitch")
-  print(graph)
-  corrected <- editData(current, viewer = "pane")
-  df_rescued_onset_less <- rbind(df_rescued_onset_less, corrected)
+removed_less <- subset(df_removed_onset, df_removed_onset$errorType == "Less")
+df_corrected_less <- data.frame() #create data.frame to store corrected data
+for (i in 1:nrow(removed_less)){
+  current <- df_onset %>% dplyr::filter(SubNr == removed_less[i,1] & BlockNr == removed_less[i,2] & TrialNr == removed_less[i,3])
+  # insert NA row
+  current <- insert_na(current, df_ideal)
+  print(sprintf("SubNr: %i, BlockNr: %i, TrialNr: %i", removed_less[i,1], removed_less[i,2], removed_less[i,3]))
+  print("----- Correction check -----")
+  current <- manual(removed_less, current, df_ideal)
+  decision <- menu(c("y", "other"), title = "Save the current data?")
+  if (decision == 1){
+    df_corrected_less <- rbind(df_corrected_less, current[, -c(5:6)])
+  } else if (decision == 2){
+    removed_less$errorType[i] <- "Other"
+    removed_less$errorRowNr[i] <- readline(prompt = "Reason?: ")
+  }
 }
 
-# insert NA row and then edit dataframe
+# Others
+# Having an equal number of NoteNr
+print("----- Equal -----")
+removed_equal <- subset(df_removed_onset, df_removed_onset$errorType == "Equal")
+df_corrected_equal <- data.frame() #create data.frame to store correced data
+for (i in 1:nrow(removed_equal)){
+  current <- df_onset %>% dplyr::filter(SubNr == removed_equal[i,1] & BlockNr == removed_equal[i,2] & TrialNr == removed_equal[i,3])
+  print(sprintf("SubNr: %i, BlockNr: %i, TrialNr: %i", removed_equal[i,1], removed_equal[i,2], removed_equal[i,3]))
+  print("----- First check -----")
+  current <- manual(removed_equal, current, df_ideal)
+  print("----- Correction check -----")
+  manual(removed_equal, current, df_ideal)
+  decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
+  if (decision == 1){
+    df_corrected_equal <- rbind(df_corrected_equal, current[, -c(5:6)])
+  } else if (decision == 3){
+    removed_equal$errorType[i] <- "Other"
+    removed_equal$errorRowNr[i] <- readline(prompt = "Reason?: ")
+  } else if (decision == 2){
+    print("----- Continue correction -----")
+  }
+}
+
+# Individual checking
+print("----- Check individually -----")
+removed_others <- rbind(subset(df_removed_onset, df_removed_onset$errorType == "Check"),
+                        subset(removed_more, removed_more$errorType == "Other"),
+                        subset(removed_less, removed_less$errorType == "Other"),
+                        subset(removed_equal, removed_equal$errorType == "Other"))
+
+# Create pitch-error-free responses
+df_correct <- rbind()
 
 ####################################
 # Export csv files
