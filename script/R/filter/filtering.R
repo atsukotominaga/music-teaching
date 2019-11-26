@@ -142,8 +142,8 @@ for (i in 1:nrow(removed_less)){
   }
 }
 
-# Others
-# Having an equal number of NoteNr
+# others
+# having an equal number of NoteNr
 print("----- Equal -----")
 removed_equal <- subset(df_removed_onset, df_removed_onset$errorType == "Equal")
 df_corrected_equal <- data.frame() #create data.frame to store correced data
@@ -165,15 +165,15 @@ for (i in 1:nrow(removed_equal)){
   }
 }
 
-# Individual checking
+# individual checking
 print("----- Check individually -----")
 removed_others <- rbind(subset(df_removed_onset, df_removed_onset$errorType == "Check"),
                         subset(removed_more, removed_more$errorType == "Other"),
                         subset(removed_less, removed_less$errorType == "Other"),
                         subset(removed_equal, removed_equal$errorType == "Other"))
 
-# Create pitch-error-free responses
-df_correct <- rbind()
+# create pitch-error-free responses
+df_correct <- do.call("rbind", list(df_correct_onset[,-15], df_corrected_more, df_corrected_less, df_corrected_equal))
 
 ####################################
 # Export csv files
@@ -189,8 +189,8 @@ write.csv(df_metro, file = "./filtered/data_metro.csv", row.names = F)
 # Export a csv file for df_onset
 write.csv(df_onset, file = "./filtered/data_onset.csv", row.names = F)
 
-# Export a csv file for df_onset_ioi
-write.csv(df_onset_ioi, file = "./filtered/data_onset_ioi.csv", row.names = F)
+# Export a csv file for df_correct
+write.csv(df_correct, file = "./filtered/data_correct.csv", row.names = F)
 
-# Export a csv file for df_removed
-write.csv(df_removed_onset, file = "./filtered/data_removed_onset.csv", row.names = F)
+# Export a csv file for removed_others
+write.csv(removed_others, file = "./filtered/data_check.csv", row.names = F)
