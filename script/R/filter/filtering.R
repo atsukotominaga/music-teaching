@@ -16,7 +16,6 @@
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 if (!require("editData")) {install.packages("editData"); require("editData")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
-if (!require("wesanderson")) {install.packages("wesanderson"); require("wesanderson")}
 
 # read functions
 source("./function.R")
