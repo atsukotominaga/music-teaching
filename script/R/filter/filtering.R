@@ -68,7 +68,6 @@ df_all <- raw_data %>% dplyr::filter(Pitch != 31 & Pitch != 34)
 
 # onset and offset
 df_onset <- df_all %>% dplyr::filter(Key_OnOff == 1)
-df_offset <- df_all %>% dplyr::filter(Key_OnOff == 0)
 
 # 1. FIRST FILTERING (AUTOMATIC)
 ### ONSET ###
@@ -166,14 +165,38 @@ for (i in 1:nrow(removed_equal)){
 }
 
 # individual checking
+# descriptions below are unique to my dataset
 print("----- Check individually -----")
 removed_others <- rbind(subset(df_removed_onset, df_removed_onset$errorType == "Check"),
                         subset(removed_more, removed_more$errorType == "Other"),
                         subset(removed_less, removed_less$errorType == "Other"),
                         subset(removed_equal, removed_equal$errorType == "Other"))
+df_corrected_others <- data.frame() #create data.frame to store correced data
+
+# SubNr 4, BlockNr 3, TrialNr 1
+# He/She started stopped playing in the middle and started playing from the beginning >> removed the first try and check errors from the second try.
+current431 <- df_onset %>% dplyr::filter(SubNr == removed_others[1,1] & BlockNr == removed_others[1,2] & TrialNr == removed_others[1,3])
+current431 <- current431[-c(1:18),]
+current431 <- manual(removed_others, current431, df_ideal)
+df_corrected_others <- rbind(df_corrected_others, current431[,-c(5:6)])
+
+# SubNr 11, BlockNr 1, TrialNr 1
+# Could not finish performing till the end - Exclude
+
+# SubNr 2, BlockNr 3, TrialNr 6
+# Stopped in the middle and continued playing - Exclude
+
+# SubNr 10, BlockNr 1, TrialNr 6
+# Many mistakes (three times) - Exclude
+
+# SubNr 7, BlockNr 1, TrialNr 1
+# Did not follow the sheet music - Exclude
 
 # create pitch-error-free responses
-df_correct <- do.call("rbind", list(df_correct_onset[,-15], df_corrected_more, df_corrected_less, df_corrected_equal))
+df_correct <- rbind(df_correct_onset[,-15], df_corrected_more, df_corrected_less, df_corrected_equal, df_corrected_others)
+
+##### Additional participants #####
+# TBC
 
 ####################################
 # Export csv files
