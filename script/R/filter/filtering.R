@@ -5,7 +5,7 @@
 #  Documentation
 ####################################
 # Created: 24/06/2019
-# This script organises raw data and removes pitch errors for the first filtering.
+# This script organises raw data and removes pitch errors.
 # GitHub repo (private): https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R 
 
 ####################################
