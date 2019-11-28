@@ -17,8 +17,8 @@ This repo contains scripts and materials necessary for a musical experiment with
 ## Environment
 All of the programme scripts were written and tested in the following environment.
 
-- ProductName:	Mac OS X  
-- ProductVersion:	10.14.3
+- ProductName: Mac OS X  
+- ProductVersion: 10.14.3
 
 ## Max
 ### Prerequisite
