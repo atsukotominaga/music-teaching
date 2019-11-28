@@ -18,6 +18,7 @@ script/Max/midi
 script/R/old/
 script/R/filter/raw_data/
 script/R/filter/filtered/
+script/R/filter/trimmed/
 
 # RNotebook
 script/RNotebook/filtered/
