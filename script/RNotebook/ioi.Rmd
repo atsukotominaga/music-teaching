@@ -332,6 +332,7 @@ print(ioi_art_trial_all)
 #### Plot
 ##### Line graph
 - Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm)
 
 ```{r ioi_art_trial_all_line, echo = FALSE}
 p_ioi_art_trial_all <- ggplot(data = ioi_art_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
@@ -378,6 +379,7 @@ print(ioi_art_var)
 #### Plot
 ##### Bar graph
 - Error bars show SD of the mean
+- A dashed line represents the tempo given by a metronome (80bpm)
 
 ```{r ioi_art_var_bar, echo = FALSE}
 p_ioi_art_var <- ggplot(data = ioi_art_var, aes(x = SubNr, y = Mean, fill = Condition)) +
@@ -741,6 +743,7 @@ print(ioi_dyn_trial_all)
 #### Plot
 ##### Line graph
 - Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm)
 
 ```{r ioi_dyn_trial_all_line, echo = FALSE}
 p_ioi_dyn_trial_all <- ggplot(data = ioi_dyn_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
@@ -929,6 +932,7 @@ print(ioi_art_order_all)
 ### Plot
 #### Bar graph
 - Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm)
 
 ```{r ioi_art_order_all_bar, echo = FALSE}
 p_ioi_art_order_all <- ggplot(data = ioi_art_order_all, aes(x = Condition, y = Mean, fill = Condition)) +
@@ -943,6 +947,8 @@ p_ioi_art_order_all
 ```
 
 ##### Box plot
+- A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_art_order_all_box, echo = FALSE}
 p_ioi_art_order_all_box <- ggplot(data = ioi_art_order, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -1008,6 +1014,7 @@ print(ioi_dyn_order_all)
 ### Plot
 #### Bar graph
 - Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm)
 
 ```{r ioi_dyn_order_all_bar, echo = FALSE}
 p_ioi_dyn_order_all <- ggplot(data = ioi_dyn_order_all, aes(x = Condition, y = Mean, fill = Condition)) +
@@ -1022,6 +1029,8 @@ p_ioi_dyn_order_all
 ```
 
 ##### Box plot
+- A dashed line represents the tempo given by a metronome (80bpm)
+
 ```{r ioi_dyn_order_all_box, echo = FALSE}
 p_ioi_dyn_order_all_box <- ggplot(data = ioi_dyn_order, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +

@@ -328,7 +328,6 @@ p_vel_acc_dyn
 
 ### 2. All - group{#vel_acc_dyn_group_all}
 - Average KV-Diff for each condition.
-- Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
 ```{r vel_acc_dyn_all, echo = FALSE}
 # Group mean
@@ -707,7 +706,6 @@ p_vel_acc_art
 
 ### 2. All - group{#vel_acc_art_group_all}
 - Average KV-Diff for each condition.
-- Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
 ```{r vel_acc_art_all, echo = FALSE}
 # Group mean

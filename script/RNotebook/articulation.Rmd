@@ -546,7 +546,6 @@ p_kot_dyn
 
 ### 2. All - group{#kot_dyn_group_all}
 - Average KOT for each condition.
-- Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
 ```{r kot_dyn_all, echo = FALSE}
 # Group mean
@@ -709,7 +708,6 @@ p_kor_dyn
 
 ### 2. All - group{#kor_dyn_group_all}
 - Average KOR for each condition.
-- Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
 ```{r kor_dyn_all, echo = FALSE}
 # Group mean
