@@ -47,8 +47,8 @@ if (!file.exists("trimmed/plot/vel/")){
 # Reading and formatting data
 ####################################
 # Read filtered csv files
-df_all <- read.csv("./1_filtered/data_analysis.csv", header = T, sep = ",", dec = ".") # clear data without pitch errors
-df_exc <- read.csv("./1_filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
+df_all <- read.csv("./filtered/data_analysis.csv", header = T, sep = ",", dec = ".") # clear data without pitch errors
+df_exc <- read.csv("./filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
 
 # Exclude participants with more than 10% errors
 include <- df_exc$SubNr[df_exc$LessThan10 == "include"]
@@ -190,8 +190,8 @@ lower <- mean(df_trim$IOI)-3*sd(df_subset$IOI)
 df_trim_sd <- df_trim %>% dplyr::filter(IOI < upper & IOI > lower)
 removed_ioi <- nrow(df_trim)-nrow(df_trim_sd)
 proportion_ioi <- round(removed_ioi/nrow(df_trim), 5)
-write(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed_ioi, proportion_ioi), file = "./trimmed/outlier.txt", append = T) # Export the results as a txt file
-print(sprintf("IOI: Remove %i trials beyond +- 3SD / %f percent", removed_ioi, proportion_ioi))
+write(sprintf("IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi, proportion_ioi*100), file = "./trimmed/outlier.txt", append = T) # Export the results as a txt file
+print(sprintf("IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi, proportion_ioi*100))
 
 p_hist_sd <- ggplot(df_trim_sd, aes(x = IOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
@@ -310,9 +310,9 @@ for (subcomponent in unique(df_subset$Subcomponent)){
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
 removed_kot <- nrow(df_subset)-nrow(df_trim_sd)
-proportion_kot <- removed_kot/nrow(df_subset)
-write(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed_kot, proportion_kot), file = "./trimmed/outlier.txt", append = T)
-print(sprintf("KOT: Remove %i trials beyond +- 3SD / %f percent", removed_kot, proportion_kot))
+proportion_kot <- round(removed_kot/nrow(df_subset), 5)
+write(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100), file = "./trimmed/outlier.txt", append = T)
+print(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100))
 
 # Sort by RowNr
 df_trim_sd <- df_trim_sd[order(df_trim_sd$RowNr),]
@@ -462,9 +462,9 @@ for (subcomponent in unique(df_subset$Subcomponent)){
   df_trim_sd <- rbind(df_trim_sd, df_current)
 }
 removed_kv <- nrow(df_subset)-nrow(df_trim_sd)
-proportion_kv <- removed_kv/nrow(df_subset)
-write(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv), file = "./trimmed/outlier.txt", append = T)
-print(sprintf("Velocity - Remove %i trials beyond +- 3SD / %f percent", removed_kv, proportion_kv))
+proportion_kv <- round(removed_kv/nrow(df_subset), 5)
+write(sprintf("Velocity - Remove %i responses beyond +- 3SD / %f percent", removed_kv, proportion_kv*100), file = "./trimmed/outlier.txt", append = T)
+print(sprintf("Velocity - Remove %i responses beyond +- 3SD / %f percent", removed_kv, proportion_kv*100))
 
 # Exclude vel_acc > +- 3SD (within a given condition)
 vel_subcomponent_acc <- aggregate(Acc~Subcomponent, data = df_subset_acc,
@@ -478,9 +478,9 @@ for (subcomponent in unique(df_subset_acc$Subcomponent)){
   df_trim_sd_acc <- rbind(df_trim_sd_acc, df_current)
 }
 removed_acc <- nrow(df_subset_acc)-nrow(df_trim_sd_acc)
-proportion <- removed_acc/nrow(df_subset_acc)
-write(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed_acc, proportion), file = "./trimmed/outlier.txt", append = T)
-print(sprintf("VelocityAcc - Remove %i trials beyond +- 3SD / %f percent", removed_acc, proportion))
+proportion_acc <- round(removed_acc/nrow(df_subset_acc), 5)
+write(sprintf("VelocityAcc - Remove %i responses beyond +- 3SD / %f percent", removed_acc, proportion_acc*100), file = "./trimmed/outlier.txt", append = T)
+print(sprintf("VelocityAcc - Remove %i responses beyond +- 3SD / %f percent", removed_acc, proportion_acc*100))
 
 p_hist_sd <- ggplot(df_trim_sd, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
