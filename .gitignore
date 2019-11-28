@@ -21,7 +21,7 @@ script/R/filter/filtered/
 script/R/filter/trimmed/
 
 # RNotebook
-script/RNotebook/filtered/
+script/RNotebook/trimmed/
 
 # my local folders
 material/lilypond/david
