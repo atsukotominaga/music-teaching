@@ -188,7 +188,7 @@ df_corrected_others <- rbind(df_corrected_others, current431[,-c(5:6)])
 # SubNr 10, BlockNr 1, TrialNr 6
 # Many mistakes (three times) - Exclude
 
-# SubNr 7, BlockNr 1, TrialNr 1
+# SubNr 7, BlockNr 1, TrialNr 6
 # Did not follow the sheet music - Exclude
 
 # create pitch-error-free responses
@@ -213,6 +213,15 @@ write.csv(df_onset, file = "./filtered/data_onset.csv", row.names = F)
 
 # Export a csv file for df_correct
 write.csv(df_correct, file = "./filtered/data_correct.csv", row.names = F)
+
+# Export a csv file for df_corrected_more
+write.csv(df_corrected_more, file = "./filtered/data_corrected_more.csv", row.names = F)
+
+# Export a csv file for df_corrected_less
+write.csv(df_corrected_less, file = "./filtered/data_corrected_less.csv", row.names = F)
+
+# Export a csv file for df_corrected_equal
+write.csv(df_corrected_equal, file = "./filtered/data_corrected_equal.csv", row.names = F)
 
 # Export a csv file for removed_others
 write.csv(removed_others, file = "./filtered/data_check.csv", row.names = F)
