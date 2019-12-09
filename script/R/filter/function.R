@@ -113,7 +113,7 @@ manual <- function(removed, data, ideal){
     geom_point(data = data, aes(x = RowNr, y = Ideal), colour = "#00BFC4") +
     scale_x_continuous("RowNr", data$RowNr) +
     coord_fixed(ratio = 1/4) +
-    labs(title = sprintf("SubNr: %i, BlockNr: %i, TrialNr: %i", removed[i,1], removed[i,2], removed[i,3]), y = "Pitch")
+    labs(title = sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(data$SubNr), unique(data$BlockNr), unique(data$TrialNr)), y = "Pitch")
   print(graph)
   corrected <- editData(data, viewer = "pane")
   return(corrected)
