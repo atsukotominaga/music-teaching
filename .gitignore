@@ -1,7 +1,7 @@
-ls
 *.DS_Store
 *.Rhistory
 *html
+others
 
 # material
 material/cropped/*pdf
