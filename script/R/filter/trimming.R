@@ -35,13 +35,25 @@ df_ideal$RowNr <- c(1:nrow(df_ideal))
 df_ideal <- df_ideal[c(2, 1)]
 
 # read csv
-df_onset <- read.csv(file.path("./filtered/data_correct.csv"), header = T)
+df_onset <- read.csv(file.path("./filtered/data_correct_onset.csv"), header = T)
+df_offset <- read.csv(file.path("./filtered/data_correct_offset.csv"), header = T)
+
+# assign RowNr
+df_onset$RowNr <- rep(1:72, nrow(df_onset)/72)
+df_offset$RowNr <- rep(1:72, nrow(df_offset)/72)
+
+# sort by SubNr, BlockNr, TrialNr and NoteNr
+df_onset <- df_onset[order(df_onset$SubNr, df_onset$BlockNr, df_onset$TrialNr, df_onset$RowNr),]
+df_offset <- df_offset[order(df_offset$SubNr, df_offset$BlockNr, df_offset$TrialNr, df_offset$RowNr),]
 
 # read functions
 source("./function.R")
 
 # make sure there is no pitch errors - outputs should be only missing trials
+print("----- Onset missing trials -----")
 ls_removed_onset <- pitch_remover(df_onset, df_ideal)
+print("----- Offset missing trials -----")
+ls_removed_offset <- pitch_remover(df_offset, df_ideal)
 
 ####################################
 # Define Subcomponents
@@ -173,6 +185,131 @@ ggsave("./trimmed/ioi_box_sd.png", plot = p_ioi_box_sd, dpi = 600, width = 5, he
 write.csv(df_ioi_trim_sd, file = "./trimmed/data_ioi.csv", row.names = F)
 
 ####################################
+# Key Overlap Time - articulation
+####################################
+df_kot <- df_onset
+
+# Offset 1 - Onset 2
+df_kot$KOT <- NA
+for (row in 1:length(df_kot$NoteNr)){
+  if (row < length(df_kot$NoteNr)){
+    df_kot$KOT[row+1] <- df_offset$TimeStamp[row] - df_onset$TimeStamp[row+1] # offset(n) - onset(n+1)
+  }
+}
+# convert bpm to ms
+df_kot$Tempo[df_kot$Tempo == 120] <- 250
+df_kot$Tempo[df_kot$Tempo == 110] <- 273
+df_kot$Tempo[df_kot$Tempo == 100] <- 300
+
+# calculate KOR
+df_kot$KOR <- df_kot$KOT/df_kot$Tempo
+
+# remove the first note
+df_kot <- df_kot %>% dplyr::filter(RowNr != 1)
+
+# assign a sequence number for each tone
+df_kot$Interval <- rep(1:71, nrow(df_kot)/71)
+
+# assign Subcomponents
+df_kot$Subcomponent <- NA
+# Legato
+for (phrase in 1:length(ls_legato)){
+  for (note in 1:length(ls_legato[[phrase]])){
+    df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == ls_legato[[phrase]][note]] <- "Legato"
+  }
+}
+# Staccato
+for (phrase in 1:length(ls_staccato)){
+  for (note in 1:length(ls_staccato[[phrase]])){
+    df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+  }
+}
+
+# Forte
+for (phrase in 1:length(ls_forte)){
+  for (note in 1:length(ls_forte[[phrase]])){
+    df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == ls_forte[[phrase]][note]] <- "Forte"
+  }
+}
+# Piano
+for (phrase in 1:length(ls_piano)){
+  for (note in 1:length(ls_piano[[phrase]])){
+    df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == ls_piano[[phrase]][note]] <- "Piano"
+  }
+}
+
+# Assign Skill Change
+for (number in change_1){
+  df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == number] <- "LtoS"
+  df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "FtoP"
+}
+for (number in change_2){
+  df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == number] <- "StoL"
+  df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "PtoF"
+}
+
+# Add a grouping name
+ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+for (cond in 1:length(ls_grouping$Condition)){
+  for (skill in 1:length(ls_grouping$Skill)){
+    df_kot$Grouping[df_kot$Condition == ls_grouping$Condition[cond] & df_kot$Skill == ls_grouping$Skill[skill]] <-
+      paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
+  }
+}
+
+####################################
+# Remove outliers
+####################################
+# exclude irrelevant notes
+df_kot_subset <- subset(df_kot, !is.na(df_kot$Subcomponent) & !is.na(df_kot$KOR))
+
+# draw histogram and boxplot
+p_kot_hist <- ggplot(df_kot_subset, aes(x = KOR, fill = Grouping)) +
+  geom_histogram(position = "identity", alpha = .5, binwidth = .05) +
+  theme_classic()
+plot(p_kot_hist)
+
+p_kot_box <- ggboxplot(df_kot_subset, x = "Skill", y = "KOR", color = "Condition")
+p_kot_box <- ggpar(p_kotbox, ylab = "Key-Overlap Ratio (KOT/Tempo)")
+plot(p_kot_box)
+
+# exclude kot > +- 3SD (within a given condition)
+kot_subcomponent <- aggregate(KOR~Subcomponent, data = df_kot_subset,
+                              FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+kot_subcomponent <- cbind(kot_subcomponent, as.data.frame(kot_subcomponent[,2]))
+df_kot_trim_sd <- data.frame()
+for (subcomponent in unique(df_kot_subset$Subcomponent)){
+  upper = kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]+3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
+  lower = kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]-3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
+  df_current <- df_kot_subset %>% dplyr::filter(Subcomponent == subcomponent & KOR < upper & KOR > lower)
+  df_kot_trim_sd <- rbind(df_kot_trim_sd, df_current)
+}
+removed_kot <- nrow(df_kot_subset)-nrow(df_kot_trim_sd)
+proportion_kot <- round(removed_kot/nrow(df_kot_subset), 5)
+write(sprintf("KOR: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100), file = "./trimmed/outlier.txt", append = T)
+print(sprintf("KOR: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100))
+
+# draw histogram and boxplot
+p_kot_hist_sd <- ggplot(df_kot_trim_sd, aes(x = KOR, fill = Grouping)) +
+  geom_histogram(position = "identity", alpha = .5, binwidth = .05) +
+  theme_classic()
+plot(p_kot_hist_sd)
+
+p_kot_box_sd <- ggboxplot(df_kot_trim_sd, x = "Skill", y = "KOR", color = "Condition")
+p_kot_box_sd <- ggpar(p_kot_box_sd, ylab = "Key-Overlap Ratio (KOT/Tempo)")
+plot(p_kot_box_sd)
+
+# Save plots
+# png files
+ggsave("./trimmed/kot_hist.png", plot = p_kot_hist, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/kot_hist_sd.png", plot = p_kot_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/kot_box.png", plot = p_kot_box, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/kot_box_sd.png", plot = p_kot_box_sd, dpi = 600, width = 5, height = 4)
+
+# Export a csv file for df_kot_trim_sd
+write.csv(df_kot_trim_sd, file = "./trimmed/data_kot.csv", row.names = F)
+
+####################################
 # Key Velocity - dynamics
 ####################################
 # calculate Acc (acceleration - velocity difference between notes)
@@ -287,13 +424,20 @@ p_vel_box <- ggboxplot(df_vel_subset, x = "Skill", y = "Velocity", color = "Cond
 p_vel_box <- ggpar(p_vel_box, ylab = "Velocity (0-127)")
 plot(p_vel_box)
 
-# exclude velocity > +- 3SD (across the conditions)
-upper <- mean(df_vel_subset$Velocity)+3*sd(df_vel_subset$Velocity)
-lower <- mean(df_vel_subset$Velocity)-3*sd(df_vel_subset$Velocity)
-df_vel_trim_sd <- df_vel_subset %>% dplyr::filter(Velocity < upper & Velocity > lower)
+# exclude vel > +- 3SD (within a given condition)
+vel_subcomponent <- aggregate(Velocity~Subcomponent, data = df_vel_subset,
+                              FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+vel_subcomponent <- cbind(vel_subcomponent, as.data.frame(vel_subcomponent[,2]))
+df_vel_trim_sd <- data.frame()
+for (subcomponent in unique(df_vel_subset$Subcomponent)){
+  upper = vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]+3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
+  lower = vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]-3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
+  df_current <- df_vel_subset %>% dplyr::filter(Subcomponent == subcomponent & Velocity < upper & Velocity > lower)
+  df_vel_trim_sd <- rbind(df_vel_trim_sd, df_current)
+}
 removed_vel <- nrow(df_vel_subset)-nrow(df_vel_trim_sd)
 proportion_vel <- round(removed_vel/nrow(df_vel_subset), 5)
-write(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100), file = "./trimmed/outlier.txt", append = T) # Export the results as a txt file
+write(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100))
 
 p_vel_hist_sd <- ggplot(df_vel_trim_sd, aes(x = Velocity, fill = Grouping)) +
@@ -311,7 +455,7 @@ ggsave("./trimmed/vel_hist_sd.png", plot = p_vel_hist_sd, dpi = 600, width = 5, 
 ggsave("./trimmed/vel_box.png", plot = p_vel_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/vel_box_sd.png", plot = p_vel_box_sd, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_trim_sd
+# export a csv file for df_trim_sd
 write.csv(df_vel_trim_sd, file = "./trimmed/data_vel.csv", row.names = F)
 
 ###### df_vel_acc
