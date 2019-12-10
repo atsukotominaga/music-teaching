@@ -1,0 +1,620 @@
+---
+title: 'Analysis: The Sound of Teaching Music 2'
+output:
+  html_notebook: default
+editor_options: 
+  chunk_output_type: inline
+---
+
+##### Description: This is a summary of all analyses for articulation.
+
+## Experimental Design{#design}
+- Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: legato vs. staccato / forte vs. piano)
+- Dependent variables: Key-Overlap Time (KOT), Key-Overlap Ratio (KOR)
+
+### Main predictions
+Participants will exaggerate legato and staccato more while teaching.
+
+```{r setup, include = FALSE}
+# packages
+# data manipulation
+if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+# plot
+if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
+# statistics
+if (!require("stats")) {install.packages("stats"); require("stats")}
+if (!require("effsize")) {install.packages("effsize"); require("effsize")}
+if (!require("ez")) {install.packages("ez"); require("ez")}
+
+# ggplots
+theme_set(theme_classic())
+theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"), legend.position = "bottom")
+```
+
+```{r extract, include = FALSE}
+df_ioi <- read.csv("./trimmed/data_ioi.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_kot <- read.csv("./trimmed/data_kot.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+
+# SubNr as a factor
+df_ioi$SubNr <- as.factor(df_ioi$SubNr)
+
+# SubNr as a factor
+df_ioi$SubNr <- as.factor(df_ioi$SubNr)
+df_kot$SubNr <- as.factor(df_kot$SubNr)
+
+# For each individual, each block, each trial
+ioi <- aggregate(IOI~SubNr*BlockNr*TrialNr*Condition*Skill, data = df_ioi,
+                 FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
+ioi <- cbind(ioi[,1:5], as.data.frame(ioi[,6]))
+# Change colnames
+colnames(ioi) <- c("SubNr", "BlockNr", "TrialNr", "Condition", "Skill", "N", "Mean", "SD")
+
+# Calculate KOR for each interval
+
+df_kor <- data.frame()
+for (subnr in unique(df_kot$SubNr)){
+  for (block in unique(df_kot$BlockNr[df_kot$SubNr == subnr])){
+    for (trial in unique(df_kot$TrialNr[df_kot$SubNr == subnr & df_kot$BlockNr == block])){
+      df_current <- df_kot %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
+      df_current$KOR <- df_current$KOT/ioi$Mean[ioi$SubNr == subnr & ioi$BlockNr == block & ioi$TrialNr == trial]
+      df_kor <- rbind(df_kor, df_current)
+    }
+  }
+}
+
+# Include only articulation
+df_kot_art <- df_kot %>% dplyr::filter(Skill == "articulation")
+df_kor_art <- df_kor %>% dplyr::filter(Skill == "articulation")
+
+# Include only dynamics
+df_kot_dyn <- df_kot %>% dplyr::filter(Skill == "dynamics")
+df_kor_dyn <- df_kor %>% dplyr::filter(Skill == "dynamics")
+```
+
+## Key-Overlap Time (KOT) - Articulation
+### 1. All - individual{#kot_art_ind_all}
+- Average KOT for each participant.
+
+```{r kot_art, echo = FALSE}
+# For each individual
+kot_art <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent, data = subset(df_kot_art, df_kot_art$Subcomponent != "LtoS" & df_kot_art$Subcomponent != "StoL"),
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_art <- cbind(kot_art[,1:4], as.data.frame(kot_art[,5]))
+# Change colnames
+colnames(kot_art) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean", "SD")
+print(kot_art)
+```
+
+#### Plot
+##### Bar chart
+- Error bars show SD of the mean
+
+```{r kot_art_bar,  echo = FALSE}
+p_kot_art <- ggplot(data = kot_art, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  facet_grid(Subcomponent ~ .) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Articulation")
+p_kot_art
+```
+
+### 2. All - group{#kot_art_group_all}
+- Average KOT for each condition.
+- Hypothesis: Participants will exaggerate legato and staccato when teaching.
+
+```{r kot_art_all, echo = FALSE}
+# Group mean
+kot_art_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = kot_art,
+                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_art_all <- cbind(kot_art_all[,1:3], as.data.frame(kot_art_all[,4]))
+# Change colnames
+colnames(kot_art_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
+print(kot_art_all)
+```
+
+#### Plot
+##### Bar chart
+- Error bars show SEM of the mean
+
+```{r kot_art_all_bar, echo = FALSE}　
+p_kot_art_all <- ggplot(data = kot_art_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Articulation")
+p_kot_art_all
+```
+
+##### Box plot
+
+```{r kot_art_all_box, echo = FALSE}
+p_kot_art_all_box <- ggplot(data = kot_art, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Articulation")
+p_kot_art_all_box
+```
+
+#### Statistics
+##### TBC
+
+### 3. Trial by trial - individual{#kot_art_ind_trial}
+- Average KOT for each trial for each participant.
+
+```{r kot_art_trial, echo = FALSE}
+# For each individual
+kot_art_trial <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_kot_art, df_kot_art$Subcomponent != "LtoS" & df_kot_art$Subcomponent != "StoL"),
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_art_trial <- cbind(kot_art_trial[,1:5], as.data.frame(kot_art_trial[,6]))
+# Change colnames
+colnames(kot_art_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "TrialNr", "N", "Mean", "SD")
+print(kot_art_trial)
+```
+
+#### Plot
+##### Line graph
+```{r kot_art_trial_line_legato, echo = FALSE, fig.height = 8}
+p_kot_art_trial_legato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Articulation/Legato") + scale_x_continuous(breaks=seq(1,8,1))
+p_kot_art_trial_legato
+```
+
+```{r kot_art_trial_line_staccato, echo = FALSE, fig.height = 8}
+p_kot_art_trial_staccato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Articulation/Staccato") + scale_x_continuous(breaks=seq(1,8,1))
+p_kot_art_trial_staccato
+```
+
+### 4. Trial by trial - group{#kot_art_group_trial}
+- Average KOT for each trial for each condition.
+
+```{r kot_art_trial_all, echo = FALSE}
+# Group mean
+kot_art_trial_all <- aggregate(Mean~Condition*Skill*Subcomponent*TrialNr, data = kot_art_trial,
+                       FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_art_trial_all <- cbind(kot_art_trial_all[,1:4], as.data.frame(kot_art_trial_all[,5]))
+# Change colnames
+colnames(kot_art_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr", "N", "Mean", "SD", "SEM")
+print(kot_art_trial_all)
+```
+
+#### Plot
+##### Line graph
+- Error bars show SEM of the mean
+
+```{r kot_art_trial_all_line_legato, echo = FALSE}
+p_kot_art_trial_all_legato <- ggplot(data = subset(kot_art_trial_all, kot_art_trial_all$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Articulation/Legato") + scale_x_continuous(breaks=seq(1,8,1))
+p_kot_art_trial_all_legato
+```
+
+```{r kot_art_trial_all_line_staccato, echo = FALSE}
+p_kot_art_trial_all_staccato <- ggplot(data = subset(kot_art_trial_all, kot_art_trial_all$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Articulation/Staccato") + scale_x_continuous(breaks=seq(1,8,1))
+p_kot_art_trial_all_staccato
+```
+
+
+## Key-Overlap Ratio (KOR) - Articulation
+### 1. All - individual{#kor_art_ind_all}
+- Average KOR for each participant.
+
+```{r kor_art, echo = FALSE}
+# For each individual
+kor_art <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent, data = subset(df_kot_art, df_kot_art$Subcomponent != "LtoS" & df_kot_art$Subcomponent != "StoL"),
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kor_art <- cbind(kor_art[,1:4], as.data.frame(kor_art[,5]))
+# Change colnames
+colnames(kor_art) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean", "SD")
+print(kor_art)
+```
+
+#### Plot
+##### Bar chart
+- Error bars show SD of the mean
+
+```{r kor_art_bar,  echo = FALSE}
+p_kor_art <- ggplot(data = kor_art, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  facet_grid(Subcomponent ~ .) +
+  labs(y = "KOR", subtitle = "KOR: Articulation")
+p_kor_art
+```
+
+### 2. All - group{#kor_art_group_all}
+- Average KOR for each condition.
+- Hypothesis: Participants will exaggerate legato and staccato when teaching.
+
+```{r kor_art_all, echo = FALSE}
+# Group mean
+kor_art_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = kor_art,
+                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kor_art_all <- cbind(kor_art_all[,1:3], as.data.frame(kor_art_all[,4]))
+# Change colnames
+colnames(kor_art_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
+print(kor_art_all)
+```
+
+#### Plot
+##### Bar chart
+- Error bars show SEM of the mean
+
+```{r kor_art_all_bar, echo = FALSE}　
+p_kor_art_all <- ggplot(data = kor_art_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  labs(y = "KOR", subtitle = "KOR: Articulation")
+p_kor_art_all
+```
+
+##### Box plot
+
+```{r kor_art_all_box, echo = FALSE}
+p_kor_art_all_box <- ggplot(data = kor_art, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
+  labs(y = "KOR", subtitle = "KOR: Articulation")
+p_kor_art_all_box
+```
+
+#### Statistics
+##### TBC
+
+### 3. Trial by trial - individual{#kor_art_ind_trial}
+- Average KOR for each trial for each participant.
+
+```{r kor_art_trial, echo = FALSE}
+# For each individual
+kor_art_trial <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_kor_art, df_kor_art$Interval != 8 & df_kor_art$Interval != 16 & df_kor_art$Interval != 24 & df_kor_art$Interval != 41 & df_kor_art$Interval != 49 & df_kor_art$Interval != 57),
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kor_art_trial <- cbind(kor_art_trial[,1:5], as.data.frame(kor_art_trial[,6]))
+# Change colnames
+colnames(kor_art_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "TrialNr", "N", "Mean", "SD")
+print(kor_art_trial)
+```
+
+#### Plot
+##### Line graph
+```{r kor_art_trial_line_legato, echo = FALSE, fig.height = 8}
+p_kor_art_trial_legato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "KOR", subtitle = "KOR: Articulation/Legato") + scale_x_continuous(breaks=seq(1,8,1))
+p_kor_art_trial_legato
+```
+
+```{r kor_art_trial_line_staccato, echo = FALSE, fig.height = 8}
+p_kor_art_trial_staccato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "KOR", subtitle = "KOR: Articulation/Staccato") + scale_x_continuous(breaks=seq(1,8,1))
+p_kor_art_trial_staccato
+```
+
+### 4. Trial by trial - group{#kor_art_group_trial}
+- Average KOR d for each trial for each condition.
+
+```{r kor_art_trial_all, echo = FALSE}
+# Group mean
+kor_art_trial_all <- aggregate(Mean~Condition*Skill*Subcomponent*TrialNr, data = kor_art_trial,
+                       FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kor_art_trial_all <- cbind(kor_art_trial_all[,1:4], as.data.frame(kor_art_trial_all[,5]))
+# Change colnames
+colnames(kor_art_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr", "N", "Mean", "SD", "SEM")
+print(kor_art_trial_all)
+```
+
+#### Plot
+##### Line graph
+- Error bars show SEM of the mean
+
+```{r kor_art_trial_all_line_legato, echo = FALSE}
+p_kor_art_trial_all_legato <- ggplot(data = subset(kor_art_trial_all, kor_art_trial_all$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "KOR", subtitle = "KOR: Articulation/Legato") + scale_x_continuous(breaks=seq(1,8,1))
+p_kor_art_trial_all_legato
+```
+
+```{r kor_art_trial_all_line_staccato, echo = FALSE}
+p_kor_art_trial_all_staccato <- ggplot(data = subset(kor_art_trial_all, kor_art_trial_all$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "KOR", subtitle = "KOR: Articulation/Staccato") + scale_x_continuous(breaks=seq(1,8,1))
+p_kor_art_trial_all_staccato
+```
+
+###########
+###########
+
+## Key-Overlap Time (KOT) - Dynamics
+### 1. All - individual{#kot_dyn_ind_all}
+- Average KOT for each participant.
+
+```{r kot_dyn, echo = FALSE}
+# For each individual
+kot_dyn <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent, data = subset(df_kot_dyn, df_kot_dyn$Subcomponent != "FtoP" & df_kot_dyn$Subcomponent != "PtoF"),
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_dyn <- cbind(kot_dyn[,1:4], as.data.frame(kot_dyn[,5]))
+# Change colnames
+colnames(kot_dyn) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean", "SD")
+print(kot_dyn)
+```
+
+#### Plot
+##### Bar chart
+- Error bars show SD of the mean
+
+```{r kot_dyn_bar,  echo = FALSE}
+p_kot_dyn <- ggplot(data = kot_dyn, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  facet_grid(Subcomponent ~ .) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Dynamics")
+p_kot_dyn
+```
+
+### 2. All - group{#kot_dyn_group_all}
+- Average KOT for each condition.
+
+```{r kot_dyn_all, echo = FALSE}
+# Group mean
+kot_dyn_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = kot_dyn,
+                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_dyn_all <- cbind(kot_dyn_all[,1:3], as.data.frame(kot_dyn_all[,4]))
+# Change colnames
+colnames(kot_dyn_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
+print(kot_dyn_all)
+```
+
+#### Plot
+##### Bar chart
+- Error bars show SEM of the mean
+
+```{r kot_dyn_all_bar, echo = FALSE}　
+p_kot_dyn_all <- ggplot(data = kot_dyn_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Dynamics")
+p_kot_dyn_all
+```
+
+##### Box plot
+
+```{r kot_dyn_all_box, echo = FALSE}
+p_kot_dyn_all_box <- ggplot(data = kot_dyn, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Dynamics")
+p_kot_dyn_all_box
+```
+
+#### Statistics
+##### TBC
+
+### 3. Trial by trial - individual{#kot_dyn_ind_trial}
+- Average KOT for each trial for each participant.
+
+```{r kot_dyn_trial, echo = FALSE}
+# For each individual
+kot_dyn_trial <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_kot_dyn, df_kot_dyn$Subcomponent != "FtoP" & df_kot_dyn$Subcomponent != "PtoF"),
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_dyn_trial <- cbind(kot_dyn_trial[,1:5], as.data.frame(kot_dyn_trial[,6]))
+# Change colnames
+colnames(kot_dyn_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "TrialNr", "N", "Mean", "SD")
+print(kot_dyn_trial)
+```
+
+#### Plot
+##### Line graph
+```{r kot_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
+p_kot_dyn_trial_forte <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Dynamics/Forte") + scale_x_continuous(breaks=seq(1,8,1))
+p_kot_dyn_trial_forte
+```
+
+```{r kot_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
+p_kot_dyn_trial_piano <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Dynamics/Piano") + scale_x_continuous(breaks=seq(1,8,1))
+p_kot_dyn_trial_piano
+```
+
+### 4. Trial by trial - group{#kot_dyn_group_trial}
+- Average KOT for each trial for each condition.
+
+```{r kot_dyn_trial_all, echo = FALSE}
+# Group mean
+kot_dyn_trial_all <- aggregate(Mean~Condition*Skill*Subcomponent*TrialNr, data = kot_dyn_trial,
+                       FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_dyn_trial_all <- cbind(kot_dyn_trial_all[,1:4], as.data.frame(kot_dyn_trial_all[,5]))
+# Change colnames
+colnames(kot_dyn_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr", "N", "Mean", "SD", "SEM")
+print(kot_dyn_trial_all)
+```
+
+#### Plot
+##### Line graph
+- Error bars show SEM of the mean
+
+```{r kot_dyn_trial_all_line_forte, echo = FALSE}
+p_kot_dyn_trial_all_forte <- ggplot(data = subset(kot_dyn_trial_all, kot_dyn_trial_all$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Dynamics/Forte") + scale_x_continuous(breaks=seq(1,8,1))
+p_kot_dyn_trial_all_forte
+```
+
+```{r kot_dyn_trial_all_line_piano, echo = FALSE}
+p_kot_dyn_trial_all_piano <- ggplot(data = subset(kot_dyn_trial_all, kot_dyn_trial_all$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Dynamics/Piano") + scale_x_continuous(breaks=seq(1,8,1))
+p_kot_dyn_trial_all_piano
+```
+
+## Key-Overlap Ratio (KOR) - Dynamics
+### 1. All - individual{#kor_dyn_ind_all}
+- Average KOR for each participant.
+
+```{r kor_dyn, echo = FALSE}
+# For each individual
+kor_dyn <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent, data = subset(df_kot_dyn, df_kot_dyn$Subcomponent != "FtoP" & df_kot_dyn$Subcomponent != "PtoF"),
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kor_dyn <- cbind(kor_dyn[,1:4], as.data.frame(kor_dyn[,5]))
+# Change colnames
+colnames(kor_dyn) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean", "SD")
+print(kor_dyn)
+```
+
+#### Plot
+##### Bar chart
+- Error bars show SD of the mean
+
+```{r kor_dyn_bar,  echo = FALSE}
+p_kor_dyn <- ggplot(data = kor_dyn, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  facet_grid(Subcomponent ~ .) +
+  labs(y = "KOR", subtitle = "KOR: Dynamics")
+p_kor_dyn
+```
+
+### 2. All - group{#kor_dyn_group_all}
+- Average KOR for each condition.
+
+```{r kor_dyn_all, echo = FALSE}
+# Group mean
+kor_dyn_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = kor_dyn,
+                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kor_dyn_all <- cbind(kor_dyn_all[,1:3], as.data.frame(kor_dyn_all[,4]))
+# Change colnames
+colnames(kor_dyn_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "SD", "SEM")
+print(kor_dyn_all)
+```
+
+#### Plot
+##### Bar chart
+- Error bars show SEM of the mean
+
+```{r kor_dyn_all_bar, echo = FALSE}　
+p_kor_dyn_all <- ggplot(data = kor_dyn_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  labs(y = "KOR", subtitle = "KOR: Dynamics")
+p_kor_dyn_all
+```
+
+##### Box plot
+
+```{r kor_dyn_all_box, echo = FALSE}
+p_kor_dyn_all_box <- ggplot(data = kor_dyn, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
+  labs(y = "KOR", subtitle = "KOR: Dynamics")
+p_kor_dyn_all_box
+```
+
+#### Statistics
+##### TBC
+
+### 3. Trial by trial - individual{#kor_dyn_ind_trial}
+- Average KOR for each trial for each participant.
+
+```{r kor_dyn_trial, echo = FALSE}
+# For each individual
+kor_dyn_trial <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_kot_dyn, df_kot_dyn$Subcomponent != "FtoP" & df_kot_dyn$Subcomponent != "PtoF"),
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kor_dyn_trial <- cbind(kor_dyn_trial[,1:5], as.data.frame(kor_dyn_trial[,6]))
+# Change colnames
+colnames(kor_dyn_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "TrialNr", "N", "Mean", "SD")
+print(kor_dyn_trial)
+```
+
+#### Plot
+##### Line graph
+```{r kor_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
+p_kor_dyn_trial_forte <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "KOR", subtitle = "KOR: Dynamics/Forte") + scale_x_continuous(breaks=seq(1,8,1))
+p_kor_dyn_trial_forte
+```
+
+```{r kor_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
+p_kor_dyn_trial_piano <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "KOR", subtitle = "KOR: Dynamics/Piano") + scale_x_continuous(breaks=seq(1,8,1))
+p_kor_dyn_trial_piano
+```
+
+### 4. Trial by trial - group{#kor_dyn_group_trial}
+- Average KOR for each trial for each condition.
+
+```{r kor_dyn_trial_all, echo = FALSE}
+# Group mean
+kor_dyn_trial_all <- aggregate(Mean~Condition*Skill*Subcomponent*TrialNr, data = kor_dyn_trial,
+                       FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kor_dyn_trial_all <- cbind(kor_dyn_trial_all[,1:4], as.data.frame(kor_dyn_trial_all[,5]))
+# Change colnames
+colnames(kor_dyn_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr", "N", "Mean", "SD", "SEM")
+print(kor_dyn_trial_all)
+```
+
+#### Plot
+##### Line graph
+- Error bars show SEM of the mean
+
+```{r kor_dyn_trial_all_line_forte, echo = FALSE}
+p_kor_dyn_trial_all_forte <- ggplot(data = subset(kor_dyn_trial_all, kor_dyn_trial_all$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "KOR", subtitle = "KOR: Dynamics/Forte") + scale_x_continuous(breaks=seq(1,8,1))
+p_kor_dyn_trial_all_forte
+```
+
+```{r kor_dyn_trial_all_line_piano, echo = FALSE}
+p_kor_dyn_trial_all_piano <- ggplot(data = subset(kor_dyn_trial_all, kor_dyn_trial_all$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "KOR", subtitle = "KOR: Dynamics/Piano") + scale_x_continuous(breaks=seq(1,8,1))
+p_kor_dyn_trial_all_piano
+```
+
