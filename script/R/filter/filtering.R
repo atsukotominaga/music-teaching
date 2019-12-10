@@ -213,6 +213,8 @@ manual(removed_others_onset, current1016, df_ideal)
 
 # insert one row at the first mistake (RowNr 8)
 current1016 <- add_row(current1016, .before = 8)
+current1016$Pitch[8] <- df_ideal$Pitch[8]
+current1016[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][8,] <- current1016[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][8-1,]
 # check the plot again
 manual(removed_others_onset, current1016, df_ideal)
 
@@ -424,7 +426,7 @@ current842_offset <- manual(removed_others_offset, current842_offset, df_ideal)
 manual(removed_others_offset, current842_offset, df_ideal)
 df_corrected_others_offset <- rbind(df_corrected_others_offset, current842_offset[,-c(5:6)])
 
-# SubNr 10, BlockNr 1, TrialNr 6
+# 6. SubNr 10, BlockNr 1, TrialNr 6
 # Many mistakes >> correct manually
 current1016_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[6,1] & BlockNr == removed_others_offset[6,2] & TrialNr == removed_others_offset[6,3])
 # check the plot
@@ -432,6 +434,9 @@ manual(removed_others_offset, current1016_offset, df_ideal)
 
 # insert one row at the first mistake (RowNr 8)
 current1016_offset <- add_row(current1016_offset, .before = 8)
+current1016_offset$Pitch[8] <- df_ideal$Pitch[8]
+current1016_offset[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note,] <- current1016_offset[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note-1,]
+
 # check the plot again
 manual(removed_others_offset, current1016_offset, df_ideal)
 
@@ -443,7 +448,7 @@ current1016_offset <- manual(removed_others_offset, current1016_offset, df_ideal
 manual(removed_others_offset, current1016_offset, df_ideal)
 df_corrected_others_offset <- rbind(df_corrected_others_offset, current1016_offset[,-c(5:6)])
 
-### SubNr 15, BlockNr 3, TrialNr 5
+### 7. SubNr 15, BlockNr 3, TrialNr 5
 current1535_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[7,1] & BlockNr == removed_others_offset[7,2] & TrialNr == removed_others_offset[7,3])
 # check the plot
 manual(removed_others_offset, current1535_offset, df_ideal)
