@@ -154,7 +154,7 @@ p_ioi_hist <- ggplot(df_ioi_subset, aes(x = normIOI, fill = Grouping)) +
 plot(p_ioi_hist)
 
 p_ioi_box <- ggboxplot(df_ioi_subset, x = "Skill", y = "normIOI", color = "Condition")
-p_ioi_box <- ggpar(p_ioibox, ylab = "Normalised IOI (IOI/Tempo)")
+p_ioi_box <- ggpar(p_ioi_box, ylab = "Normalised IOI (IOI/Tempo)")
 plot(p_ioi_box)
 
 # exclude ioi > +- 3SD (across the conditions)
@@ -171,7 +171,7 @@ p_ioi_hist_sd <- ggplot(df_ioi_trim_sd, aes(x = normIOI, fill = Grouping)) +
 plot(p_ioi_hist_sd)
 
 p_ioi_box_sd <- ggboxplot(df_ioi_trim_sd, x = "Skill", y = "normIOI", color = "Condition")
-p_ioi_box_sd <- ggpar(p_box_sd, ylab = "Normalised IOI (IOI/Tempo)")
+p_ioi_box_sd <- ggpar(p_ioi_box_sd, ylab = "Normalised IOI (IOI/Tempo)")
 plot(p_ioi_box_sd)
 
 # Save plots
@@ -468,13 +468,20 @@ p_vel_acc_box <- ggboxplot(df_vel_acc_subset, x = "Skill", y = "Acc", color = "C
 p_vel_acc_box <- ggpar(p_vel_acc_box, ylab = "Difference")
 plot(p_vel_acc_box)
 
-# exclude acc > +- 3SD (across the conditions)
-upper <- mean(df_vel_acc_subset$Acc)+3*sd(df_vel_acc_subset$Acc)
-lower <- mean(df_vel_acc_subset$Acc)-3*sd(df_vel_acc_subset$Acc)
-df_vel_acc_trim_sd <- df_vel_acc_subset %>% dplyr::filter(Acc < upper & Acc > lower)
+# exclude vel > +- 3SD (within a given condition)
+vel_acc_subcomponent <- aggregate(Acc~Subcomponent, data = df_vel_acc_subset,
+                              FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
+vel_acc_subcomponent <- cbind(vel_acc_subcomponent, as.data.frame(vel_acc_subcomponent[,2]))
+df_vel_acc_trim_sd <- data.frame()
+for (subcomponent in unique(df_vel_acc_subset$Subcomponent)){
+  upper = vel_acc_subcomponent$mean[vel_acc_subcomponent$Subcomponent == subcomponent]+3*vel_acc_subcomponent$sd[vel_acc_subcomponent$Subcomponent == subcomponent]
+  lower = vel_acc_subcomponent$mean[vel_acc_subcomponent$Subcomponent == subcomponent]-3*vel_acc_subcomponent$sd[vel_acc_subcomponent$Subcomponent == subcomponent]
+  df_current <- df_vel_acc_subset %>% dplyr::filter(Subcomponent == subcomponent & Acc < upper & Acc > lower)
+  df_vel_acc_trim_sd <- rbind(df_vel_acc_trim_sd, df_current)
+}
 removed_vel_acc <- nrow(df_vel_acc_subset)-nrow(df_vel_acc_trim_sd)
 proportion_vel_acc <- round(removed_vel_acc/nrow(df_vel_acc_subset), 5)
-write(sprintf("Acc: Remove %i responses beyond +- 3SD / %f percent", removed_vel_acc, proportion_vel_acc*100), file = "./trimmed/outlier.txt", append = T) # Export the results as a txt file
+write(sprintf("Acc: Remove %i responses beyond +- 3SD / %f percent", removed_vel_acc, proportion_vel_acc*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("Acc: Remove %i responses beyond +- 3SD / %f percent", removed_vel_acc, proportion_vel_acc*100))
 
 p_vel_acc_hist_sd <- ggplot(df_vel_acc_trim_sd, aes(x = Acc, fill = Grouping)) +
