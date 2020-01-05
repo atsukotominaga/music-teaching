@@ -1,5 +1,5 @@
 #!/usr/local/bin/R
-#rm(list=ls(all=T)) - clear all in Environment
+#rm(list=ls(all=T)) - clear all in Grobal Environment
 
 ####################################
 #  Documentation
@@ -101,7 +101,10 @@ for (i in 1:nrow(df_removed_onset)){
 ####################################
 # 2.1 manual removal for extra notes
 ########################################################################
-# look at Diff (!!!!!) and plot and manually remove errors by editData
+# look at Diff (marked as "!!!!!" if there is a difference between
+# the current performance and the ideal one) and manually remove errors
+# by editData function
+#
 # if the plot is identical to the ideal, enter y
 # if you need to correct the sequence again, enter n
 # if you find any idiosyncratic errors, enter other
@@ -133,10 +136,11 @@ for (i in 1:nrow(removed_more_onset)){
 ####################################
 # 2.2 manual addition for missing notes
 ########################################################################
-# firstly, the algorithm below inserts one na automatically 
-# after inserting na, check whether the plot is identical to the ideal
+# firstly, the algorithm below inserts one NA automatically 
+# after inserting NA, check whether the plot is identical to the ideal
+# 
 # if the plot is identical to the ideal, enter y
-# if the plot is not identical, enter other
+# if the plot is not identical, enter Other
 ########################################################################
 print("----- Add NA to missing notes -----")
 removed_less_onset <- subset(df_removed_onset, df_removed_onset$errorType == "Less")
@@ -158,7 +162,13 @@ for (i in 1:nrow(removed_less_onset)){
 }
 
 ####################################
-# 2.3 having an equal number of NoteNr
+# 2.3 if having an equal number of NoteNr
+########################################################################
+# look at each plot
+# if there is a few mishits of the keyboard, replace the values with NAs
+# by editData function and enter y
+# if there is a complicated problem, enter Other
+########################################################################
 print("----- Equal -----")
 removed_equal_onset <- subset(df_removed_onset, df_removed_onset$errorType == "Equal")
 df_corrected_equal_onset <- data.frame() #create data.frame to store correced data
@@ -185,6 +195,10 @@ for (i in 1:nrow(removed_equal_onset)){
 
 ####################################
 # 2.4 individual checking
+########################################################################
+# check the data individually by listening to the original midi
+# performance and decide whether to correct or discard the data
+########################################################################
 # !descriptions below are unique to my dataset!
 print("----- Check individually -----")
 removed_others_onset <- rbind(subset(df_removed_onset, df_removed_onset$errorType == "Check"),
@@ -228,7 +242,8 @@ df_corrected_others_onset <- rbind(df_corrected_others_onset, current1016[,-c(5:
 ### 4. SubNr 7, BlockNr 1, TrialNr 6
 # Did not follow the sheet music - Exclude
 
-# create pitch-error-free responses
+####################################
+# create pitch-error-free responses 
 df_correct_onset_updated <- rbind(df_correct_onset[,-15], df_corrected_more_onset, df_corrected_less_onset, df_corrected_equal_onset, df_corrected_others_onset)
 
 ####################################
@@ -292,7 +307,10 @@ for (i in 1:nrow(df_removed_offset)){
 ####################################
 # 2.1 manual removal for extra notes
 ########################################################################
-# look at Diff (!!!!!) and plot and manually remove errors by editData
+# look at Diff (marked as "!!!!!" if there is a difference between
+# the current performance and the ideal one) and manually remove errors
+# by editData function
+#
 # if the plot is identical to the ideal, enter y
 # if you need to correct the sequence again, enter n
 # if you find any idiosyncratic errors, enter other
@@ -324,10 +342,11 @@ for (i in 1:nrow(removed_more_offset)){
 ####################################
 # 2.2 manual addition for missing notes
 ########################################################################
-# firstly, the algorithm below inserts one na automatically 
-# after inserting na, check whether the plot is identical to the ideal
+# firstly, the algorithm below inserts one NA automatically 
+# after inserting NA, check whether the plot is identical to the ideal
+# 
 # if the plot is identical to the ideal, enter y
-# if the plot is not identical, enter other
+# if the plot is not identical, enter Other
 ########################################################################
 print("----- Add NA to missing notes -----")
 removed_less_offset <- subset(df_removed_offset, df_removed_offset$errorType == "Less")
@@ -349,7 +368,13 @@ for (i in 1:nrow(removed_less_offset)){
 }
 
 ####################################
-# 2.3 having an equal number of NoteNr
+# 2.3 if having an equal number of NoteNr
+########################################################################
+# look at each plot
+# if there is a few mishits of the keyboard, replace the values with NAs
+# by editData function and enter y
+# if there is a complicated problem, enter Other
+########################################################################
 print("----- Equal -----")
 removed_equal_offset <- subset(df_removed_offset, df_removed_offset$errorType == "Equal")
 df_corrected_equal_offset <- data.frame() #create data.frame to store correced data
@@ -376,6 +401,10 @@ for (i in 1:nrow(removed_equal_offset)){
 
 ####################################
 # 2.4 individual checking
+########################################################################
+# check the data individually by listening to the original midi
+# performance and decide whether to correct or discard the data
+########################################################################
 # !descriptions below are unique to my dataset!
 print("----- Check individually -----")
 removed_others_offset <- rbind(subset(df_removed_offset, df_removed_offset$errorType == "Check"),
