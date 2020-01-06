@@ -144,7 +144,8 @@ print(ioi_art_cohend)
 ```{r ioi_art_ch, echo = FALSE}
 # Define phrase boundaries
 df_ioi_art$Boundary <- "No"
-df_ioi_art$Boundary[df_ioi_dyn$Subcomponent == "LtoS" | df_ioi_dyn$Subcomponent == "StoL" | df_ioi_dyn$Subcomponent == "FtoP" | df_ioi_art$Subcomponent == "PtoF"] <- "Yes"
+df_ioi_art$Boundary[df_ioi_art$Subcomponent == "LtoS" | df_ioi_art$Subcomponent == "StoL" |
+                      df_ioi_art$Subcomponent == "FtoP" | df_ioi_art$Subcomponent == "PtoF"] <- "Yes"
 
 # For each individual
 ioi_art_ch <- aggregate(normIOI~SubNr*Condition*Skill*Boundary, data = df_ioi_art,
@@ -546,7 +547,8 @@ print(ioi_dyn_cohend)
 
 ```{r ioi_dyn_ch, echo = FALSE}
 df_ioi_dyn$Boundary <- "No"
-df_ioi_dyn$Boundary[df_ioi_dyn$Subcomponent == "LtoS" | df_ioi_dyn$Subcomponent == "StoL" | df_ioi_dyn$Subcomponent == "FtoP" | df_ioi_dyn$Subcomponent == "PtoF"] <- "Yes"
+df_ioi_dyn$Boundary[df_ioi_dyn$Subcomponent == "LtoS" | df_ioi_dyn$Subcomponent == "StoL" |
+                      df_ioi_dyn$Subcomponent == "FtoP" | df_ioi_dyn$Subcomponent == "PtoF"] <- "Yes"
 
 # For each individual
 ioi_dyn_ch <- aggregate(normIOI~SubNr*Condition*Skill*Boundary, data = df_ioi_dyn,
@@ -620,7 +622,6 @@ p_ioi_dyn_ch_box
 ioi_dyn_ch_norm <- by(ioi_dyn_ch$Mean, list(ioi_dyn_ch$Condition, ioi_dyn_ch$Boundary), shapiro.test)
 print(ioi_dyn_ch_norm)
 ```
-  - Violate the normality assumption
 
 ##### Two-way ANOVA (ez)
 ```{r stats9, echo = FALSE}
