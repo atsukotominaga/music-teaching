@@ -211,7 +211,7 @@ p_kor_box <- ggboxplot(df_kor_subset, x = "Skill", y = "KOR", color = "Condition
 p_kor_box <- ggpar(p_kor_box, ylab = "Key-Overlap Ratio (KOT/meanIOI)")
 plot(p_kor_box)
 
-# exclude kor > +- 3SD (within a given condition)
+# exclude kor > +- 3SD (per subcomponent)
 kor_subcomponent <- aggregate(KOR~Subcomponent, data = df_kor_subset,
                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 kor_subcomponent <- cbind(kor_subcomponent, as.data.frame(kor_subcomponent[,2]))
@@ -262,7 +262,7 @@ p_kot_box <- ggboxplot(df_kot_subset, x = "Skill", y = "KOT", color = "Condition
 p_kot_box <- ggpar(p_kotbox, ylab = "Key-Overlap Time")
 plot(p_kot_box)
 
-# exclude kot > +- 3SD (within a given condition)
+# exclude kot > +- 3SD (per subcomponent)
 kot_subcomponent <- aggregate(KOT~Subcomponent, data = df_kot_subset,
                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
 kot_subcomponent <- cbind(kot_subcomponent, as.data.frame(kot_subcomponent[,2]))
