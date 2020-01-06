@@ -33,35 +33,12 @@ theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 C
 ```
 
 ```{r extract, include = FALSE}
-df_ioi <- read.csv("./trimmed/data_ioi.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
 df_kot <- read.csv("./trimmed/data_kot.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_kor <- read.csv("./trimmed/data_kor.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
 
 # SubNr as a factor
-df_ioi$SubNr <- as.factor(df_ioi$SubNr)
-
-# SubNr as a factor
-df_ioi$SubNr <- as.factor(df_ioi$SubNr)
 df_kot$SubNr <- as.factor(df_kot$SubNr)
-
-# For each individual, each block, each trial
-ioi <- aggregate(IOI~SubNr*BlockNr*TrialNr*Condition*Skill, data = df_ioi,
-                 FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
-ioi <- cbind(ioi[,1:5], as.data.frame(ioi[,6]))
-# Change colnames
-colnames(ioi) <- c("SubNr", "BlockNr", "TrialNr", "Condition", "Skill", "N", "Mean", "SD")
-
-# Calculate KOR for each interval
-
-df_kor <- data.frame()
-for (subnr in unique(df_kot$SubNr)){
-  for (block in unique(df_kot$BlockNr[df_kot$SubNr == subnr])){
-    for (trial in unique(df_kot$TrialNr[df_kot$SubNr == subnr & df_kot$BlockNr == block])){
-      df_current <- df_kot %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
-      df_current$KOR <- df_current$KOT/ioi$Mean[ioi$SubNr == subnr & ioi$BlockNr == block & ioi$TrialNr == trial]
-      df_kor <- rbind(df_kor, df_current)
-    }
-  }
-}
+df_kor$SubNr <- as.factor(df_kor$SubNr)
 
 # Include only articulation
 df_kot_art <- df_kot %>% dplyr::filter(Skill == "articulation")
@@ -138,7 +115,61 @@ p_kot_art_all_box
 ```
 
 #### Statistics
-##### TBC
+##### Normality check
+```{r normality1, echo = FALSE}
+# Reduce unused factors
+kot_art$Subcomponent <- factor(kot_art$Subcomponent)
+kot_art_norm <- by(kot_art$Mean, list(kot_art$Condition, kot_art$Subcomponent), shapiro.test)
+print(kot_art_norm)
+```
+
+##### Two-way ANOVA (ez)
+```{r stats1, echo = FALSE}
+kot_art_aov <- ezANOVA(
+  data = subset(df_kot_art, df_kot_art$Subcomponent == "Legato" | df_kot_art$Subcomponent == "Staccato")
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+kot_art_aov$ANOVA$F <- round(kot_art_aov$ANOVA$F, 4)
+kot_art_aov$ANOVA$p <- round(kot_art_aov$ANOVA$p, 4)
+print(kot_art_aov$ANOVA)
+```
+
+##### Two-way ANOVA (aov)
+```{r stats2, echo = FALSE}
+kot_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kot_art)
+print(summary(kot_art_aov_2))
+```
+
+##### Post-hoc (direct comparison)
+```{r post-hoc1, echo = FALSE}
+kot_ttest_legato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Legato"], paired = TRUE)
+kot_ttest_staccato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Staccato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Staccato"], paired = TRUE)
+# Effect size
+kot_ttest_legato_cohend <- cohen.d(kot_art$Mean[kot_art$Subcomponent == "Legato"], kot_art$Condition[kot_art$Subcomponent == "Legato"], paired = TRUE)
+kot_ttest_staccato_cohend <- cohen.d(kot_art$Mean[kot_art$Subcomponent == "Staccato"], kot_art$Condition[kot_art$Subcomponent == "Staccato"], paired = TRUE)
+
+print(kot_ttest_legato)
+print(kot_ttest_staccato)
+print(kot_ttest_legato_cohend)
+print(kot_ttest_staccato_cohend)
+```
+
+##### Post-hoc (pairwise t test)
+```{r post-hoc2, echo = FALSE}
+# Create a group label for a post-hoc test
+kot_art$Group[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"] <- "Performing-Legato" 
+kot_art$Group[kot_art$Condition == "performing" & kot_art$Subcomponent == "Staccato"] <- "Performing-Staccato"
+kot_art$Group[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Legato"] <- "Teaching-Legato"
+kot_art$Group[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Staccato"] <- "Teaching-Staccato"
+# pairwise comparison
+kot_art_pairwise <- pairwise.t.test(kot_art$Mean, kot_art$Group, paired = TRUE, p.adjust.method = "BH")
+kot_art_pairwise$p.value <- round(kot_art_pairwise$p.value, 4)
+print(kot_art_pairwise)
+```
 
 ### 3. Trial by trial - individual{#kot_art_ind_trial}
 - Average KOT for each trial for each participant.
@@ -208,14 +239,13 @@ p_kot_art_trial_all_staccato <- ggplot(data = subset(kot_art_trial_all, kot_art_
 p_kot_art_trial_all_staccato
 ```
 
-
 ## Key-Overlap Ratio (KOR) - Articulation
 ### 1. All - individual{#kor_art_ind_all}
 - Average KOR for each participant.
 
 ```{r kor_art, echo = FALSE}
 # For each individual
-kor_art <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent, data = subset(df_kot_art, df_kot_art$Subcomponent != "LtoS" & df_kot_art$Subcomponent != "StoL"),
+kor_art <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent, data = subset(df_kor_art, df_kor_art$Subcomponent != "LtoS" & df_kor_art$Subcomponent != "StoL"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 kor_art <- cbind(kor_art[,1:4], as.data.frame(kor_art[,5]))
 # Change colnames
@@ -275,14 +305,67 @@ p_kor_art_all_box
 ```
 
 #### Statistics
-##### TBC
+##### Normality check
+```{r normality2, echo = FALSE}
+# Reduce unused factors
+kor_art$Subcomponent <- factor(kor_art$Subcomponent)
+kor_art_norm <- by(kor_art$Mean, list(kor_art$Condition, kor_art$Subcomponent), shapiro.test)
+print(kor_art_norm)
+```
+
+##### Two-way ANOVA (ez)
+```{r stats3, echo = FALSE}
+kor_art_aov <- ezANOVA(
+  data = subset(df_kor_art, df_kor_art$Subcomponent == "Legato" | df_kor_art$Subcomponent == "Staccato")
+  , dv = .(KOR)
+  , wid = .(SubNr)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+kor_art_aov$ANOVA$F <- round(kor_art_aov$ANOVA$F, 4)
+kor_art_aov$ANOVA$p <- round(kor_art_aov$ANOVA$p, 4)
+print(kor_art_aov$ANOVA)
+```
+
+##### Two-way ANOVA (aov)
+```{r stats4, echo = FALSE}
+kor_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_art)
+print(summary(kor_art_aov_2))
+```
+
+```{r post-hoc3, echo = FALSE}
+kor_ttest_legato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Legato"], paired = TRUE)
+kor_ttest_staccato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Staccato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Staccato"], paired = TRUE)
+# Effect size
+kor_ttest_legato_cohend <- cohen.d(kor_art$Mean[kor_art$Subcomponent == "Legato"], kor_art$Condition[kor_art$Subcomponent == "Legato"], paired = TRUE)
+kor_ttest_staccato_cohend <- cohen.d(kor_art$Mean[kor_art$Subcomponent == "Staccato"], kor_art$Condition[kor_art$Subcomponent == "Staccato"], paired = TRUE)
+
+print(kor_ttest_legato)
+print(kor_ttest_staccato)
+print(kor_ttest_legato_cohend)
+print(kor_ttest_staccato_cohend)
+```
+
+##### Post-hoc (pairwise t test)
+```{r post-hoc4, echo = FALSE}
+# Create a group label for a post-hoc test
+kor_art$Group[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"] <- "Performing-Legato" 
+kor_art$Group[kor_art$Condition == "performing" & kor_art$Subcomponent == "Staccato"] <- "Performing-Staccato"
+kor_art$Group[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Legato"] <- "Teaching-Legato"
+kor_art$Group[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Staccato"] <- "Teaching-Staccato"
+# pairwise comparison
+kor_art_pairwise <- pairwise.t.test(kor_art$Mean, kor_art$Group, paired = TRUE, p.adjust.method = "BH")
+kor_art_pairwise$p.value <- round(kor_art_pairwise$p.value, 4)
+print(kor_art_pairwise)
+```
 
 ### 3. Trial by trial - individual{#kor_art_ind_trial}
 - Average KOR for each trial for each participant.
 
 ```{r kor_art_trial, echo = FALSE}
 # For each individual
-kor_art_trial <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_kor_art, df_kor_art$Interval != 8 & df_kor_art$Interval != 16 & df_kor_art$Interval != 24 & df_kor_art$Interval != 41 & df_kor_art$Interval != 49 & df_kor_art$Interval != 57),
+kor_art_trial <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_kor_art, df_kor_art$Subcomponent != "LtoS" & df_kor_art$Subcomponent != "StoL"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 kor_art_trial <- cbind(kor_art_trial[,1:5], as.data.frame(kor_art_trial[,6]))
 # Change colnames
@@ -413,7 +496,35 @@ p_kot_dyn_all_box
 ```
 
 #### Statistics
-##### TBC
+##### Normality check
+```{r normality3, echo = FALSE}
+# Reduce unused factors
+kot_dyn$Subcomponent <- factor(kot_dyn$Subcomponent)
+kot_dyn_norm <- by(kot_dyn$Mean, list(kot_dyn$Condition, kot_dyn$Subcomponent), shapiro.test)
+print(kot_dyn_norm)
+```
+  - Violate the normality assumption
+
+##### Two-way ANOVA (ez)
+```{r stats5, echo = FALSE}
+kot_dyn_aov <- ezANOVA(
+  data = subset(df_kot_dyn, df_kot_dyn$Subcomponent == "Forte" | df_kot_dyn$Subcomponent == "Piano")
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+kot_dyn_aov$ANOVA$F <- round(kot_dyn_aov$ANOVA$F, 4)
+kot_dyn_aov$ANOVA$p <- round(kot_dyn_aov$ANOVA$p, 4)
+print(kot_dyn_aov$ANOVA)
+```
+
+##### Two-way ANOVA (aov)
+```{r stats6, echo = FALSE}
+kot_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kot_dyn)
+print(summary(kot_dyn_aov_2))
+```
 
 ### 3. Trial by trial - individual{#kot_dyn_ind_trial}
 - Average KOT for each trial for each participant.
@@ -489,7 +600,7 @@ p_kot_dyn_trial_all_piano
 
 ```{r kor_dyn, echo = FALSE}
 # For each individual
-kor_dyn <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent, data = subset(df_kot_dyn, df_kot_dyn$Subcomponent != "FtoP" & df_kot_dyn$Subcomponent != "PtoF"),
+kor_dyn <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent, data = subset(df_kor_dyn, df_kor_dyn$Subcomponent != "FtoP" & df_kor_dyn$Subcomponent != "PtoF"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 kor_dyn <- cbind(kor_dyn[,1:4], as.data.frame(kor_dyn[,5]))
 # Change colnames
@@ -548,14 +659,42 @@ p_kor_dyn_all_box
 ```
 
 #### Statistics
-##### TBC
+##### Normality check
+```{r normality4, echo = FALSE}
+# Reduce unused factors
+kor_dyn$Subcomponent <- factor(kor_dyn$Subcomponent)
+kor_dyn_norm <- by(kor_dyn$Mean, list(kor_dyn$Condition, kor_dyn$Subcomponent), shapiro.test)
+print(kor_dyn_norm)
+```
+  - Violate the normality assumtion
+
+##### Two-way ANOVA (ez)
+```{r stats7, echo = FALSE}
+kor_dyn_aov <- ezANOVA(
+  data = subset(df_kor_dyn, df_kor_dyn$Subcomponent == "Forte" | df_kor_dyn$Subcomponent == "Piano")
+  , dv = .(KOR)
+  , wid = .(SubNr)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+kor_dyn_aov$ANOVA$F <- round(kor_dyn_aov$ANOVA$F, 4)
+kor_dyn_aov$ANOVA$p <- round(kor_dyn_aov$ANOVA$p, 4)
+print(kor_dyn_aov$ANOVA)
+```
+
+##### Two-way ANOVA (aov)
+```{r stats8, echo = FALSE}
+kor_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_dyn)
+print(summary(kor_dyn_aov_2))
+```
 
 ### 3. Trial by trial - individual{#kor_dyn_ind_trial}
 - Average KOR for each trial for each participant.
 
 ```{r kor_dyn_trial, echo = FALSE}
 # For each individual
-kor_dyn_trial <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_kot_dyn, df_kot_dyn$Subcomponent != "FtoP" & df_kot_dyn$Subcomponent != "PtoF"),
+kor_dyn_trial <- aggregate(KOR~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_kor_dyn, df_kor_dyn$Subcomponent != "FtoP" & df_kor_dyn$Subcomponent != "PtoF"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 kor_dyn_trial <- cbind(kor_dyn_trial[,1:5], as.data.frame(kor_dyn_trial[,6]))
 # Change colnames
@@ -618,3 +757,99 @@ p_kor_dyn_trial_all_piano <- ggplot(data = subset(kor_dyn_trial_all, kor_dyn_tri
 p_kor_dyn_trial_all_piano
 ```
 
+## Sequence plot
+#### Articulation{#sequence_art}
+```{r seq_art, fig.width = 15, fig.height = 5, echo = FALSE}
+# For each individual
+kot_art_seq <- aggregate(KOT~SubNr*Condition*Skill*Interval, data = df_kot_art,
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_art_seq <- cbind(kot_art_seq[,1:4], as.data.frame(kot_art_seq[,5]))
+# Change colnames
+colnames(kot_art_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+kot_art_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = kot_art_seq,
+                           FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_art_seq_stats <- cbind(kot_art_seq_stats[,1:3], as.data.frame(kot_art_seq_stats[,4]))
+# Change colnames for each interval
+colnames(kot_art_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+
+p_kot_art_seq <- ggplot(data = kot_art_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1))
+
+# For each individual
+kor_art_seq <- aggregate(KOR~SubNr*Condition*Skill*Interval, data = df_kor_art,
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kor_art_seq <- cbind(kor_art_seq[,1:4], as.data.frame(kor_art_seq[,5]))
+# Change colnames
+colnames(kor_art_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+kor_art_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = kor_art_seq,
+                           FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kor_art_seq_stats <- cbind(kor_art_seq_stats[,1:3], as.data.frame(kor_art_seq_stats[,4]))
+# Change colnames for each interval
+colnames(kor_art_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+
+p_kor_art_seq <- ggplot(data = kor_art_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "KOR") + scale_x_continuous(breaks=seq(1,66,1))
+
+p_kot_art_seq
+p_kor_art_seq
+```
+
+#### Dynamics{#sequence_dyn}
+```{r seq_dyn, fig.width = 15, fig.height = 5, echo = FALSE}
+# For each individual
+kot_dyn_seq <- aggregate(KOT~SubNr*Condition*Skill*Interval, data = df_kot_dyn,
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kot_dyn_seq <- cbind(kot_dyn_seq[,1:4], as.data.frame(kot_dyn_seq[,5]))
+# Change colnames
+colnames(kot_dyn_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+kot_dyn_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = kot_dyn_seq,
+                           FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kot_dyn_seq_stats <- cbind(kot_dyn_seq_stats[,1:3], as.data.frame(kot_dyn_seq_stats[,4]))
+# Change colnames for each interval
+colnames(kot_dyn_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+
+p_kot_dyn_seq <- ggplot(data = kot_dyn_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1))
+
+# For each individual
+kor_dyn_seq <- aggregate(KOR~SubNr*Condition*Skill*Interval, data = df_kor_dyn,
+                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
+kor_dyn_seq <- cbind(kor_dyn_seq[,1:4], as.data.frame(kor_dyn_seq[,5]))
+# Change colnames
+colnames(kor_dyn_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+
+# Group mean
+kor_dyn_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = kor_dyn_seq,
+                           FUN = function(x){round(c(length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+kor_dyn_seq_stats <- cbind(kor_dyn_seq_stats[,1:3], as.data.frame(kor_dyn_seq_stats[,4]))
+# Change colnames for each interval
+colnames(kor_dyn_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+
+p_kor_dyn_seq <- ggplot(data = kor_dyn_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "KOR") + scale_x_continuous(breaks=seq(1,66,1))
+
+p_kot_dyn_seq
+p_kor_dyn_seq
+```
