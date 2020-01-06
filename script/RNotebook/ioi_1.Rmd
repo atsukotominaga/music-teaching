@@ -257,7 +257,7 @@ print(ioi_art_trial)
 ##### Line graph
 - A dashed line represents the ideal tempo
 
-```{r ioi_art_trial_line, echo = FALSE, fig.height = 8}
+```{r ioi_art_trial_line, echo = FALSE, fig.height = 4}
 p_ioi_art_trial <- ggplot(data = ioi_art_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -413,7 +413,7 @@ print(ioi_art_var_trial)
 
 #### Plot
 ##### Line graph
-```{r ioi_art_var_trial_line, echo = FALSE, fig.height = 8}
+```{r ioi_art_var_trial_line, echo = FALSE, fig.height = 4}
 p_ioi_art_var_trial <- ggplot(data = ioi_art_var_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -661,7 +661,7 @@ print(ioi_dyn_trial)
 ##### Line graph
 - A dashed line represents the ideal tempo.
 
-```{r ioi_dyn_trial_line, echo = FALSE, fig.height = 8}
+```{r ioi_dyn_trial_line, echo = FALSE, fig.height = 4}
 p_ioi_dyn_trial <- ggplot(data = ioi_dyn_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -813,7 +813,7 @@ print(ioi_dyn_var_trial)
 
 #### Plot
 ##### Line graph
-```{r ioi_dyn_var_trial_line, echo = FALSE, fig.height = 8}
+```{r ioi_dyn_var_trial_line, echo = FALSE, fig.height = 4}
 p_ioi_dyn_var_trial <- ggplot(data = ioi_dyn_var_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -851,7 +851,7 @@ p_ioi_dyn_var_trial_all
 
 ## Sequence plot
 #### Articulation{#sequence_art}
-```{r seq_art, fig.width = 15, fig.height = 5, echo = FALSE}
+```{r seq_art, fig.width = 6, fig.height = 2, echo = FALSE}
 # For each individual
 ioi_art_seq <- aggregate(normIOI~SubNr*Condition*Skill*Interval, data = df_ioi_art,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -877,7 +877,7 @@ p_ioi_art_seq
 ```
 
 #### Dynamics{#sequence_dyn}
-```{r seq_dyn, fig.width = 15, fig.height = 5, echo = FALSE}
+```{r seq_dyn, fig.width = 6, fig.height = 2, echo = FALSE}
 # For each individual
 ioi_dyn_seq <- aggregate(normIOI~SubNr*Condition*Skill*Interval, data = df_ioi_dyn,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
