@@ -22,7 +22,9 @@ Experimental programmes
 Stimuli generator
 
 ### R
-- filter: removing pitch errors (first-filtering) >> outputs: csv files
+- pre_process
+    + filtering.R: removing pitch errors >> outputs: csv files
+    + trimming.R (ioi, kot_kor, vel): removing outliers >> outputs: csv/png files
 - condfile: counterbalance sheet generator
 
 ### R Notebooks
