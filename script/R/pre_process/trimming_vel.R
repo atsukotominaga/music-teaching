@@ -139,7 +139,7 @@ for (phrase in 1:length(ls_legato)){
 # Stdiffato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    df_vel_diff$Subcomponent[df_vel_diff$Skill == "articulation" & df_vel_diff$Interval == ls_stdiffato[[phrase]][note]] <- "Stdiffato"
+    df_vel_diff$Subcomponent[df_vel_diff$Skill == "articulation" & df_vel_diff$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
   }
 }
 
