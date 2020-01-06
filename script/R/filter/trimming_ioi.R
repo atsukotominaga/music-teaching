@@ -145,7 +145,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 ####################################
 # Remove outliers (3 methods)
 ####################################
-# exclude irrelevant notes (Subcomponent == NA means not 8th notes / normIOI == means a missing value)
+# exclude irrelevant notes (Subcomponent == NA means not 8th notes / normIOI == NA means a missing value)
 df_ioi_subset <- subset(df_ioi, !is.na(df_ioi$Subcomponent) & !is.na(df_ioi$normIOI))
 
 # draw histogram and
