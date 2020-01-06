@@ -81,6 +81,10 @@ change_2 <- c(8, 20, 39)
 # calculate Acc (acceleration - velocity difference between notes)
 df_vel <- df_onset
 df_vel$Diff <- diff(c(0, df_vel$Velocity))
+# convert bpm to ms
+df_vel$Tempo[df_vel$Tempo == 120] <- 250
+df_vel$Tempo[df_vel$Tempo == 110] <- 273
+df_vel$Tempo[df_vel$Tempo == 100] <- 300
 
 # assign NoteNr
 df_vel$NoteNr <- rep(1:72, nrow(df_vel)/72)
