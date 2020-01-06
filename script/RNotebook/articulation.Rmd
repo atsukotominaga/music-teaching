@@ -186,7 +186,7 @@ print(kot_art_trial)
 
 #### Plot
 ##### Line graph
-```{r kot_art_trial_line_legato, echo = FALSE, fig.height = 8}
+```{r kot_art_trial_line_legato, echo = FALSE, fig.height = 4}
 p_kot_art_trial_legato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -195,7 +195,7 @@ p_kot_art_trial_legato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subc
 p_kot_art_trial_legato
 ```
 
-```{r kot_art_trial_line_staccato, echo = FALSE, fig.height = 8}
+```{r kot_art_trial_line_staccato, echo = FALSE, fig.height = 4}
 p_kot_art_trial_staccato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -375,7 +375,7 @@ print(kor_art_trial)
 
 #### Plot
 ##### Line graph
-```{r kor_art_trial_line_legato, echo = FALSE, fig.height = 8}
+```{r kor_art_trial_line_legato, echo = FALSE, fig.height = 4}
 p_kor_art_trial_legato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -384,7 +384,7 @@ p_kor_art_trial_legato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subc
 p_kor_art_trial_legato
 ```
 
-```{r kor_art_trial_line_staccato, echo = FALSE, fig.height = 8}
+```{r kor_art_trial_line_staccato, echo = FALSE, fig.height = 4}
 p_kor_art_trial_staccato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -541,7 +541,7 @@ print(kot_dyn_trial)
 
 #### Plot
 ##### Line graph
-```{r kot_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
+```{r kot_dyn_trial_line_forte, echo = FALSE, fig.height = 4}
 p_kot_dyn_trial_forte <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -550,7 +550,7 @@ p_kot_dyn_trial_forte <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subco
 p_kot_dyn_trial_forte
 ```
 
-```{r kot_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
+```{r kot_dyn_trial_line_piano, echo = FALSE, fig.height = 4}
 p_kot_dyn_trial_piano <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -704,7 +704,7 @@ print(kor_dyn_trial)
 
 #### Plot
 ##### Line graph
-```{r kor_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
+```{r kor_dyn_trial_line_forte, echo = FALSE, fig.height = 4}
 p_kor_dyn_trial_forte <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -713,7 +713,7 @@ p_kor_dyn_trial_forte <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subco
 p_kor_dyn_trial_forte
 ```
 
-```{r kor_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
+```{r kor_dyn_trial_line_piano, echo = FALSE, fig.height = 4}
 p_kor_dyn_trial_piano <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -759,7 +759,7 @@ p_kor_dyn_trial_all_piano
 
 ## Sequence plot
 #### Articulation{#sequence_art}
-```{r seq_art, fig.width = 15, fig.height = 5, echo = FALSE}
+```{r seq_art, fig.width = 6, fig.height = 2, echo = FALSE}
 # For each individual
 kot_art_seq <- aggregate(KOT~SubNr*Condition*Skill*Interval, data = df_kot_art,
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -807,7 +807,7 @@ p_kor_art_seq
 ```
 
 #### Dynamics{#sequence_dyn}
-```{r seq_dyn, fig.width = 15, fig.height = 5, echo = FALSE}
+```{r seq_dyn, fig.width = 6, fig.height = 2, echo = FALSE}
 # For each individual
 kot_dyn_seq <- aggregate(KOT~SubNr*Condition*Skill*Interval, data = df_kot_dyn,
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
