@@ -496,13 +496,14 @@ print(ioi_dyn_all)
 - A dashed line represents the ideal tempo
 
 ```{r ioi_dyn_all_bar, echo = FALSE}
-p_ioi_dyn_ch_all_bar <- ggplot(data = ioi_dyn_all, aes(x = Skill, y = Mean, fill = Condition)) +
+p_ioi_dyn_all_bar <- ggplot(data = ioi_dyn_all, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
                 width=.2, position = position_dodge(.9)) +
   geom_hline(yintercept = 1, linetype = "dashed") + # Tempo + 
-  labs(y = "Normalised IOI", subtitle = "IOI: Dynamics") +  coord_cartesian(ylim = c(.75, 1.1))
-p_ioi_dyn_ch_all_bar
+  labs(y = "Normalised IOI", subtitle = "IOI: Dynamics") +  coord_cartesian(ylim = c(.75, 1.1)) +
+  theme(legend.position = "None")
+p_ioi_dyn_all_bar
 ```
 
 ##### Box plot
