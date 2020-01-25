@@ -1,7 +1,7 @@
 # Memo
 - Please also consult with comments on each script.
 
-### filtering:
+### Step1 - filtering:
 - filtering for both onset and offset
 - 3 steps
 1. Check whether the current performance is identical to the ideal
@@ -15,16 +15,16 @@
 df_correct_onset.csv, df_correct_offset.csv >> final outputs which can be used for data analysis
 others >> corrected data for each error category (e.g., extra notes, missing notes)
 
-### trimming:
+### Step2 -trimming:
 #### IOI
 - 3 options
-1. Remove outliers outside 3SD across the conditions
+1. Remove outliers outside 3SD across the conditions (strict)
 2. Remove outliers outside per condition
     - there was little difference between 1 and 2
-3. Remove outliers separately whether normIOIs are located on Boundary or not
+3. Remove outliers separately whether normIOIs are located on Boundary or not (loose)
 
 #### KOT/KOR
-Since each participant played the piece in a different tempo, KOR would be more suitable for analysis. However, I also calculated and removed outliers for KOT as well. I chose the 3rd optionfor IOIs to calculate mean IOIs for KOR computation.
+Since each participant played the piece in a different tempo, KOR would be more suitable for analysis. However, I also calculated and removed outliers for KOT as well. I chose the 1st option for IOIs to calculate mean IOIs for KOR computation.
 - 1 option
 1. Remove outliers outside per subcomponent
 
