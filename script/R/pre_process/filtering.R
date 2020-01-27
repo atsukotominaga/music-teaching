@@ -107,7 +107,7 @@ for (i in 1:nrow(df_removed_onset)){
 #
 # if the plot is identical to the ideal, enter y
 # if you need to correct the sequence again, enter n
-# if you find any idiosyncratic errors, enter other
+# if you find any idiosyncratic errors, enter Other & describe a reason
 ########################################################################
 print("----- Remove extra notes -----")
 removed_more_onset <- subset(df_removed_onset, df_removed_onset$errorType == "More") #only consider extra notes
@@ -165,6 +165,7 @@ for (i in 1:nrow(removed_less_onset)){
 # 2.3 if having an equal number of NoteNr
 ########################################################################
 # look at each plot
+#
 # if there is a few mishits of the keyboard, replace the values with NAs
 # by editData function and enter y
 # if there is a complicated problem, enter Other
@@ -313,7 +314,7 @@ for (i in 1:nrow(df_removed_offset)){
 #
 # if the plot is identical to the ideal, enter y
 # if you need to correct the sequence again, enter n
-# if you find any idiosyncratic errors, enter other
+# if you find any idiosyncratic errors, enter Other & describe a reason
 ########################################################################
 print("----- Remove extra notes -----")
 removed_more_offset <- subset(df_removed_offset, df_removed_offset$errorType == "More") #only consider extra notes
@@ -371,6 +372,7 @@ for (i in 1:nrow(removed_less_offset)){
 # 2.3 if having an equal number of NoteNr
 ########################################################################
 # look at each plot
+#
 # if there is a few mishits of the keyboard, replace the values with NAs
 # by editData function and enter y
 # if there is a complicated problem, enter Other
