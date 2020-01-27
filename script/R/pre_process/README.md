@@ -13,6 +13,7 @@
 
 #### Outputs
 df_correct_onset.csv, df_correct_offset.csv >> final outputs which can be used for data analysis
+
 others >> corrected data for each error category (e.g., extra notes, missing notes)
 
 ### Step2 -trimming:
@@ -23,8 +24,10 @@ others >> corrected data for each error category (e.g., extra notes, missing not
     - there was little difference between 1 and 2
 3. Remove outliers separately whether normIOIs are located on Boundary or not (loose)
 
+I chose option 1 for data analysis.
+
 #### KOT/KOR
-Since each participant played the piece in a different tempo, KOR would be more suitable for analysis. However, I also calculated and removed outliers for KOT as well. I chose the 1st option for IOIs to calculate mean IOIs for KOR computation.
+Since each participant played the piece in a different tempo, KOR would be more suitable for analysis. However, I also calculated and removed outliers for KOT as well. I chose option 1 for IOIs to calculate mean IOIs for KOR computation.
 - 1 option
 1. Remove outliers outside per subcomponent
 
