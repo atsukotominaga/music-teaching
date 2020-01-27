@@ -31,18 +31,18 @@ All of the programme scripts were written and tested in the following environmen
         + practice (path: ~/script/Max/midi/practice) - within the midi folder
         
 ### Patchers
-- mainPatch.maxpat: for the experiment.
-- practicePatch.maxpat: for practice trials.
-- imagePatch.maxpat: display stimuli on the screen in front of a participant.
+- mainPatch.maxpat: for the experiment
+- practicePatch.maxpat: for practice trials
+- imagePatch.maxpat: display stimuli on the screen in front of a participant
 
 ### SubPatchers
-- MIDInoteRecording.maxpat: acquire and save MIDI data.
-- dataFileNaming.maxpat: create a file name.
-- condFileReading.maxpat: read a condition file to determine the order of conditions for each participant.
+- MIDInoteRecording.maxpat: acquire and save MIDI data
+- dataFileNaming.maxpat: create a file name
+- condFileReading.maxpat: read a condition file to determine the order of conditions for each participant
 
 ### Others
-- image: contains experimental stimuli.
-- cond: contains a csv file and an excel file about the order of conditions for each participant.
+- image: contains experimental stimuli
+- cond: contains a csv file and an excel file about the order of conditions for each participant
 
 ## R
 You need raw_data folder to run the scripts below (get the folder from [OSF](https://osf.io/35ryj/))
@@ -52,9 +52,9 @@ You need raw_data folder to run the scripts below (get the folder from [OSF](htt
 
 ## R Notebook
 You need filtered and trimmed folders to run the scripts below (outputs from filtering.R and trimming.R).
-- ioi.Rmd: analysis and plots for IOIs. >> output: html file
-- articulation.Rmd: analysis and plots for KOT/KOR. >> output: html file
-- dynamics.Rmd: analysis and plots for KV/KV-Diff. >> output: html file
+- ioi.Rmd: analysis and plots for IOIs >> output: html file
+- articulation.Rmd: analysis and plots for KOT/KOR >> output: html file
+- dynamics.Rmd: analysis and plots for KV/KV-Diff >> output: html file
 
 You need questionnaire.csv to run the script below (get the file from [OSF](https://osf.io/35ryj/)).
 - questionnaire.Rmd
@@ -70,9 +70,9 @@ You need questionnaire.csv to run the script below (get the file from [OSF](http
 
 ## Instruction
 - instruction.Rmd: a instruction sheet for an experimenter >> output: html file.
-- image: figures used in the instruction sheet.
-- psd files: images used in the instruction. >> output: png files
+- image: figures used in the instruction sheet
+- psd files: images used in the instruction >> output: png files
 
 ## Others
-- cropped: original sheet music.
-- checklist.xlsx: a list to check each procedure during testing (for an experimenter).
+- cropped: original sheet music
+- checklist.xlsx: a list to check each procedure during testing (for an experimenter)
