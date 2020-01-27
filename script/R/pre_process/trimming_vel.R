@@ -16,7 +16,6 @@
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
-if (!require("wesanderson")) {install.packages("wesanderson"); require("wesanderson")}
 
 # setting
 # ggplots
