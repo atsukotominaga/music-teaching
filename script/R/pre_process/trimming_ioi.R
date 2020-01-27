@@ -166,6 +166,7 @@ lower_ioi_1 <- mean(df_ioi_subset$normIOI)-3*sd(df_ioi_subset$normIOI)
 df_ioi_trim_sd_1 <- df_ioi_subset %>% dplyr::filter(normIOI < upper_ioi_1 & normIOI > lower_ioi_1)
 removed_ioi_1 <- nrow(df_ioi_subset)-nrow(df_ioi_trim_sd_1)
 proportion_ioi_1 <- round(removed_ioi_1/nrow(df_ioi_subset), 5)
+write(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_1, proportion_ioi_1*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_1, proportion_ioi_1*100))
 
 p_ioi_hist_sd_1 <- ggplot(df_ioi_trim_sd_1, aes(x = normIOI, fill = Grouping)) +
@@ -196,14 +197,15 @@ ioi_skill <- cbind(ioi_skill, as.data.frame(ioi_skill[,2]))
 
 df_ioi_trim_sd_2 <- data.frame()
 for (grouping in unique(ioi_skill$Grouping)){
-  upper_ioi_2 = ioi_skill$mean[ioi_skill$Grouping == grouping]+3*ioi_skill$sd[ioi_skill$Grouping == grouping]
-  lower_ioi_2 = ioi_skill$mean[ioi_skill$Grouping == grouping]-3*ioi_skill$sd[ioi_skill$Grouping == grouping]
+  upper_ioi_2 <- ioi_skill$mean[ioi_skill$Grouping == grouping]+3*ioi_skill$sd[ioi_skill$Grouping == grouping]
+  lower_ioi_2 <- ioi_skill$mean[ioi_skill$Grouping == grouping]-3*ioi_skill$sd[ioi_skill$Grouping == grouping]
   df_current <- df_ioi_subset %>% dplyr::filter(Grouping == grouping & normIOI < upper_ioi_2 & normIOI > lower_ioi_2)
   df_ioi_trim_sd_2 <- rbind(df_ioi_trim_sd_2, df_current)
 }
 
 removed_ioi_2 <- nrow(df_ioi_subset)-nrow(df_ioi_trim_sd_2)
 proportion_ioi_2 <- round(removed_ioi_2/nrow(df_ioi_subset), 5)
+write(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100))
 
 p_ioi_hist_sd_2 <- ggplot(df_ioi_trim_sd_2, aes(x = normIOI, fill = Grouping)) +
@@ -239,14 +241,15 @@ ioi_boundary <- cbind(ioi_boundary, as.data.frame(ioi_boundary[,2]))
 
 df_ioi_trim_sd_3 <- data.frame()
 for (boundary in unique(ioi_boundary$Boundary)){
-  upper_ioi_3 = ioi_boundary$mean[ioi_boundary$Boundary == boundary]+3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
-  lower_ioi_3 = ioi_boundary$mean[ioi_boundary$Boundary == boundary]-3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
+  upper_ioi_3 <- ioi_boundary$mean[ioi_boundary$Boundary == boundary]+3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
+  lower_ioi_3 <- ioi_boundary$mean[ioi_boundary$Boundary == boundary]-3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
   df_current <- df_ioi_subset %>% dplyr::filter(Boundary == boundary & normIOI < upper_ioi_3 & normIOI > lower_ioi_3)
   df_ioi_trim_sd_3 <- rbind(df_ioi_trim_sd_3, df_current)
 }
 
 removed_ioi_3 <- nrow(df_ioi_subset)-nrow(df_ioi_trim_sd_3)
 proportion_ioi_3 <- round(removed_ioi_3/nrow(df_ioi_subset), 5)
+write(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_3, proportion_ioi_3*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_3, proportion_ioi_3*100))
 
 p_ioi_hist_sd_3 <- ggplot(df_ioi_trim_sd_3, aes(x = normIOI, fill = Grouping)) +
