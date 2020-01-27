@@ -90,7 +90,7 @@ df_vel$NoteNr <- rep(1:72, nrow(df_vel)/72)
 
 # remove the first note
 df_vel_diff <- df_vel %>% dplyr::filter(NoteNr != 1)
-df_vel$Diff <- NULL # remove Acc from df_vel
+df_vel$Diff <- NULL # remove Diff from df_vel
 
 # assign Interval
 df_vel_diff$Interval <- rep(1:71, nrow(df_vel_diff)/71)
@@ -104,7 +104,6 @@ for (phrase in 1:length(ls_legato2)){
     df_vel$Subcomponent[df_vel$Skill == "articulation" & df_vel$Note == ls_legato2[[phrase]][note]] <- "Legato"
   }
 }
-
 # Staccato
 for (phrase in 1:length(ls_staccato2)){
   for (note in 1:length(ls_staccato2[[phrase]])){
@@ -135,7 +134,7 @@ for (phrase in 1:length(ls_legato)){
     df_vel_diff$Subcomponent[df_vel_diff$Skill == "articulation" & df_vel_diff$Interval == ls_legato[[phrase]][note]] <- "Legato"
   }
 }
-# Stdiffato
+# Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
     df_vel_diff$Subcomponent[df_vel_diff$Skill == "articulation" & df_vel_diff$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
@@ -179,7 +178,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 ####################################
 # Remove outliers
 ####################################
-# exclude irrelevant notes
+# exclude irrelevant notes (Subcomponent == NA means not 8th notes / Velocity/Diff == NA means a missing value)
 df_vel_subset <- subset(df_vel, !is.na(df_vel$Subcomponent) & !is.na(df_vel$Velocity))
 df_vel_diff_subset <- subset(df_vel_diff, !is.na(df_vel_diff$Subcomponent) & !is.na(df_vel_diff$Diff))
 
@@ -189,7 +188,7 @@ p_vel_hist <- ggplot(df_vel_subset, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_hist)
 
-p_vel_box <- ggboxplot(df_vel_subset, x = "Skill", y = "Velocity", color = "Condition")
+p_vel_box <- ggboxplot(df_vel_subset, x = "Subcomponent", y = "Velocity", color = "Condition")
 p_vel_box <- ggpar(p_vel_box, ylab = "Velocity (0-127)")
 plot(p_vel_box)
 
@@ -199,20 +198,21 @@ vel_subcomponent <- aggregate(Velocity~Subcomponent, data = df_vel_subset,
 vel_subcomponent <- cbind(vel_subcomponent, as.data.frame(vel_subcomponent[,2]))
 df_vel_trim_sd <- data.frame()
 for (subcomponent in unique(df_vel_subset$Subcomponent)){
-  upper = vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]+3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
-  lower = vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]-3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
+  upper <- vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]+3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
+  lower <- vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]-3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
   df_current <- df_vel_subset %>% dplyr::filter(Subcomponent == subcomponent & Velocity < upper & Velocity > lower)
   df_vel_trim_sd <- rbind(df_vel_trim_sd, df_current)
 }
 removed_vel <- nrow(df_vel_subset)-nrow(df_vel_trim_sd)
 proportion_vel <- round(removed_vel/nrow(df_vel_subset), 5)
+write(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100))
 
 p_vel_hist_sd <- ggplot(df_vel_trim_sd, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_hist_sd)
 
-p_vel_box_sd <- ggboxplot(df_vel_trim_sd, x = "Skill", y = "Velocity", color = "Condition")
+p_vel_box_sd <- ggboxplot(df_vel_trim_sd, x = "Subcomponent", y = "Velocity", color = "Condition")
 p_vel_box_sd <- ggpar(p_vel_box_sd, ylab = "Velocity (0-127)")
 plot(p_vel_box_sd)
 
@@ -232,7 +232,7 @@ p_vel_diff_hist <- ggplot(df_vel_diff_subset, aes(x = Diff, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_diff_hist)
 
-p_vel_diff_box <- ggboxplot(df_vel_diff_subset, x = "Skill", y = "Diff", color = "Condition")
+p_vel_diff_box <- ggboxplot(df_vel_diff_subset, x = "Subcomponent", y = "Diff", color = "Condition")
 p_vel_diff_box <- ggpar(p_vel_diff_box, ylab = "Difference")
 plot(p_vel_diff_box)
 
@@ -242,20 +242,21 @@ vel_diff_subcomponent <- aggregate(Diff~Subcomponent, data = df_vel_diff_subset,
 vel_diff_subcomponent <- cbind(vel_diff_subcomponent, as.data.frame(vel_diff_subcomponent[,2]))
 df_vel_diff_trim_sd <- data.frame()
 for (subcomponent in unique(df_vel_diff_subset$Subcomponent)){
-  upper = vel_diff_subcomponent$mean[vel_diff_subcomponent$Subcomponent == subcomponent]+3*vel_diff_subcomponent$sd[vel_diff_subcomponent$Subcomponent == subcomponent]
-  lower = vel_diff_subcomponent$mean[vel_diff_subcomponent$Subcomponent == subcomponent]-3*vel_diff_subcomponent$sd[vel_diff_subcomponent$Subcomponent == subcomponent]
+  upper <- vel_diff_subcomponent$mean[vel_diff_subcomponent$Subcomponent == subcomponent]+3*vel_diff_subcomponent$sd[vel_diff_subcomponent$Subcomponent == subcomponent]
+  lower <- vel_diff_subcomponent$mean[vel_diff_subcomponent$Subcomponent == subcomponent]-3*vel_diff_subcomponent$sd[vel_diff_subcomponent$Subcomponent == subcomponent]
   df_current <- df_vel_diff_subset %>% dplyr::filter(Subcomponent == subcomponent & Diff < upper & Diff > lower)
   df_vel_diff_trim_sd <- rbind(df_vel_diff_trim_sd, df_current)
 }
 removed_vel_diff <- nrow(df_vel_diff_subset)-nrow(df_vel_diff_trim_sd)
 proportion_vel_diff <- round(removed_vel_diff/nrow(df_vel_diff_subset), 5)
+write(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100))
 
 p_vel_diff_hist_sd <- ggplot(df_vel_diff_trim_sd, aes(x = Diff, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_diff_hist_sd)
 
-p_vel_diff_box_sd <- ggboxplot(df_vel_diff_trim_sd, x = "Skill", y = "Diff", color = "Condition")
+p_vel_diff_box_sd <- ggboxplot(df_vel_diff_trim_sd, x = "Subcomponent", y = "Diff", color = "Condition")
 p_vel_diff_box_sd <- ggpar(p_vel_diff_box_sd, ylab = "Difference")
 plot(p_vel_diff_box_sd)
 
