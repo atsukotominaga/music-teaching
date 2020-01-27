@@ -1,6 +1,6 @@
 This repo contains scripts and materials necessary for a musical experiment with expert pianists.
 
- Open Science Framework: [https://osf.io/35ryj/](https://osf.io/35ryj/)
+ Open Science Framework: [https://osf.io/35ryj/](https://osf.io/35ryj/) (Raw data are available in OSF (Experiment 1))
 
 # Overview
 - [Script](#Script)
@@ -11,6 +11,8 @@ This repo contains scripts and materials necessary for a musical experiment with
     + [Jupyter Notebnook (Stimuli - image processing)](#Jupyter-notebook)
     
 - [Material](#Material)
+    + [Instruction](#Instruction)
+    + [Others](#Others)
 
 # Script
 ## Environment
