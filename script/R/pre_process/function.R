@@ -119,6 +119,9 @@ manual <- function(removed, data, ideal){
   return(corrected)
 }
 
+### insert NA
+# data: data of the current trial
+# ideal: df_ideal
 insert_na <- function(data, ideal){
   # insert NA row
   while (nrow(data) < nrow(ideal)){
