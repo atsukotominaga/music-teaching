@@ -197,9 +197,9 @@ for (subnr in unique(df_kot$SubNr)){
 ####################################
 # Remove outliers (KOR)
 ####################################
-# df_kor_3
+# df_kor_1
 # exclude irrelevant notes (Subcomponent == NA means not 8th notes / KOR == NA means a missing value)
-df_kor_subset <- subset(df_kor_3, !is.na(df_kor_3$Subcomponent) & !is.na(df_kor_3$KOR))
+df_kor_subset <- subset(df_kor_1, !is.na(df_kor_1$Subcomponent) & !is.na(df_kor_1$KOR))
 
 # draw histogram and boxplot
 p_kor_hist <- ggplot(df_kor_subset, aes(x = KOR, fill = Grouping)) +
@@ -207,7 +207,7 @@ p_kor_hist <- ggplot(df_kor_subset, aes(x = KOR, fill = Grouping)) +
   theme_classic()
 plot(p_kor_hist)
 
-p_kor_box <- ggboxplot(df_kor_subset, x = "Skill", y = "KOR", color = "Condition")
+p_kor_box <- ggboxplot(df_kor_subset, x = "Subcomponent", y = "KOR", color = "Condition")
 p_kor_box <- ggpar(p_kor_box, ylab = "Key-Overlap Ratio (KOT/meanIOI)")
 plot(p_kor_box)
 
@@ -217,13 +217,14 @@ kor_subcomponent <- aggregate(KOR~Subcomponent, data = df_kor_subset,
 kor_subcomponent <- cbind(kor_subcomponent, as.data.frame(kor_subcomponent[,2]))
 df_kor_trim_sd <- data.frame()
 for (subcomponent in unique(df_kor_subset$Subcomponent)){
-  upper = kor_subcomponent$mean[kor_subcomponent$Subcomponent == subcomponent]+3*kor_subcomponent$sd[kor_subcomponent$Subcomponent == subcomponent]
-  lower = kor_subcomponent$mean[kor_subcomponent$Subcomponent == subcomponent]-3*kor_subcomponent$sd[kor_subcomponent$Subcomponent == subcomponent]
+  upper <- kor_subcomponent$mean[kor_subcomponent$Subcomponent == subcomponent]+3*kor_subcomponent$sd[kor_subcomponent$Subcomponent == subcomponent]
+  lower <- kor_subcomponent$mean[kor_subcomponent$Subcomponent == subcomponent]-3*kor_subcomponent$sd[kor_subcomponent$Subcomponent == subcomponent]
   df_current <- df_kor_subset %>% dplyr::filter(Subcomponent == subcomponent & KOR < upper & KOR > lower)
   df_kor_trim_sd <- rbind(df_kor_trim_sd, df_current)
 }
 removed_kor <- nrow(df_kor_subset)-nrow(df_kor_trim_sd)
 proportion_kor <- round(removed_kor/nrow(df_kor_subset), 5)
+write(sprintf("KOR: Remove %i responses beyond +- 3SD / %f percent", removed_kor, proportion_kor*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("KOR: Remove %i responses beyond +- 3SD / %f percent", removed_kor, proportion_kor*100))
 
 # draw histogram and boxplot
@@ -232,7 +233,7 @@ p_kor_hist_sd <- ggplot(df_kor_trim_sd, aes(x = KOR, fill = Grouping)) +
   theme_classic()
 plot(p_kor_hist_sd)
 
-p_kor_box_sd <- ggboxplot(df_kor_trim_sd, x = "Skill", y = "KOR", color = "Condition")
+p_kor_box_sd <- ggboxplot(df_kor_trim_sd, x = "Subcomponent", y = "KOR", color = "Condition")
 p_kor_box_sd <- ggpar(p_kor_box_sd, ylab = "Key-Overlap Ratio (KOT/meanIOI)")
 plot(p_kor_box_sd)
 
@@ -258,8 +259,8 @@ p_kot_hist <- ggplot(df_kot_subset, aes(x = KOT, fill = Grouping)) +
   theme_classic()
 plot(p_kot_hist)
 
-p_kot_box <- ggboxplot(df_kot_subset, x = "Skill", y = "KOT", color = "Condition")
-p_kot_box <- ggpar(p_kotbox, ylab = "Key-Overlap Time")
+p_kot_box <- ggboxplot(df_kot_subset, x = "Subcomponent", y = "KOT", color = "Condition")
+p_kot_box <- ggpar(p_kot_box, ylab = "Key-Overlap Time")
 plot(p_kot_box)
 
 # exclude kot > +- 3SD (per subcomponent)
@@ -268,13 +269,14 @@ kot_subcomponent <- aggregate(KOT~Subcomponent, data = df_kot_subset,
 kot_subcomponent <- cbind(kot_subcomponent, as.data.frame(kot_subcomponent[,2]))
 df_kot_trim_sd <- data.frame()
 for (subcomponent in unique(df_kot_subset$Subcomponent)){
-  upper = kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]+3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
-  lower = kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]-3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
+  upper <- kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]+3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
+  lower <- kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]-3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
   df_current <- df_kot_subset %>% dplyr::filter(Subcomponent == subcomponent & KOT < upper & KOT > lower)
   df_kot_trim_sd <- rbind(df_kot_trim_sd, df_current)
 }
 removed_kot <- nrow(df_kot_subset)-nrow(df_kot_trim_sd)
 proportion_kot <- round(removed_kot/nrow(df_kot_subset), 5)
+write(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100))
 
 # draw histogram and boxplot
@@ -283,7 +285,7 @@ p_kot_hist_sd <- ggplot(df_kot_trim_sd, aes(x = KOT, fill = Grouping)) +
   theme_classic()
 plot(p_kot_hist_sd)
 
-p_kot_box_sd <- ggboxplot(df_kot_trim_sd, x = "Skill", y = "KOT", color = "Condition")
+p_kot_box_sd <- ggboxplot(df_kot_trim_sd, x = "Subcomponent", y = "KOT", color = "Condition")
 p_kot_box_sd <- ggpar(p_kot_box_sd, ylab = "Key-Overlap Time")
 plot(p_kot_box_sd)
 
