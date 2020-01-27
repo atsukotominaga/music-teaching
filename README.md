@@ -36,9 +36,9 @@ All of the programme scripts were written and tested in the following environmen
 - imagePatch.maxpat: display stimuli on the screen in front of a participant.
 
 ### SubPatchers
-- MIDInoteRecording: acquire and save MIDI data.
-- dataFileNaming: create a file name.
-- condFileReading: read a condition file to determine the order of conditions for each participant.
+- MIDInoteRecording.maxpat: acquire and save MIDI data.
+- dataFileNaming.maxpat: create a file name.
+- condFileReading.maxpat: read a condition file to determine the order of conditions for each participant.
 
 ### Others
 - image: contains experimental stimuli.
