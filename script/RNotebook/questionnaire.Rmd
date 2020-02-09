@@ -1,24 +1,29 @@
 ---
-title: 'Analysis: The Sound of Teaching Music 1'
+title: 'Demographics: The Sound of Teaching Music 1'
 output:
   html_notebook: default
 editor_options: 
   chunk_output_type: inline
 ---
 
-##### Description: This is a summary of demographic information
+Description: This is a summary of demographic information
+
+```{r setup, include = FALSE}
+# packages
+# data manipulation
+if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+```
 
 # Outline - Questionnaire
 
 ```{r read, echo = FALSE}
 # Read csv files
-df <- read.csv("./questionnaire.csv", header = T, sep = ",", dec = ".")
+df <- read.csv("./questionnaire.csv", header = T, sep = ",", dec = ".", na.string = "NA")
 df_exc <- read.csv("./filtered/data_errorRate.csv", header = T, sep = ",", dec = ".")
 include <- df_exc$SubNr[df_exc$Final == "include"]
 
 # Change colnames
-colnames(df) <- c("TimeStamp", "SubNr", "Age", "Gender", "FirstLang", "SecondLang", "DominantHand", "NormalVision", "NormalHearing", "Desc1", "Desc2",
-                  "Instruments1", "FormalTraining1", "TotalPractice", "Start1", "End1", "PracticeHours", # Experience in musical instruments
+colnames(df) <- c("TimeStamp", "SubNr", "Age", "Gender", "FirstLang", "SecondLang", "DominantHand", "NormalVision", "NormalHearing", "Desc1", "Desc2", "Instruments1", "FormalTraining1", "TotalPractice", "Start1", "End1", "PracticeHours", # Experience in musical instruments
                   "Teaching", "Instruments2", "TotalTeaching1", "FormalTraining2", "Training", "AgeGroup", "Start2", "End2", "Like1", # Experience in teaching instruments
                   "Other", "Subject", "TotalTeaching2", "Like2") # Experinence in teaching in general
 
@@ -28,8 +33,9 @@ df$PianoTotalPractice <- c(14, 20, 27, 21, 10, 16, 9, 13, 25, 14, 13, 11, 6, 4, 
 print(df)
 ```
 
-### Descriptive stats for participants' demographics
-#### Number of excluded participants
+## Descriptive stats for participants' demographics
+### Number of excluded participants
+
 ```{r excluded, echo = FALSE}
 # Descriptive statistics for participants' demographics
 total <- nrow(df)
@@ -44,7 +50,7 @@ colnames(excluded_participants) <- c("Total", "Excluded participants", "Experime
 print(excluded_participants)
 ```
 
-#### Number of included participants
+### Number of included participants
 ```{r included, echo = FALSE}
 # Data frame with only included participants
 df_demo <- data.frame()
@@ -65,9 +71,10 @@ colnames(included_participants) <- c("Total", "Included participants", "Male", "
 print(included_participants)
 ```
 
-#### Error Rate of excluded participants
+### Error Rate of excluded participants
 ```{r errorRate_excluded, echo = FALSE}
 # Information about excluded participants due to errorRate (SubNr 16 was excluded but due to not errorRate but tempo deviation)
+# Error Rate = the number of trials which contain any mistake (Not the number of mistakes in a trial)
 errorRate_mean_exc <- mean(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])*100
 errorRate_sd_exc <- sd(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])*sqrt((length(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])-1)/length(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16]))*100 #biased sd for the current data
 errorRate_median_exc <- median(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])*100
@@ -79,7 +86,7 @@ colnames(errorRate_excluded) <- c("ER Mean", "ER SD", "ER Median", "ER Min", "ER
 print(errorRate_excluded)
 ```
 
-#### Error Rate: Normality test for excluded participants
+### Error Rate: Normality test for excluded participants
 ```{r normality_for_excluded, echo = FALSE}
 # Normality check
 errorRate_excluded_norm <- shapiro.test(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])
@@ -88,9 +95,10 @@ print(errorRate_excluded_norm)
 # Note: The distributions fo error rates were not normal, so we decided to report median values (plus its range) rather than mean values.
 ```
 
-#### Error Rate of included participants
+### Error Rate of included participants
 ```{r er_included, echo = FALSE}
 # Information about included participants
+# Error Rate = the number of trials which contain any mistake (Not the number of mistakes in a trial)
 errorRate_mean_inc <- mean(df_exc$ErrorRate[df_exc$Final == "include"])*100
 errorRate_sd_inc <- sd(df_exc$ErrorRate[df_exc$Final == "include"])*sqrt((length(df_exc$ErrorRate[df_exc$Final == "include"])-1)/length(df_exc$ErrorRate[df_exc$Final == "include"]))*100 #biased sd for the current data
 errorRate_median_inc <- median(df_exc$ErrorRate[df_exc$Final == "include"])*100
@@ -102,7 +110,7 @@ colnames(errorRate_included) <- c("ER Mean", "ER SD", "ER Median", "ER Min", "ER
 print(errorRate_included)
 ```
 
-#### Error Rate: Normality test for included participants
+### Error Rate: Normality test for included participants
 ```{r normality_for_included, echo = FALSE}
 # Normality check
 errorRate_included_norm <- shapiro.test(df_exc$ErrorRate[df_exc$Final == "include"])
