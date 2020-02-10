@@ -72,7 +72,7 @@ print(included_participants)
 ```
 
 ### Error Rate of excluded participants
-```{r errorRate_excluded, echo = FALSE}
+```{r er_excluded, echo = FALSE}
 # Information about excluded participants due to errorRate (SubNr 16 was excluded but due to not errorRate but tempo deviation)
 # Error Rate = the number of trials which contain any mistake (Not the number of mistakes in a trial)
 errorRate_mean_exc <- mean(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])*100
