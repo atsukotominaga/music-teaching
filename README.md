@@ -59,18 +59,18 @@ You need filtered and trimmed folders to run the scripts below (outputs from fil
 - articulation.Rmd: analysis and plots for KOT/KOR >> output: html file
 - dynamics.Rmd: analysis and plots for KV/KV-Diff >> output: html file
 
+# Material
+## Instruction
+- instruction.Rmd: a instruction sheet for an experimenter >> output: html file
+- image: figures used in the instruction sheet
+- psd files: images used in the instruction >> output: png files
+
 ## Lilypond
 - ly files: sheet music compiled by lilypond >> output: pdf files
 
 ## Python
 - stimuli.py: generate experimental stimuli >> output: stimuli and practice folders
 - cropped: used for stimuli generation
-
-# Material
-## Instruction
-- instruction.Rmd: a instruction sheet for an experimenter >> output: html file
-- image: figures used in the instruction sheet
-- psd files: images used in the instruction >> output: png files
 
 ## Others
 - cropped: original sheet music
