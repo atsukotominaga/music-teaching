@@ -7,11 +7,11 @@ Open Science Framework: [https://osf.io/35ryj/](https://osf.io/35ryj/) (Raw data
     + [Max (Experiment)](#Max)
     + [R (Filtering/Trimming)](#R)
     + [R Notebook (Data analysis)](#R-Notebook)
-    + [Lilypond (Stimuli - sheet music)](#Lilypond)
-    + [Python (Stimuli - image processing)](#Python)
 
 - [Material](#material)
     + [Instruction](#Instruction)
+    + [Lilypond (Stimuli - sheet music)](#Lilypond)
+    + [Python (Stimuli - image processing)](#Python)
     + [Others](#Others)
 
 # Script
