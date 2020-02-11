@@ -59,19 +59,18 @@ You need filtered and trimmed folders to run the scripts below (outputs from fil
 You need questionnaire.csv to run the script below (get the file from [OSF](https://osf.io/35ryj/)).
 - questionnaire.Rmd
 
+# Material
+## Instruction
+- instruction.Rmd: a instruction sheet for an experimenter >> output: html file.
+- image: figures used in the instruction sheet
+- psd files: images used in the instruction >> output: png files
+
 ## Lilypond
 - ly files: sheet music compiled by lilypond >> output: pdf files
 
 ## Jupyter Notebook
 - image_generator.ipynb: generate experimental stimuli (see more information on jupyter notebook) >> output: stimuli and practice folders
 - image: used for stimuli generation
-
-# Material
-
-## Instruction
-- instruction.Rmd: a instruction sheet for an experimenter >> output: html file.
-- image: figures used in the instruction sheet
-- psd files: images used in the instruction >> output: png files
 
 ## Others
 - cropped: original sheet music
