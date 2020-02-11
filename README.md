@@ -7,11 +7,11 @@ This repo contains scripts and materials necessary for a musical experiment with
     + [Max (Experiment)](#Max)
     + [R (Filtering/Trimming)](#R)
     + [R Notebook(Data analysis)](#R-Notebook)
-    + [Lilypond (Stimuli - sheet music)](#Lilypond)
-    + [Jupyter Notebnook (Stimuli - image processing)](#Jupyter-notebook)
-    
+   
 - [Material](#Material)
     + [Instruction](#Instruction)
+    + [Lilypond (Stimuli - sheet music)](#Lilypond)
+    + [Jupyter Notebnook (Stimuli - image processing)](#Jupyter-notebook)
     + [Others](#Others)
 
 # Script
