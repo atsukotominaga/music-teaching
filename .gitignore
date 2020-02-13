@@ -19,8 +19,8 @@ script/Max/data/
 script/Max/midi/
 script/Max/cond/cb_checking.xlsx
 
-# Jupyter notebook
-script/jupyter/.ipynb_checkpoints/image_generator-checkpoint.ipynb
+# Jupyter Notebook
+*.ipynb
 
 # personal stuff
 script/R/old_analysis
