@@ -1,6 +1,6 @@
 This repo contains scripts and materials necessary for a musical experiment with expert pianists.
 
- Open Science Framework: [https://osf.io/35ryj/](https://osf.io/35ryj/) (Raw data are available in OSF (Experiment 1))
+ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/) (Raw data are available in OSF (Experiment 1))
 
 # Overview
 - [Script](#Script)
@@ -45,7 +45,7 @@ All of the programme scripts were written and tested in the following environmen
 - cond: contains a csv file and an excel file about the order of conditions for each participant
 
 ## R
-You need raw_data folder to run the scripts below (get the folder from [OSF](https://osf.io/35ryj/))
+You need raw_data folder to run the scripts below (get the folder from [OSF](https://osf.io/8nbjh/))
 - filtering.R: clean data and remove performance errors. >> output: filtered folder
     + In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 65.
 - trimming.R: calculate dependent variables and remove outliers. >> output: trimmed folder
@@ -56,7 +56,7 @@ You need filtered and trimmed folders to run the scripts below (outputs from fil
 - articulation.Rmd: analysis and plots for KOT/KOR >> output: html file
 - dynamics.Rmd: analysis and plots for KV/KV-Diff >> output: html file
 
-You need questionnaire.csv to run the script below (get the file from [OSF](https://osf.io/35ryj/)).
+You need questionnaire.csv to run the script below (get the file from [OSF](https://osf.io/8nbjh/)).
 - questionnaire.Rmd
 
 # Material
