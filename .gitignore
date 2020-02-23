@@ -16,9 +16,9 @@ script/Max/midi
 
 # R
 script/R/old/
-script/R/pre_process/raw_data/
-script/R/pre_process/filtered/
-script/R/pre_process/trimmed/
+script/R/preprocessor/raw_data/
+script/R/preprocessor/filtered/
+script/R/preprocessor/trimmed/
 
 # RNotebook
 script/RNotebook/trimmed/
