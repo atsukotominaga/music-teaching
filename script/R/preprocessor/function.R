@@ -1,4 +1,8 @@
 ##### FUNCTIONS #####
+
+# install and load required packages
+if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+
 ### define pitch remove function (pitch_remover)
 # data: data of all trials (df_onset/df_offset)
 # ideal: df_ideal
@@ -49,8 +53,9 @@ check <- function(removed, data, ideal){
       # detect onset error
       if (data[note,]$Pitch != ideal$Pitch[note]){
         while (counter == 0) {
+          removed$errorDiff[i] <- nrow(data)-nrow(ideal)
           removed$errorRowNr[i] <- note
-          print(sprintf("More: RowNr: %i", note))
+          print(sprintf("+%i: RowNr: %i", nrow(data)-nrow(ideal), note))
           counter = counter + 1
         } 
       }
@@ -61,8 +66,9 @@ check <- function(removed, data, ideal){
       # detect onset error
       if (data[note,]$Pitch != ideal$Pitch[note]){
         while (counter == 0) {
+          removed$errorDiff[i] <- nrow(ideal)-nrow(data)
           removed$errorRowNr[i] <- note
-          print(sprintf("Less: RowNr: %i", note))
+          print(sprintf("-%i: RowNr: %i", nrow(ideal)-nrow(data), note))
           counter = counter + 1
         }
       }
@@ -73,23 +79,28 @@ check <- function(removed, data, ideal){
       # detect onset error
       if (data[note,]$Pitch != ideal$Pitch[note]){
         while (counter == 0) {
+          removed$errorDiff[i] <- nrow(data)-nrow(ideal)
           removed$errorRowNr[i] <- note
-          print(sprintf("Equal: RowNr: %i", note))
+          print(sprintf("+-%i: RowNr: %i", nrow(data)-nrow(ideal), note))
           counter = counter + 1
         }
       }
     } 
-  } else if (nrow(data) >= length(ideal$Pitch)*1.05){ # error more than 5%
+  } else if (nrow(data) >= length(ideal$Pitch)*1.1){ # error more than 10%
     removed$errorType[i] <- "Check"
-    removed$errorRowNr[i] <- "NoteNr more than 10%"
-    print("Check - NoteNr more than 10%")
-  } else if (nrow(data) <= length(ideal$Pitch)*0.95){ # error less than 5%
+    removed$errorDiff[i] <- nrow(data)-nrow(ideal)
+    removed$errorRowNr[i] <- NA
+    print(sprintf("+%i: Check - NoteNr more than 10 percent", nrow(data)-nrow(ideal)))
+  } else if (nrow(data) <= length(ideal$Pitch)*0.9){ # error less than 10%
     removed$errorType[i] <- "Check"
-    removed$errorRowNr[i] <- "NoteNr less than 10%"
-    print("Check - NoteNr less than 10%")
+    removed$errorDiff[i] <- nrow(ideal)-nrow(data)
+    removed$errorRowNr[i] <- NA
+    print(sprintf("-%i: Check - NoteNr less than 10 percent", nrow(ideal)-nrow(data)))
   } else { # other problems
     removed$errorType[i] <- "Other"
+    removed$errorDiff[i] <- nrow(ideal)-nrow(data)
     removed$errorRowNr[i] <- "Check individually"
+    print("Check individually")
   }
   return(removed)
 }
@@ -103,7 +114,7 @@ manual <- function(removed, data, ideal){
   length_diff <- abs(length(data$Pitch) - length(ideal$Pitch))
   data$Ideal <- c(ideal$Pitch, rep(NA, length_diff))
   data$Diff[data$Pitch == data$Ideal] <- 0
-  data$Diff[data$Pitch != data$Ideal] <- "!!!!!"
+  data$Diff[data$Pitch != data$Ideal] <- "!!DIFFERENT!!"
   # sort the order of columns
   data <- data[c("RowNr", "NoteNr", "TimeStamp", "Pitch", "Ideal", "Diff", "Velocity", "Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")]
   graph <- ggplot() +
@@ -119,7 +130,7 @@ manual <- function(removed, data, ideal){
   return(corrected)
 }
 
-### insert NA
+### insert NA until NoteNr reaches 72
 # data: data of the current trial
 # ideal: df_ideal
 insert_na <- function(data, ideal){
@@ -131,7 +142,7 @@ insert_na <- function(data, ideal){
         while (counter == 0){
           data <- add_row(data, .before = note)
           data$Pitch[note] <- ideal$Pitch[note]
-          data[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note,] <- data[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note-1,]
+          data[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note,] <- data[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note-1,] # add label for the inserted row
           counter = counter + 1
         }
       }
