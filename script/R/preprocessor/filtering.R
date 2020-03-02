@@ -280,13 +280,13 @@ manual(current1016, df_ideal)
 current1016 <- add_row(current1016, .before = 8)
 current1016$Pitch[8] <- df_ideal$Pitch[8]
 current1016[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][8,] <- current1016[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][8-1,]
-# check the plot again
+# check the plot
 manual(current1016, df_ideal)
 
 # remove the first two mistakes
 current1016 <- manual(current1016, df_ideal)
 current1016 <- manual(current1016, df_ideal)
-# check the plot again
+# check the plot
 manual(current1016, df_ideal) # perfectly corrected
 removed_others_onset$errorType[4] <- "Correction"
 removed_others_onset$errorCorrection[4] <- "Removal: 2, Addition: 1"
@@ -506,9 +506,10 @@ current431_offset <- current431_offset[-c(1:18),]
 # check the plot
 manual(current431_offset, df_ideal)
 
+
 removed_others_offset$errorType[1] <- "More"
 removed_others_offset$errorCorrection[1] <- 0 #because the second try was successful
-df_corrected_others_offset <- rbind(df_corrected_others_offset, current431_offset[,-c(5:6)])
+df_corrected_others_offset <- rbind(df_corrected_others_offset, current431_offset[,-15])
 
 ### 2. SubNr 11, BlockNr 1, TrialNr 1
 # Could not finish performing till the end - Exclude
@@ -560,7 +561,7 @@ manual(current236_offset, df_ideal)
 
 # replace 3 wrong notes to NA
 current236_offset <- manual(current236_offset, df_ideal)
-# remove tthe first wrong note
+# remove the first wrong note
 current236_offset <- manual(current236_offset, df_ideal)
 # check the plot
 manual(current236_offset, df_ideal)
@@ -594,9 +595,9 @@ manual(current1016_offset, df_ideal)
 # insert one row at the first mistake (RowNr 8)
 current1016_offset <- add_row(current1016_offset, .before = 8)
 current1016_offset$Pitch[8] <- df_ideal$Pitch[8]
-current1016_offset[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note,] <- current1016_offset[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note-1,]
+current1016_offset[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][8,] <- current1016_offset[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][8-1,]
 
-# check the plot again
+# check the plot
 manual(current1016_offset, df_ideal)
 
 # remove the first two errors
@@ -614,16 +615,11 @@ current1535_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset
 # check the plot
 manual(current1535_offset, df_ideal)
 
-# insert NA for the first two errors
-current1535_offset <- manual(removed_others_offset, current1535_offset, df_ideal)
-# check the plot again
-manual(removed_others_offset, current1535_offset, df_ideal)
-
 # replace 2 wrong notes to NA
 current1535_offset <- manual(current1535_offset, df_ideal)
 # remove the first wrong note
 current1535_offset <- manual(current1535_offset, df_ideal)
-# check the plot again
+# check the plot
 manual(current1535_offset, df_ideal)
 
 removed_others_offset$errorType[8] <- "Correction"
@@ -664,3 +660,12 @@ write.csv(df_corrected_others_offset, file = "./filtered/data_corrected_others_o
 
 # Export a csv file for df_error_correction_onset
 write.csv(df_error_correction_offset, file = "./filtered/data_error_correction_offset.csv", row.names = F)
+
+####################################
+# Check with pitch_remover again
+####################################
+onset <- read.csv(file = "./filtered/data_correct_onset.csv")
+offset <- read.csv(file = "./filtered/data_correct_offset.csv")
+
+pitch_remover(onset, df_ideal)
+pitch_remover(offset, df_ideal)
