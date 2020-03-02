@@ -124,9 +124,9 @@ for (i in 1:nrow(removed_more_onset)){
   while (decision == 2){
     print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
     print("----- First check -----")
-    current <- manual(removed_more_onset, current, df_ideal)
+    current <- manual(current, df_ideal)
     print("----- Correction check -----")
-    manual(removed_more_onset, current, df_ideal)
+    manual(current, df_ideal)
     decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
     if (decision == 1){
       correction = correction + 1
@@ -163,7 +163,7 @@ for (i in 1:nrow(removed_less_onset)){
   current <- insert_na(current, df_ideal)
   print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
   print("----- Correction check -----")
-  current <- manual(removed_less_onset, current, df_ideal)
+  current <- manual(current, df_ideal)
   decision <- menu(c("y", "other"), title = "Save the current data?")
   if (decision == 1){
     removed_less_onset$errorCorrection[i] <- removed_less_onset$errorDiff[i]
@@ -196,9 +196,9 @@ for (i in 1:nrow(removed_equal_onset)){
   while (decision == 2){
     print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
     print("----- First check -----")
-    current <- manual(removed_equal_onset, current, df_ideal)
+    current <- manual(current, df_ideal)
     print("----- Correction check -----")
-    manual(removed_equal_onset, current, df_ideal)
+    manual(current, df_ideal)
     decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
     if (decision == 1){
       correction = correction + 1
@@ -240,7 +240,7 @@ print(removed_others_onset) # look at an individual performance
 current431 <- df_onset %>% dplyr::filter(SubNr == removed_others_onset[1,1] & BlockNr == removed_others_onset[1,2] & TrialNr == removed_others_onset[1,3])
 current431 <- current431[-c(1:18),]
 # check the plot
-manual(removed_others_onset, current431, df_ideal)
+manual(current431, df_ideal)
 
 removed_others_onset$errorType[1] <- "More"
 removed_others_onset$errorCorrection[1] <- 0 #because the second try was successful
@@ -254,17 +254,17 @@ removed_others_onset$errorCorrection[2] <- "Could not finish performing till the
 ### 3. SubNr 2, BlockNr 3, TrialNr 6
 current236 <- df_onset %>% dplyr::filter(SubNr == removed_others_onset[3,1] & BlockNr == removed_others_onset[3,2] & TrialNr == removed_others_onset[3,3])
 # check the plot
-manual(removed_others_onset, current236, df_ideal)
+manual(current236, df_ideal)
 
 # remove one extra note
-current236 <- manual(removed_others_onset, current236, df_ideal)
+current236 <- manual(current236, df_ideal)
 # check the plot
-manual(removed_others_onset, current236, df_ideal)
+manual(current236, df_ideal)
 
 # replace wrong note to NA
-current236 <- manual(removed_others_onset, current236, df_ideal)
+current236 <- manual(current236, df_ideal)
 # check the plot
-manual(removed_others_onset, current236, df_ideal)
+manual(current236, df_ideal)
 
 removed_others_onset$errorType[3] <- "Correction"
 removed_others_onset$errorCorrection[3] <- "Removal: 1, Replacement to NA: 2"
@@ -274,20 +274,20 @@ df_corrected_others_onset <- rbind(df_corrected_others_onset, current236[,-c(5:6
 # Many mistakes >> correct manually
 current1016 <- df_onset %>% dplyr::filter(SubNr == removed_others_onset[4,1] & BlockNr == removed_others_onset[4,2] & TrialNr == removed_others_onset[4,3])
 # check the plot
-manual(removed_others_onset, current1016, df_ideal)
+manual(current1016, df_ideal)
 
 # insert one row at the first mistake (RowNr 8)
 current1016 <- add_row(current1016, .before = 8)
 current1016$Pitch[8] <- df_ideal$Pitch[8]
 current1016[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][8,] <- current1016[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][8-1,]
 # check the plot again
-manual(removed_others_onset, current1016, df_ideal)
+manual(current1016, df_ideal)
 
 # remove the first two mistakes
-current1016 <- manual(removed_others_onset, current1016, df_ideal)
-current1016 <- manual(removed_others_onset, current1016, df_ideal)
+current1016 <- manual(current1016, df_ideal)
+current1016 <- manual(current1016, df_ideal)
 # check the plot again
-manual(removed_others_onset, current1016, df_ideal) # perfectly corrected
+manual(current1016, df_ideal) # perfectly corrected
 removed_others_onset$errorType[4] <- "Correction"
 removed_others_onset$errorCorrection[4] <- "Removal: 2, Addition: 1"
 df_corrected_others_onset <- rbind(df_corrected_others_onset, current1016[,-c(5:6)])
@@ -297,13 +297,12 @@ df_corrected_others_onset <- rbind(df_corrected_others_onset, current1016[,-c(5:
 removed_others_onset$errorType[5] <- "Exclude"
 removed_others_onset$errorCorrection[5] <- "Did not follow the sheet music"
 
-####################################
 # create pitch-error-free responses 
 df_correct_onset_updated <- rbind(df_correct_onset[,-15], df_corrected_more_onset, df_corrected_less_onset, df_corrected_equal_onset, df_corrected_others_onset)
 
 # create info about correction
-df_error_correction <- rbind(subset(removed_more_onset, removed_more_onset$errorType == "More"), subset(removed_less_onset, removed_less_onset$errorType == "Less"), subset(removed_equal_onset, removed_equal_onset$errorType == "Equal"), removed_others_onset)
-)
+df_error_correction_onset <- rbind(subset(removed_more_onset, removed_more_onset$errorType == "More"), subset(removed_less_onset, removed_less_onset$errorType == "Less"), subset(removed_equal_onset, removed_equal_onset$errorType == "Equal"), removed_others_onset)
+
 ####################################
 # Export csv files
 ####################################
@@ -333,8 +332,8 @@ write.csv(df_corrected_equal_onset, file = "./filtered/data_corrected_equal_onse
 # Export a csv file for df_corrected_others_onset
 write.csv(df_corrected_others_onset, file = "./filtered/data_corrected_others_onset.csv", row.names = F)
 
-# Export a csv file for df_corrected_others_onset
-write.csv(df_error_correction, file = "./filtered/data_error_correction.csv", row.names = F)
+# Export a csv file for df_error_correction_onset
+write.csv(df_error_correction_onset, file = "./filtered/data_error_correction_onset.csv", row.names = F)
 
 ####################################
 # OFFSET
@@ -391,9 +390,9 @@ for (i in 1:nrow(removed_more_offset)){
   while (decision == 2){
     print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
     print("----- First check -----")
-    current <- manual(removed_more_offset, current, df_ideal)
+    current <- manual(current, df_ideal)
     print("----- Correction check -----")
-    manual(removed_more_offset, current, df_ideal)
+    manual(current, df_ideal)
     decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
     if (decision == 1){
       correction = correction + 1
@@ -430,7 +429,7 @@ for (i in 1:nrow(removed_less_offset)){
   current <- insert_na(current, df_ideal)
   print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
   print("----- Correction check -----")
-  current <- manual(removed_less_offset, current, df_ideal)
+  current <- manual(current, df_ideal)
   decision <- menu(c("y", "other"), title = "Save the current data?")
   if (decision == 1){
     removed_less_offset$errorCorrection[i] <- removed_less_offset$errorDiff[i]
@@ -463,9 +462,9 @@ for (i in 1:nrow(removed_equal_offset)){
   while (decision == 2){
     print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
     print("----- First check -----")
-    current <- manual(removed_equal_offset, current, df_ideal)
+    current <- manual(current, df_ideal)
     print("----- Correction check -----")
-    manual(removed_equal_offset, current, df_ideal)
+    manual(current, df_ideal)
     decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
     if (decision == 1){
       correction = correction + 1
@@ -489,62 +488,108 @@ for (i in 1:nrow(removed_equal_offset)){
 ########################################################################
 # check the data individually by listening to the original midi
 # performance and decide whether to correct or discard the data
-########################################################################
 # !descriptions below are unique to my dataset!
 print("----- Check individually -----")
+df_removed_offset$errorCorrection <- NA # create errorCorrection column
 removed_others_offset <- rbind(subset(df_removed_offset, df_removed_offset$errorType == "Check"),
                               subset(removed_more_offset, removed_more_offset$errorType == "Other"),
                               subset(removed_less_offset, removed_less_offset$errorType == "Other"),
                               subset(removed_equal_offset, removed_equal_offset$errorType == "Other"))
+df_removed_offset$errorCorrection <- NULL # delete errorCorrection column
 df_corrected_others_offset <- data.frame() #create data.frame to store correced data
-print(removed_others_offset)
+print(removed_others_offset) # look at an individual performance
 
 ### 1. SubNr 4, BlockNr 3, TrialNr 1
 # He/She started stopped playing in the middle and started playing from the beginning >> removed the first try and check errors from the second try.
 current431_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[1,1] & BlockNr == removed_others_offset[1,2] & TrialNr == removed_others_offset[1,3])
 current431_offset <- current431_offset[-c(1:18),]
-current431_offset <- manual(removed_others_offset, current431_offset, df_ideal)
+# check the plot
+manual(current431_offset, df_ideal)
+
+removed_others_offset$errorType[1] <- "More"
+removed_others_offset$errorCorrection[1] <- 0 #because the second try was successful
 df_corrected_others_offset <- rbind(df_corrected_others_offset, current431_offset[,-c(5:6)])
 
 ### 2. SubNr 11, BlockNr 1, TrialNr 1
 # Could not finish performing till the end - Exclude
+removed_others_offset$errorType[2] <- "Exclude"
+removed_others_offset$errorCorrection[2] <- "Could not finish performing till the end"
 
-### 3. SubNr 1, BlockNr 4, TrialNr 3
-current143_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[3,1] & BlockNr == removed_others_offset[3,2] & TrialNr == removed_others_offset[3,3])
-# insert NA for the first five errors
-current143_offset <- manual(removed_others_offset, current143_offset, df_ideal)
-# remove the first error
-current143_offset <- manual(removed_others_offset, current143_offset, df_ideal)
+### 3. SubNr 1, BlockNr 2, TrialNr 3
+current123_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[3,1] & BlockNr == removed_others_offset[3,2] & TrialNr == removed_others_offset[3,3])
 # check the plot
-manual(removed_others_offset, current143_offset, df_ideal)
+manual(current123_offset, df_ideal)
+
+# remove the first wrong note
+current123_offset <- manual(current123_offset, df_ideal)
+# check the plot
+manual(current123_offset, df_ideal)
+
+# replace 4 wrong notes to NA
+current123_offset <- manual(current123_offset, df_ideal)
+# check the plot
+manual(current123_offset, df_ideal)
+
+removed_others_offset$errorType[3] <- "Correction"
+removed_others_offset$errorCorrection[3] <- "Removal: 1, Replacement to NA: 4"
+df_corrected_others_offset <- rbind(df_corrected_others_offset, current123_offset[,-c(5:6)])
+
+### 4. SubNr 1, BlockNr 4, TrialNr 3
+current143_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[4,1] & BlockNr == removed_others_offset[4,2] & TrialNr == removed_others_offset[4,3])
+# check the plot
+manual(current143_offset, df_ideal)
+
+# replace 5 wrong notes to NA
+current143_offset <- manual(current143_offset, df_ideal)
+# check the plot
+manual(current143_offset, df_ideal)
+
+# remove the first wrong note
+current143_offset <- manual(current143_offset, df_ideal)
+# check the plot
+manual(current143_offset, df_ideal)
+
+removed_others_offset$errorType[4] <- "Correction"
+removed_others_offset$errorCorrection[4] <- "Removal: 1, Replacement to NA: 5"
 df_corrected_others_offset <- rbind(df_corrected_others_offset, current143_offset[,-c(5:6)])
 
-### 4. SubNr 8, BlockNr 1,TrialNr 1
-current811_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[4,1] & BlockNr == removed_others_offset[4,2] & TrialNr == removed_others_offset[4,3])
-# remove the first two errors
-current811_offset <- manual(removed_others_offset, current811_offset, df_ideal)
-current811_offset <- manual(removed_others_offset, current811_offset, df_ideal)
+### 5. SubNr 2, BlockNr 3, TrialNr 6
+current236_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[5,1] & BlockNr == removed_others_offset[5,2] & TrialNr == removed_others_offset[5,3])
 # check the plot
-manual(removed_others_offset, current811_offset, df_ideal)
-df_corrected_others_offset <- rbind(df_corrected_others_offset, current811_offset[,-c(5:6)])
+manual(current236_offset, df_ideal)
 
-### 5. SubNr 8, BlockNr 4, TrialNr 2
-current842_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[5,1] & BlockNr == removed_others_offset[5,2] & TrialNr == removed_others_offset[5,3])
+# replace 3 wrong notes to NA
+current236_offset <- manual(current236_offset, df_ideal)
+# remove tthe first wrong note
+current236_offset <- manual(current236_offset, df_ideal)
 # check the plot
-manual(removed_others_offset, current842_offset, df_ideal)
-# insert NA for the first two errors
-current842_offset <- manual(removed_others_offset, current842_offset, df_ideal)
-# remove the first error
-current842_offset <- manual(removed_others_offset, current842_offset, df_ideal)
-# check the plot again
-manual(removed_others_offset, current842_offset, df_ideal)
+manual(current236_offset, df_ideal)
+
+removed_others_offset$errorType[5] <- "Correction"
+removed_others_offset$errorCorrection[5] <- "Removal: 1, Replacement to NA: 3"
+df_corrected_others_offset <- rbind(df_corrected_others_offset, current236_offset[,-c(5:6)])
+
+### 6. SubNr 8, BlockNr 4,TrialNr 2
+current842_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[6,1] & BlockNr == removed_others_offset[6,2] & TrialNr == removed_others_offset[6,3])
+# check the plot
+manual(current842_offset, df_ideal)
+
+# replace 2 wrong notes to NA
+current842_offset <- manual(current842_offset, df_ideal)
+# remove the first wrong note
+current842_offset <- manual(current842_offset, df_ideal)
+# check the plot
+manual(current842_offset, df_ideal)
+
+removed_others_offset$errorType[6] <- "Correction"
+removed_others_offset$errorCorrection[6] <- "Removal: 1, Replacement to NA: 2"
 df_corrected_others_offset <- rbind(df_corrected_others_offset, current842_offset[,-c(5:6)])
 
-# 6. SubNr 10, BlockNr 1, TrialNr 6
+# 7. SubNr 10, BlockNr 1, TrialNr 6
 # Many mistakes >> correct manually
-current1016_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[6,1] & BlockNr == removed_others_offset[6,2] & TrialNr == removed_others_offset[6,3])
+current1016_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[7,1] & BlockNr == removed_others_offset[7,2] & TrialNr == removed_others_offset[7,3])
 # check the plot
-manual(removed_others_offset, current1016_offset, df_ideal)
+manual(current1016_offset, df_ideal)
 
 # insert one row at the first mistake (RowNr 8)
 current1016_offset <- add_row(current1016_offset, .before = 8)
@@ -552,37 +597,49 @@ current1016_offset$Pitch[8] <- df_ideal$Pitch[8]
 current1016_offset[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note,] <- current1016_offset[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note-1,]
 
 # check the plot again
-manual(removed_others_offset, current1016_offset, df_ideal)
+manual(current1016_offset, df_ideal)
 
 # remove the first two errors
-current1016_offset <- manual(removed_others_offset, current1016_offset, df_ideal)
-current1016_offset <- manual(removed_others_offset, current1016_offset, df_ideal)
+current1016_offset <- manual(current1016_offset, df_ideal)
+current1016_offset <- manual(current1016_offset, df_ideal)
+# check the plot
+manual(current1016_offset, df_ideal)
 
-# check the plot again
-manual(removed_others_offset, current1016_offset, df_ideal)
+removed_others_offset$errorType[7] <- "Correction"
+removed_others_offset$errorCorrection[7] <- "Removal: 2, Addition: 2"
 df_corrected_others_offset <- rbind(df_corrected_others_offset, current1016_offset[,-c(5:6)])
 
-### 7. SubNr 15, BlockNr 3, TrialNr 5
-current1535_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[7,1] & BlockNr == removed_others_offset[7,2] & TrialNr == removed_others_offset[7,3])
+### 8. SubNr 15, BlockNr 3, TrialNr 5
+current1535_offset <- df_offset %>% dplyr::filter(SubNr == removed_others_offset[8,1] & BlockNr == removed_others_offset[8,2] & TrialNr == removed_others_offset[8,3])
 # check the plot
-manual(removed_others_offset, current1535_offset, df_ideal)
+manual(current1535_offset, df_ideal)
 
 # insert NA for the first two errors
 current1535_offset <- manual(removed_others_offset, current1535_offset, df_ideal)
 # check the plot again
 manual(removed_others_offset, current1535_offset, df_ideal)
 
-# remove the first error
-current1535_offset <- manual(removed_others_offset, current1535_offset, df_ideal)
+# replace 2 wrong notes to NA
+current1535_offset <- manual(current1535_offset, df_ideal)
+# remove the first wrong note
+current1535_offset <- manual(current1535_offset, df_ideal)
 # check the plot again
-manual(removed_others_offset, current1535_offset, df_ideal)
+manual(current1535_offset, df_ideal)
+
+removed_others_offset$errorType[8] <- "Correction"
+removed_others_offset$errorCorrection[8] <- "Removal: 1, Replacement to NA: 2"
 df_corrected_others_offset <- rbind(df_corrected_others_offset, current1535_offset[,-c(5:6)])
 
-### 8. SubNr 7, BlockNr 1, TrialNr 6
+### 9. SubNr 7, BlockNr 1, TrialNr 6
 # Did not follow the sheet music - Exclude
+removed_others_offset$errorType[9] <- "Exclude"
+removed_others_offset$errorCorrection[9] <- "Did not follow the sheet music"
 
 # create pitch-error-free responses
 df_correct_offset_updated <- rbind(df_correct_offset[,-15], df_corrected_more_offset, df_corrected_less_offset, df_corrected_equal_offset, df_corrected_others_offset)
+
+# create info about correction
+df_error_correction_offset <- rbind(subset(removed_more_offset, removed_more_offset$errorType == "More"), subset(removed_less_offset, removed_less_offset$errorType == "Less"), subset(removed_equal_offset, removed_equal_offset$errorType == "Equal"), removed_others_offset)
 
 ####################################
 # Export csv files
@@ -604,3 +661,6 @@ write.csv(df_corrected_equal_offset, file = "./filtered/data_corrected_equal_off
 
 # Export a csv file for df_corrected_others_offset
 write.csv(df_corrected_others_offset, file = "./filtered/data_corrected_others_offset.csv", row.names = F)
+
+# Export a csv file for df_error_correction_onset
+write.csv(df_error_correction_offset, file = "./filtered/data_error_correction_offset.csv", row.names = F)

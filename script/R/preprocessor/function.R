@@ -106,10 +106,9 @@ check <- function(removed, data, ideal){
 }
 
 ### manual removal
-# removed: removed_more/removed_less
 # data: data of the current trial
 # ideal: df_ideal
-manual <- function(removed, data, ideal){
+manual <- function(data, ideal){
   data$RowNr <- c(1:nrow(data))
   length_diff <- abs(length(data$Pitch) - length(ideal$Pitch))
   data$Ideal <- c(ideal$Pitch, rep(NA, length_diff))
