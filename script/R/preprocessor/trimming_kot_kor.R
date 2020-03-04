@@ -6,7 +6,7 @@
 ####################################
 # Created: 26/11/2019
 # This script removes outliers.
-# GitHub repo (private): https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R 
+# GitHub repo: https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R 
 
 ####################################
 #  Requirements
@@ -135,7 +135,7 @@ for (phrase in 1:length(ls_piano)){
   }
 }
 
-# Assign Subcomponent Change
+# assign Subcomponent Change
 for (number in change_1){
   df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == number] <- "LtoS"
   df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "FtoP"
@@ -145,7 +145,7 @@ for (number in change_2){
   df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "PtoF"
 }
 
-# Add a grouping name
+# add a grouping name
 ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
 for (cond in 1:length(ls_grouping$Condition)){
   for (skill in 1:length(ls_grouping$Skill)){
@@ -182,7 +182,7 @@ for (subnr in unique(df_kot$SubNr)){
 }
 
 # Calculate KOR for each interval (ioi_3)
-df_kor_3<- data.frame()
+df_kor_3 <- data.frame()
 for (subnr in unique(df_kot$SubNr)){
   for (block in unique(df_kot$BlockNr[df_kot$SubNr == subnr])){
     for (trial in unique(df_kot$TrialNr[df_kot$SubNr == subnr & df_kot$BlockNr == block])){
