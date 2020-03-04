@@ -1,0 +1,120 @@
+---
+title: 'Demographics: The Sound of Teaching Music 1'
+output:
+  html_notebook: default
+editor_options: 
+  chunk_output_type: inline
+---
+
+Description: This is a summary of demographic information
+
+```{r setup, include = FALSE}
+# packages
+# data manipulation
+if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+```
+
+# Outline - Questionnaire
+
+```{r read, echo = FALSE}
+# Read csv files
+df <- read.csv("./questionnaire.csv", header = T, sep = ",", dec = ".", na.string = "NA")
+df_exc <- read.csv("./filtered/data_errorRate.csv", header = T, sep = ",", dec = ".")
+include <- df_exc$SubNr[df_exc$Final == "include"]
+
+# Change colnames
+colnames(df) <- c("TimeStamp", "SubNr", "Age", "Gender", "FirstLang", "SecondLang", "DominantHand", "NormalVision", "NormalHearing", "Desc1", "Desc2", "Instruments1", "FormalTraining1", "TotalPractice", "Start1", "End1", "PracticeHours", # Experience in musical instruments
+                  "Teaching", "Instruments2", "TotalTeaching1", "FormalTraining2", "Training", "AgeGroup", "Start2", "End2", "Like1", # Experience in teaching instruments
+                  "Other", "Subject", "TotalTeaching2", "Like2") # Experinence in teaching in general
+
+# Extract the total number of years of training in piano (input manually based on the original csv file)
+df$PianoTotalPractice <- c(14, 20, 27, 21, 10, 16, 9, 13, 25, 14, 13, 11, 6, 4, 6, 8, 21, 15, 18, 7, 11, 12, 12, 18, 12, 5, 5, 10, 16, 10, 8, 22, 10, 5, 4, 14)
+
+print(df)
+```
+
+## Descriptive stats for participants' demographics
+### Number of excluded participants
+
+```{r excluded, echo = FALSE}
+# Descriptive statistics for participants' demographics
+total <- nrow(df)
+# Number of excluded participants
+exp_error <- length(c(8)) # SubNr 8 - due to an experimental error
+pitch_error <- length(df_exc$SubNr[df_exc$LessThan10 == "exclude"])
+tempo_dev <- total-exp_error-pitch_error-length(include)
+total_exc <- exp_error+pitch_error+tempo_dev
+
+excluded_participants <- data.frame(cbind(total, total_exc, exp_error, pitch_error, tempo_dev))
+colnames(excluded_participants) <- c("Total", "Excluded participants", "Experimental error", "Pitch error", "Tempo deviation")
+print(excluded_participants)
+```
+
+### Number of included participants
+```{r included, echo = FALSE}
+# Data frame with only included participants
+df_demo <- data.frame()
+for (subnr in include){
+  df_current <- df %>% dplyr::filter(SubNr == subnr)
+  df_demo <- rbind(df_demo, df_current)
+}
+
+# Number of included participants
+included <- nrow(df_demo)
+male <- nrow(subset(df_demo, df_demo$Gender == "Male"))
+female <- nrow(subset(df_demo, df_demo$Gender == "Female"))
+experience_m <- round(mean(df_demo$PianoTotalPractice), 1)
+experience_sd <- round(sd(df_demo$PianoTotalPractice)*sqrt((length(df_demo$PianoTotalPractice)-1)/length(df_demo$PianoTotalPractice)), 2) #biased sd for the current data
+
+included_participants <- data.frame(cbind(total, included, male, female, experience_m, experience_sd))
+colnames(included_participants) <- c("Total", "Included participants", "Male", "Female", "Average experience", "SD of Average experience")
+print(included_participants)
+```
+
+### Error Rate of excluded participants
+```{r er_excluded, echo = FALSE}
+# Information about excluded participants due to errorRate (SubNr 16 was excluded but due to not errorRate but tempo deviation)
+# Error Rate = the number of trials which contain any mistake (Not the number of mistakes in a trial)
+errorRate_mean_exc <- mean(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])*100
+errorRate_sd_exc <- sd(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])*sqrt((length(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])-1)/length(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16]))*100 #biased sd for the current data
+errorRate_median_exc <- median(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])*100
+errorRate_min_exc <- min(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])*100
+errorRate_max_exc <- max(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])*100
+
+errorRate_excluded <- data.frame(cbind(errorRate_mean_exc, errorRate_sd_exc, errorRate_median_exc, errorRate_min_exc, errorRate_max_exc))
+colnames(errorRate_excluded) <- c("ER Mean", "ER SD", "ER Median", "ER Min", "ER Max")
+print(errorRate_excluded)
+```
+
+### Error Rate: Normality test for excluded participants
+```{r normality_for_excluded, echo = FALSE}
+# Normality check
+errorRate_excluded_norm <- shapiro.test(df_exc$ErrorRate[df_exc$Final == "exclude" & df_exc$SubNr != 16])
+print(errorRate_excluded_norm)
+
+# Note: The distributions fo error rates were not normal, so we decided to report median values (plus its range) rather than mean values.
+```
+
+### Error Rate of included participants
+```{r er_included, echo = FALSE}
+# Information about included participants
+# Error Rate = the number of trials which contain any mistake (Not the number of mistakes in a trial)
+errorRate_mean_inc <- mean(df_exc$ErrorRate[df_exc$Final == "include"])*100
+errorRate_sd_inc <- sd(df_exc$ErrorRate[df_exc$Final == "include"])*sqrt((length(df_exc$ErrorRate[df_exc$Final == "include"])-1)/length(df_exc$ErrorRate[df_exc$Final == "include"]))*100 #biased sd for the current data
+errorRate_median_inc <- median(df_exc$ErrorRate[df_exc$Final == "include"])*100
+errorRate_min_inc <- min(df_exc$ErrorRate[df_exc$Final == "include"])*100
+errorRate_max_inc <- max(df_exc$ErrorRate[df_exc$Final == "include"])*100
+
+errorRate_included <- data.frame(cbind(errorRate_mean_inc, errorRate_sd_inc, errorRate_median_inc, errorRate_min_inc, errorRate_max_inc))
+colnames(errorRate_included) <- c("ER Mean", "ER SD", "ER Median", "ER Min", "ER Max")
+print(errorRate_included)
+```
+
+### Error Rate: Normality test for included participants
+```{r normality_for_included, echo = FALSE}
+# Normality check
+errorRate_included_norm <- shapiro.test(df_exc$ErrorRate[df_exc$Final == "include"])
+print(errorRate_included_norm)
+
+# Note: The distributions fo error rates were not normal, so we decided to report median values (plus its range) rather than mean values.
+```

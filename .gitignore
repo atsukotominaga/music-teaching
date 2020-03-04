@@ -1,0 +1,28 @@
+# general
+*DS_Store
+*Rhistory
+*html
+others/
+
+# R
+script/R/raw_data/
+script/R/filtered/
+script/R/trimmed/
+
+# RNotebook
+script/RNotebook/filtered
+script/RNotebook/trimmed
+script/RNotebook/questionnaire.csv
+
+# Max
+script/Max/data/
+script/Max/midi/
+script/Max/cond/cb_checking.xlsx
+
+# Jupyter Notebook
+*.ipynb
+
+# personal stuff
+script/R/old_analysis
+material/jupyter/stimuli/removed/
+material/lilypond/removed/
