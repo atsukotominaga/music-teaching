@@ -6,7 +6,7 @@
 ####################################
 # Created: 30/01/2019
 # This script organises raw data and removes pitch errors.
-# GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R 
+# GitHub repo: https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R 
 
 ####################################
 #  Requirements

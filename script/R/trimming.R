@@ -6,7 +6,7 @@
 ####################################
 # Created: 10/04/2019
 # This script calculates each dependent variable (IOI, KOT, KV) and removes outliers.
-# GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R 
+# GitHub repo: https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R 
 
 ####################################
 #  Requirements
