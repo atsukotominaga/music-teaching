@@ -6,7 +6,7 @@
 ####################################
 # Created: 26/11/2019
 # This script removes outliers.
-# GitHub repo (private): https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R 
+# GitHub repo: https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R 
 
 ####################################
 #  Requirements
@@ -86,10 +86,9 @@ df_ioi$Tempo[df_ioi$Tempo == 110] <- 273
 df_ioi$Tempo[df_ioi$Tempo == 100] <- 300
 # normalise IOIs
 df_ioi$normIOI <- df_ioi$IOI/df_ioi$Tempo
-df_ioi$NoteNr <- rep(1:72, nrow(df_ioi)/72)
 
 # remove the first note
-df_ioi <- df_ioi %>% dplyr::filter(NoteNr != 1)
+df_ioi <- df_ioi %>% dplyr::filter(RowNr != 1)
 
 # assign Interval
 df_ioi$Interval <- rep(1:71, nrow(df_ioi)/71)
@@ -228,7 +227,7 @@ write.csv(df_ioi_trim_sd_2, file = "./trimmed/data_ioi_2.csv", row.names = F)
 # separately for Subcomponent Change
 # (YES or NO - as a factor)
 ####################################
-# evaluate Boundary (i.e., LtoS, StoL, FtoP, PtoF) or not
+# evaluate whether Boundary (i.e., LtoS, StoL, FtoP, PtoF) or not
 df_ioi_subset$Boundary <- "No"
 df_ioi_subset$Boundary[df_ioi_subset$Subcomponent == "LtoS" | df_ioi_subset$Subcomponent == "StoL" |
                          df_ioi_subset$Subcomponent == "FtoP" | df_ioi_subset$Subcomponent == "PtoF"] <- "Yes"
