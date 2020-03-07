@@ -6,7 +6,7 @@
 ####################################
 # Created: 26/11/2019
 # This script removes outliers.
-# GitHub repo (private): https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R 
+# GitHub repo: https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R 
 
 ####################################
 #  Requirements
@@ -85,11 +85,8 @@ df_vel$Tempo[df_vel$Tempo == 120] <- 250
 df_vel$Tempo[df_vel$Tempo == 110] <- 273
 df_vel$Tempo[df_vel$Tempo == 100] <- 300
 
-# assign NoteNr
-df_vel$NoteNr <- rep(1:72, nrow(df_vel)/72)
-
 # remove the first note
-df_vel_diff <- df_vel %>% dplyr::filter(NoteNr != 1)
+df_vel_diff <- df_vel %>% dplyr::filter(RowNr != 1)
 df_vel$Diff <- NULL # remove Diff from df_vel
 
 # assign Interval
