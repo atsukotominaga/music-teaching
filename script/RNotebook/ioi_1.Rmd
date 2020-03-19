@@ -1006,7 +1006,7 @@ p_ioi_dyn_var_trial_all
 
 ## Sequence plot
 ### Articulation{#sequence_art}
-```{r seq_art, fig.width = 10, fig.height = 4, echo = FALSE}
+```{r seq_art, fig.width = 10, fig.height = 2, echo = FALSE}
 # For each individual
 ioi_art_seq <- aggregate(normIOI~SubNr*Condition*Skill*Interval, data = df_ioi_art,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -1032,7 +1032,7 @@ p_ioi_art_seq
 ```
 
 ### Dynamics{#sequence_dyn}
-```{r seq_dyn, fig.width = 10, fig.height = 4, echo = FALSE}
+```{r seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE}
 # For each individual
 ioi_dyn_seq <- aggregate(normIOI~SubNr*Condition*Skill*Interval, data = df_ioi_dyn,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
