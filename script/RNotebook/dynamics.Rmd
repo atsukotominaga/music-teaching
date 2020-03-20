@@ -6,13 +6,63 @@ editor_options:
   chunk_output_type: inline
 ---
 
-##### Description: This is a summary of all analyses for dynamics.
+Description: This is a summary of all analyses for dynamics.
+
+- Last checked: 20/03/20
+
+# Outline - Dynamics (Key Velocity)
+## [Experimental Design](#design)
+
+## Dynamics
+
+### [KV](#vel-dynamics)
+- Individual results
+  + [All](#vel_dyn_ind_all)
+  + [Trial by trial](#vel_dyn_ind_trial)
+
+- Group results and stats (if available)
+  + [All](#vel_dyn_group_all)
+  + [Trial by trial](#vel_dyn_group_trial)
+  
+### [KV-Diff](#vel-dynamics-diff)
+- Individual results
+  + [All](#vel_diff_dyn_ind_all)
+  + [Trial by trial](#vel_diff_dyn_ind_trial)
+
+- Group results and stats (if available)
+  + [All](#vel_diff_dyn_group_all)
+  + [Trial by trial](#vel_diff_dyn_group_trial)
+
+- [Sequence plot](#sequence_dyn)
+
+## Articulation
+
+### [KV](#vel-articulation)
+- Individual results
+  + [All](#vel_art_ind_all)
+  + [Trial by trial](#vel_art_ind_trial)
+
+- Group results and stats (if available)
+  + [All](#vel_art_group_all)
+  + [Trial by trial](#vel_art_group_trial)
+  
+### [KV-Diff](#vel-articulation-diff)
+- Individual results
+  + [All](#vel_diff_art_ind_all)
+  + [Trial by trial](#vel_diff_art_ind_trial)
+
+- Group results and stats (if available)
+  + [All](#vel_diff_art_group_all)
+  + [Trial by trial](#vel_diff_art_group_trial)
+  
+- [Sequence plot](#sequence_art)
+
 
 ## Experimental Design{#design}
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: forte vs. piano / legato vs. staccato)
 - Dependent variables: Key Velocity (KV), KV difference (KV-Diff)
 
-### Main predictions
+## Main predictions
 - Participants will exaggerate forte and piano more while teaching.
 - Participants will make a larger contrast between forte and piano.
 
@@ -50,8 +100,8 @@ df_vel_dyn <- df_vel %>% dplyr::filter(Skill == "dynamics")
 df_vel_diff_dyn <- df_vel_diff %>% dplyr::filter(Skill == "dynamics")
 ```
 
-## Key Velocity (KV) - Dynamics
-### 1. All - individual{#vel_dyn_ind_all}
+# Key Velocity (KV) - Dynamic{#vel-dynamics}
+## 1. All - individual{#vel_dyn_ind_all}
 - Average KV for each participant.
 
 ```{r vel_dyn, echo = FALSE}
@@ -64,8 +114,8 @@ colnames(vel_dyn) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean
 print(vel_dyn)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SD of the mean
 
 ```{r vel_dyn_bar,  echo = FALSE}
@@ -78,7 +128,7 @@ p_vel_dyn <- ggplot(data = vel_dyn, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_vel_dyn
 ```
 
-### 2. All - group{#vel_dyn_group_all}
+## 2. All - group{#vel_dyn_group_all}
 - Average KV for each condition.
 - Hypothesis: Participants will exaggerate forte and piano when teaching.
 
@@ -92,8 +142,8 @@ colnames(vel_dyn_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "S
 print(vel_dyn_all)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SEM of the mean
 
 ```{r vel_dyn_all_bar, echo = FALSE}　
@@ -105,8 +155,7 @@ p_vel_dyn_all <- ggplot(data = vel_dyn_all, aes(x = Subcomponent, y = Mean, fill
 p_vel_dyn_all
 ```
 
-##### Box plot
-
+#### Box plot
 ```{r vel_dyn_all_box, echo = FALSE}
 p_vel_dyn_all_box <- ggplot(data = vel_dyn, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -115,8 +164,8 @@ p_vel_dyn_all_box <- ggplot(data = vel_dyn, aes(x = Subcomponent, y = Mean, fill
 p_vel_dyn_all_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality1, echo = FALSE}
 # Reduce unused factors
 vel_dyn$Subcomponent <- factor(vel_dyn$Subcomponent)
@@ -124,8 +173,8 @@ vel_dyn_norm <- by(vel_dyn$Mean, list(vel_dyn$Condition, vel_dyn$Subcomponent), 
 print(vel_dyn_norm)
 ```
   - Violate the normality assumption
-
-##### Two-way ANOVA (ez)
+  
+#### Two-way ANOVA (ez)
 ```{r stats1, echo = FALSE}
 vel_dyn_aov <- ezANOVA(
   data = df_vel_dyn
@@ -140,27 +189,32 @@ vel_dyn_aov$ANOVA$p <- round(vel_dyn_aov$ANOVA$p, 4)
 print(vel_dyn_aov$ANOVA)
 ```
 
-##### Two-way ANOVA (aov)
+#### Two-way ANOVA (aov)
 ```{r stats2, echo = FALSE}
 vel_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = vel_dyn)
 print(summary(vel_dyn_aov_2))
 ```
 
-##### Post-hoc (direct comparison)
+#### Post-hoc (direct comparison)
 ```{r post-hoc1, echo = FALSE}
 vel_ttest_forte <- t.test(vel_dyn$Mean[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Forte"], vel_dyn$Mean[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Forte"], paired = TRUE)
 vel_ttest_piano <- t.test(vel_dyn$Mean[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Piano"], vel_dyn$Mean[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Piano"], paired = TRUE)
+
+print(vel_ttest_forte)
+print(vel_ttest_piano)
+```
+
+#### Effect size
+```{r effect1, echo = FALSE}
 # Effect size
 vel_ttest_forte_cohend <- cohen.d(vel_dyn$Mean[vel_dyn$Subcomponent == "Forte"], vel_dyn$Condition[vel_dyn$Subcomponent == "Forte"], paired = TRUE)
 vel_ttest_piano_cohend <- cohen.d(vel_dyn$Mean[vel_dyn$Subcomponent == "Piano"], vel_dyn$Condition[vel_dyn$Subcomponent == "Piano"], paired = TRUE)
 
-print(vel_ttest_forte)
-print(vel_ttest_piano)
 print(vel_ttest_forte_cohend)
 print(vel_ttest_piano_cohend)
 ```
 
-##### Post-hoc (pairwise t test)
+#### Post-hoc (pairwise t test)
 ```{r post-hoc2, echo = FALSE}
 # Create a group label for a post-hoc test
 vel_dyn$Group[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Forte"] <- "Performing-Forte" 
@@ -173,7 +227,7 @@ vel_dyn_pairwise$p.value <- round(vel_dyn_pairwise$p.value, 4)
 print(vel_dyn_pairwise)
 ```
 
-### 3. Trial by trial - individual{#vel_dyn_ind_trial}
+## 3. Trial by trial - individual{#vel_dyn_ind_trial}
 - Average KV for each trial for each participant.
 
 ```{r vel_dyn_trial, echo = FALSE}
@@ -186,9 +240,9 @@ colnames(vel_dyn_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Tri
 print(vel_dyn_trial)
 ```
 
-#### Plot
-##### Line graph
-```{r vel_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
+### Plot
+#### Line graph
+```{r vel_dyn_trial_line_forte, echo = FALSE, fig.height = 4}
 p_vel_dyn_trial_forte <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -197,7 +251,7 @@ p_vel_dyn_trial_forte <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subco
 p_vel_dyn_trial_forte
 ```
 
-```{r vel_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
+```{r vel_dyn_trial_line_piano, echo = FALSE, fig.height = 4}
 p_vel_dyn_trial_piano <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -206,7 +260,7 @@ p_vel_dyn_trial_piano <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subco
 p_vel_dyn_trial_piano
 ```
 
-### 4. Trial by trial - group{#vel_dyn_group_trial}
+## 4. Trial by trial - group{#vel_dyn_group_trial}
 - Average KV for each trial for each condition.
 
 ```{r vel_dyn_trial_all, echo = FALSE}
@@ -219,8 +273,8 @@ colnames(vel_dyn_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr"
 print(vel_dyn_trial_all)
 ```
 
-#### Plot
-##### Line graph
+### Plot
+#### Line graph
 - Error bars show SEM of the mean
 
 ```{r vel_dyn_trial_all_line_forte, echo = FALSE}
@@ -241,8 +295,8 @@ p_vel_dyn_trial_all_piano <- ggplot(data = subset(vel_dyn_trial_all, vel_dyn_tri
 p_vel_dyn_trial_all_piano
 ```
 
-## Key Velocity Difference (KV-Diff) - Dynamics
-### 1. All - individual{#vel_diff_dyn_ind_all}
+# Key Velocity Difference (KV-Diff) - Dynamics{#vel-dynamics-diff}
+## 1. All - individual{#vel_diff_dyn_ind_all}
 - Average KV-Diff for each participant.
 
 ```{r vel_diff_dyn, echo = FALSE}
@@ -255,8 +309,8 @@ colnames(vel_diff_dyn) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", 
 print(vel_diff_dyn)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SD of the mean
 
 ```{r vel_diff_dyn_bar,  echo = FALSE}
@@ -269,7 +323,7 @@ p_vel_diff_dyn <- ggplot(data = vel_diff_dyn, aes(x = SubNr, y = Mean, fill = Co
 p_vel_diff_dyn
 ```
 
-### 2. All - group{#vel_diff_dyn_group_all}
+## 2. All - group{#vel_diff_dyn_group_all}
 - Average KV-Diff for each condition.
 - Hypothesis: Participants will make a larger contrast between forte and piano.
 
@@ -283,6 +337,8 @@ colnames(vel_diff_dyn_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean
 print(vel_diff_dyn_all)
 ```
 
+### Plot
+#### Bar chart
 ```{r vel_diff_dyn_all_bar,  echo = FALSE}
 p_vel_diff_dyn_all <- ggplot(data = vel_diff_dyn_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -292,8 +348,7 @@ p_vel_diff_dyn_all <- ggplot(data = vel_diff_dyn_all, aes(x = Subcomponent, y = 
 p_vel_diff_dyn_all
 ```
 
-##### Box plot
-
+#### Box plot
 ```{r vel_diff_dyn_all_box, echo = FALSE}
 p_vel_diff_dyn_all_box <- ggplot(data = vel_diff_dyn, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -302,8 +357,8 @@ p_vel_diff_dyn_all_box <- ggplot(data = vel_diff_dyn, aes(x = Subcomponent, y = 
 p_vel_diff_dyn_all_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality2, echo = FALSE}
 # Reduce unused factors
 vel_diff_dyn$Subcomponent <- factor(vel_diff_dyn$Subcomponent)
@@ -311,7 +366,7 @@ vel_diff_dyn_norm <- by(vel_diff_dyn$Mean, list(vel_diff_dyn$Condition, vel_diff
 print(vel_diff_dyn_norm)
 ```
 
-##### Two-way ANOVA (ez)
+#### Two-way ANOVA (ez)
 ```{r stats3, echo = FALSE}
 vel_diff_dyn_aov <- ezANOVA(
   data = subset(df_vel_diff_dyn, df_vel_diff_dyn$Subcomponent == "FtoP" | df_vel_diff_dyn$Subcomponent == "PtoF")
@@ -326,28 +381,33 @@ vel_diff_dyn_aov$ANOVA$p <- round(vel_diff_dyn_aov$ANOVA$p, 4)
 print(vel_diff_dyn_aov$ANOVA)
 ```
 
-##### Two-way ANOVA (aov)
+#### Two-way ANOVA (aov)
 ```{r stats4, echo = FALSE}
 vel_diff_dyn_aov_2 <- with(vel_diff_dyn,
                       aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent))))
 print(summary(vel_diff_dyn_aov_2))
 ```
 
-##### Post-hoc (direct comparison)
+#### Post-hoc (direct comparison)
 ```{r post-hoc3, echo = FALSE}
 vel_diff_ttest_ftop <- t.test(vel_diff_dyn$Mean[vel_diff_dyn$Condition == "performing" & vel_diff_dyn$Subcomponent == "FtoP"], vel_diff_dyn$Mean[vel_diff_dyn$Condition == "teaching" & vel_diff_dyn$Subcomponent == "FtoP"], paired = TRUE)
 vel_diff_ttest_ptof <- t.test(vel_diff_dyn$Mean[vel_diff_dyn$Condition == "performing" & vel_diff_dyn$Subcomponent == "PtoF"], vel_diff_dyn$Mean[vel_diff_dyn$Condition == "teaching" & vel_diff_dyn$Subcomponent == "PtoF"], paired = TRUE)
+
+print(vel_diff_ttest_ftop)
+print(vel_diff_ttest_ptof)
+```
+
+#### Effect size
+```{r effect2, echo = FALSE}
 # Effect size
 vel_diff_ttest_ftop_cohend <- cohen.d(vel_diff_dyn$Mean[vel_diff_dyn$Subcomponent == "FtoP"], vel_diff_dyn$Condition[vel_diff_dyn$Subcomponent == "FtoP"], paired = TRUE)
 vel_diff_ttest_ptof_cohend <- cohen.d(vel_diff_dyn$Mean[vel_diff_dyn$Subcomponent == "PtoF"], vel_diff_dyn$Condition[vel_diff_dyn$Subcomponent == "PtoF"], paired = TRUE)
 
-print(vel_diff_ttest_ftop)
-print(vel_diff_ttest_ptof)
 print(vel_diff_ttest_ftop_cohend)
 print(vel_diff_ttest_ptof_cohend)
 ```
 
-##### Post-hoc (pairwise t test)
+#### Post-hoc (pairwise t test)
 ```{r post-hoc4, echo = FALSE}
 # Create a group label for a post-hoc test
 vel_diff_dyn$Group[vel_diff_dyn$Condition == "performing" & vel_diff_dyn$Subcomponent == "FtoP"] <- "Performing-FtoP" 
@@ -360,7 +420,7 @@ vel_diff_dyn_pairwise$p.value <- round(vel_diff_dyn_pairwise$p.value, 4)
 print(vel_diff_dyn_pairwise)
 ```
 
-### 3. Trial by trial - individual{#vel_diff_dyn_ind_trial}
+## 3. Trial by trial - individual{#vel_diff_dyn_ind_trial}
 - Average KV-Diff for each trial for each participant.
 
 ```{r vel_diff_dyn_trial, echo = FALSE}
@@ -373,9 +433,9 @@ colnames(vel_diff_dyn_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent",
 print(vel_diff_dyn_trial)
 ```
 
-#### Plot
-##### Line graph
-```{r vel_diff_dyn_trial_line_ftop, echo = FALSE, fig.height = 8}
+### Plot
+#### Line graph
+```{r vel_diff_dyn_trial_line_ftop, echo = FALSE, fig.height = 4}
 p_vel_diff_dyn_trial_ftop <- ggplot(data = subset(vel_diff_dyn_trial, vel_diff_dyn_trial$Subcomponent == "FtoP"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -384,7 +444,7 @@ p_vel_diff_dyn_trial_ftop <- ggplot(data = subset(vel_diff_dyn_trial, vel_diff_d
 p_vel_diff_dyn_trial_ftop
 ```
 
-```{r vel_diff_dyn_trial_line_ptof, echo = FALSE, fig.height = 8}
+```{r vel_diff_dyn_trial_line_ptof, echo = FALSE, fig.height = 4}
 p_vel_diff_dyn_trial_ptof <- ggplot(data = subset(vel_diff_dyn_trial, vel_diff_dyn_trial$Subcomponent == "PtoF"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -393,7 +453,7 @@ p_vel_diff_dyn_trial_ptof <- ggplot(data = subset(vel_diff_dyn_trial, vel_diff_d
 p_vel_diff_dyn_trial_ptof
 ```
 
-### 4. Trial by trial - group{#vel_diff_dyn_group_trial}
+## 4. Trial by trial - group{#vel_diff_dyn_group_trial}
 - Average KV-Diff for each trial for each condition.
 
 ```{r vel_diff_dyn_trial_all, echo = FALSE}
@@ -406,8 +466,8 @@ colnames(vel_diff_dyn_trial_all) <- c("Condition", "Skill", "Subcomponent", "Tri
 print(vel_diff_dyn_trial_all)
 ```
 
-#### Plot
-##### Line graph
+### Plot
+#### Line graph
 - Error bars show SEM of the mean
 
 ```{r vel_diff_dyn_trial_all_line_ftop, echo = FALSE}
@@ -431,8 +491,8 @@ p_vel_diff_dyn_trial_all_ptof
 ###########
 ###########
 
-## Key Velocity (KV) - Articulation
-### 1. All - individual{#vel_art_ind_all}
+# Key Velocity (KV) - Articulation{#vel-articulation}
+## 1. All - individual{#vel_art_ind_all}
 - Average KV for each participant.
 
 ```{r vel_art, echo = FALSE}
@@ -445,8 +505,8 @@ colnames(vel_art) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean
 print(vel_art)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SD of the mean
 
 ```{r vel_art_bar,  echo = FALSE}
@@ -459,7 +519,7 @@ p_vel_art <- ggplot(data = vel_art, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_vel_art
 ```
 
-### 2. All - group{#vel_art_group_all}
+## 2. All - group{#vel_art_group_all}
 - Average KV for each condition.
 
 ```{r vel_art_all, echo = FALSE}
@@ -472,8 +532,8 @@ colnames(vel_art_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "S
 print(vel_art_all)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SEM of the mean
 
 ```{r vel_art_all_bar, echo = FALSE}　
@@ -485,8 +545,7 @@ p_vel_art_all <- ggplot(data = vel_art_all, aes(x = Subcomponent, y = Mean, fill
 p_vel_art_all
 ```
 
-##### Box plot
-
+#### Box plot
 ```{r vel_art_all_box, echo = FALSE}
 p_vel_art_all_box <- ggplot(data = vel_art, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -495,8 +554,8 @@ p_vel_art_all_box <- ggplot(data = vel_art, aes(x = Subcomponent, y = Mean, fill
 p_vel_art_all_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality3, echo = FALSE}
 # Reduce unused factors
 vel_art$Subcomponent <- factor(vel_art$Subcomponent)
@@ -504,7 +563,7 @@ vel_art_norm <- by(vel_art$Mean, list(vel_art$Condition, vel_art$Subcomponent), 
 print(vel_art_norm)
 ```
 
-##### Two-way ANOVA (ez)
+#### Two-way ANOVA (ez)
 ```{r stats5, echo = FALSE}
 vel_art_aov <- ezANOVA(
   data = df_vel_art
@@ -519,13 +578,13 @@ vel_art_aov$ANOVA$p <- round(vel_art_aov$ANOVA$p, 4)
 print(vel_art_aov$ANOVA)
 ```
 
-##### Two-way ANOVA (aov)
+#### Two-way ANOVA (aov)
 ```{r stats6, echo = FALSE}
 vel_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = vel_art)
 print(summary(vel_art_aov_2))
 ```
 
-### 3. Trial by trial - individual{#vel_art_ind_trial}
+## 3. Trial by trial - individual{#vel_diff_art_ind_all}
 - Average KV for each trial for each participant.
 
 ```{r vel_art_trial, echo = FALSE}
@@ -538,9 +597,9 @@ colnames(vel_art_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Tri
 print(vel_art_trial)
 ```
 
-#### Plot
-##### Line graph
-```{r vel_art_trial_line_legato, echo = FALSE, fig.height = 8}
+### Plot
+#### Line graph
+```{r vel_art_trial_line_legato, echo = FALSE, fig.height = 4}
 p_vel_art_trial_legato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -549,7 +608,7 @@ p_vel_art_trial_legato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Subc
 p_vel_art_trial_legato
 ```
 
-```{r vel_art_trial_line_piano, echo = FALSE, fig.height = 8}
+```{r vel_art_trial_line_piano, echo = FALSE, fig.height = 4}
 p_vel_art_trial_staccato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -558,7 +617,7 @@ p_vel_art_trial_staccato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Su
 p_vel_art_trial_staccato
 ```
 
-### 4. Trial by trial - group{#vel_art_group_trial}
+## 4. Trial by trial - group{#vel_art_group_trial}
 - Average KV for each trial for each condition.
 
 ```{r vel_art_trial_all, echo = FALSE}
@@ -571,8 +630,8 @@ colnames(vel_art_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr"
 print(vel_art_trial_all)
 ```
 
-#### Plot
-##### Line graph
+### Plot
+#### Line graph
 - Error bars show SEM of the mean
 
 ```{r vel_art_trial_all_line_legato, echo = FALSE}
@@ -593,8 +652,8 @@ p_vel_art_trial_all_staccato <- ggplot(data = subset(vel_art_trial_all, vel_art_
 p_vel_art_trial_all_staccato
 ```
 
-## Key Velocity Difference (KV-Diff) - Articulation
-### 1. All - individual{#vel_diff_art_ind_all}
+# Key Velocity Difference (KV-Diff) - Articulation{#vel-articulation-diff}
+## 1. All - individual{#vel_diff_art_ind_all}
 - Average KV-Diff for each participant.
 
 ```{r vel_diff_art, echo = FALSE}
@@ -607,8 +666,8 @@ colnames(vel_diff_art) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", 
 print(vel_diff_art)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SD of the mean
 
 ```{r vel_diff_art_bar,  echo = FALSE}
@@ -621,7 +680,7 @@ p_vel_diff_art <- ggplot(data = vel_diff_art, aes(x = SubNr, y = Mean, fill = Co
 p_vel_diff_art
 ```
 
-### 2. All - group{#vel_diff_art_group_all}
+## 2. All - group{#vel_diff_art_group_all}
 - Average KV-Diff for each condition.
 
 ```{r vel_diff_art_all, echo = FALSE}
@@ -634,7 +693,9 @@ colnames(vel_diff_art_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean
 print(vel_diff_art_all)
 ```
 
-##### Bar chart
+### Plot
+#### Bar chart
+- Error bars show SEM of the mean
 
 ```{r vel_diff_art_all_bar,  echo = FALSE}
 p_vel_diff_art_all <- ggplot(data = vel_diff_art_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
@@ -645,8 +706,7 @@ p_vel_diff_art_all <- ggplot(data = vel_diff_art_all, aes(x = Subcomponent, y = 
 p_vel_diff_art_all
 ```
 
-##### Box plot
-
+#### Box plot
 ```{r vel_diff_art_all_box, echo = FALSE}
 p_vel_diff_art_all_box <- ggplot(data = vel_diff_art, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -655,8 +715,8 @@ p_vel_diff_art_all_box <- ggplot(data = vel_diff_art, aes(x = Subcomponent, y = 
 p_vel_diff_art_all_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality4, echo = FALSE}
 # Reduce unused factors
 vel_diff_art$Subcomponent <- factor(vel_diff_art$Subcomponent)
@@ -664,7 +724,7 @@ vel_diff_art_norm <- by(vel_diff_art$Mean, list(vel_diff_art$Condition, vel_diff
 print(vel_diff_art_norm)
 ```
 
-##### Two-way ANOVA (ez)
+#### Two-way ANOVA (ez)
 ```{r stats7, echo = FALSE}
 vel_diff_art_aov <- ezANOVA(
   data = subset(df_vel_diff_art, df_vel_diff_art$Subcomponent == "LtoS" | df_vel_diff_art$Subcomponent == "StoL")
@@ -679,13 +739,13 @@ vel_diff_art_aov$ANOVA$p <- round(vel_diff_art_aov$ANOVA$p, 4)
 print(vel_diff_art_aov$ANOVA)
 ```
 
-##### Two-way ANOVA (aov)
+#### Two-way ANOVA (aov)
 ```{r stats8, echo = FALSE}
 vel_diff_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = vel_diff_art)
 print(summary(vel_diff_art_aov_2))
 ```
 
-### 3. Trial by trial - individual{#kot_dyn_ind_trial}
+## 3. Trial by trial - individual{#vel_art_ind_trial}
 - Average KV-Diff for each trial for each participant.
 
 ```{r vel_diff_art_trial, echo = FALSE}
@@ -698,9 +758,9 @@ colnames(vel_diff_art_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent",
 print(vel_diff_art_trial)
 ```
 
-#### Plot
-##### Line graph
-```{r vel_diff_art_trial_line_ltos, echo = FALSE, fig.height = 8}
+### Plot
+#### Line graph
+```{r vel_diff_art_trial_line_ltos, echo = FALSE, fig.height = 4}
 p_vel_diff_art_trial_ltos <- ggplot(data = subset(vel_diff_art_trial, vel_diff_art_trial$Subcomponent == "LtoS"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -709,7 +769,7 @@ p_vel_diff_art_trial_ltos <- ggplot(data = subset(vel_diff_art_trial, vel_diff_a
 p_vel_diff_art_trial_ltos
 ```
 
-```{r vel_diff_art_trial_line_stol, echo = FALSE, fig.height = 8}
+```{r vel_diff_art_trial_line_stol, echo = FALSE, fig.height = 4}
 p_vel_diff_art_trial_stol <- ggplot(data = subset(vel_diff_art_trial, vel_diff_art_trial$Subcomponent == "StoL"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -718,7 +778,7 @@ p_vel_diff_art_trial_stol <- ggplot(data = subset(vel_diff_art_trial, vel_diff_a
 p_vel_diff_art_trial_stol
 ```
 
-### 4. Trial by trial - group{#vel_diff_art_group_trial}
+## 4. Trial by trial - group{#vel_diff_art_group_trial}
 - Average KV-Diff for each trial for each condition.
 
 ```{r vel_diff_art_trial_all, echo = FALSE}
@@ -731,8 +791,8 @@ colnames(vel_diff_art_trial_all) <- c("Condition", "Skill", "Subcomponent", "Tri
 print(vel_diff_art_trial_all)
 ```
 
-#### Plot
-##### Line graph
+### Plot
+#### Line graph
 - Error bars show SEM of the mean
 
 ```{r vel_diff_art_trial_all_line_ltos, echo = FALSE}
@@ -753,12 +813,12 @@ p_vel_diff_art_trial_all_stol <- ggplot(data = subset(vel_diff_art_trial_all, ve
 p_vel_diff_art_trial_all_stol
 ```
 
-## Sequence plot
-#### Dynamics{#sequence_dyn}
-```{r seq_dyn, fig.width = 20, fig.height = 5, echo = FALSE}
+# Sequence plot
+## Dynamics{#sequence_dyn}
+```{r seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE}
 # Average vel_dynocity for each note
 # For each participant
-vel_dyn_seq <- aggregate(Velocity~SubNr*Condition*Skill*NoteNr, data = df_vel_dyn, 
+vel_dyn_seq <- aggregate(Velocity~SubNr*Condition*Skill*RowNr, data = df_vel_dyn, 
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 vel_dyn_seq <- cbind(vel_dyn_seq[,1:4], as.data.frame(vel_dyn_seq[,5]))
 # Change colnames
@@ -803,11 +863,11 @@ p_vel_dyn_diff_seq <- ggplot(data = vel_dyn_diff_seq_stats, aes(x = Interval, y 
 p_vel_dyn_diff_seq
 ```
 
-#### Articulation{#sequence_art}
-```{r seq_art, fig.width = 20, fig.height = 5, echo = FALSE}
+## Articulation{#sequence_art}
+```{r seq_art, fig.width = 10, fig.height = 2, echo = FALSE}
 # Average vel_artocity for each note
 # For each participant
-vel_art_seq <- aggregate(Velocity~SubNr*Condition*Skill*NoteNr, data = df_vel_art, 
+vel_art_seq <- aggregate(Velocity~SubNr*Condition*Skill*RowNr, data = df_vel_art, 
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 vel_art_seq <- cbind(vel_art_seq[,1:4], as.data.frame(vel_art_seq[,5]))
 # Change colnames
