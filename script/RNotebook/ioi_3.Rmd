@@ -6,14 +6,55 @@ editor_options:
   chunk_output_type: inline
 ---
 
-##### Description: This is a summary of all analyses for a tempo (IOIs).
+Description: This is a summary of all analyses for a tempo (IOIs).
   - data <- data_ioi_3.csv
   
+- Last checked: 19/03/20
+
+# Outline - Interonset intervals (IOIs)
+## [Experimental Design](#design)
+
+## [Articulation](#ioi-articulation)
+
+- Individual results
+  + [All](#art_ind_all)
+  + [Phrase bondaries](#art_ind_phrase)
+  + [Trial by trial](#art_ind_trial)
+  + [Variability](#art_ind_var_all)
+  + [Variability trial-by-trial](#art_ind_var_trial)
+ 
+- Group results and stats (if available)
+  + [All](#art_group_all)
+  + [Phrase bondaries](#art_group_phrase)
+  + [Trial by trial](#art_group_trial)
+  + [Variability](#art_group_var_all)
+  + [Variability trial-by-trial](#art_group_var_trial)
+   
+- [Sequence plot](#sequence_art)
+
+## [Dynamics](#ioi-dynamics)
+
+- Individual results
+  + [All](#dyn_ind_all)
+  + [Phrase bondaries](#dyn_ind_phrase)
+  + [Trial by trial](#dyn_ind_trial)
+  + [Variability all](#dyn_ind_var_all)
+  + [Variability trial-by-trial](#dyn_ind_var_trial)
+ 
+- Group results and stats (if available)
+  + [All](#dyn_group_all)
+  + [Phrase bondaries](#dyn_group_phrase)
+  + [Trial by trial](#dyn_group_trial)
+  + [Variability all](#dyn_group_var_all)
+  + [Variability trial-by-trial](#dyn_group_var_trial)
+
+- [Sequence plot](#sequence_dyn)
+
 ## Experimental Design{#design}
 - Independent variables: Condition (2 levels: teaching vs. performing) x Skill (2 levels: articulation vs. dynamics)
 - Dependent variables: Interonset intervals, variability (SD/mean IOI)
 
-### Main predictions
+## Main predictions
 Participants will play slower while teaching regardless of the skills.
 
 ```{r setup, include = FALSE}
@@ -43,11 +84,10 @@ df_ioi$SubNr <- as.factor(df_ioi$SubNr)
 df_ioi_art <- df_ioi %>% dplyr::filter(Skill == "articulation")
 # Include only dynamics
 df_ioi_dyn <- df_ioi %>% dplyr::filter(Skill == "dynamics")
-
 ```
 
-## IOI-Articulation 
-### 1. All - individual{#art_ind_all}
+# IOI-Articulation 
+## 1. All - individual{#art_ind_all}
 - Average normIOIs for each participant.
 
 ```{r ioi_art, echo = FALSE}
@@ -60,8 +100,8 @@ colnames(ioi_art) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
 print(ioi_art)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SD of the mean
 - A dashed line represents the ideal tempo
 
@@ -75,7 +115,7 @@ p_ioi_art <- ggplot(data = ioi_art, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_ioi_art
 ```
 
-### 2. All - group{#art_group_all}
+## 2. All - group{#art_group_all}
 - Average normIOIs for each condition.
 - Hypothesis: Participants will play slower when teaching.
 
@@ -89,8 +129,8 @@ colnames(ioi_art_all) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 print(ioi_art_all)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SEM of the mean
 - A dashed line represents the ideal tempo
 
@@ -118,27 +158,27 @@ p_ioi_art_all_box <- ggplot(data = ioi_art, aes(x = Condition, y = Mean, fill = 
 p_ioi_art_all_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality1, echo = FALSE}
 # Normality check
 ioi_art_norm <- by(ioi_art$Mean, list(ioi_art$Condition), shapiro.test)
 print(ioi_art_norm)
 ```
 
-##### Paired t-test
+#### Paired t-test
 ```{r stats1, echo = FALSE}
 ioi_art_ttest <- t.test(ioi_art$Mean[ioi_art$Condition == "teaching"], ioi_art$Mean[ioi_art$Condition == "performing"], paired = TRUE)
 print(ioi_art_ttest)
 ```
 
-##### Effect size
+#### Effect size
 ```{r stats2, echo = FALSE}
 ioi_art_cohend <- cohen.d(ioi_art$Mean, ioi_art$Condition, paired = TRUE)
 print(ioi_art_cohend)
 ```
 
-### 3. Subcomponent change - individual{#art_ind_phrase}
+## 3. Subcomponent change - individual{#art_ind_phrase}
 - Compare normIOIs at which Subcomponent changes (e.g., Legato to Staccato) with others fir each participant.
 
 ```{r ioi_art_ch, echo = FALSE}
@@ -151,8 +191,8 @@ colnames(ioi_art_ch) <- c("SubNr", "Condition", "Skill", "Boundary", "N", "Mean"
 print(ioi_art_ch)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SD of the mean
 - A dashed line represents the ideal tempo
 
@@ -167,7 +207,7 @@ p_ioi_art_ch <- ggplot(data = ioi_art_ch, aes(x = SubNr, y = Mean, fill = Condit
 p_ioi_art_ch
 ```
 
-### 4. Subcomponent change - group{#art_group_phrase}
+## 4. Subcomponent change - group{#art_group_phrase}
 - Compare IOIs at which Subcomponent changes (e.g., Legato to Staccato) with others in the two conditions.
 - Hypothesis: Participants will play more slowly where Subcomponent changes compared with other locations.
 
@@ -181,7 +221,8 @@ colnames(ioi_art_ch_all) <- c("Condition", "Skill", "Boundary", "N", "Mean", "SD
 print(ioi_art_ch_all)
 ```
 
-#### Plot
+### Plot
+#### Bar graph
 - Error bars show SEM of the mean
 - A dashed line represents the ideal tempo
 
@@ -195,7 +236,7 @@ p_ioi_art_ch_all_bar <- ggplot(data = ioi_art_ch_all, aes(x = Boundary, y = Mean
 p_ioi_art_ch_all_bar
 ```
 
-##### Box plot
+#### Box plot
 - A dashed line represents the ideal tempo
 
 ```{r ioi_art_ch_all_box, echo = FALSE}
@@ -207,14 +248,14 @@ p_ioi_art_ch_box <- ggplot(data = ioi_art_ch, aes(x = Boundary, y = Mean, fill =
 p_ioi_art_ch_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality2, echo = FALSE}
 ioi_art_ch_norm <- by(ioi_art_ch$Mean, list(ioi_art_ch$Condition, ioi_art_ch$Boundary), shapiro.test)
 print(ioi_art_ch_norm)
 ```
 
-##### Two-way ANOVA (ez)
+#### Two-way ANOVA (ez)
 ```{r stats3, echo = FALSE}
 ioi_art_ch_aov <- ezANOVA(
   data = df_ioi_art
@@ -229,7 +270,7 @@ ioi_art_ch_aov$ANOVA$p <- round(ioi_art_ch_aov$ANOVA$p, 4)
 print(ioi_art_ch_aov$ANOVA)
 ```
 
-##### Two-way ANOVA (aov)
+#### Two-way ANOVA (aov)
 ```{r stats4, echo = FALSE}
 ioi_art_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_art_ch)
 print(summary(ioi_art_ch_aov_2))
@@ -249,10 +290,10 @@ print(ioi_art_trial)
 ```
 
 #### Plot
-##### Line graph
+#### Line graph
 - A dashed line represents the ideal tempo
 
-```{r ioi_art_trial_line, echo = FALSE, fig.height = 8}
+```{r ioi_art_trial_line, echo = FALSE, fig.height = 4}
 p_ioi_art_trial <- ggplot(data = ioi_art_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -278,6 +319,7 @@ print(ioi_art_trial_all)
 #### Plot
 ##### Line graph
 - Error bars show SEM of the mean
+- A dashed line represents the ideal tempo
 
 ```{r ioi_art_trial_all_line, echo = FALSE}
 p_ioi_art_trial_all <- ggplot(data = ioi_art_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
@@ -322,10 +364,9 @@ print(ioi_art_var)
 ```
 
 
-#### Plot
-##### Bar graph
+### Plot
+#### Bar graph
 - Error bars show SD of the mean
-- A dashed line represents the tempo given by a metronome (80bpm)
 
 ```{r ioi_art_var_bar, echo = FALSE}
 p_ioi_art_var <- ggplot(data = ioi_art_var, aes(x = SubNr, y = Mean, fill = Condition)) +
@@ -349,8 +390,8 @@ colnames(ioi_art_var_all) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 print(ioi_art_var_all)
 ```
 
-#### Plot
-##### Bar graph
+### Plot
+#### Bar graph
 - Error bars show SEM of the mean
 
 ```{r ioi_art_var_all_bar, echo = FALSE}
@@ -363,7 +404,7 @@ p_ioi_art_var_all <- ggplot(data = ioi_art_var_all, aes(x = Condition, y = Mean,
 p_ioi_art_var_all
 ```
 
-##### Box plot
+#### Box plot
 ```{r ioi_art_var_all_box, echo = FALSE}
 p_ioi_art_var_box <- ggplot(data = ioi_art_var, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -373,27 +414,81 @@ p_ioi_art_var_box <- ggplot(data = ioi_art_var, aes(x = Condition, y = Mean, fil
 p_ioi_art_var_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality3, echo = FALSE}
 ioi_art_var_norm <- by(ioi_art_var$Mean, list(ioi_art_var$Condition), shapiro.test)
 print(ioi_art_var_norm)
 ```
 - Violate the normality assumption
 
-##### Paired t-test
+#### Paired t-test
 ```{r stats5, echo = FALSE}
 ioi_art_var_ttest <- t.test(ioi_art_var$Mean[ioi_art_var$Condition == "teaching"], ioi_art_var$Mean[ioi_art_var$Condition == "performing"], paired = TRUE)
 print(ioi_art_var_ttest)
 ```
 
-##### Effect size
+#### Effect size
 ```{r stats6, echo = FALSE}
 ioi_art_var_cohend <- cohen.d(ioi_art_var$Mean, ioi_art_var$Condition, paired = TRUE)
 print(ioi_art_var_cohend)
 ```
 
-### 9. Variability trial-by-trial - individual{#art_ind_var_trial}
+### *Except SubNr 15
+```{r ioi_art_var_all_15, echo = FALSE}
+# Group mean
+ioi_art_var_all_15 <- aggregate(Mean~Condition*Skill, data = subset(ioi_art_var, ioi_art_var$SubNr != 15),
+                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_art_var_all_15 <- cbind(ioi_art_var_all_15[,1:2], as.data.frame(ioi_art_var_all_15[,3]))
+# Change colnames
+colnames(ioi_art_var_all_15) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
+print(ioi_art_var_all_15)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r ioi_art_var_all_bar_15, echo = FALSE}
+p_ioi_art_var_all_15 <- ggplot(data = ioi_art_var_all_15, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge()) +
+  labs(y = "Variability (SD/mean IOI)", subtitle = "IOI: Articulation") +
+  theme(legend.position = "None")
+p_ioi_art_var_all_15
+```
+
+#### Box plot
+```{r ioi_art_var_all_box_15, echo = FALSE}
+p_ioi_art_var_box_15 <- ggplot(data = subset(ioi_art_var, ioi_art_var$SubNr != 15), aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
+  labs(y = "Variability (SD/mean IOI)", subtitle = "IOI: Articulation") +
+  theme(legend.position = "None")
+p_ioi_art_var_box_15
+```
+
+### Statistics
+#### Normality check
+```{r normality3_15, echo = FALSE}
+ioi_art_var_norm_15 <- by(subset(ioi_art_var, ioi_art_var$SubNr != 15)$Mean, list(subset(ioi_art_var, ioi_art_var$SubNr != 15)$Condition), shapiro.test)
+print(ioi_art_var_norm_15)
+```
+
+#### Paired t-test
+```{r stats5_15, echo = FALSE}
+ioi_art_var_ttest_15 <- t.test(subset(ioi_art_var, ioi_art_var$SubNr != 15)$Mean[subset(ioi_art_var, ioi_art_var$SubNr != 15)$Condition == "teaching"], subset(ioi_art_var, ioi_art_var$SubNr != 15)$Mean[subset(ioi_art_var, ioi_art_var$SubNr != 15)$Condition == "performing"], paired = TRUE)
+print(ioi_art_var_ttest_15)
+```
+
+#### Effect size
+```{r stats6_15, echo = FALSE}
+ioi_art_var_cohend_15 <- cohen.d(subset(ioi_art_var, ioi_art_var$SubNr != 15)$Mean, subset(ioi_art_var, ioi_art_var$SubNr != 15)$Condition, paired = TRUE)
+print(ioi_art_var_cohend_15)
+```
+
+## 9. Variability trial-by-trial - individual{#art_ind_var_trial}
 - Average variability for each trial for each participant.
 
 ```{r ioi_art_var_trial, echo = FALSE}
@@ -406,9 +501,9 @@ colnames(ioi_art_var_trial) <- c("SubNr", "Condition", "Skill", "TrialNr", "N", 
 print(ioi_art_var_trial)
 ```
 
-#### Plot
-##### Line graph
-```{r ioi_art_var_trial_line, echo = FALSE, fig.height = 8}
+### Plot
+#### Line graph
+```{r ioi_art_var_trial_line, echo = FALSE, fig.height = 4}
 p_ioi_art_var_trial <- ggplot(data = ioi_art_var_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -417,7 +512,7 @@ p_ioi_art_var_trial <- ggplot(data = ioi_art_var_trial, aes(x = TrialNr, y = Mea
 p_ioi_art_var_trial
 ```
 
-### 10. Variability trial-by-trial - group{#art_group_var_trial}
+## 10. Variability trial-by-trial - group{#art_group_var_trial}
 - Average variability for each trial for each condition.
 
 ```{r ioi_art_var_trial_all, echo = FALSE}
@@ -430,8 +525,8 @@ colnames(ioi_art_var_trial_all) <- c("Condition", "Skill", "TrialNr", "N", "Mean
 print(ioi_art_var_trial_all)
 ```
 
-#### Plot
-##### Line graph
+### Plot
+#### Line graph
 - Error bars show SEM of the mean
 
 ```{r ioi_art_var_trial_all_line, echo = FALSE}
@@ -447,8 +542,8 @@ p_ioi_art_var_trial_all
 ###########
 ###########
 
-## IOI-Dynamics
-### 1. All - individual{#dyn_ind_all}
+# IOI-Dynamics
+## 1. All - individual{#dyn_ind_all}
 - Average normIOIs for each participant.
 
 ```{r ioi_dyn, echo = FALSE}
@@ -461,8 +556,8 @@ colnames(ioi_dyn) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
 print(ioi_dyn)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SD of the mean
 - A dashed line represents the ideal tempo
 
@@ -476,7 +571,7 @@ p_ioi_dyn <- ggplot(data = ioi_dyn, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_ioi_dyn
 ```
 
-### 2. All - group{#dyn_group_all}
+## 2. All - group{#dyn_group_all}
 - Average normIOIs for each condition.
 - Hypothesis: Participants will play slower when teaching.
 
@@ -490,8 +585,8 @@ colnames(ioi_dyn_all) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 print(ioi_dyn_all)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SEM of the mean
 - A dashed line represents the ideal tempo
 
@@ -506,7 +601,7 @@ p_ioi_dyn_all_bar <- ggplot(data = ioi_dyn_all, aes(x = Condition, y = Mean, fil
 p_ioi_dyn_all_bar
 ```
 
-##### Box plot
+#### Box plot
 - A dashed line represents the tempo given by a metronome (80bpm)
 
 ```{r ioi_dyn_all_box, echo = FALSE}
@@ -519,26 +614,27 @@ p_ioi_dyn_all_box <- ggplot(data = ioi_dyn, aes(x = Condition, y = Mean, fill = 
 p_ioi_dyn_all_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality4, echo = FALSE}
 # Normality check
 ioi_dyn_norm <- by(ioi_dyn$Mean, list(ioi_dyn$Condition), shapiro.test)
 print(ioi_dyn_norm)
 ```
 
+#### Paired t-test
 ```{r stats7, echo = FALSE}
 ioi_dyn_ttest <- t.test(ioi_dyn$Mean[ioi_dyn$Condition == "teaching"], ioi_dyn$Mean[ioi_dyn$Condition == "performing"], paired = TRUE)
 print(ioi_dyn_ttest)
 ```
 
-##### Effect size
+#### Effect size
 ```{r stats8, echo = FALSE}
 ioi_dyn_cohend <- cohen.d(ioi_dyn$Mean, ioi_dyn$Condition, paired = TRUE)
 print(ioi_dyn_cohend)
 ```
 
-### 3. Subcomponent changes - individual{#dyn_ind_phrase}
+## 3. Subcomponent changes - individual{#dyn_ind_phrase}
 - Compare normIOIs at which Subcomponent changes (e.g., Forte to Piano) with others fir each participant.
 
 ```{r ioi_dyn_ch, echo = FALSE}
@@ -551,8 +647,8 @@ colnames(ioi_dyn_ch) <- c("SubNr", "Condition", "Skill", "Boundary", "N", "Mean"
 print(ioi_dyn_ch)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SD of the mean
 - A dashed line represents the ideal tempo
 
@@ -567,7 +663,7 @@ p_ioi_dyn_ch <- ggplot(data = ioi_dyn_ch, aes(x = SubNr, y = Mean, fill = Condit
 p_ioi_dyn_ch
 ```
 
-### 4. Subcomponent changes - group{#dyn_group_phrase}
+## 4. Subcomponent changes - group{#dyn_group_phrase}
 - Compare IOIs at which Subcomponent changes with others in the two conditions.
 - Hypothesis: Participants will play more slowly where Subcomponent changes compared with other locations.
 
@@ -581,8 +677,8 @@ colnames(ioi_dyn_ch_all) <- c("Condition", "Skill", "Boundary", "N", "Mean", "SD
 print(ioi_dyn_ch_all)
 ```
 
-#### Plot
-##### Bar chart
+### Plot
+#### Bar chart
 - Error bars show SEM of the mean
 - A dashed line represents the ideal tempo
 
@@ -596,7 +692,7 @@ p_ioi_dyn_ch_all_bar <- ggplot(data = ioi_dyn_ch_all, aes(x = Boundary, y = Mean
 p_ioi_dyn_ch_all_bar
 ```
 
-##### Box plot
+#### Box plot
 - A dashed line represents the ideal tempo
 
 ```{r ioi_dyn_ch_all_box, echo = FALSE}
@@ -608,15 +704,15 @@ p_ioi_dyn_ch_box <- ggplot(data = ioi_dyn_ch, aes(x = Boundary, y = Mean, fill =
 p_ioi_dyn_ch_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality5, echo = FALSE}
 ioi_dyn_ch_norm <- by(ioi_dyn_ch$Mean, list(ioi_dyn_ch$Condition, ioi_dyn_ch$Boundary), shapiro.test)
 print(ioi_dyn_ch_norm)
 ```
   - Violate the normality assumption
 
-##### Two-way ANOVA (ez)
+#### Two-way ANOVA (ez)
 ```{r stats9, echo = FALSE}
 ioi_dyn_ch_aov <- ezANOVA(
   data = df_ioi_dyn
@@ -631,7 +727,7 @@ ioi_dyn_ch_aov$ANOVA$p <- round(ioi_dyn_ch_aov$ANOVA$p, 4)
 print(ioi_dyn_ch_aov)
 ```
 
-##### Two-way ANOVA (aov)
+#### Two-way ANOVA (aov)
 ```{r stats10, echo = FALSE}
 ioi_dyn_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_dyn_ch)
 print(summary(ioi_dyn_ch_aov_2))
@@ -650,11 +746,11 @@ colnames(ioi_dyn_trial) <- c("SubNr", "Condition", "Skill", "TrialNr", "N", "Mea
 print(ioi_dyn_trial)
 ```
 
-#### Plot
-##### Line graph
+### Plot
+#### Line graph
 - A dashed line represents the ideal tempo.
 
-```{r ioi_dyn_trial_line, echo = FALSE, fig.height = 8}
+```{r ioi_dyn_trial_line, echo = FALSE, fig.height = 4}
 p_ioi_dyn_trial <- ggplot(data = ioi_dyn_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -664,7 +760,7 @@ p_ioi_dyn_trial <- ggplot(data = ioi_dyn_trial, aes(x = TrialNr, y = Mean, group
 p_ioi_dyn_trial
 ```
 
-### 6. Trial by trial - group{#dyn_group_trial}
+## 6. Trial by trial - group{#dyn_group_trial}
 - Average normIOIs for each trial for each condition.
 
 ```{r ioi_dyn_trial_all, echo = FALSE}
@@ -677,9 +773,10 @@ colnames(ioi_dyn_trial_all) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "
 print(ioi_dyn_trial_all)
 ```
 
-#### Plot
-##### Line graph
+### Plot
+#### Line graph
 - Error bars show SEM of the mean
+- A dashed line represents the ideal tempo
 
 ```{r ioi_dyn_trial_all_line, echo = FALSE}
 p_ioi_dyn_trial_all <- ggplot(data = ioi_dyn_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
@@ -691,7 +788,7 @@ p_ioi_dyn_trial_all <- ggplot(data = ioi_dyn_trial_all, aes(x = TrialNr, y = Mea
 p_ioi_dyn_trial_all
 ```
 
-### 7. Variability all - individual{#dyn_ind_var_all}
+## 7. Variability all - individual{#dyn_ind_var_all}
 - Average variability for each participant.
 - IOI variability = SD/mean IOI (per trial)
 
@@ -723,8 +820,8 @@ colnames(ioi_dyn_var) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
 print(ioi_dyn_var)
 ```
 
-#### Plot
-##### Bar graph
+### Plot
+#### Bar graph
 - Error bars show SD of the mean
 
 ```{r ioi_dyn_var_bar, echo = FALSE}
@@ -736,7 +833,7 @@ p_ioi_dyn_var <- ggplot(data = ioi_dyn_var, aes(x = SubNr, y = Mean, fill = Cond
 p_ioi_dyn_var
 ```
 
-### 8. Variability all - group{#dyn_group_var_all}
+## 8. Variability all - group{#dyn_group_var_all}
 - Average variability for each condition.
 
 ```{r ioi_dyn_var_all, echo = FALSE}
@@ -749,8 +846,8 @@ colnames(ioi_dyn_var_all) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 print(ioi_dyn_var_all)
 ```
 
-#### Plot
-##### Bar graph
+### Plot
+#### Bar graph
 - Error bars show SEM of the mean
 
 ```{r ioi_dyn_var_all_bar, echo = FALSE}
@@ -763,7 +860,7 @@ p_ioi_dyn_var_all <- ggplot(data = ioi_dyn_var_all, aes(x = Condition, y = Mean,
 p_ioi_dyn_var_all
 ```
 
-##### Box plot
+#### Box plot
 ```{r ioi_dyn_var_all_box, echo = FALSE}
 p_ioi_dyn_var_box <- ggplot(data = ioi_dyn_var, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -773,25 +870,82 @@ p_ioi_dyn_var_box <- ggplot(data = ioi_dyn_var, aes(x = Condition, y = Mean, fil
 p_ioi_dyn_var_box
 ```
 
-#### Statistics
-##### Normality check
+### Statistics
+#### Normality check
 ```{r normality6, echo = FALSE}
 ioi_dyn_var_norm <- by(ioi_dyn_var$Mean, list(ioi_dyn_var$Condition), shapiro.test)
 print(ioi_dyn_var_norm)
 ```
   - Violate the normality assumption
 
+#### Paired t-test
 ```{r stats11, echo = FALSE}
 ioi_dyn_var_ttest <- t.test(ioi_dyn_var$Mean[ioi_dyn_var$Condition == "teaching"], ioi_dyn_var$Mean[ioi_dyn_var$Condition == "performing"], paired = TRUE)
 print(ioi_dyn_var_ttest)
 ```
 
+#### Effect size
 ```{r stats12, echo = FALSE}
 ioi_dyn_var_cohend <- cohen.d(ioi_dyn_var$Mean, ioi_dyn_var$Condition, paired = TRUE)
 print(ioi_dyn_var_cohend)
 ```
 
-### 9. Variability trial-by-trial - individual{#dyn_ind_var_trial}
+### * Except SubNr 15
+```{r ioi_dyn_var_all_15, echo = FALSE}
+# Group mean
+ioi_dyn_var_all_15 <- aggregate(Mean~Condition*Skill, data = subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15),
+                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
+ioi_dyn_var_all_15 <- cbind(ioi_dyn_var_all_15[,1:2], as.data.frame(ioi_dyn_var_all_15[,3]))
+# Change colnames
+colnames(ioi_dyn_var_all_15) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
+print(ioi_dyn_var_all_15)
+```
+
+### Plot
+#### Bar graph
+- Error bars show SEM of the mean
+
+```{r ioi_dyn_var_all_bar_15, echo = FALSE}
+p_ioi_dyn_var_all_15 <- ggplot(data = ioi_dyn_var_all_15, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge()) +
+  labs(y = "Variability (SD/mean IOI)", subtitle = "IOI: Dynamics") +
+  theme(legend.position = "None")
+p_ioi_dyn_var_all_15
+```
+
+#### Box plot
+```{r ioi_dyn_var_all_box_15, echo = FALSE}
+p_ioi_dyn_var_box_15 <- ggplot(data = subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15), aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
+  labs(y = "Variability (SD/mean IOI)", subtitle = "IOI: Dynamics") +
+  theme(legend.position = "None")
+p_ioi_dyn_var_box_15
+```
+
+### Statistics
+#### Normality check
+```{r normality6_15, echo = FALSE}
+ioi_dyn_var_norm_15 <- by(subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Mean, list(subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Condition), shapiro.test)
+print(ioi_dyn_var_norm_15)
+```
+  - Violate the normality assumption
+
+#### Paired t-test
+```{r stats11_15, echo = FALSE}
+ioi_dyn_var_ttest_15 <- t.test(subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Mean[subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Condition == "teaching"], subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Mean[subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Condition == "performing"], paired = TRUE)
+print(ioi_dyn_var_ttest_15)
+```
+
+#### Effect size
+```{r stats12_15, echo = FALSE}
+ioi_dyn_var_cohend_15 <- cohen.d(subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Mean, subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Condition, paired = TRUE)
+print(ioi_dyn_var_cohend_15)
+```
+
+## 9. Variability trial-by-trial - individual{#dyn_ind_var_trial}
 - Average variability for each trial for each participant.
 
 ```{r ioi_dyn_var_trial, echo = FALSE}
@@ -804,9 +958,9 @@ colnames(ioi_dyn_var_trial) <- c("SubNr", "Condition", "Skill", "TrialNr", "N", 
 print(ioi_dyn_var_trial)
 ```
 
-#### Plot
-##### Line graph
-```{r ioi_dyn_var_trial_line, echo = FALSE, fig.height = 8}
+### Plot
+#### Line graph
+```{r ioi_dyn_var_trial_line, echo = FALSE, fig.height = 4}
 p_ioi_dyn_var_trial <- ggplot(data = ioi_dyn_var_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -815,7 +969,7 @@ p_ioi_dyn_var_trial <- ggplot(data = ioi_dyn_var_trial, aes(x = TrialNr, y = Mea
 p_ioi_dyn_var_trial
 ```
 
-### 10. Variability trial-by-trial - group{#dyn_group_var_trial}
+## 10. Variability trial-by-trial - group{#dyn_group_var_trial}
 Average variability for each trial for each condition.
 
 ```{r ioi_dyn_var_trial_all, echo = FALSE}
@@ -828,8 +982,8 @@ colnames(ioi_dyn_var_trial_all) <- c("Condition", "Skill", "TrialNr", "N", "Mean
 print(ioi_dyn_var_trial_all)
 ```
 
-#### Plot
-##### Line graph
+### Plot
+#### Line graph
 - Error bars show SEM of the mean
 
 ```{r ioi_dyn_var_trial_all_line, echo = FALSE}
@@ -843,8 +997,8 @@ p_ioi_dyn_var_trial_all
 ```
 
 ## Sequence plot
-#### Articulation{#sequence_art}
-```{r seq_art, fig.width = 20, fig.height = 5, echo = FALSE}
+### Articulation{#sequence_art}
+```{r seq_art, fig.width = 10, fig.height = 2, echo = FALSE}
 # For each individual
 ioi_art_seq <- aggregate(normIOI~SubNr*Condition*Skill*Interval, data = df_ioi_art,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -869,8 +1023,8 @@ p_ioi_art_seq <- ggplot(data = ioi_art_seq_stats, aes(x = Interval, y = Mean, gr
 p_ioi_art_seq
 ```
 
-#### Dynamics{#sequence_dyn}
-```{r seq_dyn, fig.width = 20, fig.height = 5, echo = FALSE}
+### Dynamics{#sequence_dyn}
+```{r seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE}
 # For each individual
 ioi_dyn_seq <- aggregate(normIOI~SubNr*Condition*Skill*Interval, data = df_ioi_dyn,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})

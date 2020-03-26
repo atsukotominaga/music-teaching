@@ -98,27 +98,27 @@ df_vel$Subcomponent <- NA
 # Legato
 for (phrase in 1:length(ls_legato2)){
   for (note in 1:length(ls_legato2[[phrase]])){
-    df_vel$Subcomponent[df_vel$Skill == "articulation" & df_vel$Note == ls_legato2[[phrase]][note]] <- "Legato"
+    df_vel$Subcomponent[df_vel$Skill == "articulation" & df_vel$RowNr == ls_legato2[[phrase]][note]] <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato2)){
   for (note in 1:length(ls_staccato2[[phrase]])){
-    df_vel$Subcomponent[df_vel$Skill == "articulation" & df_vel$Note == ls_staccato2[[phrase]][note]] <- "Staccato"
+    df_vel$Subcomponent[df_vel$Skill == "articulation" & df_vel$RowNr == ls_staccato2[[phrase]][note]] <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte2)){
   for (note in 1:length(ls_forte2[[phrase]])){
-    df_vel$Subcomponent[df_vel$Skill == "dynamics" & df_vel$Note == ls_forte2[[phrase]][note]] <- "Forte"
+    df_vel$Subcomponent[df_vel$Skill == "dynamics" & df_vel$RowNr == ls_forte2[[phrase]][note]] <- "Forte"
   }
 }
 
 # Piano
 for (phrase in 1:length(ls_piano2)){
   for (note in 1:length(ls_piano2[[phrase]])){
-    df_vel$Subcomponent[df_vel$Skill == "dynamics" & df_vel$Note == ls_piano2[[phrase]][note]] <- "Piano"
+    df_vel$Subcomponent[df_vel$Skill == "dynamics" & df_vel$RowNr == ls_piano2[[phrase]][note]] <- "Piano"
   }
 }
 
