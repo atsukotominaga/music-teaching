@@ -6,67 +6,13 @@ editor_options:
   chunk_output_type: inline
 ---
 
-Description: This is a summary of all analyses for articulation.
-
-- Last checked: 19/03/20
-
-# Outline - Articulation (KOT, KOR)
-## [Experimental Design](#design)
-
-## Articulation
-
-### [KOT](#kot_articulation)
-- Individual results
-  + [All](#kot_art_ind_all)
-  + [Trial by trial](#kot_art_ind_trial)
- 
-- Group results and stats (if available)
-  + [All](#kot_art_group_all)
-  + [Trial by trial](#kot_art_group_trial)
-  
-- [Sequence plot](#sequence_art)
-
-### [KOR](#kor-articulation)
-- Individual results
-  + [All](#kor_art_ind_all)
-  + [Trial by trial](#kor_art_ind_trial)
- 
-- Group results and stats (if available)
-  + [All](#kor_art_group_all)
-  + [Trial by trial](#kor_art_group_trial)
-  
-- [Sequence plot](#sequence_dyn)
-
-## Dynamics
-
-### [KOT](#kot-dynamics)
-- Individual results
-  + [All](#kot_dyn_ind_all)
-  + [Trial by trial](#kot_dyn_ind_trial)
-
-- Group results and stats (if available)
-  + [All](#kot_dyn_group_all)
-  + [Trial by trial](#kot_dyn_group_trial)
-  
-- Order analysis (teaching/performing first?)
-  + [All](#kot_dyn_order_group_all)
-  
-- [Sequence plot](#sequence_dyn)
-
-### [KOR](#kor-dynamics)
-- Individual results
-  + [All](#kor_dyn_ind_all)
-  + [Trial by trial](#kor_dyn_ind_trial)
- 
-- Group results and stats (if available)
-  + [All](#kor_dyn_group_all)
-  + [Trial by trial](#kor_dyn_group_trial)
+##### Description: This is a summary of all analyses for articulation.
 
 ## Experimental Design{#design}
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: legato vs. staccato / forte vs. piano)
 - Dependent variables: Key-Overlap Time (KOT), Key-Overlap Ratio (KOR)
 
-## Main predictions
+### Main predictions
 Participants will exaggerate legato and staccato more while teaching.
 
 ```{r setup, include = FALSE}
@@ -103,8 +49,8 @@ df_kot_dyn <- df_kot %>% dplyr::filter(Skill == "dynamics")
 df_kor_dyn <- df_kor %>% dplyr::filter(Skill == "dynamics")
 ```
 
-# Key-Overlap Time (KOT) - Articulation{#kot_articulation}
-## 1. All - individual{#kot_art_ind_all}
+## Key-Overlap Time (KOT) - Articulation
+### 1. All - individual{#kot_art_ind_all}
 - Average KOT for each participant.
 
 ```{r kot_art, echo = FALSE}
@@ -117,8 +63,8 @@ colnames(kot_art) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean
 print(kot_art)
 ```
 
-### Plot
-#### Bar chart
+#### Plot
+##### Bar chart
 - Error bars show SD of the mean
 
 ```{r kot_art_bar,  echo = FALSE}
@@ -131,7 +77,7 @@ p_kot_art <- ggplot(data = kot_art, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_kot_art
 ```
 
-## 2. All - group{#kot_art_group_all}
+### 2. All - group{#kot_art_group_all}
 - Average KOT for each condition.
 - Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
@@ -145,8 +91,8 @@ colnames(kot_art_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "S
 print(kot_art_all)
 ```
 
-### Plot
-#### Bar chart
+#### Plot
+##### Bar chart
 - Error bars show SEM of the mean
 
 ```{r kot_art_all_bar, echo = FALSE}　
@@ -158,7 +104,8 @@ p_kot_art_all <- ggplot(data = kot_art_all, aes(x = Subcomponent, y = Mean, fill
 p_kot_art_all
 ```
 
-#### Box plot
+##### Box plot
+
 ```{r kot_art_all_box, echo = FALSE}
 p_kot_art_all_box <- ggplot(data = kot_art, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -167,8 +114,8 @@ p_kot_art_all_box <- ggplot(data = kot_art, aes(x = Subcomponent, y = Mean, fill
 p_kot_art_all_box
 ```
 
-### Statistics
-#### Normality check
+#### Statistics
+##### Normality check
 ```{r normality1, echo = FALSE}
 # Reduce unused factors
 kot_art$Subcomponent <- factor(kot_art$Subcomponent)
@@ -176,7 +123,7 @@ kot_art_norm <- by(kot_art$Mean, list(kot_art$Condition, kot_art$Subcomponent), 
 print(kot_art_norm)
 ```
 
-#### Two-way ANOVA (ez)
+##### Two-way ANOVA (ez)
 ```{r stats1, echo = FALSE}
 kot_art_aov <- ezANOVA(
   data = subset(df_kot_art, df_kot_art$Subcomponent == "Legato" | df_kot_art$Subcomponent == "Staccato")
@@ -191,13 +138,13 @@ kot_art_aov$ANOVA$p <- round(kot_art_aov$ANOVA$p, 4)
 print(kot_art_aov$ANOVA)
 ```
 
-#### Two-way ANOVA (aov)
+##### Two-way ANOVA (aov)
 ```{r stats2, echo = FALSE}
 kot_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kot_art)
 print(summary(kot_art_aov_2))
 ```
 
-#### Post-hoc (direct comparison)
+##### Post-hoc (direct comparison)
 ```{r post-hoc1, echo = FALSE}
 kot_ttest_legato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Legato"], paired = TRUE)
 kot_ttest_staccato <- t.test(kot_art$Mean[kot_art$Condition == "performing" & kot_art$Subcomponent == "Staccato"], kot_art$Mean[kot_art$Condition == "teaching" & kot_art$Subcomponent == "Staccato"], paired = TRUE)
@@ -211,7 +158,7 @@ print(kot_ttest_legato_cohend)
 print(kot_ttest_staccato_cohend)
 ```
 
-#### Post-hoc (pairwise t test)
+##### Post-hoc (pairwise t test)
 ```{r post-hoc2, echo = FALSE}
 # Create a group label for a post-hoc test
 kot_art$Group[kot_art$Condition == "performing" & kot_art$Subcomponent == "Legato"] <- "Performing-Legato" 
@@ -224,7 +171,7 @@ kot_art_pairwise$p.value <- round(kot_art_pairwise$p.value, 4)
 print(kot_art_pairwise)
 ```
 
-## 3. Trial by trial - individual{#kot_art_ind_trial}
+### 3. Trial by trial - individual{#kot_art_ind_trial}
 - Average KOT for each trial for each participant.
 
 ```{r kot_art_trial, echo = FALSE}
@@ -237,9 +184,9 @@ colnames(kot_art_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Tri
 print(kot_art_trial)
 ```
 
-### Plot
-#### Line graph
-```{r kot_art_trial_line_legato, echo = FALSE, fig.height = 4}
+#### Plot
+##### Line graph
+```{r kot_art_trial_line_legato, echo = FALSE, fig.height = 8}
 p_kot_art_trial_legato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -248,7 +195,7 @@ p_kot_art_trial_legato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subc
 p_kot_art_trial_legato
 ```
 
-```{r kot_art_trial_line_staccato, echo = FALSE, fig.height = 4}
+```{r kot_art_trial_line_staccato, echo = FALSE, fig.height = 8}
 p_kot_art_trial_staccato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -257,7 +204,7 @@ p_kot_art_trial_staccato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Su
 p_kot_art_trial_staccato
 ```
 
-## 4. Trial by trial - group{#kot_art_group_trial}
+### 4. Trial by trial - group{#kot_art_group_trial}
 - Average KOT for each trial for each condition.
 
 ```{r kot_art_trial_all, echo = FALSE}
@@ -270,8 +217,8 @@ colnames(kot_art_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr"
 print(kot_art_trial_all)
 ```
 
-### Plot
-#### Line graph
+#### Plot
+##### Line graph
 - Error bars show SEM of the mean
 
 ```{r kot_art_trial_all_line_legato, echo = FALSE}
@@ -292,8 +239,8 @@ p_kot_art_trial_all_staccato <- ggplot(data = subset(kot_art_trial_all, kot_art_
 p_kot_art_trial_all_staccato
 ```
 
-# Key-Overlap Ratio (KOR) - Articulation{#kor-articulation}
-## 1. All - individual{#kor_art_ind_all}
+## Key-Overlap Ratio (KOR) - Articulation
+### 1. All - individual{#kor_art_ind_all}
 - Average KOR for each participant.
 
 ```{r kor_art, echo = FALSE}
@@ -306,8 +253,8 @@ colnames(kor_art) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean
 print(kor_art)
 ```
 
-### Plot
-#### Bar chart
+#### Plot
+##### Bar chart
 - Error bars show SD of the mean
 
 ```{r kor_art_bar,  echo = FALSE}
@@ -320,7 +267,7 @@ p_kor_art <- ggplot(data = kor_art, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_kor_art
 ```
 
-## 2. All - group{#kor_art_group_all}
+### 2. All - group{#kor_art_group_all}
 - Average KOR for each condition.
 - Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
@@ -334,8 +281,8 @@ colnames(kor_art_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "S
 print(kor_art_all)
 ```
 
-### Plot
-#### Bar chart
+#### Plot
+##### Bar chart
 - Error bars show SEM of the mean
 
 ```{r kor_art_all_bar, echo = FALSE}　
@@ -347,7 +294,8 @@ p_kor_art_all <- ggplot(data = kor_art_all, aes(x = Subcomponent, y = Mean, fill
 p_kor_art_all
 ```
 
-#### Box plot
+##### Box plot
+
 ```{r kor_art_all_box, echo = FALSE}
 p_kor_art_all_box <- ggplot(data = kor_art, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -356,8 +304,8 @@ p_kor_art_all_box <- ggplot(data = kor_art, aes(x = Subcomponent, y = Mean, fill
 p_kor_art_all_box
 ```
 
-### Statistics
-#### Normality check
+#### Statistics
+##### Normality check
 ```{r normality2, echo = FALSE}
 # Reduce unused factors
 kor_art$Subcomponent <- factor(kor_art$Subcomponent)
@@ -365,7 +313,7 @@ kor_art_norm <- by(kor_art$Mean, list(kor_art$Condition, kor_art$Subcomponent), 
 print(kor_art_norm)
 ```
 
-#### Two-way ANOVA (ez)
+##### Two-way ANOVA (ez)
 ```{r stats3, echo = FALSE}
 kor_art_aov <- ezANOVA(
   data = subset(df_kor_art, df_kor_art$Subcomponent == "Legato" | df_kor_art$Subcomponent == "Staccato")
@@ -380,13 +328,12 @@ kor_art_aov$ANOVA$p <- round(kor_art_aov$ANOVA$p, 4)
 print(kor_art_aov$ANOVA)
 ```
 
-#### Two-way ANOVA (aov)
+##### Two-way ANOVA (aov)
 ```{r stats4, echo = FALSE}
 kor_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_art)
 print(summary(kor_art_aov_2))
 ```
 
-#### Post-hoc test (direct comparison)
 ```{r post-hoc3, echo = FALSE}
 kor_ttest_legato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Legato"], paired = TRUE)
 kor_ttest_staccato <- t.test(kor_art$Mean[kor_art$Condition == "performing" & kor_art$Subcomponent == "Staccato"], kor_art$Mean[kor_art$Condition == "teaching" & kor_art$Subcomponent == "Staccato"], paired = TRUE)
@@ -400,7 +347,7 @@ print(kor_ttest_legato_cohend)
 print(kor_ttest_staccato_cohend)
 ```
 
-#### Post-hoc (pairwise t test)
+##### Post-hoc (pairwise t test)
 ```{r post-hoc4, echo = FALSE}
 # Create a group label for a post-hoc test
 kor_art$Group[kor_art$Condition == "performing" & kor_art$Subcomponent == "Legato"] <- "Performing-Legato" 
@@ -413,7 +360,7 @@ kor_art_pairwise$p.value <- round(kor_art_pairwise$p.value, 4)
 print(kor_art_pairwise)
 ```
 
-## 3. Trial by trial - individual{#kor_art_ind_trial}
+### 3. Trial by trial - individual{#kor_art_ind_trial}
 - Average KOR for each trial for each participant.
 
 ```{r kor_art_trial, echo = FALSE}
@@ -426,9 +373,9 @@ colnames(kor_art_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Tri
 print(kor_art_trial)
 ```
 
-### Plot
-#### Line graph
-```{r kor_art_trial_line_legato, echo = FALSE, fig.height = 4}
+#### Plot
+##### Line graph
+```{r kor_art_trial_line_legato, echo = FALSE, fig.height = 8}
 p_kor_art_trial_legato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -437,7 +384,7 @@ p_kor_art_trial_legato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subc
 p_kor_art_trial_legato
 ```
 
-```{r kor_art_trial_line_staccato, echo = FALSE, fig.height = 4}
+```{r kor_art_trial_line_staccato, echo = FALSE, fig.height = 8}
 p_kor_art_trial_staccato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -446,8 +393,8 @@ p_kor_art_trial_staccato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Su
 p_kor_art_trial_staccato
 ```
 
-## 4. Trial by trial - group{#kor_art_group_trial}
-- Average KOR for each trial for each condition.
+### 4. Trial by trial - group{#kor_art_group_trial}
+- Average KOR d for each trial for each condition.
 
 ```{r kor_art_trial_all, echo = FALSE}
 # Group mean
@@ -459,8 +406,8 @@ colnames(kor_art_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr"
 print(kor_art_trial_all)
 ```
 
-### Plot
-#### Line graph
+#### Plot
+##### Line graph
 - Error bars show SEM of the mean
 
 ```{r kor_art_trial_all_line_legato, echo = FALSE}
@@ -484,8 +431,8 @@ p_kor_art_trial_all_staccato
 ###########
 ###########
 
-# Key-Overlap Time (KOT) - Dynamics{#kot-dynamics}
-## 1. All - individual{#kot_dyn_ind_all}
+## Key-Overlap Time (KOT) - Dynamics
+### 1. All - individual{#kot_dyn_ind_all}
 - Average KOT for each participant.
 
 ```{r kot_dyn, echo = FALSE}
@@ -498,8 +445,8 @@ colnames(kot_dyn) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean
 print(kot_dyn)
 ```
 
-### Plot
-#### Bar chart
+#### Plot
+##### Bar chart
 - Error bars show SD of the mean
 
 ```{r kot_dyn_bar,  echo = FALSE}
@@ -512,7 +459,7 @@ p_kot_dyn <- ggplot(data = kot_dyn, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_kot_dyn
 ```
 
-## 2. All - group{#kot_dyn_group_all}
+### 2. All - group{#kot_dyn_group_all}
 - Average KOT for each condition.
 
 ```{r kot_dyn_all, echo = FALSE}
@@ -525,8 +472,8 @@ colnames(kot_dyn_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "S
 print(kot_dyn_all)
 ```
 
-### Plot
-#### Bar chart
+#### Plot
+##### Bar chart
 - Error bars show SEM of the mean
 
 ```{r kot_dyn_all_bar, echo = FALSE}　
@@ -538,7 +485,8 @@ p_kot_dyn_all <- ggplot(data = kot_dyn_all, aes(x = Subcomponent, y = Mean, fill
 p_kot_dyn_all
 ```
 
-#### Box plot
+##### Box plot
+
 ```{r kot_dyn_all_box, echo = FALSE}
 p_kot_dyn_all_box <- ggplot(data = kot_dyn, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -547,8 +495,8 @@ p_kot_dyn_all_box <- ggplot(data = kot_dyn, aes(x = Subcomponent, y = Mean, fill
 p_kot_dyn_all_box
 ```
 
-### Statistics
-#### Normality check
+#### Statistics
+##### Normality check
 ```{r normality3, echo = FALSE}
 # Reduce unused factors
 kot_dyn$Subcomponent <- factor(kot_dyn$Subcomponent)
@@ -557,7 +505,7 @@ print(kot_dyn_norm)
 ```
   - Violate the normality assumption
 
-#### Two-way ANOVA (ez)
+##### Two-way ANOVA (ez)
 ```{r stats5, echo = FALSE}
 kot_dyn_aov <- ezANOVA(
   data = subset(df_kot_dyn, df_kot_dyn$Subcomponent == "Forte" | df_kot_dyn$Subcomponent == "Piano")
@@ -572,13 +520,13 @@ kot_dyn_aov$ANOVA$p <- round(kot_dyn_aov$ANOVA$p, 4)
 print(kot_dyn_aov$ANOVA)
 ```
 
-#### Two-way ANOVA (aov)
+##### Two-way ANOVA (aov)
 ```{r stats6, echo = FALSE}
 kot_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kot_dyn)
 print(summary(kot_dyn_aov_2))
 ```
 
-## 3. Trial by trial - individual{#kot_dyn_ind_trial}
+### 3. Trial by trial - individual{#kot_dyn_ind_trial}
 - Average KOT for each trial for each participant.
 
 ```{r kot_dyn_trial, echo = FALSE}
@@ -591,9 +539,9 @@ colnames(kot_dyn_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Tri
 print(kot_dyn_trial)
 ```
 
-### Plot
-#### Line graph
-```{r kot_dyn_trial_line_forte, echo = FALSE, fig.height = 4}
+#### Plot
+##### Line graph
+```{r kot_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
 p_kot_dyn_trial_forte <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -602,7 +550,7 @@ p_kot_dyn_trial_forte <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subco
 p_kot_dyn_trial_forte
 ```
 
-```{r kot_dyn_trial_line_piano, echo = FALSE, fig.height = 4}
+```{r kot_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
 p_kot_dyn_trial_piano <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -611,7 +559,7 @@ p_kot_dyn_trial_piano <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subco
 p_kot_dyn_trial_piano
 ```
 
-## 4. Trial by trial - group{#kot_dyn_group_trial}
+### 4. Trial by trial - group{#kot_dyn_group_trial}
 - Average KOT for each trial for each condition.
 
 ```{r kot_dyn_trial_all, echo = FALSE}
@@ -624,8 +572,8 @@ colnames(kot_dyn_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr"
 print(kot_dyn_trial_all)
 ```
 
-### Plot
-#### Line graph
+#### Plot
+##### Line graph
 - Error bars show SEM of the mean
 
 ```{r kot_dyn_trial_all_line_forte, echo = FALSE}
@@ -646,8 +594,8 @@ p_kot_dyn_trial_all_piano <- ggplot(data = subset(kot_dyn_trial_all, kot_dyn_tri
 p_kot_dyn_trial_all_piano
 ```
 
-# Key-Overlap Ratio (KOR) - Dynamics{#kor-dynamics}
-## 1. All - individual{#kor_dyn_ind_all}
+## Key-Overlap Ratio (KOR) - Dynamics
+### 1. All - individual{#kor_dyn_ind_all}
 - Average KOR for each participant.
 
 ```{r kor_dyn, echo = FALSE}
@@ -660,8 +608,8 @@ colnames(kor_dyn) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean
 print(kor_dyn)
 ```
 
-### Plot
-#### Bar chart
+#### Plot
+##### Bar chart
 - Error bars show SD of the mean
 
 ```{r kor_dyn_bar,  echo = FALSE}
@@ -674,7 +622,7 @@ p_kor_dyn <- ggplot(data = kor_dyn, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_kor_dyn
 ```
 
-## 2. All - group{#kor_dyn_group_all}
+### 2. All - group{#kor_dyn_group_all}
 - Average KOR for each condition.
 
 ```{r kor_dyn_all, echo = FALSE}
@@ -687,8 +635,8 @@ colnames(kor_dyn_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "S
 print(kor_dyn_all)
 ```
 
-### Plot
-#### Bar chart
+#### Plot
+##### Bar chart
 - Error bars show SEM of the mean
 
 ```{r kor_dyn_all_bar, echo = FALSE}　
@@ -700,7 +648,8 @@ p_kor_dyn_all <- ggplot(data = kor_dyn_all, aes(x = Subcomponent, y = Mean, fill
 p_kor_dyn_all
 ```
 
-#### Box plot
+##### Box plot
+
 ```{r kor_dyn_all_box, echo = FALSE}
 p_kor_dyn_all_box <- ggplot(data = kor_dyn, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
@@ -709,8 +658,8 @@ p_kor_dyn_all_box <- ggplot(data = kor_dyn, aes(x = Subcomponent, y = Mean, fill
 p_kor_dyn_all_box
 ```
 
-### Statistics
-#### Normality check
+#### Statistics
+##### Normality check
 ```{r normality4, echo = FALSE}
 # Reduce unused factors
 kor_dyn$Subcomponent <- factor(kor_dyn$Subcomponent)
@@ -719,7 +668,7 @@ print(kor_dyn_norm)
 ```
   - Violate the normality assumtion
 
-#### Two-way ANOVA (ez)
+##### Two-way ANOVA (ez)
 ```{r stats7, echo = FALSE}
 kor_dyn_aov <- ezANOVA(
   data = subset(df_kor_dyn, df_kor_dyn$Subcomponent == "Forte" | df_kor_dyn$Subcomponent == "Piano")
@@ -734,13 +683,13 @@ kor_dyn_aov$ANOVA$p <- round(kor_dyn_aov$ANOVA$p, 4)
 print(kor_dyn_aov$ANOVA)
 ```
 
-#### Two-way ANOVA (aov)
+##### Two-way ANOVA (aov)
 ```{r stats8, echo = FALSE}
 kor_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_dyn)
 print(summary(kor_dyn_aov_2))
 ```
 
-## 3. Trial by trial - individual{#kor_dyn_ind_trial}
+### 3. Trial by trial - individual{#kor_dyn_ind_trial}
 - Average KOR for each trial for each participant.
 
 ```{r kor_dyn_trial, echo = FALSE}
@@ -753,9 +702,9 @@ colnames(kor_dyn_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Tri
 print(kor_dyn_trial)
 ```
 
-### Plot
-#### Line graph
-```{r kor_dyn_trial_line_forte, echo = FALSE, fig.height = 4}
+#### Plot
+##### Line graph
+```{r kor_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
 p_kor_dyn_trial_forte <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -764,7 +713,7 @@ p_kor_dyn_trial_forte <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subco
 p_kor_dyn_trial_forte
 ```
 
-```{r kor_dyn_trial_line_piano, echo = FALSE, fig.height = 4}
+```{r kor_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
 p_kor_dyn_trial_piano <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -773,7 +722,7 @@ p_kor_dyn_trial_piano <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subco
 p_kor_dyn_trial_piano
 ```
 
-## 4. Trial by trial - group{#kor_dyn_group_trial}
+### 4. Trial by trial - group{#kor_dyn_group_trial}
 - Average KOR for each trial for each condition.
 
 ```{r kor_dyn_trial_all, echo = FALSE}
@@ -786,8 +735,8 @@ colnames(kor_dyn_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr"
 print(kor_dyn_trial_all)
 ```
 
-### Plot
-#### Line graph
+#### Plot
+##### Line graph
 - Error bars show SEM of the mean
 
 ```{r kor_dyn_trial_all_line_forte, echo = FALSE}
@@ -809,8 +758,8 @@ p_kor_dyn_trial_all_piano
 ```
 
 ## Sequence plot
-### Articulation{#sequence_art}
-```{r seq_art, fig.width = 10, fig.height = 2, echo = FALSE}
+#### Articulation{#sequence_art}
+```{r seq_art, fig.width = 20, fig.height = 5, echo = FALSE}
 # For each individual
 kot_art_seq <- aggregate(KOT~SubNr*Condition*Skill*Interval, data = df_kot_art,
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -858,7 +807,7 @@ p_kor_art_seq
 ```
 
 #### Dynamics{#sequence_dyn}
-```{r seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE}
+```{r seq_dyn, fig.width = 20, fig.height = 5, echo = FALSE}
 # For each individual
 kot_dyn_seq <- aggregate(KOT~SubNr*Condition*Skill*Interval, data = df_kot_dyn,
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
