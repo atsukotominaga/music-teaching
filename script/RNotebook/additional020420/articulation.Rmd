@@ -1,0 +1,73 @@
+---
+title: "Additional analysis for transition points"
+output: html_notebook
+---
+Description: These are some additional analyses for transition points.
+
+## Articulation
+How does it look like articulation transition points?
+Posthoc prediciton: Participants would have a larger separation betwenn the end of legato and the beginning of staccato.
+
+```{r setup, include = FALSE}
+# packages
+# data manipulation
+if (!require("data.table")) {install.packages("data.table"); require("data.table")}
+# plot
+if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
+# statistics
+if (!require("stats")) {install.packages("stats"); require("stats")}
+if (!require("effsize")) {install.packages("effsize"); require("effsize")}
+if (!require("ez")) {install.packages("ez"); require("ez")}
+
+# read csv
+df_kot <- fread("./../trimmed/data_kot.csv")
+
+# only transition points for arituclation
+df_kot_trans <- df_kot[Skill == "articulation" & Subcomponent != "Legato" & Subcomponent != "Staccato"]
+```
+
+```{r stats1, echo = TRUE}
+# For each individual
+art_trans <- df_kot_trans[, .(N = length(KOT), Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Subcomponent)]
+print(art_trans)
+# Group
+art_trans_all <- art_trans[, .(N = length(Mean), Mean = mean(Mean), SEM = sd(Mean)/sqrt(length(Mean))), by = .(Condition, Subcomponent)]
+print(art_trans_all)
+# Stats
+# normality check
+art_trans_norm <- by(art_trans$Mean, list(art_trans$Condition, art_trans$Subcomponent), shapiro.test)
+print(art_trans_norm)
+# ezAnova
+art_trans_aov <- ezANOVA(
+  data = df_kot_trans
+  , dv = .(KOT)
+  , wid = .(SubNr)
+  , within = .(Condition, Subcomponent)
+  , type = 3
+  , detailed = TRUE
+)
+print(art_trans_aov)
+```
+
+### Plot
+#### Bar chart
+- Error bars show SEM of the mean
+
+```{r art_trans_bar, echo = FALSE}　
+p_art_trans <- ggplot(data = art_trans_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width = .2, position = position_dodge(.9)) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Articulation Transition")
+p_art_trans
+```
+
+#### Box plot
+```{r art_trans_box, echo = FALSE}
+p_art_trans_box <- ggplot(data = art_trans, aes(x = Subcomponent, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
+  labs(y = "KOT (ms)", subtitle = "KOT: Articulation Transition")
+p_art_trans_box
+```
