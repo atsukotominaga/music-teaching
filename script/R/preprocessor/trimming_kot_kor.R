@@ -41,7 +41,7 @@ df_offset <- read.csv(file.path("./filtered/data_correct_offset.csv"), header = 
 df_onset$RowNr <- rep(1:72, nrow(df_onset)/72)
 df_offset$RowNr <- rep(1:72, nrow(df_offset)/72)
 
-# sort by SubNr, BlockNr, TrialNr and NoteNr
+# sort by SubNr, BlockNr, TrialNr and RowNr
 df_onset <- df_onset[order(df_onset$SubNr, df_onset$BlockNr, df_onset$TrialNr, df_onset$RowNr),]
 df_offset <- df_offset[order(df_offset$SubNr, df_offset$BlockNr, df_offset$TrialNr, df_offset$RowNr),]
 
