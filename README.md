@@ -1,6 +1,6 @@
 This repo contains scripts and materials necessary for a musical experiment with expert pianists.
 
- Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/) (Raw data are available in OSF (Experiment 1))
+ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/) (Raw data are available here)
 
 # Overview
 - [Script](#Script)
