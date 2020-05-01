@@ -57,7 +57,7 @@ You need filtered and trimmed folders to run the scripts below (outputs from fil
 - dynamics.Rmd: analysis and plots for KV/KV-Diff >> output: html file
 
 You need questionnaire.csv to run the script below (get the file from [OSF](https://osf.io/8nbjh/)).
-- questionnaire.Rmd
+- questionnaire.Rmd >> output: html file
 
 # Material
 ## Instruction
