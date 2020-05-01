@@ -11,7 +11,7 @@ This repo contains scripts and materials necessary for a musical experiment with
 - [Material](#Material)
     + [Instruction](#Instruction)
     + [Lilypond (Stimuli - sheet music)](#Lilypond)
-    + [Jupyter Notebnook (Stimuli - image processing)](#Jupyter-notebook)
+    + [Jupyter Notebook (Stimuli - image processing)](#Jupyter-notebook)
     + [Others](#Others)
 
 # Script
