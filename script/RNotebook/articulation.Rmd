@@ -12,6 +12,7 @@ Description: This is a summary of all analyses for articulation.
 
 # Outline - Articulation (KOT, KOR)
 ## [Experimental Design](#design)
+- Main predictions
 
 ## Articulation
 
@@ -66,7 +67,7 @@ Description: This is a summary of all analyses for articulation.
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: legato vs. staccato / forte vs. piano)
 - Dependent variables: Key-Overlap Time (KOT), Key-Overlap Ratio (KOR)
 
-## Main predictions
+### Main predictions
 Participants will exaggerate legato and staccato more while teaching.
 
 ```{r setup, include = FALSE}

@@ -12,6 +12,7 @@ Description: This is a summary of all analyses for dynamics.
 
 # Outline - Dynamics (Key Velocity)
 ## [Experimental Design](#design)
+- Main predictions
 
 ## Dynamics
 
@@ -62,7 +63,7 @@ Description: This is a summary of all analyses for dynamics.
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: forte vs. piano / legato vs. staccato)
 - Dependent variables: Key Velocity (KV), KV difference (KV-Diff)
 
-## Main predictions
+### Main predictions
 - Participants will exaggerate forte and piano more while teaching.
 - Participants will make a larger contrast between forte and piano.
 

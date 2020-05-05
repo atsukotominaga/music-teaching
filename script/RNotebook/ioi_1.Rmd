@@ -13,6 +13,7 @@ Description: This is a summary of all analyses for a tempo (IOIs).
 
 # Outline - Interonset intervals (IOIs)
 ## [Experimental Design](#design)
+- Main predictions
 
 ## [Articulation](#ioi-articulation)
 
@@ -54,7 +55,7 @@ Description: This is a summary of all analyses for a tempo (IOIs).
 - Independent variables: Condition (2 levels: teaching vs. performing) x Skill (2 levels: articulation vs. dynamics)
 - Dependent variables: Interonset intervals, variability (SD/mean IOI)
 
-## Main predictions
+### Main predictions
 Participants will play slower while teaching regardless of the skills.
 
 ```{r setup, include = FALSE}
