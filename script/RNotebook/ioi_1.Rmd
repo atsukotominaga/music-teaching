@@ -76,7 +76,7 @@ theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 C
 ```
 
 ```{r extract, include = FALSE}
-df_ioi <- read.csv("./trimmed/data_ioi_1.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_ioi <- read.csv("../R/preprocessor/trimmed/data_ioi_1.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
 
 # SubNr as a factor
 df_ioi$SubNr <- as.factor(df_ioi$SubNr)
@@ -1028,7 +1028,7 @@ p_ioi_art_seq <- ggplot(data = ioi_art_seq_stats, aes(x = Interval, y = Mean, gr
   geom_hline(yintercept = 1, linetype = "dashed") + # Tempo
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Normalised IOI") + scale_x_continuous(breaks=seq(1,66,1))
+  labs(x = "Interval", y = "Normalised IOI") + scale_x_continuous(breaks=seq(1,71,1))
 p_ioi_art_seq
 ```
 
@@ -1054,6 +1054,6 @@ p_ioi_dyn_seq <- ggplot(data = ioi_dyn_seq_stats, aes(x = Interval, y = Mean, gr
   geom_hline(yintercept = 1, linetype = "dashed") + # Tempo
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Normalised IOI") + scale_x_continuous(breaks=seq(1,66,1))
+  labs(x = "Interval", y = "Normalised IOI") + scale_x_continuous(breaks=seq(1,71,1))
 p_ioi_dyn_seq
 ```

@@ -88,8 +88,8 @@ theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 C
 ```
 
 ```{r extract, include = FALSE}
-df_kot <- read.csv("./trimmed/data_kot.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
-df_kor <- read.csv("./trimmed/data_kor.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_kot <- read.csv("../R/preprocessor/trimmed/data_kot.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_kor <- read.csv("../R/preprocessor/trimmed/data_kor.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
 
 # SubNr as a factor
 df_kot$SubNr <- as.factor(df_kot$SubNr)
@@ -858,7 +858,7 @@ p_kot_art_seq
 p_kor_art_seq
 ```
 
-#### Dynamics{#sequence_dyn}
+### Dynamics{#sequence_dyn}
 ```{r seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE}
 # For each individual
 kot_dyn_seq <- aggregate(KOT~SubNr*Condition*Skill*Interval, data = df_kot_dyn,
@@ -879,7 +879,7 @@ p_kot_dyn_seq <- ggplot(data = kot_dyn_seq_stats, aes(x = Interval, y = Mean, gr
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "KOT (ms)") + scale_x_continuous(breaks=seq(1,66,1))
+  labs(x = "Interval", y = "KOT (ms)") + scale_x_continuous(breaks=seq(1,71,1))
 
 # For each individual
 kor_dyn_seq <- aggregate(KOR~SubNr*Condition*Skill*Interval, data = df_kor_dyn,
@@ -900,7 +900,7 @@ p_kor_dyn_seq <- ggplot(data = kor_dyn_seq_stats, aes(x = Interval, y = Mean, gr
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "KOR") + scale_x_continuous(breaks=seq(1,66,1))
+  labs(x = "Interval", y = "KOR") + scale_x_continuous(breaks=seq(1,71,1))
 
 p_kot_dyn_seq
 p_kor_dyn_seq

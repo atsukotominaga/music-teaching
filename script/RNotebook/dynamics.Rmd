@@ -85,8 +85,8 @@ theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 C
 ```
 
 ```{r extract, include = FALSE}
-df_vel <- read.csv("./trimmed/data_vel.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
-df_vel_diff <- read.csv("./trimmed/data_vel_diff.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_vel <- read.csv("../R/preprocessor/trimmed/data_vel.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_vel_diff <- read.csv("../R/preprocessor/trimmed/data_vel_diff.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
 
 # SubNr as a factor
 df_vel$SubNr <- as.factor(df_vel$SubNr)
@@ -852,7 +852,7 @@ p_vel_dyn_seq <- ggplot(data = vel_dyn_seq_stats, aes(x = Note, y = Mean, group 
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(0.05)) + 
-  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1))
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,72,1))
 p_vel_dyn_seq
 
 p_vel_dyn_diff_seq <- ggplot(data = vel_dyn_diff_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -860,7 +860,7 @@ p_vel_dyn_diff_seq <- ggplot(data = vel_dyn_diff_seq_stats, aes(x = Interval, y 
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1))
+  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,71,1))
 p_vel_dyn_diff_seq
 ```
 
@@ -901,7 +901,7 @@ p_vel_art_seq <- ggplot(data = vel_art_seq_stats, aes(x = Note, y = Mean, group 
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(0.05)) + 
-  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1))
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,72,1))
 p_vel_art_seq
 
 p_vel_art_diff_seq <- ggplot(data = vel_art_diff_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -909,6 +909,6 @@ p_vel_art_diff_seq <- ggplot(data = vel_art_diff_seq_stats, aes(x = Interval, y 
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1))
+  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,71,1))
 p_vel_art_diff_seq
 ```
