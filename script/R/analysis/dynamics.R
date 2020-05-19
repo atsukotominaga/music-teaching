@@ -1,4 +1,4 @@
-## ----setup, include = FALSE-----------------------------------------------------------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 # packages
 # data manipulation
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
@@ -15,9 +15,9 @@ theme_set(theme_classic())
 theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"), legend.position = "bottom")
 
 
-## ----extract, include = FALSE---------------------------------------------------------------------------------------------
-df_vel <- read.csv("./trimmed/data_vel.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
-df_vel_diff <- read.csv("./trimmed/data_vel_diff.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+## ----extract, include = FALSE-------------------------------------------------
+df_vel <- read.csv("../R/preprocessor/trimmed/data_vel.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_vel_diff <- read.csv("../R/preprocessor/trimmed/data_vel_diff.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
 
 # SubNr as a factor
 df_vel$SubNr <- as.factor(df_vel$SubNr)
@@ -32,7 +32,7 @@ df_vel_dyn <- df_vel %>% dplyr::filter(Skill == "dynamics")
 df_vel_diff_dyn <- df_vel_diff %>% dplyr::filter(Skill == "dynamics")
 
 
-## ----vel_dyn, echo = FALSE------------------------------------------------------------------------------------------------
+## ----vel_dyn, echo = FALSE----------------------------------------------------
 # For each individual
 vel_dyn <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent, data = df_vel_dyn,
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -42,7 +42,7 @@ colnames(vel_dyn) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean
 print(vel_dyn)
 
 
-## ----vel_dyn_bar,  echo = FALSE-------------------------------------------------------------------------------------------
+## ----vel_dyn_bar,  echo = FALSE-----------------------------------------------
 p_vel_dyn <- ggplot(data = vel_dyn, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -52,7 +52,7 @@ p_vel_dyn <- ggplot(data = vel_dyn, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_vel_dyn
 
 
-## ----vel_dyn_all, echo = FALSE--------------------------------------------------------------------------------------------
+## ----vel_dyn_all, echo = FALSE------------------------------------------------
 # Group mean
 vel_dyn_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = vel_dyn,
                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -62,7 +62,7 @@ colnames(vel_dyn_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "S
 print(vel_dyn_all)
 
 
-## ----vel_dyn_all_bar, echo = FALSE----------------------------------------------------------------------------------------
+## ----vel_dyn_all_bar, echo = FALSE--------------------------------------------
 p_vel_dyn_all <- ggplot(data = vel_dyn_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -71,7 +71,7 @@ p_vel_dyn_all <- ggplot(data = vel_dyn_all, aes(x = Subcomponent, y = Mean, fill
 p_vel_dyn_all
 
 
-## ----vel_dyn_all_box, echo = FALSE----------------------------------------------------------------------------------------
+## ----vel_dyn_all_box, echo = FALSE--------------------------------------------
 p_vel_dyn_all_box <- ggplot(data = vel_dyn, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
@@ -79,14 +79,14 @@ p_vel_dyn_all_box <- ggplot(data = vel_dyn, aes(x = Subcomponent, y = Mean, fill
 p_vel_dyn_all_box
 
 
-## ----normality1, echo = FALSE---------------------------------------------------------------------------------------------
+## ----normality1, echo = FALSE-------------------------------------------------
 # Reduce unused factors
 vel_dyn$Subcomponent <- factor(vel_dyn$Subcomponent)
 vel_dyn_norm <- by(vel_dyn$Mean, list(vel_dyn$Condition, vel_dyn$Subcomponent), shapiro.test)
 print(vel_dyn_norm)
 
 
-## ----stats1, echo = FALSE-------------------------------------------------------------------------------------------------
+## ----stats1, echo = FALSE-----------------------------------------------------
 vel_dyn_aov <- ezANOVA(
   data = df_vel_dyn
   , dv = .(Velocity)
@@ -100,12 +100,12 @@ vel_dyn_aov$ANOVA$p <- round(vel_dyn_aov$ANOVA$p, 4)
 print(vel_dyn_aov$ANOVA)
 
 
-## ----stats2, echo = FALSE-------------------------------------------------------------------------------------------------
+## ----stats2, echo = FALSE-----------------------------------------------------
 vel_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = vel_dyn)
 print(summary(vel_dyn_aov_2))
 
 
-## ----post-hoc1, echo = FALSE----------------------------------------------------------------------------------------------
+## ----post-hoc1, echo = FALSE--------------------------------------------------
 vel_ttest_forte <- t.test(vel_dyn$Mean[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Forte"], vel_dyn$Mean[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Forte"], paired = TRUE)
 vel_ttest_piano <- t.test(vel_dyn$Mean[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Piano"], vel_dyn$Mean[vel_dyn$Condition == "teaching" & vel_dyn$Subcomponent == "Piano"], paired = TRUE)
 
@@ -113,7 +113,7 @@ print(vel_ttest_forte)
 print(vel_ttest_piano)
 
 
-## ----effect1, echo = FALSE------------------------------------------------------------------------------------------------
+## ----effect1, echo = FALSE----------------------------------------------------
 # Effect size
 vel_ttest_forte_cohend <- cohen.d(vel_dyn$Mean[vel_dyn$Subcomponent == "Forte"], vel_dyn$Condition[vel_dyn$Subcomponent == "Forte"], paired = TRUE)
 vel_ttest_piano_cohend <- cohen.d(vel_dyn$Mean[vel_dyn$Subcomponent == "Piano"], vel_dyn$Condition[vel_dyn$Subcomponent == "Piano"], paired = TRUE)
@@ -122,7 +122,7 @@ print(vel_ttest_forte_cohend)
 print(vel_ttest_piano_cohend)
 
 
-## ----post-hoc2, echo = FALSE----------------------------------------------------------------------------------------------
+## ----post-hoc2, echo = FALSE--------------------------------------------------
 # Create a group label for a post-hoc test
 vel_dyn$Group[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Forte"] <- "Performing-Forte" 
 vel_dyn$Group[vel_dyn$Condition == "performing" & vel_dyn$Subcomponent == "Piano"] <- "Performing-Piano"
@@ -134,7 +134,7 @@ vel_dyn_pairwise$p.value <- round(vel_dyn_pairwise$p.value, 4)
 print(vel_dyn_pairwise)
 
 
-## ----vel_dyn_trial, echo = FALSE------------------------------------------------------------------------------------------
+## ----vel_dyn_trial, echo = FALSE----------------------------------------------
 # For each individual
 vel_dyn_trial <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent*TrialNr, data = df_vel_dyn,
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -144,7 +144,7 @@ colnames(vel_dyn_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Tri
 print(vel_dyn_trial)
 
 
-## ----vel_dyn_trial_line_forte, echo = FALSE, fig.height = 4---------------------------------------------------------------
+## ----vel_dyn_trial_line_forte, echo = FALSE, fig.height = 4-------------------
 p_vel_dyn_trial_forte <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -153,7 +153,7 @@ p_vel_dyn_trial_forte <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subco
 p_vel_dyn_trial_forte
 
 
-## ----vel_dyn_trial_line_piano, echo = FALSE, fig.height = 4---------------------------------------------------------------
+## ----vel_dyn_trial_line_piano, echo = FALSE, fig.height = 4-------------------
 p_vel_dyn_trial_piano <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -162,7 +162,7 @@ p_vel_dyn_trial_piano <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subco
 p_vel_dyn_trial_piano
 
 
-## ----vel_dyn_trial_all, echo = FALSE--------------------------------------------------------------------------------------
+## ----vel_dyn_trial_all, echo = FALSE------------------------------------------
 # Group mean
 vel_dyn_trial_all <- aggregate(Mean~Condition*Skill*Subcomponent*TrialNr, data = vel_dyn_trial,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -172,7 +172,7 @@ colnames(vel_dyn_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr"
 print(vel_dyn_trial_all)
 
 
-## ----vel_dyn_trial_all_line_forte, echo = FALSE---------------------------------------------------------------------------
+## ----vel_dyn_trial_all_line_forte, echo = FALSE-------------------------------
 p_vel_dyn_trial_all_forte <- ggplot(data = subset(vel_dyn_trial_all, vel_dyn_trial_all$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -181,7 +181,7 @@ p_vel_dyn_trial_all_forte <- ggplot(data = subset(vel_dyn_trial_all, vel_dyn_tri
 p_vel_dyn_trial_all_forte
 
 
-## ----vel_dyn_trial_all_line_piano, echo = FALSE---------------------------------------------------------------------------
+## ----vel_dyn_trial_all_line_piano, echo = FALSE-------------------------------
 p_vel_dyn_trial_all_piano <- ggplot(data = subset(vel_dyn_trial_all, vel_dyn_trial_all$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -190,7 +190,7 @@ p_vel_dyn_trial_all_piano <- ggplot(data = subset(vel_dyn_trial_all, vel_dyn_tri
 p_vel_dyn_trial_all_piano
 
 
-## ----vel_diff_dyn, echo = FALSE-------------------------------------------------------------------------------------------
+## ----vel_diff_dyn, echo = FALSE-----------------------------------------------
 # For each individual
 vel_diff_dyn <- aggregate(Diff~SubNr*Condition*Skill*Subcomponent, data = subset(df_vel_diff_dyn, df_vel_diff_dyn$Subcomponent == "FtoP" | df_vel_diff_dyn$Subcomponent == "PtoF"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -200,7 +200,7 @@ colnames(vel_diff_dyn) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", 
 print(vel_diff_dyn)
 
 
-## ----vel_diff_dyn_bar,  echo = FALSE--------------------------------------------------------------------------------------
+## ----vel_diff_dyn_bar,  echo = FALSE------------------------------------------
 p_vel_diff_dyn <- ggplot(data = vel_diff_dyn, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -210,7 +210,7 @@ p_vel_diff_dyn <- ggplot(data = vel_diff_dyn, aes(x = SubNr, y = Mean, fill = Co
 p_vel_diff_dyn
 
 
-## ----vel_diff_dyn_all, echo = FALSE---------------------------------------------------------------------------------------
+## ----vel_diff_dyn_all, echo = FALSE-------------------------------------------
 # Group mean
 vel_diff_dyn_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = vel_diff_dyn,
                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -220,7 +220,7 @@ colnames(vel_diff_dyn_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean
 print(vel_diff_dyn_all)
 
 
-## ----vel_diff_dyn_all_bar,  echo = FALSE----------------------------------------------------------------------------------
+## ----vel_diff_dyn_all_bar,  echo = FALSE--------------------------------------
 p_vel_diff_dyn_all <- ggplot(data = vel_diff_dyn_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -229,7 +229,7 @@ p_vel_diff_dyn_all <- ggplot(data = vel_diff_dyn_all, aes(x = Subcomponent, y = 
 p_vel_diff_dyn_all
 
 
-## ----vel_diff_dyn_all_box, echo = FALSE-----------------------------------------------------------------------------------
+## ----vel_diff_dyn_all_box, echo = FALSE---------------------------------------
 p_vel_diff_dyn_all_box <- ggplot(data = vel_diff_dyn, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
@@ -237,14 +237,14 @@ p_vel_diff_dyn_all_box <- ggplot(data = vel_diff_dyn, aes(x = Subcomponent, y = 
 p_vel_diff_dyn_all_box
 
 
-## ----normality2, echo = FALSE---------------------------------------------------------------------------------------------
+## ----normality2, echo = FALSE-------------------------------------------------
 # Reduce unused factors
 vel_diff_dyn$Subcomponent <- factor(vel_diff_dyn$Subcomponent)
 vel_diff_dyn_norm <- by(vel_diff_dyn$Mean, list(vel_diff_dyn$Condition, vel_diff_dyn$Subcomponent), shapiro.test)
 print(vel_diff_dyn_norm)
 
 
-## ----stats3, echo = FALSE-------------------------------------------------------------------------------------------------
+## ----stats3, echo = FALSE-----------------------------------------------------
 vel_diff_dyn_aov <- ezANOVA(
   data = subset(df_vel_diff_dyn, df_vel_diff_dyn$Subcomponent == "FtoP" | df_vel_diff_dyn$Subcomponent == "PtoF")
   , dv = .(Diff)
@@ -258,13 +258,13 @@ vel_diff_dyn_aov$ANOVA$p <- round(vel_diff_dyn_aov$ANOVA$p, 4)
 print(vel_diff_dyn_aov$ANOVA)
 
 
-## ----stats4, echo = FALSE-------------------------------------------------------------------------------------------------
+## ----stats4, echo = FALSE-----------------------------------------------------
 vel_diff_dyn_aov_2 <- with(vel_diff_dyn,
                       aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent))))
 print(summary(vel_diff_dyn_aov_2))
 
 
-## ----post-hoc3, echo = FALSE----------------------------------------------------------------------------------------------
+## ----post-hoc3, echo = FALSE--------------------------------------------------
 vel_diff_ttest_ftop <- t.test(vel_diff_dyn$Mean[vel_diff_dyn$Condition == "performing" & vel_diff_dyn$Subcomponent == "FtoP"], vel_diff_dyn$Mean[vel_diff_dyn$Condition == "teaching" & vel_diff_dyn$Subcomponent == "FtoP"], paired = TRUE)
 vel_diff_ttest_ptof <- t.test(vel_diff_dyn$Mean[vel_diff_dyn$Condition == "performing" & vel_diff_dyn$Subcomponent == "PtoF"], vel_diff_dyn$Mean[vel_diff_dyn$Condition == "teaching" & vel_diff_dyn$Subcomponent == "PtoF"], paired = TRUE)
 
@@ -272,7 +272,7 @@ print(vel_diff_ttest_ftop)
 print(vel_diff_ttest_ptof)
 
 
-## ----effect2, echo = FALSE------------------------------------------------------------------------------------------------
+## ----effect2, echo = FALSE----------------------------------------------------
 # Effect size
 vel_diff_ttest_ftop_cohend <- cohen.d(vel_diff_dyn$Mean[vel_diff_dyn$Subcomponent == "FtoP"], vel_diff_dyn$Condition[vel_diff_dyn$Subcomponent == "FtoP"], paired = TRUE)
 vel_diff_ttest_ptof_cohend <- cohen.d(vel_diff_dyn$Mean[vel_diff_dyn$Subcomponent == "PtoF"], vel_diff_dyn$Condition[vel_diff_dyn$Subcomponent == "PtoF"], paired = TRUE)
@@ -281,7 +281,7 @@ print(vel_diff_ttest_ftop_cohend)
 print(vel_diff_ttest_ptof_cohend)
 
 
-## ----post-hoc4, echo = FALSE----------------------------------------------------------------------------------------------
+## ----post-hoc4, echo = FALSE--------------------------------------------------
 # Create a group label for a post-hoc test
 vel_diff_dyn$Group[vel_diff_dyn$Condition == "performing" & vel_diff_dyn$Subcomponent == "FtoP"] <- "Performing-FtoP" 
 vel_diff_dyn$Group[vel_diff_dyn$Condition == "performing" & vel_diff_dyn$Subcomponent == "PtoF"] <- "Performing-PtoF"
@@ -293,7 +293,7 @@ vel_diff_dyn_pairwise$p.value <- round(vel_diff_dyn_pairwise$p.value, 4)
 print(vel_diff_dyn_pairwise)
 
 
-## ----vel_diff_dyn_trial, echo = FALSE-------------------------------------------------------------------------------------
+## ----vel_diff_dyn_trial, echo = FALSE-----------------------------------------
 # For each individual
 vel_diff_dyn_trial <- aggregate(Diff~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_vel_diff_dyn, df_vel_diff_dyn$Subcomponent == "FtoP" | df_vel_diff_dyn$Subcomponent == "PtoF"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -303,7 +303,7 @@ colnames(vel_diff_dyn_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent",
 print(vel_diff_dyn_trial)
 
 
-## ----vel_diff_dyn_trial_line_ftop, echo = FALSE, fig.height = 4-----------------------------------------------------------
+## ----vel_diff_dyn_trial_line_ftop, echo = FALSE, fig.height = 4---------------
 p_vel_diff_dyn_trial_ftop <- ggplot(data = subset(vel_diff_dyn_trial, vel_diff_dyn_trial$Subcomponent == "FtoP"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -312,7 +312,7 @@ p_vel_diff_dyn_trial_ftop <- ggplot(data = subset(vel_diff_dyn_trial, vel_diff_d
 p_vel_diff_dyn_trial_ftop
 
 
-## ----vel_diff_dyn_trial_line_ptof, echo = FALSE, fig.height = 4-----------------------------------------------------------
+## ----vel_diff_dyn_trial_line_ptof, echo = FALSE, fig.height = 4---------------
 p_vel_diff_dyn_trial_ptof <- ggplot(data = subset(vel_diff_dyn_trial, vel_diff_dyn_trial$Subcomponent == "PtoF"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -321,7 +321,7 @@ p_vel_diff_dyn_trial_ptof <- ggplot(data = subset(vel_diff_dyn_trial, vel_diff_d
 p_vel_diff_dyn_trial_ptof
 
 
-## ----vel_diff_dyn_trial_all, echo = FALSE---------------------------------------------------------------------------------
+## ----vel_diff_dyn_trial_all, echo = FALSE-------------------------------------
 # Group mean
 vel_diff_dyn_trial_all <- aggregate(Mean~Condition*Skill*Subcomponent*TrialNr, data = vel_diff_dyn_trial,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -331,7 +331,7 @@ colnames(vel_diff_dyn_trial_all) <- c("Condition", "Skill", "Subcomponent", "Tri
 print(vel_diff_dyn_trial_all)
 
 
-## ----vel_diff_dyn_trial_all_line_ftop, echo = FALSE-----------------------------------------------------------------------
+## ----vel_diff_dyn_trial_all_line_ftop, echo = FALSE---------------------------
 p_vel_diff_dyn_trial_all_ftop <- ggplot(data = subset(vel_diff_dyn_trial_all, vel_diff_dyn_trial_all$Subcomponent == "FtoP"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -340,7 +340,7 @@ p_vel_diff_dyn_trial_all_ftop <- ggplot(data = subset(vel_diff_dyn_trial_all, ve
 p_vel_diff_dyn_trial_all_ftop
 
 
-## ----vel_diff_dyn_trial_all_line_ptof, echo = FALSE-----------------------------------------------------------------------
+## ----vel_diff_dyn_trial_all_line_ptof, echo = FALSE---------------------------
 p_vel_diff_dyn_trial_all_ptof <- ggplot(data = subset(vel_diff_dyn_trial_all, vel_diff_dyn_trial_all$Subcomponent == "PtoF"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -349,7 +349,7 @@ p_vel_diff_dyn_trial_all_ptof <- ggplot(data = subset(vel_diff_dyn_trial_all, ve
 p_vel_diff_dyn_trial_all_ptof
 
 
-## ----vel_art, echo = FALSE------------------------------------------------------------------------------------------------
+## ----vel_art, echo = FALSE----------------------------------------------------
 # For each individual
 vel_art <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent, data = df_vel_art,
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -359,7 +359,7 @@ colnames(vel_art) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", "Mean
 print(vel_art)
 
 
-## ----vel_art_bar,  echo = FALSE-------------------------------------------------------------------------------------------
+## ----vel_art_bar,  echo = FALSE-----------------------------------------------
 p_vel_art <- ggplot(data = vel_art, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -369,7 +369,7 @@ p_vel_art <- ggplot(data = vel_art, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_vel_art
 
 
-## ----vel_art_all, echo = FALSE--------------------------------------------------------------------------------------------
+## ----vel_art_all, echo = FALSE------------------------------------------------
 # Group mean
 vel_art_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = vel_art,
                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -379,7 +379,7 @@ colnames(vel_art_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean", "S
 print(vel_art_all)
 
 
-## ----vel_art_all_bar, echo = FALSE----------------------------------------------------------------------------------------
+## ----vel_art_all_bar, echo = FALSE--------------------------------------------
 p_vel_art_all <- ggplot(data = vel_art_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -388,7 +388,7 @@ p_vel_art_all <- ggplot(data = vel_art_all, aes(x = Subcomponent, y = Mean, fill
 p_vel_art_all
 
 
-## ----vel_art_all_box, echo = FALSE----------------------------------------------------------------------------------------
+## ----vel_art_all_box, echo = FALSE--------------------------------------------
 p_vel_art_all_box <- ggplot(data = vel_art, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
@@ -396,14 +396,14 @@ p_vel_art_all_box <- ggplot(data = vel_art, aes(x = Subcomponent, y = Mean, fill
 p_vel_art_all_box
 
 
-## ----normality3, echo = FALSE---------------------------------------------------------------------------------------------
+## ----normality3, echo = FALSE-------------------------------------------------
 # Reduce unused factors
 vel_art$Subcomponent <- factor(vel_art$Subcomponent)
 vel_art_norm <- by(vel_art$Mean, list(vel_art$Condition, vel_art$Subcomponent), shapiro.test)
 print(vel_art_norm)
 
 
-## ----stats5, echo = FALSE-------------------------------------------------------------------------------------------------
+## ----stats5, echo = FALSE-----------------------------------------------------
 vel_art_aov <- ezANOVA(
   data = df_vel_art
   , dv = .(Velocity)
@@ -417,12 +417,12 @@ vel_art_aov$ANOVA$p <- round(vel_art_aov$ANOVA$p, 4)
 print(vel_art_aov$ANOVA)
 
 
-## ----stats6, echo = FALSE-------------------------------------------------------------------------------------------------
+## ----stats6, echo = FALSE-----------------------------------------------------
 vel_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = vel_art)
 print(summary(vel_art_aov_2))
 
 
-## ----vel_art_trial, echo = FALSE------------------------------------------------------------------------------------------
+## ----vel_art_trial, echo = FALSE----------------------------------------------
 # For each individual
 vel_art_trial <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent*TrialNr, data = df_vel_art,
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -432,7 +432,7 @@ colnames(vel_art_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Tri
 print(vel_art_trial)
 
 
-## ----vel_art_trial_line_legato, echo = FALSE, fig.height = 4--------------------------------------------------------------
+## ----vel_art_trial_line_legato, echo = FALSE, fig.height = 4------------------
 p_vel_art_trial_legato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -441,7 +441,7 @@ p_vel_art_trial_legato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Subc
 p_vel_art_trial_legato
 
 
-## ----vel_art_trial_line_piano, echo = FALSE, fig.height = 4---------------------------------------------------------------
+## ----vel_art_trial_line_piano, echo = FALSE, fig.height = 4-------------------
 p_vel_art_trial_staccato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -450,7 +450,7 @@ p_vel_art_trial_staccato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Su
 p_vel_art_trial_staccato
 
 
-## ----vel_art_trial_all, echo = FALSE--------------------------------------------------------------------------------------
+## ----vel_art_trial_all, echo = FALSE------------------------------------------
 # Group mean
 vel_art_trial_all <- aggregate(Mean~Condition*Skill*Subcomponent*TrialNr, data = vel_art_trial,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -460,7 +460,7 @@ colnames(vel_art_trial_all) <- c("Condition", "Skill", "Subcomponent", "TrialNr"
 print(vel_art_trial_all)
 
 
-## ----vel_art_trial_all_line_legato, echo = FALSE--------------------------------------------------------------------------
+## ----vel_art_trial_all_line_legato, echo = FALSE------------------------------
 p_vel_art_trial_all_legato <- ggplot(data = subset(vel_art_trial_all, vel_art_trial_all$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -469,7 +469,7 @@ p_vel_art_trial_all_legato <- ggplot(data = subset(vel_art_trial_all, vel_art_tr
 p_vel_art_trial_all_legato
 
 
-## ----vel_art_trial_all_line_staccato, echo = FALSE------------------------------------------------------------------------
+## ----vel_art_trial_all_line_staccato, echo = FALSE----------------------------
 p_vel_art_trial_all_staccato <- ggplot(data = subset(vel_art_trial_all, vel_art_trial_all$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -478,7 +478,7 @@ p_vel_art_trial_all_staccato <- ggplot(data = subset(vel_art_trial_all, vel_art_
 p_vel_art_trial_all_staccato
 
 
-## ----vel_diff_art, echo = FALSE-------------------------------------------------------------------------------------------
+## ----vel_diff_art, echo = FALSE-----------------------------------------------
 # For each individual
 vel_diff_art <- aggregate(Diff~SubNr*Condition*Skill*Subcomponent, data = subset(df_vel_diff_art, df_vel_diff_art$Subcomponent == "LtoS" | df_vel_diff_art$Subcomponent == "StoL"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -488,7 +488,7 @@ colnames(vel_diff_art) <- c("SubNr", "Condition", "Skill", "Subcomponent", "N", 
 print(vel_diff_art)
 
 
-## ----vel_diff_art_bar,  echo = FALSE--------------------------------------------------------------------------------------
+## ----vel_diff_art_bar,  echo = FALSE------------------------------------------
 p_vel_diff_art <- ggplot(data = vel_diff_art, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -498,7 +498,7 @@ p_vel_diff_art <- ggplot(data = vel_diff_art, aes(x = SubNr, y = Mean, fill = Co
 p_vel_diff_art
 
 
-## ----vel_diff_art_all, echo = FALSE---------------------------------------------------------------------------------------
+## ----vel_diff_art_all, echo = FALSE-------------------------------------------
 # Group mean
 vel_diff_art_all <- aggregate(Mean~Condition*Skill*Subcomponent, data = vel_diff_art,
                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -508,7 +508,7 @@ colnames(vel_diff_art_all) <- c("Condition", "Skill", "Subcomponent", "N", "Mean
 print(vel_diff_art_all)
 
 
-## ----vel_diff_art_all_bar,  echo = FALSE----------------------------------------------------------------------------------
+## ----vel_diff_art_all_bar,  echo = FALSE--------------------------------------
 p_vel_diff_art_all <- ggplot(data = vel_diff_art_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -517,7 +517,7 @@ p_vel_diff_art_all <- ggplot(data = vel_diff_art_all, aes(x = Subcomponent, y = 
 p_vel_diff_art_all
 
 
-## ----vel_diff_art_all_box, echo = FALSE-----------------------------------------------------------------------------------
+## ----vel_diff_art_all_box, echo = FALSE---------------------------------------
 p_vel_diff_art_all_box <- ggplot(data = vel_diff_art, aes(x = Subcomponent, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
@@ -525,14 +525,14 @@ p_vel_diff_art_all_box <- ggplot(data = vel_diff_art, aes(x = Subcomponent, y = 
 p_vel_diff_art_all_box
 
 
-## ----normality4, echo = FALSE---------------------------------------------------------------------------------------------
+## ----normality4, echo = FALSE-------------------------------------------------
 # Reduce unused factors
 vel_diff_art$Subcomponent <- factor(vel_diff_art$Subcomponent)
 vel_diff_art_norm <- by(vel_diff_art$Mean, list(vel_diff_art$Condition, vel_diff_art$Subcomponent), shapiro.test)
 print(vel_diff_art_norm)
 
 
-## ----stats7, echo = FALSE-------------------------------------------------------------------------------------------------
+## ----stats7, echo = FALSE-----------------------------------------------------
 vel_diff_art_aov <- ezANOVA(
   data = subset(df_vel_diff_art, df_vel_diff_art$Subcomponent == "LtoS" | df_vel_diff_art$Subcomponent == "StoL")
   , dv = .(Diff)
@@ -546,12 +546,12 @@ vel_diff_art_aov$ANOVA$p <- round(vel_diff_art_aov$ANOVA$p, 4)
 print(vel_diff_art_aov$ANOVA)
 
 
-## ----stats8, echo = FALSE-------------------------------------------------------------------------------------------------
+## ----stats8, echo = FALSE-----------------------------------------------------
 vel_diff_art_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = vel_diff_art)
 print(summary(vel_diff_art_aov_2))
 
 
-## ----vel_diff_art_trial, echo = FALSE-------------------------------------------------------------------------------------
+## ----vel_diff_art_trial, echo = FALSE-----------------------------------------
 # For each individual
 vel_diff_art_trial <- aggregate(Diff~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_vel_diff_art, df_vel_diff_art$Subcomponent == "LtoS" | df_vel_diff_art$Subcomponent == "StoL"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -561,7 +561,7 @@ colnames(vel_diff_art_trial) <- c("SubNr", "Condition", "Skill", "Subcomponent",
 print(vel_diff_art_trial)
 
 
-## ----vel_diff_art_trial_line_ltos, echo = FALSE, fig.height = 4-----------------------------------------------------------
+## ----vel_diff_art_trial_line_ltos, echo = FALSE, fig.height = 4---------------
 p_vel_diff_art_trial_ltos <- ggplot(data = subset(vel_diff_art_trial, vel_diff_art_trial$Subcomponent == "LtoS"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -570,7 +570,7 @@ p_vel_diff_art_trial_ltos <- ggplot(data = subset(vel_diff_art_trial, vel_diff_a
 p_vel_diff_art_trial_ltos
 
 
-## ----vel_diff_art_trial_line_stol, echo = FALSE, fig.height = 4-----------------------------------------------------------
+## ----vel_diff_art_trial_line_stol, echo = FALSE, fig.height = 4---------------
 p_vel_diff_art_trial_stol <- ggplot(data = subset(vel_diff_art_trial, vel_diff_art_trial$Subcomponent == "StoL"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -579,7 +579,7 @@ p_vel_diff_art_trial_stol <- ggplot(data = subset(vel_diff_art_trial, vel_diff_a
 p_vel_diff_art_trial_stol
 
 
-## ----vel_diff_art_trial_all, echo = FALSE---------------------------------------------------------------------------------
+## ----vel_diff_art_trial_all, echo = FALSE-------------------------------------
 # Group mean
 vel_diff_art_trial_all <- aggregate(Mean~Condition*Skill*Subcomponent*TrialNr, data = vel_diff_art_trial,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -589,7 +589,7 @@ colnames(vel_diff_art_trial_all) <- c("Condition", "Skill", "Subcomponent", "Tri
 print(vel_diff_art_trial_all)
 
 
-## ----vel_diff_art_trial_all_line_ltos, echo = FALSE-----------------------------------------------------------------------
+## ----vel_diff_art_trial_all_line_ltos, echo = FALSE---------------------------
 p_vel_diff_art_trial_all_ltos <- ggplot(data = subset(vel_diff_art_trial_all, vel_diff_art_trial_all$Subcomponent == "LtoS"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -598,7 +598,7 @@ p_vel_diff_art_trial_all_ltos <- ggplot(data = subset(vel_diff_art_trial_all, ve
 p_vel_diff_art_trial_all_ltos
 
 
-## ----vel_diff_art_trial_all_line_stol, echo = FALSE-----------------------------------------------------------------------
+## ----vel_diff_art_trial_all_line_stol, echo = FALSE---------------------------
 p_vel_diff_art_trial_all_stol <- ggplot(data = subset(vel_diff_art_trial_all, vel_diff_art_trial_all$Subcomponent == "StoL"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -607,7 +607,7 @@ p_vel_diff_art_trial_all_stol <- ggplot(data = subset(vel_diff_art_trial_all, ve
 p_vel_diff_art_trial_all_stol
 
 
-## ----seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE----------------------------------------------------------------
+## ----seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE--------------------
 # Average vel_dynocity for each note
 # For each participant
 vel_dyn_seq <- aggregate(Velocity~SubNr*Condition*Skill*RowNr, data = df_vel_dyn, 
@@ -643,7 +643,7 @@ p_vel_dyn_seq <- ggplot(data = vel_dyn_seq_stats, aes(x = Note, y = Mean, group 
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(0.05)) + 
-  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1))
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,72,1))
 p_vel_dyn_seq
 
 p_vel_dyn_diff_seq <- ggplot(data = vel_dyn_diff_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -651,11 +651,11 @@ p_vel_dyn_diff_seq <- ggplot(data = vel_dyn_diff_seq_stats, aes(x = Interval, y 
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1))
+  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,71,1))
 p_vel_dyn_diff_seq
 
 
-## ----seq_art, fig.width = 10, fig.height = 2, echo = FALSE----------------------------------------------------------------
+## ----seq_art, fig.width = 10, fig.height = 2, echo = FALSE--------------------
 # Average vel_artocity for each note
 # For each participant
 vel_art_seq <- aggregate(Velocity~SubNr*Condition*Skill*RowNr, data = df_vel_art, 
@@ -691,7 +691,7 @@ p_vel_art_seq <- ggplot(data = vel_art_seq_stats, aes(x = Note, y = Mean, group 
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(0.05)) + 
-  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1))
+  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,72,1))
 p_vel_art_seq
 
 p_vel_art_diff_seq <- ggplot(data = vel_art_diff_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
@@ -699,6 +699,6 @@ p_vel_art_diff_seq <- ggplot(data = vel_art_diff_seq_stats, aes(x = Interval, y 
   geom_point() +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
                 position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1))
+  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,71,1))
 p_vel_art_diff_seq
 
