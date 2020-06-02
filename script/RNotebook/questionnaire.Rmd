@@ -1,0 +1,69 @@
+---
+title: 'Demographics: The Sound of Teaching Music 2'
+output:
+  html_notebook: default
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+Description: This is a summary of demographic information
+
+```{r setup, include = FALSE}
+# packages
+# data manipulation
+if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+```
+
+# Outline - Questionnaire
+
+```{r read, echo = FALSE}
+# Read csv files
+df <- read.csv("./questionnaire_teaching-v2.0.csv", header = T, sep = ",", dec = ".", na.string = "NA")
+df_error_onset <- read.csv("../R/preprocessor/filtered/data_error_correction_onset.csv", header = T, sep = ",", dec = ".")
+df_error_offset <- read.csv("../R/preprocessor/filtered/data_error_correction_offset.csv", header = T, sep = ",", dec = ".")
+df$Please.specify.the.total.number.of.years.of.formal.training..i.e...lessons.. <- as.numeric(df$Please.specify.the.total.number.of.years.of.formal.training..i.e...lessons..)
+
+# add SubNr 21 manually
+df[21,2] <- 21
+df[21,3] <- 25
+df[21,4] <- "Male"
+df[21,5] <- "Hungarian"
+df[21,6] <- "English"
+df[21,7] <- "Right"
+df[21,8] <- "Yes"
+df[21,9] <- "Yes"
+df[21,17] <- 11
+df[21,18] <- 12
+df[21,19] <- 13
+
+# exclude SubNr 3 due to insufficient motor skills
+include <- df %>% dplyr::filter(Participant.number != 3)
+
+# colnames
+colnames(include) <- c("TimeStamps", "SubNr", "Age", "Gender", "FirstLang", "SecondLang", "DominantHand",
+                       "Vision", "Hearing", "KnowClementi", "PlayClementi", colnames(include)[12],
+                       colnames(include)[13], "School", "Degree", "Major", "TotalTraining", "TotalPlaying",
+                       "AgeStarted", "AgeStopped", "PracticeHours", "Instruments", colnames(include)[23],
+                       colnames(include)[24], colnames(include)[25], colnames(include)[26],
+                       colnames(include)[27], colnames(include)[28], colnames(include)[29],
+                       colnames(include)[30], colnames(include)[31], colnames(include)[32],
+                       colnames(include)[33], colnames(include)[34], colnames(include)[35],
+                       "MusicTeachingExperience", "OtherTeachingExperience", "Subject", "TotalTeaching",
+                       "TeachingLiking")
+
+# correct some gibbrish
+include[13,17] <- 18
+print(include)
+```
+
+## Descriptive stats for participants' demographics
+- Number of excluded participants: `r nrow(df)-nrow(include)`
+- Number of included participants: `r nrow(include)`
+- Male: `r nrow(subset(include, include$Gender == "Male"))`
+- Female: `r nrow(subset(include, include$Gender == "Female"))`
+- Dominant hand: Right - `r nrow(subset(include, include$DominantHand == "Right"))`, Left - `r nrow(subset(include, include$DominantHand == "Left"))`
+- Average: the total number of years of formal learning: `r mean(include$TotalTraining)`
+- Average: the total number of years of playing: `r mean(include$TotalPlaying)`
+
