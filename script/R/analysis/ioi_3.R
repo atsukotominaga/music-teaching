@@ -1,4 +1,4 @@
-## ----setup, include = FALSE---------------------------------------------------
+## ----setup, include = FALSE-----------------------------------------------------------------------------------------------
 # packages
 # data manipulation
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
@@ -15,7 +15,7 @@ theme_set(theme_classic())
 theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"), legend.position = "bottom")
 
 
-## ----extract, include = FALSE-------------------------------------------------
+## ----extract, include = FALSE---------------------------------------------------------------------------------------------
 df_ioi <- read.csv("../R/preprocessor/trimmed/data_ioi_3.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
 
 # SubNr as a factor
@@ -27,7 +27,7 @@ df_ioi_art <- df_ioi %>% dplyr::filter(Skill == "articulation")
 df_ioi_dyn <- df_ioi %>% dplyr::filter(Skill == "dynamics")
 
 
-## ----ioi_art, echo = FALSE----------------------------------------------------
+## ----ioi_art, echo = FALSE------------------------------------------------------------------------------------------------
 # For each individual
 ioi_art <- aggregate(normIOI~SubNr*Condition*Skill, data = df_ioi_art,
                  FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
@@ -37,7 +37,7 @@ colnames(ioi_art) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
 print(ioi_art)
 
 
-## ----ioi_art_bar,  echo = FALSE-----------------------------------------------
+## ----ioi_art_bar,  echo = FALSE-------------------------------------------------------------------------------------------
 p_ioi_art <- ggplot(data = ioi_art, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -47,7 +47,7 @@ p_ioi_art <- ggplot(data = ioi_art, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_ioi_art
 
 
-## ----ioi_art_all, echo = FALSE------------------------------------------------
+## ----ioi_art_all, echo = FALSE--------------------------------------------------------------------------------------------
 # Group mean
 ioi_art_all <- aggregate(Mean~Condition*Skill, data = ioi_art,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -57,7 +57,7 @@ colnames(ioi_art_all) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 print(ioi_art_all)
 
 
-## ----ioi_art_all_bar, echo = FALSE--------------------------------------------
+## ----ioi_art_all_bar, echo = FALSE----------------------------------------------------------------------------------------
 p_ioi_art_all <- ggplot(data = ioi_art_all, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -68,7 +68,7 @@ p_ioi_art_all <- ggplot(data = ioi_art_all, aes(x = Condition, y = Mean, fill = 
 p_ioi_art_all
 
 
-## ----ioi_art_all_box, echo = FALSE--------------------------------------------
+## ----ioi_art_all_box, echo = FALSE----------------------------------------------------------------------------------------
 p_ioi_art_all_box <- ggplot(data = ioi_art, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
@@ -78,23 +78,23 @@ p_ioi_art_all_box <- ggplot(data = ioi_art, aes(x = Condition, y = Mean, fill = 
 p_ioi_art_all_box
 
 
-## ----normality1, echo = FALSE-------------------------------------------------
+## ----normality1, echo = FALSE---------------------------------------------------------------------------------------------
 # Normality check
 ioi_art_norm <- by(ioi_art$Mean, list(ioi_art$Condition), shapiro.test)
 print(ioi_art_norm)
 
 
-## ----stats1, echo = FALSE-----------------------------------------------------
+## ----stats1, echo = FALSE-------------------------------------------------------------------------------------------------
 ioi_art_ttest <- t.test(ioi_art$Mean[ioi_art$Condition == "teaching"], ioi_art$Mean[ioi_art$Condition == "performing"], paired = TRUE)
 print(ioi_art_ttest)
 
 
-## ----stats2, echo = FALSE-----------------------------------------------------
+## ----stats2, echo = FALSE-------------------------------------------------------------------------------------------------
 ioi_art_cohend <- cohen.d(ioi_art$Mean, ioi_art$Condition, paired = TRUE)
 print(ioi_art_cohend)
 
 
-## ----ioi_art_ch, echo = FALSE-------------------------------------------------
+## ----ioi_art_ch, echo = FALSE---------------------------------------------------------------------------------------------
 # For each individual
 ioi_art_ch <- aggregate(normIOI~SubNr*Condition*Skill*Boundary, data = df_ioi_art,
                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -104,7 +104,7 @@ colnames(ioi_art_ch) <- c("SubNr", "Condition", "Skill", "Boundary", "N", "Mean"
 print(ioi_art_ch)
 
 
-## ----ioi_art_ch_bar, echo = FALSE---------------------------------------------
+## ----ioi_art_ch_bar, echo = FALSE-----------------------------------------------------------------------------------------
 p_ioi_art_ch <- ggplot(data = ioi_art_ch, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -115,7 +115,7 @@ p_ioi_art_ch <- ggplot(data = ioi_art_ch, aes(x = SubNr, y = Mean, fill = Condit
 p_ioi_art_ch
 
 
-## ----ioi_art_ch_all, echo = FALSE---------------------------------------------
+## ----ioi_art_ch_all, echo = FALSE-----------------------------------------------------------------------------------------
 # Group mean
 ioi_art_ch_all <- aggregate(Mean~Condition*Skill*Boundary, data = ioi_art_ch,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -125,7 +125,7 @@ colnames(ioi_art_ch_all) <- c("Condition", "Skill", "Boundary", "N", "Mean", "SD
 print(ioi_art_ch_all)
 
 
-## ----ioi_art_ch_all_bar, echo = FALSE-----------------------------------------
+## ----ioi_art_ch_all_bar, echo = FALSE-------------------------------------------------------------------------------------
 p_ioi_art_ch_all_bar <- ggplot(data = ioi_art_ch_all, aes(x = Boundary, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -135,7 +135,7 @@ p_ioi_art_ch_all_bar <- ggplot(data = ioi_art_ch_all, aes(x = Boundary, y = Mean
 p_ioi_art_ch_all_bar
 
 
-## ----ioi_art_ch_all_box, echo = FALSE-----------------------------------------
+## ----ioi_art_ch_all_box, echo = FALSE-------------------------------------------------------------------------------------
 p_ioi_art_ch_box <- ggplot(data = ioi_art_ch, aes(x = Boundary, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
@@ -144,12 +144,12 @@ p_ioi_art_ch_box <- ggplot(data = ioi_art_ch, aes(x = Boundary, y = Mean, fill =
 p_ioi_art_ch_box
 
 
-## ----normality2, echo = FALSE-------------------------------------------------
+## ----normality2, echo = FALSE---------------------------------------------------------------------------------------------
 ioi_art_ch_norm <- by(ioi_art_ch$Mean, list(ioi_art_ch$Condition, ioi_art_ch$Boundary), shapiro.test)
 print(ioi_art_ch_norm)
 
 
-## ----stats3, echo = FALSE-----------------------------------------------------
+## ----stats3, echo = FALSE-------------------------------------------------------------------------------------------------
 ioi_art_ch_aov <- ezANOVA(
   data = df_ioi_art
   , dv = .(normIOI)
@@ -163,12 +163,12 @@ ioi_art_ch_aov$ANOVA$p <- round(ioi_art_ch_aov$ANOVA$p, 4)
 print(ioi_art_ch_aov$ANOVA)
 
 
-## ----stats4, echo = FALSE-----------------------------------------------------
+## ----stats4, echo = FALSE-------------------------------------------------------------------------------------------------
 ioi_art_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_art_ch)
 print(summary(ioi_art_ch_aov_2))
 
 
-## ----ioi_art_trial, echo = FALSE----------------------------------------------
+## ----ioi_art_trial, echo = FALSE------------------------------------------------------------------------------------------
 # For each individual
 ioi_art_trial <- aggregate(normIOI~SubNr*Condition*Skill*TrialNr, data = df_ioi_art,
                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -178,7 +178,7 @@ colnames(ioi_art_trial) <- c("SubNr", "Condition", "Skill", "TrialNr", "N", "Mea
 print(ioi_art_trial)
 
 
-## ----ioi_art_trial_line, echo = FALSE, fig.height = 4-------------------------
+## ----ioi_art_trial_line, echo = FALSE, fig.height = 4---------------------------------------------------------------------
 p_ioi_art_trial <- ggplot(data = ioi_art_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -188,7 +188,7 @@ p_ioi_art_trial <- ggplot(data = ioi_art_trial, aes(x = TrialNr, y = Mean, group
 p_ioi_art_trial
 
 
-## ----ioi_art_trial_all, echo = FALSE------------------------------------------
+## ----ioi_art_trial_all, echo = FALSE--------------------------------------------------------------------------------------
 # Group mean
 ioi_art_trial_all <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_art_trial,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -198,7 +198,7 @@ colnames(ioi_art_trial_all) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "
 print(ioi_art_trial_all)
 
 
-## ----ioi_art_trial_all_line, echo = FALSE-------------------------------------
+## ----ioi_art_trial_all_line, echo = FALSE---------------------------------------------------------------------------------
 p_ioi_art_trial_all <- ggplot(data = ioi_art_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -208,7 +208,7 @@ p_ioi_art_trial_all <- ggplot(data = ioi_art_trial_all, aes(x = TrialNr, y = Mea
 p_ioi_art_trial_all
 
 
-## ----ioi_art_var, echo = FALSE------------------------------------------------
+## ----ioi_art_var, echo = FALSE--------------------------------------------------------------------------------------------
 # Create a data frame for variability (SD/)
 df_ioi_art_var <- data.frame()
 for (subnr in unique(df_ioi_art$SubNr)){
@@ -236,7 +236,7 @@ colnames(ioi_art_var) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
 print(ioi_art_var)
 
 
-## ----ioi_art_var_bar, echo = FALSE--------------------------------------------
+## ----ioi_art_var_bar, echo = FALSE----------------------------------------------------------------------------------------
 p_ioi_art_var <- ggplot(data = ioi_art_var, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -245,7 +245,7 @@ p_ioi_art_var <- ggplot(data = ioi_art_var, aes(x = SubNr, y = Mean, fill = Cond
 p_ioi_art_var
 
 
-## ----ioi_art_var_all, echo = FALSE--------------------------------------------
+## ----ioi_art_var_all, echo = FALSE----------------------------------------------------------------------------------------
 # Group mean
 ioi_art_var_all <- aggregate(Mean~Condition*Skill, data = ioi_art_var,
                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -255,7 +255,7 @@ colnames(ioi_art_var_all) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 print(ioi_art_var_all)
 
 
-## ----ioi_art_var_all_bar, echo = FALSE----------------------------------------
+## ----ioi_art_var_all_bar, echo = FALSE------------------------------------------------------------------------------------
 p_ioi_art_var_all <- ggplot(data = ioi_art_var_all, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -265,7 +265,7 @@ p_ioi_art_var_all <- ggplot(data = ioi_art_var_all, aes(x = Condition, y = Mean,
 p_ioi_art_var_all
 
 
-## ----ioi_art_var_all_box, echo = FALSE----------------------------------------
+## ----ioi_art_var_all_box, echo = FALSE------------------------------------------------------------------------------------
 p_ioi_art_var_box <- ggplot(data = ioi_art_var, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
@@ -274,22 +274,22 @@ p_ioi_art_var_box <- ggplot(data = ioi_art_var, aes(x = Condition, y = Mean, fil
 p_ioi_art_var_box
 
 
-## ----normality3, echo = FALSE-------------------------------------------------
+## ----normality3, echo = FALSE---------------------------------------------------------------------------------------------
 ioi_art_var_norm <- by(ioi_art_var$Mean, list(ioi_art_var$Condition), shapiro.test)
 print(ioi_art_var_norm)
 
 
-## ----stats5, echo = FALSE-----------------------------------------------------
+## ----stats5, echo = FALSE-------------------------------------------------------------------------------------------------
 ioi_art_var_ttest <- t.test(ioi_art_var$Mean[ioi_art_var$Condition == "teaching"], ioi_art_var$Mean[ioi_art_var$Condition == "performing"], paired = TRUE)
 print(ioi_art_var_ttest)
 
 
-## ----stats6, echo = FALSE-----------------------------------------------------
+## ----stats6, echo = FALSE-------------------------------------------------------------------------------------------------
 ioi_art_var_cohend <- cohen.d(ioi_art_var$Mean, ioi_art_var$Condition, paired = TRUE)
 print(ioi_art_var_cohend)
 
 
-## ----ioi_art_var_all_15, echo = FALSE-----------------------------------------
+## ----ioi_art_var_all_15, echo = FALSE-------------------------------------------------------------------------------------
 # Group mean
 ioi_art_var_all_15 <- aggregate(Mean~Condition*Skill, data = subset(ioi_art_var, ioi_art_var$SubNr != 15),
                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -299,7 +299,7 @@ colnames(ioi_art_var_all_15) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM"
 print(ioi_art_var_all_15)
 
 
-## ----ioi_art_var_all_bar_15, echo = FALSE-------------------------------------
+## ----ioi_art_var_all_bar_15, echo = FALSE---------------------------------------------------------------------------------
 p_ioi_art_var_all_15 <- ggplot(data = ioi_art_var_all_15, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -309,7 +309,7 @@ p_ioi_art_var_all_15 <- ggplot(data = ioi_art_var_all_15, aes(x = Condition, y =
 p_ioi_art_var_all_15
 
 
-## ----ioi_art_var_all_box_15, echo = FALSE-------------------------------------
+## ----ioi_art_var_all_box_15, echo = FALSE---------------------------------------------------------------------------------
 p_ioi_art_var_box_15 <- ggplot(data = subset(ioi_art_var, ioi_art_var$SubNr != 15), aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
@@ -318,22 +318,22 @@ p_ioi_art_var_box_15 <- ggplot(data = subset(ioi_art_var, ioi_art_var$SubNr != 1
 p_ioi_art_var_box_15
 
 
-## ----normality3_15, echo = FALSE----------------------------------------------
+## ----normality3_15, echo = FALSE------------------------------------------------------------------------------------------
 ioi_art_var_norm_15 <- by(subset(ioi_art_var, ioi_art_var$SubNr != 15)$Mean, list(subset(ioi_art_var, ioi_art_var$SubNr != 15)$Condition), shapiro.test)
 print(ioi_art_var_norm_15)
 
 
-## ----stats5_15, echo = FALSE--------------------------------------------------
+## ----stats5_15, echo = FALSE----------------------------------------------------------------------------------------------
 ioi_art_var_ttest_15 <- t.test(subset(ioi_art_var, ioi_art_var$SubNr != 15)$Mean[subset(ioi_art_var, ioi_art_var$SubNr != 15)$Condition == "teaching"], subset(ioi_art_var, ioi_art_var$SubNr != 15)$Mean[subset(ioi_art_var, ioi_art_var$SubNr != 15)$Condition == "performing"], paired = TRUE)
 print(ioi_art_var_ttest_15)
 
 
-## ----stats6_15, echo = FALSE--------------------------------------------------
+## ----stats6_15, echo = FALSE----------------------------------------------------------------------------------------------
 ioi_art_var_cohend_15 <- cohen.d(subset(ioi_art_var, ioi_art_var$SubNr != 15)$Mean, subset(ioi_art_var, ioi_art_var$SubNr != 15)$Condition, paired = TRUE)
 print(ioi_art_var_cohend_15)
 
 
-## ----ioi_art_var_trial, echo = FALSE------------------------------------------
+## ----ioi_art_var_trial, echo = FALSE--------------------------------------------------------------------------------------
 # For each individual
 ioi_art_var_trial <- aggregate(Variability~SubNr*Condition*Skill*TrialNr, data = df_ioi_art_var,
                          FUN = function(x){c(N = length(x), mean = mean(x))})
@@ -343,7 +343,7 @@ colnames(ioi_art_var_trial) <- c("SubNr", "Condition", "Skill", "TrialNr", "N", 
 print(ioi_art_var_trial)
 
 
-## ----ioi_art_var_trial_line, echo = FALSE, fig.height = 4---------------------
+## ----ioi_art_var_trial_line, echo = FALSE, fig.height = 4-----------------------------------------------------------------
 p_ioi_art_var_trial <- ggplot(data = ioi_art_var_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -352,7 +352,7 @@ p_ioi_art_var_trial <- ggplot(data = ioi_art_var_trial, aes(x = TrialNr, y = Mea
 p_ioi_art_var_trial
 
 
-## ----ioi_art_var_trial_all, echo = FALSE--------------------------------------
+## ----ioi_art_var_trial_all, echo = FALSE----------------------------------------------------------------------------------
 # Group mean
 ioi_art_var_trial_all <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_art_var_trial,
                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -362,7 +362,7 @@ colnames(ioi_art_var_trial_all) <- c("Condition", "Skill", "TrialNr", "N", "Mean
 print(ioi_art_var_trial_all)
 
 
-## ----ioi_art_var_trial_all_line, echo = FALSE---------------------------------
+## ----ioi_art_var_trial_all_line, echo = FALSE-----------------------------------------------------------------------------
 p_ioi_art_var_trial_all <- ggplot(data = ioi_art_var_trial_all, 
                                   aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
@@ -372,7 +372,7 @@ p_ioi_art_var_trial_all <- ggplot(data = ioi_art_var_trial_all,
 p_ioi_art_var_trial_all
 
 
-## ----ioi_dyn, echo = FALSE----------------------------------------------------
+## ----ioi_dyn, echo = FALSE------------------------------------------------------------------------------------------------
 # For each individual
 ioi_dyn <- aggregate(normIOI~SubNr*Condition*Skill, data = df_ioi_dyn,
                  FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
@@ -382,7 +382,7 @@ colnames(ioi_dyn) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
 print(ioi_dyn)
 
 
-## ----ioi_dyn_bar,  echo = FALSE-----------------------------------------------
+## ----ioi_dyn_bar,  echo = FALSE-------------------------------------------------------------------------------------------
 p_ioi_dyn <- ggplot(data = ioi_dyn, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -392,7 +392,7 @@ p_ioi_dyn <- ggplot(data = ioi_dyn, aes(x = SubNr, y = Mean, fill = Condition)) 
 p_ioi_dyn
 
 
-## ----ioi_dyn_all, echo = FALSE------------------------------------------------
+## ----ioi_dyn_all, echo = FALSE--------------------------------------------------------------------------------------------
 # Group mean
 ioi_dyn_all <- aggregate(Mean~Condition*Skill, data = ioi_dyn,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -402,7 +402,7 @@ colnames(ioi_dyn_all) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 print(ioi_dyn_all)
 
 
-## ----ioi_dyn_all_bar, echo = FALSE--------------------------------------------
+## ----ioi_dyn_all_bar, echo = FALSE----------------------------------------------------------------------------------------
 p_ioi_dyn_all_bar <- ggplot(data = ioi_dyn_all, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -413,7 +413,7 @@ p_ioi_dyn_all_bar <- ggplot(data = ioi_dyn_all, aes(x = Condition, y = Mean, fil
 p_ioi_dyn_all_bar
 
 
-## ----ioi_dyn_all_box, echo = FALSE--------------------------------------------
+## ----ioi_dyn_all_box, echo = FALSE----------------------------------------------------------------------------------------
 p_ioi_dyn_all_box <- ggplot(data = ioi_dyn, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
@@ -423,23 +423,23 @@ p_ioi_dyn_all_box <- ggplot(data = ioi_dyn, aes(x = Condition, y = Mean, fill = 
 p_ioi_dyn_all_box
 
 
-## ----normality4, echo = FALSE-------------------------------------------------
+## ----normality4, echo = FALSE---------------------------------------------------------------------------------------------
 # Normality check
 ioi_dyn_norm <- by(ioi_dyn$Mean, list(ioi_dyn$Condition), shapiro.test)
 print(ioi_dyn_norm)
 
 
-## ----stats7, echo = FALSE-----------------------------------------------------
+## ----stats7, echo = FALSE-------------------------------------------------------------------------------------------------
 ioi_dyn_ttest <- t.test(ioi_dyn$Mean[ioi_dyn$Condition == "teaching"], ioi_dyn$Mean[ioi_dyn$Condition == "performing"], paired = TRUE)
 print(ioi_dyn_ttest)
 
 
-## ----stats8, echo = FALSE-----------------------------------------------------
+## ----stats8, echo = FALSE-------------------------------------------------------------------------------------------------
 ioi_dyn_cohend <- cohen.d(ioi_dyn$Mean, ioi_dyn$Condition, paired = TRUE)
 print(ioi_dyn_cohend)
 
 
-## ----ioi_dyn_ch, echo = FALSE-------------------------------------------------
+## ----ioi_dyn_ch, echo = FALSE---------------------------------------------------------------------------------------------
 # For each individual
 ioi_dyn_ch <- aggregate(normIOI~SubNr*Condition*Skill*Boundary, data = df_ioi_dyn,
                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -449,7 +449,7 @@ colnames(ioi_dyn_ch) <- c("SubNr", "Condition", "Skill", "Boundary", "N", "Mean"
 print(ioi_dyn_ch)
 
 
-## ----ioi_dyn_ch_bar, echo = FALSE---------------------------------------------
+## ----ioi_dyn_ch_bar, echo = FALSE-----------------------------------------------------------------------------------------
 p_ioi_dyn_ch <- ggplot(data = ioi_dyn_ch, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -460,7 +460,7 @@ p_ioi_dyn_ch <- ggplot(data = ioi_dyn_ch, aes(x = SubNr, y = Mean, fill = Condit
 p_ioi_dyn_ch
 
 
-## ----ioi_dyn_ch_all, echo = FALSE---------------------------------------------
+## ----ioi_dyn_ch_all, echo = FALSE-----------------------------------------------------------------------------------------
 # Group mean
 ioi_dyn_ch_all <- aggregate(Mean~Condition*Skill*Boundary, data = ioi_dyn_ch,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -470,7 +470,7 @@ colnames(ioi_dyn_ch_all) <- c("Condition", "Skill", "Boundary", "N", "Mean", "SD
 print(ioi_dyn_ch_all)
 
 
-## ----ioi_dyn_ch_all_bar, echo = FALSE-----------------------------------------
+## ----ioi_dyn_ch_all_bar, echo = FALSE-------------------------------------------------------------------------------------
 p_ioi_dyn_ch_all_bar <- ggplot(data = ioi_dyn_ch_all, aes(x = Boundary, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -480,7 +480,7 @@ p_ioi_dyn_ch_all_bar <- ggplot(data = ioi_dyn_ch_all, aes(x = Boundary, y = Mean
 p_ioi_dyn_ch_all_bar
 
 
-## ----ioi_dyn_ch_all_box, echo = FALSE-----------------------------------------
+## ----ioi_dyn_ch_all_box, echo = FALSE-------------------------------------------------------------------------------------
 p_ioi_dyn_ch_box <- ggplot(data = ioi_dyn_ch, aes(x = Boundary, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
@@ -489,12 +489,12 @@ p_ioi_dyn_ch_box <- ggplot(data = ioi_dyn_ch, aes(x = Boundary, y = Mean, fill =
 p_ioi_dyn_ch_box
 
 
-## ----normality5, echo = FALSE-------------------------------------------------
+## ----normality5, echo = FALSE---------------------------------------------------------------------------------------------
 ioi_dyn_ch_norm <- by(ioi_dyn_ch$Mean, list(ioi_dyn_ch$Condition, ioi_dyn_ch$Boundary), shapiro.test)
 print(ioi_dyn_ch_norm)
 
 
-## ----stats9, echo = FALSE-----------------------------------------------------
+## ----stats9, echo = FALSE-------------------------------------------------------------------------------------------------
 ioi_dyn_ch_aov <- ezANOVA(
   data = df_ioi_dyn
   , dv = .(IOI)
@@ -508,12 +508,12 @@ ioi_dyn_ch_aov$ANOVA$p <- round(ioi_dyn_ch_aov$ANOVA$p, 4)
 print(ioi_dyn_ch_aov)
 
 
-## ----stats10, echo = FALSE----------------------------------------------------
+## ----stats10, echo = FALSE------------------------------------------------------------------------------------------------
 ioi_dyn_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_dyn_ch)
 print(summary(ioi_dyn_ch_aov_2))
 
 
-## ----ioi_dyn_trial, echo = FALSE----------------------------------------------
+## ----ioi_dyn_trial, echo = FALSE------------------------------------------------------------------------------------------
 # For each individual
 ioi_dyn_trial <- aggregate(normIOI~SubNr*Condition*Skill*TrialNr, data = df_ioi_dyn,
                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -523,7 +523,7 @@ colnames(ioi_dyn_trial) <- c("SubNr", "Condition", "Skill", "TrialNr", "N", "Mea
 print(ioi_dyn_trial)
 
 
-## ----ioi_dyn_trial_line, echo = FALSE, fig.height = 4-------------------------
+## ----ioi_dyn_trial_line, echo = FALSE, fig.height = 4---------------------------------------------------------------------
 p_ioi_dyn_trial <- ggplot(data = ioi_dyn_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -533,7 +533,7 @@ p_ioi_dyn_trial <- ggplot(data = ioi_dyn_trial, aes(x = TrialNr, y = Mean, group
 p_ioi_dyn_trial
 
 
-## ----ioi_dyn_trial_all, echo = FALSE------------------------------------------
+## ----ioi_dyn_trial_all, echo = FALSE--------------------------------------------------------------------------------------
 # Group mean
 ioi_dyn_trial_all <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_dyn_trial,
                        FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -543,7 +543,7 @@ colnames(ioi_dyn_trial_all) <- c("Condition", "Skill", "TrialNr", "N", "Mean", "
 print(ioi_dyn_trial_all)
 
 
-## ----ioi_dyn_trial_all_line, echo = FALSE-------------------------------------
+## ----ioi_dyn_trial_all_line, echo = FALSE---------------------------------------------------------------------------------
 p_ioi_dyn_trial_all <- ggplot(data = ioi_dyn_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
   geom_point(position = position_dodge(.2)) +
@@ -553,7 +553,7 @@ p_ioi_dyn_trial_all <- ggplot(data = ioi_dyn_trial_all, aes(x = TrialNr, y = Mea
 p_ioi_dyn_trial_all
 
 
-## ----ioi_dyn_var, echo = FALSE------------------------------------------------
+## ----ioi_dyn_var, echo = FALSE--------------------------------------------------------------------------------------------
 # Create a data frame for variability (SD/)
 df_ioi_dyn_var <- data.frame()
 for (subnr in unique(df_ioi_dyn$SubNr)){
@@ -581,7 +581,7 @@ colnames(ioi_dyn_var) <- c("SubNr", "Condition", "Skill", "N", "Mean", "SD")
 print(ioi_dyn_var)
 
 
-## ----ioi_dyn_var_bar, echo = FALSE--------------------------------------------
+## ----ioi_dyn_var_bar, echo = FALSE----------------------------------------------------------------------------------------
 p_ioi_dyn_var <- ggplot(data = ioi_dyn_var, aes(x = SubNr, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
@@ -590,7 +590,7 @@ p_ioi_dyn_var <- ggplot(data = ioi_dyn_var, aes(x = SubNr, y = Mean, fill = Cond
 p_ioi_dyn_var
 
 
-## ----ioi_dyn_var_all, echo = FALSE--------------------------------------------
+## ----ioi_dyn_var_all, echo = FALSE----------------------------------------------------------------------------------------
 # Group mean
 ioi_dyn_var_all <- aggregate(Mean~Condition*Skill, data = ioi_dyn_var,
                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -600,7 +600,7 @@ colnames(ioi_dyn_var_all) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM")
 print(ioi_dyn_var_all)
 
 
-## ----ioi_dyn_var_all_bar, echo = FALSE----------------------------------------
+## ----ioi_dyn_var_all_bar, echo = FALSE------------------------------------------------------------------------------------
 p_ioi_dyn_var_all <- ggplot(data = ioi_dyn_var_all, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -610,7 +610,7 @@ p_ioi_dyn_var_all <- ggplot(data = ioi_dyn_var_all, aes(x = Condition, y = Mean,
 p_ioi_dyn_var_all
 
 
-## ----ioi_dyn_var_all_box, echo = FALSE----------------------------------------
+## ----ioi_dyn_var_all_box, echo = FALSE------------------------------------------------------------------------------------
 p_ioi_dyn_var_box <- ggplot(data = ioi_dyn_var, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
@@ -619,22 +619,22 @@ p_ioi_dyn_var_box <- ggplot(data = ioi_dyn_var, aes(x = Condition, y = Mean, fil
 p_ioi_dyn_var_box
 
 
-## ----normality6, echo = FALSE-------------------------------------------------
+## ----normality6, echo = FALSE---------------------------------------------------------------------------------------------
 ioi_dyn_var_norm <- by(ioi_dyn_var$Mean, list(ioi_dyn_var$Condition), shapiro.test)
 print(ioi_dyn_var_norm)
 
 
-## ----stats11, echo = FALSE----------------------------------------------------
+## ----stats11, echo = FALSE------------------------------------------------------------------------------------------------
 ioi_dyn_var_ttest <- t.test(ioi_dyn_var$Mean[ioi_dyn_var$Condition == "teaching"], ioi_dyn_var$Mean[ioi_dyn_var$Condition == "performing"], paired = TRUE)
 print(ioi_dyn_var_ttest)
 
 
-## ----stats12, echo = FALSE----------------------------------------------------
+## ----stats12, echo = FALSE------------------------------------------------------------------------------------------------
 ioi_dyn_var_cohend <- cohen.d(ioi_dyn_var$Mean, ioi_dyn_var$Condition, paired = TRUE)
 print(ioi_dyn_var_cohend)
 
 
-## ----ioi_dyn_var_all_15, echo = FALSE-----------------------------------------
+## ----ioi_dyn_var_all_15, echo = FALSE-------------------------------------------------------------------------------------
 # Group mean
 ioi_dyn_var_all_15 <- aggregate(Mean~Condition*Skill, data = subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15),
                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -644,7 +644,7 @@ colnames(ioi_dyn_var_all_15) <- c("Condition", "Skill", "N", "Mean", "SD", "SEM"
 print(ioi_dyn_var_all_15)
 
 
-## ----ioi_dyn_var_all_bar_15, echo = FALSE-------------------------------------
+## ----ioi_dyn_var_all_bar_15, echo = FALSE---------------------------------------------------------------------------------
 p_ioi_dyn_var_all_15 <- ggplot(data = ioi_dyn_var_all_15, aes(x = Condition, y = Mean, fill = Condition)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
@@ -654,7 +654,7 @@ p_ioi_dyn_var_all_15 <- ggplot(data = ioi_dyn_var_all_15, aes(x = Condition, y =
 p_ioi_dyn_var_all_15
 
 
-## ----ioi_dyn_var_all_box_15, echo = FALSE-------------------------------------
+## ----ioi_dyn_var_all_box_15, echo = FALSE---------------------------------------------------------------------------------
 p_ioi_dyn_var_box_15 <- ggplot(data = subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15), aes(x = Condition, y = Mean, fill = Condition)) +
   geom_boxplot() +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
@@ -663,22 +663,22 @@ p_ioi_dyn_var_box_15 <- ggplot(data = subset(ioi_dyn_var, ioi_dyn_var$SubNr != 1
 p_ioi_dyn_var_box_15
 
 
-## ----normality6_15, echo = FALSE----------------------------------------------
+## ----normality6_15, echo = FALSE------------------------------------------------------------------------------------------
 ioi_dyn_var_norm_15 <- by(subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Mean, list(subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Condition), shapiro.test)
 print(ioi_dyn_var_norm_15)
 
 
-## ----stats11_15, echo = FALSE-------------------------------------------------
+## ----stats11_15, echo = FALSE---------------------------------------------------------------------------------------------
 ioi_dyn_var_ttest_15 <- t.test(subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Mean[subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Condition == "teaching"], subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Mean[subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Condition == "performing"], paired = TRUE)
 print(ioi_dyn_var_ttest_15)
 
 
-## ----stats12_15, echo = FALSE-------------------------------------------------
+## ----stats12_15, echo = FALSE---------------------------------------------------------------------------------------------
 ioi_dyn_var_cohend_15 <- cohen.d(subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Mean, subset(ioi_dyn_var, ioi_dyn_var$SubNr != 15)$Condition, paired = TRUE)
 print(ioi_dyn_var_cohend_15)
 
 
-## ----ioi_dyn_var_trial, echo = FALSE------------------------------------------
+## ----ioi_dyn_var_trial, echo = FALSE--------------------------------------------------------------------------------------
 # For each individual
 ioi_dyn_var_trial <- aggregate(Variability~SubNr*Condition*Skill*TrialNr, data = df_ioi_dyn_var,
                          FUN = function(x){c(N = length(x), mean = mean(x))})
@@ -688,7 +688,7 @@ colnames(ioi_dyn_var_trial) <- c("SubNr", "Condition", "Skill", "TrialNr", "N", 
 print(ioi_dyn_var_trial)
 
 
-## ----ioi_dyn_var_trial_line, echo = FALSE, fig.height = 4---------------------
+## ----ioi_dyn_var_trial_line, echo = FALSE, fig.height = 4-----------------------------------------------------------------
 p_ioi_dyn_var_trial <- ggplot(data = ioi_dyn_var_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -697,7 +697,7 @@ p_ioi_dyn_var_trial <- ggplot(data = ioi_dyn_var_trial, aes(x = TrialNr, y = Mea
 p_ioi_dyn_var_trial
 
 
-## ----ioi_dyn_var_trial_all, echo = FALSE--------------------------------------
+## ----ioi_dyn_var_trial_all, echo = FALSE----------------------------------------------------------------------------------
 # Group mean
 ioi_dyn_var_trial_all <- aggregate(Mean~Condition*Skill*TrialNr, data = ioi_dyn_var_trial,
                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
@@ -707,7 +707,7 @@ colnames(ioi_dyn_var_trial_all) <- c("Condition", "Skill", "TrialNr", "N", "Mean
 print(ioi_dyn_var_trial_all)
 
 
-## ----ioi_dyn_var_trial_all_line, echo = FALSE---------------------------------
+## ----ioi_dyn_var_trial_all_line, echo = FALSE-----------------------------------------------------------------------------
 p_ioi_dyn_var_trial_all <- ggplot(data = ioi_dyn_var_trial_all, 
                                   aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line(position = position_dodge(.2)) +
@@ -717,7 +717,7 @@ p_ioi_dyn_var_trial_all <- ggplot(data = ioi_dyn_var_trial_all,
 p_ioi_dyn_var_trial_all
 
 
-## ----seq_art, fig.width = 10, fig.height = 2, echo = FALSE--------------------
+## ----seq_art, fig.width = 10, fig.height = 2, echo = FALSE----------------------------------------------------------------
 # For each individual
 ioi_art_seq <- aggregate(normIOI~SubNr*Condition*Skill*Interval, data = df_ioi_art,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -742,7 +742,7 @@ p_ioi_art_seq <- ggplot(data = ioi_art_seq_stats, aes(x = Interval, y = Mean, gr
 p_ioi_art_seq
 
 
-## ----seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE--------------------
+## ----seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE----------------------------------------------------------------
 # For each individual
 ioi_dyn_seq <- aggregate(normIOI~SubNr*Condition*Skill*Interval, data = df_ioi_dyn,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
