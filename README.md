@@ -1,6 +1,6 @@
 This repo contains scripts and materials necessary for a musical experiment with expert pianists.
 
-Open Science Framework: [https://osf.io/uemk5/](https://osf.io/uemk5/) (Raw data are available in OSF (Experiment 2))
+Open Science Framework: [https://osf.io/uemk5/](https://osf.io/uemk5/) (Raw data are available in OSF)
 
 # Overview
 - [Script](#script)
@@ -21,7 +21,7 @@ All of the programme scripts were written and tested in the following environmen
 - ProductName: Mac OS X  
 - ProductVersion: 10.14.3
 
-## Max
+## Max (version 8)
 ### Prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 8.
 - The Shell package is used to generate necessary folders to store collected data. If it does not work in your environment, please create the following 4 folders manually.
@@ -46,18 +46,27 @@ All of the programme scripts were written and tested in the following environmen
 - cond: contains a csv file and an excel file about the order of conditions for each participant
 
 ## R
-### pre_process
+### preprocessor
 - filtering.R: removing pitch errors >> outputs: csv files
 - trimming.R (ioi, kot/kor, vel): removing outliers >> outputs: csv/png files
+
+### analysis
+analysis R scripts (extracted from R Notebook)
 
 ### condfile
 counterbalance sheet generator >> output: csv file
 
 ## R Notebook
 You need filtered and trimmed folders to run the scripts below (outputs from filtering.R and trimming.R)
-- ioi.Rmd: analysis and plots for IOIs >> output: html file
+- ioi_1.Rmd: analysis and plots for IOIs >> output: html file
+    + outliers: 1. > +- 3SD across the conditions (all together; see [detail](xhttps://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R/preprocessor))
+- ioi_3.Rmd: analysis and plots for IOIs >> output: html file
+    + outliers: 3. > +- 3SD actross the conditions (separately for Subcomponent Change; see [detail](xhttps://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R/preprocessor))
 - articulation.Rmd: analysis and plots for KOT/KOR >> output: html file
 - dynamics.Rmd: analysis and plots for KV/KV-Diff >> output: html file
+
+You need questionnaire.csv to run the script below (get the file from [OSF](https://osf.io/uemk5/)).
+- questionnaire.Rmd >> output: html file
 
 # Material
 ## Instruction
