@@ -6,7 +6,7 @@ This repo contains scripts and materials necessary for a musical experiment with
 - [Script](#Script)
     + [Max (Experiment)](#Max)
     + [R (Filtering/Trimming)](#R)
-    + [R Notebook(Data analysis)](#R-Notebook)
+    + [R Notebook (Data analysis)](#R-Notebook)
    
 - [Material](#Material)
     + [Instruction](#Instruction)
