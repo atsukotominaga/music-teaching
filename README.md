@@ -46,6 +46,7 @@ All of the programme scripts were written and tested in the following environmen
 - cond: contains a csv file and an excel file about the order of conditions for each participant
 
 ## R
+You need raw_data folder to run the scripts below (get the folder from [OSF](https://osf.io/uemk5/))
 ### preprocessor
 - filtering.R: removing pitch errors >> outputs: csv files
 - trimming.R (ioi, kot/kor, vel): removing outliers >> outputs: csv/png files
@@ -59,9 +60,9 @@ counterbalance sheet generator >> output: csv file
 ## R Notebook
 You need filtered and trimmed folders to run the scripts below (outputs from filtering.R and trimming.R)
 - ioi_1.Rmd: analysis and plots for IOIs >> output: html file
-    + outliers: 1. > +- 3SD across the conditions (all together; see [detail](xhttps://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R/preprocessor))
+    + outliers: 1. > +- 3SD across the conditions (all together; see [detail](https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R/preprocessor))
 - ioi_3.Rmd: analysis and plots for IOIs >> output: html file
-    + outliers: 3. > +- 3SD actross the conditions (separately for Subcomponent Change; see [detail](xhttps://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R/preprocessor))
+    + outliers: 3. > +- 3SD actross the conditions (separately for Subcomponent Change; see [detail](https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R/preprocessor))
 - articulation.Rmd: analysis and plots for KOT/KOR >> output: html file
 - dynamics.Rmd: analysis and plots for KV/KV-Diff >> output: html file
 
