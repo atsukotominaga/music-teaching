@@ -51,7 +51,7 @@ All of the programme scripts were written and tested in the following environmen
 - trimming.R (ioi, kot/kor, vel): removing outliers >> outputs: csv/png files
 
 ### analysis
-analysis R scripts (extracted from R Notebook)
+- export.R (extract R scripts from R Notebook) >> R file
 
 ### condfile
 counterbalance sheet generator >> output: csv file
