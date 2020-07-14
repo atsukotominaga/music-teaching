@@ -21,7 +21,7 @@ All of the programme scripts were written and tested in the following environmen
 - ProductName: Mac OS X  
 - ProductVersion: 10.14.3
 
-## Max
+## Max (version 7)
 ### Prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 7.
 - The Shell package is used to generate necessary folders to store collected data. If it does not work in your environment, please create the following 4 folders manually.
