@@ -55,7 +55,7 @@ You need raw_data folder to run the scripts below (get the folder from [OSF](htt
 - export.R (extract R scripts from R Notebook) >> R file
 
 ### condfile
-counterbalance sheet generator >> output: csv file
+- condfile.R >> output: csv file
 
 ## R Notebook
 You need filtered and trimmed folders to run the scripts below (outputs from filtering.R and trimming.R)
