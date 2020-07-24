@@ -182,7 +182,7 @@ if (length(exclude) != 0){ # if a vector is not 0
 }
 
 # Update a csv file for df_exc
-write.csv(df_exc, file = "./1_filtered/data_errorRate.csv", row.names = F)
+write.csv(df_exc, file = "./filtered/data_errorRate.csv", row.names = F)
 
 # Exclude ioi > +- 3SD (across the conditions)
 upper <- mean(df_trim$IOI)+3*sd(df_subset$IOI)
@@ -212,7 +212,7 @@ write.csv(df_trim_sd, file = "./trimmed/data_ioi.csv", row.names = F)
 ####################################
 # Key Overlap Time - articulation
 ####################################
-df_exc <- read.csv("./1_filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
+df_exc <- read.csv("./filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
 
 # Exclude participants
 include <- df_exc$SubNr[df_exc$Final == "include"]
@@ -336,7 +336,7 @@ write.csv(df_trim_sd, file = "./trimmed/data_kot.csv", row.names = F)
 ####################################
 # Key Velocity - dynamics
 ####################################
-df_exc <- read.csv("./1_filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
+df_exc <- read.csv("./filtered/data_errorRate.csv", header = T, sep = ",", dec = ".") # exclusion criteria
 
 # Exclude participants
 include <- df_exc$SubNr[df_exc$Final == "include"]
