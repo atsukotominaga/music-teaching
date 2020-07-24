@@ -1,0 +1,2 @@
+# Memo
+## Include excluded participants
