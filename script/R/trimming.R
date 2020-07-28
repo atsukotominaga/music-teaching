@@ -298,10 +298,13 @@ for (cond in 1:length(ls_grouping$Condition)){
 ####################################
 df_subset <- subset(df_kot, df_kot$Interval != 32 & df_kot$Interval != 33 & df_kot$Interval != 65 & df_kot$Interval != 66) # Exclude irrelevant notes
  
-# Draw histogram and
+# Draw histogram and boxplot
 p_hist <- ggplot(df_subset, aes(x = KOT, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
+
+p_box <- ggboxplot(df_subset, x = "Subcomponent", y = "KOT", color = "Condition")
+p_box <- ggpar(p_box, ylab = "KOT (ms)")
 
 # Exclude kot > +- 3SD (within a given condition)
 kot_subcomponent <- aggregate(KOT~Subcomponent, data = df_subset,
@@ -322,16 +325,18 @@ print(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot
 # Sort by RowNr
 df_trim_sd <- df_trim_sd[order(df_trim_sd$RowNr),]
 
+# Draw histogram and boxplot
 p_hist_sd <- ggplot(df_trim_sd, aes(x = KOT, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
 
-p_box_sd <- ggboxplot(df_trim_sd, x = "Skill", y = "KOT", color = "Condition")
+p_box_sd <- ggboxplot(df_trim_sd, x = "Subcomponent", y = "KOT", color = "Condition")
 p_box_sd <- ggpar(p_box_sd, ylab = "KOT (ms)")
 
 # Save plots
 # png files
 ggsave("./trimmed//plot/kot/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed//plot/kot/p_box.png", plot = p_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed//plot/kot/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed//plot/kot/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 
@@ -446,14 +451,20 @@ for (cond in 1:length(ls_grouping$Condition)){
 df_subset <- subset(df_vel, df_vel$Note != 33 & df_vel$Note != 66 & df_vel$Note != 67)
 df_subset_acc <- subset(df_vel_acc, df_vel_acc$Interval != 32 & df_vel_acc$Interval != 33 & df_vel_acc$Interval != 65 & df_vel_acc$Interval != 66)
 
-# Draw histogram
+# Draw histogram and boxplot
 p_hist <- ggplot(df_subset, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
 
+p_box <- ggboxplot(df_subset, x = "Subcomponent", y = "Velocity", color = "Condition")
+p_box <- ggpar(p_box, ylab = "Velocity (0-127)")
+
 p_hist_acc <- ggplot(df_subset_acc, aes(x = Acc, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
+
+p_box_acc <- ggboxplot(df_subset_acc, x = "Subcomponent", y = "Acc", color = "Condition")
+p_box_acc <- ggpar(p_box_acc, ylab = "Velocity (0-127)")
 
 # Exclude vel > +- 3SD (within a given condition)
 vel_subcomponent <- aggregate(Velocity~Subcomponent, data = df_subset,
@@ -487,23 +498,26 @@ proportion_acc <- round(removed_acc/nrow(df_subset_acc), 5)
 write(sprintf("VelocityAcc - Remove %i responses beyond +- 3SD / %f percent", removed_acc, proportion_acc*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("VelocityAcc - Remove %i responses beyond +- 3SD / %f percent", removed_acc, proportion_acc*100))
 
+# Draw histogram and boxplot
 p_hist_sd <- ggplot(df_trim_sd, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
 
-p_box_sd <- ggboxplot(df_trim_sd, x = "Skill", y = "Velocity", color = "Condition")
+p_box_sd <- ggboxplot(df_trim_sd, x = "Subcomponent", y = "Velocity", color = "Condition")
 p_box_sd <- ggpar(p_box_sd, ylab = "Velocity (0-127)")
 
 p_hist_sd_acc <- ggplot(df_trim_sd_acc, aes(x = Acc, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
 
-p_box_sd_acc <- ggboxplot(df_trim_sd_acc, x = "Skill", y = "Acc", color = "Condition")
+p_box_sd_acc <- ggboxplot(df_trim_sd_acc, x = "Subcomponent", y = "Acc", color = "Condition")
 p_box_sd_acc <- ggpar(p_box_sd_acc, ylab = "Acceleration")
 
 # png files
 ggsave("./trimmed/plot/vel/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/vel/p_box.png", plot = p_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/plot/vel/p_hist_acc.png", plot = p_hist_acc, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/vel/p_box_acc.png", plot = p_box_acc, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/plot/vel/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/plot/vel/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/plot/vel/p_hist_sd_acc.png", plot = p_hist_sd_acc, dpi = 600, width = 5, height = 4)
