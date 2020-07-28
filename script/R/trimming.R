@@ -146,10 +146,13 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Exclude irrelevant notes
 df_subset <- subset(df_ioi, df_ioi$Interval != 32 & df_ioi$Interval != 33 & df_ioi$Interval != 65 & df_ioi$Interval != 66)
 
-# Draw histogram
+# Draw histogram and boxplot
 p_hist <- ggplot(df_subset, aes(x = IOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
+
+p_box <- ggboxplot(df_subset, x = "Skill", y = "IOI", color = "Condition")
+p_box <- ggpar(p_box, ylab = "IOI (ms)")
 
 # Exclude deviated participants (>+3/<-3SD)
 ioi_subject <- aggregate(IOI~SubNr, data = df_subset,
@@ -193,6 +196,7 @@ proportion_ioi <- round(removed_ioi/nrow(df_trim), 5)
 write(sprintf("IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi, proportion_ioi*100), file = "./trimmed/outlier.txt", append = T) # Export the results as a txt file
 print(sprintf("IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi, proportion_ioi*100))
 
+# Draw histogram and boxplot
 p_hist_sd <- ggplot(df_trim_sd, aes(x = IOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
@@ -203,6 +207,7 @@ p_box_sd <- ggpar(p_box_sd, ylab = "IOI (ms)")
 # Save plots
 # png files
 ggsave("./trimmed/plot/ioi/p_hist.png", plot = p_hist, dpi = 600, width = 5, height = 4)
+ggsave("./trimmed/plot/ioi/p_box.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/plot/ioi/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/plot/ioi/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 
