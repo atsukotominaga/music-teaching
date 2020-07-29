@@ -1,0 +1,4 @@
+IOI: Remove 386 responses beyond +- 3SD / 0.669000 percent
+KOT: Remove 1331 responses beyond +- 3SD / 2.306000 percent
+Velocity - Remove 233 responses beyond +- 3SD / 0.391000 percent
+VelocityAcc - Remove 532 responses beyond +- 3SD / 0.922000 percent
