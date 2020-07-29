@@ -211,7 +211,7 @@ ggsave("./trimmed/plot/ioi/p_box.png", plot = p_box_sd, dpi = 600, width = 5, he
 ggsave("./trimmed/plot/ioi/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/plot/ioi/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_trimmed
+# Export a csv file for df_trim_sd
 write.csv(df_trim_sd, file = "./trimmed/data_ioi.csv", row.names = F)
 
 ####################################
@@ -340,7 +340,7 @@ ggsave("./trimmed//plot/kot/p_box.png", plot = p_box, dpi = 600, width = 5, heig
 ggsave("./trimmed//plot/kot/p_hist_sd.png", plot = p_hist_sd, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed//plot/kot/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_trimmed
+# Export a csv file for df_trim_sd
 write.csv(df_trim_sd, file = "./trimmed/data_kot.csv", row.names = F)
 
 ####################################
@@ -464,7 +464,7 @@ p_hist_acc <- ggplot(df_subset_acc, aes(x = Acc, fill = Grouping)) +
   theme_classic()
 
 p_box_acc <- ggboxplot(df_subset_acc, x = "Subcomponent", y = "Acc", color = "Condition")
-p_box_acc <- ggpar(p_box_acc, ylab = "Velocity (0-127)")
+p_box_acc <- ggpar(p_box_acc, ylab = "Acceleration")
 
 # Exclude vel > +- 3SD (within a given condition)
 vel_subcomponent <- aggregate(Velocity~Subcomponent, data = df_subset,
@@ -523,6 +523,6 @@ ggsave("./trimmed/plot/vel/p_box_sd.png", plot = p_box_sd, dpi = 600, width = 5,
 ggsave("./trimmed/plot/vel/p_hist_sd_acc.png", plot = p_hist_sd_acc, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/plot/vel/p_box_sd_acc.png", plot = p_box_sd_acc, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_trimmed
+# Export a csv file for df_trim_sd
 write.csv(df_trim_sd, file = "./trimmed/data_vel.csv", row.names = F)
 write.csv(df_trim_sd_acc, file = "./trimmed/data_vel_acc.csv", row.names = F)
