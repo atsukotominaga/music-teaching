@@ -26,7 +26,7 @@ Description: This is a summary of all analyses for articulation.
   
 - Order analysis (teaching/performing first?)
   + [All](#kot_art_order_group_all)
-  
+   
 - [Sequence plot](#sequence_art)
 
 ### KOR
@@ -93,9 +93,14 @@ theme_set(theme_classic())
 theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"), legend.position = "bottom")
 ```
 
+```{r file, include = FALSE}
+filename_ioi = "../R/trimmed/data_ioi.csv"
+filename_kot = "../R/trimmed/data_kot.csv"
+```
+
 ```{r extract, include = FALSE}
-df_ioi <- read.csv("./trimmed/data_ioi.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
-df_kot <- read.csv("./trimmed/data_kot.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_ioi <- read.csv(filename_ioi, header = T, sep = ",", dec = ".") # read a trimmed csv
+df_kot <- read.csv(filename_kot, header = T, sep = ",", dec = ".") # read a trimmed csv
 
 # SubNr as a factor
 df_ioi$SubNr <- as.factor(df_ioi$SubNr)

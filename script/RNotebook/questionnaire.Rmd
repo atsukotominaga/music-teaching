@@ -18,10 +18,15 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 
 # Outline - Questionnaire
 
+```{r file, include = FALSE}
+filename_que = "./questionnaire.csv"
+filename_exc = "../R/filtered/data_errorRate.csv"
+```
+
 ```{r read, echo = FALSE}
 # Read csv files
-df <- read.csv("./questionnaire.csv", header = T, sep = ",", dec = ".", na.string = "NA")
-df_exc <- read.csv("./filtered/data_errorRate.csv", header = T, sep = ",", dec = ".")
+df <- read.csv(filename_que, header = T, sep = ",", dec = ".", na.string = "NA")
+df_exc <- read.csv(filename_exc, header = T, sep = ",", dec = ".")
 include <- df_exc$SubNr[df_exc$Final == "include"]
 
 # Change colnames

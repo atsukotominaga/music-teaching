@@ -79,8 +79,12 @@ theme_set(theme_classic())
 theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"), legend.position = "bottom")
 ```
 
+```{r file, include = FALSE}
+filename_ioi = "../R/trimmed/data_ioi.csv"
+```
+
 ```{r extract, include = FALSE}
-df_ioi <- read.csv("./trimmed/data_ioi.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_ioi <- read.csv(filename_ioi, header = T, sep = ",", dec = ".") # read a trimmed csv
 
 # SubNr as a factor
 df_ioi$SubNr <- as.factor(df_ioi$SubNr)

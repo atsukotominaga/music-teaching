@@ -93,9 +93,14 @@ theme_set(theme_classic())
 theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"), legend.position = "bottom")
 ```
 
+```{r file, include = FALSE}
+filename_vel = "../R/trimmed/data_vel.csv"
+filename_vel_acc = "../R/trimmed/data_vel_acc.csv"
+```
+
 ```{r extract, include = FALSE}
-df_vel <- read.csv("./trimmed/data_vel.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
-df_vel_acc <- read.csv("./trimmed/data_vel_acc.csv", header = T, sep = ",", dec = ".") # read a trimmed csv
+df_vel <- read.csv(filename_vel, header = T, sep = ",", dec = ".") # read a trimmed csv
+df_vel_acc <- read.csv(filename_vel_acc, header = T, sep = ",", dec = ".") # read a trimmed csv
 
 # SubNr as a factor
 df_vel$SubNr <- as.factor(df_vel$SubNr)
