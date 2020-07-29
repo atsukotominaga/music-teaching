@@ -146,7 +146,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 # exclude irrelevant notes (Subcomponent == NA means not 8th notes / normIOI == NA means a missing value)
 df_ioi_subset <- subset(df_ioi, !is.na(df_ioi$Subcomponent) & !is.na(df_ioi$normIOI))
 
-# draw histogram and
+# draw histogram and boxplot
 p_ioi_hist <- ggplot(df_ioi_subset, aes(x = normIOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = .01)
 plot(p_ioi_hist)
@@ -167,6 +167,7 @@ proportion_ioi_1 <- round(removed_ioi_1/nrow(df_ioi_subset), 5)
 write(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_1, proportion_ioi_1*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_1, proportion_ioi_1*100))
 
+# draw histogram and boxplot
 p_ioi_hist_sd_1 <- ggplot(df_ioi_trim_sd_1, aes(x = normIOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = .01)
 plot(p_ioi_hist_sd_1)
@@ -206,6 +207,7 @@ proportion_ioi_2 <- round(removed_ioi_2/nrow(df_ioi_subset), 5)
 write(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100))
 
+# draw histogram and boxplot
 p_ioi_hist_sd_2 <- ggplot(df_ioi_trim_sd_2, aes(x = normIOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = .01)
 plot(p_ioi_hist_sd_2)
@@ -250,6 +252,7 @@ proportion_ioi_3 <- round(removed_ioi_3/nrow(df_ioi_subset), 5)
 write(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_3, proportion_ioi_3*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_3, proportion_ioi_3*100))
 
+# draw histogram and boxplot
 p_ioi_hist_sd_3 <- ggplot(df_ioi_trim_sd_3, aes(x = normIOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = .01)
 plot(p_ioi_hist_sd_3)

@@ -180,7 +180,7 @@ df_vel_subset <- subset(df_vel, !is.na(df_vel$Subcomponent) & !is.na(df_vel$Velo
 df_vel_diff_subset <- subset(df_vel_diff, !is.na(df_vel_diff$Subcomponent) & !is.na(df_vel_diff$Diff))
 
 ###### df_vel
-# draw histogram
+# draw histogram and boxplot
 p_vel_hist <- ggplot(df_vel_subset, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_hist)
@@ -205,6 +205,7 @@ proportion_vel <- round(removed_vel/nrow(df_vel_subset), 5)
 write(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100))
 
+# draw histogram and boxplot
 p_vel_hist_sd <- ggplot(df_vel_trim_sd, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_hist_sd)
@@ -224,7 +225,7 @@ ggsave("./trimmed/vel_box_sd.png", plot = p_vel_box_sd, dpi = 600, width = 5, he
 write.csv(df_vel_trim_sd, file = "./trimmed/data_vel.csv", row.names = F)
 
 ###### df_vel_diff
-# draw histogram
+# draw histogram and boxplot
 p_vel_diff_hist <- ggplot(df_vel_diff_subset, aes(x = Diff, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_diff_hist)
@@ -249,6 +250,7 @@ proportion_vel_diff <- round(removed_vel_diff/nrow(df_vel_diff_subset), 5)
 write(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100))
 
+# draw histogram and boxplot
 p_vel_diff_hist_sd <- ggplot(df_vel_diff_trim_sd, aes(x = Diff, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_diff_hist_sd)
