@@ -12,6 +12,8 @@ Description: This is a summary of demographic information
 # packages
 # data manipulation
 if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+# plot
+if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 ```
 
 # Outline - Questionnaire
@@ -118,3 +120,11 @@ print(errorRate_included_norm)
 
 # Note: The distributions fo error rates were not normal, so we decided to report median values (plus its range) rather than mean values.
 ```
+
+### Error Rate: Plot
+```{r plot, echo = FALSE}
+p_hist <- ggplot(subset(df_exc, df_exc$Final == "include"), aes(x = ErrorRate)) +
+  geom_histogram(position = "identity", alpha = .5, binwidth = .01)
+plot(p_hist)
+```
+
