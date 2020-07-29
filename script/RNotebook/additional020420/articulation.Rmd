@@ -1,12 +1,13 @@
 ---
-title: "Additional analysis for transition points"
+title: "Additional analysis for articulation transition points"
 output: html_notebook
 ---
-Description: These are some additional analyses for transition points.
+Description: These are some additional analyses for articulation transition points.
 
 ## Articulation
 How does it look like articulation transition points?
-Posthoc prediciton: Participants would have a larger separation betwenn the end of legato and the beginning of staccato.
+
+Post-hoc prediction: Participants would have **a larger separation** between the end of legato and the beginning of staccato.
 
 ```{r setup, include = FALSE}
 # packages
@@ -21,15 +22,15 @@ if (!require("effsize")) {install.packages("effsize"); require("effsize")}
 if (!require("ez")) {install.packages("ez"); require("ez")}
 
 # read csv
-df_kot <- fread("./../trimmed/data_kot.csv")
+dt_kot <- fread("./../trimmed/data_kot.csv")
 
 # only transition points for arituclation
-df_kot_trans <- df_kot[Skill == "articulation" & Subcomponent != "Legato" & Subcomponent != "Staccato"]
+dt_kot_trans <- dt_kot[Skill == "articulation" & Subcomponent != "Legato" & Subcomponent != "Staccato"]
 ```
 
 ```{r stats1, echo = TRUE}
 # For each individual
-art_trans <- df_kot_trans[, .(N = length(KOT), Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Subcomponent)]
+art_trans <- dt_kot_trans[, .(N = length(KOT), Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Subcomponent)]
 print(art_trans)
 # Group
 art_trans_all <- art_trans[, .(N = length(Mean), Mean = mean(Mean), SEM = sd(Mean)/sqrt(length(Mean))), by = .(Condition, Subcomponent)]
@@ -38,9 +39,15 @@ print(art_trans_all)
 # normality check
 art_trans_norm <- by(art_trans$Mean, list(art_trans$Condition, art_trans$Subcomponent), shapiro.test)
 print(art_trans_norm)
+
+# Converting variables to Factor
+dt_kot_trans$SubNr <- factor(dt_kot_trans$SubNr)
+dt_kot_trans$Condition <- factor(dt_kot_trans$Condition)
+dt_kot_trans$Subcomponent <- factor(dt_kot_trans$Subcomponent)
+
 # ezAnova
 art_trans_aov <- ezANOVA(
-  data = df_kot_trans
+  data = dt_kot_trans
   , dv = .(KOT)
   , wid = .(SubNr)
   , within = .(Condition, Subcomponent)
