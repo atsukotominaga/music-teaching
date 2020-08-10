@@ -11,8 +11,8 @@ script/Max/cond/cb_checking.xlsx
 # R
 script/R/raw_data
 
-# Jupyter Notebook
-*.ipynb
+# jupyter
+material/jupyter/.ipynb_checkpoints/
 
 # personal stuff
 material/jupyter/stimuli/removed/
