@@ -4,7 +4,7 @@ Open Science Framework: [https://osf.io/uemk5/](https://osf.io/uemk5/) (Raw data
 
 # Overview
 - [Script](#script)
-    + [Max (Experiment)](#Max)
+    + [Max (Experiment)](#Max-(version-8))
     + [R (Filtering/Trimming)](#R)
     + [R Notebook (Data analysis)](#R-Notebook)
 
