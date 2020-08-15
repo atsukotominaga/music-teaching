@@ -4,7 +4,7 @@ Open Science Framework: [https://osf.io/uemk5/](https://osf.io/uemk5/) (Raw data
 
 # Overview
 - [Script](#script)
-    + [Max (Experiment)](#Max-(version-8))
+    + [Max (Experiment)](#Max)
     + [R (Filtering/Trimming)](#R)
     + [R Notebook (Data analysis)](#R-Notebook)
 
@@ -21,7 +21,8 @@ All of the programme scripts were written and tested in the following environmen
 - ProductName: Mac OS X  
 - ProductVersion: 10.14.3
 
-## Max (version 8)
+## Max
+- version 8
 ### Prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 8.
 - The Shell package is used to generate necessary folders to store collected data. If it does not work in your environment, please create the following 4 folders manually.
