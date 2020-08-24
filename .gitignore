@@ -9,7 +9,7 @@ script/Max/midi/
 script/Max/cond/cb_checking.xlsx
 
 # R
-script/R/raw_data
+script/R/preprocessor/raw_data
 
 # jupyter
 material/jupyter/.ipynb_checkpoints/
