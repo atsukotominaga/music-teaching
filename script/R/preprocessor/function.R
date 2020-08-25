@@ -30,7 +30,7 @@ pitch_remover <- function(data, ideal){
               }
             }
           }
-        } else { #if current data is emtpy"
+        } else { #if current data is empty"
           ls_removed <- c(ls_removed, list(c(subnr, block, trial, "Missing")))
           print(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
         }
