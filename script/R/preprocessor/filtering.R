@@ -73,27 +73,24 @@ error_extra <- dt_error_onset[Reason == "Extra Notes"]
 dt_correct_onset_2 <- data.table()
 for (row in 1:nrow(error_extra)){
   current <- dt_onset[SubNr == error_extra$SubNr[row] & BlockNr == error_extra$BlockNr[row] & TrialNr == error_extra$TrialNr[row]]
-  if (nrow(current) > nrow(dt_ideal)){ # extra notes
-    decision = 2 
-    correction = 0 # # of correction for reporting stats
-    while (decision == 2){
-      print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
-      print("----- First check -----")
-      current <- extra(current, dt_ideal)
-      print("----- Correction check -----")
-      print(current)
-      #extra(current, dt_ideal)
-      decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
-      if (decision == 1){
-        correction = correction + 1
-        error_extra$CorrectionNr[row] <- correction
-        dt_correct_onset_2 <- rbind(dt_correct_onset_2, current[, -c(5:6)])
-      } else if (decision == 3){
-        error_extra$CorrectionNr[row] <- readline(prompt = "Reason?: ")
-      } else if (decision == 2){
-        correction = correction + 1
-        print("----- Continue correction -----")
-      }
+  decision = 2 
+  correction = 0 # # of correction for reporting stats
+  while (decision == 2){
+    print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
+    print("----- First check -----")
+    current <- extra(current, dt_ideal)
+    print("----- Correction check -----")
+    extra(current, dt_ideal)
+    decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
+    if (decision == 1){
+      correction = correction + 1
+      error_extra$CorrectionNr[row] <- correction
+      dt_correct_onset_2 <- rbind(dt_correct_onset_2, current[, -c(5:6)])
+    } else if (decision == 3){
+      error_extra$CorrectionNr[row] <- readline(prompt = "Reason?: ")
+    } else if (decision == 2){
+      correction = correction + 1
+      print("----- Continue correction -----")
     }
   }
 }

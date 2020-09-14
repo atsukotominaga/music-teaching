@@ -57,5 +57,5 @@ extra <- function(data, ideal){
     labs(title = sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(data$SubNr), unique(data$BlockNr), unique(data$TrialNr)), y = "Pitch")
   print(graph)
   corrected <- editData(data, viewer = "pane")
-  return(corrected)
+  return(data.table(corrected)) # convert to data.table
 }
