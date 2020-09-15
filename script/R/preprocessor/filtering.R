@@ -368,7 +368,7 @@ for (i in 1:nrow(df_removed_offset)){
 }
 
 ####################################
-# 2.1 manual removal for extra notes
+# 2.1 manual removal
 ####################################
 
 ########################################################################
@@ -410,7 +410,7 @@ for (i in 1:nrow(removed_more_offset)){
 }
 
 ####################################
-# 2.2 manual addition for missing notes
+# 2.2 manual addition
 ####################################
 
 ########################################################################
@@ -442,7 +442,7 @@ for (i in 1:nrow(removed_less_offset)){
 }
 
 ####################################
-# 2.3 if having an equal number of NoteNr
+# 2.3 if equal number of NoteNr
 ####################################
 
 ########################################################################
@@ -489,6 +489,7 @@ for (i in 1:nrow(removed_equal_offset)){
 # check the data individually by listening to the original midi
 # performance and decide whether to correct or discard the data
 # !descriptions below are unique to my dataset!
+########################################################################
 print("----- Check individually -----")
 df_removed_offset$errorCorrection <- NA # create errorCorrection column
 removed_others_offset <- rbind(subset(df_removed_offset, df_removed_offset$errorType == "Check"),
