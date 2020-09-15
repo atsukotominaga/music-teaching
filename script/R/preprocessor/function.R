@@ -1,6 +1,11 @@
 # install and load required packages
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
+if (!require("tibble")) {install.packages("tibble"); require("tibble")}
 if (!require("editData")) {install.packages("editData"); require("editData")}
+if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+
+# ggplot settings
+theme_set(theme_classic())
 
 ### check whether a trial contains pitch errors
 # data: data of the current trial
@@ -20,7 +25,7 @@ checker <- function(data, ideal){
             }
           } else if (nrow(current) == nrow(ideal)){ # substituted note
             for (note in 1:nrow(ideal)){
-              if (current$Pitch[note] != ideal$IdealPerformance[note]){
+              if (current$Pitch[note] != ideal$Pitch[note]){
                 dt_errors <- rbind(dt_errors, data.table(subject, block, trial, paste("Substituted Notes - RowNr ", as.character(note), sep = "")))
                 break
               }
@@ -36,13 +41,13 @@ checker <- function(data, ideal){
   return(dt_errors)
 }
 
-### remove extra notes
+### edit data
 # data: data of the current trial
 # ideal: dt_ideal
-extra <- function(data, ideal){
+edit <- function(data, ideal){
   data$RowNr <- c(1:nrow(data))
   length_diff <- abs(nrow(data) - nrow(ideal))
-  data$Ideal <- c(ideal$IdealPerformance, rep(NA, length_diff))
+  data$Ideal <- c(ideal$Pitch, rep(NA, length_diff))
   data$Diff <- "NA"
   data[Pitch != Ideal]$Diff <- "DIFFERENT"
   # sort the order of columns
@@ -58,4 +63,24 @@ extra <- function(data, ideal){
   print(graph)
   corrected <- editData(data, viewer = "pane")
   return(data.table(corrected)) # convert to data.table
+}
+
+### insert NA
+# data: data of the current trial
+# ideal: dt_ideal
+insert_na <- function(data, ideal){
+  # insert NA row
+  while (nrow(data) < nrow(ideal)){
+    for (note in 1:nrow(data)){
+      if (data$Pitch[note] != ideal$Pitch[note]){
+        data <- add_row(data, .before = note)
+        data[note] <- data[note-1]
+        data$TimeStamp[note] <- NA
+        data$Velocity[note] <- NA
+        data$Pitch[note] <- ideal$Pitch[note]
+        break
+      }
+    }
+  }
+  return(data)
 }

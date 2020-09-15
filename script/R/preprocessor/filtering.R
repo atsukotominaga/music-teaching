@@ -2,11 +2,6 @@
 #rm(list=ls(all=T)) # clear all
 
 # created 24/08/2020
-# install packages
-if (!require("data.table")) {install.packages("data.table"); require("data.table")}
-if (!require("editData")) {install.packages("editData"); require("editData")}
-if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
-
 # create a folder if not exists
 if (!file.exists("filtered")){
   dir.create("filtered")
@@ -15,11 +10,11 @@ if (!file.exists("filtered")){
 # read functions
 source("./function.R")
 
-# ggplot settings
-theme_set(theme_classic())
-
 # read a text file for ideal performance
-dt_ideal <- read.table("./ideal.txt", header = T, sep = ",")
+dt_ideal <- read.table("./ideal.txt")
+colnames(dt_ideal) <- "Pitch"
+dt_ideal$RowNr <- 1:nrow(dt_ideal)
+setcolorder(dt_ideal, c(2, 1))
 
 # create a list of data file names
 lf <- list.files("./raw_data", pattern = "txt")
@@ -32,8 +27,7 @@ for (i in 1:length(lf)){
 }
 
 # add column namesls
-colnames(raw_data) <- c("NoteNr", "TimeStamp", "Pitch", "Velocity", "Key_OnOff", "Device",
-                        "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")
+colnames(raw_data) <- c("NoteNr", "TimeStamp", "Pitch", "Velocity", "Key_OnOff", "Device", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")
 
 # clean raw_data
 raw_data$NoteNr <- as.numeric(gsub(",", "", raw_data$NoteNr))
@@ -42,7 +36,7 @@ raw_data$Image <- gsub(";", "", raw_data$Image)
 # sort by SubNr, BlockNr, TrialNr
 raw_data <- raw_data[order(raw_data$SubNr, raw_data$BlockNr, raw_data$TrialNr),]
 raw_data$RowNr <- c(1:nrow(raw_data))
-raw_data <- setcolorder(raw_data, c(13, 1:12))
+setcolorder(raw_data, c(13, 1:12))
 
 # raw_data without metronome
 dt_all <- raw_data[Pitch != 31 & Pitch != 34]
@@ -56,6 +50,9 @@ dt_offset <- dt_all[Key_OnOff == 0]
 ####################################
 # 1. Detect error trials
 dt_error_onset <- checker(dt_onset, dt_ideal)
+
+# export csv
+fwrite(dt_error_onset, file = "./filtered/error_onset.txt")
 
 # mark imperfect performances
 dt_onset$Error <- 0
@@ -78,9 +75,9 @@ for (row in 1:nrow(error_extra)){
   while (decision == 2){
     print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
     print("----- First check -----")
-    current <- extra(current, dt_ideal)
+    current <- edit(current, dt_ideal)
     print("----- Correction check -----")
-    extra(current, dt_ideal)
+    edit(current, dt_ideal)
     decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
     if (decision == 1){
       correction = correction + 1
@@ -96,6 +93,28 @@ for (row in 1:nrow(error_extra)){
 }
 
 # missing notes
+error_missing <- dt_error_onset[Reason == "Missing Notes"]
+dt_correct_onset_3 <- data.table()
+for (row in 1:nrow(error_missing)){
+  current <- dt_onset[SubNr == error_missing$SubNr[row] & BlockNr == error_missing$BlockNr[row] & TrialNr == error_missing$TrialNr[row]]
+  diff <- abs(nrow(dt_ideal) - nrow(current))
+  if (diff < 5){
+    # insert NA row
+    current <- insert_na(current, dt_ideal)
+    print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
+    print("----- Correction check -----")
+    current <- edit(current, dt_ideal)
+    decision <- menu(c("y", "other"), title = "Save the current data?")
+    if (decision == 1){
+      error_missing$CorrectionNr[row] <- diff
+      dt_correct_onset_3 <- rbind(dt_correct_onset_3, current[, -c(5:6)])
+    } else if (decision == 2){
+      error_missing$CorrectionNr[row] <- readline(prompt = "Reason?: ")
+    }
+  } else {
+    error_missing$CorrectionNr[row] <- "Check individually"
+  }
+}
 
 # substituted notes
 
