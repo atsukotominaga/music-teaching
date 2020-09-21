@@ -35,7 +35,6 @@ raw_data$Image <- gsub(";", "", raw_data$Image)
 
 # sort by SubNr, BlockNr, TrialNr
 raw_data <- raw_data[order(raw_data$SubNr, raw_data$BlockNr, raw_data$TrialNr),]
-raw_data$RowNr <- c(1:nrow(raw_data))
 setcolorder(raw_data, c(13, 1:12))
 
 # raw_data without metronome
