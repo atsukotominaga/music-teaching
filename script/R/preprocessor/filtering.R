@@ -60,6 +60,8 @@ for (error in 1:nrow(dt_error_onset)){
 }
 
 dt_correct_onset_1 <- dt_onset[Error == 0]
+dt_correct_onset_1$RowNr <- rep(1:67, nrow(dt_correct_onset_1)/67)
+setcolorder(dt_correct_onset_1, c(14, 1:13))
 
 # export csv
 fwrite(dt_correct_onset_1, file = "./filtered/dt_correct_onset_1.txt")
@@ -143,12 +145,21 @@ for (row in 1:nrow(error_sub)){
 fwrite(dt_correct_onset_3, file = "./filtered/dt_correct_onset_4.txt")
 
 # combine all
-dt_corret_onset <- rbind(dt_correct_onset_1, dt_correct_onset_2, dt_correct_onset_3, dt_correct_onset_4)
+dt_correct_onset <- rbind(dt_correct_onset_1, dt_correct_onset_2, dt_correct_onset_3, dt_correct_onset_4)
 error_onset <- rbind(error_extra, error_missing, error_sub)
 
 # export csv
 fwrite(dt_correct_onset, file = "./filtered/dt_correct_onset.txt")
 fwrite(error_onset, file = "./filtered/error_onset.txt")
+
+### individual corrections
+error_ind <- error_onset[startsWith(CorrectionNr, "Check") | startsWith(CorrectionNr, "Octave")]
+
+# 1
+current_1 <- dt_onset[SubNr == error_ind$SubNr[1] & BlockNr == error_ind$BlockNr[1] & TrialNr == error_ind$TrialNr[1]]
+# check a plot
+edit(current_1, dt_ideal)
+# decision: remove
 
 ####################################
 # OFFSET
