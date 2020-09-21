@@ -62,6 +62,9 @@ for (error in 1:nrow(dt_error_onset)){
 
 dt_correct_onset_1 <- dt_onset[Error == 0]
 
+# export csv
+fwrite(dt_correct_onset_1, file = "./filtered/dt_correct_onset_1.txt")
+
 # 2. Manual pitch error removal
 dt_error_onset$CorrectionNr <- NA
 
@@ -92,6 +95,9 @@ for (row in 1:nrow(error_extra)){
   }
 }
 
+# export csv
+fwrite(dt_correct_onset_2, file = "./filtered/dt_correct_onset_2.txt")
+
 # missing notes
 error_missing <- dt_error_onset[Reason == "Missing Notes"]
 dt_correct_onset_3 <- data.table()
@@ -116,7 +122,34 @@ for (row in 1:nrow(error_missing)){
   }
 }
 
+# export csv
+fwrite(dt_correct_onset_3, file = "./filtered/dt_correct_onset_3.txt")
+
 # substituted notes
+error_sub <- dt_error_onset[startsWith(Reason, "Substituted")]
+dt_correct_onset_4 <- data.table()
+for (row in 1:nrow(error_sub)){
+  current <- dt_onset[SubNr == error_sub$SubNr[row] & BlockNr == error_sub$BlockNr[row] & TrialNr == error_sub$TrialNr[row]]
+  current <- edit(current, dt_ideal)
+  decision <- menu(c("y", "other"), title = "Save the current data?")
+  if (decision == 1){
+    error_sub$CorrectionNr[row] <- 1
+    dt_correct_onset_4 <- rbind(dt_correct_onset_4, current[, -c(5:6)])
+  } else if (decision == 2){
+    error_sub$CorrectionNr[row] <- readline(prompt = "Reason?: ")
+  }
+}
+
+# export csv
+fwrite(dt_correct_onset_3, file = "./filtered/dt_correct_onset_4.txt")
+
+# combine all
+dt_corret_onset <- rbind(dt_correct_onset_1, dt_correct_onset_2, dt_correct_onset_3, dt_correct_onset_4)
+error_onset <- rbind(error_extra, error_missing, error_sub)
+
+# export csv
+fwrite(dt_correct_onset, file = "./filtered/dt_correct_onset.txt")
+fwrite(error_onset, file = "./filtered/error_onset.txt")
 
 ####################################
 # OFFSET
@@ -125,6 +158,11 @@ for (row in 1:nrow(error_missing)){
 
 
 
+
+
+####################################
+# Combine ONSET/OFFSET
+####################################
 
 
 
