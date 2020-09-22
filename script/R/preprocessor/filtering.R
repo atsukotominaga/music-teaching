@@ -167,6 +167,7 @@ edit(current_2, dt_ideal)
 current_2 <- insert_na(current_2[-c(1:73), ], dt_ideal)
 # check a plot
 edit(current_2, dt_ideal)
+current_2$RowNr <- c(1:67)
 
 # 3
 current_3 <- dt_onset[SubNr == error_ind$SubNr[3] & BlockNr == error_ind$BlockNr[3] & TrialNr == error_ind$TrialNr[3]]
@@ -194,9 +195,15 @@ edit(current_7, dt_ideal)
 # 8 - 16
 # decision: exclude - Octave difference
 
-# combine all
-dt_correct_onset <- rbind(dt_correct_onset_1, dt_correct_onset_2, dt_correct_onset_3, dt_correct_onset_4, current_2)
+# add from individual corrections
+dt_correct_onset_5 <- current_2
 
+# combine all
+dt_correct_onset <- rbind(dt_correct_onset_1, dt_correct_onset_2, dt_correct_onset_3, dt_correct_onset_4, dt_correct_onset_5)
+
+# export csv
+fwrite(dt_correct_onset_5, file = "./filtered/dt_correct_onset_5.txt")
+fwrite(dt_correct_onset, file = "./filtered/dt_correct_onset.txt")
 
 ####################################
 # OFFSET
