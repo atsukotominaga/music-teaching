@@ -11,10 +11,10 @@
     - if participants accidentally hit a wrong key instead of the correct one, replace that with NA.
     - if there are complicated errors, look at the data and listen to the midi performance.
 
-#### Outputs
-df_correct_onset.csv, df_correct_offset.csv >> final outputs which can be used for data analysis
-
-others >> corrected data for each error category (e.g., extra notes, missing notes)
+#### Outputs (filtered folder)
+- data_correct_onset.csv, data_correct_offset.csv >> final outputs which can be used for data analysis
+- data_error_correction_onset.csv, data_error_correction_offset.csv >> error data for onset/offset
+- others >> corrected data for each error category (e.g., extra notes, missing notes) or uncorrected data before filtering (i.e., data_all, data_onset, data_offset, data_metro)
 
 ### Step2 -trimming:
 #### IOI
