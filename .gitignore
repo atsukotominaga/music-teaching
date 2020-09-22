@@ -1,7 +1,6 @@
 *.DS_Store
 *.Rhistory
 *html
-*csv
 others
 
 # material
@@ -18,8 +17,6 @@ script/Max/midi
 # R
 script/R/old/
 script/R/preprocessor/raw_data/
-script/R/preprocessor/filtered/
-script/R/preprocessor/trimmed/
 
 # RNotebook
 script/RNotebook/trimmed/
