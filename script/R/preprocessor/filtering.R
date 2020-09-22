@@ -144,12 +144,10 @@ for (row in 1:nrow(error_sub)){
 # export csv
 fwrite(dt_correct_onset_3, file = "./filtered/dt_correct_onset_4.txt")
 
-# combine all
-dt_correct_onset <- rbind(dt_correct_onset_1, dt_correct_onset_2, dt_correct_onset_3, dt_correct_onset_4)
+# combine error
 error_onset <- rbind(error_extra, error_missing, error_sub)
 
 # export csv
-fwrite(dt_correct_onset, file = "./filtered/dt_correct_onset.txt")
 fwrite(error_onset, file = "./filtered/error_onset.txt")
 
 ### individual corrections
@@ -159,7 +157,46 @@ error_ind <- error_onset[startsWith(CorrectionNr, "Check") | startsWith(Correcti
 current_1 <- dt_onset[SubNr == error_ind$SubNr[1] & BlockNr == error_ind$BlockNr[1] & TrialNr == error_ind$TrialNr[1]]
 # check a plot
 edit(current_1, dt_ideal)
-# decision: remove
+# decision: exclude - did not follow sheet music
+
+# 2
+current_2 <- dt_onset[SubNr == error_ind$SubNr[2] & BlockNr == error_ind$BlockNr[2] & TrialNr == error_ind$TrialNr[2]]
+# check a plot
+edit(current_2, dt_ideal)
+# decision: removed the first attempt and add - played twice
+current_2 <- insert_na(current_2[-c(1:73), ], dt_ideal)
+# check a plot
+edit(current_2, dt_ideal)
+
+# 3
+current_3 <- dt_onset[SubNr == error_ind$SubNr[3] & BlockNr == error_ind$BlockNr[3] & TrialNr == error_ind$TrialNr[3]]
+# decision: exclude - did not finish till the end
+
+# 4
+current_4 <- dt_onset[SubNr == error_ind$SubNr[4] & BlockNr == error_ind$BlockNr[4] & TrialNr == error_ind$TrialNr[4]]
+# decision: exclude - did not follow sheet music
+
+# 5
+current_5 <- dt_onset[SubNr == error_ind$SubNr[5] & BlockNr == error_ind$BlockNr[5] & TrialNr == error_ind$TrialNr[5]]
+# decision: exclude - did not finish till the end
+
+# 6
+current_6 <- dt_onset[SubNr == error_ind$SubNr[6] & BlockNr == error_ind$BlockNr[6] & TrialNr == error_ind$TrialNr[6]]
+# decision: exclude - did not finish till the end
+
+# 7
+current_7 <- dt_onset[SubNr == error_ind$SubNr[7] & BlockNr == errorå_ind$BlockNr[7] & TrialNr == error_ind$TrialNr[7]]
+# check a plot
+current_7 <- insert_na(current_7, dt_ideal)
+edit(current_7, dt_ideal)
+# decision: exclude - did not follow sheet music
+
+# 8 - 16
+# decision: exclude - Octave difference
+
+# combine all
+dt_correct_onset <- rbind(dt_correct_onset_1, dt_correct_onset_2, dt_correct_onset_3, dt_correct_onset_4, current_2)
+
 
 ####################################
 # OFFSET
