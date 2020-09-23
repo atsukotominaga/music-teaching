@@ -125,15 +125,27 @@ fwrite(dt_correct_onset_3, file = "./filtered/dt_correct_onset_3.txt")
 # substituted notes
 error_sub_onset <- dt_error_onset[startsWith(Reason, "Substituted")]
 dt_correct_onset_4 <- data.table()
-for (row in 1:nrow(error_sub_onset)){
+for (row in 22:nrow(error_sub_onset)){
   current <- dt_onset[SubNr == error_sub_onset$SubNr[row] & BlockNr == error_sub_onset$BlockNr[row] & TrialNr == error_sub_onset$TrialNr[row]]
-  current <- edit(current, dt_ideal)
-  decision <- menu(c("y", "other"), title = "Save the current data?")
-  if (decision == 1){
-    error_sub_onset$CorrectionNr[row] <- 1
-    dt_correct_onset_4 <- rbind(dt_correct_onset_4, current[, -c(5:6)])
-  } else if (decision == 2){
-    error_sub_onset$CorrectionNr[row] <- readline(prompt = "Reason?: ")
+  decision = 2 
+  correction = 0 # # of correction for reporting stats
+  while (decision == 2){
+    print(sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(current$SubNr), unique(current$BlockNr), unique(current$TrialNr)))
+    print("----- First check -----")
+    current <- edit(current, dt_ideal)
+    print("----- Correction check -----")
+    edit(current, dt_ideal)
+    decision <- menu(c("y", "n", "other"), title = "Save the current data? (to continue, enter 'n')")
+    if (decision == 1){
+      correction = correction + 1
+      error_sub_onset$CorrectionNr[row] <- correction
+      dt_correct_onset_4 <- rbind(dt_correct_onset_4, current[, -c(5:6)])
+    } else if (decision == 3) {
+      error_sub_onset$CorrectionNr[row] <- readline(prompt = "Reason?: ")
+    } else if (decision == 2){
+      correction = correction + 1
+      print("----- Continue correction -----")
+    }
   }
 }
 
@@ -325,7 +337,7 @@ fwrite(error_offset, file = "./filtered/error_offset.txt")
 ####################################
 # Combine ONSET/OFFSET
 ####################################
-
+rm(list=ls(all=T)) # clear all
 
 
 
