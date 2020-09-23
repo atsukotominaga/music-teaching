@@ -80,21 +80,27 @@ insert_na <- function(data, ideal){
           data$Velocity[note] <- NA
           data$Pitch[note] <- ideal$Pitch[note]
           break
-        } else if (note == 66){
-          if (data$Pitch[note] != ideal$Pitch[note]){
-            data <- add_row(data, .before = note)
-            data[note] <- data[note-1]
-            data$TimeStamp[note] <- NA
-            data$Velocity[note] <- NA
-            data$Pitch[note] <- ideal$Pitch[note]
-            break
-          } else if (data$Pitch[note] == ideal$Pitch[note]){
-            data[note+1] <- data[note]
-            data$TimeStamp[note+1] <- NA
-            data$Velocity[note+1] <- NA
-            data$Pitch[note+1] <- ideal$Pitch[note+1]
-            break
-          }
+        }
+      } else if (note == 66){
+        if (data$Pitch[note] != ideal$Pitch[note]){
+          data <- add_row(data, .after = note)
+          data[note+1] <- data[note]
+          # NA66
+          data$TimeStamp[note] <- NA
+          data$Velocity[note] <- NA
+          data$Pitch[note] <- ideal$Pitch[note]
+          # NA67
+          data$TimeStamp[note+1] <- NA
+          data$Velocity[note+1] <- NA
+          data$Pitch[note+1] <- ideal$Pitch[note+1]
+          break
+        } else if (data$Pitch[note] == ideal$Pitch[note]){
+          data <- add_row(data, .after = note)
+          data[note+1] <- data[note]
+          data$TimeStamp[note+1] <- NA
+          data$Velocity[note+1] <- NA
+          data$Pitch[note+1] <- ideal$Pitch[note+1]
+          break
         }
       }
     }
