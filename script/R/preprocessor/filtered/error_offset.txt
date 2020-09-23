@@ -1,0 +1,151 @@
+SubNr,BlockNr,TrialNr,Reason,CorrectionNr
+1,1,3,Extra Notes,
+1,2,6,Extra Notes,
+1,2,8,Extra Notes,
+1,3,6,Extra Notes,
+1,3,8,Extra Notes,
+2,1,1,Extra Notes,
+2,1,3,Extra Notes,
+2,2,3,Extra Notes,
+2,2,7,Extra Notes,
+2,3,1,Extra Notes,
+2,3,3,Extra Notes,
+2,3,6,Extra Notes,
+3,2,1,Extra Notes,
+3,2,5,Extra Notes,
+3,3,2,Extra Notes,
+3,3,7,Extra Notes,
+3,4,1,Extra Notes,
+3,4,2,Extra Notes,
+3,4,4,Extra Notes,
+3,4,6,Extra Notes,
+3,4,7,Extra Notes,
+5,1,2,Extra Notes,
+5,2,3,Extra Notes,
+5,2,4,Extra Notes,
+5,2,6,Extra Notes,
+5,2,7,Extra Notes,
+5,2,8,Extra Notes,
+5,4,2,Extra Notes,
+5,4,5,Extra Notes,
+5,4,8,Extra Notes,
+11,2,7,Extra Notes,
+11,3,4,Extra Notes,
+11,4,5,Extra Notes,
+11,4,8,Extra Notes,
+13,3,3,Extra Notes,
+15,1,1,Extra Notes,
+15,1,8,Extra Notes,
+15,3,3,Extra Notes,
+15,3,6,Extra Notes,
+15,4,3,Extra Notes,
+20,4,5,Extra Notes,
+20,4,7,Extra Notes,
+20,4,8,Extra Notes,
+21,4,6,Extra Notes,
+21,4,7,Extra Notes,
+22,1,5,Extra Notes,
+22,2,4,Extra Notes,
+22,3,1,Extra Notes,
+22,3,7,Extra Notes,
+24,1,2,Extra Notes,
+27,1,2,Extra Notes,
+27,1,6,Extra Notes,
+27,3,6,Extra Notes,
+28,1,5,Extra Notes,
+28,1,6,Extra Notes,
+28,2,4,Extra Notes,
+28,4,3,Extra Notes,
+31,1,6,Extra Notes,
+31,2,3,Extra Notes,
+33,1,7,Extra Notes,
+34,3,7,Extra Notes,
+35,3,1,Extra Notes,
+1,1,2,Missing Notes,1
+1,3,1,Missing Notes,1
+1,3,5,Missing Notes,1
+3,1,1,Missing Notes,Check individually
+3,2,7,Missing Notes,Check individually
+3,2,8,Missing Notes,Check individually
+4,4,4,Missing Notes,1
+5,4,3,Missing Notes,1
+6,3,1,Missing Notes,1
+6,3,4,Missing Notes,1
+7,1,1,Missing Notes,1
+7,1,3,Missing Notes,1
+7,1,6,Missing Notes,1
+7,2,3,Missing Notes,1
+7,2,4,Missing Notes,2
+7,3,2,Missing Notes,1
+7,4,3,Missing Notes,2
+7,4,4,Missing Notes,1
+7,4,8,Missing Notes,1
+11,1,1,Missing Notes,1
+11,1,2,Missing Notes,1
+11,3,2,Missing Notes,1
+11,3,3,Missing Notes,1
+11,3,7,Missing Notes,1
+11,3,8,Missing Notes,1
+13,2,2,Missing Notes,1
+16,2,4,Missing Notes,1
+18,1,1,Missing Notes,2
+18,1,8,Missing Notes,1
+18,3,1,Missing Notes,1
+19,2,6,Missing Notes,1
+19,4,3,Missing Notes,1
+19,4,4,Missing Notes,1
+21,1,2,Missing Notes,1
+23,2,8,Missing Notes,1
+23,3,5,Missing Notes,1
+24,1,4,Missing Notes,1
+24,1,6,Missing Notes,1
+24,3,2,Missing Notes,1
+24,3,3,Missing Notes,1
+24,3,6,Missing Notes,1
+24,3,7,Missing Notes,2
+29,2,6,Missing Notes,1
+29,4,1,Missing Notes,1
+29,4,7,Missing Notes,1
+31,2,4,Missing Notes,Check individually
+31,4,5,Missing Notes,Check individually
+32,2,3,Missing Notes,1
+33,1,1,Missing Notes,1
+33,1,3,Missing Notes,1
+34,3,5,Missing Notes,1
+35,2,5,Missing Notes,1
+35,2,8,Missing Notes,1
+35,4,4,Missing Notes,1
+36,1,1,Missing Notes,2
+36,3,4,Missing Notes,1
+3,4,3,Substituted Notes - RowNr 30,1
+7,3,3,Substituted Notes - RowNr 40,2
+9,4,3,Substituted Notes - RowNr 27,2
+9,4,5,Substituted Notes - RowNr 56,2
+11,2,6,Substituted Notes - RowNr 40,2
+11,4,4,Substituted Notes - RowNr 40,2
+11,4,7,Substituted Notes - RowNr 40,2
+14,1,1,Substituted Notes - RowNr 1,Octave diff
+14,1,2,Substituted Notes - RowNr 1,Octave diff
+14,1,3,Substituted Notes - RowNr 1,Octave diff
+14,1,4,Substituted Notes - RowNr 1,Octave diff
+14,1,5,Substituted Notes - RowNr 1,Octave diff
+14,1,6,Substituted Notes - RowNr 1,Octave diff
+14,1,7,Substituted Notes - RowNr 1,Octave diff
+14,1,8,Substituted Notes - RowNr 1,Octave diff
+27,1,8,Substituted Notes - RowNr 52,2
+27,2,6,Substituted Notes - RowNr 7,2
+27,2,8,Substituted Notes - RowNr 44,2
+27,3,1,Substituted Notes - RowNr 44,2
+27,3,2,Substituted Notes - RowNr 31,2
+27,3,3,Substituted Notes - RowNr 44,2
+27,3,5,Substituted Notes - RowNr 7,10
+27,3,7,Substituted Notes - RowNr 7,8
+27,3,8,Substituted Notes - RowNr 36,6
+27,4,1,Substituted Notes - RowNr 44,2
+27,4,2,Substituted Notes - RowNr 44,2
+27,4,3,Substituted Notes - RowNr 44,2
+27,4,5,Substituted Notes - RowNr 60,2
+27,4,7,Substituted Notes - RowNr 44,2
+27,4,8,Substituted Notes - RowNr 44,2
+28,1,1,Substituted Notes - RowNr 41,1
+34,1,8,Substituted Notes - RowNr 41,1

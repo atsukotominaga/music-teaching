@@ -284,7 +284,7 @@ fwrite(dt_correct_offset_3, file = "./filtered/dt_correct_offset_3.txt")
 # substituted notes
 error_sub_offset <- dt_error_offset[startsWith(Reason, "Substituted")]
 dt_correct_offset_4 <- data.table()
-for (row in 1:nrow(error_sub_offset)){
+for (row in 22:nrow(error_sub_offset)){
   current <- dt_offset[SubNr == error_sub_offset$SubNr[row] & BlockNr == error_sub_offset$BlockNr[row] & TrialNr == error_sub_offset$TrialNr[row]]
   decision = 2 
   correction = 0 # # of correction for reporting stats
