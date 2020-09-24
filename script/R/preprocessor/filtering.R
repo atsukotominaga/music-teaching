@@ -417,3 +417,19 @@ rm(list=ls(all=T)) # clear all
 dt_correct_onset <- fread(file = "./filtered/dt_correct_onset.txt")
 dt_correct_offset <- fread(file = "./filtered/dt_correct_offset.txt")
 
+# read functions
+source("./function.R")
+
+# read a text file for ideal performance
+dt_ideal <- read.table("./ideal.txt")
+colnames(dt_ideal) <- "Pitch"
+dt_ideal$RowNr <- 1:nrow(dt_ideal)
+setcolorder(dt_ideal, c(2, 1))
+
+# check whether data look okay
+print("--- ONSET ---")
+print(checker(dt_correct_onset, dt_ideal))
+print("--- OFFSET ---")
+print(checker(dt_correct_offset, dt_ideal))
+
+# Missing Trial - fine / if there is other than Missing Trial, look at data again
