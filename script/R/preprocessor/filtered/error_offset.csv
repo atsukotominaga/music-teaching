@@ -5,7 +5,7 @@ SubNr,BlockNr,TrialNr,Reason,CorrectionNr
 1,3,6,Extra Notes,1
 1,3,8,Extra Notes,1
 2,1,1,Extra Notes,Check individually
-2,1,3,Extra Notes,Check individually
+2,1,3,Extra Notes,"Removal: 1, Replacement to NA: 1"
 2,2,3,Extra Notes,3
 2,2,7,Extra Notes,1
 2,3,1,Extra Notes,1
