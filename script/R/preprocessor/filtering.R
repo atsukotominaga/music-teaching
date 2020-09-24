@@ -1,7 +1,13 @@
 #!/usr/local/bin/R
 #rm(list=ls(all=T)) # clear all
 
-# created 24/08/2020
+####################################
+#  Documentation
+####################################
+# Created: 24/08/2020
+# This script organises raw data and removes pitch errors.
+# GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R/preprocessor
+
 # create a folder if not exists
 if (!file.exists("filtered")){
   dir.create("filtered")
