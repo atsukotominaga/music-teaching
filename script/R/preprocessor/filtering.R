@@ -155,20 +155,17 @@ fwrite(dt_correct_onset_3, file = "./filtered/dt_correct_onset_4.txt")
 # combine error
 error_onset <- rbind(error_extra_onset, error_missing_onset, error_sub_onset)
 
-# export csv
-fwrite(error_onset, file = "./filtered/error_onset.txt")
-
 ### individual corrections
-error_ind <- error_onset[startsWith(CorrectionNr, "Check") | startsWith(CorrectionNr, "Octave")]
+error_ind_onset <- error_onset[startsWith(CorrectionNr, "Check") | startsWith(CorrectionNr, "Octave")]
 
 # 1
-current_1 <- dt_onset[SubNr == error_ind$SubNr[1] & BlockNr == error_ind$BlockNr[1] & TrialNr == error_ind$TrialNr[1]]
+current_1 <- dt_onset[SubNr == error_ind_onset$SubNr[1] & BlockNr == error_ind_onset$BlockNr[1] & TrialNr == error_ind_onset$TrialNr[1]]
 # check a plot
 edit(current_1, dt_ideal)
 # decision: exclude - did not follow sheet music
 
 # 2
-current_2 <- dt_onset[SubNr == error_ind$SubNr[2] & BlockNr == error_ind$BlockNr[2] & TrialNr == error_ind$TrialNr[2]]
+current_2 <- dt_onset[SubNr == error_ind_onset$SubNr[2] & BlockNr == error_ind_onset$BlockNr[2] & TrialNr == error_ind_onset$TrialNr[2]]
 # check a plot
 edit(current_2, dt_ideal)
 # decision: removed the first attempt and add - played twice
@@ -178,39 +175,42 @@ edit(current_2, dt_ideal)
 current_2$RowNr <- c(1:67)
 
 # 3
-current_3 <- dt_onset[SubNr == error_ind$SubNr[3] & BlockNr == error_ind$BlockNr[3] & TrialNr == error_ind$TrialNr[3]]
+current_3 <- dt_onset[SubNr == error_ind_onset$SubNr[3] & BlockNr == error_ind_onset$BlockNr[3] & TrialNr == error_ind_onset$TrialNr[3]]
 # decision: exclude - did not finish till the end
 
 # 4
-current_4 <- dt_onset[SubNr == error_ind$SubNr[4] & BlockNr == error_ind$BlockNr[4] & TrialNr == error_ind$TrialNr[4]]
+current_4 <- dt_onset[SubNr == error_ind_onset$SubNr[4] & BlockNr == error_ind_onset$BlockNr[4] & TrialNr == error_ind_onset$TrialNr[4]]
 # decision: exclude - did not follow sheet music
 
 # 5
-current_5 <- dt_onset[SubNr == error_ind$SubNr[5] & BlockNr == error_ind$BlockNr[5] & TrialNr == error_ind$TrialNr[5]]
+current_5 <- dt_onset[SubNr == error_ind_onset$SubNr[5] & BlockNr == error_ind_onset$BlockNr[5] & TrialNr == error_ind_onset$TrialNr[5]]
 # decision: exclude - did not finish till the end
 
 # 6
-current_6 <- dt_onset[SubNr == error_ind$SubNr[6] & BlockNr == error_ind$BlockNr[6] & TrialNr == error_ind$TrialNr[6]]
+current_6 <- dt_onset[SubNr == error_ind_onset$SubNr[6] & BlockNr == error_ind_onset$BlockNr[6] & TrialNr == error_ind_onset$TrialNr[6]]
 # decision: exclude - did not finish till the end
 
 # 7
-current_7 <- dt_onset[SubNr == error_ind$SubNr[7] & BlockNr == errorå_ind$BlockNr[7] & TrialNr == error_ind$TrialNr[7]]
+current_7 <- dt_onset[SubNr == error_ind_onset$SubNr[7] & BlockNr == error_ind_onset$BlockNr[7] & TrialNr == error_ind_onset$TrialNr[7]]
 # check a plot
 current_7 <- insert_na(current_7, dt_ideal)
 edit(current_7, dt_ideal)
 # decision: exclude - did not follow sheet music
 
-# 8 - 16
+# 8 - 15
 # decision: exclude - Octave difference
 
 # add from individual corrections
 dt_correct_onset_5 <- current_2
 
+# export csv
+fwrite(dt_correct_onset_5, file = "./filtered/dt_correct_onset_5.txt")
+fwrite(error_onset, file = "./filtered/error_onset.txt")
+
 # combine all
 dt_correct_onset <- rbind(dt_correct_onset_1, dt_correct_onset_2, dt_correct_onset_3, dt_correct_onset_4, dt_correct_onset_5)
 
 # export csv
-fwrite(dt_correct_onset_5, file = "./filtered/dt_correct_onset_5.txt")
 fwrite(dt_correct_onset, file = "./filtered/dt_correct_onset.txt")
 
 ####################################
@@ -238,7 +238,7 @@ dt_error_offset$CorrectionNr <- NA
 # extra notes
 error_extra_offset <- dt_error_offset[Reason == "Extra Notes"]
 dt_correct_offset_2 <- data.table()
-for (row in 1:nrow(error_extra_offset)){
+for (row in 34:nrow(error_extra_offset)){
   current <- dt_offset[SubNr == error_extra_offset$SubNr[row] & BlockNr == error_extra_offset$BlockNr[row] & TrialNr == error_extra_offset$TrialNr[row]]
   decision = 2 
   correction = 0 # # of correction for reporting stats
@@ -263,7 +263,6 @@ for (row in 1:nrow(error_extra_offset)){
 }
 
 # export csv
-dt_correct_offset_2 <- fread(file = "./filtered/dt_correct_offset_2.txt")
 fwrite(dt_correct_offset_2, file = "./filtered/dt_correct_offset_2.txt")
 
 # missing notes
@@ -326,21 +325,95 @@ fwrite(dt_correct_offset_3, file = "./filtered/dt_correct_offset_4.txt")
 # combine error
 error_offset <- rbind(error_extra_offset, error_missing_offset, error_sub_offset)
 
+### individual corrections
+error_ind_offset <- error_offset[startsWith(CorrectionNr, "Check") | startsWith(CorrectionNr, "Octave")]
+
+# 1
+current_1 <- dt_offset[SubNr == error_ind_offset$SubNr[1] & BlockNr == error_ind_offset$BlockNr[1] & TrialNr == error_ind_offset$TrialNr[1]]
+# check a plot
+edit(current_1, dt_ideal)
+# decision: exclude - did not follow sheet music
+
+# 2
+current_2 <- dt_offset[SubNr == error_ind_offset$SubNr[2] & BlockNr == error_ind_offset$BlockNr[2] & TrialNr == error_ind_offset$TrialNr[2]]
+# check a plot
+edit(current_2, dt_ideal)
+# decision: removed the first attempt and add - played twice
+current_2 <- insert_na(current_2[-c(1:73), ], dt_ideal)
+# check a plot
+edit(current_2, dt_ideal)
+current_2$RowNr <- c(1:67)
+
+# 3
+current_3 <- dt_offset[SubNr == error_ind_offset$SubNr[3] & BlockNr == error_ind_offset$BlockNr[3] & TrialNr == error_ind_offset$TrialNr[3]]
+# check a plot
+edit(current_3, dt_ideal)
+
+# correct substituted note and remove an extra note
+current_3 <- edit(current_3, dt_ideal)
+current_3 <- current_3[, -c(5:6)]
+# check a plot
+edit(current_3, dt_ideal)
+current_3$RowNr <- c(1:67)
+# save correctionNr
+error_offset$CorrectionNr[34] <- "Removal: 1, Replacement to NA: 2"
+
+# 4
+current_4 <- dt_offset[SubNr == error_ind_offset$SubNr[4] & BlockNr == error_ind_offset$BlockNr[4] & TrialNr == error_ind_offset$TrialNr[4]]
+# check a plot
+edit(current_4, dt_ideal)
+
+# correct substituted notes for 6 points and remove an extra note
+current_4 <- edit(current_4, dt_ideal)
+current_4 <- current_4[, -c(5:6)]
+# check a plot
+edit(current_4, dt_ideal)
+current_4$RowNr <- c(1:67)
+# save correctionNr
+error_offset$CorrectionNr[53] <- "Removal: 1, Replacement to NA: 6"
+
+# 5
+current_5 <- dt_offset[SubNr == error_ind_offset$SubNr[5] & BlockNr == error_ind_offset$BlockNr[5] & TrialNr == error_ind_offset$TrialNr[5]]
+# decision: exclude - did not finish till the end
+
+# 6
+current_6 <- dt_offset[SubNr == error_ind_offset$SubNr[6] & BlockNr == error_ind_offset$BlockNr[6] & TrialNr == error_ind_offset$TrialNr[6]]
+# decision: exclude - did not finish till the end
+
+# 7
+current_7 <- dt_offset[SubNr == error_ind_offset$SubNr[7] & BlockNr == error_ind_offset$BlockNr[7] & TrialNr == error_ind_offset$TrialNr[7]]
+# decision: exclude - did not finish till the end
+
+# 8
+current_8 <- dt_offset[SubNr == error_ind_offset$SubNr[8] & BlockNr == error_ind_offset$BlockNr[8] & TrialNr == error_ind_offset$TrialNr[8]]
+# decision: exclude - did not finish till the end
+
+# 9
+current_9 <- dt_offset[SubNr == error_ind_offset$SubNr[9] & BlockNr == error_ind_offset$BlockNr[9] & TrialNr == error_ind_offset$TrialNr[9]]
+# decision: exclude - did not follow sheet music
+
+# 10 - 17
+# decision: exclude - Octave difference
+
+# add from individual corrections
+dt_correct_offset_5 <-rbind(current_2, current_3, current_4)
+
 # export csv
-fwrite(error_offset, file = "./filtered/error_offset.txt")
+fwrite(dt_correct_offset_5, file = "./filtered/dt_correct_offset_5.txt")
+fwrite(error_offset, file = "./filtered/error_offset.csv")
 
+# combine all
+dt_correct_offset <- rbind(dt_correct_offset_1, dt_correct_offset_2, dt_correct_offset_3, dt_correct_offset_4, dt_correct_offset_5)
 
-
-
-
+# export csv
+fwrite(dt_correct_offset, file = "./filtered/dt_correct_offset.txt")
 
 ####################################
 # Combine ONSET/OFFSET
 ####################################
 rm(list=ls(all=T)) # clear all
 
-
-
-
-
+# read txt files
+dt_correct_onset <- fread(file = "./filtered/dt_correct_onset.txt")
+dt_correct_offset <- fread(file = "./filtered/dt_correct_offset.txt")
 
