@@ -32,7 +32,7 @@ SubNr,BlockNr,TrialNr,Reason,CorrectionNr
 11,2,7,Extra Notes,1
 11,3,4,Extra Notes,1
 11,4,5,Extra Notes,1
-11,4,8,Extra Notes,Check individually
+11,4,8,Extra Notes,"Removal: 1, Replacement to NA: 2"
 13,3,3,Extra Notes,1
 15,1,1,Extra Notes,1
 15,1,8,Extra Notes,1
@@ -44,14 +44,14 @@ SubNr,BlockNr,TrialNr,Reason,CorrectionNr
 20,4,8,Extra Notes,1
 21,4,6,Extra Notes,1
 21,4,7,Extra Notes,1
-22,1,5,Extra Notes,1
+22,1,5,Extra Notes,3
 22,2,4,Extra Notes,1
 22,3,1,Extra Notes,1
 22,3,7,Extra Notes,1
 24,1,2,Extra Notes,3
 27,1,2,Extra Notes,1
 27,1,6,Extra Notes,1
-27,3,6,Extra Notes,Check individually
+27,3,6,Extra Notes,"Removal: 1, Replacement to NA: 6"
 28,1,5,Extra Notes,1
 28,1,6,Extra Notes,1
 28,2,4,Extra Notes,1
