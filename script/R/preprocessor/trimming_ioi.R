@@ -225,7 +225,7 @@ ggsave("./trimmed/ioi_box_sd_2.png", plot = p_ioi_box_sd_2, dpi = 600, width = 5
 write.csv(df_ioi_trim_sd_2, file = "./trimmed/data_ioi_2.csv", row.names = F)
 
 ####################################
-# 3. > +- 3SD actross the conditions
+# 3. > +- 3SD across the conditions
 # separately for Subcomponent Change
 # (YES or NO - as a factor)
 ####################################

@@ -1,5 +1,5 @@
 #!/usr/local/bin/R
-#rm(list=ls(all=T)) - clear all in Grobal Environment
+#rm(list=ls(all=T)) - clear all in Global Environment
 
 ####################################
 #  Documentation

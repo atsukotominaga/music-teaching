@@ -162,7 +162,7 @@ ioi_1 <- cbind(ioi_1[,1:5], as.data.frame(ioi_1[,6]))
 # Change colnames
 colnames(ioi_1) <- c("SubNr", "BlockNr", "TrialNr", "Condition", "Skill", "N", "Mean", "SD")
 
-# mean IOI for each trial (df_ioi_1)
+# mean IOI for each trial (df_ioi_3)
 ioi_3 <- aggregate(IOI~SubNr*BlockNr*TrialNr*Condition*Skill, data = df_ioi_3,
                    FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
 ioi_3 <- cbind(ioi_3[,1:5], as.data.frame(ioi_3[,6]))
