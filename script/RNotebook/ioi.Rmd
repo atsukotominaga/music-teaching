@@ -80,7 +80,7 @@ theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 C
 ```
 
 ```{r file, include = FALSE}
-filename_ioi = "../R/trimmed/data_ioi.csv"
+filename_ioi = "../R/preprocessor/trimmed/data_ioi_1.txt"
 ```
 
 ```{r extract, include = FALSE}
@@ -88,6 +88,9 @@ df_ioi <- read.csv(filename_ioi, header = T, sep = ",", dec = ".") # read a trim
 
 # SubNr as a factor
 df_ioi$SubNr <- as.factor(df_ioi$SubNr)
+
+# exclude participants
+df_ioi <- df_ioi %>% dplyr::filter(SubNr != 1 & SubNr != 3 & SubNr != 14 & SubNr != 16)
 
 # Include only articulation
 df_ioi_art <- df_ioi %>% dplyr::filter(Skill == "articulation")
@@ -313,7 +316,7 @@ print(ioi_art_trial)
 #### Line graph
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
 
-```{r ioi_art_trial_line, echo = FALSE, fig.height = 4}
+```{r ioi_art_trial_line, echo = FALSE, fig.height = 8}
 p_ioi_art_trial <- ggplot(data = ioi_art_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -468,7 +471,7 @@ print(ioi_art_var_trial)
 
 ### Plot
 #### Line graph
-```{r ioi_art_var_trial_line, echo = FALSE, fig.height = 4}
+```{r ioi_art_var_trial_line, echo = FALSE, fig.height = 8}
 p_ioi_art_var_trial <- ggplot(data = ioi_art_var_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -873,7 +876,7 @@ print(ioi_dyn_var_trial)
 
 ### Plot
 #### Line graph
-```{r ioi_dyn_var_trial_line, echo = FALSE, fig.height = 4}
+```{r ioi_dyn_var_trial_line, echo = FALSE, fig.height = 8}
 p_ioi_dyn_var_trial <- ggplot(data = ioi_dyn_var_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -1075,7 +1078,7 @@ print(summary(ioi_dyn_order_aov_2))
 
 # Sequence plot
 ## Articulation{#sequence_art}
-```{r seq_art, fig.width = 10, fig.height = 2, echo = FALSE}
+```{r seq_art, fig.width = 20, fig.height = 4, echo = FALSE}
 # For each individual
 ioi_art_seq <- aggregate(IOI~SubNr*Condition*Skill*Interval, data = df_ioi_art,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
@@ -1102,7 +1105,7 @@ p_ioi_art_seq
 ```
 
 ## Dynamics{#sequence_dyn}
-```{r seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE}
+```{r seq_dyn, fig.width = 20, fig.height = 4, echo = FALSE}
 # For each individual
 ioi_dyn_seq <- aggregate(IOI~SubNr*Condition*Skill*Interval, data = df_ioi_dyn,
                                  FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})

@@ -94,8 +94,8 @@ theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 C
 ```
 
 ```{r file, include = FALSE}
-filename_ioi = "../R/trimmed/data_ioi.csv"
-filename_kot = "../R/trimmed/data_kot.csv"
+filename_ioi = "../R/preprocessor/trimmed/data_ioi_1.txt"
+filename_kot = "../R/preprocessor/trimmed/data_kot.txt"
 ```
 
 ```{r extract, include = FALSE}
@@ -105,6 +105,10 @@ df_kot <- read.csv(filename_kot, header = T, sep = ",", dec = ".") # read a trim
 # SubNr as a factor
 df_ioi$SubNr <- as.factor(df_ioi$SubNr)
 df_kot$SubNr <- as.factor(df_kot$SubNr)
+
+# exclude participants
+df_ioi <- df_ioi %>% dplyr::filter(SubNr != 1 & SubNr != 3 & SubNr != 14 & SubNr != 16)
+df_kot <- df_kot %>% dplyr::filter(SubNr != 1 & SubNr != 3 & SubNr != 14 & SubNr != 16)
 
 # For each individual, each block, each trial
 ioi <- aggregate(IOI~SubNr*BlockNr*TrialNr*Condition*Skill, data = df_ioi,
@@ -271,7 +275,7 @@ print(kot_art_trial)
 
 ### Plot
 #### Line graph
-```{r kot_art_trial_line_legato, echo = FALSE, fig.height = 4}
+```{r kot_art_trial_line_legato, echo = FALSE, fig.height = 8}
 p_kot_art_trial_legato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -280,7 +284,7 @@ p_kot_art_trial_legato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subc
 p_kot_art_trial_legato
 ```
 
-```{r kot_art_trial_line_staccato, echo = FALSE, fig.height = 4}
+```{r kot_art_trial_line_staccato, echo = FALSE, fig.height = 8}
 p_kot_art_trial_staccato <- ggplot(data = subset(kot_art_trial, kot_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -461,7 +465,7 @@ print(kor_art_trial)
 
 ### Plot
 #### Line graph
-```{r kor_art_trial_line_legato, echo = FALSE, fig.height = 4}
+```{r kor_art_trial_line_legato, echo = FALSE, fig.height = 8}
 p_kor_art_trial_legato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -470,7 +474,7 @@ p_kor_art_trial_legato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subc
 p_kor_art_trial_legato
 ```
 
-```{r kor_art_trial_line_staccato, echo = FALSE, fig.height = 4}
+```{r kor_art_trial_line_staccato, echo = FALSE, fig.height = 8}
 p_kor_art_trial_staccato <- ggplot(data = subset(kor_art_trial, kor_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -623,7 +627,7 @@ print(kot_dyn_trial)
 
 ### Plot
 #### Line graph
-```{r kot_dyn_trial_line_forte, echo = FALSE, fig.height = 4}
+```{r kot_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
 p_kot_dyn_trial_forte <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -632,7 +636,7 @@ p_kot_dyn_trial_forte <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subco
 p_kot_dyn_trial_forte
 ```
 
-```{r kot_dyn_trial_line_piano, echo = FALSE, fig.height = 4}
+```{r kot_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
 p_kot_dyn_trial_piano <- ggplot(data = subset(kot_dyn_trial, kot_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -784,7 +788,7 @@ print(kor_dyn_trial)
 
 ### Plot
 #### Line graph
-```{r kor_dyn_trial_line_forte, echo = FALSE, fig.height = 4}
+```{r kor_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
 p_kor_dyn_trial_forte <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -793,7 +797,7 @@ p_kor_dyn_trial_forte <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subco
 p_kor_dyn_trial_forte
 ```
 
-```{r kor_dyn_trial_line_piano, echo = FALSE, fig.height = 4}
+```{r kor_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
 p_kor_dyn_trial_piano <- ggplot(data = subset(kor_dyn_trial, kor_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -837,74 +841,74 @@ p_kor_dyn_trial_all_piano <- ggplot(data = subset(kor_dyn_trial_all, kor_dyn_tri
 p_kor_dyn_trial_all_piano
 ```
 
-# KOT-Order-Articulation
-- Investigate whether there is any order effect of the conditions.
+<!-- # KOT-Order-Articulation -->
+<!-- - Investigate whether there is any order effect of the conditions. -->
 
-## 1. All{#kot_art_order_group_all}
-```{r kot_art_order_all, echo = FALSE}
-# For each participant
-kot_art_order <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_kot_art, df_kot_art$Interval != 8 & df_kot_art$Interval != 16 & df_kot_art$Interval != 24 & df_kot_art$Interval != 41 & df_kot_art$Interval != 49 & df_kot_art$Interval != 57), FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x)), 4)})
-kot_art_order <- cbind(kot_art_order[,1:5], as.data.frame(kot_art_order[,6]))
-# Change colnames
-colnames(kot_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+<!-- ## 1. All{#kot_art_order_group_all} -->
+<!-- ```{r kot_art_order_all, echo = FALSE} -->
+<!-- # For each participant -->
+<!-- kot_art_order <- aggregate(KOT~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_kot_art, df_kot_art$Interval != 8 & df_kot_art$Interval != 16 & df_kot_art$Interval != 24 & df_kot_art$Interval != 41 & df_kot_art$Interval != 49 & df_kot_art$Interval != 57), FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x)), 4)}) -->
+<!-- kot_art_order <- cbind(kot_art_order[,1:5], as.data.frame(kot_art_order[,6])) -->
+<!-- # Change colnames -->
+<!-- colnames(kot_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD") -->
 
-# Group mean
-kot_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = kot_art_order,
-                                     FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
-kot_art_order_all <- cbind(kot_art_order_all[,1:4], as.data.frame(kot_art_order_all[,5]))
-# Change colnames
-colnames(kot_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
-print(kot_art_order_all)
-```
+<!-- # Group mean -->
+<!-- kot_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = kot_art_order, -->
+<!--                                      FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)}) -->
+<!-- kot_art_order_all <- cbind(kot_art_order_all[,1:4], as.data.frame(kot_art_order_all[,5])) -->
+<!-- # Change colnames -->
+<!-- colnames(kot_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM") -->
+<!-- print(kot_art_order_all) -->
+<!-- ``` -->
 
-### Plot
-#### Bar graph
-- Error bars show SEM of the mean
+<!-- ### Plot -->
+<!-- #### Bar graph -->
+<!-- - Error bars show SEM of the mean -->
 
-```{r kot_art_order_all_bar, echo = FALSE}
-p_kot_art_order_all <- ggplot(data = kot_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
-                width = .2, position = position_dodge(.9)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "KOT (ms)", subtitle = "KOT: Articulation")
-p_kot_art_order_all
-```
+<!-- ```{r kot_art_order_all_bar, echo = FALSE} -->
+<!-- p_kot_art_order_all <- ggplot(data = kot_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_bar(stat = "identity", position = position_dodge()) + -->
+<!--   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), -->
+<!--                 width = .2, position = position_dodge(.9)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "KOT (ms)", subtitle = "KOT: Articulation") -->
+<!-- p_kot_art_order_all -->
+<!-- ``` -->
 
-#### Box plot
-```{r kot_art_order_all_box, echo = FALSE}
-p_kot_art_order_all_box <- ggplot(data = kot_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_boxplot() +
-  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "KOT", subtitle = "KOT: Articulation")
-p_kot_art_order_all_box
-```
+<!-- #### Box plot -->
+<!-- ```{r kot_art_order_all_box, echo = FALSE} -->
+<!-- p_kot_art_order_all_box <- ggplot(data = kot_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_boxplot() + -->
+<!--   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "KOT", subtitle = "KOT: Articulation") -->
+<!-- p_kot_art_order_all_box -->
+<!-- ``` -->
 
-### Statistics
-#### Normality check
-```{r normality5, echo = FALSE}
-# Normality check
-kot_art_order$Subcomponent <- factor(kot_art_order$Subcomponent)
-kot_art_order_norm <- by(kot_art_order$Mean, list(kot_art_order$Condition, kot_art_order$Subcomponent, kot_art_order$Order), shapiro.test)
-print(kot_art_order_norm)
-```
+<!-- ### Statistics -->
+<!-- #### Normality check -->
+<!-- ```{r normality5, echo = FALSE} -->
+<!-- # Normality check -->
+<!-- kot_art_order$Subcomponent <- factor(kot_art_order$Subcomponent) -->
+<!-- kot_art_order_norm <- by(kot_art_order$Mean, list(kot_art_order$Condition, kot_art_order$Subcomponent, kot_art_order$Order), shapiro.test) -->
+<!-- print(kot_art_order_norm) -->
+<!-- ``` -->
 
-#### Three-way ANOVA (ez)
-```{r stats9, echo = FALSE}
-kot_art_order_aov <- ezANOVA(
-  data = df_kot_art
-  , dv = .(KOT)
-  , wid = .(SubNr)
-  , between = .(Order)
-  , within = .(Condition, Subcomponent)
-  , type = 3
-  , detailed = TRUE
-)
-kot_art_order_aov$ANOVA$F <- round(kot_art_order_aov$ANOVA$F, 4)
-kot_art_order_aov$ANOVA$p <- round(kot_art_order_aov$ANOVA$p, 4)
-print(kot_art_order_aov)
-```
+<!-- #### Three-way ANOVA (ez) -->
+<!-- ```{r stats9, echo = FALSE} -->
+<!-- kot_art_order_aov <- ezANOVA( -->
+<!--   data = df_kot_art -->
+<!--   , dv = .(KOT) -->
+<!--   , wid = .(SubNr) -->
+<!--   , between = .(Order) -->
+<!--   , within = .(Condition, Subcomponent) -->
+<!--   , type = 3 -->
+<!--   , detailed = TRUE -->
+<!-- ) -->
+<!-- kot_art_order_aov$ANOVA$F <- round(kot_art_order_aov$ANOVA$F, 4) -->
+<!-- kot_art_order_aov$ANOVA$p <- round(kot_art_order_aov$ANOVA$p, 4) -->
+<!-- print(kot_art_order_aov) -->
+<!-- ``` -->
 
 # KOR-Order-Articulation
 - Investigate whether there is any order effect of the conditions.

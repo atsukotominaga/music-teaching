@@ -94,8 +94,8 @@ theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 C
 ```
 
 ```{r file, include = FALSE}
-filename_vel = "../R/trimmed/data_vel.csv"
-filename_vel_acc = "../R/trimmed/data_vel_acc.csv"
+filename_vel = "../R/preprocessor/trimmed/data_vel.txt"
+filename_vel_acc = "../R/preprocessor/trimmed/data_vel_diff.txt"
 ```
 
 ```{r extract, include = FALSE}
@@ -105,6 +105,10 @@ df_vel_acc <- read.csv(filename_vel_acc, header = T, sep = ",", dec = ".") # rea
 # SubNr as a factor
 df_vel$SubNr <- as.factor(df_vel$SubNr)
 df_vel_acc$SubNr <- as.factor(df_vel_acc$SubNr)
+
+# exclude participants
+df_vel <- df_vel %>% dplyr::filter(SubNr != 1 & SubNr != 3 & SubNr != 14 & SubNr != 16)
+df_vel_acc <- df_vel_acc %>% dplyr::filter(SubNr != 1 & SubNr != 3 & SubNr != 14 & SubNr != 16)
 
 # Include only articulation
 df_vel_art <- df_vel %>% dplyr::filter(Skill == "articulation")
@@ -251,7 +255,7 @@ print(vel_dyn_trial)
 
 ### Plot
 #### Line graph
-```{r vel_dyn_trial_line_forte, echo = FALSE, fig.height = 4}
+```{r vel_dyn_trial_line_forte, echo = FALSE, fig.height = 8}
 p_vel_dyn_trial_forte <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subcomponent == "Forte"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -260,7 +264,7 @@ p_vel_dyn_trial_forte <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subco
 p_vel_dyn_trial_forte
 ```
 
-```{r vel_dyn_trial_line_piano, echo = FALSE, fig.height = 4}
+```{r vel_dyn_trial_line_piano, echo = FALSE, fig.height = 8}
 p_vel_dyn_trial_piano <- ggplot(data = subset(vel_dyn_trial, vel_dyn_trial$Subcomponent == "Piano"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -310,7 +314,7 @@ p_vel_dyn_trial_all_piano
 
 ```{r vel_acc_dyn, echo = FALSE}
 # For each individual
-vel_acc_dyn <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent, data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF"),
+vel_acc_dyn <- aggregate(Diff~SubNr*Condition*Skill*Subcomponent, data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 vel_acc_dyn <- cbind(vel_acc_dyn[,1:4], as.data.frame(vel_acc_dyn[,5]))
 # Change colnames
@@ -378,7 +382,7 @@ print(vel_acc_dyn_norm)
 ```{r stats3, echo = FALSE}
 vel_acc_dyn_aov <- ezANOVA(
   data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF")
-  , dv = .(Acc)
+  , dv = .(Diff)
   , wid = .(SubNr)
   , within = .(Condition, Subcomponent)
   , type = 3
@@ -428,7 +432,7 @@ print(vel_acc_dyn_pairwise)
 
 ```{r vel_acc_dyn_trial, echo = FALSE}
 # For each individual
-vel_acc_dyn_trial <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF"),
+vel_acc_dyn_trial <- aggregate(Diff~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 vel_acc_dyn_trial <- cbind(vel_acc_dyn_trial[,1:5], as.data.frame(vel_acc_dyn_trial[,6]))
 # Change colnames
@@ -438,7 +442,7 @@ print(vel_acc_dyn_trial)
 
 ### Plot
 #### Line graph
-```{r vel_acc_dyn_trial_line_ftop, echo = FALSE, fig.height = 4}
+```{r vel_acc_dyn_trial_line_ftop, echo = FALSE, fig.height = 8}
 p_vel_acc_dyn_trial_ftop <- ggplot(data = subset(vel_acc_dyn_trial, vel_acc_dyn_trial$Subcomponent == "FtoP"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -447,7 +451,7 @@ p_vel_acc_dyn_trial_ftop <- ggplot(data = subset(vel_acc_dyn_trial, vel_acc_dyn_
 p_vel_acc_dyn_trial_ftop
 ```
 
-```{r vel_acc_dyn_trial_line_ptof, echo = FALSE, fig.height = 4}
+```{r vel_acc_dyn_trial_line_ptof, echo = FALSE, fig.height = 8}
 p_vel_acc_dyn_trial_ptof <- ggplot(data = subset(vel_acc_dyn_trial, vel_acc_dyn_trial$Subcomponent == "PtoF"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -626,7 +630,7 @@ print(vel_art_trial)
 
 ### Plot
 #### Line graph
-```{r vel_art_trial_line_legato, echo = FALSE, fig.height = 4}
+```{r vel_art_trial_line_legato, echo = FALSE, fig.height = 8}
 p_vel_art_trial_legato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Subcomponent == "Legato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -635,7 +639,7 @@ p_vel_art_trial_legato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Subc
 p_vel_art_trial_legato
 ```
 
-```{r vel_art_trial_line_piano, echo = FALSE, fig.height = 4}
+```{r vel_art_trial_line_piano, echo = FALSE, fig.height = 8}
 p_vel_art_trial_staccato <- ggplot(data = subset(vel_art_trial, vel_art_trial$Subcomponent == "Staccato"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -685,7 +689,7 @@ p_vel_art_trial_all_staccato
 
 ```{r vel_acc_art, echo = FALSE}
 # For each individual
-vel_acc_art <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent, data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL"),
+vel_acc_art <- aggregate(Diff~SubNr*Condition*Skill*Subcomponent, data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 vel_acc_art <- cbind(vel_acc_art[,1:4], as.data.frame(vel_acc_art[,5]))
 # Change colnames
@@ -753,7 +757,7 @@ print(vel_acc_art_norm)
 ```{r stats7, echo = FALSE}
 vel_acc_art_aov <- ezANOVA(
   data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL")
-  , dv = .(Acc)
+  , dv = .(Diff)
   , wid = .(SubNr)
   , within = .(Condition, Subcomponent)
   , type = 3
@@ -802,7 +806,7 @@ print(summary(vel_acc_art_aov_2))
 
 ```{r vel_acc_art_trial, echo = FALSE}
 # For each individual
-vel_acc_art_trial <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL"),
+vel_acc_art_trial <- aggregate(Diff~SubNr*Condition*Skill*Subcomponent*TrialNr, data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL"),
                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
 vel_acc_art_trial <- cbind(vel_acc_art_trial[,1:5], as.data.frame(vel_acc_art_trial[,6]))
 # Change colnames
@@ -812,7 +816,7 @@ print(vel_acc_art_trial)
 
 ### Plot
 #### Line graph
-```{r vel_acc_art_trial_line_ltos, echo = FALSE, fig.height = 4}
+```{r vel_acc_art_trial_line_ltos, echo = FALSE, fig.height = 8}
 p_vel_acc_art_trial_ltos <- ggplot(data = subset(vel_acc_art_trial, vel_acc_art_trial$Subcomponent == "LtoS"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -821,7 +825,7 @@ p_vel_acc_art_trial_ltos <- ggplot(data = subset(vel_acc_art_trial, vel_acc_art_
 p_vel_acc_art_trial_ltos
 ```
 
-```{r vel_acc_art_trial_line_stol, echo = FALSE, fig.height = 4}
+```{r vel_acc_art_trial_line_stol, echo = FALSE, fig.height = 8}
 p_vel_acc_art_trial_stol <- ggplot(data = subset(vel_acc_art_trial, vel_acc_art_trial$Subcomponent == "StoL"), aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
   geom_line() +
   geom_point() +
@@ -865,381 +869,381 @@ p_vel_acc_art_trial_all_stol <- ggplot(data = subset(vel_acc_art_trial_all, vel_
 p_vel_acc_art_trial_all_stol
 ```
 
-# KV-Order-Dynamics
-- Investigate whether there is any order effect of the conditions.
+<!-- # KV-Order-Dynamics -->
+<!-- - Investigate whether there is any order effect of the conditions. -->
 
-## 1. All{#vel_dyn_order_group_all}
-```{r vel_dyn_order_all, echo = all}
-# For each participant
-vel_dyn_order <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent*Order, data = df_vel_dyn,
-                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-vel_dyn_order <- cbind(vel_dyn_order[,1:5], as.data.frame(vel_dyn_order[,6]))
-# Change colnames
-colnames(vel_dyn_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+<!-- ## 1. All{#vel_dyn_order_group_all} -->
+<!-- ```{r vel_dyn_order_all, echo = all} -->
+<!-- # For each participant -->
+<!-- vel_dyn_order <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent*Order, data = df_vel_dyn, -->
+<!--                                FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))}) -->
+<!-- vel_dyn_order <- cbind(vel_dyn_order[,1:5], as.data.frame(vel_dyn_order[,6])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_dyn_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD") -->
 
-# Group mean
-vel_dyn_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_dyn_order,
-                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
-vel_dyn_order_all <- cbind(vel_dyn_order_all[,1:4], as.data.frame(vel_dyn_order_all[,5]))
-# Change colnames
-colnames(vel_dyn_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
-print(vel_dyn_order_all)
-```
+<!-- # Group mean -->
+<!-- vel_dyn_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_dyn_order, -->
+<!--                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)}) -->
+<!-- vel_dyn_order_all <- cbind(vel_dyn_order_all[,1:4], as.data.frame(vel_dyn_order_all[,5])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_dyn_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM") -->
+<!-- print(vel_dyn_order_all) -->
+<!-- ``` -->
 
-### Plot
-#### Bar graph
-- Error bars show SEM of the mean
+<!-- ### Plot -->
+<!-- #### Bar graph -->
+<!-- - Error bars show SEM of the mean -->
 
-```{r vel_dyn_order_all_bar, echo = FALSE}
-p_vel_dyn_order_all <- ggplot(data = vel_dyn_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
-                width = .2, position = position_dodge(.9)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") + coord_cartesian(ylim = c(40, 100))
-p_vel_dyn_order_all
-```
+<!-- ```{r vel_dyn_order_all_bar, echo = FALSE} -->
+<!-- p_vel_dyn_order_all <- ggplot(data = vel_dyn_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_bar(stat = "identity", position = position_dodge()) + -->
+<!--   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), -->
+<!--                 width = .2, position = position_dodge(.9)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "KV (0-127)", subtitle = "KV: Dynamics") + coord_cartesian(ylim = c(40, 100)) -->
+<!-- p_vel_dyn_order_all -->
+<!-- ``` -->
 
-#### Box plot
-```{r vel_dyn_order_all_box, echo = FALSE}
-p_vel_dyn_order_all_box <- ggplot(data = vel_dyn_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_boxplot() +
-  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Dynamics") 
-p_vel_dyn_order_all_box
-```
+<!-- #### Box plot -->
+<!-- ```{r vel_dyn_order_all_box, echo = FALSE} -->
+<!-- p_vel_dyn_order_all_box <- ggplot(data = vel_dyn_order, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_boxplot() + -->
+<!--   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "KV (0-127)", subtitle = "KV: Dynamics")  -->
+<!-- p_vel_dyn_order_all_box -->
+<!-- ``` -->
 
-### Statistics
-#### Normality check
-```{r normality5, echo = FALSE}
-# Normality check
-vel_dyn_order$Subcomponent <- factor(vel_dyn_order$Subcomponent)
-vel_dyn_order_norm <- by(vel_dyn_order$Mean, list(vel_dyn_order$Condition, vel_dyn_order$Subcomponent, vel_dyn_order$Order), shapiro.test)
-print(vel_dyn_order_norm)
-```
+<!-- ### Statistics -->
+<!-- #### Normality check -->
+<!-- ```{r normality5, echo = FALSE} -->
+<!-- # Normality check -->
+<!-- vel_dyn_order$Subcomponent <- factor(vel_dyn_order$Subcomponent) -->
+<!-- vel_dyn_order_norm <- by(vel_dyn_order$Mean, list(vel_dyn_order$Condition, vel_dyn_order$Subcomponent, vel_dyn_order$Order), shapiro.test) -->
+<!-- print(vel_dyn_order_norm) -->
+<!-- ``` -->
 
-#### Three-way ANOVA (ez)
-```{r stats9, echo = FALSE}
-vel_dyn_order_aov <- ezANOVA(
-  data = df_vel_dyn
-  , dv = .(Velocity)
-  , wid = .(SubNr)
-  , between = .(Order)
-  , within = .(Condition, Subcomponent)
-  , type = 3
-  , detailed = TRUE
-)
-vel_dyn_order_aov$ANOVA$F <- round(vel_dyn_order_aov$ANOVA$F, 4)
-vel_dyn_order_aov$ANOVA$p <- round(vel_dyn_order_aov$ANOVA$p, 4)
-print(vel_dyn_order_aov)
-```
+<!-- #### Three-way ANOVA (ez) -->
+<!-- ```{r stats9, echo = FALSE} -->
+<!-- vel_dyn_order_aov <- ezANOVA( -->
+<!--   data = df_vel_dyn -->
+<!--   , dv = .(Velocity) -->
+<!--   , wid = .(SubNr) -->
+<!--   , between = .(Order) -->
+<!--   , within = .(Condition, Subcomponent) -->
+<!--   , type = 3 -->
+<!--   , detailed = TRUE -->
+<!-- ) -->
+<!-- vel_dyn_order_aov$ANOVA$F <- round(vel_dyn_order_aov$ANOVA$F, 4) -->
+<!-- vel_dyn_order_aov$ANOVA$p <- round(vel_dyn_order_aov$ANOVA$p, 4) -->
+<!-- print(vel_dyn_order_aov) -->
+<!-- ``` -->
 
-# KV-Diff-Order-Dynamics
-- Investigate whether there is any order effect of the conditions.
+<!-- # KV-Diff-Order-Dynamics -->
+<!-- - Investigate whether there is any order effect of the conditions. -->
 
-## 1. All{#vel_acc_dyn_order_group_all}
-```{r vel_acc_dyn_order_all, echo = all}
-# For each participant
-vel_acc_dyn_order <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF"),
-                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-vel_acc_dyn_order <- cbind(vel_acc_dyn_order[,1:5], as.data.frame(vel_acc_dyn_order[,6]))
-# Change colnames
-colnames(vel_acc_dyn_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+<!-- ## 1. All{#vel_acc_dyn_order_group_all} -->
+<!-- ```{r vel_acc_dyn_order_all, echo = all} -->
+<!-- # For each participant -->
+<!-- vel_acc_dyn_order <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF"), -->
+<!--                                FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))}) -->
+<!-- vel_acc_dyn_order <- cbind(vel_acc_dyn_order[,1:5], as.data.frame(vel_acc_dyn_order[,6])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_acc_dyn_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD") -->
 
-# Group mean
-vel_acc_dyn_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_acc_dyn_order,
-                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
-vel_acc_dyn_order_all <- cbind(vel_acc_dyn_order_all[,1:4], as.data.frame(vel_acc_dyn_order_all[,5]))
-# Change colnames
-colnames(vel_acc_dyn_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
-print(vel_acc_dyn_order_all)
-```
+<!-- # Group mean -->
+<!-- vel_acc_dyn_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_acc_dyn_order, -->
+<!--                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)}) -->
+<!-- vel_acc_dyn_order_all <- cbind(vel_acc_dyn_order_all[,1:4], as.data.frame(vel_acc_dyn_order_all[,5])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_acc_dyn_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM") -->
+<!-- print(vel_acc_dyn_order_all) -->
+<!-- ``` -->
 
-### Plot
-#### Bar graph
-- Error bars show SEM of the mean
+<!-- ### Plot -->
+<!-- #### Bar graph -->
+<!-- - Error bars show SEM of the mean -->
 
-```{r vel_acc_dyn_order_all_bar, echo = FALSE}
-p_vel_acc_dyn_order_all <- ggplot(data = vel_acc_dyn_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
-                width = .2, position = position_dodge(.9)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "Difference", subtitle = "KV-Diff: Dynamics")
-p_vel_acc_dyn_order_all
-```
+<!-- ```{r vel_acc_dyn_order_all_bar, echo = FALSE} -->
+<!-- p_vel_acc_dyn_order_all <- ggplot(data = vel_acc_dyn_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_bar(stat = "identity", position = position_dodge()) + -->
+<!--   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), -->
+<!--                 width = .2, position = position_dodge(.9)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "Difference", subtitle = "KV-Diff: Dynamics") -->
+<!-- p_vel_acc_dyn_order_all -->
+<!-- ``` -->
 
-#### Box plot
-```{r vel_acc_dyn_order_all_box, echo = FALSE}
-p_vel_acc_dyn_order_all_box <- ggplot(data = vel_acc_dyn_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_boxplot() +
-  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "Difference", subtitle = "KV-Diff: Dynamics") 
-p_vel_acc_dyn_order_all_box
-```
+<!-- #### Box plot -->
+<!-- ```{r vel_acc_dyn_order_all_box, echo = FALSE} -->
+<!-- p_vel_acc_dyn_order_all_box <- ggplot(data = vel_acc_dyn_order, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_boxplot() + -->
+<!--   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "Difference", subtitle = "KV-Diff: Dynamics")  -->
+<!-- p_vel_acc_dyn_order_all_box -->
+<!-- ``` -->
 
-### Statistics
-#### Normality check
-```{r normality6, echo = FALSE}
-# Normality check
-vel_acc_dyn_order$Subcomponent <- factor(vel_acc_dyn_order$Subcomponent)
-vel_acc_dyn_order_norm <- by(vel_acc_dyn_order$Mean, list(vel_acc_dyn_order$Condition, vel_acc_dyn_order$Subcomponent, vel_acc_dyn_order$Order), shapiro.test)
-print(vel_acc_dyn_order_norm)
-```
+<!-- ### Statistics -->
+<!-- #### Normality check -->
+<!-- ```{r normality6, echo = FALSE} -->
+<!-- # Normality check -->
+<!-- vel_acc_dyn_order$Subcomponent <- factor(vel_acc_dyn_order$Subcomponent) -->
+<!-- vel_acc_dyn_order_norm <- by(vel_acc_dyn_order$Mean, list(vel_acc_dyn_order$Condition, vel_acc_dyn_order$Subcomponent, vel_acc_dyn_order$Order), shapiro.test) -->
+<!-- print(vel_acc_dyn_order_norm) -->
+<!-- ``` -->
 
-#### Three-way ANOVA (ez)
-```{r stats10, echo = FALSE}
-vel_acc_dyn_order_aov <- ezANOVA(
-  data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF")
-  , dv = .(Acc)
-  , wid = .(SubNr)
-  , between = .(Order)
-  , within = .(Condition, Subcomponent)
-  , type = 3
-  , detailed = TRUE
-)
-vel_acc_dyn_order_aov$ANOVA$F <- round(vel_acc_dyn_order_aov$ANOVA$F, 4)
-vel_acc_dyn_order_aov$ANOVA$p <- round(vel_acc_dyn_order_aov$ANOVA$p, 4)
-print(vel_acc_dyn_order_aov)
-```
+<!-- #### Three-way ANOVA (ez) -->
+<!-- ```{r stats10, echo = FALSE} -->
+<!-- vel_acc_dyn_order_aov <- ezANOVA( -->
+<!--   data = subset(df_vel_acc_dyn, df_vel_acc_dyn$Subcomponent == "FtoP" | df_vel_acc_dyn$Subcomponent == "PtoF") -->
+<!--   , dv = .(Acc) -->
+<!--   , wid = .(SubNr) -->
+<!--   , between = .(Order) -->
+<!--   , within = .(Condition, Subcomponent) -->
+<!--   , type = 3 -->
+<!--   , detailed = TRUE -->
+<!-- ) -->
+<!-- vel_acc_dyn_order_aov$ANOVA$F <- round(vel_acc_dyn_order_aov$ANOVA$F, 4) -->
+<!-- vel_acc_dyn_order_aov$ANOVA$p <- round(vel_acc_dyn_order_aov$ANOVA$p, 4) -->
+<!-- print(vel_acc_dyn_order_aov) -->
+<!-- ``` -->
 
-# KV-Order-Articulation
-- Investigate whether there is any order effect of the conditions.
+<!-- # KV-Order-Articulation -->
+<!-- - Investigate whether there is any order effect of the conditions. -->
 
-## 1. All{#vel_art_order_group_all}
-```{r vel_art_order_all, echo = all}
-# For each participant
-vel_art_order <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent*Order, data = df_vel_art,
-                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-vel_art_order <- cbind(vel_art_order[,1:5], as.data.frame(vel_art_order[,6]))
-# Change colnames
-colnames(vel_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+<!-- ## 1. All{#vel_art_order_group_all} -->
+<!-- ```{r vel_art_order_all, echo = all} -->
+<!-- # For each participant -->
+<!-- vel_art_order <- aggregate(Velocity~SubNr*Condition*Skill*Subcomponent*Order, data = df_vel_art, -->
+<!--                                FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))}) -->
+<!-- vel_art_order <- cbind(vel_art_order[,1:5], as.data.frame(vel_art_order[,6])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD") -->
 
-# Group mean
-vel_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_art_order,
-                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
-vel_art_order_all <- cbind(vel_art_order_all[,1:4], as.data.frame(vel_art_order_all[,5]))
-# Change colnames
-colnames(vel_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
-print(vel_art_order_all)
-```
+<!-- # Group mean -->
+<!-- vel_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_art_order, -->
+<!--                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)}) -->
+<!-- vel_art_order_all <- cbind(vel_art_order_all[,1:4], as.data.frame(vel_art_order_all[,5])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM") -->
+<!-- print(vel_art_order_all) -->
+<!-- ``` -->
 
-### Plot
-#### Bar graph
-- Error bars show SEM of the mean
+<!-- ### Plot -->
+<!-- #### Bar graph -->
+<!-- - Error bars show SEM of the mean -->
 
-```{r vel_art_order_all_bar, echo = FALSE}
-p_vel_art_order_all <- ggplot(data = vel_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
-                width = .2, position = position_dodge(.9)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Articulation") + coord_cartesian(ylim = c(40, 100))
-p_vel_art_order_all
-```
+<!-- ```{r vel_art_order_all_bar, echo = FALSE} -->
+<!-- p_vel_art_order_all <- ggplot(data = vel_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_bar(stat = "identity", position = position_dodge()) + -->
+<!--   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), -->
+<!--                 width = .2, position = position_dodge(.9)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "KV (0-127)", subtitle = "KV: Articulation") + coord_cartesian(ylim = c(40, 100)) -->
+<!-- p_vel_art_order_all -->
+<!-- ``` -->
 
-#### Box plot
-```{r vel_art_order_all_box, echo = FALSE}
-p_vel_art_order_all_box <- ggplot(data = vel_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_boxplot() +
-  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "KV (0-127)", subtitle = "KV: Articulation") 
-p_vel_art_order_all_box
-```
+<!-- #### Box plot -->
+<!-- ```{r vel_art_order_all_box, echo = FALSE} -->
+<!-- p_vel_art_order_all_box <- ggplot(data = vel_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_boxplot() + -->
+<!--   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "KV (0-127)", subtitle = "KV: Articulation")  -->
+<!-- p_vel_art_order_all_box -->
+<!-- ``` -->
 
-### Statistics
-#### Normality check
-```{r normality7, echo = FALSE}
-# Normality check
-vel_art_order$Subcomponent <- factor(vel_art_order$Subcomponent)
-vel_art_order_norm <- by(vel_art_order$Mean, list(vel_art_order$Condition, vel_art_order$Subcomponent, vel_art_order$Order), shapiro.test)
-print(vel_art_order_norm)
-```
+<!-- ### Statistics -->
+<!-- #### Normality check -->
+<!-- ```{r normality7, echo = FALSE} -->
+<!-- # Normality check -->
+<!-- vel_art_order$Subcomponent <- factor(vel_art_order$Subcomponent) -->
+<!-- vel_art_order_norm <- by(vel_art_order$Mean, list(vel_art_order$Condition, vel_art_order$Subcomponent, vel_art_order$Order), shapiro.test) -->
+<!-- print(vel_art_order_norm) -->
+<!-- ``` -->
 
-#### Three-way ANOVA (ez)
-```{r stats11, echo = FALSE}
-vel_art_order_aov <- ezANOVA(
-  data = df_vel_art
-  , dv = .(Velocity)
-  , wid = .(SubNr)
-  , between = .(Order)
-  , within = .(Condition, Subcomponent)
-  , type = 3
-  , detailed = TRUE
-)
-vel_art_order_aov$ANOVA$F <- round(vel_art_order_aov$ANOVA$F, 4)
-vel_art_order_aov$ANOVA$p <- round(vel_art_order_aov$ANOVA$p, 4)
-print(vel_art_order_aov)
-```
+<!-- #### Three-way ANOVA (ez) -->
+<!-- ```{r stats11, echo = FALSE} -->
+<!-- vel_art_order_aov <- ezANOVA( -->
+<!--   data = df_vel_art -->
+<!--   , dv = .(Velocity) -->
+<!--   , wid = .(SubNr) -->
+<!--   , between = .(Order) -->
+<!--   , within = .(Condition, Subcomponent) -->
+<!--   , type = 3 -->
+<!--   , detailed = TRUE -->
+<!-- ) -->
+<!-- vel_art_order_aov$ANOVA$F <- round(vel_art_order_aov$ANOVA$F, 4) -->
+<!-- vel_art_order_aov$ANOVA$p <- round(vel_art_order_aov$ANOVA$p, 4) -->
+<!-- print(vel_art_order_aov) -->
+<!-- ``` -->
 
-# KV-Diff-Order-Articulation
-- Investigate whether there is any order effect of the conditions.
+<!-- # KV-Diff-Order-Articulation -->
+<!-- - Investigate whether there is any order effect of the conditions. -->
 
-## 1. All{#vel_acc_art_order_group_all}
-```{r vel_acc_art_order_all, echo = all}
-# For each participant
-vel_acc_art_order <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL"),
-                               FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-vel_acc_art_order <- cbind(vel_acc_art_order[,1:5], as.data.frame(vel_acc_art_order[,6]))
-# Change colnames
-colnames(vel_acc_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD")
+<!-- ## 1. All{#vel_acc_art_order_group_all} -->
+<!-- ```{r vel_acc_art_order_all, echo = all} -->
+<!-- # For each participant -->
+<!-- vel_acc_art_order <- aggregate(Acc~SubNr*Condition*Skill*Subcomponent*Order, data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL"), -->
+<!--                                FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))}) -->
+<!-- vel_acc_art_order <- cbind(vel_acc_art_order[,1:5], as.data.frame(vel_acc_art_order[,6])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_acc_art_order) <- c("SubNr", "Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD") -->
 
-# Group mean
-vel_acc_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_acc_art_order,
-                         FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
-vel_acc_art_order_all <- cbind(vel_acc_art_order_all[,1:4], as.data.frame(vel_acc_art_order_all[,5]))
-# Change colnames
-colnames(vel_acc_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM")
-print(vel_acc_art_order_all)
-```
+<!-- # Group mean -->
+<!-- vel_acc_art_order_all <- aggregate(Mean~Condition*Skill*Subcomponent*Order, data = vel_acc_art_order, -->
+<!--                          FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)}) -->
+<!-- vel_acc_art_order_all <- cbind(vel_acc_art_order_all[,1:4], as.data.frame(vel_acc_art_order_all[,5])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_acc_art_order_all) <- c("Condition", "Skill", "Subcomponent", "Order", "N", "Mean", "SD", "SEM") -->
+<!-- print(vel_acc_art_order_all) -->
+<!-- ``` -->
 
-### Plot
-#### Bar graph
-- Error bars show SEM of the mean
+<!-- ### Plot -->
+<!-- #### Bar graph -->
+<!-- - Error bars show SEM of the mean -->
 
-```{r vel_acc_art_order_all_bar, echo = FALSE}
-p_vel_acc_art_order_all <- ggplot(data = vel_acc_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
-                width = .2, position = position_dodge(.9)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "Difference", subtitle = "KV-Diff: Articulation")
-p_vel_acc_art_order_all
-```
+<!-- ```{r vel_acc_art_order_all_bar, echo = FALSE} -->
+<!-- p_vel_acc_art_order_all <- ggplot(data = vel_acc_art_order_all, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_bar(stat = "identity", position = position_dodge()) + -->
+<!--   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), -->
+<!--                 width = .2, position = position_dodge(.9)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "Difference", subtitle = "KV-Diff: Articulation") -->
+<!-- p_vel_acc_art_order_all -->
+<!-- ``` -->
 
-#### Box plot
-```{r vel_acc_art_order_all_box, echo = FALSE}
-p_vel_acc_art_order_all_box <- ggplot(data = vel_acc_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) +
-  geom_boxplot() +
-  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) +
-  facet_wrap(Order ~ .) +
-  labs(y = "Difference", subtitle = "KV: Articulation") 
-p_vel_acc_art_order_all_box
-```
+<!-- #### Box plot -->
+<!-- ```{r vel_acc_art_order_all_box, echo = FALSE} -->
+<!-- p_vel_acc_art_order_all_box <- ggplot(data = vel_acc_art_order, aes(x = Subcomponent, y = Mean, fill = Condition)) + -->
+<!--   geom_boxplot() + -->
+<!--   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(.75)) + -->
+<!--   facet_wrap(Order ~ .) + -->
+<!--   labs(y = "Difference", subtitle = "KV: Articulation")  -->
+<!-- p_vel_acc_art_order_all_box -->
+<!-- ``` -->
 
-### Statistics
-#### Normality check
-```{r normality8, echo = FALSE}
-# Normality check
-vel_acc_art_order$Subcomponent <- factor(vel_acc_art_order$Subcomponent)
-vel_acc_art_order_norm <- by(vel_acc_art_order$Mean, list(vel_acc_art_order$Condition, vel_acc_art_order$Subcomponent, vel_acc_art_order$Order), shapiro.test)
-print(vel_acc_art_order_norm)
-```
+<!-- ### Statistics -->
+<!-- #### Normality check -->
+<!-- ```{r normality8, echo = FALSE} -->
+<!-- # Normality check -->
+<!-- vel_acc_art_order$Subcomponent <- factor(vel_acc_art_order$Subcomponent) -->
+<!-- vel_acc_art_order_norm <- by(vel_acc_art_order$Mean, list(vel_acc_art_order$Condition, vel_acc_art_order$Subcomponent, vel_acc_art_order$Order), shapiro.test) -->
+<!-- print(vel_acc_art_order_norm) -->
+<!-- ``` -->
 
-#### Three-way ANOVA (ez)
-```{r stats12, echo = FALSE}
-vel_acc_art_order_aov <- ezANOVA(
-  data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL")
-  , dv = .(Acc)
-  , wid = .(SubNr)
-  , between = .(Order)
-  , within = .(Condition, Subcomponent)
-  , type = 3
-  , detailed = TRUE
-)
-vel_acc_art_order_aov$ANOVA$F <- round(vel_acc_art_order_aov$ANOVA$F, 4)
-vel_acc_art_order_aov$ANOVA$p <- round(vel_acc_art_order_aov$ANOVA$p, 4)
-print(vel_acc_art_order_aov)
-```
+<!-- #### Three-way ANOVA (ez) -->
+<!-- ```{r stats12, echo = FALSE} -->
+<!-- vel_acc_art_order_aov <- ezANOVA( -->
+<!--   data = subset(df_vel_acc_art, df_vel_acc_art$Subcomponent == "LtoS" | df_vel_acc_art$Subcomponent == "StoL") -->
+<!--   , dv = .(Acc) -->
+<!--   , wid = .(SubNr) -->
+<!--   , between = .(Order) -->
+<!--   , within = .(Condition, Subcomponent) -->
+<!--   , type = 3 -->
+<!--   , detailed = TRUE -->
+<!-- ) -->
+<!-- vel_acc_art_order_aov$ANOVA$F <- round(vel_acc_art_order_aov$ANOVA$F, 4) -->
+<!-- vel_acc_art_order_aov$ANOVA$p <- round(vel_acc_art_order_aov$ANOVA$p, 4) -->
+<!-- print(vel_acc_art_order_aov) -->
+<!-- ``` -->
 
-# Sequence plot
-### Dynamics{#sequence_dyn}
-```{r seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE}
-# Average vel_dynocity for each note
-# For each participant
-vel_dyn_seq <- aggregate(Velocity~SubNr*Condition*Skill*Note, data = df_vel_dyn, 
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-vel_dyn_seq <- cbind(vel_dyn_seq[,1:4], as.data.frame(vel_dyn_seq[,5]))
-# Change colnames
-colnames(vel_dyn_seq) <- c("SubNr", "Condition", "Skill", "Note", "N", "Mean", "SD")
+<!-- # Sequence plot -->
+<!-- ### Dynamics{#sequence_dyn} -->
+<!-- ```{r seq_dyn, fig.width = 10, fig.height = 2, echo = FALSE} -->
+<!-- # Average vel_dynocity for each note -->
+<!-- # For each participant -->
+<!-- vel_dyn_seq <- aggregate(Velocity~SubNr*Condition*Skill*Note, data = df_vel_dyn,  -->
+<!--                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))}) -->
+<!-- vel_dyn_seq <- cbind(vel_dyn_seq[,1:4], as.data.frame(vel_dyn_seq[,5])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_dyn_seq) <- c("SubNr", "Condition", "Skill", "Note", "N", "Mean", "SD") -->
 
-# Group mean
-vel_dyn_seq_stats <- aggregate(Mean~Condition*Skill*Note, data = vel_dyn_seq,
-                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
-vel_dyn_seq_stats <- cbind(vel_dyn_seq_stats[,1:3], as.data.frame(vel_dyn_seq_stats[,4]))
-# Change colnames
-colnames(vel_dyn_seq_stats) <- c("Condition", "Skill", "Note", "N", "Mean", "SD", "SEM")
+<!-- # Group mean -->
+<!-- vel_dyn_seq_stats <- aggregate(Mean~Condition*Skill*Note, data = vel_dyn_seq, -->
+<!--                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)}) -->
+<!-- vel_dyn_seq_stats <- cbind(vel_dyn_seq_stats[,1:3], as.data.frame(vel_dyn_seq_stats[,4])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_dyn_seq_stats) <- c("Condition", "Skill", "Note", "N", "Mean", "SD", "SEM") -->
 
-# Average acceleration for each note
-# For each participant
-vel_dyn_acc_seq <- aggregate(Acc~SubNr*Condition*Skill*Interval, data = df_vel_acc_dyn, 
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-vel_dyn_acc_seq <- cbind(vel_dyn_acc_seq[,1:4], as.data.frame(vel_dyn_acc_seq[,5]))
-# Change colnames
-colnames(vel_dyn_acc_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+<!-- # Average acceleration for each note -->
+<!-- # For each participant -->
+<!-- vel_dyn_acc_seq <- aggregate(Acc~SubNr*Condition*Skill*Interval, data = df_vel_acc_dyn,  -->
+<!--                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))}) -->
+<!-- vel_dyn_acc_seq <- cbind(vel_dyn_acc_seq[,1:4], as.data.frame(vel_dyn_acc_seq[,5])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_dyn_acc_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD") -->
 
-# Group mean
-vel_dyn_acc_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = vel_dyn_acc_seq,
-                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
-vel_dyn_acc_seq_stats <- cbind(vel_dyn_acc_seq_stats[,1:3], as.data.frame(vel_dyn_acc_seq_stats[,4]))
-# Change colnames
-colnames(vel_dyn_acc_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+<!-- # Group mean -->
+<!-- vel_dyn_acc_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = vel_dyn_acc_seq, -->
+<!--                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)}) -->
+<!-- vel_dyn_acc_seq_stats <- cbind(vel_dyn_acc_seq_stats[,1:3], as.data.frame(vel_dyn_acc_seq_stats[,4])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_dyn_acc_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM") -->
 
-p_vel_dyn_seq <- ggplot(data = vel_dyn_seq_stats, aes(x = Note, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
-                position = position_dodge(0.05)) + 
-  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1))
-p_vel_dyn_seq
+<!-- p_vel_dyn_seq <- ggplot(data = vel_dyn_seq_stats, aes(x = Note, y = Mean, group = Condition, shape = Condition, colour = Condition)) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2, -->
+<!--                 position = position_dodge(0.05)) +  -->
+<!--   labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1)) -->
+<!-- p_vel_dyn_seq -->
 
-p_vel_dyn_acc_seq <- ggplot(data = vel_dyn_acc_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
-                position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1))
-p_vel_dyn_acc_seq
-```
+<!-- p_vel_dyn_acc_seq <- ggplot(data = vel_dyn_acc_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2, -->
+<!--                 position = position_dodge(.05)) +  -->
+<!--   labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1)) -->
+<!-- p_vel_dyn_acc_seq -->
+<!-- ``` -->
 
-### Articulation{#sequence_art}
-```{r seq_art, fig.width = 10, fig.height = 2, echo = FALSE}
-# Average vel_artocity for each note
-# For each participant
-vel_art_seq <- aggregate(Velocity~SubNr*Condition*Skill*Note, data = df_vel_art, 
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-vel_art_seq <- cbind(vel_art_seq[,1:4], as.data.frame(vel_art_seq[,5]))
-# Change colnames
-colnames(vel_art_seq) <- c("SubNr", "Condition", "Skill", "Note", "N", "Mean", "SD")
+<!-- ### Articulation{#sequence_art} -->
+<!-- ```{r seq_art, fig.width = 10, fig.height = 2, echo = FALSE} -->
+<!-- # Average vel_artocity for each note -->
+<!-- # For each participant -->
+<!-- vel_art_seq <- aggregate(Velocity~SubNr*Condition*Skill*Note, data = df_vel_art,  -->
+<!--                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))}) -->
+<!-- vel_art_seq <- cbind(vel_art_seq[,1:4], as.data.frame(vel_art_seq[,5])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_art_seq) <- c("SubNr", "Condition", "Skill", "Note", "N", "Mean", "SD") -->
 
-# Group mean
-vel_art_seq_stats <- aggregate(Mean~Condition*Skill*Note, data = vel_art_seq,
-                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
-vel_art_seq_stats <- cbind(vel_art_seq_stats[,1:3], as.data.frame(vel_art_seq_stats[,4]))
-# Change colnames
-colnames(vel_art_seq_stats) <- c("Condition", "Skill", "Note", "N", "Mean", "SD", "SEM")
+<!-- # Group mean -->
+<!-- vel_art_seq_stats <- aggregate(Mean~Condition*Skill*Note, data = vel_art_seq, -->
+<!--                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)}) -->
+<!-- vel_art_seq_stats <- cbind(vel_art_seq_stats[,1:3], as.data.frame(vel_art_seq_stats[,4])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_art_seq_stats) <- c("Condition", "Skill", "Note", "N", "Mean", "SD", "SEM") -->
 
-# Average acceleration for each note
-# For each participant
-vel_art_acc_seq <- aggregate(Acc~SubNr*Condition*Skill*Interval, data = df_vel_acc_art, 
-                     FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))})
-vel_art_acc_seq <- cbind(vel_art_acc_seq[,1:4], as.data.frame(vel_art_acc_seq[,5]))
-# Change colnames
-colnames(vel_art_acc_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD")
+<!-- # Average acceleration for each note -->
+<!-- # For each participant -->
+<!-- vel_art_acc_seq <- aggregate(Acc~SubNr*Condition*Skill*Interval, data = df_vel_acc_art,  -->
+<!--                      FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x))}) -->
+<!-- vel_art_acc_seq <- cbind(vel_art_acc_seq[,1:4], as.data.frame(vel_art_acc_seq[,5])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_art_acc_seq) <- c("SubNr", "Condition", "Skill", "Interval", "N", "Mean", "SD") -->
 
-# Group mean
-vel_art_acc_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = vel_art_acc_seq,
-                           FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)})
-vel_art_acc_seq_stats <- cbind(vel_art_acc_seq_stats[,1:3], as.data.frame(vel_art_acc_seq_stats[,4]))
-# Change colnames
-colnames(vel_art_acc_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM")
+<!-- # Group mean -->
+<!-- vel_art_acc_seq_stats <- aggregate(Mean~Condition*Skill*Interval, data = vel_art_acc_seq, -->
+<!--                            FUN = function(x){round(c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x))), 4)}) -->
+<!-- vel_art_acc_seq_stats <- cbind(vel_art_acc_seq_stats[,1:3], as.data.frame(vel_art_acc_seq_stats[,4])) -->
+<!-- # Change colnames -->
+<!-- colnames(vel_art_acc_seq_stats) <- c("Condition", "Skill", "Interval", "N", "Mean", "SD", "SEM") -->
 
-p_vel_art_seq <- ggplot(data = vel_art_seq_stats, aes(x = Note, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
-                position = position_dodge(0.05)) + 
-  labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1))
-p_vel_art_seq
+<!-- p_vel_art_seq <- ggplot(data = vel_art_seq_stats, aes(x = Note, y = Mean, group = Condition, shape = Condition, colour = Condition)) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2, -->
+<!--                 position = position_dodge(0.05)) +  -->
+<!--   labs(y = "Velocity (0-127)") + scale_x_continuous(breaks=seq(1,67,1)) -->
+<!-- p_vel_art_seq -->
 
-p_vel_art_acc_seq <- ggplot(data = vel_art_acc_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
-                position = position_dodge(.05)) + 
-  labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1))
-p_vel_art_acc_seq
-```
+<!-- p_vel_art_acc_seq <- ggplot(data = vel_art_acc_seq_stats, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) + -->
+<!--   geom_line() + -->
+<!--   geom_point() + -->
+<!--   geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2, -->
+<!--                 position = position_dodge(.05)) +  -->
+<!--   labs(x = "Interval", y = "Difference") + scale_x_continuous(breaks=seq(1,66,1)) -->
+<!-- p_vel_art_acc_seq -->
+<!-- ``` -->
