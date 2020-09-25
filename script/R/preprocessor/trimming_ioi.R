@@ -120,7 +120,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers (3 methods)
 ####################################
 # exclude irrelevant notes (IOI == NA means a missing value)
-dt_ioi_subset <- subset(dt_ioi, !is.na(dt_ioi$IOI))
+dt_ioi_subset <- subset(dt_ioi, !is.na(dt_ioi$Subcomponent) & !is.na(dt_ioi$IOI))
 
 # draw histogram and boxplot
 p_ioi_hist <- ggplot(dt_ioi_subset, aes(x = IOI, fill = Grouping)) +
@@ -145,7 +145,7 @@ print(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", r
 
 # draw histogram and boxplot
 p_ioi_hist_sd_1 <- ggplot(dt_ioi_trim_sd_1, aes(x = IOI, fill = Grouping)) +
-  geom_histogram(position = "identity", alpha = .5, binwidth = 10)
+  geom_histogram(position = "identity", alpha = .5, binwidth = 5)
 plot(p_ioi_hist_sd_1)
 
 p_ioi_box_sd_1 <- ggboxplot(dt_ioi_trim_sd_1, x = "Skill", y = "IOI", color = "Condition")
@@ -177,12 +177,9 @@ for (grouping in unique(ioi_skill$Grouping)){
 }
 
 removed_ioi_2 <- nrow(dt_ioi_subset)-nrow(dt_ioi_trim_sd_2)
+proportion_ioi_2 <- round(removed_ioi_2/nrow(dt_ioi_subset), 5)
 write(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100))
-
-
-
-***** TILL HERE *****
 
 # draw histogram and boxplot
 p_ioi_hist_sd_2 <- ggplot(dt_ioi_trim_sd_2, aes(x = IOI, fill = Grouping)) +
@@ -208,14 +205,10 @@ fwrite(dt_ioi_trim_sd_2, file = "./trimmed/data_ioi_2.txt", row.names = F)
 ####################################
 # evaluate whether Boundary (i.e., LtoS, StoL, FtoP, PtoF) or not
 dt_ioi_subset$Boundary <- "No"
-dt_ioi_subset$Boundary[dt_ioi_subset$Subcomponent == "LtoS" | dt_ioi_subset$Subcomponent == "StoL" |
-                         dt_ioi_subset$Subcomponent == "FtoP" | dt_ioi_subset$Subcomponent == "PtoF"] <- "Yes"
+dt_ioi_subset[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Boundary <- "Yes"
 
 # exclude ioi > +- 3SD (separately for each Boundary)
-ioi_boundary <- ioi_skill1 <- dt_ioi_subset[, .(N = .N, meanIOI = mean(IOI)), by = Boundary]
-ioi_boundary2 <- aggregate(IOI~Boundary, data = dt_ioi_subset,
-                          FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-ioi_boundary2 <- cbind(ioi_boundary2, as.data.frame(ioi_boundary[,2]))
+ioi_boundary <- dt_ioi_subset[, .(N = .N, mean = mean(IOI), sd = sd(IOI)), by = Boundary]
 
 dt_ioi_trim_sd_3 <- data.table()
 for (boundary in unique(ioi_boundary$Boundary)){
@@ -232,10 +225,10 @@ print(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", r
 
 # draw histogram and boxplot
 p_ioi_hist_sd_3 <- ggplot(dt_ioi_trim_sd_3, aes(x = IOI, fill = Grouping)) +
-  geom_histogram(position = "identity", alpha = .5, binwidth = 10)
+  geom_histogram(position = "identity", alpha = .5, binwidth = 5)
 plot(p_ioi_hist_sd_3)
 
-p_ioi_box_sd_3 <- ggboxplot(dt_ioi_trim_sd_3, x = "Subcomponent", y = "IOI", color = "Condition")
+p_ioi_box_sd_3 <- ggboxplot(dt_ioi_trim_sd_3, x = "Boundary", y = "IOI", color = "Condition")
 p_ioi_box_sd_3 <- ggpar(p_ioi_box_sd_3, ylab = "IOI (ms)")
 plot(p_ioi_box_sd_3)
 
