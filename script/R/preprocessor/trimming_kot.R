@@ -33,10 +33,6 @@ dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
 dt_offset <- dt_offset
 dt_offset$TimeStamp <- as.integer(dt_offset$TimeStamp)
 
-# conbine onset and offset
-dt_all <- rbind(dt_onset, dt_offset)
-dt_all <- dt_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-
 ####################################
 # Define Subcomponents
 ####################################

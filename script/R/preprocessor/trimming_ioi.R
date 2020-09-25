@@ -32,10 +32,6 @@ dt_offset <- fread(file = "./filtered/dt_correct_offset.txt")
 dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
 dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
 
-# conbine onset and offset
-dt_all <- rbind(dt_onset, dt_offset)
-dt_all <- dt_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-
 ####################################
 # Define Subcomponents
 ####################################
