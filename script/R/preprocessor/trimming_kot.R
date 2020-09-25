@@ -133,25 +133,6 @@ for (cond in 1:length(ls_grouping$Condition)){
   }
 }
 
-# # compute KOR (Key-Overlap Ratio)
-# # mean IOI for each trial (dt_ioi_1)
-# ioi_1 <- dt_ioi_1[, .(N = .N, mean = mean(IOI), sd = sd(IOI)), by = .(SubNr, BlockNr, TrialNr, Condition, Skill)]
-# 
-# # Change colnames
-# colnames(ioi_1) <- c("SubNr", "BlockNr", "TrialNr", "Condition", "Skill", "N", "Mean", "SD")
-# 
-# # Calculate KOR for each interval (ioi_1)
-# dt_kor_1<- data.frame()
-# for (subnr in unique(dt_kot$SubNr)){
-#   for (block in unique(dt_kot$BlockNr[dt_kot$SubNr == subnr])){
-#     for (trial in unique(dt_kot$TrialNr[dt_kot$SubNr == subnr & dt_kot$BlockNr == block])){
-#       dt_current <- dt_kot %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
-#       dt_current$KOR <- dt_current$KOT/ioi_1$Mean[ioi_1$SubNr == subnr & ioi_1$BlockNr == block & ioi_1$TrialNr == trial]
-#       dt_kor_1 <- rbind(dt_kor_1, dt_current)
-#     }
-#   }
-# }
-
 ####################################
 # Remove outliers (KOT)
 ####################################
@@ -174,7 +155,7 @@ dt_kot_trim_sd <- data.table()
 for (subcomponent in unique(dt_kot_subset$Subcomponent)){
   upper <- kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]+3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
   lower <- kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]-3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
-  dt_current <- dt_kot_subset %>% dplyr::filter(Subcomponent == subcomponent & KOT < upper & KOT > lower)
+  dt_current <- dt_kot_subset[Subcomponent == subcomponent & KOT < upper & KOT > lower]
   dt_kot_trim_sd <- rbind(dt_kot_trim_sd, dt_current)
 }
 removed_kot <- nrow(dt_kot_subset)-nrow(dt_kot_trim_sd)
@@ -200,4 +181,4 @@ ggsave("./trimmed/kot_box.png", plot = p_kot_box, dpi = 600, width = 5, height =
 ggsave("./trimmed/kot_box_sd.png", plot = p_kot_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for dt_kot_trim_sd
-write.csv(dt_kot_trim_sd, file = "./trimmed/data_kot.csv", row.names = F)
+write.csv(dt_kot_trim_sd, file = "./trimmed/data_kot.txt", row.names = F)

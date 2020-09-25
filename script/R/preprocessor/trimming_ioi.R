@@ -214,7 +214,7 @@ dt_ioi_trim_sd_3 <- data.table()
 for (boundary in unique(ioi_boundary$Boundary)){
   upper_ioi_3 <- ioi_boundary$mean[ioi_boundary$Boundary == boundary]+3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
   lower_ioi_3 <- ioi_boundary$mean[ioi_boundary$Boundary == boundary]-3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
-  dt_current <- dt_ioi_subset %>% dplyr::filter(Boundary == boundary & IOI < upper_ioi_3 & IOI > lower_ioi_3)
+  dt_current <- dt_ioi_subset[Boundary == boundary & IOI < upper_ioi_3 & IOI > lower_ioi_3]
   dt_ioi_trim_sd_3 <- rbind(dt_ioi_trim_sd_3, dt_current)
 }
 
