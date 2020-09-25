@@ -27,11 +27,32 @@ if (!file.exists("trimmed")){
 # read txt files
 dt_onset <- fread(file = "./filtered/dt_correct_onset.txt")
 dt_offset <- fread(file = "./filtered/dt_correct_offset.txt")
+dt_offset[Velocity == NA]$TimeStamp <- NA
+
+# check whether each trial has both onset/offset datasets
+onset_trials <- dt_onset[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
+offset_trials <- dt_offset[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
+valid_trials <- rbind(onset_trials, offset_trials)
+valid_trials$Duplicate <- duplicated(valid_trials)
+valid_trials <- valid_trials[Duplicate == TRUE]
+
+dt_kot_onset <- data.table()
+for (row in 1:nrow(valid_trials)){
+ current <- dt_onset[SubNr == valid_trials$SubNr[row] & BlockNr == valid_trials$BlockNr[row] & TrialNr == valid_trials$TrialNr[row]]
+ dt_kot_onset <- rbind(dt_kot_onset, current)
+}
+
+dt_kot_offset <- data.table()
+for (row in 1:nrow(valid_trials)){
+  current <- dt_offset[SubNr == valid_trials$SubNr[row] & BlockNr == valid_trials$BlockNr[row] & TrialNr == valid_trials$TrialNr[row]]
+  dt_kot_offset <- rbind(dt_kot_offset, current)
+}
 
 # sort by SubNr, BlockNr, TrialNr, NoteNrm TimeStamp
-dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-dt_offset <- dt_offset
-dt_offset$TimeStamp <- as.integer(dt_offset$TimeStamp)
+dt_kot_onset <- dt_kot_onset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+dt_kot_offset <- dt_kot_offset
+dt_kot_offset$TimeStamp <- as.integer(dt_kot_offset$TimeStamp)
+dt_kot_offset <- dt_kot_offset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
 
 ####################################
 # Define Subcomponents
@@ -66,13 +87,13 @@ dt_ioi_3 <- fread(file.path("./trimmed/data_ioi_3.txt"), header = T) # remove ou
 ####################################
 # Key Overlap Time - articulation
 ####################################
-dt_kot <- dt_onset
+dt_kot <- dt_kot_onset
 
 # Offset 1 - Onset 2
 dt_kot$KOT <- NA
 for (row in 1:nrow(dt_kot)){
   if (row < nrow(dt_kot)){
-    dt_kot$KOT[row+1] <- dt_offset$TimeStamp[row] - dt_onset$TimeStamp[row+1] # offset(n) - onset(n+1)
+    dt_kot$KOT[row+1] <- dt_kot_offset$TimeStamp[row] - dt_kot_onset$TimeStamp[row+1] # offset(n) - onset(n+1)
   }
 }
 

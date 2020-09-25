@@ -4,3 +4,5 @@
 KOT: Remove 2062 responses beyond +- 3SD / 3.037000 percent
 Velocity: Remove 245 responses beyond +- 3SD / 0.349000 percent
 Diff: Remove 650 responses beyond +- 3SD / 0.956000 percent
+KOT: Remove 0 responses beyond +- 3SD / NaN percent
+KOT: Remove 1167 responses beyond +- 3SD / 1.719000 percent
