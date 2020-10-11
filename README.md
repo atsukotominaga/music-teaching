@@ -22,7 +22,7 @@ All of the programme scripts were written and tested in the following environmen
 - ProductVersion: 10.14.3
 
 ## Max
-- version 7
+- Version 7
 ### Prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 7.
 - The Shell package is used to generate necessary folders to store collected data. If it does not work in your environment, please create the following 4 folders manually.
@@ -47,9 +47,11 @@ All of the programme scripts were written and tested in the following environmen
 
 ## R
 You need raw_data folder to run the scripts below (get the folder from [OSF](https://osf.io/8nbjh/))
-- filtering.R: clean data and remove performance errors. >> output: filtered folder
-    + In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 65.
-- trimming.R: calculate dependent variables and remove outliers. >> output: trimmed folder
+- filtering.R: to clean data and remove performance errors. >> output: filtered folder
+    + *In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 65.*
+- trimming.R: to calculate dependent variables and remove outliers. >> output: trimmed folder
+- function.R: to detect pitch errors in a performance / insert NAs
+- ideal.txt: the ideal sequence of the piece. used for filtering
 
 ## R Notebook
 You need filtered and trimmed folders to run the scripts below (outputs from filtering.R and trimming.R).
