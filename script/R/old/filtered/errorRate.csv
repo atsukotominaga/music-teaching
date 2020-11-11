@@ -1,7 +1,0 @@
-"Criterion","ErrorRate.N","ErrorRate.mean","ErrorRate.median","ErrorRate.sd","Decision"
-"LessThan10",14.00000000, 0.27455357, 0.23437500, 0.14760259,"exclude"
-"LessThan10",21.00000000, 0.05208333, 0.06250000, 0.03803629,"include"
-"Within +2SD", 2.00000000, 0.59375000, 0.59375000, 0.02209709,"exclude"
-"Within +2SD",33.00000000, 0.11363636, 0.09375000, 0.09987888,"include"
-"75% Percentile", 9.00000000, 0.35069444, 0.31250000, 0.13377947,"exclude"
-"75% Percentile",26.00000000, 0.06850962, 0.07812500, 0.04809137,"include"
