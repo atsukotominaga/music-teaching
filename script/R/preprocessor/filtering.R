@@ -278,7 +278,7 @@ dt_error_offset$CorrectionNr <- NA
 # extra notes
 error_extra_offset <- dt_error_offset[Reason == "Extra Notes"]
 dt_correct_offset_2 <- data.table()
-for (row in 34:nrow(error_extra_offset)){
+for (row in 1:nrow(error_extra_offset)){
   current <- dt_offset[SubNr == error_extra_offset$SubNr[row] & BlockNr == error_extra_offset$BlockNr[row] & TrialNr == error_extra_offset$TrialNr[row]]
   decision = 2 
   correction = 0 # # of correction for reporting stats
@@ -360,11 +360,10 @@ for (row in 22:nrow(error_sub_offset)){
 }
 
 # export csv
-fwrite(dt_correct_offset_3, file = "./filtered/dt_correct_offset_4.txt")
+fwrite(dt_correct_offset_4, file = "./filtered/dt_correct_offset_4.txt")
 
-# combine error
-error_offset <- rbind(error_extra_offset, error_missing_offset, error_sub_offset)
-
+++++++++++ DONE ABOVE
+  
 ### individual corrections
 error_ind_offset <- error_offset[startsWith(CorrectionNr, "Check") | startsWith(CorrectionNr, "Octave")]
 
@@ -440,13 +439,18 @@ dt_correct_offset_5 <-rbind(current_2, current_3, current_4)
 
 # export csv
 fwrite(dt_correct_offset_5, file = "./filtered/dt_correct_offset_5.txt")
-fwrite(error_offset, file = "./filtered/error_offset.csv")
 
 # combine all
 dt_correct_offset <- rbind(dt_correct_offset_1, dt_correct_offset_2, dt_correct_offset_3, dt_correct_offset_4, dt_correct_offset_5)
 
+# combine error
+error_offset <- rbind(error_ind_offset, error_extra_offset, error_missing_offset, error_sub_offset)
+error_offset$Duplicate <- duplicated(error_offset[,1:3])
+error_offset_all <- error_offset[Duplicate == FALSE]
+
 # export csv
 fwrite(dt_correct_offset, file = "./filtered/dt_correct_offset.txt")
+fwrite(error_offset, file = "./filtered/error_offset.csv")
 
 ####################################
 # Checking
