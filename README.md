@@ -16,10 +16,11 @@ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/) (Raw data
 
 # Script
 ## Environment
-All of the programme scripts were written and tested in the following environment.
+All of the programme scripts for the experiment were written and tested in the following environment.
 
 - ProductName: Mac OS X  
 - ProductVersion: 10.14.3
+
 
 ## Max
 - Version 7
@@ -48,7 +49,7 @@ All of the programme scripts were written and tested in the following environmen
 ## R
 You need raw_data folder to run the scripts below (get the folder from [OSF](https://osf.io/8nbjh/))
 - filtering.R: to clean data and remove performance errors. >> output: filtered folder
-    + *In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 65.*
+    + *In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 48.*
 - trimming.R: to calculate dependent variables and remove outliers. >> output: trimmed folder
 - function.R: to detect pitch errors in a performance / insert NAs
 - ideal.txt: the ideal sequence of the piece. used for filtering
