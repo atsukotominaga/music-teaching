@@ -1,121 +1,57 @@
-##### FUNCTIONS #####
-
 # install and load required packages
-if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+if (!require("data.table")) {install.packages("data.table"); require("data.table")}
+if (!require("tibble")) {install.packages("tibble"); require("tibble")}
+if (!require("editData")) {install.packages("editData"); require("editData")}
+if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 
-### define pitch remove function (pitch_remover)
-# data: data of all trials (df_onset/df_offset)
-# ideal: df_ideal
-pitch_remover <- function(data, ideal){
-  ls_removed <- list()
-  for (subnr in unique(data$SubNr)){ #set # of participants
-    print(sprintf("---SubNr %i---", subnr))
-    for (block in c(1:4)){
+# ggplot settings
+theme_set(theme_classic())
+
+### check whether a trial contains pitch errors
+# data: data of the current trial
+# ideal: dt_ideal
+checker <- function(data, ideal){
+  dt_errors <- data.table() # return data of erroneous trials - SubNr/BlockNr/TrialNr/Reason
+  for (subject in unique(data$SubNr)){
+    for(block in c(1:4)){
       for (trial in c(1:8)){
-        current <- data %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
-        if (nrow(current) != 0){ #if current data is not empty
-          if (length(ideal$Pitch) != length(current$NoteNr)){ #if # of onsets/offsets is not equal to ideal performance
-            ls_removed <- c(ls_removed, list(c(subnr, block, trial, "NoteNr error")))
-            print(sprintf("NoteNr error - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
-          } else if (length(ideal$Pitch) == length(current$Pitch)) { #if # of onsets and offsets are correct
-            counter = 0 #set a counter so that the following loop will terminate once it detects one pitch error in a trial
-            for (note in 1:length(ideal$Pitch)){
-              # detect onset error
-              if (current[note,]$Pitch != ideal$Pitch[note]){
-                while (counter == 0){
-                  ls_removed <- c(ls_removed, list(c(subnr, block, trial, "Pitch error")))
-                  print(sprintf("Pitch error - SubNr/BlockNr/TrialNr/NoteNr: %i/%i/%i/%i", subnr, block, trial, note))
-                  counter = counter + 1
-                }
+        current <- data[SubNr == subject & BlockNr == block & TrialNr == trial]
+        if (nrow(current) != 0){ # current data not empty
+          if (nrow(current) != nrow(ideal)){ # extra/missing note
+            if (nrow(current) > nrow(ideal)){
+              dt_errors <- rbind(dt_errors, data.table(subject, block, trial, "Extra Notes")) 
+            } else if (nrow(current) < nrow(ideal)){
+              dt_errors <- rbind(dt_errors, data.table(subject, block, trial, "Missing Notes")) 
+            }
+          } else if (nrow(current) == nrow(ideal)){ # substituted note
+            for (note in 1:nrow(ideal)){
+              if (current$Pitch[note] != ideal$Pitch[note]){
+                dt_errors <- rbind(dt_errors, data.table(subject, block, trial, paste("Substituted Notes - RowNr ", as.character(note), sep = "")))
+                break
               }
             }
           }
-        } else { #if current data is empty"
-          ls_removed <- c(ls_removed, list(c(subnr, block, trial, "Missing")))
-          print(sprintf("Missing - SubNr/BlockNr/TrialNr: %i/%i/%i", subnr, block, trial))
+        } else if (nrow(current) == 0){ # current data empty
+          dt_errors <- rbind(dt_errors, data.table(subject, block, trial, paste("Missing Trial")))
         }
       }
     }
   }
-  return(ls_removed)
+  colnames(dt_errors) <- c("SubNr", "BlockNr", "TrialNr", "Reason")
+  return(dt_errors)
 }
 
-### check error categories
-# removed: info of removed trials (df_removed_onset/df_removed_offset)
+### edit data
 # data: data of the current trial
-# ideal: df_ideal
-check <- function(removed, data, ideal){
-  counter = 0
-  # define column names
-  if (nrow(data) > length(ideal$Pitch) & nrow(data) < length(ideal$Pitch)*1.1){ # if there are more notes than ideal
-    removed$errorType[i] <- "More"
-    for (note in 1:length(ideal$Pitch)){
-      # detect onset error
-      if (data[note,]$Pitch != ideal$Pitch[note]){
-        while (counter == 0) {
-          removed$errorDiff[i] <- nrow(data)-nrow(ideal)
-          removed$errorRowNr[i] <- note
-          print(sprintf("+%i: RowNr: %i", nrow(data)-nrow(ideal), note))
-          counter = counter + 1
-        } 
-      }
-    }
-  } else if (nrow(data) > length(ideal$Pitch)*0.9 & nrow(data) < length(ideal$Pitch)){ # if there are less note than ideal
-    removed$errorType[i] <- "Less"
-    for (note in 1:nrow(data)){
-      # detect onset error
-      if (data[note,]$Pitch != ideal$Pitch[note]){
-        while (counter == 0) {
-          removed$errorDiff[i] <- nrow(ideal)-nrow(data)
-          removed$errorRowNr[i] <- note
-          print(sprintf("-%i: RowNr: %i", nrow(ideal)-nrow(data), note))
-          counter = counter + 1
-        }
-      }
-    }
-  } else if (nrow(data) == length(ideal$Pitch)){ # there are equal notes to ideal
-    for (note in 1:nrow(data)){
-      removed$errorType[i] <- "Equal"
-      # detect onset error
-      if (data[note,]$Pitch != ideal$Pitch[note]){
-        while (counter == 0) {
-          removed$errorDiff[i] <- nrow(data)-nrow(ideal)
-          removed$errorRowNr[i] <- note
-          print(sprintf("+-%i: RowNr: %i", nrow(data)-nrow(ideal), note))
-          counter = counter + 1
-        }
-      }
-    } 
-  } else if (nrow(data) >= length(ideal$Pitch)*1.1){ # error more than 10%
-    removed$errorType[i] <- "Check"
-    removed$errorDiff[i] <- nrow(data)-nrow(ideal)
-    removed$errorRowNr[i] <- NA
-    print(sprintf("+%i: Check - NoteNr more than 10 percent", nrow(data)-nrow(ideal)))
-  } else if (nrow(data) <= length(ideal$Pitch)*0.9){ # error less than 10%
-    removed$errorType[i] <- "Check"
-    removed$errorDiff[i] <- nrow(ideal)-nrow(data)
-    removed$errorRowNr[i] <- NA
-    print(sprintf("-%i: Check - NoteNr less than 10 percent", nrow(ideal)-nrow(data)))
-  } else { # other problems
-    removed$errorType[i] <- "Other"
-    removed$errorDiff[i] <- nrow(ideal)-nrow(data)
-    removed$errorRowNr[i] <- "Check individually"
-    print("Check individually")
-  }
-  return(removed)
-}
-
-### manual removal
-# data: data of the current trial
-# ideal: df_ideal
-manual <- function(data, ideal){
+# ideal: dt_ideal
+edit <- function(data, ideal){
   data$RowNr <- c(1:nrow(data))
-  length_diff <- abs(length(data$Pitch) - length(ideal$Pitch))
+  length_diff <- abs(nrow(data) - nrow(ideal))
   data$Ideal <- c(ideal$Pitch, rep(NA, length_diff))
-  data$Diff[data$Pitch == data$Ideal] <- 0
-  data$Diff[data$Pitch != data$Ideal] <- "!!DIFFERENT!!"
+  data$Diff <- "NA"
+  data[Pitch != Ideal]$Diff <- "DIFFERENT"
   # sort the order of columns
-  data <- data[c("RowNr", "NoteNr", "TimeStamp", "Pitch", "Ideal", "Diff", "Velocity", "Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")]
+  setcolorder(data, c("RowNr", "NoteNr", "TimeStamp", "Pitch", "Ideal", "Diff", "Velocity", "Key_OnOff", "Device", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image", "Error"))
   graph <- ggplot() +
     geom_line(data = data, aes(x = RowNr, y = Pitch), colour = "#F8766D") +
     geom_line(data = data, aes(x = RowNr, y = Ideal), colour = "#00BFC4") +
@@ -126,23 +62,45 @@ manual <- function(data, ideal){
     labs(title = sprintf("SubNr: %s, BlockNr: %s, TrialNr: %s", unique(data$SubNr), unique(data$BlockNr), unique(data$TrialNr)), y = "Pitch")
   print(graph)
   corrected <- editData(data, viewer = "pane")
-  return(corrected)
+  return(data.table(corrected)) # convert to data.table
 }
 
-### insert NA until NoteNr reaches 72
+### insert NA
 # data: data of the current trial
-# ideal: df_ideal
+# ideal: dt_ideal
 insert_na <- function(data, ideal){
   # insert NA row
   while (nrow(data) < nrow(ideal)){
-    counter = 0
     for (note in 1:nrow(data)){
-      if (data$Pitch[note] != ideal$Pitch[note]){
-        while (counter == 0){
+      if (note != 66){
+        if (data$Pitch[note] != ideal$Pitch[note]){
           data <- add_row(data, .before = note)
+          data[note] <- data[note-1]
+          data$TimeStamp[note] <- NA
+          data$Velocity[note] <- NA
           data$Pitch[note] <- ideal$Pitch[note]
-          data[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note,] <- data[c("Key_OnOff", "Device", "Tempo", "SubNr", "BlockNr", "TrialNr", "Skill", "Condition", "Image")][note-1,] # add label for the inserted row
-          counter = counter + 1
+          break
+        }
+      } else if (note == 66){
+        if (data$Pitch[note] != ideal$Pitch[note]){
+          data <- add_row(data, .after = note)
+          data[note+1] <- data[note]
+          # NA66
+          data$TimeStamp[note] <- NA
+          data$Velocity[note] <- NA
+          data$Pitch[note] <- ideal$Pitch[note]
+          # NA67
+          data$TimeStamp[note+1] <- NA
+          data$Velocity[note+1] <- NA
+          data$Pitch[note+1] <- ideal$Pitch[note+1]
+          break
+        } else if (data$Pitch[note] == ideal$Pitch[note]){
+          data <- add_row(data, .after = note)
+          data[note+1] <- data[note]
+          data$TimeStamp[note+1] <- NA
+          data$Velocity[note+1] <- NA
+          data$Pitch[note+1] <- ideal$Pitch[note+1]
+          break
         }
       }
     }

@@ -8,7 +8,8 @@
 2. Manually remove errors using editData function
     - if there are extra notes, remove them by looking at the plot and the Diff column.
     - if there are missing notes, insert NA to that missing location.
-    - if participants accidentally hit a wrong key instead of the correct one, replace that with NA.
+    - if participants accidentally hit a ls
+    wrong key instead of the correct one, replace that with NA.
     - if there are complicated errors, look at the data and listen to the midi performance.
 
 #### Outputs (filtered folder)
