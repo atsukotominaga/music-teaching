@@ -1,0 +1,113 @@
+SubNr,BlockNr,TrialNr,Reason,CorrectionNr,Duplicate
+1,2,3,Extra Notes,"Removal: 1, Replacement to NA: 4",FALSE
+1,4,3,Extra Notes,1,FALSE
+2,3,6,Extra Notes,Exclude,FALSE
+4,3,1,Extra Notes,0,FALSE
+5,1,1,Extra Notes,1,FALSE
+8,4,2,Extra Notes,"Removal: 1, Replacement to NA: 2",FALSE
+10,1,6,Extra Notes,Check individually,FALSE
+15,3,5,Extra Notes,"Removal: 1, Replacement to NA: 2",FALSE
+11,1,1,Missing Notes,Exclude,FALSE
+2,1,6,Extra Notes,1,FALSE
+5,1,4,Extra Notes,1,FALSE
+5,4,5,Extra Notes,1,FALSE
+6,1,3,Extra Notes,1,FALSE
+6,1,8,Extra Notes,1,FALSE
+6,3,4,Extra Notes,2,FALSE
+7,1,8,Extra Notes,1,FALSE
+8,1,1,Extra Notes,2,FALSE
+8,3,2,Extra Notes,1,FALSE
+9,2,4,Extra Notes,2,FALSE
+10,2,8,Extra Notes,1,FALSE
+10,3,3,Extra Notes,1,FALSE
+11,1,2,Extra Notes,1,FALSE
+11,3,1,Extra Notes,1,FALSE
+12,1,3,Extra Notes,1,FALSE
+12,1,7,Extra Notes,2,FALSE
+12,2,1,Extra Notes,1,FALSE
+12,3,1,Extra Notes,1,FALSE
+13,4,3,Extra Notes,2,FALSE
+15,3,3,Extra Notes,,FALSE
+15,3,8,Extra Notes,1,FALSE
+17,1,2,Extra Notes,1,FALSE
+17,1,7,Extra Notes,1,FALSE
+17,3,4,Extra Notes,1,FALSE
+17,3,6,Extra Notes,1,FALSE
+19,1,3,Extra Notes,1,FALSE
+19,2,4,Extra Notes,1,FALSE
+20,1,3,Extra Notes,1,FALSE
+21,3,4,Extra Notes,1,FALSE
+21,4,7,Extra Notes,1,FALSE
+4,1,1,Missing Notes,1,FALSE
+4,1,4,Missing Notes,1,FALSE
+4,2,6,Missing Notes,1,FALSE
+4,3,6,Missing Notes,1,FALSE
+4,3,7,Missing Notes,1,FALSE
+6,1,1,Missing Notes,1,FALSE
+6,2,7,Missing Notes,1,FALSE
+6,3,1,Missing Notes,1,FALSE
+6,4,1,Missing Notes,1,FALSE
+6,4,6,Missing Notes,1,FALSE
+7,2,8,Missing Notes,1,FALSE
+7,4,7,Missing Notes,1,FALSE
+9,4,3,Missing Notes,1,FALSE
+9,4,6,Missing Notes,1,FALSE
+10,1,5,Missing Notes,1,FALSE
+10,2,3,Missing Notes,2,FALSE
+10,2,5,Missing Notes,1,FALSE
+10,2,6,Missing Notes,1,FALSE
+10,3,1,Missing Notes,1,FALSE
+10,4,4,Missing Notes,2,FALSE
+13,2,2,Missing Notes,1,FALSE
+14,3,2,Missing Notes,1,FALSE
+15,1,1,Missing Notes,1,FALSE
+15,1,2,Missing Notes,1,FALSE
+15,1,4,Missing Notes,1,FALSE
+15,2,6,Missing Notes,2,FALSE
+15,4,7,Missing Notes,1,FALSE
+16,3,6,Missing Notes,1,FALSE
+16,4,5,Missing Notes,1,FALSE
+17,2,5,Missing Notes,1,FALSE
+17,2,8,Missing Notes,1,FALSE
+17,3,2,Missing Notes,1,FALSE
+19,1,1,Missing Notes,1,FALSE
+19,2,3,Missing Notes,1,FALSE
+20,3,4,Missing Notes,1,FALSE
+1,1,3,Substituted Notes - RowNr 40,2,FALSE
+1,1,4,Substituted Notes - RowNr 23,2,FALSE
+1,1,5,Substituted Notes - RowNr 23,4,FALSE
+1,1,7,Substituted Notes - RowNr 40,2,FALSE
+1,1,8,Substituted Notes - RowNr 23,2,FALSE
+1,2,2,Substituted Notes - RowNr 23,2,FALSE
+1,2,4,Substituted Notes - RowNr 23,6,FALSE
+1,2,5,Substituted Notes - RowNr 40,6,FALSE
+1,2,6,Substituted Notes - RowNr 11,5,FALSE
+1,2,7,Substituted Notes - RowNr 11,5,FALSE
+1,3,1,Substituted Notes - RowNr 40,2,FALSE
+1,3,2,Substituted Notes - RowNr 40,2,FALSE
+1,3,3,Substituted Notes - RowNr 23,5,FALSE
+1,3,5,Substituted Notes - RowNr 40,3,FALSE
+1,3,6,Substituted Notes - RowNr 23,1,FALSE
+1,3,7,Substituted Notes - RowNr 40,2,FALSE
+1,3,8,Substituted Notes - RowNr 40,2,FALSE
+1,4,1,Substituted Notes - RowNr 23,5,FALSE
+1,4,2,Substituted Notes - RowNr 23,5,FALSE
+1,4,4,Substituted Notes - RowNr 23,2,FALSE
+1,4,5,Substituted Notes - RowNr 40,2,FALSE
+1,4,6,Substituted Notes - RowNr 40,2,FALSE
+1,4,7,Substituted Notes - RowNr 23,2,FALSE
+1,4,8,Substituted Notes - RowNr 40,4,FALSE
+2,4,6,Substituted Notes - RowNr 46,2,FALSE
+5,3,1,Substituted Notes - RowNr 47,2,FALSE
+5,4,1,Substituted Notes - RowNr 47,2,FALSE
+6,1,2,Substituted Notes - RowNr 10,2,FALSE
+6,3,7,Substituted Notes - RowNr 40,2,FALSE
+6,4,5,Substituted Notes - RowNr 45,2,FALSE
+7,1,6,Substituted Notes - RowNr 35,17,FALSE
+8,4,6,Substituted Notes - RowNr 16,2,FALSE
+9,1,2,Substituted Notes - RowNr 25,2,FALSE
+10,3,6,Substituted Notes - RowNr 22,1,FALSE
+13,4,4,Substituted Notes - RowNr 11,2,FALSE
+15,3,6,Substituted Notes - RowNr 1,1,FALSE
+18,3,4,Substituted Notes - RowNr 47,2,FALSE
+18,3,6,Substituted Notes - RowNr 25,2,FALSE

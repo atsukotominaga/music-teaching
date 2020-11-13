@@ -197,9 +197,9 @@ current_3$Velocity[8] <- NA
 current_3 <- edit(current_3, dt_ideal)
 current_3$RowNr <- c(1:72)
 current_3 <- current_3[,-c(5:6)]
-error_ind_onset$CorrectionNr[3] <- "Removal: 2, Replacement to NA: 1"
+error_ind_onset$CorrectionNr[3] <- "Removal: 2, Insert NA: 1"
 
-# 4: SubNr 10, BlockNr 1, TrialNr 6
+# 4: SubNr 11, BlockNr 1, TrialNr 1
 current_4 <- dt_onset[SubNr == error_ind_onset$SubNr[4] & BlockNr == error_ind_onset$BlockNr[4] & TrialNr == error_ind_onset$TrialNr[4]]
 # decision: exclude - did not follow sheet music 
 error_ind_onset$CorrectionNr[4] <- "Exclude"
@@ -308,12 +308,10 @@ for (row in 1:nrow(error_missing_offset)){
 # export csv
 fwrite(dt_correct_offset_3, file = "./filtered/dt_correct_offset_3.txt")
 
-+++
-  
 # substituted notes
 error_sub_offset <- dt_error_offset[startsWith(Reason, "Substituted")]
 dt_correct_offset_4 <- data.table()
-for (row in 1:nrow(error_sub_offset)){
+for (row in 30:nrow(error_sub_offset)){
   current <- dt_offset[SubNr == error_sub_offset$SubNr[row] & BlockNr == error_sub_offset$BlockNr[row] & TrialNr == error_sub_offset$TrialNr[row]]
   decision = 2 
   correction = 0 # # of correction for reporting stats
@@ -344,98 +342,109 @@ fwrite(dt_correct_offset_4, file = "./filtered/dt_correct_offset_4.txt")
 error_offset <- rbind(error_extra_offset, error_missing_offset, error_sub_offset)
 
 ### individual corrections
-error_ind_offset <- error_offset[startsWith(CorrectionNr, "Check") | startsWith(CorrectionNr, "Octave")]
+error_ind_offset <- error_offset[startsWith(CorrectionNr, "Check")]
 
-# 1: SubNr 2, BlockNr 1, TrialNr 1
+# 1: SubNr 1, BlockNr 2, TrialNr 3
 current_1 <- dt_offset[SubNr == error_ind_offset$SubNr[1] & BlockNr == error_ind_offset$BlockNr[1] & TrialNr == error_ind_offset$TrialNr[1]]
 # check a plot
 edit(current_1, dt_ideal)
-# decision: exclude the first attempt and add
-current_1 <- current_1[-c(1:12),]
-current_1$RowNr <- c(1:67)
-error_ind_offset$CorrectionNr[1] <- 0
+# decision: remove one extra note and correct 4 points and add
+current_1 <- edit(current_1, dt_ideal) # remove one extra note
+current_1 <- edit(current_1, dt_ideal) # correct 4 points
+current_1 <- current_1[,-c(5:6)]
+current_1$RowNr <- c(1:72)
 
-# 2: SubNr 2, BlockNr 1, TrialNr 3
+error_ind_offset$CorrectionNr[1] <- "Removal: 1, Replacement to NA: 4"
+
+# 2: SubNr 1, BlockNr 4, TrialNr 3
 current_2 <- dt_offset[SubNr == error_ind_offset$SubNr[2] & BlockNr == error_ind_offset$BlockNr[2] & TrialNr == error_ind_offset$TrialNr[2]]
 # check a plot
 edit(current_2, dt_ideal)
-# decision: removed the first attempt, insert NA for a missing note and add
-current_2 <- insert_na(current_2[-c(1:73), ], dt_ideal)
+# decision: correct 5 points and remove one extra note and add
+current_2 <- edit(current_2, dt_ideal) # correct 5 points
+current_2 <- edit(current_2, dt_ideal) # remove one extra note
+current_2 <- current_2[,-c(5:6)]
 # check a plot
 edit(current_2, dt_ideal)
-current_2$RowNr <- c(1:67)
+current_2$RowNr <- c(1:72)
 error_ind_offset$CorrectionNr[2] <- 1
 
-# 3: SubNr 3, BlockNr 3, TrialNr 7
+# 3: SubNr 2, BlockNr 3, TrialNr 6
 current_3 <- dt_offset[SubNr == error_ind_offset$SubNr[3] & BlockNr == error_ind_offset$BlockNr[3] & TrialNr == error_ind_offset$TrialNr[3]]
 # check a plot
 edit(current_3, dt_ideal)
-# decision: exclude - exclude the first attempt and add
-current_3 <- current_3[-c(1:7),]
-current_3$RowNr <- c(1:67)
-error_ind_offset$CorrectionNr[3] <- 0
+# decision: exclude - did not follow sheet music
+error_ind_offset$CorrectionNr[3] <- "Exclude"
 
-# 4: SubNr 3, BlockNr 1, TrialNr 1
+# 4: SubNr 4, BlockNr 3, TrialNr 1
 current_4 <- dt_offset[SubNr == error_ind_offset$SubNr[4] & BlockNr == error_ind_offset$BlockNr[4] & TrialNr == error_ind_offset$TrialNr[4]]
 # check a plot
 edit(current_4, dt_ideal)
-
-# correct substituted notes for 2 points and remove an extra note
-current_4 <- edit(current_4, dt_ideal)
-current_4 <- current_4[, -c(5:6)]
+# decision: removed the first attempt and add
+current_4 <- current_4[-c(1:18), ]
 # check a plot
 edit(current_4, dt_ideal)
-current_4$RowNr <- c(1:67)
-# save correctionNr
-error_ind_offset$CorrectionNr[4] <- "Removal: 1, Replacement to NA: 2"
+current_4$RowNr <- c(1:72)
+error_ind_offset$CorrectionNr[4] <- 0
 
-# 5: SubNr 27, BlockNr 3, TrialNr 6
+# 5: SubNr 5, BlockNr 1, TrialNr 1
 current_5 <- dt_offset[SubNr == error_ind_offset$SubNr[5] & BlockNr == error_ind_offset$BlockNr[5] & TrialNr == error_ind_offset$TrialNr[5]]
 # check a plot
 edit(current_5, dt_ideal)
-# correct substituted notes for 6 points and remove an extra note
-current_5 <- edit(current_5, dt_ideal)
-current_5 <- current_5[, -c(5:6)]
-# check a plot
-edit(current_5, dt_ideal)
-current_5$RowNr <- c(1:67)
+# correct remove one extra note
+current_5 <- edit(current_5, dt_ideal) # remove one extra note
+current_5 <- current_5[,-c(5:6)]
+current_5$RowNr <- c(1:72)
 # save correctionNr
-error_ind_offset$CorrectionNr[5] <- "Removal: 1, Replacement to NA: 6"
+error_ind_offset$CorrectionNr[5] <- 1
 
-# 6: SubNr 3, BlockNr 1, TrialNr 1
+# 6: SubNr 8, BlockNr 4, TrialNr 2
 current_6 <- dt_offset[SubNr == error_ind_offset$SubNr[6] & BlockNr == error_ind_offset$BlockNr[6] & TrialNr == error_ind_offset$TrialNr[6]]
-# decision: exclude - did not finish till the end
-error_ind_offset$CorrectionNr[6] <- "Exclude"
+# check a plot
+edit(current_6, dt_ideal)
+# decision: exclude - correct 2 points and remove one extra note and add
+current_6 <- edit(current_6, dt_ideal) # correct 2 points
+current_6 <- edit(current_6, dt_ideal) # remove one extra note
+current_6 <- current_6[,-c(5:6)]
+# check a plot
+edit(current_6, dt_ideal)
+current_6$RowNr <- c(1:72)
+error_ind_offset$CorrectionNr[6] <- "Removal: 1, Replacement to NA: 2"
 
-# 7: SubNr 3, BlockNr 2, TrialNr 7
+# 7: SubNr 10, BlockNr 1, TrialNr 6
 current_7 <- dt_offset[SubNr == error_ind_offset$SubNr[7] & BlockNr == error_ind_offset$BlockNr[7] & TrialNr == error_ind_offset$TrialNr[7]]
 # check a plot
-edit(insert_na(current_7, dt_ideal), dt_ideal)
-# decision: exclude - did not follow sheet music
-error_ind_offset$CorrectionNr[7] <- "Exclude"
+edit(current_7, dt_ideal)
+# decision: insert NA and remove extra notes and add
+# insert one NA at the first mistake (RowNr 8)
+current_7 <- add_row(current_7, .before = 8)
+current_7[8,] <- current_7[7, ]
+current_7$Pitch[8] <- dt_ideal$Pitch[8]
+current_7$TimeStamp[8] <- ""
+current_7$Velocity[8] <- ""
+# remove 2 extra notes
+current_7 <- edit(current_7, dt_ideal)
+current_7$RowNr <- c(1:72)
+current_7 <- current_7[,-c(5:6)]
+error_ind_onset$CorrectionNr[7] <- "Removal: 2, Insert NA: 1"
 
-# 8: SubNr 3, BlockNr 2, TrialNr 8
+# 8: SubNr 15, BlockNr 3, TrialNr 5
 current_8 <- dt_offset[SubNr == error_ind_offset$SubNr[8] & BlockNr == error_ind_offset$BlockNr[8] & TrialNr == error_ind_offset$TrialNr[8]]
-# decision: exclude - did not finish till the end
-error_ind_offset$CorrectionNr[8] <- "Exclude"
+# check a plot
+edit(current_8, dt_ideal)
+# decision: correct 2 points and remove one extra note and add
+current_8 <- edit(current_8, dt_ideal)
+current_8$RowNr <- c(1:72)
+current_8 <- current_8[,-c(5:6)]
+error_ind_offset$CorrectionNr[8] <- "Removal: 1, Replacement to NA: 2"
 
-# 9: SubNr 31, BlockNr 2, TrialNr 4
+# 9: SubNr 11, BlockNr 1, TrialNr 1
 current_9 <- dt_offset[SubNr == error_ind_offset$SubNr[9] & BlockNr == error_ind_offset$BlockNr[9] & TrialNr == error_ind_offset$TrialNr[9]]
 # decision: exclude - did not follow sheet music
 error_ind_offset$CorrectionNr[9] <- "Exclude"
 
-# 10: SubNr 31, BlockNr 4, TrialNr 5
-current_10 <- dt_offset[SubNr == error_ind_offset$SubNr[10] & BlockNr == error_ind_offset$BlockNr[10] & TrialNr == error_ind_offset$TrialNr[10]]
-# check a plot
-edit(insert_na(current_10, dt_ideal), dt_ideal)
-# decision: exclude - did not follow sheet music
-error_ind_offset$CorrectionNr[10] <- "Exclude"
-
-# 11 - 17
-# decision: exclude - Octave difference
-
 # add from individual corrections
-dt_correct_offset_5 <-rbind(current_1, current_2, current_3, current_4, current_5)
+dt_correct_offset_5 <-rbind(current_1, current_2, current_4, current_5, current_6, current_7, current_8)
 
 # export csv
 fwrite(dt_correct_offset_5, file = "./filtered/dt_correct_offset_5.txt")

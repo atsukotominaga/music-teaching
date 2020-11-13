@@ -1,0 +1,7 @@
+SubNr,BlockNr,TrialNr,Reason,OnOff
+2,3,6,Missing Trial,Onset
+7,1,6,Missing Trial,Onset
+11,1,1,Missing Trial,Onset
+2,3,6,Missing Trial,Offset
+11,1,1,Missing Trial,Offset
+15,3,3,Missing Trial,Offset
