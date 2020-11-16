@@ -458,6 +458,7 @@ error_ind_offset$CorrectionNr[10] <- "Exclude"
 
 # 11 - 17
 # decision: exclude - Octave difference
+error_ind_offset$CorrectionNr[11:18] <- "Exclude"
 
 # add from individual corrections
 dt_correct_offset_5 <-rbind(current_1, current_2, current_3, current_4, current_5)

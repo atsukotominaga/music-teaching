@@ -9,14 +9,14 @@ SubNr,BlockNr,TrialNr,Reason,CorrectionNr,Duplicate
 3,2,8,Missing Notes,Exclude,FALSE
 31,2,4,Missing Notes,Exclude,FALSE
 31,4,5,Missing Notes,Exclude,FALSE
-14,1,1,Substituted Notes - RowNr 1,Octave diff,FALSE
-14,1,2,Substituted Notes - RowNr 1,Octave diff,FALSE
-14,1,3,Substituted Notes - RowNr 1,Octave diff,FALSE
-14,1,4,Substituted Notes - RowNr 1,Octave diff,FALSE
-14,1,5,Substituted Notes - RowNr 1,Octave diff,FALSE
-14,1,6,Substituted Notes - RowNr 1,Octave diff,FALSE
-14,1,7,Substituted Notes - RowNr 1,Octave diff,FALSE
-14,1,8,Substituted Notes - RowNr 1,Octave diff,FALSE
+14,1,1,Substituted Notes - RowNr 1,Exclude,FALSE
+14,1,2,Substituted Notes - RowNr 1,Exclude,FALSE
+14,1,3,Substituted Notes - RowNr 1,Exclude,FALSE
+14,1,4,Substituted Notes - RowNr 1,Exclude,FALSE
+14,1,5,Substituted Notes - RowNr 1,Exclude,FALSE
+14,1,6,Substituted Notes - RowNr 1,Exclude,FALSE
+14,1,7,Substituted Notes - RowNr 1,Exclude,FALSE
+14,1,8,Substituted Notes - RowNr 1,Exclude,FALSE
 1,1,3,Extra Notes,1,FALSE
 1,2,6,Extra Notes,1,FALSE
 1,2,8,Extra Notes,1,FALSE
