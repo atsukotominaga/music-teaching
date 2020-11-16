@@ -32,7 +32,7 @@ error_onset <- fread(file = "./filtered/error_onset.txt", sep = ",")
 error_offset <- fread(file = "./filtered/error_offset.txt", sep = ",")
 ```
 
-- Each performance (1 trial) contains 72 responses for onsets and 72 responses for offsets (i.e., if there is no mistake, 144 responses in total)
+- Each performance (1 trial) contains 67 responses for onsets and 67 responses for offsets (i.e., if there is no mistake, 134 responses in total)
 - Each block contains 8 trials and there are 4 blocks (teaching vs. performing x articulation vs. dynamics)
 
 # Outline
