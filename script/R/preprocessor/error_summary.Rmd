@@ -1,0 +1,128 @@
+---
+title: "Error Summary (teaching-v2.0)"
+output: html_notebook
+---
+
+- Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
+
+```{r setup, include = FALSE}
+# packages
+# data manipulation
+if (!require("data.table")) {install.packages("data.table"); require("data.table")}
+# plot
+if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
+# statistics
+if (!require("stats")) {install.packages("stats"); require("stats")}
+if (!require("effsize")) {install.packages("effsize"); require("effsize")}
+if (!require("ez")) {install.packages("ez"); require("ez")}
+
+# function
+source("./function.R")
+
+# read a text file for ideal performance
+dt_ideal <- read.table("./ideal.txt")
+colnames(dt_ideal) <- "Pitch"
+dt_ideal$RowNr <- 1:nrow(dt_ideal)
+setcolorder(dt_ideal, c(2, 1))
+# 
+dt_onset <- fread(file = "./filtered/dt_correct_onset.txt", sep = ",")
+dt_offset <- fread(file = "./filtered/dt_correct_offset.txt", sep = ",")
+error_onset <- fread(file = "./filtered/error_onset.txt", sep = ",")
+error_offset <- fread(file = "./filtered/error_offset.txt", sep = ",")
+```
+
+- Each performance (1 trial) contains 72 responses for onsets and 72 responses for offsets (i.e., if there is no mistake, 144 responses in total)
+- Each block contains 8 trials and there are 4 blocks (teaching vs. performing x articulation vs. dynamics)
+
+# Outline
+1. [Onset reports](#onset)
+2. [Offset reports](#offset)
+
+## ONSET
+### Corrected Error Onset (All)
+```{r onset_all, echo = FALSE}
+error_onset_all <- error_onset[CorrectionNr != "Exclude",]
+
+# separate errors depending on reasons
+# SubNr 10, BlockNr 1, TrialNr 6
+error_onset_all <- rbind(error_onset_all, error_onset_all[2])
+error_onset_all$Reason[2] <- "Extra Notes"
+error_onset_all$CorrectionNr[2] <- 2
+error_onset_all$Reason[nrow(error_onset_all)] <- "Substituted"
+error_onset_all$CorrectionNr[nrow(error_onset_all)] <- 1
+
+error_onset_all
+```
+
+### Corrected Error Onset (Summary)
+```{r onset_summary, echo = FALSE}
+error_onset_all[startsWith(Reason, "Substituted")]$Reason <- "Substituted"
+error_onset_summary <- error_onset_all[, .(N = .N, Sum = sum(as.numeric(CorrectionNr))), by = .(Reason)]
+error_onset_summary
+```
+
+### Missing/Excluded Trials Onset (All)
+```{r na_onset_all, echo = FALSE}
+missing_onset <- checker(dt_onset, dt_ideal)
+missing_onset
+```
+
+### Missing/Excluded Trials Onset (Summary)
+```{r na_onset_summary, echo = FALSE}
+missing_onset_summary <- missing_onset[, .(N = .N), by = .(Reason)]
+missing_onset_summary
+```
+
+## OFFSET
+### Corrected Error Offset (All)
+```{r offset_all, echo = FALSE}
+error_offset_all <- error_offset[CorrectionNr != "Exclude",]
+
+# separate errors depending on reasons
+# SubNr 1, BlockNr 2, TrialNr 3
+error_offset_all <- rbind(error_offset_all, error_offset_all[1])
+error_offset_all$Reason[1] <- "Extra Notes"
+error_offset_all$CorrectionNr[1] <- 1
+error_offset_all$Reason[nrow(error_offset_all)] <- "Substituted"
+error_offset_all$CorrectionNr[nrow(error_offset_all)] <- 4
+# SubNr 8, BlockNr 4, TrialNr 2
+error_offset_all <- rbind(error_offset_all, error_offset_all[5])
+error_offset_all$Reason[5] <- "Extra Notes"
+error_offset_all$CorrectionNr[5] <- 1
+error_offset_all$Reason[nrow(error_offset_all)] <- "Substituted"
+error_offset_all$CorrectionNr[nrow(error_offset_all)] <- 2
+# SubNr 10, BlockNr 1, TrialNr 6
+error_offset_all <- rbind(error_offset_all, error_offset_all[6])
+error_offset_all$Reason[6] <- "Extra Notes"
+error_offset_all$CorrectionNr[6] <- 2
+error_offset_all$Reason[nrow(error_offset_all)] <- "Substituted"
+error_offset_all$CorrectionNr[nrow(error_offset_all)] <- 1
+# SubNr 15, BlockNr 3, TrialNr 5
+error_offset_all <- rbind(error_offset_all, error_offset_all[7])
+error_offset_all$Reason[7] <- "Extra Notes"
+error_offset_all$CorrectionNr[7] <- 1
+error_offset_all$Reason[nrow(error_offset_all)] <- "Substituted"
+error_offset_all$CorrectionNr[nrow(error_offset_all)] <- 2
+
+error_offset_all
+```
+
+### Corrected Error Offset (Summary)
+```{r offset_summary, echo = FALSE}
+error_offset_all[startsWith(Reason, "Substituted")]$Reason <- "Substituted"
+error_offset_summary <- error_offset_all[, .(N = .N, Sum = sum(as.numeric(CorrectionNr))), by = .(Reason)]
+error_offset_summary
+```
+
+### Missing/Excluded Trials Offset (All)
+```{r na_offset_all, echo = FALSE}
+missing_offset <- checker(dt_offset, dt_ideal)
+missing_offset
+```
+
+### Missing/Excluded Trials Offset (Summary)
+```{r na_offset_summary, echo = FALSE}
+missing_offset_summary <- missing_offset[, .(N = .N), by = .(Reason)]
+missing_offset_summary
+```
