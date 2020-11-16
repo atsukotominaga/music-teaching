@@ -5,7 +5,7 @@ SubNr,BlockNr,TrialNr,Reason,CorrectionNr,Duplicate
 4,3,1,Extra Notes,0,FALSE
 5,1,1,Extra Notes,1,FALSE
 8,4,2,Extra Notes,"Removal: 1, Replacement to NA: 2",FALSE
-10,1,6,Extra Notes,Check individually,FALSE
+10,1,6,Extra Notes,"Removal: 2, Insert NA: 1",FALSE
 15,3,5,Extra Notes,"Removal: 1, Replacement to NA: 2",FALSE
 11,1,1,Missing Notes,Exclude,FALSE
 2,1,6,Extra Notes,1,FALSE
@@ -27,7 +27,7 @@ SubNr,BlockNr,TrialNr,Reason,CorrectionNr,Duplicate
 12,2,1,Extra Notes,1,FALSE
 12,3,1,Extra Notes,1,FALSE
 13,4,3,Extra Notes,2,FALSE
-15,3,3,Extra Notes,,FALSE
+15,3,3,Extra Notes,1,FALSE
 15,3,8,Extra Notes,1,FALSE
 17,1,2,Extra Notes,1,FALSE
 17,1,7,Extra Notes,1,FALSE
