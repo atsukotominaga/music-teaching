@@ -25,12 +25,19 @@ if (!file.exists("trimmed")){
 }
 
 # read txt files
-dt_onset <- fread(file = "./filtered/dt_correct_onset.txt")
-dt_offset <- fread(file = "./filtered/dt_correct_offset.txt")
+dt_onset_all <- fread(file = "./filtered/dt_correct_onset.txt")
+dt_offset_all <- fread(file = "./filtered/dt_correct_offset.txt")
 
 # sort by SubNr, BlockNr, TrialNr, NoteNrm TimeStamp
-dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+dt_onset_all <- dt_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+dt_offset_all <- dt_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+
+####################################
+# Exclude two participants
+# (see error_summary.Rmd)
+####################################
+dt_onset <- dt_onset_all[SubNr != 3 & SubNr != 14]
+dt_offset <- dt_offset_all[SubNr != 3 & SubNr != 14]
 
 ####################################
 # Define Subcomponents
@@ -116,7 +123,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers (3 methods)
 ####################################
 # exclude irrelevant notes (IOI == NA means a missing value)
-dt_ioi_subset <- subset(dt_ioi, !is.na(dt_ioi$Subcomponent) & !is.na(dt_ioi$IOI))
+dt_ioi_subset <- dt_ioi[!is.na(dt_ioi$Subcomponent) & !is.na(dt_ioi$IOI)]
 
 # draw histogram and boxplot
 p_ioi_hist <- ggplot(dt_ioi_subset, aes(x = IOI, fill = Grouping)) +
@@ -126,6 +133,16 @@ plot(p_ioi_hist)
 p_ioi_box <- ggboxplot(dt_ioi_subset, x = "Skill", y = "IOI", color = "Condition")
 p_ioi_box <- ggpar(p_ioi_box, ylab = "IOI")
 plot(p_ioi_box)
+
+####################################
+# exclude deviated participants
+####################################
+ioi_summary <- dt_ioi_subset[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr)]
+# exclude tempo deviated participants
+ioi_summary$Include <- "No"
+ioi_summary[Mean < mean(ioi_summary$Mean)+3*sd(ioi_summary$Mean) & Mean > mean(ioi_summary$Mean)-3*sd(ioi_summary$Mean)]$Include <- "Yes"
+# exclude SubNr 16
+dt_ioi_subset <- dt_ioi_subset[SubNr != 16]
 
 ####################################
 # 1. > +- 3SD across the conditions
@@ -162,12 +179,12 @@ fwrite(dt_ioi_trim_sd_1, file = "./trimmed/data_ioi_1.txt", row.names = F)
 # 2. > +- 3SD per condition
 ####################################
 # exclude ioi > +- 3SD (per condition)
-ioi_skill <- dt_ioi_subset[, .(N = .N, mean = mean(IOI), sd = sd(IOI)), by = Grouping]
+ioi_skill <- dt_ioi_subset[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = Grouping]
 
 dt_ioi_trim_sd_2 <- data.table()
 for (grouping in unique(ioi_skill$Grouping)){
-  upper_ioi_2 <- ioi_skill$mean[ioi_skill$Grouping == grouping]+3*ioi_skill$sd[ioi_skill$Grouping == grouping]
-  lower_ioi_2 <- ioi_skill$mean[ioi_skill$Grouping == grouping]-3*ioi_skill$sd[ioi_skill$Grouping == grouping]
+  upper_ioi_2 <- ioi_skill$Mean[ioi_skill$Grouping == grouping]+3*ioi_skill$SD[ioi_skill$Grouping == grouping]
+  lower_ioi_2 <- ioi_skill$Mean[ioi_skill$Grouping == grouping]-3*ioi_skill$SD[ioi_skill$Grouping == grouping]
   dt_current <- dt_ioi_subset[Grouping == grouping & IOI < upper_ioi_2 & IOI > lower_ioi_2]
   dt_ioi_trim_sd_2 <- rbind(dt_ioi_trim_sd_2, dt_current)
 }
@@ -204,12 +221,12 @@ dt_ioi_subset$Boundary <- "No"
 dt_ioi_subset[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Boundary <- "Yes"
 
 # exclude ioi > +- 3SD (separately for each Boundary)
-ioi_boundary <- dt_ioi_subset[, .(N = .N, mean = mean(IOI), sd = sd(IOI)), by = Boundary]
+ioi_boundary <- dt_ioi_subset[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = Boundary]
 
 dt_ioi_trim_sd_3 <- data.table()
 for (boundary in unique(ioi_boundary$Boundary)){
-  upper_ioi_3 <- ioi_boundary$mean[ioi_boundary$Boundary == boundary]+3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
-  lower_ioi_3 <- ioi_boundary$mean[ioi_boundary$Boundary == boundary]-3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
+  upper_ioi_3 <- ioi_boundary$Mean[ioi_boundary$Boundary == boundary]+3*ioi_boundary$SD[ioi_boundary$Boundary == boundary]
+  lower_ioi_3 <- ioi_boundary$Mean[ioi_boundary$Boundary == boundary]-3*ioi_boundary$SD[ioi_boundary$Boundary == boundary]
   dt_current <- dt_ioi_subset[Boundary == boundary & IOI < upper_ioi_3 & IOI > lower_ioi_3]
   dt_ioi_trim_sd_3 <- rbind(dt_ioi_trim_sd_3, dt_current)
 }

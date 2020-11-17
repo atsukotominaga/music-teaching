@@ -1,0 +1,3 @@
+(Method 1)IOI: Remove 748 responses beyond +- 3SD / 1.184000 percent
+(Method 2)IOI: Remove 1057 responses beyond +- 3SD / 1.673000 percent
+(Method 3)IOI: Remove 748 responses beyond +- 3SD / 1.184000 percent
