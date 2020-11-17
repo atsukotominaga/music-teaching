@@ -72,49 +72,50 @@ dt_ioi <- dt_ioi[RowNr != 1]
 # assign Interval
 dt_ioi$Interval <- rep(1:66, nrow(dt_ioi)/66)
 
-# assign Subcomponents
-dt_ioi$Subcomponent <- NA
+# assign Subcomponents# assign Subcomponents
+dt_ioi$Subcomponent <- "NA"
 # Legato
 for (phrase in 1:length(ls_legato)){
   for (note in 1:length(ls_legato[[phrase]])){
-    dt_ioi$Subcomponent[dt_ioi$Skill == "articulation" & dt_ioi$Interval == ls_legato[[phrase]][note]] <- "Legato"
+    dt_ioi[Skill == "articulation" & Interval == ls_legato[[phrase]][note]]$Subcomponent <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    dt_ioi$Subcomponent[dt_ioi$Skill == "articulation" & dt_ioi$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+    dt_ioi[Skill == "articulation" & Interval == ls_staccato[[phrase]][note]]$Subcomponent <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte)){
   for (note in 1:length(ls_forte[[phrase]])){
-    dt_ioi$Subcomponent[dt_ioi$Skill == "dynamics" & dt_ioi$Interval == ls_forte[[phrase]][note]] <- "Forte"
+    dt_ioi[Skill == "dynamics" & Interval == ls_forte[[phrase]][note]]$Subcomponent <- "Forte"
   }
 }
 # Piano
 for (phrase in 1:length(ls_piano)){
   for (note in 1:length(ls_piano[[phrase]])){
-    dt_ioi$Subcomponent[dt_ioi$Skill == "dynamics" & dt_ioi$Interval == ls_piano[[phrase]][note]] <- "Piano"
+    dt_ioi[Skill == "dynamics" & Interval == ls_piano[[phrase]][note]]$Subcomponent <- "Piano"
   }
 }
 
 # assign Subcomponent Change
 for (number in change_1){
-  dt_ioi$Subcomponent[dt_ioi$Skill == "articulation" & dt_ioi$Interval == number] <- "LtoS"
-  dt_ioi$Subcomponent[dt_ioi$Skill == "dynamics" & dt_ioi$Interval == number] <- "FtoP"
+  dt_ioi[Skill == "articulation" & Interval == number]$Subcomponent <- "LtoS"
+  dt_ioi[Skill == "dynamics" & Interval == number]$Subcomponent <- "FtoP"
 }
 for (number in change_2){
-  dt_ioi$Subcomponent[dt_ioi$Skill == "articulation" & dt_ioi$Interval == number] <- "StoL"
-  dt_ioi$Subcomponent[dt_ioi$Skill == "dynamics" & dt_ioi$Interval == number] <- "PtoF"
+  dt_ioi[Skill == "articulation" & Interval == number]$Subcomponent <- "StoL"
+  dt_ioi[Skill == "dynamics" & Interval == number]$Subcomponent <- "PtoF"
 }
 
 # add a grouping name
 ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+dt_ioi$Grouping <- "NA"
 for (cond in 1:length(ls_grouping$Condition)){
   for (skill in 1:length(ls_grouping$Skill)){
-    dt_ioi$Grouping[dt_ioi$Condition == ls_grouping$Condition[cond] & dt_ioi$Skill == ls_grouping$Skill[skill]] <-
+    dt_ioi[Condition == ls_grouping$Condition[cond] & Skill == ls_grouping$Skill[skill]]$Grouping <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
   }
 }
