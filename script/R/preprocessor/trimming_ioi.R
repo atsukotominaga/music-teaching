@@ -122,7 +122,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 ####################################
 # Remove outliers (3 methods)
 ####################################
-# exclude irrelevant notes (IOI == NA means a missing value)
+# exclude irrelevant notes (Subcomponent == NA means not 16th notes / IOI == NA means a missing value)
 dt_ioi_subset <- dt_ioi[!is.na(dt_ioi$Subcomponent) & !is.na(dt_ioi$IOI)]
 
 # draw histogram and boxplot
