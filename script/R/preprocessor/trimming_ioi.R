@@ -13,7 +13,7 @@
 ####################################
 # set working directory to file source location
 # install and load required packages
-if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+if (!require("data.table")) {install.packages("data.table"); require("data.table")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 
@@ -28,31 +28,22 @@ if (!file.exists("trimmed")){
 }
 
 # read a text file for ideal performance
-df_ideal <- read.table("./ideal.txt")
-colnames(df_ideal) <- "Pitch"
-df_ideal$RowNr <- c(1:nrow(df_ideal))
-df_ideal <- df_ideal[c(2, 1)]
+dt_ideal <- read.table("./ideal.txt")
+colnames(dt_ideal) <- "Pitch"
+dt_ideal$RowNr <- c(1:nrow(dt_ideal))
+dt_ideal <- dt_ideal[c(2, 1)]
 
-# read csv
-df_onset <- read.csv(file.path("./filtered/data_correct_onset.csv"), header = T)
-df_offset <- read.csv(file.path("./filtered/data_correct_offset.csv"), header = T)
+# read txt files
+dt_onset <- fread(file = "./filtered/dt_correct_onset.txt", header = T)
+dt_offset <- fread(file = "./filtered/dt_correct_offset.txt", header = T)
 
 # assign RowNr
-df_onset$RowNr <- rep(1:72, nrow(df_onset)/72)
-df_offset$RowNr <- rep(1:72, nrow(df_offset)/72)
+dt_onset$RowNr <- rep(1:72, nrow(dt_onset)/72)
+dt_offset$RowNr <- rep(1:72, nrow(dt_offset)/72)
 
 # sort by SubNr, BlockNr, TrialNr and RowNr
-df_onset <- df_onset[order(df_onset$SubNr, df_onset$BlockNr, df_onset$TrialNr, df_onset$RowNr),]
-df_offset <- df_offset[order(df_offset$SubNr, df_offset$BlockNr, df_offset$TrialNr, df_offset$RowNr),]
-
-# read functions
-source("./function.R")
-
-# make sure there is no pitch errors - outputs should be only missing trials
-print("----- Onset missing trials -----")
-ls_removed_onset <- pitch_remover(df_onset, df_ideal)
-print("----- Offset missing trials -----")
-ls_removed_offset <- pitch_remover(df_offset, df_ideal)
+dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
 
 ####################################
 # Define Subcomponents
@@ -78,64 +69,65 @@ change_2 <- c(8, 20, 39)
 # Inter-Onset intervals
 ####################################
 # calculate IOIs
-df_ioi <- df_onset
-df_ioi$IOI <- diff(c(0, df_ioi$TimeStamp))
+dt_ioi <- dt_onset
+dt_ioi$IOI <- diff(c(0, dt_ioi$TimeStamp))
 # convert bpm to ms
-df_ioi$Tempo[df_ioi$Tempo == 120] <- 250
-df_ioi$Tempo[df_ioi$Tempo == 110] <- 273
-df_ioi$Tempo[df_ioi$Tempo == 100] <- 300
+dt_ioi$Tempo[dt_ioi$Tempo == 120] <- 250
+dt_ioi$Tempo[dt_ioi$Tempo == 110] <- 273
+dt_ioi$Tempo[dt_ioi$Tempo == 100] <- 300
 # normalise IOIs
-df_ioi$normIOI <- df_ioi$IOI/df_ioi$Tempo
+dt_ioi$normIOI <- dt_ioi$IOI/dt_ioi$Tempo
 
 # remove the first note
-df_ioi <- df_ioi %>% dplyr::filter(RowNr != 1)
+dt_ioi <- dt_ioi[RowNr != 1]
 
 # assign Interval
-df_ioi$Interval <- rep(1:71, nrow(df_ioi)/71)
+dt_ioi$Interval <- rep(1:71, nrow(dt_ioi)/71)
 
 # assign Subcomponents
-df_ioi$Subcomponent <- NA
+dt_ioi$Subcomponent <- "NA"
 # Legato
 for (phrase in 1:length(ls_legato)){
   for (note in 1:length(ls_legato[[phrase]])){
-    df_ioi$Subcomponent[df_ioi$Skill == "articulation" & df_ioi$Interval == ls_legato[[phrase]][note]] <- "Legato"
+    dt_ioi[Skill == "articulation" & Interval == ls_legato[[phrase]][note]]$Subcomponent <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    df_ioi$Subcomponent[df_ioi$Skill == "articulation" & df_ioi$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+    dt_ioi[Skill == "articulation" & Interval == ls_staccato[[phrase]][note]]$Subcomponent <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte)){
   for (note in 1:length(ls_forte[[phrase]])){
-    df_ioi$Subcomponent[df_ioi$Skill == "dynamics" & df_ioi$Interval == ls_forte[[phrase]][note]] <- "Forte"
+    dt_ioi[Skill == "dynamics" & Interval == ls_forte[[phrase]][note]]$Subcomponent <- "Forte"
   }
 }
 # Piano
 for (phrase in 1:length(ls_piano)){
   for (note in 1:length(ls_piano[[phrase]])){
-    df_ioi$Subcomponent[df_ioi$Skill == "dynamics" & df_ioi$Interval == ls_piano[[phrase]][note]] <- "Piano"
+    dt_ioi[Skill == "dynamics" & Interval == ls_piano[[phrase]][note]]$Subcomponent <- "Piano"
   }
 }
 
 # assign Subcomponent Change
 for (number in change_1){
-  df_ioi$Subcomponent[df_ioi$Skill == "articulation" & df_ioi$Interval == number] <- "LtoS"
-  df_ioi$Subcomponent[df_ioi$Skill == "dynamics" & df_ioi$Interval == number] <- "FtoP"
+  dt_ioi[Skill == "articulation" & Interval == number]$Subcomponent <- "LtoS"
+  dt_ioi[Skill == "dynamics" & Interval == number]$Subcomponent <- "FtoP"
 }
 for (number in change_2){
-  df_ioi$Subcomponent[df_ioi$Skill == "articulation" & df_ioi$Interval == number] <- "StoL"
-  df_ioi$Subcomponent[df_ioi$Skill == "dynamics" & df_ioi$Interval == number] <- "PtoF"
+  dt_ioi[Skill == "articulation" & Interval == number]$Subcomponent <- "StoL"
+  dt_ioi[Skill == "dynamics" & Interval == number]$Subcomponent <- "PtoF"
 }
 
 # add a grouping name
 ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+dt_ioi$Grouping <- "NA"
 for (cond in 1:length(ls_grouping$Condition)){
   for (skill in 1:length(ls_grouping$Skill)){
-    df_ioi$Grouping[df_ioi$Condition == ls_grouping$Condition[cond] & df_ioi$Skill == ls_grouping$Skill[skill]] <-
+    dt_ioi[Condition == ls_grouping$Condition[cond] & Skill == ls_grouping$Skill[skill]]$Grouping <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
   }
 }
@@ -144,35 +136,44 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers (3 methods)
 ####################################
 # exclude irrelevant notes (Subcomponent == NA means not 8th notes / normIOI == NA means a missing value)
-df_ioi_subset <- subset(df_ioi, !is.na(df_ioi$Subcomponent) & !is.na(df_ioi$normIOI))
+dt_ioi_subset <- dt_ioi[Subcomponent != "NA" & !is.na(normIOI)]
 
 # draw histogram and boxplot
-p_ioi_hist <- ggplot(df_ioi_subset, aes(x = normIOI, fill = Grouping)) +
+p_ioi_hist <- ggplot(dt_ioi_subset, aes(x = normIOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = .01)
 plot(p_ioi_hist)
 
-p_ioi_box <- ggboxplot(df_ioi_subset, x = "Skill", y = "normIOI", color = "Condition")
+p_ioi_box <- ggboxplot(dt_ioi_subset, x = "Skill", y = "normIOI", color = "Condition")
 p_ioi_box <- ggpar(p_ioi_box, ylab = "Normalised IOI (IOI/Tempo)")
 plot(p_ioi_box)
+
+####################################
+# exclude deviated participants
+####################################
+ioi_summary <- dt_ioi_subset[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr)]
+# exclude tempo deviated participants
+ioi_summary$Include <- "No"
+ioi_summary[Mean < mean(ioi_summary$Mean)+3*sd(ioi_summary$Mean) & Mean > mean(ioi_summary$Mean)-3*sd(ioi_summary$Mean)]$Include <- "Yes"
+# No excluded participants
 
 ####################################
 # 1. > +- 3SD across the conditions
 ####################################
 # exclude ioi > +- 3SD (across the conditions)
-upper_ioi_1 <- mean(df_ioi_subset$normIOI)+3*sd(df_ioi_subset$normIOI)
-lower_ioi_1 <- mean(df_ioi_subset$normIOI)-3*sd(df_ioi_subset$normIOI)
-df_ioi_trim_sd_1 <- df_ioi_subset %>% dplyr::filter(normIOI < upper_ioi_1 & normIOI > lower_ioi_1)
-removed_ioi_1 <- nrow(df_ioi_subset)-nrow(df_ioi_trim_sd_1)
-proportion_ioi_1 <- round(removed_ioi_1/nrow(df_ioi_subset), 5)
+upper_ioi_1 <- mean(dt_ioi_subset$normIOI)+3*sd(dt_ioi_subset$normIOI)
+lower_ioi_1 <- mean(dt_ioi_subset$normIOI)-3*sd(dt_ioi_subset$normIOI)
+dt_ioi_trim_sd_1 <- dt_ioi_subset[normIOI < upper_ioi_1 & normIOI > lower_ioi_1]
+removed_ioi_1 <- nrow(dt_ioi_subset)-nrow(dt_ioi_trim_sd_1)
+proportion_ioi_1 <- round(removed_ioi_1/nrow(dt_ioi_subset), 5)
 write(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_1, proportion_ioi_1*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_1, proportion_ioi_1*100))
 
 # draw histogram and boxplot
-p_ioi_hist_sd_1 <- ggplot(df_ioi_trim_sd_1, aes(x = normIOI, fill = Grouping)) +
+p_ioi_hist_sd_1 <- ggplot(dt_ioi_trim_sd_1, aes(x = normIOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = .01)
 plot(p_ioi_hist_sd_1)
 
-p_ioi_box_sd_1 <- ggboxplot(df_ioi_trim_sd_1, x = "Skill", y = "normIOI", color = "Condition")
+p_ioi_box_sd_1 <- ggboxplot(dt_ioi_trim_sd_1, x = "Skill", y = "normIOI", color = "Condition")
 p_ioi_box_sd_1 <- ggpar(p_ioi_box_sd_1, ylab = "Normalised IOI (IOI/Tempo)")
 plot(p_ioi_box_sd_1)
 
@@ -183,36 +184,34 @@ ggsave("./trimmed/ioi_hist_sd_1.png", plot = p_ioi_hist_sd_1, dpi = 600, width =
 ggsave("./trimmed/ioi_box.png", plot = p_ioi_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/ioi_box_sd_1.png", plot = p_ioi_box_sd_1, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_ioi_trim_sd
-write.csv(df_ioi_trim_sd_1, file = "./trimmed/data_ioi_1.csv", row.names = F)
+# Export a txt file for dt_ioi_trim_sd
+fwrite(dt_ioi_trim_sd_1, file = "./trimmed/data_ioi_1.txt", row.names = F)
 
 ####################################
 # 2. > +- 3SD per condition
 ####################################
 # exclude ioi > +- 3SD (per condition)
-ioi_skill <- aggregate(normIOI~Grouping, data = df_ioi_subset,
-                              FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-ioi_skill <- cbind(ioi_skill, as.data.frame(ioi_skill[,2]))
+ioi_skill <- dt_ioi_subset[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = Grouping]
 
-df_ioi_trim_sd_2 <- data.frame()
+dt_ioi_trim_sd_2 <- data.frame()
 for (grouping in unique(ioi_skill$Grouping)){
-  upper_ioi_2 <- ioi_skill$mean[ioi_skill$Grouping == grouping]+3*ioi_skill$sd[ioi_skill$Grouping == grouping]
-  lower_ioi_2 <- ioi_skill$mean[ioi_skill$Grouping == grouping]-3*ioi_skill$sd[ioi_skill$Grouping == grouping]
-  df_current <- df_ioi_subset %>% dplyr::filter(Grouping == grouping & normIOI < upper_ioi_2 & normIOI > lower_ioi_2)
-  df_ioi_trim_sd_2 <- rbind(df_ioi_trim_sd_2, df_current)
+  upper_ioi_2 <- ioi_skill[Grouping == grouping]$Mean+3*ioi_skill[Grouping == grouping]$SD
+  lower_ioi_2 <- ioi_skill[Grouping == grouping]$Mean-3*ioi_skill[Grouping == grouping]$SD
+  dt_current <- dt_ioi_subset[Grouping == grouping & normIOI < upper_ioi_2 & normIOI > lower_ioi_2]
+  dt_ioi_trim_sd_2 <- rbind(dt_ioi_trim_sd_2, dt_current)
 }
 
-removed_ioi_2 <- nrow(df_ioi_subset)-nrow(df_ioi_trim_sd_2)
-proportion_ioi_2 <- round(removed_ioi_2/nrow(df_ioi_subset), 5)
+removed_ioi_2 <- nrow(dt_ioi_subset)-nrow(dt_ioi_trim_sd_2)
+proportion_ioi_2 <- round(removed_ioi_2/nrow(dt_ioi_subset), 5)
 write(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100))
 
 # draw histogram and boxplot
-p_ioi_hist_sd_2 <- ggplot(df_ioi_trim_sd_2, aes(x = normIOI, fill = Grouping)) +
+p_ioi_hist_sd_2 <- ggplot(dt_ioi_trim_sd_2, aes(x = normIOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = .01)
 plot(p_ioi_hist_sd_2)
 
-p_ioi_box_sd_2 <- ggboxplot(df_ioi_trim_sd_2, x = "Skill", y = "normIOI", color = "Condition")
+p_ioi_box_sd_2 <- ggboxplot(dt_ioi_trim_sd_2, x = "Skill", y = "normIOI", color = "Condition")
 p_ioi_box_sd_2 <- ggpar(p_ioi_box_sd_2, ylab = "Normalised IOI (IOI/Tempo)")
 plot(p_ioi_box_sd_2)
 
@@ -221,8 +220,8 @@ plot(p_ioi_box_sd_2)
 ggsave("./trimmed/ioi_hist_sd_2.png", plot = p_ioi_hist_sd_2, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/ioi_box_sd_2.png", plot = p_ioi_box_sd_2, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_ioi_trim_sd
-write.csv(df_ioi_trim_sd_2, file = "./trimmed/data_ioi_2.csv", row.names = F)
+# Export a txt file for dt_ioi_trim_sd
+fwrite(dt_ioi_trim_sd_2, file = "./trimmed/data_ioi_2.txt", row.names = F)
 
 ####################################
 # 3. > +- 3SD across the conditions
@@ -230,34 +229,31 @@ write.csv(df_ioi_trim_sd_2, file = "./trimmed/data_ioi_2.csv", row.names = F)
 # (YES or NO - as a factor)
 ####################################
 # evaluate whether Boundary (i.e., LtoS, StoL, FtoP, PtoF) or not
-df_ioi_subset$Boundary <- "No"
-df_ioi_subset$Boundary[df_ioi_subset$Subcomponent == "LtoS" | df_ioi_subset$Subcomponent == "StoL" |
-                         df_ioi_subset$Subcomponent == "FtoP" | df_ioi_subset$Subcomponent == "PtoF"] <- "Yes"
+dt_ioi_subset$Boundary <- "No"
+dt_ioi_subset[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Boundary <- "Yes"
 
 # exclude ioi > +- 3SD (separately for each Boundary)
-ioi_boundary <- aggregate(normIOI~Boundary, data = df_ioi_subset,
-                       FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-ioi_boundary <- cbind(ioi_boundary, as.data.frame(ioi_boundary[,2]))
+ioi_boundary <- dt_ioi_subset[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = Boundary]
 
-df_ioi_trim_sd_3 <- data.frame()
+dt_ioi_trim_sd_3 <- data.frame()
 for (boundary in unique(ioi_boundary$Boundary)){
-  upper_ioi_3 <- ioi_boundary$mean[ioi_boundary$Boundary == boundary]+3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
-  lower_ioi_3 <- ioi_boundary$mean[ioi_boundary$Boundary == boundary]-3*ioi_boundary$sd[ioi_boundary$Boundary == boundary]
-  df_current <- df_ioi_subset %>% dplyr::filter(Boundary == boundary & normIOI < upper_ioi_3 & normIOI > lower_ioi_3)
-  df_ioi_trim_sd_3 <- rbind(df_ioi_trim_sd_3, df_current)
+  upper_ioi_3 <- ioi_boundary[Boundary == boundary]$Mean+3*ioi_boundary[Boundary == boundary]$SD
+  lower_ioi_3 <- ioi_boundary[Boundary == boundary]$Mean-3*ioi_boundary[Boundary == boundary]$SD
+  dt_current <- dt_ioi_subset[Boundary == boundary & normIOI < upper_ioi_3 & normIOI > lower_ioi_3]
+  dt_ioi_trim_sd_3 <- rbind(dt_ioi_trim_sd_3, dt_current)
 }
 
-removed_ioi_3 <- nrow(df_ioi_subset)-nrow(df_ioi_trim_sd_3)
-proportion_ioi_3 <- round(removed_ioi_3/nrow(df_ioi_subset), 5)
+removed_ioi_3 <- nrow(dt_ioi_subset)-nrow(dt_ioi_trim_sd_3)
+proportion_ioi_3 <- round(removed_ioi_3/nrow(dt_ioi_subset), 5)
 write(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_3, proportion_ioi_3*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_3, proportion_ioi_3*100))
 
 # draw histogram and boxplot
-p_ioi_hist_sd_3 <- ggplot(df_ioi_trim_sd_3, aes(x = normIOI, fill = Grouping)) +
+p_ioi_hist_sd_3 <- ggplot(dt_ioi_trim_sd_3, aes(x = normIOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = .01)
 plot(p_ioi_hist_sd_3)
 
-p_ioi_box_sd_3 <- ggboxplot(df_ioi_trim_sd_3, x = "Skill", y = "normIOI", color = "Condition")
+p_ioi_box_sd_3 <- ggboxplot(dt_ioi_trim_sd_3, x = "Skill", y = "normIOI", color = "Condition")
 p_ioi_box_sd_3 <- ggpar(p_ioi_box_sd_3, ylab = "Normalised IOI (IOI/Tempo)")
 plot(p_ioi_box_sd_3)
 
@@ -266,5 +262,5 @@ plot(p_ioi_box_sd_3)
 ggsave("./trimmed/ioi_hist_sd_3.png", plot = p_ioi_hist_sd_3, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/ioi_box_sd_3.png", plot = p_ioi_box_sd_3, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_ioi_trim_sd
-write.csv(df_ioi_trim_sd_3, file = "./trimmed/data_ioi_3.csv", row.names = F)
+# Export a txt file for dt_ioi_trim_sd
+fwrite(dt_ioi_trim_sd_3, file = "./trimmed/data_ioi_3.txt", row.names = F)
