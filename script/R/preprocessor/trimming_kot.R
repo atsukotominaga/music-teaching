@@ -25,39 +25,42 @@ if (!file.exists("trimmed")){
 }
 
 # read txt files
-dt_onset <- fread(file = "./filtered/dt_correct_onset.txt")
-dt_offset <- fread(file = "./filtered/dt_correct_offset.txt")
+dt_onset_all <- fread(file = "./filtered/dt_correct_onset.txt")
+dt_offset_all <- fread(file = "./filtered/dt_correct_offset.txt")
 
 # check whether each trial has both onset/offset datasets
-onset_trials <- dt_onset[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
-offset_trials <- dt_offset[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
+onset_trials <- dt_onset_all[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
+offset_trials <- dt_offset_all[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
 valid_trials <- rbind(onset_trials, offset_trials)
 valid_trials$Duplicate <- duplicated(valid_trials)
-valid_trials <- valid_trials[Duplicate == TRUE]
+valid_trials_included <- valid_trials[Duplicate == TRUE]
+# 0 trial was excluded
+write(sprintf("KOT: %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)), file = "./trimmed/outlier.txt", append = T)
+print(sprintf("KOT: %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)))
 
-dt_kot_onset_all <- data.table()
-for (row in 1:nrow(valid_trials)){
- current <- dt_onset[SubNr == valid_trials$SubNr[row] & BlockNr == valid_trials$BlockNr[row] & TrialNr == valid_trials$TrialNr[row]]
- dt_kot_onset_all <- rbind(dt_kot_onset_all, current)
+dt_onset <- data.table()
+for (row in 1:nrow(valid_trials_included)){
+ current <- dt_onset_all[SubNr == valid_trials_included$SubNr[row] & BlockNr == valid_trials_included$BlockNr[row] & TrialNr == valid_trials_included$TrialNr[row]]
+ dt_onset <- rbind(dt_onset, current)
 }
 
-dt_kot_offset_all <- data.table()
-for (row in 1:nrow(valid_trials)){
-  current <- dt_offset[SubNr == valid_trials$SubNr[row] & BlockNr == valid_trials$BlockNr[row] & TrialNr == valid_trials$TrialNr[row]]
-  dt_kot_offset_all <- rbind(dt_kot_offset_all, current)
+dt_offset <- data.table()
+for (row in 1:nrow(valid_trials_included)){
+  current <- dt_offset_all[SubNr == valid_trials_included$SubNr[row] & BlockNr == valid_trials_included$BlockNr[row] & TrialNr == valid_trials_included$TrialNr[row]]
+  dt_offset <- rbind(dt_offset, current)
 }
 
-# sort by SubNr, BlockNr, TrialNr, NoteNrm TimeStamp
-dt_kot_onset_all <- dt_kot_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-dt_kot_offset_all <- dt_kot_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+# sort by SubNr, BlockNr, TrialNr, NoteNr
+dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr)]
+dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr)]
 
 ####################################
 # Exclude 3 participants
 # (see error_summary.Rmd
 # and trimming_ioi.R) 
 ####################################
-dt_kot_onset <- dt_kot_onset_all[SubNr != 3 & SubNr != 14 & SubNr != 16]
-dt_kot_offset <- dt_kot_offset_all[SubNr != 3 & SubNr != 14 & SubNr != 16]
+dt_kot_onset <- dt_onset[SubNr != 3 & SubNr != 14 & SubNr != 16]
+dt_kot_offset <- dt_offset[SubNr != 3 & SubNr != 14 & SubNr != 16]
 
 ####################################
 # Define Subcomponents
@@ -109,48 +112,49 @@ dt_kot <- dt_kot[RowNr != 1]
 dt_kot$Interval <- rep(1:66, nrow(dt_kot)/66)
 
 # assign Subcomponents
-dt_kot$Subcomponent <- NA
+dt_kot$Subcomponent <- "NA"
 # Legato
 for (phrase in 1:length(ls_legato)){
   for (note in 1:length(ls_legato[[phrase]])){
-    dt_kot$Subcomponent[dt_kot$Skill == "articulation" & dt_kot$Interval == ls_legato[[phrase]][note]] <- "Legato"
+    dt_kot[Skill == "articulation" & Interval == ls_legato[[phrase]][note]]$Subcomponent <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    dt_kot$Subcomponent[dt_kot$Skill == "articulation" & dt_kot$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+    dt_kot[Skill == "articulation" & Interval == ls_staccato[[phrase]][note]]$Subcomponent <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte)){
   for (note in 1:length(ls_forte[[phrase]])){
-    dt_kot$Subcomponent[dt_kot$Skill == "dynamics" & dt_kot$Interval == ls_forte[[phrase]][note]] <- "Forte"
+    dt_kot[Skill == "dynamics" & Interval == ls_forte[[phrase]][note]]$Subcomponent <- "Forte"
   }
 }
 # Piano
 for (phrase in 1:length(ls_piano)){
   for (note in 1:length(ls_piano[[phrase]])){
-    dt_kot$Subcomponent[dt_kot$Skill == "dynamics" & dt_kot$Interval == ls_piano[[phrase]][note]] <- "Piano"
+    dt_kot[Skill == "dynamics" & Interval == ls_piano[[phrase]][note]]$Subcomponent <- "Piano"
   }
 }
 
 # assign Subcomponent Change
 for (number in change_1){
-  dt_kot$Subcomponent[dt_kot$Skill == "articulation" & dt_kot$Interval == number] <- "LtoS"
-  dt_kot$Subcomponent[dt_kot$Skill == "dynamics" & dt_kot$Interval == number] <- "FtoP"
+  dt_kot[Skill == "articulation" & Interval == number]$Subcomponent <- "LtoS"
+  dt_kot[Skill == "dynamics" & Interval == number]$Subcomponent <- "FtoP"
 }
 for (number in change_2){
-  dt_kot$Subcomponent[dt_kot$Skill == "articulation" & dt_kot$Interval == number] <- "StoL"
-  dt_kot$Subcomponent[dt_kot$Skill == "dynamics" & dt_kot$Interval == number] <- "PtoF"
+  dt_kot[Skill == "articulation" & Interval == number]$Subcomponent <- "StoL"
+  dt_kot[Skill == "dynamics" & Interval == number]$Subcomponent <- "PtoF"
 }
 
 # add a grouping name
 ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+dt_kot$Grouping = "NA"
 for (cond in 1:length(ls_grouping$Condition)){
   for (skill in 1:length(ls_grouping$Skill)){
-    dt_kot$Grouping[dt_kot$Condition == ls_grouping$Condition[cond] & dt_kot$Skill == ls_grouping$Skill[skill]] <-
+    dt_kot[Condition == ls_grouping$Condition[cond] & Skill == ls_grouping$Skill[skill]]$Grouping <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
   }
 }
@@ -159,7 +163,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers (KOT)
 ####################################
 # exclude irrelevant notes (Subcomponent == NA means not 16th notes / KOT == NA means a missing value)
-dt_kot_subset <- dt_kot[!is.na(dt_kot$Subcomponent) & !is.na(dt_kot$KOT)]
+dt_kot_subset <- dt_kot[Subcomponent != "NA" & !is.na(KOT)]
 
 # draw histogram and boxplot
 p_kot_hist <- ggplot(dt_kot_subset, aes(x = KOT, fill = Grouping)) +
@@ -175,8 +179,8 @@ plot(p_kot_box)
 kot_subcomponent <- dt_kot_subset[, .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = Subcomponent]
 dt_kot_trim_sd <- data.table()
 for (subcomponent in unique(dt_kot_subset$Subcomponent)){
-  upper <- kot_subcomponent$Mean[kot_subcomponent$Subcomponent == subcomponent]+3*kot_subcomponent$SD[kot_subcomponent$Subcomponent == subcomponent]
-  lower <- kot_subcomponent$Mean[kot_subcomponent$Subcomponent == subcomponent]-3*kot_subcomponent$SD[kot_subcomponent$Subcomponent == subcomponent]
+  upper <- kot_subcomponent[Subcomponent == subcomponent]$Mean+3*kot_subcomponent[Subcomponent == subcomponent]$SD
+  lower <- kot_subcomponent[Subcomponent == subcomponent]$Mean-3*kot_subcomponent[Subcomponent == subcomponent]$SD
   dt_current <- dt_kot_subset[Subcomponent == subcomponent & KOT < upper & KOT > lower]
   dt_kot_trim_sd <- rbind(dt_kot_trim_sd, dt_current)
 }
@@ -187,7 +191,7 @@ print(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot
 
 # draw histogram and boxplot
 p_kot_hist_sd <- ggplot(dt_kot_trim_sd, aes(x = KOT, fill = Grouping)) +
-  geom_histogram(position = "identity", alpha = .5, binwidth = 10) +
+  geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
 plot(p_kot_hist_sd)
 
@@ -203,4 +207,4 @@ ggsave("./trimmed/kot_box.png", plot = p_kot_box, dpi = 600, width = 5, height =
 ggsave("./trimmed/kot_box_sd.png", plot = p_kot_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for dt_kot_trim_sd
-write.csv(dt_kot_trim_sd, file = "./trimmed/data_kot.txt", row.names = F)
+fwrite(dt_kot_trim_sd, file = "./trimmed/data_kot.txt", row.names = F)

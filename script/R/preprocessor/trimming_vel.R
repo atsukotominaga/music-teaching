@@ -28,9 +28,9 @@ if (!file.exists("trimmed")){
 dt_onset_all <- fread(file = "./filtered/dt_correct_onset.txt")
 dt_offset_all <- fread(file = "./filtered/dt_correct_offset.txt")
 
-# sort by SubNr, BlockNr, TrialNr, NoteNrm TimeStamp
-dt_onset_all <- dt_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-dt_offset_all <- dt_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+# sort by SubNr, BlockNr, TrialNr, NoteNr
+dt_onset_all <- dt_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr)]
+dt_offset_all <- dt_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr)]
 
 ####################################
 # Exclude 3 participants
@@ -76,80 +76,82 @@ dt_vel_diff$Interval <- rep(1:66, nrow(dt_vel_diff)/66)
 
 # assign Subcomponents
 # for each note
-dt_vel$Subcomponent <- NA
+dt_vel$Subcomponent <- "NA"
 # Legato
 for (phrase in 1:length(ls_legato_2)){
   for (note in 1:length(ls_legato_2[[phrase]])){
-    dt_vel$Subcomponent[dt_vel$Skill == "articulation" & dt_vel$RowNr == ls_legato_2[[phrase]][note]] <- "Legato"
+    dt_vel[Skill == "articulation" & RowNr == ls_legato_2[[phrase]][note]]$Subcomponent <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato_2)){
   for (note in 1:length(ls_staccato_2[[phrase]])){
-    dt_vel$Subcomponent[dt_vel$Skill == "articulation" & dt_vel$RowNr == ls_staccato_2[[phrase]][note]] <- "Staccato"
+    dt_vel[Skill == "articulation" & RowNr == ls_staccato_2[[phrase]][note]]$Subcomponent <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte_2)){
   for (note in 1:length(ls_forte_2[[phrase]])){
-    dt_vel$Subcomponent[dt_vel$Skill == "dynamics" & dt_vel$RowNr == ls_forte_2[[phrase]][note]] <- "Forte"
+    dt_vel[Skill == "dynamics" & RowNr == ls_forte_2[[phrase]][note]]$Subcomponent <- "Forte"
   }
 }
 
 # Piano
 for (phrase in 1:length(ls_piano_2)){
   for (note in 1:length(ls_piano_2[[phrase]])){
-    dt_vel$Subcomponent[dt_vel$Skill == "dynamics" & dt_vel$RowNr == ls_piano_2[[phrase]][note]] <- "Piano"
+    dt_vel[Skill == "dynamics" & RowNr == ls_piano_2[[phrase]][note]]$Subcomponent <- "Piano"
   }
 }
 
 # assign Subcomponents
 # for intervals
-dt_vel_diff$Subcomponent <- NA
+dt_vel_diff$Subcomponent <- "NA"
 # Legato
 for (phrase in 1:length(ls_legato)){
   for (note in 1:length(ls_legato[[phrase]])){
-    dt_vel_diff$Subcomponent[dt_vel_diff$Skill == "articulation" & dt_vel_diff$Interval == ls_legato[[phrase]][note]] <- "Legato"
+    dt_vel_diff[Skill == "articulation" & Interval == ls_legato[[phrase]][note]]$Subcomponent <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    dt_vel_diff$Subcomponent[dt_vel_diff$Skill == "articulation" & dt_vel_diff$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+    dt_vel_diff[Skill == "articulation" & Interval == ls_staccato[[phrase]][note]]$Subcomponent <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte)){
   for (note in 1:length(ls_forte[[phrase]])){
-    dt_vel_diff$Subcomponent[dt_vel_diff$Skill == "dynamics" & dt_vel_diff$Interval == ls_forte[[phrase]][note]] <- "Forte"
+    dt_vel_diff[Skill == "dynamics" & Interval == ls_forte[[phrase]][note]]$Subcomponent <- "Forte"
   }
 }
 # Piano
 for (phrase in 1:length(ls_piano)){
   for (note in 1:length(ls_piano[[phrase]])){
-    dt_vel_diff$Subcomponent[dt_vel_diff$Skill == "dynamics" & dt_vel_diff$Interval == ls_piano[[phrase]][note]] <- "Piano"
+    dt_vel_diff[Skill == "dynamics" & Interval == ls_piano[[phrase]][note]]$Subcomponent <- "Piano"
   }
 }
 
 # Assign Skill Change
 for (i in change_1){
-  dt_vel_diff$Subcomponent[dt_vel_diff$Skill == "articulation" & dt_vel_diff$Interval == i] <- "LtoS"
-  dt_vel_diff$Subcomponent[dt_vel_diff$Skill == "dynamics" & dt_vel_diff$Interval == i] <- "FtoP"
+  dt_vel_diff[Skill == "articulation" & Interval == i]$Subcomponent <- "LtoS"
+  dt_vel_diff[Skill == "dynamics" & Interval == i]$Subcomponent <- "FtoP"
 }
 for (i in change_2){
-  dt_vel_diff$Subcomponent[dt_vel_diff$Skill == "articulation" & dt_vel_diff$Interval == i] <- "StoL"
-  dt_vel_diff$Subcomponent[dt_vel_diff$Skill == "dynamics" & dt_vel_diff$Interval == i] <- "PtoF"
+  dt_vel_diff[Skill == "articulation" & Interval == i]$Subcomponent <- "StoL"
+  dt_vel_diff[Skill == "dynamics" & Interval == i]$Subcomponent <- "PtoF"
 }
 
 # Add a grouping name
 ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+dt_vel$Grouping <- "NA"
+dt_vel_diff$Grouping <- "NA"
 for (cond in 1:length(ls_grouping$Condition)){
   for (skill in 1:length(ls_grouping$Skill)){
-    dt_vel$Grouping[dt_vel$Condition == ls_grouping$Condition[cond] & dt_vel$Skill == ls_grouping$Skill[skill]] <-
+    dt_vel[Condition == ls_grouping$Condition[cond] & Skill == ls_grouping$Skill[skill]]$Grouping <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-    dt_vel_diff$Grouping[dt_vel_diff$Condition == ls_grouping$Condition[cond] & dt_vel_diff$Skill == ls_grouping$Skill[skill]] <-
+    dt_vel_diff[Condition == ls_grouping$Condition[cond] & Skill == ls_grouping$Skill[skill]]$Grouping <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
   }
 }
@@ -158,8 +160,8 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers
 ####################################
 # exclude irrelevant notes (Subcomponent == NA means not 16th notes / Velocity/Diff == NA means a missing value)
-dt_vel_subset <- dt_vel[!is.na(dt_vel$Subcomponent) & !is.na(dt_vel$Velocity)]
-dt_vel_diff_subset <- dt_vel_diff[!is.na(dt_vel_diff$Subcomponent) & !is.na(dt_vel_diff$Diff)]
+dt_vel_subset <- dt_vel[Subcomponent != "NA" & !is.na(Velocity)]
+dt_vel_diff_subset <- dt_vel_diff[Subcomponent != "NA" & !is.na(Diff)]
 
 ###### dt_vel
 # draw histogram and boxplot
@@ -176,11 +178,12 @@ vel_subcomponent <- dt_vel_subset[, .(N = .N, Mean = mean(Velocity), SD = sd(Vel
  
 dt_vel_trim_sd <- data.table()
 for (subcomponent in unique(dt_vel_subset$Subcomponent)){
-  upper <- vel_subcomponent$Mean[vel_subcomponent$Subcomponent == subcomponent]+3*vel_subcomponent$SD[vel_subcomponent$Subcomponent == subcomponent]
-  lower <- vel_subcomponent$Mean[vel_subcomponent$Subcomponent == subcomponent]-3*vel_subcomponent$SD[vel_subcomponent$Subcomponent == subcomponent]
+  upper <- vel_subcomponent[Subcomponent == subcomponent]$Mean+3*vel_subcomponent[Subcomponent == subcomponent]$SD
+  lower <- vel_subcomponent[Subcomponent == subcomponent]$Mean-3*vel_subcomponent[Subcomponent == subcomponent]$SD
   dt_current <- dt_vel_subset[Subcomponent == subcomponent & Velocity < upper & Velocity > lower]
   dt_vel_trim_sd <- rbind(dt_vel_trim_sd, dt_current)
 }
+
 removed_vel <- nrow(dt_vel_subset)-nrow(dt_vel_trim_sd)
 proportion_vel <- round(removed_vel/nrow(dt_vel_subset), 5)
 write(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100), file = "./trimmed/outlier.txt", append = T)
@@ -202,8 +205,8 @@ ggsave("./trimmed/vel_hist_sd.png", plot = p_vel_hist_sd, dpi = 600, width = 5, 
 ggsave("./trimmed/vel_box.png", plot = p_vel_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/vel_box_sd.png", plot = p_vel_box_sd, dpi = 600, width = 5, height = 4)
 
-# export a csv file for dt_trim_sd
-write.csv(dt_vel_trim_sd, file = "./trimmed/data_vel.txt", row.names = F)
+# export a txt file for dt_trim_sd
+fwrite(dt_vel_trim_sd, file = "./trimmed/data_vel.txt", row.names = F)
 
 ###### dt_vel_diff
 # draw histogram and boxplot
@@ -220,11 +223,12 @@ vel_diff_subcomponent <- dt_vel_diff_subset[, .(N = .N, Mean = mean(Diff), SD = 
 
 dt_vel_diff_trim_sd <- data.table()
 for (subcomponent in unique(dt_vel_diff_subset$Subcomponent)){
-  upper <- vel_diff_subcomponent$Mean[vel_diff_subcomponent$Subcomponent == subcomponent]+3*vel_diff_subcomponent$SD[vel_diff_subcomponent$Subcomponent == subcomponent]
-  lower <- vel_diff_subcomponent$Mean[vel_diff_subcomponent$Subcomponent == subcomponent]-3*vel_diff_subcomponent$SD[vel_diff_subcomponent$Subcomponent == subcomponent]
+  upper <- vel_diff_subcomponent[Subcomponent == subcomponent]$Mean+3*vel_diff_subcomponent[Subcomponent == subcomponent]$SD
+  lower <- vel_diff_subcomponent[Subcomponent == subcomponent]$Mean-3*vel_diff_subcomponent[Subcomponent == subcomponent]$SD
   dt_current <- dt_vel_diff_subset[Subcomponent == subcomponent & Diff < upper & Diff > lower]
   dt_vel_diff_trim_sd <- rbind(dt_vel_diff_trim_sd, dt_current)
 }
+
 removed_vel_diff <- nrow(dt_vel_diff_subset)-nrow(dt_vel_diff_trim_sd)
 proportion_vel_diff <- round(removed_vel_diff/nrow(dt_vel_diff_subset), 5)
 write(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100), file = "./trimmed/outlier.txt", append = T)
@@ -247,4 +251,4 @@ ggsave("./trimmed/vel_diff_box.png", plot = p_vel_diff_box, dpi = 600, width = 5
 ggsave("./trimmed/vel_diff_box_sd.png", plot = p_vel_diff_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for dt_trim_sd
-write.csv(dt_vel_diff_trim_sd, file = "./trimmed/data_vel_diff.txt", row.names = F)
+fwrite(dt_vel_diff_trim_sd, file = "./trimmed/data_vel_diff.txt", row.names = F)

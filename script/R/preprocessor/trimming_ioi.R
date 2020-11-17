@@ -28,9 +28,9 @@ if (!file.exists("trimmed")){
 dt_onset_all <- fread(file = "./filtered/dt_correct_onset.txt")
 dt_offset_all <- fread(file = "./filtered/dt_correct_offset.txt")
 
-# sort by SubNr, BlockNr, TrialNr, NoteNrm TimeStamp
-dt_onset_all <- dt_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-dt_offset_all <- dt_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+# sort by SubNr, BlockNr, TrialNr, NoteNr
+dt_onset_all <- dt_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr)]
+dt_offset_all <- dt_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr)]
 
 ####################################
 # Exclude two participants
@@ -124,7 +124,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers (3 methods)
 ####################################
 # exclude irrelevant notes (Subcomponent == NA means not 16th notes / IOI == NA means a missing value)
-dt_ioi_subset <- dt_ioi[!is.na(dt_ioi$Subcomponent) & !is.na(dt_ioi$IOI)]
+dt_ioi_subset <- dt_ioi[Subcomponent　!= "NA" & !is.na(IOI)]
 
 # draw histogram and boxplot
 p_ioi_hist <- ggplot(dt_ioi_subset, aes(x = IOI, fill = Grouping)) +
@@ -173,7 +173,7 @@ ggsave("./trimmed/ioi_hist_sd_1.png", plot = p_ioi_hist_sd_1, dpi = 600, width =
 ggsave("./trimmed/ioi_box.png", plot = p_ioi_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/ioi_box_sd_1.png", plot = p_ioi_box_sd_1, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for dt_ioi_trim_sd
+# Export a txt file for dt_ioi_trim_sd
 fwrite(dt_ioi_trim_sd_1, file = "./trimmed/data_ioi_1.txt", row.names = F)
 
 ####################################
@@ -184,8 +184,8 @@ ioi_skill <- dt_ioi_subset[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = Gro
 
 dt_ioi_trim_sd_2 <- data.table()
 for (grouping in unique(ioi_skill$Grouping)){
-  upper_ioi_2 <- ioi_skill$Mean[ioi_skill$Grouping == grouping]+3*ioi_skill$SD[ioi_skill$Grouping == grouping]
-  lower_ioi_2 <- ioi_skill$Mean[ioi_skill$Grouping == grouping]-3*ioi_skill$SD[ioi_skill$Grouping == grouping]
+  upper_ioi_2 <- ioi_skill[Grouping == grouping]$Mean+3*ioi_skill[Grouping == grouping]$SD
+  lower_ioi_2 <- ioi_skill[Grouping == grouping]$Mean-3*ioi_skill[Grouping == grouping]$SD
   dt_current <- dt_ioi_subset[Grouping == grouping & IOI < upper_ioi_2 & IOI > lower_ioi_2]
   dt_ioi_trim_sd_2 <- rbind(dt_ioi_trim_sd_2, dt_current)
 }
@@ -197,7 +197,7 @@ print(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", r
 
 # draw histogram and boxplot
 p_ioi_hist_sd_2 <- ggplot(dt_ioi_trim_sd_2, aes(x = IOI, fill = Grouping)) +
-  geom_histogram(position = "identity", alpha = .5, binwidth = 10)
+  geom_histogram(position = "identity", alpha = .5, binwidth = 5)
 plot(p_ioi_hist_sd_2)
 
 p_ioi_box_sd_2 <- ggboxplot(dt_ioi_trim_sd_2, x = "Skill", y = "IOI", color = "Condition")
@@ -209,7 +209,7 @@ plot(p_ioi_box_sd_2)
 ggsave("./trimmed/ioi_hist_sd_2.png", plot = p_ioi_hist_sd_2, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/ioi_box_sd_2.png", plot = p_ioi_box_sd_2, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for dt_ioi_trim_sd
+# Export a txt file for dt_ioi_trim_sd
 fwrite(dt_ioi_trim_sd_2, file = "./trimmed/data_ioi_2.txt", row.names = F)
 
 ####################################
@@ -226,8 +226,8 @@ ioi_boundary <- dt_ioi_subset[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = 
 
 dt_ioi_trim_sd_3 <- data.table()
 for (boundary in unique(ioi_boundary$Boundary)){
-  upper_ioi_3 <- ioi_boundary$Mean[ioi_boundary$Boundary == boundary]+3*ioi_boundary$SD[ioi_boundary$Boundary == boundary]
-  lower_ioi_3 <- ioi_boundary$Mean[ioi_boundary$Boundary == boundary]-3*ioi_boundary$SD[ioi_boundary$Boundary == boundary]
+  upper_ioi_3 <- ioi_boundary[Boundary == boundary]$Mean+3*ioi_boundary[Boundary == boundary]$SD
+  lower_ioi_3 <- ioi_boundary[Boundary == boundary]$Mean-3*ioi_boundary[Boundary == boundary]$SD
   dt_current <- dt_ioi_subset[Boundary == boundary & IOI < upper_ioi_3 & IOI > lower_ioi_3]
   dt_ioi_trim_sd_3 <- rbind(dt_ioi_trim_sd_3, dt_current)
 }
@@ -251,5 +251,5 @@ plot(p_ioi_box_sd_3)
 ggsave("./trimmed/ioi_hist_sd_3.png", plot = p_ioi_hist_sd_3, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/ioi_box_sd_3.png", plot = p_ioi_box_sd_3, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for dt_ioi_trim_sd
+# Export a txt file for dt_ioi_trim_sd
 fwrite(dt_ioi_trim_sd_3, file = "./trimmed/data_ioi_3.txt", row.names = F)
