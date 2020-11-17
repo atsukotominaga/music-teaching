@@ -25,12 +25,20 @@ if (!file.exists("trimmed")){
 }
 
 # read txt files
-dt_onset <- fread(file = "./filtered/dt_correct_onset.txt")
-dt_offset <- fread(file = "./filtered/dt_correct_offset.txt")
+dt_onset_all <- fread(file = "./filtered/dt_correct_onset.txt")
+dt_offset_all <- fread(file = "./filtered/dt_correct_offset.txt")
 
 # sort by SubNr, BlockNr, TrialNr, NoteNrm TimeStamp
-dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+dt_onset_all <- dt_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+dt_offset_all <- dt_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+
+####################################
+# Exclude 3 participants
+# (see error_summary.Rmd
+# and trimming_ioi.R) 
+####################################
+dt_onset <- dt_onset_all[SubNr != 3 & SubNr != 14 & SubNr != 16]
+dt_offset <- dt_offset_all[SubNr != 3 & SubNr != 14 & SubNr != 16]
 
 ####################################
 # Define Subcomponents
@@ -150,8 +158,8 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers
 ####################################
 # exclude irrelevant notes (Subcomponent == NA means not 16th notes / Velocity/Diff == NA means a missing value)
-dt_vel_subset <- subset(dt_vel, !is.na(dt_vel$Subcomponent) & !is.na(dt_vel$Velocity))
-dt_vel_diff_subset <- subset(dt_vel_diff, !is.na(dt_vel_diff$Subcomponent) & !is.na(dt_vel_diff$Diff))
+dt_vel_subset <- dt_vel[!is.na(dt_vel$Subcomponent) & !is.na(dt_vel$Velocity)]
+dt_vel_diff_subset <- dt_vel_diff[!is.na(dt_vel_diff$Subcomponent) & !is.na(dt_vel_diff$Diff)]
 
 ###### dt_vel
 # draw histogram and boxplot
@@ -164,12 +172,12 @@ p_vel_box <- ggpar(p_vel_box, ylab = "Velocity (0-127)")
 plot(p_vel_box)
 
 # exclude vel > +- 3SD (within a given condition)
-vel_subcomponent <- dt_vel_subset[, .(N = .N, mean = mean(Velocity), sd = sd(Velocity), sem = sd(Velocity)/sqrt(.N)), by = Subcomponent]
+vel_subcomponent <- dt_vel_subset[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = Subcomponent]
  
 dt_vel_trim_sd <- data.table()
 for (subcomponent in unique(dt_vel_subset$Subcomponent)){
-  upper <- vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]+3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
-  lower <- vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]-3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
+  upper <- vel_subcomponent$Mean[vel_subcomponent$Subcomponent == subcomponent]+3*vel_subcomponent$SD[vel_subcomponent$Subcomponent == subcomponent]
+  lower <- vel_subcomponent$Mean[vel_subcomponent$Subcomponent == subcomponent]-3*vel_subcomponent$SD[vel_subcomponent$Subcomponent == subcomponent]
   dt_current <- dt_vel_subset[Subcomponent == subcomponent & Velocity < upper & Velocity > lower]
   dt_vel_trim_sd <- rbind(dt_vel_trim_sd, dt_current)
 }
@@ -208,12 +216,12 @@ p_vel_diff_box <- ggpar(p_vel_diff_box, ylab = "Difference")
 plot(p_vel_diff_box)
 
 # exclude vel > +- 3SD (within a given condition)
-vel_diff_subcomponent <- dt_vel_diff_subset[, .(N = .N, mean = mean(Diff), sd = sd(Diff), sem = sd(Diff)/sqrt(.N)), by = Subcomponent]
+vel_diff_subcomponent <- dt_vel_diff_subset[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = Subcomponent]
 
 dt_vel_diff_trim_sd <- data.table()
 for (subcomponent in unique(dt_vel_diff_subset$Subcomponent)){
-  upper <- vel_diff_subcomponent$mean[vel_diff_subcomponent$Subcomponent == subcomponent]+3*vel_diff_subcomponent$sd[vel_diff_subcomponent$Subcomponent == subcomponent]
-  lower <- vel_diff_subcomponent$mean[vel_diff_subcomponent$Subcomponent == subcomponent]-3*vel_diff_subcomponent$sd[vel_diff_subcomponent$Subcomponent == subcomponent]
+  upper <- vel_diff_subcomponent$Mean[vel_diff_subcomponent$Subcomponent == subcomponent]+3*vel_diff_subcomponent$SD[vel_diff_subcomponent$Subcomponent == subcomponent]
+  lower <- vel_diff_subcomponent$Mean[vel_diff_subcomponent$Subcomponent == subcomponent]-3*vel_diff_subcomponent$SD[vel_diff_subcomponent$Subcomponent == subcomponent]
   dt_current <- dt_vel_diff_subset[Subcomponent == subcomponent & Diff < upper & Diff > lower]
   dt_vel_diff_trim_sd <- rbind(dt_vel_diff_trim_sd, dt_current)
 }
