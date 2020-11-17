@@ -27,7 +27,6 @@ if (!file.exists("trimmed")){
 # read txt files
 dt_onset <- fread(file = "./filtered/dt_correct_onset.txt")
 dt_offset <- fread(file = "./filtered/dt_correct_offset.txt")
-dt_offset[Velocity == NA]$TimeStamp <- NA
 
 # check whether each trial has both onset/offset datasets
 onset_trials <- dt_onset[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
@@ -36,23 +35,29 @@ valid_trials <- rbind(onset_trials, offset_trials)
 valid_trials$Duplicate <- duplicated(valid_trials)
 valid_trials <- valid_trials[Duplicate == TRUE]
 
-dt_kot_onset <- data.table()
+dt_kot_onset_all <- data.table()
 for (row in 1:nrow(valid_trials)){
  current <- dt_onset[SubNr == valid_trials$SubNr[row] & BlockNr == valid_trials$BlockNr[row] & TrialNr == valid_trials$TrialNr[row]]
- dt_kot_onset <- rbind(dt_kot_onset, current)
+ dt_kot_onset_all <- rbind(dt_kot_onset_all, current)
 }
 
-dt_kot_offset <- data.table()
+dt_kot_offset_all <- data.table()
 for (row in 1:nrow(valid_trials)){
   current <- dt_offset[SubNr == valid_trials$SubNr[row] & BlockNr == valid_trials$BlockNr[row] & TrialNr == valid_trials$TrialNr[row]]
-  dt_kot_offset <- rbind(dt_kot_offset, current)
+  dt_kot_offset_all <- rbind(dt_kot_offset_all, current)
 }
 
 # sort by SubNr, BlockNr, TrialNr, NoteNrm TimeStamp
-dt_kot_onset <- dt_kot_onset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-dt_kot_offset <- dt_kot_offset
-dt_kot_offset$TimeStamp <- as.integer(dt_kot_offset$TimeStamp)
-dt_kot_offset <- dt_kot_offset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+dt_kot_onset_all <- dt_kot_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+dt_kot_offset_all <- dt_kot_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+
+####################################
+# Exclude 3 participants
+# (see error_summary.Rmd
+# and trimming_ioi.R) 
+####################################
+dt_kot_onset <- dt_kot_onset_all[SubNr != 3 & SubNr != 14 & SubNr != 16]
+dt_kot_offset <- dt_kot_offset_all[SubNr != 3 & SubNr != 14 & SubNr != 16]
 
 ####################################
 # Define Subcomponents
@@ -154,7 +159,7 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers (KOT)
 ####################################
 # exclude irrelevant notes (Subcomponent == NA means not 16th notes / KOT == NA means a missing value)
-dt_kot_subset <- subset(dt_kot, !is.na(dt_kot$Subcomponent) & !is.na(dt_kot$KOT))
+dt_kot_subset <- dt_kot[!is.na(dt_kot$Subcomponent) & !is.na(dt_kot$KOT)]
 
 # draw histogram and boxplot
 p_kot_hist <- ggplot(dt_kot_subset, aes(x = KOT, fill = Grouping)) +
@@ -167,11 +172,11 @@ p_kot_box <- ggpar(p_kot_box, ylab = "Key-Overlap Time")
 plot(p_kot_box)
 
 # exclude kot > +- 3SD (per subcomponent)
-kot_subcomponent <- dt_kot_subset[, .(N = .N, mean = mean(KOT), sd = sd(KOT), sem = sd(KOT)/sqrt(.N)), by = Subcomponent]
+kot_subcomponent <- dt_kot_subset[, .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = Subcomponent]
 dt_kot_trim_sd <- data.table()
 for (subcomponent in unique(dt_kot_subset$Subcomponent)){
-  upper <- kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]+3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
-  lower <- kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]-3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
+  upper <- kot_subcomponent$Mean[kot_subcomponent$Subcomponent == subcomponent]+3*kot_subcomponent$SD[kot_subcomponent$Subcomponent == subcomponent]
+  lower <- kot_subcomponent$Mean[kot_subcomponent$Subcomponent == subcomponent]-3*kot_subcomponent$SD[kot_subcomponent$Subcomponent == subcomponent]
   dt_current <- dt_kot_subset[Subcomponent == subcomponent & KOT < upper & KOT > lower]
   dt_kot_trim_sd <- rbind(dt_kot_trim_sd, dt_current)
 }
