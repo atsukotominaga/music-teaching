@@ -35,6 +35,8 @@ error_offset <- fread(file = "./filtered/error_offset.txt", sep = ",")
 - Each performance (1 trial) contains 67 responses for onsets and 67 responses for offsets (i.e., if there is no mistake, 134 responses in total)
 - Each block contains 8 trials and there are 4 blocks (teaching vs. performing x articulation vs. dynamics)
 
+- Note: SubNr 8 was already excluded because of an experimental error
+
 # Outline
 1. [Onset reports](#onset)
 2. [Offset reports](#offset)
@@ -63,6 +65,7 @@ missing_onset
 
 - SubNr 3: experimental error (8 trials)
 - SubNr 14: played in octave higher (8 trials)
+(- SubNr 8 was already excluded because of an experimental error)
 
 2. **some performances were removed because 1) participants didn't follow sheet music or 2) participants didn't finish till the end (5 trials)**
 
