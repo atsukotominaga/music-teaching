@@ -28,7 +28,7 @@ if (!file.exists("trimmed")){
 }
 
 # read a text file for ideal performance
-dt_ideal <- read.table("./ideal.txt")
+dt_ideal <- fread("./ideal.txt")
 colnames(dt_ideal) <- "Pitch"
 dt_ideal$RowNr <- c(1:nrow(dt_ideal))
 dt_ideal <- dt_ideal[c(2, 1)]
@@ -41,9 +41,9 @@ dt_offset <- fread(file = "./filtered/dt_correct_offset.txt", header = T)
 dt_onset$RowNr <- rep(1:72, nrow(dt_onset)/72)
 dt_offset$RowNr <- rep(1:72, nrow(dt_offset)/72)
 
-# sort by SubNr, BlockNr, TrialNr and RowNr
-dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
-dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr, TimeStamp)]
+# sort by SubNr, BlockNr, TrialNr and NoteNr
+dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr)]
+dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr)]
 
 ####################################
 # Define Subcomponents
@@ -72,9 +72,9 @@ change_2 <- c(8, 20, 39)
 dt_ioi <- dt_onset
 dt_ioi$IOI <- diff(c(0, dt_ioi$TimeStamp))
 # convert bpm to ms
-dt_ioi$Tempo[dt_ioi$Tempo == 120] <- 250
-dt_ioi$Tempo[dt_ioi$Tempo == 110] <- 273
-dt_ioi$Tempo[dt_ioi$Tempo == 100] <- 300
+dt_ioi[Tempo == 120]$Tempo <- 250
+dt_ioi[Tempo == 110]$Tempo <- 273
+dt_ioi[Tempo == 100]$Tempo <- 300
 # normalise IOIs
 dt_ioi$normIOI <- dt_ioi$IOI/dt_ioi$Tempo
 

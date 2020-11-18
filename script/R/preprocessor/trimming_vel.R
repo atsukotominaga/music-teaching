@@ -13,7 +13,7 @@
 ####################################
 # set working directory to file source location
 # install and load required packages
-if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+if (!require("data.table")) {install.packages("data.table"); require("data.table")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 
@@ -28,31 +28,22 @@ if (!file.exists("trimmed")){
 }
 
 # read a text file for ideal performance
-df_ideal <- read.table("./ideal.txt")
-colnames(df_ideal) <- "Pitch"
-df_ideal$RowNr <- c(1:nrow(df_ideal))
-df_ideal <- df_ideal[c(2, 1)]
+dt_ideal <- read.table("./ideal.txt")
+colnames(dt_ideal) <- "Pitch"
+dt_ideal$RowNr <- c(1:nrow(dt_ideal))
+dt_ideal <- dt_ideal[c(2, 1)]
 
-# read csv
-df_onset <- read.csv(file.path("./filtered/data_correct_onset.csv"), header = T)
-df_offset <- read.csv(file.path("./filtered/data_correct_offset.csv"), header = T)
+# read txt files
+dt_onset <- fread(file = "./filtered/dt_correct_onset.txt", header = T)
+dt_offset <- fread(file = "./filtered/dt_correct_offset.txt", header = T)
 
 # assign RowNr
-df_onset$RowNr <- rep(1:72, nrow(df_onset)/72)
-df_offset$RowNr <- rep(1:72, nrow(df_offset)/72)
+dt_onset$RowNr <- rep(1:72, nrow(dt_onset)/72)
+dt_offset$RowNr <- rep(1:72, nrow(dt_offset)/72)
 
-# sort by SubNr, BlockNr, TrialNr and RowNr
-df_onset <- df_onset[order(df_onset$SubNr, df_onset$BlockNr, df_onset$TrialNr, df_onset$RowNr),]
-df_offset <- df_offset[order(df_offset$SubNr, df_offset$BlockNr, df_offset$TrialNr, df_offset$RowNr),]
-
-# read functions
-source("./function.R")
-
-# make sure there is no pitch errors - outputs should be only missing trials
-print("----- Onset missing trials -----")
-ls_removed_onset <- pitch_remover(df_onset, df_ideal)
-print("----- Offset missing trials -----")
-ls_removed_offset <- pitch_remover(df_offset, df_ideal)
+# sort by SubNr, BlockNr, TrialNr and NoteNr
+dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr)]
+dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr)]
 
 ####################################
 # Define Subcomponents
@@ -78,96 +69,98 @@ change_2 <- c(8, 20, 39)
 # Key Velocity - dynamics
 ####################################
 # calculate Acc (acceleration - velocity difference between notes)
-df_vel <- df_onset
-df_vel$Diff <- diff(c(0, df_vel$Velocity))
+dt_vel <- dt_onset
+dt_vel$Diff <- diff(c(0, dt_vel$Velocity))
 # convert bpm to ms
-df_vel$Tempo[df_vel$Tempo == 120] <- 250
-df_vel$Tempo[df_vel$Tempo == 110] <- 273
-df_vel$Tempo[df_vel$Tempo == 100] <- 300
+dt_vel[Tempo == 120]$Tempo <- 250
+dt_vel[Tempo == 110]$Tempo <- 273
+dt_vel[Tempo == 100]$Tempo <- 300
 
 # remove the first note
-df_vel_diff <- df_vel %>% dplyr::filter(RowNr != 1)
-df_vel$Diff <- NULL # remove Diff from df_vel
+dt_vel_diff <- dt_vel[RowNr != 1]
+dt_vel$Diff <- NULL # remove Diff from dt_vel
 
 # assign Interval
-df_vel_diff$Interval <- rep(1:71, nrow(df_vel_diff)/71)
+dt_vel_diff$Interval <- rep(1:71, nrow(dt_vel_diff)/71)
 
 # assign Subcomponents
 # for each note
-df_vel$Subcomponent <- NA
+dt_vel$Subcomponent <- "NA"
 # Legato
 for (phrase in 1:length(ls_legato2)){
   for (note in 1:length(ls_legato2[[phrase]])){
-    df_vel$Subcomponent[df_vel$Skill == "articulation" & df_vel$RowNr == ls_legato2[[phrase]][note]] <- "Legato"
+    dt_vel[Skill == "articulation" & RowNr == ls_legato2[[phrase]][note]]$Subcomponent <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato2)){
   for (note in 1:length(ls_staccato2[[phrase]])){
-    df_vel$Subcomponent[df_vel$Skill == "articulation" & df_vel$RowNr == ls_staccato2[[phrase]][note]] <- "Staccato"
+    dt_vel[Skill == "articulation" & RowNr == ls_staccato2[[phrase]][note]]$Subcomponent <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte2)){
   for (note in 1:length(ls_forte2[[phrase]])){
-    df_vel$Subcomponent[df_vel$Skill == "dynamics" & df_vel$RowNr == ls_forte2[[phrase]][note]] <- "Forte"
+    dt_vel[Skill == "dynamics" & RowNr == ls_forte2[[phrase]][note]]$Subcomponent <- "Forte"
   }
 }
 
 # Piano
 for (phrase in 1:length(ls_piano2)){
   for (note in 1:length(ls_piano2[[phrase]])){
-    df_vel$Subcomponent[df_vel$Skill == "dynamics" & df_vel$RowNr == ls_piano2[[phrase]][note]] <- "Piano"
+    dt_vel[Skill == "dynamics" & RowNr == ls_piano2[[phrase]][note]]$Subcomponent <- "Piano"
   }
 }
 
 # assign Subcomponents
 # for intervals
-df_vel_diff$Subcomponent <- NA
+dt_vel_diff$Subcomponent <- "NA"
 # Legato
 for (phrase in 1:length(ls_legato)){
   for (note in 1:length(ls_legato[[phrase]])){
-    df_vel_diff$Subcomponent[df_vel_diff$Skill == "articulation" & df_vel_diff$Interval == ls_legato[[phrase]][note]] <- "Legato"
+    dt_vel_diff[Skill == "articulation" & Interval == ls_legato[[phrase]][note]]$Subcomponent <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    df_vel_diff$Subcomponent[df_vel_diff$Skill == "articulation" & df_vel_diff$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+    dt_vel_diff[Skill == "articulation" & Interval == ls_staccato[[phrase]][note]]$Subcomponent <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte)){
   for (note in 1:length(ls_forte[[phrase]])){
-    df_vel_diff$Subcomponent[df_vel_diff$Skill == "dynamics" & df_vel_diff$Interval == ls_forte[[phrase]][note]] <- "Forte"
+    dt_vel_diff[Skill == "dynamics" & Interval == ls_forte[[phrase]][note]]$Subcomponent <- "Forte"
   }
 }
 # Piano
 for (phrase in 1:length(ls_piano)){
   for (note in 1:length(ls_piano[[phrase]])){
-    df_vel_diff$Subcomponent[df_vel_diff$Skill == "dynamics" & df_vel_diff$Interval == ls_piano[[phrase]][note]] <- "Piano"
+    dt_vel_diff[Skill == "dynamics" & Interval == ls_piano[[phrase]][note]]$Subcomponent <- "Piano"
   }
 }
 
 # Assign Skill Change
-for (i in change_1){
-  df_vel_diff$Subcomponent[df_vel_diff$Skill == "articulation" & df_vel_diff$Interval == i] <- "LtoS"
-  df_vel_diff$Subcomponent[df_vel_diff$Skill == "dynamics" & df_vel_diff$Interval == i] <- "FtoP"
+for (number in change_1){
+  dt_vel_diff[Skill == "articulation" & Interval == number]$Subcomponent <- "LtoS"
+  dt_vel_diff[Skill == "dynamics" & Interval == number]$Subcomponent <- "FtoP"
 }
-for (i in change_2){
-  df_vel_diff$Subcomponent[df_vel_diff$Skill == "articulation" & df_vel_diff$Interval == i] <- "StoL"
-  df_vel_diff$Subcomponent[df_vel_diff$Skill == "dynamics" & df_vel_diff$Interval == i] <- "PtoF"
+for (number in change_2){
+  dt_vel_diff[Skill == "articulation" & Interval == number]$Subcomponent <- "StoL"
+  dt_vel_diff[Skill == "dynamics" & Interval == number]$Subcomponent <- "PtoF"
 }
 
 # Add a grouping name
 ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+dt_vel$Grouping <- "NA"
+dt_vel_diff$Grouping <- "NA"
 for (cond in 1:length(ls_grouping$Condition)){
   for (skill in 1:length(ls_grouping$Skill)){
-    df_vel$Grouping[df_vel$Condition == ls_grouping$Condition[cond] & df_vel$Skill == ls_grouping$Skill[skill]] <-
+    dt_vel[Condition == ls_grouping$Condition[cond] & Skill == ls_grouping$Skill[skill]]$Grouping <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
-    df_vel_diff$Grouping[df_vel_diff$Condition == ls_grouping$Condition[cond] & df_vel_diff$Skill == ls_grouping$Skill[skill]] <-
+    dt_vel_diff[Condition == ls_grouping$Condition[cond] & Skill == ls_grouping$Skill[skill]]$Grouping <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
   }
 }
@@ -176,41 +169,40 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers
 ####################################
 # exclude irrelevant notes (Subcomponent == NA means not 8th notes / Velocity/Diff == NA means a missing value)
-df_vel_subset <- subset(df_vel, !is.na(df_vel$Subcomponent) & !is.na(df_vel$Velocity))
-df_vel_diff_subset <- subset(df_vel_diff, !is.na(df_vel_diff$Subcomponent) & !is.na(df_vel_diff$Diff))
+dt_vel_subset <- dt_vel[Subcomponent != "NA" & !is.na(Velocity)]
+dt_vel_diff_subset <- dt_vel_diff[Subcomponent != "NA" & !is.na(Diff)]
 
-###### df_vel
+###### dt_vel
 # draw histogram and boxplot
-p_vel_hist <- ggplot(df_vel_subset, aes(x = Velocity, fill = Grouping)) +
+p_vel_hist <- ggplot(dt_vel_subset, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_hist)
 
-p_vel_box <- ggboxplot(df_vel_subset, x = "Subcomponent", y = "Velocity", color = "Condition")
+p_vel_box <- ggboxplot(dt_vel_subset, x = "Subcomponent", y = "Velocity", color = "Condition")
 p_vel_box <- ggpar(p_vel_box, ylab = "Velocity (0-127)")
 plot(p_vel_box)
 
 # exclude vel > +- 3SD (within a given condition)
-vel_subcomponent <- aggregate(Velocity~Subcomponent, data = df_vel_subset,
-                              FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-vel_subcomponent <- cbind(vel_subcomponent, as.data.frame(vel_subcomponent[,2]))
-df_vel_trim_sd <- data.frame()
-for (subcomponent in unique(df_vel_subset$Subcomponent)){
-  upper <- vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]+3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
-  lower <- vel_subcomponent$mean[vel_subcomponent$Subcomponent == subcomponent]-3*vel_subcomponent$sd[vel_subcomponent$Subcomponent == subcomponent]
-  df_current <- df_vel_subset %>% dplyr::filter(Subcomponent == subcomponent & Velocity < upper & Velocity > lower)
-  df_vel_trim_sd <- rbind(df_vel_trim_sd, df_current)
+vel_subcomponent <- dt_vel_subset[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = Subcomponent]
+dt_vel_trim_sd <- data.frame()
+for (subcomponent in unique(dt_vel_subset$Subcomponent)){
+  upper <- vel_subcomponent[Subcomponent == subcomponent]$Mean+3*vel_subcomponent[Subcomponent == subcomponent]$SD
+  lower <- vel_subcomponent[Subcomponent == subcomponent]$Mean-3*vel_subcomponent[Subcomponent == subcomponent]$SD
+  dt_current <- dt_vel_subset[Subcomponent == subcomponent & Velocity < upper & Velocity > lower]
+  dt_vel_trim_sd <- rbind(dt_vel_trim_sd, dt_current)
 }
-removed_vel <- nrow(df_vel_subset)-nrow(df_vel_trim_sd)
-proportion_vel <- round(removed_vel/nrow(df_vel_subset), 5)
+
+removed_vel <- nrow(dt_vel_subset)-nrow(dt_vel_trim_sd)
+proportion_vel <- round(removed_vel/nrow(dt_vel_subset), 5)
 write(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100))
 
 # draw histogram and boxplot
-p_vel_hist_sd <- ggplot(df_vel_trim_sd, aes(x = Velocity, fill = Grouping)) +
+p_vel_hist_sd <- ggplot(dt_vel_trim_sd, aes(x = Velocity, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_hist_sd)
 
-p_vel_box_sd <- ggboxplot(df_vel_trim_sd, x = "Subcomponent", y = "Velocity", color = "Condition")
+p_vel_box_sd <- ggboxplot(dt_vel_trim_sd, x = "Subcomponent", y = "Velocity", color = "Condition")
 p_vel_box_sd <- ggpar(p_vel_box_sd, ylab = "Velocity (0-127)")
 plot(p_vel_box_sd)
 
@@ -221,41 +213,40 @@ ggsave("./trimmed/vel_hist_sd.png", plot = p_vel_hist_sd, dpi = 600, width = 5, 
 ggsave("./trimmed/vel_box.png", plot = p_vel_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/vel_box_sd.png", plot = p_vel_box_sd, dpi = 600, width = 5, height = 4)
 
-# export a csv file for df_trim_sd
-write.csv(df_vel_trim_sd, file = "./trimmed/data_vel.csv", row.names = F)
+# export a txt file for dt_trim_sd
+fwrite(dt_vel_trim_sd, file = "./trimmed/data_vel.txt", row.names = F)
 
-###### df_vel_diff
+###### dt_vel_diff
 # draw histogram and boxplot
-p_vel_diff_hist <- ggplot(df_vel_diff_subset, aes(x = Diff, fill = Grouping)) +
+p_vel_diff_hist <- ggplot(dt_vel_diff_subset, aes(x = Diff, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_diff_hist)
 
-p_vel_diff_box <- ggboxplot(df_vel_diff_subset, x = "Subcomponent", y = "Diff", color = "Condition")
+p_vel_diff_box <- ggboxplot(dt_vel_diff_subset, x = "Subcomponent", y = "Diff", color = "Condition")
 p_vel_diff_box <- ggpar(p_vel_diff_box, ylab = "Difference")
 plot(p_vel_diff_box)
 
 # exclude vel > +- 3SD (within a given condition)
-vel_diff_subcomponent <- aggregate(Diff~Subcomponent, data = df_vel_diff_subset,
-                              FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-vel_diff_subcomponent <- cbind(vel_diff_subcomponent, as.data.frame(vel_diff_subcomponent[,2]))
-df_vel_diff_trim_sd <- data.frame()
-for (subcomponent in unique(df_vel_diff_subset$Subcomponent)){
-  upper <- vel_diff_subcomponent$mean[vel_diff_subcomponent$Subcomponent == subcomponent]+3*vel_diff_subcomponent$sd[vel_diff_subcomponent$Subcomponent == subcomponent]
-  lower <- vel_diff_subcomponent$mean[vel_diff_subcomponent$Subcomponent == subcomponent]-3*vel_diff_subcomponent$sd[vel_diff_subcomponent$Subcomponent == subcomponent]
-  df_current <- df_vel_diff_subset %>% dplyr::filter(Subcomponent == subcomponent & Diff < upper & Diff > lower)
-  df_vel_diff_trim_sd <- rbind(df_vel_diff_trim_sd, df_current)
+vel_diff_subcomponent <- dt_vel_diff_subset[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = Subcomponent]
+dt_vel_diff_trim_sd <- data.frame()
+for (subcomponent in unique(dt_vel_diff_subset$Subcomponent)){
+  upper <- vel_diff_subcomponent[Subcomponent == subcomponent]$Mean+3*vel_diff_subcomponent[Subcomponent == subcomponent]$SD
+  lower <- vel_diff_subcomponent[Subcomponent == subcomponent]$Mean-3*vel_diff_subcomponent[Subcomponent == subcomponent]$SD
+  dt_current <- dt_vel_diff_subset[Subcomponent == subcomponent & Diff < upper & Diff > lower]
+  dt_vel_diff_trim_sd <- rbind(dt_vel_diff_trim_sd, dt_current)
 }
-removed_vel_diff <- nrow(df_vel_diff_subset)-nrow(df_vel_diff_trim_sd)
-proportion_vel_diff <- round(removed_vel_diff/nrow(df_vel_diff_subset), 5)
+
+removed_vel_diff <- nrow(dt_vel_diff_subset)-nrow(dt_vel_diff_trim_sd)
+proportion_vel_diff <- round(removed_vel_diff/nrow(dt_vel_diff_subset), 5)
 write(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100))
 
 # draw histogram and boxplot
-p_vel_diff_hist_sd <- ggplot(df_vel_diff_trim_sd, aes(x = Diff, fill = Grouping)) +
+p_vel_diff_hist_sd <- ggplot(dt_vel_diff_trim_sd, aes(x = Diff, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 1)
 plot(p_vel_diff_hist_sd)
 
-p_vel_diff_box_sd <- ggboxplot(df_vel_diff_trim_sd, x = "Subcomponent", y = "Diff", color = "Condition")
+p_vel_diff_box_sd <- ggboxplot(dt_vel_diff_trim_sd, x = "Subcomponent", y = "Diff", color = "Condition")
 p_vel_diff_box_sd <- ggpar(p_vel_diff_box_sd, ylab = "Difference")
 plot(p_vel_diff_box_sd)
 
@@ -266,5 +257,5 @@ ggsave("./trimmed/vel_diff_hist_sd.png", plot = p_vel_diff_hist_sd, dpi = 600, w
 ggsave("./trimmed/vel_diff_box.png", plot = p_vel_diff_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/vel_diff_box_sd.png", plot = p_vel_diff_box_sd, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_trim_sd
-write.csv(df_vel_diff_trim_sd, file = "./trimmed/data_vel_diff.csv", row.names = F)
+# Export a txt file for dt_trim_sd
+fwrite(dt_vel_diff_trim_sd, file = "./trimmed/data_vel_diff.txt", row.names = F)

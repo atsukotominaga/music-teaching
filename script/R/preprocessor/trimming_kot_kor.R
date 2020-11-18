@@ -13,7 +13,7 @@
 ####################################
 # set working directory to file source location
 # install and load required packages
-if (!require("dplyr")) {install.packages("dplyr"); require("dplyr")}
+if (!require("data.table")) {install.packages("data.table"); require("data.table")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 
@@ -28,31 +28,44 @@ if (!file.exists("trimmed")){
 }
 
 # read a text file for ideal performance
-df_ideal <- read.table("./ideal.txt")
-colnames(df_ideal) <- "Pitch"
-df_ideal$RowNr <- c(1:nrow(df_ideal))
-df_ideal <- df_ideal[c(2, 1)]
+dt_ideal <- fread("./ideal.txt")
+colnames(dt_ideal) <- "Pitch"
+dt_ideal$RowNr <- c(1:nrow(dt_ideal))
+dt_ideal <- dt_ideal[c(2, 1)]
 
-# read csv
-df_onset <- read.csv(file.path("./filtered/data_correct_onset.csv"), header = T)
-df_offset <- read.csv(file.path("./filtered/data_correct_offset.csv"), header = T)
+# read txt files
+dt_onset_all <- fread(file = "./filtered/dt_correct_onset.txt", header = T)
+dt_offset_all <- fread(file= "./filtered/dt_correct_offset.txt", header = T)
 
 # assign RowNr
-df_onset$RowNr <- rep(1:72, nrow(df_onset)/72)
-df_offset$RowNr <- rep(1:72, nrow(df_offset)/72)
+dt_onset_all$RowNr <- rep(1:72, nrow(dt_onset_all)/72)
+dt_offset_all$RowNr <- rep(1:72, nrow(dt_offset_all)/72)
 
-# sort by SubNr, BlockNr, TrialNr and RowNr
-df_onset <- df_onset[order(df_onset$SubNr, df_onset$BlockNr, df_onset$TrialNr, df_onset$RowNr),]
-df_offset <- df_offset[order(df_offset$SubNr, df_offset$BlockNr, df_offset$TrialNr, df_offset$RowNr),]
+# check whether each trial has both onset/offset datasets
+onset_trials <- dt_onset_all[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
+offset_trials <- dt_offset_all[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
+valid_trials <- rbind(onset_trials, offset_trials)
+valid_trials$Duplicate <- duplicated(valid_trials)
+valid_trials_included <- valid_trials[Duplicate == TRUE]
+# 1 trial was excluded
+write(sprintf("KOT: %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)), file = "./trimmed/outlier.txt", append = T)
+print(sprintf("KOT: %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)))
 
-# read functions
-source("./function.R")
+dt_kot_onset_all <- data.table()
+for (row in 1:nrow(valid_trials_included)){
+  current <- dt_onset_all[SubNr == valid_trials_included$SubNr[row] & BlockNr == valid_trials_included$BlockNr[row] & TrialNr == valid_trials_included$TrialNr[row]]
+  dt_kot_onset_all <- rbind(dt_kot_onset_all, current)
+}
 
-# make sure there is no pitch errors - outputs should be only missing trials
-print("----- Onset missing trials -----")
-ls_removed_onset <- pitch_remover(df_onset, df_ideal)
-print("----- Offset missing trials -----")
-ls_removed_offset <- pitch_remover(df_offset, df_ideal)
+dt_kot_offset_all <- data.table()
+for (row in 1:nrow(valid_trials_included)){
+  current <- dt_offset_all[SubNr == valid_trials_included$SubNr[row] & BlockNr == valid_trials_included$BlockNr[row] & TrialNr == valid_trials_included$TrialNr[row]]
+  dt_kot_offset_all <- rbind(dt_kot_offset_all, current)
+}
+
+# sort by SubNr, BlockNr, TrialNr and NoteNr
+dt_onset <- dt_kot_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr)]
+dt_offset <- dt_kot_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr)]
 
 ####################################
 # Define Subcomponents
@@ -81,114 +94,107 @@ change_2 <- c(8, 20, 39)
 # source("./trimming_ioi.R")
 
 # or read csv
-df_ioi_1 <- read.csv(file.path("./trimmed/data_ioi_1.csv"), header = T) # remove outliers outside 3SD across the conditions
-df_ioi_3 <- read.csv(file.path("./trimmed/data_ioi_3.csv"), header = T) # remove outliers per Boundary
+dt_ioi_1 <- fread(file = "./trimmed/data_ioi_1.txt", header = T) # remove outliers outside 3SD across the conditions
+dt_ioi_3 <- fread(file = "./trimmed/data_ioi_3.txt", header = T) # remove outliers per Boundary
 
 ####################################
 # Key Overlap Time - articulation
 ####################################
-df_kot <- df_onset
+dt_kot <- dt_onset
 
 # Offset 1 - Onset 2
-df_kot$KOT <- NA
-for (row in 1:length(df_kot$NoteNr)){
-  if (row < length(df_kot$NoteNr)){
-    df_kot$KOT[row+1] <- df_offset$TimeStamp[row] - df_onset$TimeStamp[row+1] # offset(n) - onset(n+1)
+dt_kot$KOT <- NA
+for (row in 1:nrow(dt_kot)){
+  if (row < nrow(dt_kot)){
+    dt_kot$KOT[row+1] <- dt_offset$TimeStamp[row] - dt_onset$TimeStamp[row+1] # offset(n) - onset(n+1)
   }
 }
 # convert bpm to ms
-df_kot$Tempo[df_kot$Tempo == 120] <- 250
-df_kot$Tempo[df_kot$Tempo == 110] <- 273
-df_kot$Tempo[df_kot$Tempo == 100] <- 300
+dt_kot[Tempo == 120]$Tempo <- 250
+dt_kot[Tempo == 110]$Tempo <- 273
+dt_kot[Tempo == 100]$Tempo <- 300
 
 # remove the first note
-df_kot <- df_kot %>% dplyr::filter(RowNr != 1)
+dt_kot <- dt_kot[RowNr != 1]
 
 # assign a sequence number for each tone
-df_kot$Interval <- rep(1:71, nrow(df_kot)/71)
+dt_kot$Interval <- rep(1:71, nrow(dt_kot)/71)
 
 # assign Subcomponents
-df_kot$Subcomponent <- NA
+dt_kot$Subcomponent <- "NA"
 # Legato
 for (phrase in 1:length(ls_legato)){
   for (note in 1:length(ls_legato[[phrase]])){
-    df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == ls_legato[[phrase]][note]] <- "Legato"
+    dt_kot[Skill == "articulation" & Interval == ls_legato[[phrase]][note]]$Subcomponent <- "Legato"
   }
 }
 # Staccato
 for (phrase in 1:length(ls_staccato)){
   for (note in 1:length(ls_staccato[[phrase]])){
-    df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == ls_staccato[[phrase]][note]] <- "Staccato"
+    dt_kot[Skill == "articulation" & Interval == ls_staccato[[phrase]][note]]$Subcomponent <- "Staccato"
   }
 }
 
 # Forte
 for (phrase in 1:length(ls_forte)){
   for (note in 1:length(ls_forte[[phrase]])){
-    df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == ls_forte[[phrase]][note]] <- "Forte"
+    dt_kot[Skill == "dynamics" & Interval == ls_forte[[phrase]][note]]$Subcomponent <- "Forte"
   }
 }
 # Piano
 for (phrase in 1:length(ls_piano)){
   for (note in 1:length(ls_piano[[phrase]])){
-    df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == ls_piano[[phrase]][note]] <- "Piano"
+    dt_kot[Skill == "dynamics" & Interval == ls_piano[[phrase]][note]]$Subcomponent <- "Piano"
   }
 }
 
 # assign Subcomponent Change
 for (number in change_1){
-  df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == number] <- "LtoS"
-  df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "FtoP"
+  dt_kot[Skill == "articulation" & Interval == number]$Subcomponent <- "LtoS"
+  dt_kot[Skill == "dynamics" & Interval == number]$Subcomponent <- "FtoP"
 }
 for (number in change_2){
-  df_kot$Subcomponent[df_kot$Skill == "articulation" & df_kot$Interval == number] <- "StoL"
-  df_kot$Subcomponent[df_kot$Skill == "dynamics" & df_kot$Interval == number] <- "PtoF"
+  dt_kot[Skill == "articulation" & Interval == number]$Subcomponent <- "StoL"
+  dt_kot[Skill == "dynamics" & Interval == number]$Subcomponent <- "PtoF"
 }
 
 # add a grouping name
 ls_grouping <- list(Condition = c('performing', 'teaching'), Skill = c('articulation', 'dynamics'))
+dt_kot$Grouping <- "NA"
 for (cond in 1:length(ls_grouping$Condition)){
   for (skill in 1:length(ls_grouping$Skill)){
-    df_kot$Grouping[df_kot$Condition == ls_grouping$Condition[cond] & df_kot$Skill == ls_grouping$Skill[skill]] <-
+    dt_kot[Condition == ls_grouping$Condition[cond] & Skill == ls_grouping$Skill[skill]]$Grouping <-
       paste(ls_grouping$Condition[cond], '-', ls_grouping$Skill[skill], sep = '')
   }
 }
 
 # compute KOR (Key-Overlap Ratio)
-# mean IOI for each trial (df_ioi_1)
-ioi_1 <- aggregate(IOI~SubNr*BlockNr*TrialNr*Condition*Skill, data = df_ioi_1,
-                   FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
-ioi_1 <- cbind(ioi_1[,1:5], as.data.frame(ioi_1[,6]))
-# Change colnames
-colnames(ioi_1) <- c("SubNr", "BlockNr", "TrialNr", "Condition", "Skill", "N", "Mean", "SD")
+# mean IOI for each trial (dt_ioi_1)
+ioi_1 <- dt_ioi_1[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, BlockNr, TrialNr, Condition, Skill)]
 
-# mean IOI for each trial (df_ioi_3)
-ioi_3 <- aggregate(IOI~SubNr*BlockNr*TrialNr*Condition*Skill, data = df_ioi_3,
-                   FUN = function(x){c(length(x), mean = mean(x), sd = sd(x))})
-ioi_3 <- cbind(ioi_3[,1:5], as.data.frame(ioi_3[,6]))
-# Change colnames
-colnames(ioi_3) <- c("SubNr", "BlockNr", "TrialNr", "Condition", "Skill", "N", "Mean", "SD")
+# mean IOI for each trial (dt_ioi_3)
+ioi_3 <- dt_ioi_3[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, BlockNr, TrialNr, Condition, Skill)]
 
 # Calculate KOR for each interval (ioi_1)
-df_kor_1<- data.frame()
-for (subnr in unique(df_kot$SubNr)){
-  for (block in unique(df_kot$BlockNr[df_kot$SubNr == subnr])){
-    for (trial in unique(df_kot$TrialNr[df_kot$SubNr == subnr & df_kot$BlockNr == block])){
-      df_current <- df_kot %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
-      df_current$KOR <- df_current$KOT/ioi_1$Mean[ioi_1$SubNr == subnr & ioi_1$BlockNr == block & ioi_1$TrialNr == trial]
-      df_kor_1 <- rbind(df_kor_1, df_current)
+dt_kor_1<- data.frame()
+for (subnr in unique(dt_kot$SubNr)){
+  for (block in unique(dt_kot[SubNr == subnr]$BlockNr)){
+    for (trial in unique(dt_kot[SubNr == subnr & BlockNr == block]$TrialNr)){
+      dt_current <- dt_kot[SubNr == subnr & BlockNr == block & TrialNr == trial]
+      dt_current$KOR <- dt_current$KOT/ioi_1[SubNr == subnr & BlockNr == block & TrialNr == trial]$Mean
+      dt_kor_1 <- rbind(dt_kor_1, dt_current)
     }
   }
 }
 
 # Calculate KOR for each interval (ioi_3)
-df_kor_3 <- data.frame()
-for (subnr in unique(df_kot$SubNr)){
-  for (block in unique(df_kot$BlockNr[df_kot$SubNr == subnr])){
-    for (trial in unique(df_kot$TrialNr[df_kot$SubNr == subnr & df_kot$BlockNr == block])){
-      df_current <- df_kot %>% dplyr::filter(SubNr == subnr & BlockNr == block & TrialNr == trial)
-      df_current$KOR <- df_current$KOT/ioi_3$Mean[ioi_3$SubNr == subnr & ioi_3$BlockNr == block & ioi_3$TrialNr == trial]
-      df_kor_3 <- rbind(df_kor_3, df_current)
+dt_kor_3 <- data.frame()
+for (subnr in unique(dt_kot$SubNr)){
+  for (block in unique(dt_kot[SubNr == subnr]$BlockNr)){
+    for (trial in unique(dt_kot[SubNr == subnr & BlockNr == block]$TrialNr)){
+      dt_current <- dt_kot[SubNr == subnr & BlockNr == block & TrialNr == trial]
+      dt_current$KOR <- dt_current$KOT/ioi_3[SubNr == subnr & BlockNr == block & TrialNr == trial]$Mean
+      dt_kor_3 <- rbind(dt_kor_3, dt_current)
     }
   }
 }
@@ -196,43 +202,42 @@ for (subnr in unique(df_kot$SubNr)){
 ####################################
 # Remove outliers (KOR)
 ####################################
-# df_kor_1
+# dt_kor_1
 # exclude irrelevant notes (Subcomponent == NA means not 8th notes / KOR == NA means a missing value)
-df_kor_subset <- subset(df_kor_1, !is.na(df_kor_1$Subcomponent) & !is.na(df_kor_1$KOR))
+dt_kor_subset <- dt_kor_1[Subcomponent != "NA" & !is.na(KOR)]
 
 # draw histogram and boxplot
-p_kor_hist <- ggplot(df_kor_subset, aes(x = KOR, fill = Grouping)) +
-  geom_histogram(position = "identity", alpha = .5, binwidth = .1) +
+p_kor_hist <- ggplot(dt_kor_subset, aes(x = KOR, fill = Grouping)) +
+  geom_histogram(position = "identity", alpha = .5, binwidth = .05) +
   theme_classic()
 plot(p_kor_hist)
 
-p_kor_box <- ggboxplot(df_kor_subset, x = "Subcomponent", y = "KOR", color = "Condition")
+p_kor_box <- ggboxplot(dt_kor_subset, x = "Subcomponent", y = "KOR", color = "Condition")
 p_kor_box <- ggpar(p_kor_box, ylab = "Key-Overlap Ratio (KOT/meanIOI)")
 plot(p_kor_box)
 
 # exclude kor > +- 3SD (per subcomponent)
-kor_subcomponent <- aggregate(KOR~Subcomponent, data = df_kor_subset,
-                              FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-kor_subcomponent <- cbind(kor_subcomponent, as.data.frame(kor_subcomponent[,2]))
-df_kor_trim_sd <- data.frame()
-for (subcomponent in unique(df_kor_subset$Subcomponent)){
-  upper <- kor_subcomponent$mean[kor_subcomponent$Subcomponent == subcomponent]+3*kor_subcomponent$sd[kor_subcomponent$Subcomponent == subcomponent]
-  lower <- kor_subcomponent$mean[kor_subcomponent$Subcomponent == subcomponent]-3*kor_subcomponent$sd[kor_subcomponent$Subcomponent == subcomponent]
-  df_current <- df_kor_subset %>% dplyr::filter(Subcomponent == subcomponent & KOR < upper & KOR > lower)
-  df_kor_trim_sd <- rbind(df_kor_trim_sd, df_current)
+kor_subcomponent <- dt_kor_subset[, .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = Subcomponent]
+dt_kor_trim_sd <- data.table()
+for (subcomponent in unique(dt_kor_subset$Subcomponent)){
+  upper <- kor_subcomponent[Subcomponent == subcomponent]$Mean+3*kor_subcomponent[Subcomponent == subcomponent]$SD
+  lower <- kor_subcomponent[Subcomponent == subcomponent]$Mean-3*kor_subcomponent[Subcomponent == subcomponent]$SD
+  dt_current <- dt_kor_subset[Subcomponent == subcomponent & KOR < upper & KOR > lower]
+  dt_kor_trim_sd <- rbind(dt_kor_trim_sd, dt_current)
 }
-removed_kor <- nrow(df_kor_subset)-nrow(df_kor_trim_sd)
-proportion_kor <- round(removed_kor/nrow(df_kor_subset), 5)
+
+removed_kor <- nrow(dt_kor_subset)-nrow(dt_kor_trim_sd)
+proportion_kor <- round(removed_kor/nrow(dt_kor_subset), 5)
 write(sprintf("KOR: Remove %i responses beyond +- 3SD / %f percent", removed_kor, proportion_kor*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("KOR: Remove %i responses beyond +- 3SD / %f percent", removed_kor, proportion_kor*100))
 
 # draw histogram and boxplot
-p_kor_hist_sd <- ggplot(df_kor_trim_sd, aes(x = KOR, fill = Grouping)) +
+p_kor_hist_sd <- ggplot(dt_kor_trim_sd, aes(x = KOR, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = .05) +
   theme_classic()
 plot(p_kor_hist_sd)
 
-p_kor_box_sd <- ggboxplot(df_kor_trim_sd, x = "Subcomponent", y = "KOR", color = "Condition")
+p_kor_box_sd <- ggboxplot(dt_kor_trim_sd, x = "Subcomponent", y = "KOR", color = "Condition")
 p_kor_box_sd <- ggpar(p_kor_box_sd, ylab = "Key-Overlap Ratio (KOT/meanIOI)")
 plot(p_kor_box_sd)
 
@@ -243,48 +248,47 @@ ggsave("./trimmed/kor_hist_sd.png", plot = p_kor_hist_sd, dpi = 600, width = 5, 
 ggsave("./trimmed/kor_box.png", plot = p_kor_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/kor_box_sd.png", plot = p_kor_box_sd, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_kor_trim_sd
-write.csv(df_kor_trim_sd, file = "./trimmed/data_kor.csv", row.names = F)
+# Export a txt file for dt_kor_trim_sd
+fwrite(dt_kor_trim_sd, file = "./trimmed/data_kor.txt", row.names = F)
 
 ####################################
 # Remove outliers (KOT)
 ####################################
 # exclude irrelevant notes (Subcomponent == NA means not 8th notes / KOT == NA means a missing value)
-df_kot_subset <- subset(df_kot, !is.na(df_kot$Subcomponent) & !is.na(df_kot$KOT))
+dt_kot_subset <- dt_kot[Subcomponent != "NA" & !is.na(KOT)]
 
 # draw histogram and boxplot
-p_kot_hist <- ggplot(df_kot_subset, aes(x = KOT, fill = Grouping)) +
-  geom_histogram(position = "identity", alpha = .5, binwidth = 10) +
+p_kot_hist <- ggplot(dt_kot_subset, aes(x = KOT, fill = Grouping)) +
+  geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
 plot(p_kot_hist)
 
-p_kot_box <- ggboxplot(df_kot_subset, x = "Subcomponent", y = "KOT", color = "Condition")
+p_kot_box <- ggboxplot(dt_kot_subset, x = "Subcomponent", y = "KOT", color = "Condition")
 p_kot_box <- ggpar(p_kot_box, ylab = "Key-Overlap Time")
 plot(p_kot_box)
 
 # exclude kot > +- 3SD (per subcomponent)
-kot_subcomponent <- aggregate(KOT~Subcomponent, data = df_kot_subset,
-                              FUN = function(x){c(N = length(x), mean = mean(x), sd = sd(x), sem = sd(x)/sqrt(length(x)))})
-kot_subcomponent <- cbind(kot_subcomponent, as.data.frame(kot_subcomponent[,2]))
-df_kot_trim_sd <- data.frame()
-for (subcomponent in unique(df_kot_subset$Subcomponent)){
-  upper <- kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]+3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
-  lower <- kot_subcomponent$mean[kot_subcomponent$Subcomponent == subcomponent]-3*kot_subcomponent$sd[kot_subcomponent$Subcomponent == subcomponent]
-  df_current <- df_kot_subset %>% dplyr::filter(Subcomponent == subcomponent & KOT < upper & KOT > lower)
-  df_kot_trim_sd <- rbind(df_kot_trim_sd, df_current)
+kot_subcomponent <- dt_kot_subset[, .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = Subcomponent]
+dt_kot_trim_sd <- data.frame()
+for (subcomponent in unique(dt_kot_subset$Subcomponent)){
+  upper <- kot_subcomponent[Subcomponent == subcomponent]$Mean+3*kot_subcomponent[Subcomponent == subcomponent]$SD
+  lower <- kot_subcomponent[Subcomponent == subcomponent]$Mean-3*kot_subcomponent[Subcomponent == subcomponent]$SD
+  dt_current <- dt_kot_subset[Subcomponent == subcomponent & KOT < upper & KOT > lower]
+  dt_kot_trim_sd <- rbind(dt_kot_trim_sd, dt_current)
 }
-removed_kot <- nrow(df_kot_subset)-nrow(df_kot_trim_sd)
-proportion_kot <- round(removed_kot/nrow(df_kot_subset), 5)
+
+removed_kot <- nrow(dt_kot_subset)-nrow(dt_kot_trim_sd)
+proportion_kot <- round(removed_kot/nrow(dt_kot_subset), 5)
 write(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100), file = "./trimmed/outlier.txt", append = T)
 print(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100))
 
 # draw histogram and boxplot
-p_kot_hist_sd <- ggplot(df_kot_trim_sd, aes(x = KOT, fill = Grouping)) +
-  geom_histogram(position = "identity", alpha = .5, binwidth = 10) +
+p_kot_hist_sd <- ggplot(dt_kot_trim_sd, aes(x = KOT, fill = Grouping)) +
+  geom_histogram(position = "identity", alpha = .5, binwidth = 5) +
   theme_classic()
 plot(p_kot_hist_sd)
 
-p_kot_box_sd <- ggboxplot(df_kot_trim_sd, x = "Subcomponent", y = "KOT", color = "Condition")
+p_kot_box_sd <- ggboxplot(dt_kot_trim_sd, x = "Subcomponent", y = "KOT", color = "Condition")
 p_kot_box_sd <- ggpar(p_kot_box_sd, ylab = "Key-Overlap Time")
 plot(p_kot_box_sd)
 
@@ -295,5 +299,5 @@ ggsave("./trimmed/kot_hist_sd.png", plot = p_kot_hist_sd, dpi = 600, width = 5, 
 ggsave("./trimmed/kot_box.png", plot = p_kot_box, dpi = 600, width = 5, height = 4)
 ggsave("./trimmed/kot_box_sd.png", plot = p_kot_box_sd, dpi = 600, width = 5, height = 4)
 
-# Export a csv file for df_kot_trim_sd
-write.csv(df_kot_trim_sd, file = "./trimmed/data_kot.csv", row.names = F)
+# Export a txt file for dt_kot_trim_sd
+fwrite(dt_kot_trim_sd, file = "./trimmed/data_kot.txt", row.names = F)
