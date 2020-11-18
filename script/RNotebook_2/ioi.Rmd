@@ -128,7 +128,7 @@ p_ioi_art
 
 ```{r ioi_art_all, echo = FALSE}
 # Group mean
-ioi_art_all <- ioi_art[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_art)/2)), by = .(Condition, Skill)]
+ioi_art_all <- ioi_art[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill)]
 ioi_art_all
 ```
 
@@ -310,7 +310,7 @@ p_ioi_art_trial
 
 ```{r ioi_art_trial_all, echo = FALSE}
 # Group mean
-ioi_art_trial_all <- ioi_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_art_trial)/2)), by = .(Condition, Skill, TrialNr)]
+ioi_art_trial_all <- ioi_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, TrialNr)]
 ioi_art_trial_all
 ```
 
@@ -361,7 +361,7 @@ p_ioi_dyn
 
 ```{r ioi_dyn_all, echo = FALSE}
 # Group mean
-ioi_dyn_all <- ioi_dyn[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_dyn)/2)), by = .(Condition, Skill)]
+ioi_dyn_all <- ioi_dyn[, .(N = .N, Mean = mean(Mean), SD = sd(Mean),  SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill)]
 ioi_dyn_all
 ```
 
@@ -453,7 +453,7 @@ p_ioi_dyn_ch
 
 ```{r ioi_dyn_ch_all, echo = FALSE}
 # Group mean
-ioi_dyn_ch_all <- ioi_dyn_ch[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_dyn_ch)/2)), by = .(Condition, Skill, Boundary)]
+ioi_dyn_ch_all <- ioi_dyn_ch[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Boundary)]
 ioi_dyn_ch_all
 ```
 
@@ -543,7 +543,7 @@ p_ioi_dyn_trial
 
 ```{r ioi_dyn_trial_all, echo = FALSE}
 # Group mean
-ioi_dyn_trial_all <- ioi_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_dyn_trial)/2)), by = .(Condition, Skill, TrialNr)]
+ioi_dyn_trial_all <- ioi_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean),  SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, TrialNr)]
 ioi_dyn_trial_all
 ```
 
@@ -567,7 +567,7 @@ p_ioi_dyn_trial_all
 # For each individual
 ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 # Group mean
-ioi_art_seq_all <- ioi_art_seq[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_art_seq)/2)), by = .(Condition, Skill, Interval)]
+ioi_art_seq_all <- ioi_art_seq[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Interval)]
 
 p_ioi_art_seq <- ggplot(data = ioi_art_seq_all, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
   geom_line() +
@@ -585,7 +585,7 @@ p_ioi_art_seq
 # For each individual
 ioi_dyn_seq <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 # Group mean
-ioi_dyn_seq_all <- ioi_dyn_seq[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_dyn_seq)/2)), by = .(Condition, Skill, Interval)]
+ioi_dyn_seq_all <- ioi_dyn_seq[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Interval)]
 
 p_ioi_dyn_seq <- ggplot(data = ioi_dyn_seq_all, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
   geom_line() +
