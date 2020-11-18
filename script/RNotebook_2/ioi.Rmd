@@ -169,13 +169,13 @@ p_ioi_art_all_box
 ```{r normality1, echo = FALSE}
 # Normality check
 ioi_art_norm <- by(ioi_art$Mean, list(ioi_art$Condition), shapiro.test)
-print(ioi_art_norm)
+ioi_art_norm
 ```
 
 #### Paired t-test
 ```{r stats1, echo = FALSE}
 ioi_art_ttest <- t.test(ioi_art[Condition == "teaching"]$Mean, ioi_art[Condition == "performing"]$Mean, paired = TRUE)
-print(ioi_art_ttest)
+ioi_art_ttest
 ```
 
 #### Wilcoxon test
@@ -259,7 +259,7 @@ p_ioi_art_ch_box
 - Violate the normality
 ```{r normality2, echo = FALSE}
 ioi_art_ch_norm <- by(ioi_art_ch$Mean, list(ioi_art_ch$Condition, ioi_art_ch$Boundary), shapiro.test)
-print(ioi_art_ch_norm)
+ioi_art_ch_norm
 ```
 #### Two-way ANOVA (ez)
 ```{r stats3, echo = FALSE}
@@ -273,13 +273,13 @@ ioi_art_ch_aov <- ezANOVA(
 )
 ioi_art_ch_aov$ANOVA$F <- round(ioi_art_ch_aov$ANOVA$F, 4)
 ioi_art_ch_aov$ANOVA$p <- round(ioi_art_ch_aov$ANOVA$p, 4)
-print(ioi_art_ch_aov$ANOVA)
+ioi_art_ch_aov$ANOVA
 ```
 
 #### Two-way ANOVA (aov)
 ```{r stats4, echo = FALSE}
 ioi_art_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_art_ch)
-print(summary(ioi_art_ch_aov_2))
+summary(ioi_art_ch_aov_2)
 ```
 
 ## 5. Trial by trial - individual{#art_ind_trial}
@@ -402,13 +402,13 @@ p_ioi_dyn_all_box
 ```{r normality3, echo = FALSE}
 # Normality check
 ioi_dyn_norm <- by(ioi_dyn$Mean, list(ioi_dyn$Condition), shapiro.test)
-print(ioi_dyn_norm)
+ioi_dyn_norm
 ```
 
 #### Paired t-test
 ```{r stats5, echo = FALSE}
 ioi_dyn_ttest <- t.test(ioi_dyn$Mean[ioi_dyn$Condition == "teaching"], ioi_dyn$Mean[ioi_dyn$Condition == "performing"], paired = TRUE)
-print(ioi_dyn_ttest)
+ioi_dyn_ttest
 ```
 
 #### Wilcoxon test
@@ -492,7 +492,7 @@ p_ioi_dyn_ch_box
 - Violate the normality
 ```{r normality4, echo = FALSE}
 ioi_dyn_ch_norm <- by(ioi_dyn_ch$Mean, list(ioi_dyn_ch$Condition, ioi_dyn_ch$Boundary), shapiro.test)
-print(ioi_dyn_ch_norm)
+ioi_dyn_ch_norm
 ```
 #### Two-way ANOVA (ez)
 ```{r stats7, echo = FALSE}
@@ -506,13 +506,13 @@ ioi_dyn_ch_aov <- ezANOVA(
 )
 ioi_dyn_ch_aov$ANOVA$F <- round(ioi_dyn_ch_aov$ANOVA$F, 4)
 ioi_dyn_ch_aov$ANOVA$p <- round(ioi_dyn_ch_aov$ANOVA$p, 4)
-print(ioi_dyn_ch_aov$ANOVA)
+ioi_dyn_ch_aov$ANOVA
 ```
 
 #### Two-way ANOVA (aov)
 ```{r stats8, echo = FALSE}
 ioi_dyn_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_dyn_ch)
-print(summary(ioi_dyn_ch_aov_2))
+summary(ioi_dyn_ch_aov_2)
 ```
 
 ## 5. Trial by trial - individual{#dyn_ind_trial}
