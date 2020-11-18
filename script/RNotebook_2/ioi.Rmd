@@ -1,0 +1,599 @@
+---
+title: 'Tempo Analysis: The Sound of Teaching Music 1'
+output:
+  html_notebook: default
+editor_options: 
+  chunk_output_type: inline
+---
+
+Description: This is a summary of all analyses for a tempo.
+
+- Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
+
+# Outline - Interonset intervals (IOIs)
+## [Experimental Design](#design)
+
+## [Articulation](#ioi-articulation)
+
+- Individual results
+  + [All](#art_ind_all)
+  + [Phrase bondaries](#art_ind_phrase)
+  + [Trial by trial](#art_ind_trial)
+
+- Group results and stats (if available)
+  + [All](#art_group_all)
+  + [Phrase bondaries](#art_group_phrase)
+  + [Trial by trial](#art_group_trial)
+  
+- Order analysis (teaching/performing first?)
+  + [All](#art_order_group_all)
+  
+- [Sequence plot](#sequence_art)
+
+## [Dynamics](#ioi-dynamics)
+
+- Individual results
+  + [All](#dyn_ind_all)
+  + [Phrase bondaries](#dyn_ind_phrase)
+  + [Trial by trial](#dyn_ind_trial)
+
+- Group results and stats (if available)
+  + [All](#dyn_group_all)
+  + [Phrase bondaries](#dyn_group_phrase)
+  + [Trial by trial](#dyn_group_trial)
+
+- Order analysis (teaching/performing first?)
+  + [All](#dyn_order_group_all)
+
+- [Sequence plot](#sequence_dyn)
+
+## Experimental Design{#design}
+- Independent variables: Condition (2 levels: teaching vs. performing) x Skill (2 levels: articulation vs. dynamics)
+- Dependent variables: Interonset intervals, Variability (SD/mean IOI)
+
+## Main predictions
+Participants will play slower while teaching regardless of the skills.
+
+## Excluded participnats
+- SubNr 1: Most of responses (more than 90%) were removed due to outliers
+- SubNr 3: Experimental error
+- SubNr 8: Experimental error
+- SubNr 14: Experimental error
+
+```{r setup, include = FALSE}
+# packages
+# data manipulation
+if (!require("data.table")) {install.packages("data.table"); require("data.table")}
+# plot
+if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
+# statistics
+if (!require("stats")) {install.packages("stats"); require("stats")}
+if (!require("effsize")) {install.packages("effsize"); require("effsize")}
+if (!require("ez")) {install.packages("ez"); require("ez")}
+
+# ggplots
+theme_set(theme_classic())
+theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"), legend.position = "bottom")
+```
+
+```{r file, include = FALSE}
+filename_ioi = "../R/preprocessor/trimmed/data_ioi_1.txt"
+```
+
+```{r extract, include = FALSE}
+dt_ioi <- fread(filename_ioi, header = T, sep = ",", dec = ".") # read a trimmed csv
+
+# SubNr as a factor
+dt_ioi$SubNr <- as.factor(dt_ioi$SubNr)
+
+# Exclude SubNr 1 because most responses were removed because of outliers
+dt_ioi <- dt_ioi[SubNr != 1]
+
+# Include only articulation
+dt_ioi_art <- dt_ioi[Skill == "articulation"]
+# Include only dynamics
+dt_ioi_dyn <- dt_ioi[Skill == "dynamics"]
+```
+
+# IOI-Articulation 
+## 1. All - individual{#art_ind_all}
+- Average IOIs for each participant.
+
+```{r ioi_art, echo = FALSE}
+# For each individual
+ioi_art <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
+ioi_art
+```
+
+### Plot
+#### Bar chart
+- Error bars show SD of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_art_bar,  echo = FALSE}
+p_ioi_art <- ggplot(data = ioi_art, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 18, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = -2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Articulation") + coord_cartesian(ylim = c(100, 280))
+p_ioi_art
+```
+
+## 2. All - group{#art_group_all}
+- Average IOIs for each condition.
+- Hypothesis: Participants will play slower when teaching.
+
+```{r ioi_art_all, echo = FALSE}
+# Group mean
+ioi_art_all <- ioi_art[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_art)/2)), by = .(Condition, Skill)]
+ioi_art_all
+```
+
+### Plot
+#### Bar chart
+- Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_art_all_bar, echo = FALSE}
+p_ioi_art_all <- ggplot(data = ioi_art_all, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 1.5, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = -2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Articulation") + coord_cartesian(ylim = c(120, 210)) +
+  theme(legend.position = "None")
+p_ioi_art_all
+```
+
+#### Box plot
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_art_all_box, echo = FALSE}
+p_ioi_art_all_box <- ggplot(data = ioi_art, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 1.5, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = 5, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Articulation") + #coord_cartesian(ylim = c(100, 210)) +
+  theme(legend.position = "None")
+p_ioi_art_all_box
+```
+
+### Statistics
+#### Normality check
+- Violate the normality
+```{r normality1, echo = FALSE}
+# Normality check
+ioi_art_norm <- by(ioi_art$Mean, list(ioi_art$Condition), shapiro.test)
+print(ioi_art_norm)
+```
+
+#### Paired t-test
+```{r stats1, echo = FALSE}
+ioi_art_ttest <- t.test(ioi_art[Condition == "teaching"]$Mean, ioi_art[Condition == "performing"]$Mean, paired = TRUE)
+print(ioi_art_ttest)
+```
+
+#### Wilcoxon test
+```{r stats2, echo = FALSE}
+ioi_art_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_art, paired = TRUE)
+ioi_art_wilcoxon
+```
+
+## 3. Phrase boundaries - individual{#art_ind_phrase}
+- Compare IOIs at phrase boundaries with others fir each participant.
+
+```{r ioi_art_ch, echo = FALSE}
+# Define phrase boundaries
+dt_ioi_art$Boundary <- "No"
+dt_ioi_art[Interval == 8 | Interval == 16 | Interval == 24 | Interval == 41 | Interval == 49 | Interval == 57]$Boundary <- "Yes"
+
+# For each individual
+ioi_art_ch <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Boundary)]
+ioi_art_ch
+```
+
+### Plot
+#### Bar chart
+- Error bars show SD of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_art_ch_bar, echo = FALSE}
+p_ioi_art_ch <- ggplot(data = ioi_art_ch, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  facet_grid(Boundary ~ .) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 18, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = -2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Articulation") + coord_cartesian(ylim = c(100, 280))
+p_ioi_art_ch
+```
+
+## 4. Phrase boundaries - group{#art_group_phrase}
+- Compare IOIs at phrase boundaries with others in the two conditions.
+- Hypothesis: Participants will play more slowly at phrase boundaries compared to other locations.
+
+```{r ioi_art_ch_all, echo = FALSE}
+# Group mean
+ioi_art_ch_all <- ioi_art_ch[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_art_ch)/2)), by = .(Condition, Skill, Boundary)]
+ioi_art_ch_all
+```
+
+### Plot
+#### Bar chart
+- Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_art_ch_all_bar, echo = FALSE}
+p_ioi_art_ch_all_bar <- ggplot(data = ioi_art_ch_all, aes(x = Boundary, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 1, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = 2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  #facet_grid(. ~ Boundary) +
+  labs(y = "IOI (ms)", subtitle = "IOI: Articulation") + coord_cartesian(ylim = c(100, 210))
+p_ioi_art_ch_all_bar
+```
+
+#### Box plot
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_art_ch_all_box, echo = FALSE}
+p_ioi_art_ch_box <- ggplot(data = ioi_art_ch, aes(x = Boundary, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 1.5, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = 5, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Articulation")
+p_ioi_art_ch_box
+```
+
+### Statistics
+#### Normality check
+- Violate the normality
+```{r normality2, echo = FALSE}
+ioi_art_ch_norm <- by(ioi_art_ch$Mean, list(ioi_art_ch$Condition, ioi_art_ch$Boundary), shapiro.test)
+print(ioi_art_ch_norm)
+```
+#### Two-way ANOVA (ez)
+```{r stats3, echo = FALSE}
+ioi_art_ch_aov <- ezANOVA(
+  data = dt_ioi_art
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, Boundary)
+  , type = 3
+  , detailed = TRUE
+)
+ioi_art_ch_aov$ANOVA$F <- round(ioi_art_ch_aov$ANOVA$F, 4)
+ioi_art_ch_aov$ANOVA$p <- round(ioi_art_ch_aov$ANOVA$p, 4)
+print(ioi_art_ch_aov$ANOVA)
+```
+
+#### Two-way ANOVA (aov)
+```{r stats4, echo = FALSE}
+ioi_art_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_art_ch)
+print(summary(ioi_art_ch_aov_2))
+```
+
+## 5. Trial by trial - individual{#art_ind_trial}
+- Average IOIs for each trial for each participant.
+
+```{r ioi_art_trial, echo = FALSE}
+# For each individual
+ioi_art_trial <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, TrialNr)]
+ioi_art_trial
+```
+
+### Plot
+#### Line graph
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_art_trial_line, echo = FALSE, fig.height = 4}
+p_ioi_art_trial <- ggplot(data = ioi_art_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "IOI (ms)", subtitle = "IOI: Articulation") + scale_x_continuous(breaks=seq(1,8,1))
+p_ioi_art_trial
+```
+
+## 6. Trial by trial - group{#art_group_trial}
+- Average IOIs for each trial for each condition.
+
+```{r ioi_art_trial_all, echo = FALSE}
+# Group mean
+ioi_art_trial_all <- ioi_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_art_trial)/2)), by = .(Condition, Skill, TrialNr)]
+ioi_art_trial_all
+```
+
+### Plot
+#### Line graph
+- Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_art_trial_all_line, echo = FALSE}
+p_ioi_art_trial_all <- ggplot(data = ioi_art_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "IOI (ms)", subtitle = "IOI: Articulation") + scale_x_continuous(breaks=seq(1,8,1))
+p_ioi_art_trial_all
+```
+
+# IOI-Dynamics
+## 1. All - individual{#dyn_ind_all}
+- Average IOIs for each participant.
+
+```{r ioi_dyn, echo = FALSE}
+# For each individual
+ioi_dyn <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
+ioi_dyn
+```
+
+### Plot
+#### Bar chart
+- Error bars show SD of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_dyn_bar,  echo = FALSE}
+p_ioi_dyn <- ggplot(data = ioi_dyn, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 18, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = -2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Dynamics") + coord_cartesian(ylim = c(100, 280))
+p_ioi_dyn
+```
+
+## 2. All - group{#dyn_group_all}
+- Average IOIs for each condition.
+- Hypothesis: Participants will play slower when teaching.
+
+```{r ioi_dyn_all, echo = FALSE}
+# Group mean
+ioi_dyn_all <- ioi_dyn[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_dyn)/2)), by = .(Condition, Skill)]
+ioi_dyn_all
+```
+
+### Plot
+#### Bar chart
+- Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_dyn_all_bar, echo = FALSE}
+p_ioi_dyn_all <- ggplot(data = ioi_dyn_all, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 1.5, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = -2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Dynamics") + coord_cartesian(ylim = c(120, 210)) +
+  theme(legend.position = "None")
+p_ioi_dyn_all
+```
+
+#### Box plot
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_dyn_all_box, echo = FALSE}
+p_ioi_dyn_all_box <- ggplot(data = ioi_dyn, aes(x = Condition, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 1.5, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = 5, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Dynamics") + #coord_cartesian(ylim = c(100, 210)) +
+  theme(legend.position = "None")
+p_ioi_dyn_all_box
+```
+
+### Statistics
+#### Normality check
+- Violate the normality
+```{r normality3, echo = FALSE}
+# Normality check
+ioi_dyn_norm <- by(ioi_dyn$Mean, list(ioi_dyn$Condition), shapiro.test)
+print(ioi_dyn_norm)
+```
+
+#### Paired t-test
+```{r stats5, echo = FALSE}
+ioi_dyn_ttest <- t.test(ioi_dyn$Mean[ioi_dyn$Condition == "teaching"], ioi_dyn$Mean[ioi_dyn$Condition == "performing"], paired = TRUE)
+print(ioi_dyn_ttest)
+```
+
+#### Wilcoxon test
+```{r stats6, echo = FALSE}
+ioi_dyn_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_dyn, paired = TRUE)
+ioi_dyn_wilcoxon
+```
+
+## 3. Phrase boundaries - individual{#dyn_ind_phrase}
+- Compare IOIs at phrase boundaries with others fir each participant.
+
+```{r ioi_dyn_ch, echo = FALSE}
+# Define phrase boundaries
+dt_ioi_dyn$Boundary <- "No"
+dt_ioi_dyn[Interval == 8 | Interval == 16 | Interval == 24 | Interval == 41 | Interval == 49 | Interval == 57]$Boundary <- "Yes"
+
+# For each individual
+ioi_dyn_ch <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Boundary)]
+ioi_dyn_ch
+```
+
+### Plot
+#### Bar chdyn
+- Error bars show SD of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_dyn_ch_bar, echo = FALSE}
+p_ioi_dyn_ch <- ggplot(data = ioi_dyn_ch, aes(x = SubNr, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
+                width = .2, position = position_dodge(.9)) +
+  facet_grid(Boundary ~ .) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 18, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = -2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Dynamics") + coord_cartesian(ylim = c(100, 280))
+p_ioi_dyn_ch
+```
+
+## 4. Phrase boundaries - group{#dyn_group_phrase}
+- Compare IOIs at phrase boundaries with others in the two conditions.
+- Hypothesis: Participants will play more slowly at phrase boundaries compared to other locations.
+
+```{r ioi_dyn_ch_all, echo = FALSE}
+# Group mean
+ioi_dyn_ch_all <- ioi_dyn_ch[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_dyn_ch)/2)), by = .(Condition, Skill, Boundary)]
+ioi_dyn_ch_all
+```
+
+### Plot
+#### Bar chdyn
+- Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_dyn_ch_all_bar, echo = FALSE}
+p_ioi_dyn_ch_all_bar <- ggplot(data = ioi_dyn_ch_all, aes(x = Boundary, y = Mean, fill = Condition)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM),
+                width=.2, position = position_dodge(.9)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 1, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = 2, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  #facet_grid(. ~ Boundary) +
+  labs(y = "IOI (ms)", subtitle = "IOI: Dynamics") + coord_cartesian(ylim = c(100, 210))
+p_ioi_dyn_ch_all_bar
+```
+
+#### Box plot
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_dyn_ch_all_box, echo = FALSE}
+p_ioi_dyn_ch_box <- ggplot(data = ioi_dyn_ch, aes(x = Boundary, y = Mean, fill = Condition)) +
+  geom_boxplot() +
+  geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 1, position = position_dodge(0.75)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  #annotate("text", 1.5, 188, label = "Tempo (80bpm / IOI-188ms)", vjust = 5, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  labs(y = "IOI (ms)", subtitle = "IOI: Dynamics")
+p_ioi_dyn_ch_box
+```
+
+### Statistics
+#### Normality check
+- Violate the normality
+```{r normality4, echo = FALSE}
+ioi_dyn_ch_norm <- by(ioi_dyn_ch$Mean, list(ioi_dyn_ch$Condition, ioi_dyn_ch$Boundary), shapiro.test)
+print(ioi_dyn_ch_norm)
+```
+#### Two-way ANOVA (ez)
+```{r stats7, echo = FALSE}
+ioi_dyn_ch_aov <- ezANOVA(
+  data = dt_ioi_dyn
+  , dv = .(IOI)
+  , wid = .(SubNr)
+  , within = .(Condition, Boundary)
+  , type = 3
+  , detailed = TRUE
+)
+ioi_dyn_ch_aov$ANOVA$F <- round(ioi_dyn_ch_aov$ANOVA$F, 4)
+ioi_dyn_ch_aov$ANOVA$p <- round(ioi_dyn_ch_aov$ANOVA$p, 4)
+print(ioi_dyn_ch_aov$ANOVA)
+```
+
+#### Two-way ANOVA (aov)
+```{r stats8, echo = FALSE}
+ioi_dyn_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_dyn_ch)
+print(summary(ioi_dyn_ch_aov_2))
+```
+
+## 5. Trial by trial - individual{#dyn_ind_trial}
+- Average IOIs for each trial for each participant.
+
+```{r ioi_dyn_trial, echo = FALSE}
+# For each individual
+ioi_dyn_trial <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, TrialNr)]
+ioi_dyn_trial
+```
+
+### Plot
+#### Line graph
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_dyn_trial_line, echo = FALSE, fig.height = 4}
+p_ioi_dyn_trial <- ggplot(data = ioi_dyn_trial, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  facet_wrap(SubNr ~ .) + 
+  labs(x = "Trial", y = "IOI (ms)", subtitle = "IOI: Dynamics") + scale_x_continuous(breaks=seq(1,8,1))
+p_ioi_dyn_trial
+```
+
+## 6. Trial by trial - group{#dyn_group_trial}
+- Average IOIs for each trial for each condition.
+
+```{r ioi_dyn_trial_all, echo = FALSE}
+# Group mean
+ioi_dyn_trial_all <- ioi_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_dyn_trial)/2)), by = .(Condition, Skill, TrialNr)]
+ioi_dyn_trial_all
+```
+
+### Plot
+#### Line graph
+- Error bars show SEM of the mean
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+
+```{r ioi_dyn_trial_all_line, echo = FALSE}
+p_ioi_dyn_trial_all <- ggplot(data = ioi_dyn_trial_all, aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
+  geom_line(position = position_dodge(.2)) +
+  geom_point(position = position_dodge(.2)) +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width = .2, position = position_dodge(.2)) + 
+  labs(x = "Trial", y = "IOI (ms)", subtitle = "IOI: Dynamics") + scale_x_continuous(breaks=seq(1,8,1))
+p_ioi_dyn_trial_all
+```
+# Sequence plot
+## Articulation{#sequence_art}
+```{r seq_art, fig.width = 9, fig.height = 3, echo = FALSE}
+# For each individual
+ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
+# Group mean
+ioi_art_seq_all <- ioi_art_seq[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_art_seq)/2)), by = .(Condition, Skill, Interval)]
+
+p_ioi_art_seq <- ggplot(data = ioi_art_seq_all, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  annotate("text", 2, 188, label = "Tempo (80bpm)", vjust = -1, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "IOI (ms)", subtitle = "IOI: Articulation") + scale_x_continuous(breaks=seq(1,66,1))
+p_ioi_art_seq
+```
+
+## Dynamics{#sequence_dyn}
+```{r seq_dyn, fig.width = 9, fig.height = 3, echo = FALSE}
+# For each individual
+ioi_dyn_seq <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
+# Group mean
+ioi_dyn_seq_all <- ioi_dyn_seq[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(nrow(ioi_dyn_seq)/2)), by = .(Condition, Skill, Interval)]
+
+p_ioi_dyn_seq <- ggplot(data = ioi_dyn_seq_all, aes(x = Interval, y = Mean, group = Condition, shape = Condition, colour = Condition)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 188, linetype = "dashed") + # Tempo
+  annotate("text", 2, 188, label = "Tempo (80bpm)", vjust = -1, size = 5, family = "Helvetica Neue LT Std 57 Condensed") +
+  geom_errorbar(aes(ymin = Mean - SEM, ymax = Mean + SEM), width=.2,
+                position = position_dodge(.05)) + 
+  labs(x = "Interval", y = "IOI (ms)", subtitle = "IOI: Dynamics") + scale_x_continuous(breaks=seq(1,66,1))
+p_ioi_dyn_seq
+```
