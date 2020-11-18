@@ -193,7 +193,7 @@ fwrite(dt_ioi_trim_sd_1, file = "./trimmed/data_ioi_1.txt", row.names = F)
 # exclude ioi > +- 3SD (per condition)
 ioi_skill <- dt_ioi_subset[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = Grouping]
 
-dt_ioi_trim_sd_2 <- data.frame()
+dt_ioi_trim_sd_2 <- data.table()
 for (grouping in unique(ioi_skill$Grouping)){
   upper_ioi_2 <- ioi_skill[Grouping == grouping]$Mean+3*ioi_skill[Grouping == grouping]$SD
   lower_ioi_2 <- ioi_skill[Grouping == grouping]$Mean-3*ioi_skill[Grouping == grouping]$SD
@@ -235,7 +235,7 @@ dt_ioi_subset[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == 
 # exclude ioi > +- 3SD (separately for each Boundary)
 ioi_boundary <- dt_ioi_subset[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = Boundary]
 
-dt_ioi_trim_sd_3 <- data.frame()
+dt_ioi_trim_sd_3 <- data.table()
 for (boundary in unique(ioi_boundary$Boundary)){
   upper_ioi_3 <- ioi_boundary[Boundary == boundary]$Mean+3*ioi_boundary[Boundary == boundary]$SD
   lower_ioi_3 <- ioi_boundary[Boundary == boundary]$Mean-3*ioi_boundary[Boundary == boundary]$SD

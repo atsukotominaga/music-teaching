@@ -184,7 +184,7 @@ plot(p_vel_box)
 
 # exclude vel > +- 3SD (within a given condition)
 vel_subcomponent <- dt_vel_subset[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = Subcomponent]
-dt_vel_trim_sd <- data.frame()
+dt_vel_trim_sd <- data.table()
 for (subcomponent in unique(dt_vel_subset$Subcomponent)){
   upper <- vel_subcomponent[Subcomponent == subcomponent]$Mean+3*vel_subcomponent[Subcomponent == subcomponent]$SD
   lower <- vel_subcomponent[Subcomponent == subcomponent]$Mean-3*vel_subcomponent[Subcomponent == subcomponent]$SD
@@ -228,7 +228,7 @@ plot(p_vel_diff_box)
 
 # exclude vel > +- 3SD (within a given condition)
 vel_diff_subcomponent <- dt_vel_diff_subset[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = Subcomponent]
-dt_vel_diff_trim_sd <- data.frame()
+dt_vel_diff_trim_sd <- data.table()
 for (subcomponent in unique(dt_vel_diff_subset$Subcomponent)){
   upper <- vel_diff_subcomponent[Subcomponent == subcomponent]$Mean+3*vel_diff_subcomponent[Subcomponent == subcomponent]$SD
   lower <- vel_diff_subcomponent[Subcomponent == subcomponent]$Mean-3*vel_diff_subcomponent[Subcomponent == subcomponent]$SD

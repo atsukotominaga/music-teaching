@@ -176,7 +176,7 @@ ioi_1 <- dt_ioi_1[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Blo
 ioi_3 <- dt_ioi_3[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, BlockNr, TrialNr, Condition, Skill)]
 
 # Calculate KOR for each interval (ioi_1)
-dt_kor_1<- data.frame()
+dt_kor_1<- data.table()
 for (subnr in unique(dt_kot$SubNr)){
   for (block in unique(dt_kot[SubNr == subnr]$BlockNr)){
     for (trial in unique(dt_kot[SubNr == subnr & BlockNr == block]$TrialNr)){
@@ -188,7 +188,7 @@ for (subnr in unique(dt_kot$SubNr)){
 }
 
 # Calculate KOR for each interval (ioi_3)
-dt_kor_3 <- data.frame()
+dt_kor_3 <- data.table()
 for (subnr in unique(dt_kot$SubNr)){
   for (block in unique(dt_kot[SubNr == subnr]$BlockNr)){
     for (trial in unique(dt_kot[SubNr == subnr & BlockNr == block]$TrialNr)){
@@ -269,7 +269,7 @@ plot(p_kot_box)
 
 # exclude kot > +- 3SD (per subcomponent)
 kot_subcomponent <- dt_kot_subset[, .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = Subcomponent]
-dt_kot_trim_sd <- data.frame()
+dt_kot_trim_sd <- data.table()
 for (subcomponent in unique(dt_kot_subset$Subcomponent)){
   upper <- kot_subcomponent[Subcomponent == subcomponent]$Mean+3*kot_subcomponent[Subcomponent == subcomponent]$SD
   lower <- kot_subcomponent[Subcomponent == subcomponent]$Mean-3*kot_subcomponent[Subcomponent == subcomponent]$SD
