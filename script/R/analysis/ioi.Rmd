@@ -199,7 +199,7 @@ ioi_art_ch_all
 ```{r ioi-art-ch-all-bar, echo = FALSE}
 ioi_art_ch_plot <- data.table(subject = ioi_art_ch[Condition == "teaching"]$SubNr, teaching = ioi_art_ch[Condition == "teaching"]$Mean, performing = ioi_art_ch[Condition == "performing"]$Mean, boundary = ioi_art_ch[Condition == "teaching"]$Boundary)
 
-ggpaired(ioi_art_ch_plot, cond1 = "teaching", cond2 = "performing", color = "condition", legend = "none", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "jco", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggpaired(ioi_art_ch_plot, cond1 = "teaching", cond2 = "performing", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "jco", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed", ) +
   theme(legend.position = "none")
@@ -374,7 +374,7 @@ ioi_dyn_ch_all
 ```{r ioi-dyn-ch-all-bar, echo = FALSE}
 ioi_dyn_ch_plot <- data.table(subject = ioi_dyn_ch[Condition == "teaching"]$SubNr, teaching = ioi_dyn_ch[Condition == "teaching"]$Mean, performing = ioi_dyn_ch[Condition == "performing"]$Mean, boundary = ioi_dyn_ch[Condition == "teaching"]$Boundary)
 
-ggpaired(ioi_dyn_ch_plot, cond1 = "teaching", cond2 = "performing", color = "condition", legend = "none", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "jco", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggpaired(ioi_dyn_ch_plot, cond1 = "teaching", cond2 = "performing", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "jco", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed", ) +
   theme(legend.position = "none")
@@ -430,7 +430,7 @@ ioi_dyn_trial_all
 - Error bars show SEM of the mean
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
 
-```{r ioi_dyn_trial_all_line, echo = FALSE}
+```{r ioi-dyn-trial-all-line, echo = FALSE}
 ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "jco", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   scale_x_continuous(breaks=seq(1,8,1)) +
