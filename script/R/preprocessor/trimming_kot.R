@@ -35,8 +35,8 @@ valid_trials <- rbind(onset_trials, offset_trials)
 valid_trials$Duplicate <- duplicated(valid_trials)
 valid_trials_included <- valid_trials[Duplicate == TRUE]
 # 0 trial was excluded
-write(sprintf("KOT: %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)), file = "./trimmed/outlier.txt", append = T)
-print(sprintf("KOT: %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)))
+write(sprintf("KOT (Onset-Offset check): %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)), file = "./trimmed/outlier.txt", append = T)
+print(sprintf("KOT (Onset-Offset check): %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)))
 
 dt_onset <- data.table()
 for (row in 1:nrow(valid_trials_included)){
