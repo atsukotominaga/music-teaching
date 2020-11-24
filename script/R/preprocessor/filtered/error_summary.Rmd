@@ -14,10 +14,10 @@ if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 if (!require("ggsignif")) {install.packages("ggsignif"); require("ggsignif")}
 
 # function
-source("./function.R")
+source("../function.R")
 
 # read a text file for ideal performance
-dt_ideal <- read.table("./ideal.txt")
+dt_ideal <- read.table("../ideal.txt")
 colnames(dt_ideal) <- "Pitch"
 dt_ideal$RowNr <- 1:nrow(dt_ideal)
 setcolorder(dt_ideal, c(2, 1))
