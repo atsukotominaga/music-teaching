@@ -12,7 +12,7 @@
     - if there are complicated errors, look at the data and listen to the midi performance.
 
 #### Outputs (filtered folder)
-1. Onset
+1. Onsets
 -  dt_correct_onset.txt: all valid trials for onsets
 -  dt_correct_onset_1.txt: trials without error
 - dt_correct_onset_2.txt: corrected trials because of extra notes
@@ -21,8 +21,8 @@
 - dt_correct_onset_5.txt: corrected trials because of idiosyncratic errors
 - error_onset.txt: info about corrected and excluded trials
 
-2. Offset
-Same as onsets
+2. Offsets
+- Same as onsets
 
 3. missingTrials.txt: info about missing trials
 
