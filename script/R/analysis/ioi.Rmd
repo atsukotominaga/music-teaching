@@ -11,11 +11,11 @@ Description: This is a summary of tempo analysis.
 - Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
 
 # Experimental Design{#design}
-- Independent variables: Condition (2 levels: teaching vs. performing) x Skill (2 levels: articulation vs. dynamics)
-- Dependent variables: Interonset intervals
+- Independent variables: Condition (2 levels: teaching vs. performing) x Technique (2 levels: articulation vs. dynamics)
+- Dependent variables: Interonset intervals (IOIs)
 
 1. Main predictions
-- Participants will play slower while teaching regardless of the skills.
+- Participants will play slower while teaching regardless of the techniques.
 
 2. Excluded participants
 
@@ -129,7 +129,7 @@ ioi_art_all
 ```{r ioi-art-plot, echo = FALSE}
 ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
 
-ggpaired(ioi_art_plot, cond1 = "teaching", cond2 = "performing", color = "condition", line.size = 0.3, line.color = "gray", palette = "jco", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
   theme(legend.position = "none")
@@ -199,7 +199,7 @@ ioi_art_ch_all
 ```{r ioi-art-ch-all-bar, echo = FALSE}
 ioi_art_ch_plot <- data.table(subject = ioi_art_ch[Condition == "teaching"]$SubNr, teaching = ioi_art_ch[Condition == "teaching"]$Mean, performing = ioi_art_ch[Condition == "performing"]$Mean, boundary = ioi_art_ch[Condition == "teaching"]$Boundary)
 
-ggpaired(ioi_art_ch_plot, cond1 = "teaching", cond2 = "performing", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "jco", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggpaired(ioi_art_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed", ) +
   theme(legend.position = "none")
@@ -256,7 +256,7 @@ ioi_art_trial_all
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
 
 ```{r ioi-art-trial-all-line, echo = FALSE}
-ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "jco", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   scale_x_continuous(breaks=seq(1,8,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
@@ -305,7 +305,7 @@ ioi_dyn_all
 ```{r ioi-dyn-all-box, echo = FALSE}
 ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
 
-ggpaired(ioi_dyn_plot, cond1 = "teaching", cond2 = "performing", color = "condition", line.size = 0.3, line.color = "gray", palette = "jco", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+ggpaired(ioi_dyn_plot, cond1 = "teaching", cond2 = "performing", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
   theme(legend.position = "none")
@@ -374,7 +374,7 @@ ioi_dyn_ch_all
 ```{r ioi-dyn-ch-all-bar, echo = FALSE}
 ioi_dyn_ch_plot <- data.table(subject = ioi_dyn_ch[Condition == "teaching"]$SubNr, teaching = ioi_dyn_ch[Condition == "teaching"]$Mean, performing = ioi_dyn_ch[Condition == "performing"]$Mean, boundary = ioi_dyn_ch[Condition == "teaching"]$Boundary)
 
-ggpaired(ioi_dyn_ch_plot, cond1 = "teaching", cond2 = "performing", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "jco", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggpaired(ioi_dyn_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed", ) +
   theme(legend.position = "none")
@@ -431,7 +431,7 @@ ioi_dyn_trial_all
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
 
 ```{r ioi-dyn-trial-all-line, echo = FALSE}
-ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "jco", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   scale_x_continuous(breaks=seq(1,8,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
@@ -443,7 +443,7 @@ ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = pos
 # For each individual
 ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "jco", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   scale_x_continuous(breaks=seq(1,66,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
@@ -455,7 +455,7 @@ ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = posi
 # For each individual
 ioi_dyn_seq <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(ioi_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "jco", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+ggline(ioi_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   geom_hline(yintercept = 188, linetype = "dashed") +
   scale_x_continuous(breaks=seq(1,66,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +

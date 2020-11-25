@@ -15,7 +15,7 @@ Description: This is a summary of dynamics analysis.
 - Dependent variables: Key Velocity (KV), KV difference
 
 1. Main predictions
-Participants will exaggerate forte and piano more while teaching.
+- Participants will exaggerate forte and piano more while teaching.
 
 2. Excluded participants
 
@@ -473,7 +473,7 @@ ggline(vel_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add
   theme(legend.position = "bottom")
 ```
 
-# Key Velocity Difference (Difference) - Articulation
+# Key Velocity Difference (Difference) - Articulation{#vel_articulation}
 ## 1. All - individual{#vel_diff_art_ind_all}
 - Average KV-Diff for each participant.
 
