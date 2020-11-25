@@ -6,7 +6,7 @@ editor_options:
   chunk_output_type: inline
 ---
 
-Description: This is a summary of all analyses for articulation.
+Description: This is a summary of articulation analysis.
 
 - Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
 
