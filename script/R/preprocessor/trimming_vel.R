@@ -24,13 +24,13 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 theme_set(theme_classic())
 
 # create a folder if not exists
-if (!file.exists("trimmed")){
-  dir.create("trimmed")
+if (!file.exists(here("trimmed"))){
+  dir.create(here("trimmed"))
 }
 
 # read txt files
-dt_onset_all <- fread(file = "./filtered/dt_correct_onset.txt")
-dt_offset_all <- fread(file = "./filtered/dt_correct_offset.txt")
+dt_onset_all <- fread(file = here("filtered", "dt_correct_onset.txt"))
+dt_offset_all <- fread(file = here("filtered", "dt_correct_offset.txt"))
 
 # sort by SubNr, BlockNr, TrialNr, NoteNr
 dt_onset_all <- dt_onset_all[order(SubNr, BlockNr, TrialNr, NoteNr)]
@@ -190,7 +190,7 @@ for (subcomponent in unique(dt_vel_subset$Subcomponent)){
 
 removed_vel <- nrow(dt_vel_subset)-nrow(dt_vel_trim_sd)
 proportion_vel <- round(removed_vel/nrow(dt_vel_subset), 5)
-write(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100), file = "./trimmed/outlier.txt", append = T)
+write(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100), file = here("trimmed", "outlier.txt"), append = T)
 print(sprintf("Velocity: Remove %i responses beyond +- 3SD / %f percent", removed_vel, proportion_vel*100))
 
 # draw histogram and boxplot
@@ -204,13 +204,13 @@ plot(p_vel_box_sd)
 
 # Save plots
 # png files
-ggsave("./trimmed/vel_hist.png", plot = p_vel_hist, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/vel_hist_sd.png", plot = p_vel_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/vel_box.png", plot = p_vel_box, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/vel_box_sd.png", plot = p_vel_box_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "vel_hist.png"), plot = p_vel_hist, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "vel_hist_sd.png"), plot = p_vel_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "vel_box.png"), plot = p_vel_box, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "vel_box_sd.png"), plot = p_vel_box_sd, dpi = 600, width = 5, height = 4)
 
 # export a txt file for dt_trim_sd
-fwrite(dt_vel_trim_sd, file = "./trimmed/data_vel.txt", row.names = F)
+fwrite(dt_vel_trim_sd, file = here("trimmed", "data_vel.txt"), row.names = F)
 
 ###### dt_vel_diff
 # draw histogram and boxplot
@@ -235,7 +235,7 @@ for (subcomponent in unique(dt_vel_diff_subset$Subcomponent)){
 
 removed_vel_diff <- nrow(dt_vel_diff_subset)-nrow(dt_vel_diff_trim_sd)
 proportion_vel_diff <- round(removed_vel_diff/nrow(dt_vel_diff_subset), 5)
-write(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100), file = "./trimmed/outlier.txt", append = T)
+write(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100), file = here("trimmed", "outlier.txt"), append = T)
 print(sprintf("Diff: Remove %i responses beyond +- 3SD / %f percent", removed_vel_diff, proportion_vel_diff*100))
 
 # draw histogram and boxplot
@@ -249,10 +249,10 @@ plot(p_vel_diff_box_sd)
 
 # Save plots
 # png files
-ggsave("./trimmed/vel_diff_hist.png", plot = p_vel_diff_hist, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/vel_diff_hist_sd.png", plot = p_vel_diff_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/vel_diff_box.png", plot = p_vel_diff_box, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/vel_diff_box_sd.png", plot = p_vel_diff_box_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "vel_diff_hist.png"), plot = p_vel_diff_hist, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "vel_diff_hist_sd.png"), plot = p_vel_diff_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "vel_diff_box.png"), plot = p_vel_diff_box, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "vel_diff_box_sd.png"), plot = p_vel_diff_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for dt_trim_sd
-fwrite(dt_vel_diff_trim_sd, file = "./trimmed/data_vel_diff.txt", row.names = F)
+fwrite(dt_vel_diff_trim_sd, file = here("trimmed", "data_vel_diff.txt"), row.names = F)

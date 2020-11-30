@@ -13,26 +13,26 @@ if (!require("here")) {install.packages("here"); require("here")}
 here::i_am("filtering.R")
 
 # create a folder if not exists
-if (!file.exists("filtered")){
-  dir.create("filtered")
+if (!file.exists(here("filtered"))){
+  dir.create(here("filtered"))
 }
 
 # read functions
-source("./function.R")
+source(here("filtered", "function.R"))
 
 # read a text file for ideal performance
-dt_ideal <- read.table("./ideal.txt")
+dt_ideal <- read.table(here("filtered", "ideal.txt"))
 colnames(dt_ideal) <- "Pitch"
 dt_ideal$RowNr <- 1:nrow(dt_ideal)
 setcolorder(dt_ideal, c(2, 1))
 
 # create a list of data file names
-lf <- list.files("./raw_data", pattern = "txt")
+lf <- list.files(here("filtered", "raw_data"), pattern = "txt")
 
 # create raw_data - merge all data files into one
 raw_data <- data.table()
 for (i in 1:length(lf)){
-  data_i <- fread(file.path("./raw_data", lf[i]), header = F, sep = " ", dec = ".")
+  data_i <- fread(file.path(here("filtered", "raw_data"), lf[i]), header = F, sep = " ", dec = ".")
   raw_data <- rbind(raw_data, data_i)
 }
 
@@ -74,7 +74,7 @@ dt_correct_onset_1$RowNr <- rep(1:67, nrow(dt_correct_onset_1)/67)
 setcolorder(dt_correct_onset_1, c(14, 1:13))
 
 # export csv
-fwrite(dt_correct_onset_1, file = "./filtered/dt_correct_onset_1.txt")
+fwrite(dt_correct_onset_1, file = here("filtered", "dt_correct_onset_1.txt"))
 
 # 2. Manual pitch error removal
 dt_error_onset$CorrectionNr <- NA
@@ -107,7 +107,7 @@ for (row in 1:nrow(error_extra_onset)){
 }
 
 # export csv
-fwrite(dt_correct_onset_2, file = "./filtered/dt_correct_onset_2.txt")
+fwrite(dt_correct_onset_2, file = here("filtered", "dt_correct_onset_2.txt"))
 
 # missing notes
 error_missing_onset <- dt_error_onset[Reason == "Missing Notes"]
@@ -134,7 +134,7 @@ for (row in 1:nrow(error_missing_onset)){
 }
 
 # export csv
-fwrite(dt_correct_onset_3, file = "./filtered/dt_correct_onset_3.txt")
+fwrite(dt_correct_onset_3, file = here("filtered", "dt_correct_onset_3.txt"))
 
 # substituted notes
 error_sub_onset <- dt_error_onset[startsWith(Reason, "Substituted")]
@@ -164,7 +164,7 @@ for (row in 1:nrow(error_sub_onset)){
 }
 
 # export csv
-fwrite(dt_correct_onset_4, file = "./filtered/dt_correct_onset_4.txt")
+fwrite(dt_correct_onset_4, file = here("filtered", "dt_correct_onset_4.txt"))
 
 # combine error
 error_onset <- rbind(error_extra_onset, error_missing_onset, error_sub_onset)
@@ -246,7 +246,7 @@ error_ind_onset$CorrectionNr[10:17] <- "Exclude"
 dt_correct_onset_5 <- rbind(current_1, current_2, current_3, current_7)
 
 # export csv
-fwrite(dt_correct_onset_5, file = "./filtered/dt_correct_onset_5.txt")
+fwrite(dt_correct_onset_5, file = here("filtered", "dt_correct_onset_5.txt"))
 
 # combine all
 dt_correct_onset <- rbind(dt_correct_onset_1, dt_correct_onset_2, dt_correct_onset_3, dt_correct_onset_4, dt_correct_onset_5)
@@ -257,8 +257,8 @@ error_onset$Duplicate <- duplicated(error_onset[,1:3])
 error_onset_all <- error_onset[Duplicate == FALSE]
 
 # export csv
-fwrite(dt_correct_onset, file = "./filtered/dt_correct_onset.txt")
-fwrite(error_onset_all, file = "./filtered/error_onset.txt")
+fwrite(dt_correct_onset, file = here("filtered", "dt_correct_onset.txt"))
+fwrite(error_onset_all, file = here("filtered", "error_onset.txt"))
 
 ####################################
 # OFFSET
@@ -277,7 +277,7 @@ dt_correct_offset_1$RowNr <- rep(1:67, nrow(dt_correct_offset_1)/67)
 setcolorder(dt_correct_offset_1, c(14, 1:13))
 
 # export csv
-fwrite(dt_correct_offset_1, file = "./filtered/dt_correct_offset_1.txt")
+fwrite(dt_correct_offset_1, file = here("filtered", "dt_correct_offset_1.txt"))
 
 # 2. Manual pitch error removal
 dt_error_offset$CorrectionNr <- NA
@@ -310,7 +310,7 @@ for (row in 1:nrow(error_extra_offset)){
 }
 
 # export csv
-fwrite(dt_correct_offset_2, file = "./filtered/dt_correct_offset_2.txt")
+fwrite(dt_correct_offset_2, file = here("filtered", "dt_correct_offset_2.txt"))
 
 # missing notes
 error_missing_offset <- dt_error_offset[Reason == "Missing Notes"]
@@ -337,7 +337,7 @@ for (row in 1:nrow(error_missing_offset)){
 }
 
 # export csv
-fwrite(dt_correct_offset_3, file = "./filtered/dt_correct_offset_3.txt")
+fwrite(dt_correct_offset_3, file = here("filtered", "dt_correct_offset_3.txt"))
 
 # substituted notes
 error_sub_offset <- dt_error_offset[startsWith(Reason, "Substituted")]
@@ -367,7 +367,7 @@ for (row in 1:nrow(error_sub_offset)){
 }
 
 # export csv
-fwrite(dt_correct_offset_4, file = "./filtered/dt_correct_offset_4.txt")
+fwrite(dt_correct_offset_4, file = here("filtered", "dt_correct_offset_4.txt"))
 
 # combine error
 error_offset <- rbind(error_extra_offset, error_missing_offset, error_sub_offset)
@@ -468,7 +468,7 @@ error_ind_offset$CorrectionNr[11:18] <- "Exclude"
 dt_correct_offset_5 <-rbind(current_1, current_2, current_3, current_4, current_5)
 
 # export csv
-fwrite(dt_correct_offset_5, file = "./filtered/dt_correct_offset_5.txt")
+fwrite(dt_correct_offset_5, file = here("filtered", "dt_correct_offset_5.txt"))
 
 # combine all
 dt_correct_offset <- rbind(dt_correct_offset_1, dt_correct_offset_2, dt_correct_offset_3, dt_correct_offset_4, dt_correct_offset_5)
@@ -479,8 +479,8 @@ error_offset$Duplicate <- duplicated(error_offset[,1:3])
 error_offset_all <- error_offset[Duplicate == FALSE]
 
 # export csv
-fwrite(dt_correct_offset, file = "./filtered/dt_correct_offset.txt")
-fwrite(error_offset_all, file = "./filtered/error_offset.txt")
+fwrite(dt_correct_offset, file = here("filtered", "dt_correct_offset.txt"))
+fwrite(error_offset_all, file = here("filtered", "error_offset.txt"))
 
 ####################################
 # Checking
@@ -488,16 +488,16 @@ fwrite(error_offset_all, file = "./filtered/error_offset.txt")
 rm(list=ls(all=T)) # clear all
 
 # read txt files
-dt_correct_onset <- fread(file = "./filtered/dt_correct_onset.txt")
-dt_correct_offset <- fread(file = "./filtered/dt_correct_offset.txt")
+dt_correct_onset <- fread(file = here("filtered", "dt_correct_onset.txt"))
+dt_correct_offset <- fread(file = here("filtered", "dt_correct_offset.txt"))
 
 # check if duplicates
 
 # read functions
-source("./function.R")
+source(here("filtered", "function.R"))
 
 # read a text file for ideal performance
-dt_ideal <- read.table("./ideal.txt")
+dt_ideal <- read.table(here("filtered", "ideal.txt"))
 colnames(dt_ideal) <- "Pitch"
 dt_ideal$RowNr <- 1:nrow(dt_ideal)
 setcolorder(dt_ideal, c(2, 1))
@@ -513,6 +513,6 @@ offset_missing <- checker(dt_correct_offset, dt_ideal)
 onset_missing$OnOff <- "Onset"
 offset_missing$OnOff <- "Offset"
 
-fwrite(rbind(onset_missing, offset_missing), file = "./filtered/missingTrials.txt")
+fwrite(rbind(onset_missing, offset_missing), file = here("filtered", "missingTrials.txt"))
 
 # Missing Trial - fine / if there is other than Missing Trial, look at data again

@@ -24,13 +24,13 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 theme_set(theme_classic())
 
 # create a folder if not exists
-if (!file.exists("trimmed")){
-  dir.create("trimmed")
+if (!file.exists(here("trimmed"))){
+  dir.create(here("trimmed"))
 }
 
 # read txt files
-dt_onset_all <- fread(file = "./filtered/dt_correct_onset.txt")
-dt_offset_all <- fread(file = "./filtered/dt_correct_offset.txt")
+dt_onset_all <- fread(file = here("filtered", "dt_correct_onset.txt"))
+dt_offset_all <- fread(file = here("filtered", "dt_correct_offset.txt"))
 
 # check whether each trial has both onset/offset datasets
 onset_trials <- dt_onset_all[, .(N = .N), by = .(SubNr, BlockNr, TrialNr)]
@@ -39,7 +39,7 @@ valid_trials <- rbind(onset_trials, offset_trials)
 valid_trials$Duplicate <- duplicated(valid_trials)
 valid_trials_included <- valid_trials[Duplicate == TRUE]
 # 0 trial was excluded
-write(sprintf("KOT (Onset-Offset check): %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)), file = "./trimmed/outlier.txt", append = T)
+write(sprintf("KOT (Onset-Offset check): %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)), file = here("trimmed", "outlier.txt"), append = T)
 print(sprintf("KOT (Onset-Offset check): %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)))
 
 dt_onset <- data.table()
@@ -93,8 +93,8 @@ change_2 <- c(16, 41, 57)
 # source("./trimming_ioi.R")
 
 # or read txt files for IOIs
-dt_ioi_1 <- fread(file.path("./trimmed/data_ioi_1.txt"), header = T) # remove outliers outside 3SD across the conditions
-dt_ioi_3 <- fread(file.path("./trimmed/data_ioi_3.txt"), header = T) # remove outliers per Boundary
+dt_ioi_1 <- fread(file.path(here("trimmed", "data_ioi_1.txt")), header = T) # remove outliers outside 3SD across the conditions
+dt_ioi_3 <- fread(file.path(here("trimmed", "data_ioi_3.txt")), header = T) # remove outliers per Boundary
 
 ####################################
 # Key Overlap Time - articulation
@@ -190,7 +190,7 @@ for (subcomponent in unique(dt_kot_subset$Subcomponent)){
 }
 removed_kot <- nrow(dt_kot_subset)-nrow(dt_kot_trim_sd)
 proportion_kot <- round(removed_kot/nrow(dt_kot_subset), 5)
-write(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100), file = "./trimmed/outlier.txt", append = T)
+write(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100), file = here("trimmed", "outlier.txt"), append = T)
 print(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100))
 
 # draw histogram and boxplot
@@ -205,10 +205,10 @@ plot(p_kot_box_sd)
 
 # Save plots
 # png files
-ggsave("./trimmed/kot_hist.png", plot = p_kot_hist, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/kot_hist_sd.png", plot = p_kot_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/kot_box.png", plot = p_kot_box, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/kot_box_sd.png", plot = p_kot_box_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kot_hist.png"), plot = p_kot_hist, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kot_hist_sd.png"), plot = p_kot_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kot_box.png"), plot = p_kot_box, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kot_box_sd.png"), plot = p_kot_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a csv file for dt_kot_trim_sd
-fwrite(dt_kot_trim_sd, file = "./trimmed/data_kot.txt", row.names = F)
+fwrite(dt_kot_trim_sd, file = here("trimmed", "data_kot.txt"), row.names = F)
