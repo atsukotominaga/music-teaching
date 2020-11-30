@@ -8,6 +8,10 @@
 # This script removes outliers.
 # GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R/preprocessor
 
+# set working directory
+if (!require("here")) {install.packages("here"); require("here")}
+here::i_am("trimming_vel.R")
+
 # install and load required packages
 # data manipulation
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}

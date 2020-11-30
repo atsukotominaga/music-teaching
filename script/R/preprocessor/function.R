@@ -1,6 +1,5 @@
 # install and load required packages
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
-if (!require("tibble")) {install.packages("tibble"); require("tibble")}
 if (!require("editData")) {install.packages("editData"); require("editData")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
 
