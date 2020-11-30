@@ -11,7 +11,10 @@
 ####################################
 #  Requirements
 ####################################
-# set working directory to file source location
+# set working directory
+if (!require("here")) {install.packages("here"); require("here")}
+here::i_am("trimming_ioi.R")
+
 # install and load required packages
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}

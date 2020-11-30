@@ -8,6 +8,10 @@
 # This script organises raw data and removes pitch errors.
 # GitHub repo (private): https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R/preprocessor
 
+# set working directory
+if (!require("here")) {install.packages("here"); require("here")}
+here::i_am("filtering.R")
+
 # create a folder if not exists
 if (!file.exists("filtered")){
   dir.create("filtered")
