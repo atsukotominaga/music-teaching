@@ -83,10 +83,6 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 # statistics
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("emmeans")) {install.packages("emmeans"); require("emmeans")}
-
-# ggplots
-theme_set(theme_classic()) 
-theme_update(text = element_text(size = 20, family = "Helvetica Neue LT Std 57 Condensed"), legend.position = "bottom")
 ```
 
 ```{r file, include = FALSE}
@@ -137,17 +133,12 @@ kot_art
 ```
 
 ### Plot
-#### Bar chart
-- Error bars show SD of the mean
+#### Box plot
 
-```{r kot-art-bar,  echo = FALSE}
-p_kot_art <- ggplot(data = kot_art, aes(x = SubNr, y = Mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
-                width = .2, position = position_dodge(.9)) +
+```{r kot-art-box,  echo = FALSE}
+ggboxplot(dt_kot_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "KOT (ms)", title = "KOT: Articulation") +
   facet_grid(Subcomponent ~ .) +
-  labs(y = "KOT (ms)", subtitle = "KOT: Articulation")
-p_kot_art
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ## 2. All - group{#kot_art_group_all}
@@ -161,13 +152,18 @@ kot_art_all
 ```
 
 ### Plot
+#### Scatter plot
+```{r kot-art-all-scatter, echo = FALSE}
+ggerrorplot(kot_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", palette = "aaas", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Articulation") +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
+```
+
 #### Box plot
 ```{r kot-art-all-box, echo = FALSE}
 kot_art_plot <- data.table(subject = kot_art[Condition == "teaching"]$SubNr, teaching = kot_art[Condition == "teaching"]$Mean, performing = kot_art[Condition == "performing"]$Mean, subcomponent = kot_art[Condition == "teaching"]$Subcomponent)
 
 ggpaired(kot_art_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Articulation") +
-  theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed", ) +
-  theme(legend.position = "none")
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ### Statistics
@@ -201,21 +197,15 @@ kot_art_trial
 ### Plot
 #### Line graph
 ```{r kot-art-trial-line-legato, echo = FALSE, fig.height = 4}
-p_kot_art_trial_legato <- ggplot(data = kot_art_trial[Subcomponent == "Legato"], aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(SubNr ~ .) + 
-  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Articulation/Legato") + scale_x_continuous(breaks=seq(1,8,1))
-p_kot_art_trial_legato
+ggline(dt_kot_art[Subcomponent == "Legato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Articulation/Legato") +
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kot-art-trial-line-staccato, echo = FALSE, fig.height = 4}
-p_kot_art_trial_staccato <- ggplot(data = kot_art_trial[Subcomponent == "Staccato"], aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(SubNr ~ .) + 
-  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Articulation/Staccato") + scale_x_continuous(breaks=seq(1,8,1))
-p_kot_art_trial_staccato
+ggline(dt_kot_art[Subcomponent == "Staccato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Articulation/Staccato") +
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ## 4. Trial by trial - group{#kot_art_group_trial}
@@ -232,14 +222,14 @@ kot_art_trial_all
 - Error bars show SEM of the mean
 
 ```{r kot-art-trial-all-line-legato, echo = FALSE}
-ggline(kot_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Articulation/Legato") +
+ggline(kot_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Articulation/Legato") +
   scale_x_continuous(breaks=seq(1,8,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
   theme(legend.position = "bottom")
 ```
 
 ```{r kot-art-trial-all-line-staccato, echo = FALSE}
-ggline(kot_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Articulation/Staccato") +
+ggline(kot_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Articulation/Staccato") +
   scale_x_continuous(breaks=seq(1,8,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
   theme(legend.position = "bottom")
@@ -257,17 +247,12 @@ kor_art
 ```
 
 ### Plot
-#### Bar chart
-- Error bars show SD of the mean
+#### Box plot
 
-```{r kor-art-bar,  echo = FALSE}
-p_kor_art <- ggplot(data = kor_art, aes(x = SubNr, y = Mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
-                width = .2, position = position_dodge(.9)) +
+```{r kor-art-box,  echo = FALSE}
+ggboxplot(dt_kor_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "KOR", title = "KOR: Articulation") +
   facet_grid(Subcomponent ~ .) +
-  labs(y = "KOR", subtitle = "KOR: Articulation")
-p_kor_art
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ## 2. All - group{#kor_art_group_all}
@@ -281,15 +266,19 @@ kor_art_all
 ```
 
 ### Plot
-#### Bar chart
+#### Scatter plot
 - Error bars show SEM of the mean
+
+```{r kor-art-all-scatter, echo = FALSE}
+ggerrorplot(kor_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", palette = "aaas", xlab = "Condition", ylab = "KOR", title = "KOR: Articulation") +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
+```
 
 ```{r kor-art-all-bar, echo = FALSE}
 kor_art_plot <- data.table(subject = kor_art[Condition == "teaching"]$SubNr, teaching = kor_art[Condition == "teaching"]$Mean, performing = kor_art[Condition == "performing"]$Mean, subcomponent = kor_art[Condition == "teaching"]$Subcomponent)
 
 ggpaired(kor_art_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOR", title = "KOR: Articulation") +
-  theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed", ) +
-  theme(legend.position = "none")
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ### Statistics
@@ -323,21 +312,15 @@ kor_art_trial
 ### Plot
 #### Line graph
 ```{r kor-art-trial-line-legato, echo = FALSE, fig.height = 4}
-p_kor_art_trial_legato <- ggplot(data = kor_art_trial[Subcomponent == "Legato"], aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(SubNr ~ .) + 
-  labs(x = "Trial", y = "KOR", subtitle = "KOR: Articulation/Legato") + scale_x_continuous(breaks=seq(1,8,1))
-p_kor_art_trial_legato
+ggline(dt_kor_art[Subcomponent == "Legato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "KOR", title = "KOR: Articulation/Legato") +
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kor-art-trial-line-staccato, echo = FALSE, fig.height = 4}
-p_kor_art_trial_staccato <- ggplot(data = kor_art_trial[Subcomponent == "Staccato"], aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(SubNr ~ .) + 
-  labs(x = "Trial", y = "KOR", subtitle = "KOR: Articulation/Staccato") + scale_x_continuous(breaks=seq(1,8,1))
-p_kor_art_trial_staccato
+ggline(dt_kor_art[Subcomponent == "Staccato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "KOR", title = "KOR: Articulation/Staccato") +
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ## 4. Trial by trial - group{#kor_art_group_trial}
@@ -354,14 +337,14 @@ kor_art_trial_all
 - Error bars show SEM of the mean
 
 ```{r kor-art-trial-all-line-legato, echo = FALSE}
-ggline(kor_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOR", title = "KOR: Articulation/Legato") +
+ggline(kor_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOR", title = "KOR: Articulation/Legato") +
   scale_x_continuous(breaks=seq(1,8,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
   theme(legend.position = "bottom")
 ```
 
 ```{r kor-art-trial-all-line-staccato, echo = FALSE}
-ggline(kor_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOR", title = "KOR: Articulation/Legato") +
+ggline(kor_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOR", title = "KOR: Articulation/Legato") +
   scale_x_continuous(breaks=seq(1,8,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
   theme(legend.position = "bottom")
@@ -378,17 +361,12 @@ kot_dyn
 ```
 
 ### Plot
-#### Bar chart
-- Error bars show SD of the mean
+#### Box plot
 
-```{r kot-dyn-bar,  echo = FALSE}
-p_kot_dyn <- ggplot(data = kot_dyn, aes(x = SubNr, y = Mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
-                width = .2, position = position_dodge(.9)) +
+```{r kot-dyn-box,  echo = FALSE}
+ggboxplot(dt_kot_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "KOT (ms)", title = "KOT: Dynamics") +
   facet_grid(Subcomponent ~ .) +
-  labs(y = "KOT (ms)", subtitle = "KOT: Dynamics")
-p_kot_dyn
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ## 2. All - group{#kot_dyn_group_all}
@@ -407,8 +385,7 @@ kot_dyn_all
 kot_dyn_plot <- data.table(subject = kot_dyn[Condition == "teaching"]$SubNr, teaching = kot_dyn[Condition == "teaching"]$Mean, performing = kot_dyn[Condition == "performing"]$Mean, subcomponent = kot_dyn[Condition == "teaching"]$Subcomponent)
 
 ggpaired(kot_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Dynamics") +
-  theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed", ) +
-  theme(legend.position = "none")
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ### Statistics
@@ -436,21 +413,15 @@ kot_dyn_trial
 ### Plot
 #### Line graph
 ```{r kot-dyn-trial-line-forte, echo = FALSE, fig.height = 4}
-p_kot_dyn_trial_forte <- ggplot(data = kot_dyn_trial[Subcomponent == "Forte"], aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(SubNr ~ .) + 
-  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Dynamics/Forte") + scale_x_continuous(breaks=seq(1,8,1))
-p_kot_dyn_trial_forte
+ggline(dt_kot_dyn[Subcomponent == "Forte", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Dynamics/Forte") +
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kot-dyn-trial-line-piano, echo = FALSE, fig.height = 4}
-p_kot_dyn_trial_piano <- ggplot(data = kot_dyn_trial[Subcomponent == "Piano"], aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(SubNr ~ .) + 
-  labs(x = "Trial", y = "KOT (ms)", subtitle = "KOT: Dynamics/Piano") + scale_x_continuous(breaks=seq(1,8,1))
-p_kot_dyn_trial_piano
+ggline(dt_kot_dyn[Subcomponent == "Piano", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Dynamics/Piano") +
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ## 4. Trial by trial - group{#kot_dyn_group_trial}
@@ -467,14 +438,14 @@ kot_dyn_trial_all
 - Error bars show SEM of the mean
 
 ```{r kot-dyn-trial-all-line-forte, echo = FALSE}
-ggline(kot_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Forte") +
+ggline(kot_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Forte") +
   scale_x_continuous(breaks=seq(1,8,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
   theme(legend.position = "bottom")
 ```
 
 ```{r kot-dyn-trial-all-line-piano, echo = FALSE}
-ggline(kot_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Piano") +
+ggline(kot_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Piano") +
   scale_x_continuous(breaks=seq(1,8,1)) +
   theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
   theme(legend.position = "bottom")
@@ -491,17 +462,11 @@ kor_dyn
 ```
 
 ### Plot
-#### Bar chart
-- Error bars show SD of the mean
-
-```{r kor-dyn-bar,  echo = FALSE}
-p_kor_dyn <- ggplot(data = kor_dyn, aes(x = SubNr, y = Mean, fill = Condition)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD),
-                width = .2, position = position_dodge(.9)) +
+#### Box plot
+```{r kor-dyn-box,  echo = FALSE}
+ggboxplot(dt_kor_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "KOR", title = "KOR: Dynamics") +
   facet_grid(Subcomponent ~ .) +
-  labs(y = "KOR", subtitle = "KOR: Dynamics")
-p_kor_dyn
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ## 2. All - group{#kor_dyn_group_all}
@@ -519,8 +484,7 @@ kor_dyn_all
 kor_dyn_plot <- data.table(subject = kor_dyn[Condition == "teaching"]$SubNr, teaching = kor_dyn[Condition == "teaching"]$Mean, performing = kor_dyn[Condition == "performing"]$Mean, subcomponent = kor_dyn[Condition == "teaching"]$Subcomponent)
 
 ggpaired(kor_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOR", title = "KOR: Dynamics") +
-  theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed", ) +
-  theme(legend.position = "none")
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ### Statistics
@@ -548,21 +512,15 @@ kor_dyn_trial
 ### Plot
 #### Line graph
 ```{r kor-dyn-trial-line-forte, echo = FALSE, fig.height = 4}
-p_kor_dyn_trial_forte <- ggplot(data = kor_dyn_trial[Subcomponent == "Forte"], aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(SubNr ~ .) + 
-  labs(x = "Trial", y = "KOR", subtitle = "KOR: Dynamics/Forte") + scale_x_continuous(breaks=seq(1,8,1))
-p_kor_dyn_trial_forte
+ggline(dt_kor_dyn[Subcomponent == "Forte", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "KOR", title = "KOR: Dynamics/Forte") +
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kor-dyn-trial-line-piano, echo = FALSE, fig.height = 4}
-p_kor_dyn_trial_piano <- ggplot(data = kor_dyn_trial[Subcomponent == "Piano"], aes(x = TrialNr, y = Mean, group = Condition, colour = Condition)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(SubNr ~ .) + 
-  labs(x = "Trial", y = "KOR", subtitle = "KOR: Dynamics/Piano") + scale_x_continuous(breaks=seq(1,8,1))
-p_kor_dyn_trial_piano
+ggline(dt_kor_dyn[Subcomponent == "Piano", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "KOR", title = "KOR: Dynamics/Piano") +
+  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ## 4. Trial by trial - group{#kor_dyn_group_trial}
@@ -581,15 +539,13 @@ kor_dyn_trial_all
 ```{r kor-dyn-trial-all-line-forte, echo = FALSE}
 ggline(kor_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOR", title = "KOR: Dynamics/Forte") +
   scale_x_continuous(breaks=seq(1,8,1)) +
-  theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
-  theme(legend.position = "bottom")
+  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ```{r kor_dyn_trial_all_line_piano, echo = FALSE}
-ggline(kor_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOR", title = "KOR: Dynamics/Piano") +
+ggline(kor_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOR", title = "KOR: Dynamics/Piano") +
   scale_x_continuous(breaks=seq(1,8,1)) +
-  theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
-  theme(legend.position = "bottom")
+  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 # Sequence plot
@@ -600,8 +556,7 @@ kot_art_seq <- dt_kot_art[, .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(Su
 
 ggline(kot_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Interval", ylab = "KOT (ms)", title = "KOT: Articulation") +
   scale_x_continuous(breaks=seq(1,66,1)) +
-  theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
-  theme(legend.position = "bottom")
+  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
 ## Dynamics{#sequence_dyn}
@@ -611,6 +566,5 @@ kot_dyn_seq <- dt_kot_dyn[, .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(Su
 
 ggline(kot_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Interval", ylab = "KOT (ms)", title = "KOT: Dynamics") +
   scale_x_continuous(breaks=seq(1,66,1)) +
-  theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed") +
-  theme(legend.position = "bottom")
+  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
