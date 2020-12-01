@@ -239,8 +239,8 @@ ioi_art_trial_all
 ```{r ioi-art-trial-all-line, echo = FALSE}
 ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,8,1)) +
-  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
+  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 # IOI-Dynamics
@@ -399,8 +399,8 @@ ioi_dyn_trial_all
 ```{r ioi-dyn-trial-all-line, echo = FALSE}
 ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,8,1)) +
-  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
+  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 # Sequence plot
 ## Articulation{#sequence_art}
@@ -410,8 +410,8 @@ ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(Su
 
 ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,66,1)) +
-  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
+  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+  scale_x_continuous(breaks = seq(1,66,1))
 ```
 
 ## Dynamics{#sequence_dyn}
@@ -421,6 +421,6 @@ ioi_dyn_seq <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(Su
 
 ggline(ioi_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,66,1)) +
-  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed")
+  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+    scale_x_continuous(breaks = seq(1,66,1))
 ```
