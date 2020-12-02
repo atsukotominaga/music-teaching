@@ -6,7 +6,6 @@
 ####################################
 # Created: 26/11/2019
 # This script removes outliers.
-# GitHub repo: https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R 
 
 ####################################
 #  Requirements
@@ -26,19 +25,19 @@ theme_set(theme_classic())
 
 # create necessary folders if not exist
 # filtered - all of the outputs will be stored in this folder
-if (!file.exists("trimmed")){
-  dir.create("trimmed")
+if (!file.exists(here("trimmed"))){
+  dir.create(here("trimmed"))
 }
 
 # read a text file for ideal performance
-dt_ideal <- fread("./ideal.txt")
+dt_ideal <- fread(here("ideal.txt"))
 colnames(dt_ideal) <- "Pitch"
 dt_ideal$RowNr <- c(1:nrow(dt_ideal))
 dt_ideal <- dt_ideal[c(2, 1)]
 
 # read txt files
-dt_onset_all <- fread(file = "./filtered/dt_correct_onset.txt", header = T)
-dt_offset_all <- fread(file= "./filtered/dt_correct_offset.txt", header = T)
+dt_onset_all <- fread(file = here("filtered", "dt_correct_onset.txt"), header = T)
+dt_offset_all <- fread(file= here("filtered", "dt_correct_offset.txt"), header = T)
 
 # assign RowNr
 dt_onset_all$RowNr <- rep(1:72, nrow(dt_onset_all)/72)
@@ -51,7 +50,7 @@ valid_trials <- rbind(onset_trials, offset_trials)
 valid_trials$Duplicate <- duplicated(valid_trials)
 valid_trials_included <- valid_trials[Duplicate == TRUE]
 # 1 trial was excluded
-write(sprintf("KOT: %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)), file = "./trimmed/outlier.txt", append = T)
+write(sprintf("KOT: %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)), file = here("trimmed", "outlier.txt"), append = T)
 print(sprintf("KOT: %i trial was excluded because it lacks either onset or offset dataset", nrow(onset_trials)-nrow(valid_trials_included)))
 
 dt_kot_onset_all <- data.table()
@@ -97,8 +96,8 @@ change_2 <- c(8, 20, 39)
 # source("./trimming_ioi.R")
 
 # or read csv
-dt_ioi_1 <- fread(file = "./trimmed/data_ioi_1.txt", header = T) # remove outliers outside 3SD across the conditions
-dt_ioi_3 <- fread(file = "./trimmed/data_ioi_3.txt", header = T) # remove outliers per Boundary
+dt_ioi_1 <- fread(file = here("trimmed", "data_ioi_1.txt"), header = T) # remove outliers outside 3SD across the conditions
+dt_ioi_3 <- fread(file = here("trimmed", "data_ioi_3.txt"), header = T) # remove outliers per Boundary
 
 ####################################
 # Key Overlap Time - articulation
@@ -246,13 +245,13 @@ plot(p_kor_box_sd)
 
 # Save plots
 # png files
-ggsave("./trimmed/kor_hist.png", plot = p_kor_hist, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/kor_hist_sd.png", plot = p_kor_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/kor_box.png", plot = p_kor_box, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/kor_box_sd.png", plot = p_kor_box_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kor_hist.png"), plot = p_kor_hist, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kor_hist_sd.png"), plot = p_kor_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kor_box.png"), plot = p_kor_box, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kor_box_sd.png"), plot = p_kor_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a txt file for dt_kor_trim_sd
-fwrite(dt_kor_trim_sd, file = "./trimmed/data_kor.txt", row.names = F)
+fwrite(dt_kor_trim_sd, file = here("trimmed", "data_kor.txt"), row.names = F)
 
 ####################################
 # Remove outliers (KOT)
@@ -282,7 +281,7 @@ for (subcomponent in unique(dt_kot_subset$Subcomponent)){
 
 removed_kot <- nrow(dt_kot_subset)-nrow(dt_kot_trim_sd)
 proportion_kot <- round(removed_kot/nrow(dt_kot_subset), 5)
-write(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100), file = "./trimmed/outlier.txt", append = T)
+write(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100), file = here("trimmed", "outlier.txt"), append = T)
 print(sprintf("KOT: Remove %i responses beyond +- 3SD / %f percent", removed_kot, proportion_kot*100))
 
 # draw histogram and boxplot
@@ -297,10 +296,10 @@ plot(p_kot_box_sd)
 
 # Save plots
 # png files
-ggsave("./trimmed/kot_hist.png", plot = p_kot_hist, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/kot_hist_sd.png", plot = p_kot_hist_sd, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/kot_box.png", plot = p_kot_box, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/kot_box_sd.png", plot = p_kot_box_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kot_hist.png"), plot = p_kot_hist, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kot_hist_sd.png"), plot = p_kot_hist_sd, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kot_box.png"), plot = p_kot_box, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "kot_box_sd.png"), plot = p_kot_box_sd, dpi = 600, width = 5, height = 4)
 
 # Export a txt file for dt_kot_trim_sd
-fwrite(dt_kot_trim_sd, file = "./trimmed/data_kot.txt", row.names = F)
+fwrite(dt_kot_trim_sd, file = here("trimmed", "data_kot.txt"), row.names = F)

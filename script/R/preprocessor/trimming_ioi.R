@@ -6,7 +6,6 @@
 ####################################
 # Created: 26/11/2019
 # This script removes outliers.
-# GitHub repo: https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R 
 
 ####################################
 #  Requirements
@@ -26,19 +25,19 @@ theme_set(theme_classic())
 
 # create necessary folders if not exist
 # filtered - all of the outputs will be stored in this folder
-if (!file.exists("trimmed")){
-  dir.create("trimmed")
+if (!file.exists(here("trimmed"))){
+  dir.create(here("trimmed"))
 }
 
 # read a text file for ideal performance
-dt_ideal <- fread("./ideal.txt")
+dt_ideal <- fread(here("ideal.txt"))
 colnames(dt_ideal) <- "Pitch"
 dt_ideal$RowNr <- c(1:nrow(dt_ideal))
 dt_ideal <- dt_ideal[c(2, 1)]
 
 # read txt files
-dt_onset <- fread(file = "./filtered/dt_correct_onset.txt", header = T)
-dt_offset <- fread(file = "./filtered/dt_correct_offset.txt", header = T)
+dt_onset <- fread(file = here("filtered", "dt_correct_onset.txt"), header = T)
+dt_offset <- fread(file = here("filtered", "dt_correct_offset.txt"), header = T)
 
 # assign RowNr
 dt_onset$RowNr <- rep(1:72, nrow(dt_onset)/72)
@@ -168,7 +167,7 @@ lower_ioi_1 <- mean(dt_ioi_subset$normIOI)-3*sd(dt_ioi_subset$normIOI)
 dt_ioi_trim_sd_1 <- dt_ioi_subset[normIOI < upper_ioi_1 & normIOI > lower_ioi_1]
 removed_ioi_1 <- nrow(dt_ioi_subset)-nrow(dt_ioi_trim_sd_1)
 proportion_ioi_1 <- round(removed_ioi_1/nrow(dt_ioi_subset), 5)
-write(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_1, proportion_ioi_1*100), file = "./trimmed/outlier.txt", append = T)
+write(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_1, proportion_ioi_1*100), file = here("trimmed", "outlier.txt"), append = T)
 print(sprintf("(Method 1)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_1, proportion_ioi_1*100))
 
 # draw histogram and boxplot
@@ -182,13 +181,13 @@ plot(p_ioi_box_sd_1)
 
 # Save plots
 # png files
-ggsave("./trimmed/ioi_hist.png", plot = p_ioi_hist, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/ioi_hist_sd_1.png", plot = p_ioi_hist_sd_1, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/ioi_box.png", plot = p_ioi_box, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/ioi_box_sd_1.png", plot = p_ioi_box_sd_1, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "ioi_hist.png"), plot = p_ioi_hist, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "ioi_hist_sd_1.png"), plot = p_ioi_hist_sd_1, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "ioi_box.png"), plot = p_ioi_box, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "ioi_box_sd_1.png"), plot = p_ioi_box_sd_1, dpi = 600, width = 5, height = 4)
 
 # Export a txt file for dt_ioi_trim_sd
-fwrite(dt_ioi_trim_sd_1, file = "./trimmed/data_ioi_1.txt", row.names = F)
+fwrite(dt_ioi_trim_sd_1, file = here("trimmed", "data_ioi_1.txt"), row.names = F)
 
 ####################################
 # 2. > +- 3SD per condition
@@ -206,7 +205,7 @@ for (grouping in unique(ioi_skill$Grouping)){
 
 removed_ioi_2 <- nrow(dt_ioi_subset)-nrow(dt_ioi_trim_sd_2)
 proportion_ioi_2 <- round(removed_ioi_2/nrow(dt_ioi_subset), 5)
-write(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100), file = "./trimmed/outlier.txt", append = T)
+write(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100), file = here("trimmed", "outlier.txt"), append = T)
 print(sprintf("(Method 2)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_2, proportion_ioi_2*100))
 
 # draw histogram and boxplot
@@ -220,11 +219,11 @@ plot(p_ioi_box_sd_2)
 
 # Save plots
 # png files
-ggsave("./trimmed/ioi_hist_sd_2.png", plot = p_ioi_hist_sd_2, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/ioi_box_sd_2.png", plot = p_ioi_box_sd_2, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "ioi_hist_sd_2.png"), plot = p_ioi_hist_sd_2, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "ioi_box_sd_2.png"), plot = p_ioi_box_sd_2, dpi = 600, width = 5, height = 4)
 
 # Export a txt file for dt_ioi_trim_sd
-fwrite(dt_ioi_trim_sd_2, file = "./trimmed/data_ioi_2.txt", row.names = F)
+fwrite(dt_ioi_trim_sd_2, file = here("trimmed", "data_ioi_2.txt"), row.names = F)
 
 ####################################
 # 3. > +- 3SD across the conditions
@@ -248,7 +247,7 @@ for (boundary in unique(ioi_boundary$Boundary)){
 
 removed_ioi_3 <- nrow(dt_ioi_subset)-nrow(dt_ioi_trim_sd_3)
 proportion_ioi_3 <- round(removed_ioi_3/nrow(dt_ioi_subset), 5)
-write(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_3, proportion_ioi_3*100), file = "./trimmed/outlier.txt", append = T)
+write(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_3, proportion_ioi_3*100), file = here("trimmed", "outlier.txt"), append = T)
 print(sprintf("(Method 3)IOI: Remove %i responses beyond +- 3SD / %f percent", removed_ioi_3, proportion_ioi_3*100))
 
 # draw histogram and boxplot
@@ -262,8 +261,8 @@ plot(p_ioi_box_sd_3)
 
 # Save plots
 # png files
-ggsave("./trimmed/ioi_hist_sd_3.png", plot = p_ioi_hist_sd_3, dpi = 600, width = 5, height = 4)
-ggsave("./trimmed/ioi_box_sd_3.png", plot = p_ioi_box_sd_3, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "ioi_hist_sd_3.png"), plot = p_ioi_hist_sd_3, dpi = 600, width = 5, height = 4)
+ggsave(here("trimmed", "ioi_box_sd_3.png"), plot = p_ioi_box_sd_3, dpi = 600, width = 5, height = 4)
 
 # Export a txt file for dt_ioi_trim_sd
-fwrite(dt_ioi_trim_sd_3, file = "./trimmed/data_ioi_3.txt", row.names = F)
+fwrite(dt_ioi_trim_sd_3, file = here("trimmed", "data_ioi_3.txt"), row.names = F)
