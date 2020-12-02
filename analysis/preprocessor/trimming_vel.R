@@ -6,7 +6,6 @@
 ####################################
 # Created: 25/09/2020
 # This script removes outliers.
-# GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R/preprocessor
 
 # set working directory
 if (!require("here")) {install.packages("here"); require("here")}
