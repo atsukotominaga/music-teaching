@@ -95,7 +95,7 @@ ioi_art
 
 ### Plot
 #### Boxplot
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-box,  echo = FALSE}
 ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
@@ -115,7 +115,7 @@ ioi_art_all
 
 ### Plot
 #### Box plot
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-all-box, echo = FALSE}
 ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
@@ -157,7 +157,7 @@ ioi_art_ch
 
 ### Plot
 #### Box plot
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-ch-box, echo = FALSE}
 ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
@@ -178,7 +178,7 @@ ioi_art_ch_all
 
 ### Plot
 #### Box plot
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-ch-all-box, echo = FALSE}
 ioi_art_ch_plot <- data.table(subject = ioi_art_ch[Condition == "teaching"]$SubNr, teaching = ioi_art_ch[Condition == "teaching"]$Mean, performing = ioi_art_ch[Condition == "performing"]$Mean, boundary = ioi_art_ch[Condition == "teaching"]$Boundary)
@@ -212,7 +212,7 @@ ioi_art_trial
 
 ### Plot
 #### Line graph
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-trial-line, echo = FALSE, fig.height = 4}
 ggline(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Articulation") +
@@ -234,7 +234,7 @@ ioi_art_trial_all
 ### Plot
 #### Line graph
 - Error bars show SEM of the mean
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-trial-all-line, echo = FALSE}
 ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Articulation") +
@@ -255,7 +255,7 @@ ioi_dyn
 
 ### Plot
 #### Box plot
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-dyn-box,  echo = FALSE}
 ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
@@ -275,7 +275,7 @@ ioi_dyn_all
 
 ### Plot
 #### Box plot
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-dyn-all-box, echo = FALSE}
 ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
@@ -317,7 +317,7 @@ ioi_dyn_ch
 
 ### Plot
 #### Box plot
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-dyn-ch-box, echo = FALSE}
 ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
@@ -338,7 +338,7 @@ ioi_dyn_ch_all
 
 ### Plot
 #### Box plot
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-dyn-ch-all-box, echo = FALSE}
 ioi_dyn_ch_plot <- data.table(subject = ioi_dyn_ch[Condition == "teaching"]$SubNr, teaching = ioi_dyn_ch[Condition == "teaching"]$Mean, performing = ioi_dyn_ch[Condition == "performing"]$Mean, boundary = ioi_dyn_ch[Condition == "teaching"]$Boundary)
@@ -372,7 +372,7 @@ ioi_dyn_trial
 
 ### Plot
 #### Line graph
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-dyn-trial-line, echo = FALSE, fig.height = 4}
 ggline(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
@@ -394,7 +394,7 @@ ioi_dyn_trial_all
 ### Plot
 #### Line graph
 - Error bars show SEM of the mean
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-dyn-trial-all-line, echo = FALSE}
 ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
