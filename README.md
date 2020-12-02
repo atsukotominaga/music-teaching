@@ -19,7 +19,7 @@ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 - `practicePatch.maxpat`: for practice trials
 - `imagePatch.maxpat`: to display stimuli on the screen in front of a participant
 
-## sub patchers (used by Main Patchers)
+## sub patchers (used by main patchers)
 - `MIDInoteRecording.maxpat`: to acquire and save MIDI data
 - `dataFileNaming.maxpat`: to create a file name
 - `condFileReading.maxpat`: to read a condition file to determine the order of conditions for each participant
