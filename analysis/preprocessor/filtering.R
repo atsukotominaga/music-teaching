@@ -6,7 +6,6 @@
 ####################################
 # Created: 24/08/2020
 # This script organises raw data and removes pitch errors.
-# GitHub repo (private): https://github.com/atsukotominaga/teaching-v1.0/tree/master/script/R/preprocessor
 
 # set working directory
 if (!require("here")) {install.packages("here"); require("here")}
@@ -18,21 +17,21 @@ if (!file.exists(here("filtered"))){
 }
 
 # read functions
-source(here("filtered", "function.R"))
+source(here("function.R"))
 
 # read a text file for ideal performance
-dt_ideal <- read.table(here("filtered", "ideal.txt"))
+dt_ideal <- read.table(here("ideal.txt"))
 colnames(dt_ideal) <- "Pitch"
 dt_ideal$RowNr <- 1:nrow(dt_ideal)
 setcolorder(dt_ideal, c(2, 1))
 
 # create a list of data file names
-lf <- list.files(here("filtered", "raw_data"), pattern = "txt")
+lf <- list.files(here("raw_data"), pattern = "txt")
 
 # create raw_data - merge all data files into one
 raw_data <- data.table()
 for (i in 1:length(lf)){
-  data_i <- fread(file.path(here("filtered", "raw_data"), lf[i]), header = F, sep = " ", dec = ".")
+  data_i <- fread(file.path(here("raw_data"), lf[i]), header = F, sep = " ", dec = ".")
   raw_data <- rbind(raw_data, data_i)
 }
 
@@ -494,10 +493,10 @@ dt_correct_offset <- fread(file = here("filtered", "dt_correct_offset.txt"))
 # check if duplicates
 
 # read functions
-source(here("filtered", "function.R"))
+source(here("function.R"))
 
 # read a text file for ideal performance
-dt_ideal <- read.table(here("filtered", "ideal.txt"))
+dt_ideal <- read.table(here("ideal.txt"))
 colnames(dt_ideal) <- "Pitch"
 dt_ideal$RowNr <- 1:nrow(dt_ideal)
 setcolorder(dt_ideal, c(2, 1))
