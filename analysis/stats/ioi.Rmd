@@ -356,7 +356,7 @@ summary(ioi_dyn_ch_aov)
 ```
 
 #### Two-way ANOVA (aov)
-```{r anova-art-boundary2, echo = FALSE}
+```{r anova-dyn-boundary2, echo = FALSE}
 ioi_dyn_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Boundary)), data = ioi_dyn_ch)
 summary(ioi_dyn_ch_aov_2)
 ```
