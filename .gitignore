@@ -1,13 +1,12 @@
 # general
 *DS_Store
-*html
+*.html
+*.Rhistory
+*.ipynb_checkpoints/
 
 # experiment
 experiment/data/
 experiment/midi/
-
-# material
-material/expstimuli/.ipynb_checkpoints/
 
 # personal stuff
 material/expstimuli/removed/
