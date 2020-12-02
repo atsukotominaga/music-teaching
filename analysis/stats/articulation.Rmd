@@ -274,6 +274,7 @@ ggerrorplot(kor_art, x = "Condition", y = "Mean", add = "jitter", add.params = l
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
 ```
 
+#### Box plot
 ```{r kor-art-all-box, echo = FALSE}
 kor_art_plot <- data.table(subject = kor_art[Condition == "teaching"]$SubNr, teaching = kor_art[Condition == "teaching"]$Mean, performing = kor_art[Condition == "performing"]$Mean, subcomponent = kor_art[Condition == "teaching"]$Subcomponent)
 
@@ -556,7 +557,7 @@ ggline(kor_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = 
 ```{r kor_dyn_trial_all_line_piano, echo = FALSE}
 ggline(kor_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "KOR", title = "KOR: Dynamics/Piano") +
   theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
-  scale_x_continuous(breaks = seq(1,66,1))
+  scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 # Sequence plot
