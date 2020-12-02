@@ -1,17 +1,22 @@
-# Memo
-- Please also consult comments on each script.
+# Workflow
+
+1. filter with `filtering.R`
+2. check the details of errors and remove some participants if needed (this script: `error_summary.Rmd`)
+3. trim data (i.e., remove outliers) with `trimming_ioi.R`, `trimming_kot.R`, `trimming_vel.R`
+4. check trimmed data and remove some participants if needed (`included_summary.Rmd`)
 
 ### Step1 - filtering:
+script: `filtering.R`
 - filtering for both onset and offset
 - 3 steps
 1. Check whether the current performance is identical to the ideal
-2. Manually remove errors using editData function
+2. Manually remove errors using editData function (**therefore, the process is not reproducible**)
     - if there are extra notes, remove them by looking at the plot and the Diff column.
     - if there are missing notes, insert NA to that missing location.
     - if participants accidentally hit a wrong key instead of the correct one, replace that with NA.
     - if there are complicated errors, look at the data and listen to the midi performance.
 
-#### Outputs (filtered folder)
+#### Outputs
 1. Onsets
 -  dt_correct_onset.txt: all valid trials for onsets
 -  dt_correct_onset_1.txt: trials without error
@@ -26,8 +31,8 @@
 
 3. missingTrials.txt: info about missing trials
 
-
 ### Step2 -trimming:
+scripts: `trimming_ioi.R`, `trimming_kot.R`, `trimming_vel.R`
 #### IOI
 - 3 options
 1. Remove outliers outside 3SD across the conditions (strict)
