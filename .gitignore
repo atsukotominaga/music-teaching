@@ -1,27 +1,16 @@
-*.DS_Store
+# general
+*DS_Store
+*.html
 *.Rhistory
-*html
-others
+
+# experiment
+experiment/data/
+experiment/midi/
 
 # material
-material/cropped/*pdf
+material/sheetmusic/*midi
 
-# Lilypond
-script/lilypond/*midi
-script/lilypond/*pdf
-
-# Max
-script/Max/data
-script/Max/midi
-
-# R
-script/R/old/
-script/R/preprocessor/raw_data/
-
-# RNotebook
-script/RNotebook/trimmed/
-
-# my local folders
-material/lilypond/david
-script/Max/docs
-script/Max/backup
+# personal stuff
+others
+material/sheetmusic/david
+material/sheetmusic/removed
