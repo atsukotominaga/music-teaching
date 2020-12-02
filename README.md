@@ -2,11 +2,11 @@ This repo contains scripts and materials necessary for a musical experiment with
 
 Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 
-## experiment
+# experiment
 - Max MSP Version 7
 - Environment: Mac OS X 10.14.3
 
-### prerequisite
+## prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 7.
 
 - The Shell package is used to generate necessary folders to store collected data. If it does not work in your environment, please create the following 4 folders manually.
@@ -15,24 +15,24 @@ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
     + midi (path: ~/script/Max/midi)
         + practice (path: ~/script/Max/midi/practice) - within the midi folder
         
-### main patchers
+## main patchers
 - `mainPatch.maxpat`: for the experiment
 - `practicePatch.maxpat`: for practice trials
 - `imagePatch.maxpat`: to display stimuli on the screen in front of a participant
 
-### sub patchers (used by Main Patchers)
+## sub patchers (used by Main Patchers)
 - `MIDInoteRecording.maxpat`: to acquire and save MIDI data
 - `dataFileNaming.maxpat`: to create a file name
 - `condFileReading.maxpat`: to read a condition file to determine the order of conditions for each participant
 
-### Others
+## Others
 - `image`: experimental stimuli
 - `cond`: csv file and an excel file about the order of conditions for each participant
 
-## analysis
+# analysis
 - Environment: Mac OS X 10.15.7
 
-### 1. preprosessor
+## 1. preprosessor
 - `filtering.R`: to clean data and remove performance errors >> output: filtered folder
     + *In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 48.*
 - `trimming.R`: to calculate dependent variables and remove outliers >> output: trimmed folder
@@ -40,13 +40,13 @@ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 - `ideal.txt`: the ideal sequence of the piece (used for filtering)
 - `error_summary.Rmd`: summary for errors >> html file
 
-### 2. stats
+## 2. stats
 - `ioi.Rmd`: analysis and plots for IOIs >> output: html file
 - `articulation.Rmd`: analysis and plots for KOT/KOR >> output: html file
 - `dynamics.Rmd`: analysis and plots for KV/KV-Diff >> output: html file
 - `questionnaire.Rmd` >> output: html file
 
-## material
+# material
 ## instruction
 - `instruction.Rmd`: instruction sheet for an experimenter >> output: html file
 - `image`: figures used in the instruction sheet
