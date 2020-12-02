@@ -6,10 +6,10 @@
 experiment/data/
 experiment/midi/
 
-# jupyter
-material/jupyter/.ipynb_checkpoints/
+# material
+material/expstimuli/.ipynb_checkpoints/
 
 # personal stuff
-material/jupyter/stimuli/removed/
-material/lilypond/removed/
+material/expstimuli/removed/
+material/sheetmusic/removed/
 others/
