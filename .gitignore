@@ -1,15 +1,10 @@
 # general
 *DS_Store
 *html
-others/
 
-# Max
-script/Max/data/
-script/Max/midi/
-script/Max/cond/cb_checking.xlsx
-
-# R
-script/R/preprocessor/raw_data
+# experiment
+experiment/data/
+experiment/midi/
 
 # jupyter
 material/jupyter/.ipynb_checkpoints/
@@ -17,3 +12,4 @@ material/jupyter/.ipynb_checkpoints/
 # personal stuff
 material/jupyter/stimuli/removed/
 material/lilypond/removed/
+others/
