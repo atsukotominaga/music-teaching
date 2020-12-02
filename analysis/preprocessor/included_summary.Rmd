@@ -8,7 +8,7 @@ output: html_notebook
 # Workflow
 1. filter with `filtering.R`
 2. check the details of errors and remove some participants if needed (`error_summary.Rmd`)
-3. trim data (i.e., remove outliers) with `trimming.R`
+3. trim data (i.e., remove outliers) with `trimming_ioi.R`, `trimming_kot.R`, `trimming_vel.R`
 4. check trimmed data and remove some participants if needed (**this script**: `included_summary.Rmd`)
 
 ```{r setup, include = FALSE}
@@ -60,7 +60,7 @@ dt_kot[SubNr != 1, .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Cond
 dt_vel[SubNr != 1]
 ```
 
-### Key Velocity (Individual)
+### Key Velocity (Summary)
 ```{r vel-summary, echo = FALSE}
 dt_vel[SubNr != 1, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, Subcomponent)]
 ```
@@ -70,7 +70,7 @@ dt_vel[SubNr != 1, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(S
 dt_vel_diff[SubNr != 1]
 ```
 
-### KV Difference (Individual)
+### KV Difference (Summary)
 ```{r vel-diff-summary, echo = FALSE}
 dt_vel_diff[SubNr != 1, .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Subcomponent)]
 ```
