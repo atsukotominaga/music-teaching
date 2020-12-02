@@ -1,23 +1,38 @@
-# Memo
-- Please also consult comments on each script.
+# Workflow
+
+1. filter with `filtering.R`
+2. check the details of errors and remove some participants if needed (this script: `error_summary.Rmd`)
+3. trim data (i.e., remove outliers) with `trimming_ioi.R`, `trimming_kot_kor.R`, `trimming_vel.R`
+4. check trimmed data and remove some participants if needed (`included_summary.Rmd`)
 
 ### Step1 - filtering:
+script: `filtering.R`
 - filtering for both onset and offset
 - 3 steps
 1. Check whether the current performance is identical to the ideal
-2. Manually remove errors using editData function
+2. Manually remove errors using editData function (**therefore, the process is not reproducible**)
     - if there are extra notes, remove them by looking at the plot and the Diff column.
     - if there are missing notes, insert NA to that missing location.
-    - if participants accidentally hit a ls
-    wrong key instead of the correct one, replace that with NA.
+    - if participants accidentally hit a wrong key instead of the correct one, replace that with NA.
     - if there are complicated errors, look at the data and listen to the midi performance.
 
-#### Outputs (filtered folder)
-- data_correct_onset.csv, data_correct_offset.csv >> final outputs which can be used for data analysis
-- data_error_correction_onset.csv, data_error_correction_offset.csv >> error data for onset/offset
-- others >> corrected data for each error category (e.g., extra notes, missing notes) or uncorrected data before filtering (i.e., data_all, data_onset, data_offset, data_metro)
+#### Outputs
+1. Onsets
+-  dt_correct_onset.txt: all valid trials for onsets
+-  dt_correct_onset_1.txt: trials without error
+- dt_correct_onset_2.txt: corrected trials because of extra notes
+- dt_correct_onset_3.txt: corrected trials because of missing notes
+- dt_correct_onset_4.txt: corrected trials because of substituted notes
+- dt_correct_onset_5.txt: corrected trials because of idiosyncratic errors
+- error_onset.txt: info about corrected and excluded trials
+
+2. Offsets
+- Same as onsets
+
+3. missingTrials.txt: info about missing trials
 
 ### Step2 -trimming:
+scripts: `trimming_ioi.R`, `trimming_kot_kor.R`, `trimming_vel.R`
 #### IOI
 - 3 options
 1. Remove outliers outside 3SD across the conditions (strict)

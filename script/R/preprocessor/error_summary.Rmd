@@ -8,7 +8,7 @@ output: html_notebook
 # Workflow
 1. filter with `filtering.R`
 2. check the details of errors and remove some participants if needed (**this script**: `error_summary.Rmd`)
-3. trim data (i.e., remove outliers) with `trimming.R`
+3. trim data (i.e., remove outliers) with `trimming_ioi.R`, `trimming_kot_kor.R`, `trimming_vel.R`
 4. check trimmed data and remove some participants if needed (`included_summary.Rmd`)
 
 ```{r setup, include = FALSE}
