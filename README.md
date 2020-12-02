@@ -3,8 +3,7 @@ This repo contains scripts and materials necessary for a musical experiment with
 Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 
 # experiment
-- Max MSP Version 7
-- Environment: Mac OS X 10.14.3
+- Environment: Mac OS X 10.14.3, Max MSP 7
 
 ## prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 7.
@@ -25,12 +24,12 @@ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 - `dataFileNaming.maxpat`: to create a file name
 - `condFileReading.maxpat`: to read a condition file to determine the order of conditions for each participant
 
-## Others
+## others
 - `image`: experimental stimuli
 - `cond`: csv file and an excel file about the order of conditions for each participant
 
 # analysis
-- Environment: Mac OS X 10.15.7
+- Environment: Mac OS X 10.15.7, R version 3.6.3 (2020-02-29)
 
 ## 1. preprosessor
 data: `raw_data`    
@@ -64,5 +63,5 @@ data: `questionnaire.csv`
 - `image`: used for stimuli generation
 
 ## others
-- `cropped`: original sheet music
+- `cropped`: cropped sheet music
 - `checklist.xlsx`: a list to check each procedure during testing (for an experimenter)
