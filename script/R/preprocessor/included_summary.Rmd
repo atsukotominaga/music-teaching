@@ -1,0 +1,99 @@
+---
+title: "Included  Summary (teaching-v2.0)"
+output: html_notebook
+---
+
+- Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
+
+# Workflow
+1. filter with `filtering.R`
+2. check the details of errors and remove some participants if needed (`error_summary.Rmd`)
+3. trim data (i.e., remove outliers) with `trimming_ioi.R`, `trimming_kot_kor.R`, `trimming_vel.R`
+4. check trimmed data and remove some participants if needed (**this script**: `included_summary.Rmd`)
+
+```{r setup, include = FALSE}
+# packages
+# data manipulation
+if (!require("data.table")) {install.packages("data.table"); require("data.table")}
+# plot
+if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
+if (!require("here")) {install.packages("here"); require("here")}
+
+# set working directory
+here::i_am("included_summary.Rmd")
+
+# read txt files
+dt_ioi <- fread(file = here("trimmed", "data_ioi_1.txt"), sep = ",")
+dt_kor <- fread(file = here("trimmed", "data_kor.txt"), sep = ",")
+dt_kot <- fread(file = here("trimmed", "data_kot.txt"), sep = ",")
+dt_vel <- fread(file = here("trimmed", "data_vel.txt"), sep = ",")
+dt_vel_diff <- fread(file = here("trimmed", "data_vel_diff.txt"), sep = ",")
+```
+
+# Design
+- Each performance (1 trial) contains 72 responses for onsets and 72 responses for offsets (i.e., if there is no mistake, 144 responses in total)
+- Each block contains 8 trials and there are 4 blocks (teaching vs. performing x articulation vs. dynamics)
+- Note: SubNr 3 was excluded due to insufficient motor skills
+
+### IOIs (All)
+```{r ioi, echo = FALSE}
+dt_ioi
+```
+
+### IOIs (Summary)
+```{r ioi-summary, echo = FALSE}
+dt_ioi[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
+```
+
+### KOR (All)
+```{r kor, echo = FALSE}
+dt_kor
+```
+
+### KOR (Summary)
+```{r kor-summary, echo = FALSE}
+dt_kor[, .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent)]
+```
+
+### KOT (All)
+```{r kot, echo = FALSE}
+dt_kot
+```
+
+### KOT (Summary)
+```{r kot-summary, echo = FALSE}
+dt_kot[, .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, Subcomponent)]
+```
+
+### Key Velocity (All)
+```{r vel, echo = FALSE}
+dt_vel
+```
+
+### Key Velocity (Summary)
+```{r vel-summary, echo = FALSE}
+dt_vel[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, Subcomponent)]
+```
+
+### KV Difference (All)
+```{r vel-diff, echo = FALSE}
+dt_vel_diff
+```
+
+### KV Difference (Summary)
+```{r vel-diff-summary, echo = FALSE}
+dt_vel_diff[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Subcomponent)]
+```
+
+## Excluded participnats
+- SubNr 3: Insufficient motor skills
+
+### Export only included participants
+data_analysis~.txt are used for data analysis.
+```{r export, echo = TRUE}
+fwrite(dt_ioi[SubNr != 3], file = here("trimmed", "data_analysis_ioi.txt"), sep = ",")
+fwrite(dt_kor[SubNr != 3], file = here("trimmed", "data_analysis_kor.txt"), sep = ",")
+fwrite(dt_kot[SubNr != 3], file = here("trimmed", "data_analysis_kot.txt"), sep = ",")
+fwrite(dt_vel[SubNr != 3], file = here("trimmed", "data_analysis_vel.txt"), sep = ",")
+fwrite(dt_vel_diff[SubNr != 3], file = here("trimmed", "data_analysis_vel_diff.txt"), sep = ",")
+```
