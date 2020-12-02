@@ -33,6 +33,7 @@ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 - Environment: Mac OS X 10.15.7
 
 ## 1. preprosessor
+data: `raw_data`    
 - `filtering.R`: to clean data and remove performance errors >> output: filtered folder
     + *In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 48.*
 - `trimming.R`: to calculate dependent variables and remove outliers >> output: trimmed folder
@@ -44,6 +45,9 @@ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 - `ioi.Rmd`: analysis and plots for IOIs >> output: html file
 - `articulation.Rmd`: analysis and plots for KOT/KOR >> output: html file
 - `dynamics.Rmd`: analysis and plots for KV/KV-Diff >> output: html file
+
+## demographics
+data: `questionnaire.csv`
 - `questionnaire.Rmd` >> output: html file
 
 # material
