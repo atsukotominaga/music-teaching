@@ -1,14 +1,8 @@
 # The Sound of Teaching Music  (Experiment 1)
 
-<p align="center">
-  <img width="1024" height="300" src="https://media.giphy.com/media/oqyKi6VA1du8M/giphy.gif">
-</p>
-
 ![](material/etc/cropped/stim_n.png)
 
 This repo contains scripts and materials necessary for a musical experiment with expert pianists (Experiment 1).
-
-Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 
 # experiment
 - Environment: Mac OS X 10.14.3, Max MSP 7

@@ -1,20 +1,15 @@
 # The Sound of Teaching Music  (Experiment 2)
 
-<p align="center">
-  <img width="1024" height="300" src="https://media.giphy.com/media/oqyKi6VA1du8M/giphy.gif">
-</p>
-
 ![](material/etc/cropped/stim_n.png)
 
 This repo contains scripts and materials necessary for a musical experiment with expert pianists (Experiment 2).
-
-Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 
 # experiment
 - Environment: Mac OS X 10.14.3, Max MSP 8
 
 ## Prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 8.
+
 - The Shell package is used to generate necessary folders to store collected data. If it does not work in your environment, please create the following 4 folders manually.
     + data (path: ~/script/Max/data)
         + practice (path: ~/script/Max/data/practice) - within the data folder
