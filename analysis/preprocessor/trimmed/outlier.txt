@@ -1,0 +1,8 @@
+(Method 1)IOI: Remove 414 responses beyond +- 3SD / 1.252000 percent
+(Method 2)IOI: Remove 414 responses beyond +- 3SD / 1.252000 percent
+(Method 3)IOI: Remove 359 responses beyond +- 3SD / 1.086000 percent
+KOT: 1 trial was excluded because it lacks either onset or offset dataset
+KOR: Remove 693 responses beyond +- 3SD / 2.107000 percent
+KOT: Remove 642 responses beyond +- 3SD / 1.952000 percent
+Velocity: Remove 240 responses beyond +- 3SD / 0.650000 percent
+Diff: Remove 326 responses beyond +- 3SD / 0.986000 percent
