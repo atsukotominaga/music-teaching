@@ -1,4 +1,12 @@
-This repo contains scripts and materials necessary for a musical experiment with expert pianists.
+# The Sound of Teaching Music  (Experiment 1)
+
+<p align="center">
+  <img width="1024" height="300" src="https://media.giphy.com/media/oqyKi6VA1du8M/giphy.gif">
+</p>
+
+![](material/etc/cropped/stim_n.png)
+
+This repo contains scripts and materials necessary for a musical experiment with expert pianists (Experiment 1).
 
 Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 
@@ -32,13 +40,14 @@ Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 - Environment: Mac OS X 10.15.7, R version 3.6.3 (2020-02-29)
 
 ## 1. preprosessor
-data: `raw_data`    
+data: `raw_data`
 - `filtering.R`: to clean data and remove performance errors >> output: filtered folder
     + *In the original study, there was an coding error in Max for labelling the name of skills (either articulation or dynamics). This was corrected based on what was actually displayed to participants by checking the name of a stimulus image. See line 48.*
-- `trimming.R`: to calculate dependent variables and remove outliers >> output: trimmed folder
+- `trimming_ioi.R`, `trimming_kot.R`, `trimming_vel.R`: to calculate dependent variables and remove outliers >> output: trimmed folder
 - `function.R`: to detect pitch errors in a performance / insert NAs
 - `ideal.txt`: the ideal sequence of the piece (used for filtering)
 - `error_summary.Rmd`: summary for errors >> html file
+- `included_summary.Rmd`: summary for included participants/responses >> html file
 
 ## 2. stats
 - `ioi.Rmd`: analysis and plots for IOIs >> output: html file
@@ -62,6 +71,6 @@ data: `questionnaire.csv`
 - `image_generator.ipynb`: to generate experimental stimuli (see more information on jupyter notebook) >> output: stimuli and practice folders
 - `image`: used for stimuli generation
 
-## others
+## etc
 - `cropped`: cropped sheet music
 - `checklist.xlsx`: a list to check each procedure during testing (for an experimenter)
