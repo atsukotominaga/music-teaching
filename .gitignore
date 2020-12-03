@@ -2,24 +2,8 @@
 *DS_Store
 *.html
 *.Rhistory
-others
+*.ipynb_checkpoints/
 
 # experiment
 experiment/data/
 experiment/midi/
-
-# experiment-1
-*.ipynb_checkpoints/
-
-## personal stuff
-experiment-1/material/expstimuli/removed/
-experiment-1/material/sheetmusic/removed/
-others/
-
-# experiment-2
-## material
-experiment-2/material/sheetmusic/*midi
-
-## personal stuff
-experiment-2/material/sheetmusic/david
-experiment-2/material/sheetmusic/removed
