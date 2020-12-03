@@ -7,3 +7,6 @@
 # experiment
 experiment/data/
 experiment/midi/
+
+# paper
+paper/*pdf
