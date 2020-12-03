@@ -1,0 +1,8 @@
+(Method 1)IOI: Remove 2487 responses beyond +- 3SD / 3.659000 percent
+(Method 2)IOI: Remove 2265 responses beyond +- 3SD / 3.333000 percent
+(Method 3)IOI: Remove 2476 responses beyond +- 3SD / 3.643000 percent
+KOT: Remove 2062 responses beyond +- 3SD / 3.037000 percent
+Velocity: Remove 245 responses beyond +- 3SD / 0.349000 percent
+Diff: Remove 650 responses beyond +- 3SD / 0.956000 percent
+KOT: Remove 0 responses beyond +- 3SD / NaN percent
+KOT: Remove 1167 responses beyond +- 3SD / 1.719000 percent
