@@ -1,29 +1,19 @@
-This repo contains scripts and materials necessary for a musical experiment with expert pianists.
+# The Sound of Teaching Music  (Experiment 2)
 
-Open Science Framework: [https://osf.io/uemk5/](https://osf.io/uemk5/) (Raw data are available in OSF)
+<p align="center">
+  <img width="1024" height="300" src="https://media.giphy.com/media/oqyKi6VA1du8M/giphy.gif">
+</p>
 
-# Overview
-- [Script](#script)
-    + [Max (Experiment)](#Max)
-    + [R (Filtering/Trimming)](#R)
-    + [R Notebook (Data analysis)](#R-Notebook)
+![](material/etc/cropped/stim_n.png)
 
-- [Material](#material)
-    + [Instruction](#Instruction)
-    + [Lilypond (Stimuli - sheet music)](#Lilypond)
-    + [Python (Stimuli - image processing)](#Python)
-    + [Others](#Others)
+This repo contains scripts and materials necessary for a musical experiment with expert pianists (Experiment 2).
 
-# Script
-## Environment
-All of the programme scripts were written and tested in the following environment.
+Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/) (Raw data are available in OSF)
 
-- ProductName: Mac OS X  
-- ProductVersion: 10.14.3
+# experiment
+- Environment: Mac OS X 10.14.3, Max MSP 8
 
-## Max
-- version 8
-### Prerequisite
+## Prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 8.
 - The Shell package is used to generate necessary folders to store collected data. If it does not work in your environment, please create the following 4 folders manually.
     + data (path: ~/script/Max/data)
@@ -31,58 +21,58 @@ All of the programme scripts were written and tested in the following environmen
     + midi (path: ~/script/Max/midi)
         + practice (path: ~/script/Max/midi/practice) - within the midi folder
    
-### Patchers
-- EXPERIMENT.maxpat: controller for all patchers
-- main.maxpat: for the experiment
-- practice.maxpat: for practice trials
-- display.maxpat: display stimuli on the screen in front of a participant
+## main patchers
+- `EXPERIMENT.maxpat`: controller for all patchers
+- `main.maxpat`: for the experiment
+- `practice.maxpat`: for practice trials
+- `display.maxpat`: to display stimuli on the screen in front of a participant
 
-### SubPatchers
-- sub(pra)MIDIRec.maxpat: acquire and save MIDI data
-- sub(pra)FileName.maxpat: create a file name
-- sub(pra)Cond.maxpat: read a condition file to determine the order of conditions for each participant
+## sub patchers (used by main patchers)
+- `sub(pra)MIDIRec.maxpat`: to acquire and save MIDI data
+- `sub(pra)FileName.maxpat`: to create a file name
+- `sub(pra)Cond.maxpat`: to read a condition file to determine the order of conditions for each participant
 
-### Others
+## others
 - stimuli: contains experimental stimuli
 - cond: contains a csv file and an excel file about the order of conditions for each participant
 
-## R
-You need raw_data folder to run the scripts below (get the folder from [OSF](https://osf.io/uemk5/))
-### preprocessor
-- filtering.R: removing pitch errors >> outputs: csv files
-- trimming.R (ioi, kot/kor, vel): removing outliers >> outputs: csv/png files
+# analysis
+- Environment: Mac OS X 10.15.7, R version 3.6.3 (2020-02-29)
 
-### analysis
-- export.R (extract R scripts from R Notebook) >> R file
+## 1. preprosessor
+data: `raw_data`
+- `filtering.R`: to clean data and remove performance errors >> output: filtered folder
+- `trimming_ioi.R`, `trimming_kot_kor.R`, `trimming_vel.R`: to calculate dependent variables and remove outliers >> output: trimmed folder
+- `function.R`: to detect pitch errors in a performance / insert NAs
+- `ideal.txt`: the ideal sequence of the piece (used for filtering)
+- `error_summary.Rmd`: summary for errors >> html file
+- `included_summary.Rmd`: summary for included participants/responses >> html file
 
-### condfile
-- condfile.R >> output: csv file
+## 2. stats
+- `ioi.Rmd`: analysis and plots for IOIs >> output: html file
+- `articulation.Rmd`: analysis and plots for KOT/KOR >> output: html file
+- `dynamics.Rmd`: analysis and plots for KV/KV-Diff >> output: html file
 
-## R Notebook
-You need filtered and trimmed folders to run the scripts below (outputs from filtering.R and trimming.R)
-- ioi_1.Rmd: analysis and plots for IOIs >> output: html file
-    + outliers: 1. > +- 3SD across the conditions (all together; see [detail](https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R/preprocessor))
-- ioi_3.Rmd: analysis and plots for IOIs >> output: html file
-    + outliers: 3. > +- 3SD actross the conditions (separately for Subcomponent Change; see [detail](https://github.com/atsukotominaga/teaching-v2.0/tree/master/script/R/preprocessor))
-- articulation.Rmd: analysis and plots for KOT/KOR >> output: html file
-- dynamics.Rmd: analysis and plots for KV/KV-Diff >> output: html file
+## condfile
+- `condfile.R`:o generate a counterbalance sheet >> output: csv file
 
-You need questionnaire.csv to run the script below (get the file from [OSF](https://osf.io/uemk5/)).
-- questionnaire.Rmd >> output: html file
+## demographics
+data: `questionnaire.csv`
+- `questionnaire.Rmd` >> output: html file
 
-# Material
-## Instruction
-- instruction.Rmd: a instruction sheet for an experimenter >> output: html file
-- image: figures used in the instruction sheet
-- psd files: images used in the instruction >> output: png files
+# material
+## instruction
+- `instruction.Rmd`: instruction sheet for an experimenter >> output: html file
+- `image`: figures used in the instruction sheet
+- `psd files`: images used in the instruction >> output: png files
 
-## Lilypond
-- ly files: sheet music compiled by lilypond >> output: pdf files
+## sheetmusic
+- `ly files`: sheet music compiled by lilypond >> output: pdf files
 
-## Python
-- stimuli.py: generate experimental stimuli >> output: stimuli and practice folders
-- cropped: used for stimuli generation
+## expstimuli
+- `stimuli.py`: to generate experimental stimuli >> output: stimuli and practice folders
+- `image`: used for stimuli generation
 
-## Others
-- cropped: original sheet music
-- checklist.xlsx: a list to check each procedure during testing (for an experimenter)
+## etc
+- `cropped`: cropped sheet music
+- `checklist.xlsx`: a list to check each procedure during testing (for an experimenter)
