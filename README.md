@@ -8,7 +8,7 @@
 
 This repo contains scripts and materials necessary for a musical experiment with expert pianists (Experiment 2).
 
-Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/) (Raw data are available in OSF)
+Open Science Framework: [https://osf.io/8nbjh/](https://osf.io/8nbjh/)
 
 # experiment
 - Environment: Mac OS X 10.14.3, Max MSP 8
