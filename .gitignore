@@ -9,5 +9,9 @@ experiment/data/
 experiment/midi/
 
 # paper
+paper/docs
 paper/*pdf
 paper/*bib
+
+# personal stuff
+merged
