@@ -1,17 +1,4 @@
----
-title: "Error Summary (teaching-v1.0)"
-output: html_notebook
----
-
-- Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
-
-# Workflow
-1. filter with `filtering.R`
-2. check the details of errors and remove some participants if needed (**this script**: `error_summary.Rmd`)
-3. trim data (i.e., remove outliers) with `trimming_ioi.R`, `trimming_kot.R`, `trimming_vel.R`
-4. check trimmed data and remove some participants if needed (`included_summary.Rmd`)
-
-```{r setup, include = FALSE}
+## ----setup, include = FALSE--------------------------------------------------------
 # packages
 # data manipulation
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
@@ -35,53 +22,30 @@ dt_onset <- fread(file = here("filtered", "dt_correct_onset.txt"), sep = ",")
 dt_offset <- fread(file = here("filtered", "dt_correct_offset.txt"), sep = ",")
 error_onset <- fread(file = here("filtered", "error_onset.txt"), sep = ",")
 error_offset <- fread(file = here("filtered", "error_offset.txt"), sep = ",")
-```
 
-# Design
-- Each performance (1 trial) contains 67 responses for onsets and 67 responses for offsets (i.e., if there is no mistake, 134 responses in total)
-- Each block contains 8 trials and there are 4 blocks (teaching vs. performing x articulation vs. dynamics)
-- Note: SubNr 8 was excluded due to an experimental error
 
-# Outline
-1. [Onset reports](#onset)
-2. [Offset reports](#offset)
-
-## ONSET
-### Corrected Error Onset (All)
-```{r onset-all, echo = FALSE}
+## ----onset-all, echo = FALSE-------------------------------------------------------
 error_onset_all <- error_onset[CorrectionNr != "Exclude"]
 error_onset_all
-```
 
-### Corrected Error Onset (Summary)
-```{r onset-summary, echo = FALSE}
+
+## ----onset-summary, echo = FALSE---------------------------------------------------
 error_onset_all[startsWith(Reason, "Substituted")]$Reason <- "Substituted"
 error_onset_summary <- error_onset_all[, .(N = .N, Sum = sum(as.numeric(CorrectionNr))), by = .(Reason)]
 error_onset_summary
-```
 
-### Missing/Excluded Trials Onset (All)
-```{r na-onset-all, echo = FALSE}
+
+## ----na-onset-all, echo = FALSE----------------------------------------------------
 missing_onset <- checker(dt_onset, dt_ideal)
 missing_onset
-```
 
-1. **2 participants should be removed from the entire data analysis because they missed at least one block (16 trials)**
 
-- SubNr 3: experimental error (8 trials)
-- SubNr 14: played in octave higher (8 trials)
-
-2. **some performances were removed because 1) participants didn't follow sheet music or 2) participants didn't finish till the end (5 trials)**
-
-### Missing/Excluded Trials Onset (Summary)
-```{r na-onset-summary, echo = FALSE}
+## ----na-onset-summary, echo = FALSE------------------------------------------------
 missing_onset_summary <- missing_onset[, .(N = .N), by = .(Reason)]
 missing_onset_summary
-```
 
-## OFFSET
-### Corrected Error Offset (All)
-```{r offset-all, echo = FALSE}
+
+## ----offset-all, echo = FALSE------------------------------------------------------
 error_offset_all <- error_offset[CorrectionNr != "Exclude",]
 
 # separate errors depending on reasons
@@ -99,34 +63,24 @@ error_offset_all$Reason[nrow(error_offset_all)] <- "Substituted"
 error_offset_all$CorrectionNr[nrow(error_offset_all)] <- 6
 
 error_offset_all
-```
 
-### Corrected Error Offset (Summary)
-```{r offset-summary, echo = FALSE}
+
+## ----offset-summary, echo = FALSE--------------------------------------------------
 error_offset_all[startsWith(Reason, "Substituted")]$Reason <- "Substituted"
 error_offset_summary <- error_offset_all[, .(N = .N, Sum = sum(as.numeric(CorrectionNr))), by = .(Reason)]
 error_offset_summary
-```
 
-### Missing/Excluded Trials Offset (All)
-```{r na-offset-all, echo = FALSE}
+
+## ----na-offset-all, echo = FALSE---------------------------------------------------
 missing_offset <- checker(dt_offset, dt_ideal)
 missing_offset
-```
 
-1. **2 participants should be removed from the entire data analysis because they missed at least one block (16 trials)**
 
-- SubNr 3: experimental error (8 trials)
-- SubNr 14: played in octave higher (8 trials)
-
-2. **some performances were removed because 1) participants didn't follow sheet music or 2) participants didn't finish till the end (5 trials)**
-
-### Missing/Excluded Trials Offset (Summary)
-```{r na-offset-summary, echo = FALSE}
+## ----na-offset-summary, echo = FALSE-----------------------------------------------
 missing_offset_summary <- missing_offset[, .(N = .N), by = .(Reason)]
 missing_offset_summary
-```
 
-```{r export, include = FALSE}
+
+## ----export, include = FALSE-------------------------------------------------------
 knitr::purl("error_summary.Rmd")
-```
+
