@@ -1,5 +1,6 @@
 # general
 *DS_Store
+*.log
 *.html
 *.Rhistory
 *.ipynb_checkpoints/
