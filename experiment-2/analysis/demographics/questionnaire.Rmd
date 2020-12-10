@@ -24,47 +24,47 @@ filename_q = "./questionnaire.csv"
 
 ```{r extract, echo = FALSE}
 # read csv files
-dt <- fread(filename_q, header = T, sep = ",", dec = ".", na.string = "NA")
-dt <- dt[!21]
+dt_2 <- fread(filename_q, header = T, sep = ",", dec = ".", na.string = "NA")
+dt_2 <- dt_2[!21]
 
 # change some colnames
-colnames(dt)[2] <- "SubNr"
-colnames(dt)[3] <- "Age"
-colnames(dt)[4] <- "Gender"
-colnames(dt)[7] <- "Handedness"
-colnames(dt)[18] <- "PianoTotalPractice"
+colnames(dt_2)[2] <- "SubNr"
+colnames(dt_2)[3] <- "Age"
+colnames(dt_2)[4] <- "Gender"
+colnames(dt_2)[7] <- "Handedness"
+colnames(dt_2)[18] <- "PianoTotalPractice"
 
 # extract the total number of years of training in piano (input manually based on the original csv file)
-dt$PianoTotalPractice <- c(13, 15, 15, 16, 9, 10, 24, 8, 19, 6, 12, 10, 21, 23, 15, 22, 22, 24, 17, 15, 12)
+dt_2$PianoTotalPractice <- c(13, 15, 15, 16, 9, 10, 24, 8, 19, 6, 12, 10, 21, 23, 15, 22, 22, 24, 17, 15, 12)
 
 # change some characteristics
-dt$Age <- as.numeric(dt$Age)
-dt$PianoTotalPractice <- as.numeric(dt$PianoTotalPractice)
+dt_2$Age <- as.numeric(dt_2$Age)
+dt_2$PianoTotalPractice <- as.numeric(dt_2$PianoTotalPractice)
 
 # exclude participants
-dt_included <- dt[SubNr != 3]
+dt_2_included <- dt_2[SubNr != 3]
 
-print(dt_included)
+print(dt_2_included)
 ```
 
 ## Descriptive stats for included participants
 Note: A different questionnaire was used for only SubNr 21 and adjusted for necessary columns (but not others; see original csv for the precise information)
 
-- Number of included participants: `r nrow(dt_included)` (mean age: `r round(mean(dt_included$Age), 2)`, sd: `r round(sd(dt_included$Age), 2)`)
-- Male: `r nrow(dt_included[Gender == "Male"])` (mean age: `r round(mean(dt_included[Gender == "Male"]$Age), 2)`, sd: `r round(sd(dt_included[Gender == "Male"]$Age), 2)`)
-- Female: `r nrow(dt_included[Gender == "Female"])` (mean age: `r round(mean(dt_included[Gender == "Female"]$Age), 2)`, sd: `r round(sd(dt_included[Gender == "Female"]$Age), 2)`)
-- Average training years: `r round(mean(dt_included$PianoTotalPractice), 2)` years
-- Handedness: Right (`r nrow(dt_included[Handedness == "Right"])`), Left (`r nrow(dt_included[Handedness == "Left"])`), Both (`r nrow(dt_included[Handedness == "Both"])`)
+- Number of included participants: `r nrow(dt_2_included)` (mean age: `r round(mean(dt_2_included$Age), 2)`, sd: `r round(sd(dt_2_included$Age), 2)`)
+- Male: `r nrow(dt_2_included[Gender == "Male"])` (mean age: `r round(mean(dt_2_included[Gender == "Male"]$Age), 2)`, sd: `r round(sd(dt_2_included[Gender == "Male"]$Age), 2)`)
+- Female: `r nrow(dt_2_included[Gender == "Female"])` (mean age: `r round(mean(dt_2_included[Gender == "Female"]$Age), 2)`, sd: `r round(sd(dt_2_included[Gender == "Female"]$Age), 2)`)
+- Average training years: `r round(mean(dt_2_included$PianoTotalPractice), 2)` years
+- Handedness: Right (`r nrow(dt_2_included[Handedness == "Right"])`), Left (`r nrow(dt_2_included[Handedness == "Left"])`), Both (`r nrow(dt_2_included[Handedness == "Both"])`)
 
 ## Some descriptive questions
 1. Did you try to perform differently when you are asked to play as a teacher during the experiment? If so, please describe how you changed your performance?
 
 ```{r 1, echo = FALSE}
-data.table("Answer" = dt_included$`Did you try to perform differently when you are asked to play as a teacher during the experiment? If so, please describe how you changed your performance?`)
+data.table("Answer" = dt_2_included$`Did you try to perform differently when you are asked to play as a teacher during the experiment? If so, please describe how you changed your performance?`)
 ```
 
 2. Have you noticed anything special regarding the tasks in the experiment? If any, please describe below.
 
 ```{r 2, echo = FALSE}
-data.table("Answer" = dt_included$`Have you noticed anything special regarding the tasks in the experiment? If any, please describe below.`)
+data.table("Answer" = dt_2_included$`Have you noticed anything special regarding the tasks in the experiment? If any, please describe below.`)
 ```
