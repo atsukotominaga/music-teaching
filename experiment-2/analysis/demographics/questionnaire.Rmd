@@ -68,3 +68,7 @@ data.table("Answer" = dt_2_included$`Did you try to perform differently when you
 ```{r 2, echo = FALSE}
 data.table("Answer" = dt_2_included$`Have you noticed anything special regarding the tasks in the experiment? If any, please describe below.`)
 ```
+
+```{r export, include = FALSE}
+knitr::purl("questionnaire.Rmd")
+```
