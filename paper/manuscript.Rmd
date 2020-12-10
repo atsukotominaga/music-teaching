@@ -61,6 +61,7 @@ output:
 ```{r setup, include = FALSE}
 if (!require("papaja")) {install.packages("papaja"); require("papaja")}
 if (!require("here")) {install.packages("here"); require("here")}
+if (!require("magick")) {install.packages("magick"); require("magick")}
 
 # create image folder
 if (!file.exists(here("paper/image"))){
@@ -77,10 +78,47 @@ if (!file.exists(here("paper/image"))){
 source(here("experiment-1/analysis/demographics", "questionnaire.R"), chdir = TRUE)
 ```
 
+
 ### 2.1.1. Participants
+
+We recruited 36 piano experts who played the piano for at least the past 10 years or were studying piano performance at a music school at the time of recruitment. For data analysis, we excluded 5 participants due to an experimental error (3), an overall deviated tempo (2). Thirty-one participants (`r nrow(dt_included[Gender == "Female"])` female) were included in data analysis. They had `r round(mean(dt_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_included$PianoTotalPractice), 2)`). All participants gave their informed consent before the experiment started and received vouchers for their participation. The study was approved by the United Ethical REview Committee for Research in Psychology (EPKEB) in Hungary.
+
 ### 2.1.2. Apparatus and stimuli
+
+A weighted Yamaha MIDI digital piano was used to record participants' performance via Max/MSP on a MacBook Pro with MacOS X Mojave 10.14.3. The laptop and piano were connected to a high-fidelity soundcard (Focusrite Scarlett 6i6) to deliver a metronome and piano sound. All auditory feedback was given to participants through headphones (Audio-Technica ATH-M50X). Sheet music was displayed on a computer monitor in front of the participants. The pitch, onset and offset time of each note, and key velocity profiles were obtained from MIDI data using Max/MSP patchers.
+
+One musical excerpt was used as a stimulus. The excerpt was taken from ``A Dozen a Day - Play with Ease in Many Keys" by Edna-Mae Brunam and modified for the experiment. It consisted of a 6-measure isochronous melody noted in 4/4 meter. The stimulus was composed in C major to be played with the right hand only. Non-expressive sheet music (i.e., sheet music without musical expression; see *Figure \ref{fig:stimuli}, A*) was used for the purpose of practice. Expressive notations were added to the non-expressive sheet music for the experiment. They referred to either articulation or dynamics (*Figure \ref{fig:stimuli}, B-C*). Articulation was notated as either legato or staccato. Legato indicates that musical notes are to be connected and should sound smooth. Staccato requires producing musical notes with shortened duration, keeping them separate from each other. Dynamics was notated in terms of forte and piano. Forte indicates that musical notes should be played loudly whereas piano indicates that musical notes should be played softly. The notation did not include any indication of fingering (i.e., the positioning of the fingers when playing the piano) because the piece was simple and pilot testing had shown that specifying fingering was not required.
+
 ### 2.1.3. Procedure
+
+In order to ensure that participants had sufficient motor skills to perform the piece, we asked them to practise the piece with the non-expressive sheet music (*Figure \ref{fig:stimuli}, A*). Once they could perform the piece without pitch errors twice consecutively, the experiment started.
+
+First, participants were allocated to either the teaching or performing condition and asked to practise the excerpt the excerpt with notated expressions of either articulation or dynamics (*Figure \ref{fig:stimuli}, B-C*). As soon as they had produced the excerpt with notated expressions without pitch errors twice consecutively, the test trials began.
+
+In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with notated expressions by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience. Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was counterbalanced across participants. The order of the expressive techniques within each condition was also counterbalanced across participants. A leading metronome (80 beats per minute, 8 beats) indicated the target tempo before each trial.
+
+At the end of the experiment, participants filled in a questionnaire asking about their demographic information and experience in piano performance/teaching.
+
 ### 2.1.4. Design and data analysis
+
+The experiment had two factors; Condition (teaching vs. performing) and Expressive Technique (articulation vs. dynamics). Additionally, the factor Subcomponent was used when analysing data for each subcomponent for each technique separately (i.e., LS; legato vs. staccato, FP; forte vs. piano).
+
+Three dependent variables were computed for data analysis. Interonset intervals (IOIs) are the intervals between onsets of adjacent notes and provide a tempo of tempo. Key-overlap time (KOT) is the difference between the offset time of the current tone (i.e., key release time) and the onset time of the ensuing tone and measures the smoothness of musical sequences (CITE). A positive value indicates smooth legato styles due to overlap between the current and ensuing tone whereas a negative value indicates sharp staccato styles due to separation between the current and ensuing tone. Tone intensity is assessed by key velocity (KV) and measures the loudness of a musical note. The value of KV in MIDI varies between 0 (minimum) and 127 (maximum).
+
+Pitch errors were identified by comparing the participants' performance with the sheet music. (TBC)
+
+```{r stim-1, out.width = "100%", fig.cap = "\\label{fig:stimuli}(A)Non-expressive sheet music. (B)Articulation. The curved line (slur) indicates legato and the dots indicate staccato. (C)Dynamics. The symbol `f' denotes forte and the symbol `p' denotes piano. For data analysis, only the 16th notes were included.", echo = FALSE}
+stim_a <- image_border(image_read(here("paper/image/sheetmusic-1", "stim_a.png")), "#FFFFFF", "120x120")
+stim_d <- image_border(image_read(here("paper/image/sheetmusic-1", "stim_d.png")), "#FFFFFF", "120x120")
+stim_n <- image_border(image_read(here("paper/image/sheetmusic-1", "stim_n.png")), "#FFFFFF", "120x120")
+
+# Combine
+img_stimuli <- image_append(c(stim_n, stim_a, stim_d), stack = TRUE)
+img_stimuli <- image_annotate(img_stimuli, "(A)", size = 80, location = "+100+10", color = "black", font = "helvetica")
+img_stimuli <- image_annotate(img_stimuli, "(B)", size = 80, location = "+100+660", color = "black", font = "helvetica")
+img_stimuli <- image_annotate(img_stimuli, "(C)", size = 80, location = "+100+1310", color = "black", font = "helvetica")
+img_stimuli
+```
 
 ## 2.2. Results (Articulation)
 ### 2.2.1. Interonset Intervals (IOIs)
@@ -101,13 +139,35 @@ source(here("experiment-1/analysis/demographics", "questionnaire.R"), chdir = TR
 # 3. Experiment 2
 ## 3.1. Method
 ```{r questionnaire-2, include = FALSE}
-#source(here("experiment-2/analysis/demographics", "questionnaire.R"), chdir = TRUE)
+source(here("experiment-2/analysis/demographics", "questionnaire.R"), chdir = TRUE)
 ```
 
 ### 3.1.1. Participants
+
+We recruited 21 piano experts who already had a degree in (above bachelor or equivalent) in piano performance/teaching or were studying piano performance at a music school at the time of recruitment. One participant was excluded due to insufficient motor skills. Twenty participants (`r nrow(dt_2_included[Gender == "Female"])` female) were included in data analysis. They had `r round(mean(dt_2_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_2_included$PianoTotalPractice), 2)`).
+
+
 ### 3.1.2. Apparatus and stimuli
+
+The same apparatus as Experiment 1 was used. We selected Clementi's Sonatina Op.36 (No.3) in C major as a stimulus because it contained our targeted expression (i.e., articulation, dynamics) and relatively simple in terms of motor skills. The first 12 measures of the original piece and modified it so that it had the most equal number of data points for each dependent variable (see details in *[Data analysis](#analysis-2)*). The stimulus consisted of a 12-measure isochronous melody notated in 4/4 meter. Only the right hand was used to play. Non-expressive sheet was used for the purpose of practice (*Figure \ref{fig:stimuli-2}, A*). Expressive notations were added to the non-expressive sheet music for the experiment (*Figure \ref{fig:stimuli-2}, B-C*). These excerpts were confirmed to be musically natural by a doctoral student in piano performance at Liszt Ferenc Academy of Music in Hungary. The fingering was also assigned and confirmed by the same doctoral student.
+
 ### 3.1.3. Procedure
+
 ### 3.1.4. Design and data analysis
+
+
+```{r stim-2, out.width = "100%", fig.cap = "\\label{fig:stimuli-2}(A)Non-expressive sheet music. (B)Articulation. The curved line (slur) indicates legato and the dots indicate staccato. (C)Dynamics. The symbol `f' denotes forte and the symbol `p' denotes piano. For data analysis, only the 8th notes were included.", echo = FALSE}
+stim_a_2 <- image_border(image_read(here("paper/image/sheetmusic-2", "stim_a.png")), "#FFFFFF", "120x120")
+stim_d_2 <- image_border(image_read(here("paper/image/sheetmusic-2", "stim_d.png")), "#FFFFFF", "120x120")
+stim_n_2 <- image_border(image_read(here("paper/image/sheetmusic-2", "stim_n.png")), "#FFFFFF", "120x120")
+
+# Combine
+img_stimuli_2 <- image_append(c(stim_n_2, stim_a_2, stim_d_2), stack = TRUE)
+img_stimuli_2 <- image_annotate(img_stimuli_2, "(A)", size = 80, location = "+100+20", color = "black", font = "helvetica")
+img_stimuli_2 <- image_annotate(img_stimuli_2, "(B)", size = 80, location = "+100+1075", color = "black", font = "helvetica")
+img_stimuli_2 <- image_annotate(img_stimuli_2, "(C)", size = 80, location = "+100+2100", color = "black", font = "helvetica")
+img_stimuli_2
+```
 
 ## 3.2. Results (Articulation)
 ### 3.2.1. Interonset Intervals (IOIs)
@@ -122,6 +182,8 @@ source(here("experiment-1/analysis/demographics", "questionnaire.R"), chdir = TR
 ### 3.3.4. Key-Overlap Time (KOT)
 
 ## 3.4. Discussion
+
+\newpage
 
 # 4. General Discussion
 
