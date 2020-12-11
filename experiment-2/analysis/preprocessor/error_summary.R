@@ -1,17 +1,4 @@
----
-title: "Error Summary (teaching-v2.0)"
-output: html_notebook
----
-
-- Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
-
-# Workflow
-1. filter with `filtering.R`
-2. check the details of errors and remove some participants if needed (**this script**: `error_summary.Rmd`)
-3. trim data (i.e., remove outliers) with `trimming_ioi.R`, `trimming_kot_kor.R`, `trimming_vel.R`
-4. check trimmed data and remove some participants if needed (`included_summary.Rmd`)
-
-```{r setup, include = FALSE}
+## ----setup, include = FALSE---------------------------------------------------
 # packages
 # data manipulation
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
@@ -31,20 +18,9 @@ dt_onset_2 <- fread(file = "filtered/dt_correct_onset.txt", sep = ",")
 dt_offset_2 <- fread(file = "filtered/dt_correct_offset.txt", sep = ",")
 error_onset_2 <- fread(file = "filtered/error_onset.txt", sep = ",")
 error_offset_2 <- fread(file = "filtered/error_offset.txt", sep = ",")
-```
 
-# Design
-- Each performance (1 trial) contains 72 responses for onsets and 72 responses for offsets (i.e., if there is no mistake, 144 responses in total)
-- Each block contains 8 trials and there are 4 blocks (teaching vs. performing x articulation vs. dynamics)
-- Note: SubNr 3 was excluded due to insufficient motor skills
 
-# Outline
-1. [Onset reports](#onset)
-2. [Offset reports](#offset)
-
-## ONSET
-### Corrected Error Onset (All)
-```{r onset-all, echo = FALSE}
+## ----onset-all, echo = FALSE--------------------------------------------------
 error_onset_all_2 <- error_onset_2[CorrectionNr != "Exclude"]
 
 # separate errors depending on reasons
@@ -56,32 +32,25 @@ error_onset_all_2$Reason[nrow(error_onset_all_2)] <- "Substituted"
 error_onset_all_2$CorrectionNr[nrow(error_onset_all_2)] <- 1
 
 error_onset_all_2
-```
 
-### Corrected Error Onset (Summary)
-```{r onset-summary, echo = FALSE}
+
+## ----onset-summary, echo = FALSE----------------------------------------------
 error_onset_all_2[startsWith(Reason, "Substituted")]$Reason <- "Substituted"
 error_onset_summary_2 <- error_onset_all_2[, .(N = .N, Sum = sum(as.numeric(CorrectionNr))), by = .(Reason)]
 error_onset_summary_2
-```
 
-### Missing/Excluded Trials Onset (All)
-```{r na-onset-all, echo = FALSE}
+
+## ----na-onset-all, echo = FALSE-----------------------------------------------
 missing_onset_2 <- checker(dt_onset_2, dt_ideal_2)
 missing_onset_2
-```
 
-1. **some performances were removed because participants didn't follow sheet music (3 trials)**
 
-### Missing/Excluded Trials Onset (Summary)
-```{r na-onset-summary, echo = FALSE}
+## ----na-onset-summary, echo = FALSE-------------------------------------------
 missing_onset_summary_2 <- missing_onset_2[, .(N = .N), by = .(Reason)]
 missing_onset_summary_2
-```
 
-## OFFSET
-### Corrected Error Offset (All)
-```{r offset-all, echo = FALSE}
+
+## ----offset-all, echo = FALSE-------------------------------------------------
 error_offset_all_2 <- error_offset_2[CorrectionNr != "Exclude",]
 
 # separate errors depending on reasons
@@ -111,29 +80,24 @@ error_offset_all_2$Reason[nrow(error_offset_all_2)] <- "Substituted"
 error_offset_all_2$CorrectionNr[nrow(error_offset_all_2)] <- 2
 
 error_offset_all_2
-```
 
-### Corrected Error Offset (Summary)
-```{r offset-summary, echo = FALSE}
+
+## ----offset-summary, echo = FALSE---------------------------------------------
 error_offset_all_2[startsWith(Reason, "Substituted")]$Reason <- "Substituted"
 error_offset_summary_2 <- error_offset_all_2[, .(N = .N, Sum = sum(as.numeric(CorrectionNr))), by = .(Reason)]
 error_offset_summary_2
-```
 
-### Missing/Excluded Trials Offset (All)
-```{r na-offset-all, echo = FALSE}
+
+## ----na-offset-all, echo = FALSE----------------------------------------------
 missing_offset_2 <- checker(dt_offset_2, dt_ideal_2)
 missing_offset_2
-```
 
-1. **some performances were removed because participants didn't follow sheet music (3 trials)**
 
-### Missing/Excluded Trials Offset (Summary)
-```{r na-offset-summary, echo = FALSE}
+## ----na-offset-summary, echo = FALSE------------------------------------------
 missing_offset_summary_2 <- missing_offset_2[, .(N = .N), by = .(Reason)]
 missing_offset_summary_2
-```
 
-```{r export, include = FALSE}
+
+## ----export, include = FALSE--------------------------------------------------
 knitr::purl("error_summary.Rmd")
-```
+
