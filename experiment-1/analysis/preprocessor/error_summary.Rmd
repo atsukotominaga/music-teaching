@@ -17,24 +17,20 @@ output: html_notebook
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
 # plot
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
-if (!require("here")) {install.packages("here"); require("here")}
-
-# set working directory
-here::i_am("error_summary.Rmd")
 
 # function
-source(here("function.R"))
+source("function.R")
 
 # read a text file for ideal performance
-dt_ideal <- read.table(here("ideal.txt"))
+dt_ideal <- read.table("ideal.txt")
 colnames(dt_ideal) <- "Pitch"
 dt_ideal$RowNr <- 1:nrow(dt_ideal)
 setcolorder(dt_ideal, c(2, 1))
 # 
-dt_onset <- fread(file = here("filtered", "dt_correct_onset.txt"), sep = ",")
-dt_offset <- fread(file = here("filtered", "dt_correct_offset.txt"), sep = ",")
-error_onset <- fread(file = here("filtered", "error_onset.txt"), sep = ",")
-error_offset <- fread(file = here("filtered", "error_offset.txt"), sep = ",")
+dt_onset <- fread(file = "filtered/dt_correct_onset.txt", sep = ",")
+dt_offset <- fread(file = "filtered/dt_correct_offset.txt", sep = ",")
+error_onset <- fread(file = "filtered/error_onset.txt", sep = ",")
+error_offset <- fread(file = "filtered/error_offset.txt", sep = ",")
 ```
 
 # Design
