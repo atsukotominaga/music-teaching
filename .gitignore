@@ -12,7 +12,7 @@ experiment/midi/
 
 # paper
 paper/docs
-paper//manuscript_files
+paper/manuscript_files
 paper/*pdf
 paper/*bib
 
