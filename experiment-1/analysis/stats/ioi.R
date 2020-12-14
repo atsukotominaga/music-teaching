@@ -38,7 +38,7 @@ ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, 
 
 ## ----ioi-art-all, echo = FALSE------------------------------------------------
 # Group mean
-ioi_art_all <- ioi_art[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill)]
+ioi_art_all <- ioi_art[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N), Median = median(Mean), IQR = IQR(Mean)), by = .(Condition, Skill)]
 ioi_art_all
 
 
@@ -144,7 +144,7 @@ ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, 
 
 ## ----ioi-dyn-all, echo = FALSE------------------------------------------------
 # Group mean
-ioi_dyn_all <- ioi_dyn[, .(N = .N, Mean = mean(Mean), SD = sd(Mean),  SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill)]
+ioi_dyn_all <- ioi_dyn[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N), Median = median(Mean), IQR = IQR(Mean)), by = .(Condition, Skill)]
 ioi_dyn_all
 
 
