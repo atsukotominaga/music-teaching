@@ -47,10 +47,9 @@ floatsintext      : yes
 figurelist        : no
 tablelist         : no
 footnotelist      : no
-linenumbers       : yes
+linenumbers       : no
 mask              : no
 draft             : no
-noextraspace      : yes
 
 documentclass     : "apa6"
 classoption       : "man"
@@ -71,6 +70,9 @@ if (!file.exists(here("paper/image"))){
 
 # 1. Introduction
 
+
+
+
 # 2. Experiment 1
 
 ## 2.1. Method
@@ -81,21 +83,21 @@ source(here("experiment-1/analysis/preprocessor", "error_summary.R"), chdir = TR
 
 ### 2.1.1. Participants
 
-We recruited 36 piano experts who played the piano for at least the past 10 years or were studying piano performance at a music school at the time of recruitment. For data analysis, we excluded 5 participants due to experimental errors (3; performances were not recorded for one or more blocks, or participants played the piece in an octave higher), an overall deviated tempo (2). As a result, 31 participants (`r nrow(dt_included[Gender == "Female"])` female) were included in data analysis. Most participants were right handed (left; `r nrow(dt_included[Handedness == "Left"])`, both; `r nrow(dt_included[Handedness == "Both"])`). They had `r round(mean(dt_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_included$PianoTotalPractice), 2)`). All participants gave their informed consent before the experiment started and received vouchers for their participation. The study was approved by the United Ethical Review Committee for Research in Psychology (EPKEB) in Hungary.
+We recruited 36 piano experts who played the piano for at least the past 10 years or were studying piano performance at a music school at the time of recruitment. For data analysis, we excluded 5 participants due to experimental errors (3), an overall deviated tempo (2). Thirty-one participants (`r nrow(dt_included[Gender == "Female"])` female) were included in data analysis. Most participants were right-handed (left; `r nrow(dt_included[Handedness == "Left"])`, both; `r nrow(dt_included[Handedness == "Both"])`). They had `r round(mean(dt_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_included$PianoTotalPractice), 2)`). All participants gave their informed consent before the experiment started and received vouchers for their participation. The study was approved by the United Ethical Review Committee for Research in Psychology (EPKEB) in Hungary.
 
 ### 2.1.2. Apparatus and stimuli
 
 A weighted Yamaha MIDI digital piano was used to record participants' performance via Max/MSP on a MacBook Pro with MacOS X Mojave 10.14.3. The laptop and piano were connected to a high-fidelity soundcard (Focusrite Scarlett 6i6) to deliver a metronome and piano sound. All auditory feedback was given to participants through headphones (Audio-Technica ATH-M50X). Sheet music was displayed on a computer monitor in front of the participants. The pitch, onset and offset time of each note, and key velocity profiles were obtained from MIDI data using Max/MSP patchers.
 
-One musical excerpt was used as a stimulus. The excerpt was taken from ``A Dozen a Day - Play with Ease in Many Keys" by Edna-Mae Burnam and modified for the experiment. It consisted of a 6-measure isochronous melody noted in 4/4 meter. The stimulus was composed in C major to be played with the right hand only. Non-expressive sheet music (i.e., sheet music without expressive notations; see *Figure \ref{fig:stimuli}, A*) was used for the purpose of practice. Expressive notations were added to the non-expressive sheet music for the experiment. They referred to either articulation or dynamics (*Figure \ref{fig:stimuli}, B-C*). Articulation was notated as either legato or staccato. Legato indicates that musical notes are to be connected and should sound smooth. Staccato requires producing musical notes with shortened duration, keeping them separate from each other. Dynamics was notated in terms of forte and piano. Forte indicates that musical notes should be played loudly whereas piano indicates that musical notes should be played softly. The notation did not include any indication of fingering (i.e., the positioning of the fingers when playing the piano) because the piece was simple and pilot testing had shown that specifying fingering was not required.
+One musical excerpt was used as a stimulus. The excerpt was taken from ``A Dozen a Day - Play with Ease in Many Keys" by Edna-Mae Burnam and modified for the experiment. It consisted of a 6-measure isochronous melody noted in 4/4 meter. The stimulus was composed in C major to be played with the right hand only. Non-expressive sheet music (i.e., sheet music without expressive notations; see *Figure \ref{fig:stimuli}, A*) was used for the purpose of practice. Expressive notations were added to the non-expressive sheet music for the experiment. They referred to either articulation or dynamics (*Figure \ref{fig:stimuli}, B-C*). Articulation was notated as either legato or staccato. Legato indicates that musical notes are to be connected and should sound smooth. Staccato requires producing musical notes with shortened duration, keeping them separate from each other. Dynamics was notated as either forte and piano. Forte indicates that musical notes should be played loudly whereas piano indicates that musical notes should be played softly. The notation did not include any indication of fingering (i.e., the positioning of the fingers when playing the piano) because the piece was simple and pilot testing had shown that specifying fingering was not required.
 
 ### 2.1.3. Procedure
 
 In order to ensure that participants had sufficient motor skills to perform the piece, we asked them to practise the piece with the non-expressive sheet music (*Figure \ref{fig:stimuli}, A*). Once they could perform the piece without pitch errors twice consecutively within 5 attempts, the experiment started.
 
-First, participants were allocated to either the teaching or performing condition and asked to practise the excerpt the excerpt with notated expressions of either articulation or dynamics (*Figure \ref{fig:stimuli}, B-C*). As soon as they had produced the excerpt with notated expressions without pitch errors twice consecutively, the test trials began.
+First, participants were allocated to either the teaching or performing condition and asked to practise the excerpt with notated expressions of either articulation or dynamics (*Figure \ref{fig:stimuli}, B-C*). As soon as they had produced the excerpt with notated expressions without pitch errors twice consecutively, the test trials began.
 
-In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with notated expressions by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience. Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was counterbalanced across participants. The order of the expressive techniques within each condition was also counterbalanced across participants. A leading metronome (80 beats per minute, 8 beats) indicated the target tempo before each trial.
+In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with a notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience. Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was counterbalanced across participants. The order of the expressive techniques within each condition was also counterbalanced across participants. A leading metronome (80 beats per minute, 8 beats) indicated the target tempo before each trial.
 
 At the end of the experiment, participants filled in a questionnaire asking about their demographic information and experience in piano performance/teaching.
 
@@ -103,11 +105,11 @@ At the end of the experiment, participants filled in a questionnaire asking abou
 
 The experiment had two factors; Condition (teaching vs. performing) and Expressive Technique (articulation vs. dynamics). Additionally, the factor Subcomponent was used when analysing data for each subcomponent for each technique separately (i.e., LS; legato vs. staccato, FP; forte vs. piano).
 
-Three dependent variables were computed for data analysis. Interonset intervals (IOIs) are the intervals between onsets of adjacent notes and provide a tempo of tempo. Key-overlap time (KOT) is the difference between the offset time of the current tone (i.e., key release time) and the onset time of the ensuing tone and measures the smoothness of musical sequences [@bresin_2000]. A positive value indicates smooth legato styles due to overlap between the current and ensuing tone whereas a negative value indicates sharp staccato styles due to separation between the current and ensuing tone. Tone intensity is assessed by key velocity (KV) and measures the loudness of a musical note. The value of KV in MIDI varies between 0 (minimum) and 127 (maximum).
+Three dependent variables were computed for data analysis. Interonset intervals (IOIs) are the intervals between onsets of adjacent notes and provide a tempo of tempo. Key-overlap time (KOT) is the difference between the offset time of the current tone (i.e., key release time) and the onset time of the ensuing tone, and measures the smoothness of musical sequences [@bresin_2000]. A positive value indicates smooth legato styles due to overlap between the current and ensuing tone whereas a negative value indicates sharp staccato styles due to separation between the current and ensuing tone. Tone intensity is assessed by key velocity (KV) and measures the loudness of a musical note. The value of KV in MIDI varies between 0 (minimum) and 127 (maximum).
 
-Data cleaning, preprocessing and statistical analysis were performed in R version 3.6.3. Pitch errors were identified separately for onsets and offsets by comparing the participants' performance with the sheet music. Three trials were entirely excluded from data analysis because participants did not follow sheet music or complete performing till the end. We manually removed accidental pitch errors produced by participants. Pitch errors included either extra, missing or substituted tones. For onsets, `r round(sum(error_onset_summary$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_onset_summary[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_onset_summary[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_onset_summary[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). For offsets, `r round(sum(error_offset_summary$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_offset_summary[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_offset_summary[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_offset_summary[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). After we removed pitch errors, outliers for IOIs, KOT and KV were defined as values more than 3 standard deviations from the mean of each dependent variable and were excluded from data analysis. Removed outliers were less than 5% of overall responses for each dependent variable.
+Data cleaning, preprocessing and statistical analysis were performed in R version 3.6.3. For statistical analysis, only 16th notes with expressive notations were included. Three trials were entirely excluded from data analysis because participants did not follow sheet music or complete performing till the end. Pitch errors were identified by comparing a sequence of musical notes produced by a participant with the sequence of musical notes according to the sheet music. Pitch errors included either extra, missing or substituted tones and were manually removed by using editData package. For onsets, `r round(sum(error_onset_summary$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_onset_summary[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_onset_summary[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_onset_summary[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). For offsets, `r round(sum(error_offset_summary$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_offset_summary[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_offset_summary[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_offset_summary[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). After we removed pitch errors, outliers for IOIs, KOT and KV were defined as values more than 3 standard deviations from the mean of each dependent variable and excluded from data analysis. Removed outliers were less than 5% of overall responses for each dependent variable.
 
-We performed separate analyses for the two expressive techniques (i.e., articulation, dynamics). Paired-sample *t*-tests were performed to compare the mean IOIs in the teaching and performing condition. For KOT and KV, we performed a 2 x 2 repeated-measures analysis of variance (ANOVA) with the factors Condition (teaching vs. performing) and Subcomponent (LS; legato vs. staccato or FP; forte vs. piano, respectively). The ``aov_car" function in the afex package was used for a repeated-measures ANOVA. For post-hoc comparisons, we used emmeans package to investigate interactions fomr the ANOVA. 
+We performed separate analyses for the two expressive techniques (i.e., articulation, dynamics). A paired-sample *t*-test or a Wilcoxon signed-rank tests (a non-parametric alternative to a paired *t*-test) was performed to compare the mean IOIs in the teaching and performing condition. For KOT and KV, we performed a 2 x 2 repeated-measures analysis of variance (ANOVA) with the factors Condition (teaching vs. performing) and Subcomponent (LS; legato vs. staccato or FP; forte vs. piano, respectively). The ``aov_car" function in the afex package was used for a repeated-measures ANOVA. For post-hoc comparisons, we used emmeans package to investigate interactions from the ANOVA. 
 
 ```{r stim-1, out.width = "100%", fig.cap = "\\label{fig:stimuli}(A)Non-expressive sheet music. (B)Articulation. The curved line (slur) indicates legato and the dots indicate staccato. (C)Dynamics. The symbol `f' denotes forte and the symbol `p' denotes piano. For data analysis, only the 16th notes were included.", echo = FALSE}
 stim_a <- image_border(image_read(here("paper/image/sheetmusic-1", "stim_a.png")), "#FFFFFF", "120x120")
@@ -126,11 +128,37 @@ img_stimuli
 
 ## 2.2. Results (Articulation)
 
+```{r results-1, include = FALSE}
+source(here("experiment-1/analysis/stats", "ioi.R"), chdir = TRUE)
+source(here("experiment-1/analysis/stats", "articulation.R"), chdir = TRUE)
+source(here("experiment-1/analysis/stats", "dynamics.R"), chdir = TRUE)
+```
 
+All effects are reported as significant at *p* < .05. We first report results for performance the piece with the notated expression of articulation (*Figure \ref{fig:stimuli}, B*). followed by performance of the piece with the notated expression of dynamics (*Figure \ref{fig:stimuli}, C*).
 
 ### 2.2.1. Interonset Intervals (IOIs)
+
+In order to compare the mean IOIs between the teaching and performing condition, we used a Wiscoxon Signed-rank test, instead of a paired *t*-test, because the Shapiro-Wilk test showed that the difference... was significantly different from the normal distribution.
+
+The Wisconxin Signed-rank test revealed....
+
+```{r ioi-art-1, echo = FALSE}
+ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
+
+ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+  geom_hline(yintercept = 188, linetype = "dashed") +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+```
+
+
 ### 2.2.2. Key-Overlap Time (KOT)
+
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) revealed that there was a significant main effect of Subcomponent-LS (F) and a significant interation betweenC Condition and Subcomponent-LS (F). Post-hoc comparisons showed that participants produced shorter staccato in the teaching condition than in the performing condition (t) whereas there was no significant difference in legato between the teaching and performing condition (t).
+
+We also calculated KOR...
+
 ### 2.2.3. Key Velocity (KV)
+
 ### 2.2.4. KV Transition Points
 
 ## 2.3. Results (Dynamics)
@@ -152,15 +180,15 @@ source(here("experiment-2/analysis/preprocessor", "error_summary.R"), chdir = TR
 
 ### 3.1.1. Participants
 
-We recruited 21 piano experts who already had a degree in (above bachelor or equivalent) in piano performance/teaching or were studying piano performance at a music school at the time of recruitment. One participant was excluded due to insufficient motor skills (see details in *[Procedure](#procedure-2)*). Twenty participants (`r nrow(dt_2_included[Gender == "Female"])` female) were included in data analysis. Most participants were right handed (left; `r nrow(dt_2_included[Handedness == "Left"])`). They had `r round(mean(dt_2_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_2_included$PianoTotalPractice), 2)`). 
+We recruited 21 piano experts who already had a degree in (above bachelor or equivalent) in piano performance/teaching or were studying piano performance at a music school at the time of recruitment. One participant was excluded due to insufficient motor skills (see details in *[Procedure](#procedure-2)*). Twenty participants (`r nrow(dt_2_included[Gender == "Female"])` female) were included in data analysis. Most participants were right-handed (left; `r nrow(dt_2_included[Handedness == "Left"])`). They had `r round(mean(dt_2_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_2_included$PianoTotalPractice), 2)`). 
 
 ### 3.1.2. Apparatus and stimuli
 
-The same apparatus as Experiment 1 was used. We selected Clementi's Sonatina Op.36 (No.3) in C major as a stimulus because it contained our targeted expressions (i.e., articulation, dynamics) and was relatively simple in terms of motor skills. The first 12 measures of the original piece was used and modified so that it had the almost equal number of data points for each dependent variable (see details in *[Data analysis](#analysis-2)*). The stimulus consisted of a 12-measure isochronous melody notated in 4/4 meter. Non-expressive sheet was used for the purpose of practice (*Figure \ref{fig:stimuli-2}, A*). Expressive notations were added to the non-expressive sheet music for the experiment (*Figure \ref{fig:stimuli-2}, B-C*). These excerpts were confirmed to be musically natural by a doctoral student in piano performance at Liszt Ferenc Academy of Music in Hungary. The fingering was also assigned and confirmed by the same doctoral student.
+The same apparatus as Experiment 1 was used. We selected Clementi's Sonatina Op.36 (No.3) in C major as a stimulus because it contained our targeted expressions (i.e., articulation, dynamics) and was relatively simple in terms of motor skills. The first 12 measures of the original piece was used and modified so that it had the almost equal number of data points for each dependent variable. The stimulus consisted of a 12-measure isochronous melody notated in 4/4 meter. Non-expressive sheet was used for the purpose of practice (*Figure \ref{fig:stimuli-2}, A*). Expressive notations were added to the non-expressive sheet music for the experiment (*Figure \ref{fig:stimuli-2}, B-C*). These excerpts were confirmed to be musically natural by a doctoral student in piano performance at Liszt Ferenc Academy of Music in Hungary. The fingering was also assigned and confirmed by the same doctoral student.
 
 ### 3.1.3. Procedure{#procedure-2}
 
-We employed the similar procedure as Experiment 1. Unlike Experiment 1, all participants were required to memorise the piece without expressive notations (i.e., *Figure \ref{fig:stimuli-2}, A*) prior to the experiment. Those who could not perform the piece twice consecutively within 5 attempts were considered not to have sufficient motor skills to implement musical expressions and excluded from data analysis. Also, we modified the wording of instructions for the teaching and performing condition so that both had the same focus on expressive notations (see details in *[Supplemental Materials](#supplemental)*).
+We employed the similar procedure as Experiment 1. Unlike Experiment 1, all participants were required to memorise the piece without expressive notations (i.e., *Figure \ref{fig:stimuli-2}, A*) prior to the experiment. Also, we modified the wording of instructions for the teaching and performing condition so that both had the same focus on expressive notations (see details in *[Supplemental Materials](#supplemental)*). As Experiment 1, we asked participants to perform the piece without looking at the non-expressive sheet music in order to make sure that participants memorise the piece and had sufficient motor skills and memorised. Those who could not perform the piece twice consecutively within 5 attempts were excluded from data analysis.
 
 ### 3.1.4. Design and data analysis
 
@@ -173,9 +201,9 @@ stim_n_2 <- image_border(image_read(here("paper/image/sheetmusic-2", "stim_n.png
 
 # Combine
 img_stimuli_2 <- image_append(c(stim_n_2, stim_a_2, stim_d_2), stack = TRUE)
-img_stimuli_2 <- image_annotate(img_stimuli_2, "(A)", size = 80, location = "+100+20", color = "black", font = "helvetica")
-img_stimuli_2 <- image_annotate(img_stimuli_2, "(B)", size = 80, location = "+100+1075", color = "black", font = "helvetica")
-img_stimuli_2 <- image_annotate(img_stimuli_2, "(C)", size = 80, location = "+100+2100", color = "black", font = "helvetica")
+img_stimuli_2 <- image_annotate(img_stimuli_2, "(A)", size = 80, location = "+100+30", color = "black", font = "helvetica")
+img_stimuli_2 <- image_annotate(img_stimuli_2, "(B)", size = 80, location = "+100+1085", color = "black", font = "helvetica")
+img_stimuli_2 <- image_annotate(img_stimuli_2, "(C)", size = 80, location = "+100+2110", color = "black", font = "helvetica")
 img_stimuli_2
 ```
 
