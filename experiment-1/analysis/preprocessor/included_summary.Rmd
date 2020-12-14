@@ -1,5 +1,5 @@
 ---
-title: "Included  Summary (teaching-v1.0)"
+title: "Included Summary (teaching-v1.0)"
 output: html_notebook
 ---
 
@@ -17,16 +17,12 @@ output: html_notebook
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
 # plot
 if (!require("ggplot2")) {install.packages("ggplot2"); require("ggplot2")}
-if (!require("here")) {install.packages("here"); require("here")}
-
-# set working directory
-here::i_am("included_summary.Rmd")
 
 # read txt files
-dt_ioi <- fread(file = here("trimmed", "data_ioi_1.txt"), sep = ",")
-dt_kot <- fread(file = here("trimmed", "data_kot.txt"), sep = ",")
-dt_vel <- fread(file = here("trimmed", "data_vel.txt"), sep = ",")
-dt_vel_diff <- fread(file = here("trimmed", "data_vel_diff.txt"), sep = ",")
+dt_ioi <- fread(file = "./trimmed/data_ioi_1.txt", sep = ",")
+dt_kot <- fread(file = "./trimmed/data_kot.txt", sep = ",")
+dt_vel <- fread(file = "./trimmed/data_vel.txt", sep = ",")
+dt_vel_diff <- fread(file = "./trimmed/data_vel_diff.txt", sep = ",")
 ```
 
 # Design
@@ -43,7 +39,6 @@ dt_ioi
 ```{r ioi-summary, echo = FALSE}
 dt_ioi[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
 ```
-- SubNr 1 is excluded from data analysis because most of the responses were excluded due to outliers.
 
 ### KOT (All)
 ```{r kot, echo = FALSE}
@@ -76,7 +71,7 @@ dt_vel_diff[SubNr != 1, .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubN
 ```
 
 ## Excluded participnats
-- SubNr 1: Most of responses (more than 90%) were removed due to outliers
+- SubNr 1: A deviated tempo
 - SubNr 3: Experimental error
 - SubNr 8: Experimental error
 - SubNr 14: Experimental error
