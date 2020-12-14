@@ -12,8 +12,8 @@ experiment/midi/
 
 # paper
 paper/docs
+paper//manuscript_files
 paper/*pdf
-paper/manuscript_files/figure-latex/*pdf
 paper/*bib
 
 # personal stuff
