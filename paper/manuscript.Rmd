@@ -97,7 +97,7 @@ In order to ensure that participants had sufficient motor skills to perform the 
 
 First, participants were allocated to either the teaching or performing condition and asked to practise the excerpt with notated expressions of either articulation or dynamics (*Figure \ref{fig:stimuli}, B-C*). As soon as they had produced the excerpt with notated expressions without pitch errors twice consecutively, the test trials began.
 
-In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with a notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience. Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was counterbalanced across participants. The order of the expressive techniques within each condition was also counterbalanced across participants. A leading metronome (80 beats per minute, 8 beats) indicated the target tempo before each trial.
+In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with a notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience (see details in *[Supplemental Materials](#supplemental)*). Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was counterbalanced across participants. The order of the expressive techniques within each condition was also counterbalanced across participants. A leading metronome (80 beats per minute, 8 beats) indicated the target tempo before each trial.
 
 At the end of the experiment, participants filled in a questionnaire asking about their demographic information and experience in piano performance/teaching.
 
@@ -118,9 +118,9 @@ stim_n <- image_border(image_read(here("paper/image/sheetmusic-1", "stim_n.png")
 
 # Combine
 img_stimuli <- image_append(c(stim_n, stim_a, stim_d), stack = TRUE)
-img_stimuli <- image_annotate(img_stimuli, "(A)", size = 80, location = "+100+10", color = "black", font = "helvetica")
-img_stimuli <- image_annotate(img_stimuli, "(B)", size = 80, location = "+100+660", color = "black", font = "helvetica")
-img_stimuli <- image_annotate(img_stimuli, "(C)", size = 80, location = "+100+1310", color = "black", font = "helvetica")
+img_stimuli <- image_annotate(img_stimuli, "(A)", size = 80, location = "+100+0", color = "black", font = "helvetica")
+img_stimuli <- image_annotate(img_stimuli, "(B)", size = 80, location = "+100+650", color = "black", font = "helvetica")
+img_stimuli <- image_annotate(img_stimuli, "(C)", size = 80, location = "+100+1300", color = "black", font = "helvetica")
 img_stimuli
 ```
 
@@ -138,22 +138,25 @@ All effects are reported as significant at *p* < .05. We first report results fo
 
 ### 2.2.1. Interonset Intervals (IOIs)
 
-In order to compare the mean IOIs between the teaching and performing condition, we used a Wiscoxon Signed-rank test, instead of a paired *t*-test, because the Shapiro-Wilk test showed that the difference... was significantly different from the normal distribution.
+In order to compare the mean IOIs between the teaching and performing condition, we conducted a Wiscoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution. The Wiscoxon Signed-rank test revealed that participants played more slowly in the teaching condition [*Mdn* = `r ioi_art_all[Condition == "teaching"]$Median` (ms), *IQR* = `r ioi_art_all[Condition == "teaching"]$IQR`] than in the performing condition [*Mdn* = `r ioi_art_all[Condition == "performing"]$Median` (ms), *IQR* = `r ioi_art_all[Condition == "performing"]$IQR`] while playing the piece with notated articulation (*p* `r if(ioi_art_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_wilcoxon$p.value))}`; *Figure \ref{fig:ioi-1}*).
 
-The Wisconxin Signed-rank test revealed....
-
-```{r ioi-art-1, echo = FALSE}
+```{r ioi-art-1, include = FALSE}
 ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
 
-ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ioi_art_1 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+  ylim(150, 260) +
   geom_hline(yintercept = 188, linetype = "dashed") +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 200, paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
-```
 
+# save plots
+ggsave(here("paper/image", "ioi_art_1.png"), plot = ioi_art_1, dpi = 600, width = 5, height = 5)
+img_ioi_art_1 <- image_read(here("paper/image", "ioi_art_1.png"))
+```
 
 ### 2.2.2. Key-Overlap Time (KOT)
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) revealed that there was a significant main effect of Subcomponent-LS (F) and a significant interation betweenC Condition and Subcomponent-LS (F). Post-hoc comparisons showed that participants produced shorter staccato in the teaching condition than in the performing condition (t) whereas there was no significant difference in legato between the teaching and performing condition (t).
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) revealed that there was a significant main effect of Subcomponent-LS (F) and a significant interaction between Condition and Subcomponent-LS (F). Post-hoc comparisons showed that participants produced shorter staccato in the teaching condition than in the performing condition (t) whereas there was no significant difference in legato between the teaching and performing condition (t).
 
 We also calculated KOR...
 
@@ -163,9 +166,35 @@ We also calculated KOR...
 
 ## 2.3. Results (Dynamics)
 ### 2.3.1. Interonset Intervals (IOIs)
+
+The Wiscoxon Signed-rank test revealed no significant difference between the teaching condition [*Mdn* = `r ioi_dyn_all[Condition == "teaching"]$Median` (ms), *IQR* = `r ioi_dyn_all[Condition == "teaching"]$IQR`] and the performing condition [*Mdn* = `r ioi_dyn_all[Condition == "performing"]$Median` (ms), *IQR* = `r ioi_dyn_all[Condition == "performing"]$IQR`] while playing the piece with notated dynamics (*p* `r if(ioi_dyn_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_dyn_wilcoxon$p.value))}`; *Figure \ref{fig:ioi-1}*).
+
+```{r ioi-dyn-1, include = FALSE}
+ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
+
+ioi_dyn_1 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+  ylim(150, 260) +
+  geom_hline(yintercept = 188, linetype = "dashed") +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 200, paired = TRUE) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_dyn_1.png"), plot = ioi_dyn_1, dpi = 600, width = 5, height = 5)
+img_ioi_dyn_1 <- image_read(here("paper/image", "ioi_dyn_1.png"))
+```
+
+
+
 ### 2.3.2. Key Velocity (KV)
 ### 2.3.3. KV Transition Points
 ### 2.3.4. Key-Overlap Time (KOT)
+
+```{r plot-ioi-1, out.width = "100%", fig.cap = "\\label{fig:ioi-1}Experiment 1: IOIs (ms) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+# combine
+img_ioi_1 <- image_append(c(img_ioi_art_1, img_ioi_dyn_1))
+image_write(img_ioi_1, path = here("paper/image", "img_ioi_1.png"), format = "png")
+img_ioi_1
+```
 
 ## 2.4. Discussion
 
@@ -188,11 +217,11 @@ The same apparatus as Experiment 1 was used. We selected Clementi's Sonatina Op.
 
 ### 3.1.3. Procedure{#procedure-2}
 
-We employed the similar procedure as Experiment 1. Unlike Experiment 1, all participants were required to memorise the piece without expressive notations (i.e., *Figure \ref{fig:stimuli-2}, A*) prior to the experiment. Also, we modified the wording of instructions for the teaching and performing condition so that both had the same focus on expressive notations (see details in *[Supplemental Materials](#supplemental)*). As Experiment 1, we asked participants to perform the piece without looking at the non-expressive sheet music in order to make sure that participants memorise the piece and had sufficient motor skills and memorised. Those who could not perform the piece twice consecutively within 5 attempts were excluded from data analysis.
+We employed the same procedure as Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., *Figure \ref{fig:stimuli-2}, A*) prior to the experiment. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations (see details in *[Supplemental Materials](#supplemental)*). Third, participants could choose their preferred tempo from one of the 3 options (100, 110 and 120 beats per minute) as a leading metronome. In order to make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the non-expressive sheet music. As Experiment 1, those who could not perform the piece twice consecutively within 5 attempts were excluded from data analysis. The rest of the procedure was identical to Experiment 1.
 
 ### 3.1.4. Design and data analysis
 
-Data cleaning, preprocessing and statistical analysis were identical as Experiment 1. For statistical analysis, only 8th notes with expressive notations were included. As a result, only one 8th note in the 4th measure without any expression was not included to calculate dependent variables. Three trials were entirely excluded from data analysis because participants did not follow sheet music. With the same method as Experiment 1, pitch errors were removed manually. For onsets, `r round(sum(error_onset_summary_2$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_onset_summary_2[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_onset_summary_2[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_onset_summary_2[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). For offsets, `r round(sum(error_offset_summary_2$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_offset_summary_2[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_offset_summary_2[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_offset_summary_2[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). Removed outliers (i.e., responses outside 3 standard deviations from the mean) were less than 5% of overall responses for each dependent variable.
+Data cleaning, preprocessing and statistical analysis were identical as Experiment 1. For statistical analysis, only 8th notes with expressive notations were included. As a result, only one 8th note in the 4th measure without any expression was not included to calculate dependent variables. Also, IOIs were normalised by their preferred tempo because each participant chose different tempi from the 3 options. Three trials were entirely excluded from data analysis because participants did not follow sheet music. With the same method as Experiment 1, pitch errors were removed manually. For onsets, `r round(sum(error_onset_summary_2$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_onset_summary_2[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_onset_summary_2[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_onset_summary_2[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). For offsets, `r round(sum(error_offset_summary_2$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_offset_summary_2[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_offset_summary_2[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_offset_summary_2[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). Removed outliers (i.e., responses outside 3 standard deviations from the mean) were less than 5% of overall responses for each dependent variable.
 
 ```{r stim-2, out.width = "100%", fig.cap = "\\label{fig:stimuli-2}(A)Non-expressive sheet music. (B)Articulation. The curved line (slur) indicates legato and the dots indicate staccato. (C)Dynamics. The symbol `f' denotes forte and the symbol `p' denotes piano. For data analysis, only the 8th notes were included.", echo = FALSE}
 stim_a_2 <- image_border(image_read(here("paper/image/sheetmusic-2", "stim_a.png")), "#FFFFFF", "120x120")
@@ -201,20 +230,70 @@ stim_n_2 <- image_border(image_read(here("paper/image/sheetmusic-2", "stim_n.png
 
 # Combine
 img_stimuli_2 <- image_append(c(stim_n_2, stim_a_2, stim_d_2), stack = TRUE)
-img_stimuli_2 <- image_annotate(img_stimuli_2, "(A)", size = 80, location = "+100+30", color = "black", font = "helvetica")
-img_stimuli_2 <- image_annotate(img_stimuli_2, "(B)", size = 80, location = "+100+1085", color = "black", font = "helvetica")
-img_stimuli_2 <- image_annotate(img_stimuli_2, "(C)", size = 80, location = "+100+2110", color = "black", font = "helvetica")
+img_stimuli_2 <- image_annotate(img_stimuli_2, "(A)", size = 80, location = "+100+70", color = "black", font = "helvetica")
+img_stimuli_2 <- image_annotate(img_stimuli_2, "(B)", size = 80, location = "+100+1125", color = "black", font = "helvetica")
+img_stimuli_2 <- image_annotate(img_stimuli_2, "(C)", size = 80, location = "+100+2150", color = "black", font = "helvetica")
 img_stimuli_2
 ```
 
 ## 3.2. Results (Articulation)
+
+```{r results-2, include = FALSE}
+source(here("experiment-2/analysis/stats", "ioi.R"), chdir = TRUE)
+source(here("experiment-2/analysis/stats", "articulation.R"), chdir = TRUE)
+source(here("experiment-2/analysis/stats", "dynamics.R"), chdir = TRUE)
+```
+
+As Experiment 1, we first report results for performance the piece with the notated expression of articulation (*Figure \ref{fig:stimuli-2}, B*). followed by performance of the piece with the notated expression of dynamics (*Figure \ref{fig:stimuli-2}, C*).
+
 ### 3.2.1. Interonset Intervals (IOIs)
+
+A paired-sample *t*-test showed that participants played more slowly in the teaching condition [*M* = `r sprintf('%.3f', ioi_art_all[Condition == "teaching"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_art_all[Condition == "teaching"]$SD)`] than in the performing condition [*M* = `r sprintf('%.3f', ioi_art_all[Condition == "performing"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_art_all[Condition == "performing"]$SD)`] while playing the piece with notated articulation (*t*(`r ioi_art_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_art_ttest$statistic))`
+, *p* `r if(ioi_art_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_ttest$p.value))}`; *Figure \ref{fig:ioi-2}*). A Wiscoxon Signed-rank test also confirmed that there was a significant difference between the two condition (*p* `r if(ioi_art_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_wilcoxon$p.value))}`).
+
+```{r ioi-art-2, echo = FALSE}
+ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
+
+ioi_art_2 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Articulation") +
+  ylim(0.8, 1.1) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 1.05, paired = TRUE) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_art_2.png"), plot = ioi_art_2, dpi = 600, width = 5, height = 5)
+img_ioi_art_2 <- image_read(here("paper/image", "ioi_art_2.png"))
+```
+
 ### 3.2.2. Key-Overlap Time (KOT)
 ### 3.2.3. Key Velocity (KV)
 ### 3.2.4. KV Transition Points
 
 ## 3.3. Results (Dynamics)
 ### 3.3.1. Interonset Intervals (IOIs)
+
+A paired-sample *t*-test showed no significant difference between the teaching condition [*M* = `r sprintf('%.3f', ioi_dyn_all[Condition == "teaching"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_dyn_all[Condition == "teaching"]$SD)`] and the performing condition [*M* = `r sprintf('%.3f', ioi_dyn_all[Condition == "performing"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_dyn_all[Condition == "performing"]$SD)`] while playing the piece with notated articulation (*t*(`r ioi_dyn_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_dyn_ttest$statistic))`, *p* `r if(ioi_dyn_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_dyn_ttest$p.value))}`; *Figure \ref{fig:ioi-2}*). A Wiscoxon Signed-rank test also confirmed that there was no significant difference between the two condition (*p* `r if(ioi_dyn_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_dyn_wilcoxon$p.value))}`).
+
+```{r ioi-dyn-2, echo = FALSE}
+ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
+
+ioi_dyn_2 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Dynamics") +
+  ylim(0.8, 1.1) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 1.05, paired = TRUE) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_dyn_2.png"), plot = ioi_dyn_2, dpi = 600, width = 5, height = 5)
+img_ioi_dyn_2 <- image_read(here("paper/image", "ioi_dyn_2.png"))
+```
+
+```{r plot-ioi-2, out.width = "100%", fig.cap = "\\label{fig:ioi-2}Experiment 2: Normalised IOIs when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+img_ioi_2 <- image_append(c(img_ioi_art_2, img_ioi_dyn_2))
+image_write(img_ioi_2, path = here("paper/image", "img_ioi_2.png"), format = "png")
+img_ioi_2
+```
+
 ### 3.3.2. Key Velocity (KV)
 ### 3.3.3. KV Transition Points
 ### 3.3.4. Key-Overlap Time (KOT)
