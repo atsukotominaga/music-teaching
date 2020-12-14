@@ -127,26 +127,31 @@ for (cond in 1:length(ls_grouping$Condition)){
 # Remove outliers (3 methods)
 ####################################
 # exclude irrelevant notes (Subcomponent == NA means not 16th notes / IOI == NA means a missing value)
-dt_ioi_subset <- dt_ioi[Subcomponent != "NA" & !is.na(IOI)]
+dt_ioi_subset_all <- dt_ioi[Subcomponent != "NA" & !is.na(IOI)]
 
 # draw histogram and boxplot
-p_ioi_hist <- ggplot(dt_ioi_subset, aes(x = IOI, fill = Grouping)) +
+p_ioi_hist <- ggplot(dt_ioi_subset_all, aes(x = IOI, fill = Grouping)) +
   geom_histogram(position = "identity", alpha = .5, binwidth = 10)
 plot(p_ioi_hist)
 
-p_ioi_box <- ggboxplot(dt_ioi_subset, x = "Skill", y = "IOI", color = "Condition")
+p_ioi_box <- ggboxplot(dt_ioi_subset_all, x = "Skill", y = "IOI", color = "Condition")
 p_ioi_box <- ggpar(p_ioi_box, ylab = "IOI")
 plot(p_ioi_box)
 
 ####################################
 # exclude deviated participants
 ####################################
-ioi_summary <- dt_ioi_subset[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr)]
+ioi_summary <- dt_ioi_subset_all[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr)]
 # exclude tempo deviated participants
 ioi_summary$Include <- "No"
-ioi_summary[Mean < mean(ioi_summary$Mean)+3*sd(ioi_summary$Mean) & Mean > mean(ioi_summary$Mean)-3*sd(ioi_summary$Mean)]$Include <- "Yes"
-# exclude SubNr 16
-dt_ioi_subset <- dt_ioi_subset[SubNr != 16]
+ioi_summary[Mean < mean(ioi_summary$Mean)+2*sd(ioi_summary$Mean) & Mean > mean(ioi_summary$Mean)-2*sd(ioi_summary$Mean)]$Include <- "Yes"
+# exclude participants due to deviated tempi
+dt_ioi_subset <- data.table()
+dt_ioi_subset_all$Exclude <- 0
+for (i in 1:nrow(ioi_summary[Include == "No"])){
+  dt_ioi_subset_all[SubNr == ioi_summary[Include == "No"]$SubNr[i]]$Exclude <- 1
+}
+dt_ioi_subset <- dt_ioi_subset_all[Exclude == 0]
 
 ####################################
 # 1. > +- 3SD across the conditions
