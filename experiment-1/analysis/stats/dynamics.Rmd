@@ -19,7 +19,7 @@ Description: This is a summary of dynamics analysis.
 
 2. Excluded participants
 
-- SubNr 1: Most of responses (more than 90%) were removed due to outliers
+- SubNr 1: A deviated tempo
 - SubNr 3: Experimental error
 - SubNr 8: Experimental error
 - SubNr 14: Experimental error
