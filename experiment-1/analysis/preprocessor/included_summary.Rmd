@@ -28,7 +28,7 @@ dt_vel_diff <- fread(file = "./trimmed/data_vel_diff.txt", sep = ",")
 # Design
 - Each performance (1 trial) contains 67 responses for onsets and 67 responses for offsets (i.e., if there is no mistake, 134 responses in total)
 - Each block contains 8 trials and there are 4 blocks (teaching vs. performing x articulation vs. dynamics)
-- Note: SubNr 3, 8, 14 were already excluded due to an experimental error. SubNr 16 was removed due to a deviated tempo
+- Note: SubNr 3, 8, 14 were already excluded due to an experimental error. SubNr 1 & 16 was removed due to a deviated tempo
 
 ### IOIs (All)
 ```{r ioi, echo = FALSE}
