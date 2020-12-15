@@ -72,8 +72,8 @@ summary(kor_art_aov_2)
 
 
 ## ----post-hoc-2, echo = FALSE-------------------------------------------------
-test(pairs(emmeans(kor_art_aov,~Condition|Subcomponent)), joint = TRUE)
-pairs(emmeans(kor_art_aov,~Condition|Subcomponent), adjust = "tukey")
+kor_art_posthoc <- test(pairs(emmeans(kor_art_aov,~Condition|Subcomponent), adjust = "tukey"), joint = TRUE)
+kor_art_posthoc
 
 
 ## ----kor-art-trial, echo = FALSE----------------------------------------------
@@ -153,8 +153,8 @@ summary(kot_art_aov_2)
 
 
 ## ----post-hoc-1, echo = FALSE-------------------------------------------------
-test(pairs(emmeans(kot_art_aov,~Condition|Subcomponent)), joint = TRUE)
-pairs(emmeans(kot_art_aov,~Condition|Subcomponent), adjust = "tukey")
+kot_art_posthoc <- test(pairs(emmeans(kot_art_aov,~Condition|Subcomponent), adjust = "tukey"), joint = TRUE)
+kot_art_posthoc
 
 
 ## ----kot-art-trial, echo = FALSE----------------------------------------------
