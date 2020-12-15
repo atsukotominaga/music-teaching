@@ -245,7 +245,7 @@ source(here("experiment-2/analysis/preprocessor", "error_summary.R"), chdir = TR
 
 ### 3.1.1. Participants
 
-We recruited 21 piano experts who already had a degree in (above bachelor or equivalent) in piano performance/teaching or were studying piano performance at a music school at the time of recruitment. One participant was excluded due to insufficient motor skills (see details in *[Procedure](#procedure-2)*). Twenty participants (`r nrow(dt_2_included[Gender == "Female"])` female) were included in data analysis. Most participants were right-handed (left; `r nrow(dt_2_included[Handedness == "Left"])`). They had `r round(mean(dt_2_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_2_included$PianoTotalPractice), 2)`). 
+We recruited 21 piano experts who already had a degree in (above bachelor or equivalent) in piano performance/teaching or were studying piano performance at a music school at the time of recruitment. For data analysis, we excluded 1 participants due to insufficient motor skills (1) and an overall deviated tempo (1). Nineteen participants (`r nrow(dt_2_included[Gender == "Female"])` female) were included in data analysis. Most participants were right-handed (left; `r nrow(dt_2_included[Handedness == "Left"])`). They had `r round(mean(dt_2_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_2_included$PianoTotalPractice), 2)`). 
 
 ### 3.1.2. Apparatus and stimuli
 
@@ -305,17 +305,17 @@ img_ioi_art_2 <- image_read(here("paper/image", "ioi_art_2.png"))
 
 Blah
 
-```{r kot-art-2, include = FALSE}
-kot_art_plot <- data.table(subject = kot_art[Condition == "teaching"]$SubNr, teaching = kot_art[Condition == "teaching"]$Mean, performing = kot_art[Condition == "performing"]$Mean, subcomponent = kot_art[Condition == "teaching"]$Subcomponent)
+```{r kor-art-2, include = FALSE}
+kor_art_plot <- data.table(subject = kor_art[Condition == "teaching"]$SubNr, teaching = kor_art[Condition == "teaching"]$Mean, performing = kor_art[Condition == "performing"]$Mean, subcomponent = kor_art[Condition == "teaching"]$Subcomponent)
 
-kot_art_2 <- ggpaired(kot_art_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOR", title = "KOR: Articulation") +
+kor_art_2 <- ggpaired(kor_art_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOR", title = "KOR: Articulation") +
   ylim(-1, 0.4) +
   stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = -0.5, paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "kot_art_2.png"), plot = kot_art_1, dpi = 600, width = 7, height = 5)
-img_kot_art_2 <- image_read(here("paper/image", "kot_art_2.png"))
+ggsave(here("paper/image", "kor_art_2.png"), plot = kor_art_2, dpi = 600, width = 7, height = 5)
+img_kor_art_2 <- image_read(here("paper/image", "kor_art_2.png"))
 ```
 
 ### 3.2.3. Key Velocity (KV)
@@ -346,12 +346,6 @@ ggsave(here("paper/image", "ioi_dyn_2.png"), plot = ioi_dyn_2, dpi = 600, width 
 img_ioi_dyn_2 <- image_read(here("paper/image", "ioi_dyn_2.png"))
 ```
 
-```{r plot-ioi-2, out.width = "100%", fig.cap = "\\label{fig:ioi-2}Experiment 2: Normalised IOIs when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
-img_ioi_2 <- image_append(c(img_ioi_art_2, img_ioi_dyn_2))
-image_write(img_ioi_2, path = here("paper/image", "img_ioi_2.png"), format = "png")
-img_ioi_2
-```
-
 ### 3.3.2. Key Velocity (KV)
 
 Blah
@@ -364,19 +358,31 @@ Blah
 
 Blah
 
-```{r kot-dyn-2, include = FALSE}
-kot_dyn_plot <- data.table(subject = kot_dyn[Condition == "teaching"]$SubNr, teaching = kot_dyn[Condition == "teaching"]$Mean, performing = kot_dyn[Condition == "performing"]$Mean, subcomponent = kot_dyn[Condition == "teaching"]$Subcomponent)
+```{r kor-dyn-2, include = FALSE}
+kor_dyn_plot <- data.table(subject = kor_dyn[Condition == "teaching"]$SubNr, teaching = kor_dyn[Condition == "teaching"]$Mean, performing = kor_dyn[Condition == "performing"]$Mean, subcomponent = kor_dyn[Condition == "teaching"]$Subcomponent)
 
-kot_dyn_2 <- ggpaired(kot_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOR", title = "KOR: Dynamics") +
+kor_dyn_2 <- ggpaired(kor_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOR", title = "KOR: Dynamics") +
   ylim(-1, 0.4) +
   stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = -0.5, paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "kot_dyn_2.png"), plot = kot_dyn_1, dpi = 600, width = 7, height = 5)
-img_kot_dyn_2 <- image_read(here("paper/image", "kot_dyn_2.png"))
+ggsave(here("paper/image", "kor_dyn_2.png"), plot = kor_dyn_2, dpi = 600, width = 7, height = 5)
+img_kor_dyn_2 <- image_read(here("paper/image", "kor_dyn_2.png"))
 ```
 
+```{r plot-ioi-2, out.width = "100%", fig.cap = "\\label{fig:ioi-2}Experiment 2: Normalised IOIs when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+img_ioi_2 <- image_append(c(img_ioi_art_2, img_ioi_dyn_2))
+image_write(img_ioi_2, path = here("paper/image", "img_ioi_2.png"), format = "png")
+img_ioi_2
+```
+
+```{r plot-kot-2, out.width = "100%", fig.cap = "\\label{fig:kot-2}Experiment 2: KOR when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+# combine
+img_kor_2 <- image_append(c(img_kor_art_2, img_kor_dyn_2))
+image_write(img_kor_2, path = here("paper/image", "img_kor_2.png"), format = "png")
+img_kor_2
+```
 ## 3.4. Discussion
 
 \newpage
