@@ -151,7 +151,7 @@ img_ioi_art_1 <- image_read(here("paper/image", "ioi_art_1.png"))
 
 ### 2.2.2. Key-Overlap Time (KOT)
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) revealed that there was a significant main effect of Subcomponent-LS (*F*(`r kot_art_aov$anova_table[2,1]`,`r kot_art_aov$anova_table[2,2]`) = `r sprintf('%.0f', kot_art_aov$anova_table[2,4])`, *p* `r if(kot_art_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kot_art_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kot_art_aov$anova_table[2,5])`) and a significant interaction between Condition and Subcomponent-LS (*F*(`r kot_art_aov$anova_table[3,1]`,`r kot_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', kot_art_aov$anova_table[3,4])`, *p* `r if(kot_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kot_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kot_art_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal  means with Tukey adjustment showed that participants produced shorter staccato in the teaching condition than in the performing condition (*p* = `r sprintf('%.3f', kot_art_posthoc$p.value[2])`) while there was no significant difference in legato between the teaching and performing condition (*p* = `r sprintf('%.2f', kot_art_posthoc$p.value[1])`).  
 
 ```{r kot-art-1, include = FALSE}
 kot_art_plot <- data.table(subject = kot_art[Condition == "teaching"]$SubNr, teaching = kot_art[Condition == "teaching"]$Mean, performing = kot_art[Condition == "performing"]$Mean, subcomponent = kot_art[Condition == "teaching"]$Subcomponent)
@@ -203,7 +203,7 @@ Blah
 
 ### 2.3.4. Key-Overlap Time (KOT)
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-FP (forte vs. piano) revealed that there was a significant main effect of Subcomponent-FP (*F*(`r kot_dyn_aov$anova_table[2,1]`,`r kot_dyn_aov$anova_table[2,2]`) = `r sprintf('%.0f', kot_dyn_aov$anova_table[2,4])`, *p* `r if(kot_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kot_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kot_dyn_aov$anova_table[2,5])`), reflecting more key overlap for forte notes compared to piano notes. Neither the main effect of Condition (*F*(`r kot_dyn_aov$anova_table[1,1]`,`r kot_dyn_aov$anova_table[1,2]`) = `r sprintf('%.3f', kot_dyn_aov$anova_table[1,4])`, *p* `r if(kot_dyn_aov$anova_table[1,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kot_dyn_aov$anova_table[1,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kot_dyn_aov$anova_table[1,5])`) nor the interaction between Condition and Subcomponent-FP (*F*(`r kot_dyn_aov$anova_table[3,1]`,`r kot_dyn_aov$anova_table[3,2]`) = `r sprintf('%.3f', kot_dyn_aov$anova_table[3,4])`, *p* `r if(kot_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kot_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kot_dyn_aov$anova_table[3,5])`).
 
 ```{r kot-dyn-1, include = FALSE}
 kot_dyn_plot <- data.table(subject = kot_dyn[Condition == "teaching"]$SubNr, teaching = kot_dyn[Condition == "teaching"]$Mean, performing = kot_dyn[Condition == "performing"]$Mean, subcomponent = kot_dyn[Condition == "teaching"]$Subcomponent)
@@ -303,7 +303,7 @@ img_ioi_art_2 <- image_read(here("paper/image", "ioi_art_2.png"))
 
 ### 3.2.2. Key-Overlap Ratio (KOR)
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) showed that there was a significant main effect of Subcomponent-LS (*F*(`r kor_art_aov$anova_table[2,1]`,`r kor_art_aov$anova_table[2,2]`) = `r sprintf('%.0f', kor_art_aov$anova_table[2,4])`, *p* `r if(kor_art_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[2,5])`) and a significant interaction between Condition and Subcomponent-LS (*F*(`r kor_art_aov$anova_table[3,1]`,`r kor_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', kor_art_aov$anova_table[3,4])`, *p* `r if(kor_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal  means with Tukey adjustment showed that participants produced shorter staccato in the teaching condition than in the performing condition (*p* = `r sprintf('%.3f', kor_art_posthoc$p.value[2])`) while there was no significant difference in legato between the teaching and performing condition (*p* = `r sprintf('%.2f', kor_art_posthoc$p.value[1])`).  
 
 ```{r kor-art-2, include = FALSE}
 kor_art_plot <- data.table(subject = kor_art[Condition == "teaching"]$SubNr, teaching = kor_art[Condition == "teaching"]$Mean, performing = kor_art[Condition == "performing"]$Mean, subcomponent = kor_art[Condition == "teaching"]$Subcomponent)
@@ -356,7 +356,7 @@ Blah
 
 ### 3.3.4. Key-Overlap Ratio (KOR)
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-FP (forte vs. piano) showed that there was a significant main effect of Subcomponent-FP (*F*(`r kor_dyn_aov$anova_table[2,1]`,`r kor_dyn_aov$anova_table[2,2]`) = `r sprintf('%.0f', kor_dyn_aov$anova_table[2,4])`, *p* `r if(kor_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_dyn_aov$anova_table[2,5])`), reflecting more key overlap for forte notes compared to piano notes. Neither the main effect of Condition (*F*(`r kor_dyn_aov$anova_table[1,1]`,`r kor_dyn_aov$anova_table[1,2]`) = `r sprintf('%.3f', kor_dyn_aov$anova_table[1,4])`, *p* `r if(kor_dyn_aov$anova_table[1,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_dyn_aov$anova_table[1,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_dyn_aov$anova_table[1,5])`) nor the interaction between Condition and Subcomponent-FP (*F*(`r kor_dyn_aov$anova_table[3,1]`,`r kor_dyn_aov$anova_table[3,2]`) = `r sprintf('%.3f', kor_dyn_aov$anova_table[3,4])`, *p* `r if(kor_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_dyn_aov$anova_table[3,5])`).
 
 ```{r kor-dyn-2, include = FALSE}
 kor_dyn_plot <- data.table(subject = kor_dyn[Condition == "teaching"]$SubNr, teaching = kor_dyn[Condition == "teaching"]$Mean, performing = kor_dyn[Condition == "performing"]$Mean, subcomponent = kor_dyn[Condition == "teaching"]$Subcomponent)
