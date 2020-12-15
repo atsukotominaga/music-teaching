@@ -104,7 +104,7 @@ Three dependent variables were computed for data analysis. Interonset intervals 
 
 Data cleaning, preprocessing and statistical analysis were performed in R version 3.6.3. For statistical analysis, only 16th notes with expressive notations were included. Three trials were entirely excluded from data analysis because participants did not follow sheet music or complete performing till the end. Pitch errors were identified by comparing a sequence of musical notes produced by a participant with the sequence of musical notes according to the sheet music. Pitch errors included either extra, missing or substituted tones and were manually removed by using editData package. For onsets, `r round(sum(error_onset_summary$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_onset_summary[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_onset_summary[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_onset_summary[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). For offsets, `r round(sum(error_offset_summary$N)/((31*4*18)-3)*100, 2)`% of the trials contained at least one pitch error (extra notes; `r round(error_offset_summary[Reason == "Extra Notes"]$N/((31*4*18)-3)*100, 2)`%, missing notes; `r round(error_offset_summary[Reason == "Missing Notes"]$N/((31*4*18)-3)*100, 2)`%, substituted notes; `r round(error_offset_summary[Reason == "Substituted"]$N/((31*4*18)-3)*100, 2)`%). After we removed pitch errors, outliers for IOIs, KOT and KV were defined as values more than 3 standard deviations from the mean of each dependent variable and excluded from data analysis. Removed outliers were less than 5% of overall responses for each dependent variable.
 
-We performed separate analyses for the two expressive techniques (i.e., articulation, dynamics). A paired-sample *t*-test or a Wilcoxon signed-rank tests (a non-parametric alternative to a paired *t*-test) was performed to compare the mean IOIs in the teaching and performing condition. For KOT and KV, we performed a 2 x 2 repeated-measures analysis of variance (ANOVA) with the factors Condition (teaching vs. performing) and Subcomponent (LS; legato vs. staccato or FP; forte vs. piano, respectively). The ``aov_car" function in the afex package was used for a repeated-measures ANOVA. For post-hoc comparisons, we used emmeans package to investigate interactions from the ANOVA. 
+We performed separate analyses for the two expressive techniques (i.e., articulation, dynamics). A paired-sample *t*-test or a Wilcoxon signed-rank tests (a non-parametric alternative to a paired *t*-test) was performed to compare the mean IOIs in the teaching and performing condition. For KOT and KV, we performed a 2 x 2 repeated-measures analysis of variance (ANOVA) with the factors Condition (teaching vs. performing) and Subcomponent (LS; legato vs. staccato or FP; forte vs. piano, respectively). The ``aov_car" function in the afex package was used for a repeated-measures ANOVA. For post-hoc comparisons, we used emmeans package. 
 
 ```{r stim-1, out.width = "100%", fig.cap = "\\label{fig:stimuli}(A)Non-expressive sheet music. (B)Articulation. The curved line (slur) indicates legato and the dots indicate staccato. (C)Dynamics. The symbol `f' denotes forte and the symbol `p' denotes piano. For data analysis, only the 16th notes were included.", echo = FALSE}
 stim_a <- image_border(image_read(here("paper/image/sheetmusic-1", "stim_a.png")), "#FFFFFF", "120x120")
@@ -139,9 +139,9 @@ In order to compare the mean IOIs between the teaching and performing condition,
 ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
 
 ioi_art_1 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
-  ylim(150, 260) +
+  ylim(145, 260) +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 200, paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 230, paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -151,7 +151,7 @@ img_ioi_art_1 <- image_read(here("paper/image", "ioi_art_1.png"))
 
 ### 2.2.2. Key-Overlap Time (KOT)
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) revealed that there was a significant main effect of Subcomponent-LS (*F*(`r kot_art_aov$anova_table[2,1]`,`r kot_art_aov$anova_table[2,2]`) = `r sprintf('%.0f', kot_art_aov$anova_table[2,4])`, *p* `r if(kot_art_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kot_art_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kot_art_aov$anova_table[2,5])`) and a significant interaction between Condition and Subcomponent-LS (*F*(`r kot_art_aov$anova_table[3,1]`,`r kot_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', kot_art_aov$anova_table[3,4])`, *p* `r if(kot_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kot_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kot_art_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal  means with Tukey adjustment showed that participants produced shorter staccato in the teaching condition than in the performing condition (*p* = `r sprintf('%.3f', kot_art_posthoc$p.value[2])`) while there was no significant difference in legato between the teaching and performing condition (*p* = `r sprintf('%.2f', kot_art_posthoc$p.value[1])`).  
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) revealed that there was a significant main effect of Subcomponent-LS (*F*(`r kot_art_aov$anova_table[2,1]`,`r kot_art_aov$anova_table[2,2]`) = `r sprintf('%.0f', kot_art_aov$anova_table[2,4])`, *p* `r if(kot_art_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kot_art_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kot_art_aov$anova_table[2,5])`) and a significant interaction between Condition and Subcomponent-LS (*F*(`r kot_art_aov$anova_table[3,1]`,`r kot_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', kot_art_aov$anova_table[3,4])`, *p* `r if(kot_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kot_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kot_art_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that participants produced shorter staccato in the teaching condition than in the performing condition (*p* = `r sprintf('%.3f', kot_art_posthoc$p.value[2])`) while there was no significant difference in legato between the teaching and performing condition (*p* = `r sprintf('%.2f', kot_art_posthoc$p.value[1])`).  
 
 ```{r kot-art-1, include = FALSE}
 kot_art_plot <- data.table(subject = kot_art[Condition == "teaching"]$SubNr, teaching = kot_art[Condition == "teaching"]$Mean, performing = kot_art[Condition == "performing"]$Mean, subcomponent = kot_art[Condition == "teaching"]$Subcomponent)
@@ -168,11 +168,20 @@ img_kot_art_1 <- image_read(here("paper/image", "kot_art_1.png"))
 
 ### 2.2.3. Key Velocity (KV)
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) showed that there was a significant interaction between Condition and Subcomponent-LS (*F*(`r vel_art_aov$anova_table[3,1]`,`r vel_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_art_aov$anova_table[3,4])`, *p* `r if(vel_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_art_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment did not show a significant difference between the teaching and performing condition for each subcomponent (Legato; *p* = `r sprintf('%.3f', vel_art_posthoc$p.value[1])`, Staccato; *p* = `r sprintf('%.2f', vel_art_posthoc$p.value[2])`).  
 
-### 2.2.4. KV Transition Points
+```{r vel-art-1, echo = FALSE}
+vel_art_plot <- data.table(subject = vel_art[Condition == "teaching"]$SubNr, teaching = vel_art[Condition == "teaching"]$Mean, performing = vel_art[Condition == "performing"]$Mean, subcomponent = vel_art[Condition == "teaching"]$Subcomponent)
 
-Blah
+vel_art_1 <- ggpaired(vel_art_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Articulation") +
+  ylim(50, 100) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 90, paired = TRUE) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_art_1.png"), plot = vel_art_1, dpi = 600, width = 7, height = 5)
+img_vel_art_1 <- image_read(here("paper/image", "vel_art_1.png"))
+```
 
 ## 2.3. Results (Dynamics)
 ### 2.3.1. Interonset Intervals (IOIs)
@@ -183,7 +192,7 @@ The Wiscoxon Signed-rank test revealed no significant difference between the tea
 ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
 
 ioi_dyn_1 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
-  ylim(150, 260) +
+  ylim(145, 260) +
   geom_hline(yintercept = 188, linetype = "dashed") +
   stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 200, paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
@@ -195,11 +204,37 @@ img_ioi_dyn_1 <- image_read(here("paper/image", "ioi_dyn_1.png"))
 
 ### 2.3.2. Key Velocity (KV)
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-FP (forte vs. piano) showed that there was a significant main effect of Subcomponent-FP (*F*(`r vel_dyn_aov$anova_table[2,1]`,`r vel_dyn_aov$anova_table[2,2]`) = `r sprintf('%.2f', vel_dyn_aov$anova_table[2,4])`, *p* `r if(vel_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_dyn_aov$anova_table[2,5])`) and a significant interaction between Condition and Subcomponent-FP (*F*(`r vel_dyn_aov$anova_table[3,1]`,`r vel_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_dyn_aov$anova_table[3,4])`, *p* `r if(vel_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_dyn_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that participants produced louder forte in the teaching condition than in the performing condition (*p* `r if(vel_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_posthoc$p.value[1]))}`) while there was no significant difference in piano between the teaching and performing condition (*p* `r if(vel_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_posthoc$p.value[2]))}`).
+
+```{r vel-dyn-1, echo = FALSE}
+vel_dyn_plot <- data.table(subject = vel_dyn[Condition == "teaching"]$SubNr, teaching = vel_dyn[Condition == "teaching"]$Mean, performing = vel_dyn[Condition == "performing"]$Mean, subcomponent = vel_dyn[Condition == "teaching"]$Subcomponent)
+
+vel_dyn_1 <- ggpaired(vel_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics") +
+  ylim(50, 100) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 90, paired = TRUE) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_dyn_1.png"), plot = vel_dyn_1, dpi = 600, width = 7, height = 5)
+img_vel_dyn_1 <- image_read(here("paper/image", "vel_dyn_1.png"))
+```
 
 ### 2.3.3. KV Transition Points
 
-Blah
+Additionally, we conducted an exploratory analysis by focusing on specific points at which each subcomponent changed from one to the other (i.e., forte to piano; FtoP, piano to forte; PtoF). These points could be structurally important in order to make a contrast between forte and piano. We calculated a KV difference for each interval subtracting the KV value of the current note from that of the following note. A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-FP (FtoP vs. PtoF) showed that there was a significant main effect of Subcomponent-FP (*F*(`r vel_diff_dyn_aov$anova_table[2,1]`,`r vel_diff_dyn_aov$anova_table[2,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_diff_dyn_aov$anova_table[2,5])`) and a significant interaction of Condition and Subcomponent-FP (*F*(`r vel_diff_dyn_aov$anova_table[3,1]`,`r vel_diff_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_diff_dyn_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when the expressive notation changed from forte to piano and from piano to forte in the teaching condition than in the performing condition (FtoP; *p* `r if(vel_diff_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[1]))}`, PtoF; *p* `r if(vel_diff_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[2]))}`.
+
+```{r vel-diff-dyn-1, echo = FALSE}
+vel_diff_dyn_plot <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn[Condition == "teaching"]$Mean, performing = vel_diff_dyn[Condition == "performing"]$Mean, subcomponent = vel_diff_dyn[Condition == "teaching"]$Subcomponent)
+
+vel_diff_dyn_1 <- ggpaired(vel_diff_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics") +
+  ylim(-40, 45) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 90, paired = TRUE) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_diff_dyn_1.png"), plot = vel_diff_dyn_1, dpi = 600, width = 7, height = 5)
+img_vel_diff_dyn_1 <- image_read(here("paper/image", "vel_diff_dyn_1.png"))
+```
 
 ### 2.3.4. Key-Overlap Time (KOT)
 
@@ -210,7 +245,7 @@ kot_dyn_plot <- data.table(subject = kot_dyn[Condition == "teaching"]$SubNr, tea
 
 kot_dyn_1 <- ggpaired(kot_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Dynamics") +
   ylim(-170, 105) +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 0, paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = -50, paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -232,7 +267,20 @@ image_write(img_kot_1, path = here("paper/image", "img_kot_1.png"), format = "pn
 img_kot_1
 ```
 
+```{r plot-vel-1, out.width = "100%", fig.cap = "\\label{fig:vel-1}Experiment 1: KV (0-127) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+# combine
+img_vel_1 <- image_append(c(img_vel_art_1, img_vel_dyn_1))
+image_write(img_vel_1, path = here("paper/image", "img_vel_1.png"), format = "png")
+img_vel_1
+```
+
+```{r plot-vel-diff-1, out.width = "100%", fig.cap = "\\label{fig:vel-diff-1}Experiment 1: KV Difference at transition points when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+img_vel_diff_dyn_1
+```
+
 ## 2.4. Discussion
+
+Blah
 
 \newpage
 
@@ -303,7 +351,7 @@ img_ioi_art_2 <- image_read(here("paper/image", "ioi_art_2.png"))
 
 ### 3.2.2. Key-Overlap Ratio (KOR)
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) showed that there was a significant main effect of Subcomponent-LS (*F*(`r kor_art_aov$anova_table[2,1]`,`r kor_art_aov$anova_table[2,2]`) = `r sprintf('%.0f', kor_art_aov$anova_table[2,4])`, *p* `r if(kor_art_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[2,5])`) and a significant interaction between Condition and Subcomponent-LS (*F*(`r kor_art_aov$anova_table[3,1]`,`r kor_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', kor_art_aov$anova_table[3,4])`, *p* `r if(kor_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal  means with Tukey adjustment showed that participants produced shorter staccato in the teaching condition than in the performing condition (*p* = `r sprintf('%.3f', kor_art_posthoc$p.value[2])`) while there was no significant difference in legato between the teaching and performing condition (*p* = `r sprintf('%.2f', kor_art_posthoc$p.value[1])`).  
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) showed that there was a significant main effect of Subcomponent-LS (*F*(`r kor_art_aov$anova_table[2,1]`,`r kor_art_aov$anova_table[2,2]`) = `r sprintf('%.0f', kor_art_aov$anova_table[2,4])`, *p* `r if(kor_art_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[2,5])`) and a significant interaction between Condition and Subcomponent-LS (*F*(`r kor_art_aov$anova_table[3,1]`,`r kor_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', kor_art_aov$anova_table[3,4])`, *p* `r if(kor_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that participants produced shorter staccato in the teaching condition than in the performing condition (*p* = `r sprintf('%.3f', kor_art_posthoc$p.value[2])`) while there was no significant difference in legato between the teaching and performing condition (*p* = `r sprintf('%.2f', kor_art_posthoc$p.value[1])`).  
 
 ```{r kor-art-2, include = FALSE}
 kor_art_plot <- data.table(subject = kor_art[Condition == "teaching"]$SubNr, teaching = kor_art[Condition == "teaching"]$Mean, performing = kor_art[Condition == "performing"]$Mean, subcomponent = kor_art[Condition == "teaching"]$Subcomponent)
@@ -320,12 +368,20 @@ img_kor_art_2 <- image_read(here("paper/image", "kor_art_2.png"))
 
 ### 3.2.3. Key Velocity (KV)
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-LS (legato vs. staccato) showed that there was a significant main effect of Subcomponent-LS (*F*(`r vel_art_aov$anova_table[2,1]`,`r vel_art_aov$anova_table[2,2]`) = `r sprintf('%.2f', vel_art_aov$anova_table[2,4])`, *p* `r if(vel_art_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_art_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_art_aov$anova_table[2,5])`), reflecting louder sound for legato notes compared to staccato notes. Neither the main effect of Condition (*F*(`r vel_art_aov$anova_table[1,1]`,`r vel_art_aov$anova_table[1,2]`) = `r sprintf('%.2f', vel_art_aov$anova_table[1,4])`, *p* `r if(vel_art_aov$anova_table[1,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_art_aov$anova_table[1,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_art_aov$anova_table[1,5])`) nor the interaction between Condition and Subcomponent-LS (*F*(`r vel_art_aov$anova_table[3,1]`,`r vel_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_art_aov$anova_table[2,4])`, *p* `r if(vel_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_art_aov$anova_table[3,5])`).
 
-### 3.2.4. KV Transition Points
+```{r vel-art-2, echo = FALSE}
+vel_art_plot <- data.table(subject = vel_art[Condition == "teaching"]$SubNr, teaching = vel_art[Condition == "teaching"]$Mean, performing = vel_art[Condition == "performing"]$Mean, subcomponent = vel_art[Condition == "teaching"]$Subcomponent)
 
-Blah
+vel_art_2 <- ggpaired(vel_art_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Articulation") +
+  ylim(c(50, 100)) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 90, paired = TRUE) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
+# save plots
+ggsave(here("paper/image", "vel_art_2.png"), plot = vel_art_2, dpi = 600, width = 7, height = 5)
+img_vel_art_2 <- image_read(here("paper/image", "vel_art_2.png"))
+```
 
 ## 3.3. Results (Dynamics)
 ### 3.3.1. Interonset Intervals (IOIs)
@@ -348,11 +404,37 @@ img_ioi_dyn_2 <- image_read(here("paper/image", "ioi_dyn_2.png"))
 
 ### 3.3.2. Key Velocity (KV)
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-FP (forte vs. piano) showed that there was a significant main effect of Subcomponent-FP (*F*(`r vel_dyn_aov$anova_table[2,1]`,`r vel_dyn_aov$anova_table[2,2]`) = `r sprintf('%.2f', vel_dyn_aov$anova_table[2,4])`, *p* `r if(vel_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_dyn_aov$anova_table[2,5])`) and a significant interaction between Condition and Subcomponent-FP (*F*(`r vel_dyn_aov$anova_table[3,1]`,`r vel_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_dyn_aov$anova_table[3,4])`, *p* `r if(vel_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_dyn_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that participants produced louder forte and softer piano in the teaching condition than in the performing condition (Forte; *p* `r if(vel_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_posthoc$p.value[1]))}`, Piano; *p* `r if(vel_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_posthoc$p.value[2]))}`).
+
+```{r vel-dyn-2, echo = FALSE}
+vel_dyn_plot <- data.table(subject = vel_dyn[Condition == "teaching"]$SubNr, teaching = vel_dyn[Condition == "teaching"]$Mean, performing = vel_dyn[Condition == "performing"]$Mean, subcomponent = vel_dyn[Condition == "teaching"]$Subcomponent)
+
+vel_dyn_2 <- ggpaired(vel_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics") +
+  ylim(c(50, 100)) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 90, paired = TRUE) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_dyn_2.png"), plot = vel_dyn_2, dpi = 600, width = 7, height = 5)
+img_vel_dyn_2 <- image_read(here("paper/image", "vel_dyn_2.png"))
+```
 
 ### 3.3.3. KV Transition Points
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-FP (FtoP vs. PtoF) showed that there was a significant main effect of Subcomponent-FP (*F*(`r vel_diff_dyn_aov$anova_table[2,1]`,`r vel_diff_dyn_aov$anova_table[2,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_diff_dyn_aov$anova_table[2,5])`) and a significant interaction of Condition and Subcomponent-FP (*F*(`r vel_diff_dyn_aov$anova_table[3,1]`,`r vel_diff_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.4f', vel_diff_dyn_aov$anova_table[3,5])`). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when the expressive notation changed from forte to piano and from piano to forte in the teaching condition than in the performing condition (FtoP; *p* `r if(vel_diff_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[1]))}`, PtoF; *p* `r if(vel_diff_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[2]))}`.
+
+```{r vel-diff-dyn-2, echo = FALSE}
+vel_diff_dyn_plot <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn[Condition == "teaching"]$Mean, performing = vel_diff_dyn[Condition == "performing"]$Mean, subcomponent = vel_diff_dyn[Condition == "teaching"]$Subcomponent)
+
+vel_diff_dyn_2 <- ggpaired(vel_diff_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics") +
+  ylim(-40, 45) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 90, paired = TRUE) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_diff_dyn_2.png"), plot = vel_diff_dyn_2, dpi = 600, width = 7, height = 5)
+img_vel_diff_dyn_2 <- image_read(here("paper/image", "vel_diff_dyn_2.png"))
+```
 
 ### 3.3.4. Key-Overlap Ratio (KOR)
 
@@ -383,7 +465,20 @@ img_kor_2 <- image_append(c(img_kor_art_2, img_kor_dyn_2))
 image_write(img_kor_2, path = here("paper/image", "img_kor_2.png"), format = "png")
 img_kor_2
 ```
+
+```{r plot-vel-2, out.width = "100%", fig.cap = "\\label{fig:vel-2}Experiment 2: KV (0-127) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+# combine
+img_vel_2 <- image_append(c(img_vel_art_2, img_vel_dyn_2))
+image_write(img_vel_2, path = here("paper/image", "img_vel_2.png"), format = "png")
+img_vel_2
+```
+
+```{r plot-vel-diff-2, out.width = "100%", fig.cap = "\\label{fig:vel-diff-1}Experiment 2: KV Difference at transition points when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+img_vel_diff_dyn_2
+```
 ## 3.4. Discussion
+
+Blah
 
 \newpage
 

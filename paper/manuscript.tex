@@ -197,7 +197,7 @@ Three dependent variables were computed for data analysis. Interonset intervals 
 
 Data cleaning, preprocessing and statistical analysis were performed in R version 3.6.3. For statistical analysis, only 16th notes with expressive notations were included. Three trials were entirely excluded from data analysis because participants did not follow sheet music or complete performing till the end. Pitch errors were identified by comparing a sequence of musical notes produced by a participant with the sequence of musical notes according to the sheet music. Pitch errors included either extra, missing or substituted tones and were manually removed by using editData package. For onsets, 5.16\% of the trials contained at least one pitch error (extra notes; 2.78\%, missing notes; 2.24\%, substituted notes; 0.13\%). For offsets, 6.24\% of the trials contained at least one pitch error (extra notes; 2.78\%, missing notes; 2.29\%, substituted notes; 1.17\%). After we removed pitch errors, outliers for IOIs, KOT and KV were defined as values more than 3 standard deviations from the mean of each dependent variable and excluded from data analysis. Removed outliers were less than 5\% of overall responses for each dependent variable.
 
-We performed separate analyses for the two expressive techniques (i.e., articulation, dynamics). A paired-sample \emph{t}-test or a Wilcoxon signed-rank tests (a non-parametric alternative to a paired \emph{t}-test) was performed to compare the mean IOIs in the teaching and performing condition. For KOT and KV, we performed a 2 x 2 repeated-measures analysis of variance (ANOVA) with the factors Condition (teaching vs.~performing) and Subcomponent (LS; legato vs.~staccato or FP; forte vs.~piano, respectively). The ``aov\_car" function in the afex package was used for a repeated-measures ANOVA. For post-hoc comparisons, we used emmeans package to investigate interactions from the ANOVA.
+We performed separate analyses for the two expressive techniques (i.e., articulation, dynamics). A paired-sample \emph{t}-test or a Wilcoxon signed-rank tests (a non-parametric alternative to a paired \emph{t}-test) was performed to compare the mean IOIs in the teaching and performing condition. For KOT and KV, we performed a 2 x 2 repeated-measures analysis of variance (ANOVA) with the factors Condition (teaching vs.~performing) and Subcomponent (LS; legato vs.~staccato or FP; forte vs.~piano, respectively). The ``aov\_car" function in the afex package was used for a repeated-measures ANOVA. For post-hoc comparisons, we used emmeans package.
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{manuscript_files/figure-latex/stim-1-1} \caption{\label{fig:stimuli}(A)Non-expressive sheet music. (B)Articulation. The curved line (slur) indicates legato and the dots indicate staccato. (C)Dynamics. The symbol `f' denotes forte and the symbol `p' denotes piano. For data analysis, only the 16th notes were included.}\label{fig:stim-1}
@@ -223,12 +223,7 @@ A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~perfo
 \hypertarget{key-velocity-kv}{%
 \subsubsection{2.2.3. Key Velocity (KV)}\label{key-velocity-kv}}
 
-Blah
-
-\hypertarget{kv-transition-points}{%
-\subsubsection{2.2.4. KV Transition Points}\label{kv-transition-points}}
-
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Subcomponent-LS (legato vs.~staccato) showed that there was a significant interaction between Condition and Subcomponent-LS (\emph{F}(1,30) = 7.38, \emph{p} = 0.011, \(\eta_G^2\) = 0.0044). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment did not show a significant difference between the teaching and performing condition for each subcomponent (Legato; \emph{p} = 0.696, Staccato; \emph{p} = 0.07).
 
 \hypertarget{results-dynamics}{%
 \subsection{2.3. Results (Dynamics)}\label{results-dynamics}}
@@ -241,12 +236,16 @@ The Wiscoxon Signed-rank test revealed no significant difference between the tea
 \hypertarget{key-velocity-kv-1}{%
 \subsubsection{2.3.2. Key Velocity (KV)}\label{key-velocity-kv-1}}
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Subcomponent-FP (forte vs.~piano) showed that there was a significant main effect of Subcomponent-FP (\emph{F}(1,30) = 369.54, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.7367) and a significant interaction between Condition and Subcomponent-FP (\emph{F}(1,30) = 6.80, \emph{p} = 0.014, \(\eta_G^2\) = 0.0034). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that participants produced louder forte in the teaching condition than in the performing condition (\emph{p} = 0.021) while there was no significant difference in piano between the teaching and performing condition (\emph{p} = 0.448).
 
-\hypertarget{kv-transition-points-1}{%
-\subsubsection{2.3.3. KV Transition Points}\label{kv-transition-points-1}}
+\hypertarget{kv-transition-points}{%
+\subsubsection{2.3.3. KV Transition Points}\label{kv-transition-points}}
 
-Blah
+Additionally, we conducted an exploratory analysis by focusing on specific points at which each subcomponent changed from one to the other (i.e., forte to piano; FtoP, piano to forte; PtoF). These points could be structurally important in order to make a contrast between forte and piano. We calculated a KV difference for each interval subtracting the KV value of the current note from that of the following note. A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Subcomponent-FP (FtoP vs.~PtoF) showed that there was a significant main effect of Subcomponent-FP (\emph{F}(1,30) = 223.89, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.8344) and a significant interaction of Condition and Subcomponent-FP (\emph{F}(1,30) = 25.74, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.0321). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when the expressive notation changed from forte to piano and from piano to forte in the teaching condition than in the performing condition (FtoP; \emph{p} = 0.002, PtoF; \emph{p} \textless{} 0.001.
+
+\begin{verbatim}
+## Warning: Removed 2 rows containing missing values (geom_text).
+\end{verbatim}
 
 \hypertarget{key-overlap-time-kot-1}{%
 \subsubsection{2.3.4. Key-Overlap Time (KOT)}\label{key-overlap-time-kot-1}}
@@ -261,8 +260,18 @@ A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~perfo
 \includegraphics[width=1\linewidth]{manuscript_files/figure-latex/plot-kot-1-1} \caption{\label{fig:kot-1}Experiment 1: KOT (ms) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \textit{p} < .05, ** \textit{p} < .01, *** \textit{p} < .001}\label{fig:plot-kot-1}
 \end{figure}
 
+\begin{figure}
+\includegraphics[width=1\linewidth]{manuscript_files/figure-latex/plot-vel-1-1} \caption{\label{fig:vel-1}Experiment 1: KV (0-127) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \textit{p} < .05, ** \textit{p} < .01, *** \textit{p} < .001}\label{fig:plot-vel-1}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{manuscript_files/figure-latex/plot-vel-diff-1-1} \caption{\label{fig:vel-diff-1}Experiment 1: KV Difference at transition points when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \textit{p} < .05, ** \textit{p} < .01, *** \textit{p} < .001}\label{fig:plot-vel-diff-1}
+\end{figure}
+
 \hypertarget{discussion}{%
 \subsection{2.4. Discussion}\label{discussion}}
+
+Blah
 
 \newpage
 
@@ -315,12 +324,7 @@ A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~perfo
 \hypertarget{key-velocity-kv-2}{%
 \subsubsection{3.2.3. Key Velocity (KV)}\label{key-velocity-kv-2}}
 
-Blah
-
-\hypertarget{kv-transition-points-2}{%
-\subsubsection{3.2.4. KV Transition Points}\label{kv-transition-points-2}}
-
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Subcomponent-LS (legato vs.~staccato) showed that there was a significant main effect of Subcomponent-LS (\emph{F}(1,18) = 8.15, \emph{p} = 0.011, \(\eta_G^2\) = 0.0400), reflecting louder sound for legato notes compared to staccato notes. Neither the main effect of Condition (\emph{F}(1,18) = 0.46, \emph{p} = 0.506, \(\eta_G^2\) = 0.0008) nor the interaction between Condition and Subcomponent-LS (\emph{F}(1,18) = 8.15, \emph{p} = 0.799, \(\eta_G^2\) = 0.0001).
 
 \hypertarget{results-dynamics-1}{%
 \subsection{3.3. Results (Dynamics)}\label{results-dynamics-1}}
@@ -333,12 +337,16 @@ A paired-sample \emph{t}-test showed no significant difference between the teach
 \hypertarget{key-velocity-kv-3}{%
 \subsubsection{3.3.2. Key Velocity (KV)}\label{key-velocity-kv-3}}
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Subcomponent-FP (forte vs.~piano) showed that there was a significant main effect of Subcomponent-FP (\emph{F}(1,18) = 126.10, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.7190) and a significant interaction between Condition and Subcomponent-FP (\emph{F}(1,18) = 6.11, \emph{p} = 0.024, \(\eta_G^2\) = 0.0217). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that participants produced louder forte and softer piano in the teaching condition than in the performing condition (Forte; \emph{p} = 0.036, Piano; \emph{p} = 0.028).
 
-\hypertarget{kv-transition-points-3}{%
-\subsubsection{3.3.3. KV Transition Points}\label{kv-transition-points-3}}
+\hypertarget{kv-transition-points-1}{%
+\subsubsection{3.3.3. KV Transition Points}\label{kv-transition-points-1}}
 
-Blah
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Subcomponent-FP (FtoP vs.~PtoF) showed that there was a significant main effect of Subcomponent-FP (\emph{F}(1,18) = 110.64, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.8167) and a significant interaction of Condition and Subcomponent-FP (\emph{F}(1,18) = 9.77, \emph{p} = 0.006, \(\eta_G^2\) = 0.0641). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when the expressive notation changed from forte to piano and from piano to forte in the teaching condition than in the performing condition (FtoP; \emph{p} = 0.017, PtoF; \emph{p} = 0.003.
+
+\begin{verbatim}
+## Warning: Removed 2 rows containing missing values (geom_text).
+\end{verbatim}
 
 \hypertarget{key-overlap-ratio-kor-1}{%
 \subsubsection{3.3.4. Key-Overlap Ratio (KOR)}\label{key-overlap-ratio-kor-1}}
@@ -353,8 +361,14 @@ A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~perfo
 \includegraphics[width=1\linewidth]{manuscript_files/figure-latex/plot-kot-2-1} \caption{\label{fig:kot-2}Experiment 2: KOR when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \textit{p} < .05, ** \textit{p} < .01, *** \textit{p} < .001}\label{fig:plot-kot-2}
 \end{figure}
 
+\begin{figure}
+\includegraphics[width=1\linewidth]{manuscript_files/figure-latex/plot-vel-2-1} \caption{\label{fig:vel-2}Experiment 2: KV (0-127) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \textit{p} < .05, ** \textit{p} < .01, *** \textit{p} < .001}\label{fig:plot-vel-2}
+\end{figure}
+
 \hypertarget{discussion-1}{%
 \subsection{3.4. Discussion}\label{discussion-1}}
+
+Blah
 
 \newpage
 

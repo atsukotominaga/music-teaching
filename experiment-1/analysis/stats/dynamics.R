@@ -58,8 +58,7 @@ ggerrorplot(vel_dyn, x = "Condition", y = "Mean", add = c("mean", "mean_se"), er
 vel_dyn_plot <- data.table(subject = vel_dyn[Condition == "teaching"]$SubNr, teaching = vel_dyn[Condition == "teaching"]$Mean, performing = vel_dyn[Condition == "performing"]$Mean, subcomponent = vel_dyn[Condition == "teaching"]$Subcomponent)
 
 ggpaired(vel_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics") +
-  theme_pubr(base_size = 20, base_family = "Helvetica Neue LT Std 57 Condensed", ) +
-  theme(legend.position = "none")
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
 
 
 ## ----anova-dyn-vel-1, echo = FALSE--------------------------------------------
@@ -73,8 +72,8 @@ summary(vel_dyn_aov_2)
 
 
 ## ----post-hoc-1, echo = FALSE-------------------------------------------------
-test(pairs(emmeans(vel_dyn_aov,~Condition|Subcomponent)), joint = TRUE)
-pairs(emmeans(vel_dyn_aov,~Condition|Subcomponent), adjust = "tukey")
+vel_dyn_posthoc <- test(pairs(emmeans(vel_dyn_aov,~Condition|Subcomponent), adjust = "tukey"), joint = TRUE)
+vel_dyn_posthoc
 
 
 ## ----vel-dyn-trial, echo = FALSE----------------------------------------------
@@ -140,7 +139,7 @@ ggerrorplot(vel_diff_dyn, x = "Condition", y = "Mean", add = c("mean", "mean_se"
 vel_diff_dyn_plot <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn[Condition == "teaching"]$Mean, performing = vel_diff_dyn[Condition == "performing"]$Mean, subcomponent = vel_diff_dyn[Condition == "teaching"]$Subcomponent)
 
 ggpaired(vel_diff_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics") +
-  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed", )
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
 
 
 ## ----anova-dyn-vel-diff-1, echo = FALSE---------------------------------------
@@ -154,8 +153,8 @@ summary(vel_diff_dyn_aov_2)
 
 
 ## ----post-hoc-2, echo = FALSE-------------------------------------------------
-test(pairs(emmeans(vel_diff_dyn_aov,~Condition|Subcomponent)), joint = TRUE)
-pairs(emmeans(vel_diff_dyn_aov,~Condition|Subcomponent), adjust = "tukey")
+vel_diff_dyn_posthoc <- test(pairs(emmeans(vel_diff_dyn_aov,~Condition|Subcomponent), adjust = "turkey"), joint = TRUE)
+vel_diff_dyn_posthoc
 
 
 ## ----vel-diff-dyn-trial, echo = FALSE-----------------------------------------
@@ -235,8 +234,8 @@ summary(vel_art_aov_2)
 
 
 ## ----post-hoc-3, echo = FALSE-------------------------------------------------
-test(pairs(emmeans(vel_art_aov,~Condition|Subcomponent)), joint = TRUE)
-pairs(emmeans(vel_art_aov,~Condition|Subcomponent), adjust = "tukey")
+vel_art_posthoc <- test(pairs(emmeans(vel_art_aov,~Condition|Subcomponent), adjust = "turkey"), joint = TRUE)
+vel_art_posthoc
 
 
 ## ----vel-art-trial, echo = FALSE----------------------------------------------
@@ -316,8 +315,8 @@ summary(vel_diff_art_aov_2)
 
 
 ## ----post-hoc-4, echo = FALSE-------------------------------------------------
-test(pairs(emmeans(vel_diff_art_aov,~Condition|Subcomponent)), joint = TRUE)
-pairs(emmeans(vel_diff_art_aov,~Condition|Subcomponent), adjust = "tukey")
+vel_diff_art_posthoc <- test(pairs(emmeans(vel_diff_art_aov,~Condition|Subcomponent), adjust = "turkey"), joint = TRUE)
+vel_diff_art_posthoc
 
 
 ## ----vel-diff-art-trial, echo = FALSE-----------------------------------------
