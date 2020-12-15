@@ -36,8 +36,8 @@ dt_ideal$RowNr <- c(1:nrow(dt_ideal))
 dt_ideal <- dt_ideal[c(2, 1)]
 
 # read txt files
-dt_onset <- fread(file = here("filtered", "dt_correct_onset.txt", header = T))
-dt_offset <- fread(file = here("filtered", "dt_correct_offset.txt", header = T))
+dt_onset <- fread(file = here("filtered", "dt_correct_onset.txt"), header = T)
+dt_offset <- fread(file = here("filtered", "dt_correct_offset.txt"), header = T)
 
 # assign RowNr
 dt_onset$RowNr <- rep(1:72, nrow(dt_onset)/72)
@@ -46,6 +46,14 @@ dt_offset$RowNr <- rep(1:72, nrow(dt_offset)/72)
 # sort by SubNr, BlockNr, TrialNr and NoteNr
 dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr)]
 dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr)]
+
+####################################
+# Exclude participants
+# (see error_summary.Rmd
+# and trimming_ioi.R) 
+####################################
+dt_kot_onset <- dt_onset[SubNr != 2]
+dt_kot_offset <- dt_offset[SubNr != 2]
 
 ####################################
 # Define Subcomponents
