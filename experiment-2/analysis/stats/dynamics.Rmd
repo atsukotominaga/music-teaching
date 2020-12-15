@@ -18,6 +18,7 @@ Description: This is a summary of dynamics analysis.
 - Participants will exaggerate forte and piano more while teaching.
 
 2. Excluded participants
+- SubNr 2: A deviated tempo
 - SubNr 3: Insufficient motor skills
 
 3. Stats packages

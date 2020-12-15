@@ -18,6 +18,7 @@ Description: This is a summary of tempo analysis.
 - Participants will play slower while teaching regardless of the techniques.
 
 2. Excluded participants
+- SubNr 2: A deviated tempo
 - SubNr 3: Insufficient motor skills
 
 3. Stats packages
