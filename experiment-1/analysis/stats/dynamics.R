@@ -126,7 +126,7 @@ ggboxplot(dt_vel_diff_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N =
 
 ## ----vel-diff-dyn-all, echo = FALSE-------------------------------------------
 # Group mean
-vel_diff_dyn_all <- vel_diff_dyn[, .(N = .N, Mean = mean(Mean), SD = mean(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
+vel_diff_dyn_all <- vel_diff_dyn[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
 vel_diff_dyn_all
 
 
@@ -159,7 +159,7 @@ vel_diff_dyn_posthoc
 
 ## ----vel-diff-dyn-trial, echo = FALSE-----------------------------------------
 # For each individual
-vel_diff_dyn_trial <- dt_vel_diff_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(Diff), SD = mean(Diff)), by = .(SubNr, Condition, Skill, Subcomponent,TrialNr)]
+vel_diff_dyn_trial <- dt_vel_diff_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Subcomponent,TrialNr)]
 vel_diff_dyn_trial
 
 
@@ -177,7 +177,7 @@ ggline(dt_vel_diff_dyn[Subcomponent == "PtoF", .(N = .N, Mean = mean(Diff), SD =
 
 ## ----vel-diff-dyn-trial-all, echo = FALSE-------------------------------------
 # Group mean
-vel_diff_dyn_trial_all <- vel_diff_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = mean(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent, TrialNr)]
+vel_diff_dyn_trial_all <- vel_diff_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent, TrialNr)]
 vel_diff_dyn_trial_all
 
 
