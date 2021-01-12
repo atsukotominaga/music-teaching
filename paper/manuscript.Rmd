@@ -40,6 +40,7 @@ draft             : no
 documentclass     : "apa6"
 classoption       : "man"
 output: papaja::apa6_docx
+
 ---
 ```{r set-up, include = FALSE}
 if (!require("papaja")) {install.packages("papaja"); require("papaja")}
