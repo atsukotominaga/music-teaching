@@ -7,7 +7,7 @@ This repo contains scripts and materials necessary for a musical experiment with
 # experiment
 - Environment: Mac OS X 10.14.3, Max MSP 8
 
-## Prerequisite
+## prerequisite
 - Install the Shell package (https://github.com/jeremybernstein/shell/releases) into the package folder of Max 8.
 
 - The Shell package is used to generate necessary folders to store collected data. If it does not work in your environment, please create the following 4 folders manually.
