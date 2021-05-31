@@ -13,6 +13,7 @@ experiment/midi/
 # paper
 paper/docs
 paper/manuscript_files
+paper/feedback
 paper/*pdf
 paper/*bib
 
