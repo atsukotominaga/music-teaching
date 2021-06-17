@@ -259,7 +259,7 @@ One of the limitations of Experiment 1 is that we employed a simple musical scal
 ```{r plot-ioi-1, out.width = "100%", fig.cap = "\\label{fig:ioi-1}Experiment 1: IOIs (ms) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_ioi_1 <- image_append(c(img_ioi_art_1, img_ioi_dyn_1))
-image_write(img_ioi_1, path = here("paper/image", "img_ioi_1.png"), format = "png")
+#image_write(img_ioi_1, path = here("paper/image", "img_ioi_1.png"), format = "png")
 img_ioi_1
 ```
 
@@ -269,14 +269,14 @@ kot_exaggeration_1 <- data.table("Legato" == kot_art_all$Mean)
 
 # combine
 img_kot_1 <- image_append(c(img_kot_art_1, img_kot_dyn_1))
-image_write(img_kot_1, path = here("paper/image", "img_kot_1.png"), format = "png")
+#image_write(img_kot_1, path = here("paper/image", "img_kot_1.png"), format = "png")
 img_kot_1
 ```
 
 ```{r plot-vel-1, out.width = "100%", fig.cap = "\\label{fig:vel-1}Experiment 1: KV (0-127) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_vel_1 <- image_append(c(img_vel_art_1, img_vel_dyn_1))
-image_write(img_vel_1, path = here("paper/image", "img_vel_1.png"), format = "png")
+#image_write(img_vel_1, path = here("paper/image", "img_vel_1.png"), format = "png")
 img_vel_1
 ```
 
@@ -459,28 +459,28 @@ The results from Experiment 2 demonstrated that we successfully replicated our e
 
 ```{r plot-ioi-2, out.width = "100%", fig.cap = "\\label{fig:ioi-2}Experiment 2: Normalised IOIs when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 img_ioi_2 <- image_append(c(img_ioi_art_2, img_ioi_dyn_2))
-image_write(img_ioi_2, path = here("paper/image", "img_ioi_2.png"), format = "png")
+#image_write(img_ioi_2, path = here("paper/image", "img_ioi_2.png"), format = "png")
 img_ioi_2
 ```
 
 ```{r plot-kor-2, out.width = "100%", fig.cap = "\\label{fig:kor-2}Experiment 2: KOR when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_kor_2 <- image_append(c(img_kor_art_2, img_kor_dyn_2))
-image_write(img_kor_2, path = here("paper/image", "img_kor_2.png"), format = "png")
+#image_write(img_kor_2, path = here("paper/image", "img_kor_2.png"), format = "png")
 img_kor_2
 ```
 
 ```{r plot-vel-2, out.width = "100%", fig.cap = "\\label{fig:vel-2}Experiment 2: KV (0-127) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_vel_2 <- image_append(c(img_vel_art_2, img_vel_dyn_2))
-image_write(img_vel_2, path = here("paper/image", "img_vel_2.png"), format = "png")
+#image_write(img_vel_2, path = here("paper/image", "img_vel_2.png"), format = "png")
 img_vel_2
 ```
 
 ```{r plot-vel-diff, out.width = "100%", fig.cap = "\\label{fig:vel-diff}Experiment 1, 2: KV Difference at transition points when playing the piece with dynamics (left; Experiment 1, right; Experiment 2). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_vel_diff <- image_append(c(img_vel_diff_dyn_1, img_vel_diff_dyn_2))
-image_write(img_vel_diff, path = here("paper/image", "img_vel_diff.png"), format = "png")
+#image_write(img_vel_diff, path = here("paper/image", "img_vel_diff.png"), format = "png")
 img_vel_diff
 ```
 
