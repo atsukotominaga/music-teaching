@@ -3,8 +3,6 @@
 *.bib
 *.log
 *.html
-*.Rhistory
-*.ipynb_checkpoints/
 
 # experiment
 experiment/data/
