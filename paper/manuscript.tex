@@ -5,10 +5,10 @@
 \documentclass[
   english,
   man,floatsintext]{apa6}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -38,6 +38,7 @@
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   pdftitle={The Sound of Teaching Music: Expert Pianists' Performance Modulations for Novices},
+  pdfauthor={Atsuko Tominaga1, Günther Knoblich1, \& Natalie Sebanz1},
   pdflang={en-EN},
   pdfkeywords={teaching, expertise, skill transmission, artistic expression, music},
   hidelinks,
@@ -105,41 +106,66 @@
   {\section{\normalfont\normalsize\abstractname}}
   {\section*{\normalfont\normalsize\abstractname}}
   {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\HyOrg@maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
 \makeatother
 \shorttitle{The Sound of Teaching Music}
-\author{Atsuko Tominaga\textsuperscript{1}, Günther Knoblich\textsuperscript{1}, \& Natalie Sebanz\textsuperscript{1}}
-\affiliation{
-\vspace{0.5cm}
-\textsuperscript{1} Department of Cognitive Science, Central European University}
-\authornote{
-
-Correspondence concerning this article should be addressed to Atsuko Tominaga, Quellenstraße 51, 1100 Vienna, Austria. E-mail: Tominaga\_Atsuko@phd.ceu.edu}
-\keywords{teaching, expertise, skill transmission, artistic expression, music\newline\indent Word count: 5220}
+\keywords{teaching, expertise, skill transmission, artistic expression, music\newline\indent Word count: 5022}
 \usepackage{csquotes}
-\ifxetex
+\ifXeTeX
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
   \setmainlanguage[]{english}
 \else
-  \usepackage[shorthands=off,main=english]{babel}
+  \usepackage[main=english]{babel}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
 \fi
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
-\newenvironment{cslreferences}%
-  {\setlength{\parindent}{0pt}%
-  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
-  {\par}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \title{The Sound of Teaching Music: Expert Pianists' Performance Modulations for Novices}
-
+\author{Atsuko Tominaga\textsuperscript{1}, Günther Knoblich\textsuperscript{1}, \& Natalie Sebanz\textsuperscript{1}}
 \date{}
+
+
+\authornote{
+
+Correspondence concerning this article should be addressed to Atsuko Tominaga, Quellenstraße 51, 1100 Vienna, Austria. E-mail: \href{mailto:Tominaga_Atsuko@phd.ceu.edu}{\nolinkurl{Tominaga\_Atsuko@phd.ceu.edu}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Department of Cognitive Science, Central European University}
 
 \abstract{
 Experts modulate their performance of actions for teaching purposes, performing slower and exaggerated movements when demonstrating novel actions to novices. The present study asked whether such modulations are also used to teach techniques of artistic expression. One domain where subtle movement modulations are crucial for achieving artistic expression is music. We investigated how skilled pianists modulate their playing to demonstrate to students the techniques required for conveying piece-related musical expressions, compared to performing the piece without didactic intentions. Expressions in the piece concerned either articulation (i.e., legato and staccato) or dynamics (i.e., forte and piano). The pianists played either with the goal to perform the piece to an audience or with the goal to teach the respective techniques to novices.When intending to teach articulation, skilled pianists produced more exaggerated staccato. When intending to teach dynamics, they created a larger contrast between forte and piano at structurally important points. We found consistent results with a simple musical scale (Experiment 1) and a more naturalistic piece of music (Experiment 2). These findings suggest that action modulations are performed not only to attract learners' attention but to highlight the most relevant aspects of the actions to be learnt.
 }
+
+
 
 \begin{document}
 \maketitle
@@ -151,13 +177,13 @@ Deliberate teaching has supported human skill transmission over generations and 
 
 Previous research has shown that demonstrators not only adjust their gestures (Campisi \& Özyürek, 2013) and actions (Fukuyama et al., 2015) to learners' skills but engage in specific action modulations to highlight particular aspects of demonstrated actions. For example, Schaik, Meyer, Ham, and Hunnius (2019) showed that adults used specific action modulations for demonstrating different action effects of objects to infants. Ho, Littman, MacGlashan, Cushman, and Austerweil (2016) found that demonstrators chose costly movement paths at structurally important points to disambiguate one goal over other possibilities.
 
-Importantly, in some domains teaching requires not only demonstrating \emph{what} to do, but \emph{how} to perform actions. In artistic contexts, novices need to learn how exactly to perform actions by relying on particular techniques (Sloboda, 2000). For example, when playing a piece of music on the piano, it is not sufficient to press the keys in the correct order, but learners need to be able to implement expressive techniques (Juslin, 2003). This raises the question of whether and how experts modulate their actions during didactic demonstration in artistic contexts, where expressivity is an integral part of what learners need to acquire. Studying action modulations that serve the teaching of artistic techniques is of broader theoretical importance: It can show whether action modulations can be used to selectively highlight subtle aspects of actions that define expert performance.
+Importantly, in some domains teaching requires not only demonstrating \emph{what} to do, but \emph{how} to perform actions. In artistic contexts, novices need to learn how exactly to perform actions by relying on particular techniques (Sloboda, 2000). For example, when playing a piece of music on the piano, it is not sufficient to press the keys in the correct order, but learners need to be able to implement expressive techniques (Juslin, 2003). This raises the question of whether and how experts modulate their actions during didactic demonstration in artistic contexts, where expressivity is an integral part of what learners need to acquire. Studying action modulations that serve the teaching of artistic techniques is also of broader theoretical importance: It can show whether action modulations can be used to selectively highlight subtle aspects of actions that define expert performance.
 
-In the present study, we employed musical expressive techniques as skills to be taught because multiple properties of the performance (e.g., timing, articulation, loudness) can be modulated at the same time. Specific and subtle aspects of the performance need to be highlighted to teach a respective technique. We asked whether skilled pianists use sound to communicate didactic intentions. Pianists were asked to perform a piece in order to demonstrate to a learner how to implement the notated expressions (teaching condition) and to play the same piece for an audience (performing condition). Two basic expressive techniques in piano performance were used: articulation (legato and staccato) and dynamics (forte and piano).
+In the present study, we employed musical expressive techniques as skills to be taught because multiple properties of the performance (e.g., timing, articulation, loudness) can be modulated at the same time. Specific and subtle aspects of the performance may need to be highlighted to teach a respective technique. Pianists were asked to perform a piece in order to demonstrate to a learner how to implement the notated expressions (teaching condition) and to play the same piece for an audience (performing condition). Two basic expressive techniques in piano performance were used: articulation (legato and staccato) and dynamics (forte and piano).
 
 If experts rely on generic action modulations, it can be expected that they will play more slowly during didactic demonstration, regardless of the kind of expressive techniques to be taught. To the extent that experts use action modulations to support their teaching of specific expressive techniques, they should produce longer legato and shorter staccato when teaching articulation whereas they should produce louder forte and softer piano when teaching dynamics. Furthermore, one could speculate that they might produce modulations specifically at structurally important points that best highlight the technique to be taught. Importantly, they should avoid modulating irrelevant properties of expression, e.g., the smoothness of the sound while teaching dynamics.
 
-In Experiment 1, we employed a simple musical scale to examine whether and how skilled pianists vary their performance depending on which expressive techniques (i.e., either articulation or dynamics) they were teaching. Experiment 2 was conducted to replicate our findings from Experiment 1 with a more naturalistic piece of music.
+In Experiment 1, we employed a simple musical scale to examine whether and how skilled pianists vary their performance depending on which expressive techniques (i.e., either articulation or dynamics) they are teaching. Experiment 2 was conducted to replicate our findings from Experiment 1 with a more naturalistic piece of music.
 
 \hypertarget{experiment-1}{%
 \section{2. Experiment 1}\label{experiment-1}}
@@ -168,36 +194,32 @@ In Experiment 1, we employed a simple musical scale to examine whether and how s
 \hypertarget{participants}{%
 \subsubsection{2.1.1. Participants}\label{participants}}
 
-We recruited 36 piano experts who played the piano for at least the past 10 years or were studying piano performance at a music school at the time of recruitment. For data analysis, we excluded 5 participants due to experimental errors (3), an overall deviated tempo (2; outside 2 standard deviations from the average tempo across participants). Thirty-one participants (15 female) were included in data analysis. Most participants were right-handed (left; 2, both; 2). They had 12.45 years of practice on average (\emph{SD} = 5.66). All participants gave their informed consent before the experiment started and received vouchers for their participation. The study was approved by the United Ethical Review Committee for Research in Psychology (EPKEB) in Hungary.
+We recruited 36 piano experts who played the piano for at least the past 10 years or were studying advanced piano performance at a music school at the time of recruitment. In order to ensure that participants had sufficient motor skills to perform the piece, we asked them to practise the piece with the non-expressive sheet music (\emph{Figure \ref{fig:stimuli}, A}) in the lab. Once they could perform the piece without pitch errors twice consecutively within 5 attempts, the experiment started. Those who could not meet this requirement were excluded from data analysis (as a result, none of the participants were excluded based on this criterion). For data analysis, we excluded three participants due to experimental errors, and two participants because they deviated substantially from the prescribed tempo (outside 2 standard deviations from the average tempo across participants). Thirty-one participants (15 female) were included in data analysis. Most participants were right-handed (left; 2, ambidextrous; 2). They had 12.45 years of practice on average (\emph{SD} = 5.66). All participants gave their informed consent before the experiment started and received vouchers for their participation. The study was approved by the United Ethical Review Committee for Research in Psychology (EPKEB) in Hungary.
 
 \hypertarget{apparatus-and-stimuli}{%
 \subsubsection{2.1.2. Apparatus and stimuli}\label{apparatus-and-stimuli}}
 
 A weighted Yamaha MIDI digital piano was used to record participants' performance via Max/MSP on a MacBook Pro with MacOS X Mojave 10.14.3. The laptop and piano were connected to a high-fidelity soundcard (Focusrite Scarlett 6i6) to deliver a metronome and piano sound. All auditory feedback was given to participants through headphones (Audio-Technica ATH-M50X). Sheet music was displayed on a computer monitor in front of the participants. The pitch, onset and offset time of each note, and key velocity profiles were obtained from MIDI data using Max/MSP patchers.
 
-One musical excerpt was used as a stimulus. The excerpt was taken from ``A Dozen a Day - Play with Ease in Many Keys" by Edna-Mae Burnam and modified for the experiment. It consisted of a 6-measure isochronous melody noted in 4/4 meter. The stimulus was composed in C major to be played with the right hand only. Non-expressive sheet music (i.e., sheet music without expressive notations; see \emph{Figure \ref{fig:stimuli}, A}) was used for the purpose of practice. Expressive notations were added to the non-expressive sheet music for the experiment. They referred to either articulation or dynamics (\emph{Figure \ref{fig:stimuli}, B-C}). Articulation was notated as either legato or staccato. Legato indicates that musical notes are to be connected and should sound smooth. Staccato requires producing musical notes with shortened duration, keeping them separate from each other. Dynamics was notated as either forte and piano. Forte indicates that musical notes should be played loudly whereas piano indicates that musical notes should be played softly. The notation did not include any indication of fingering (i.e., the positioning of the fingers when playing the piano) because the piece was simple and pilot testing had shown that specifying fingering was not required.
+One musical excerpt was used as a stimulus. The excerpt was taken from ``A Dozen a Day - Play with Ease in Many Keys" by Edna-Mae Burnam and modified for the experiment. It consisted of a 6-measure isochronous melody noted in 4/4 meter. The stimulus was composed in C major to be played with the right hand only. Non-expressive sheet music (i.e., sheet music without expressive notations; see \emph{Figure \ref{fig:stimuli}, A}) was used for the purpose of practice. Expressive notations were added to the non-expressive sheet music for the experiment. They referred to either articulation or dynamics (\emph{Figure \ref{fig:stimuli}, B-C}). Articulation was notated as either legato or staccato. Legato indicates that musical notes are to be connected and should sound smooth. Staccato requires producing musical notes with shortened duration, keeping them separate from each other. Dynamics was notated as either forte and piano. Forte indicates that musical notes should be played loudly whereas piano indicates that musical notes should be played softly. The notation did not include any indication of fingering (i.e., the positioning of the fingers when playing the piano) because the piece was simple and pilot testing had shown that specifying fingering was not necessary.
 
 \hypertarget{procedure}{%
 \subsubsection{2.1.3. Procedure}\label{procedure}}
 
-In order to ensure that participants had sufficient motor skills to perform the piece, we asked them to practise the piece with the non-expressive sheet music (\emph{Figure \ref{fig:stimuli}, A}). Once they could perform the piece without pitch errors twice consecutively within 5 attempts, the experiment started. Those who could not meet this requirement were excluded from data analysis (as a result, none of the participants were excluded).
+First, participants were allocated to either the teaching or performing condition and asked to practise the excerpt with notated expressions of either articulation or dynamics (\emph{Figure \ref{fig:stimuli}, B-C}). As soon as they had produced the excerpt with the notated expression without pitch errors twice consecutively, the test trials began.
 
-First, participants were allocated to either the teaching or performing condition and asked to practise the excerpt with notated expressions of either articulation or dynamics (\emph{Figure \ref{fig:stimuli}, B-C}). As soon as they had produced the excerpt with a notated expression without pitch errors twice consecutively, the test trials began.
-
-In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with a notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience (see details in \emph{\protect\hyperlink{supplementary}{Supplemental Materials}}). Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was counterbalanced across participants. The order of the expressive techniques within each condition was also counterbalanced across participants. A leading metronome (80 beats per minute, 8 beats) indicated the target tempo before each trial.
+In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with the notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience (see details in \emph{\protect\hyperlink{supplementary}{Supplementary Materials}}). Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was blocked and counterbalanced across participants. The order of the expressive techniques within each condition was also blocked and counterbalanced across participants. A leading metronome (80 beats per minute, 8 beats) indicated the target tempo before each trial.
 
 At the end of the experiment, participants filled in a questionnaire asking about their demographic information and experience in piano performance/teaching.
 
-\hypertarget{design-and-data-analysis}{%
-\subsubsection{2.1.4. Design and data analysis}\label{design-and-data-analysis}}
+\hypertarget{data-analysis}{%
+\subsubsection{2.1.4. Data analysis}\label{data-analysis}}
 
-The experiment had two factors; Condition (teaching vs.~performing) and Expressive Technique (articulation vs.~dynamics). Additionally, the factor Subcomponent was used when analysing data for each subcomponent for each technique separately (i.e., LS; legato vs.~staccato, FP; forte vs.~piano).
+Three dependent variables were computed for data analysis. Interonset intervals (IOIs) are the intervals between onsets of adjacent notes and provide a measure of tempo. Key-overlap time (KOT) is the difference between the offset time of the current tone (i.e., key release time) and the onset time of the ensuing tone, and measures the smoothness of musical sequences (Bresin \& Battel, 2000). A positive value indicates smooth legato styles due to overlap between the current and ensuing tone whereas a negative value indicates sharp staccato styles due to separation between the current and ensuing tone. Tone intensity is assessed by key velocity (KV) and measures the loudness of a musical note. The value of KV in MIDI varies between 0 (minimum) and 127 (maximum).
 
-Three dependent variables were computed for data analysis. Interonset intervals (IOIs) are the intervals between onsets of adjacent notes and provide a tempo of tempo. Key-overlap time (KOT) is the difference between the offset time of the current tone (i.e., key release time) and the onset time of the ensuing tone, and measures the smoothness of musical sequences (Bresin \& Battel, 2000). A positive value indicates smooth legato styles due to overlap between the current and ensuing tone whereas a negative value indicates sharp staccato styles due to separation between the current and ensuing tone. Tone intensity is assessed by key velocity (KV) and measures the loudness of a musical note. The value of KV in MIDI varies between 0 (minimum) and 127 (maximum).
+Data cleaning, preprocessing and statistical analysis were performed in R version 4.0.5. For statistical analysis, only 16th notes with expressive notations were included. Overall, three trials were excluded from data analysis because participants did not follow the sheet music or stopped performing before the end. Pitch errors were identified by comparing the sequence of musical notes produced by a participant with the sequence of musical notes according to the sheet music. Pitch errors included either extra, missing or substituted tones and were manually removed by using the \emph{editData} R package. For onsets, 5.16\% of the trials contained at least one pitch error (extra notes; 2.78\%, missing notes; 2.24\%, substituted notes; 0.13\%). For offsets, 6.24\% of the trials contained at least one pitch error (extra notes; 2.78\%, missing notes; 2.29\%, substituted notes; 1.17\%). In addition to pitch errors, we removed outliers for IOIs, KOT and KV were defined as values more than 3 standard deviations from the mean of each dependent variable and excluded from data analysis. For each dependent variable, this resulted in less than 5\% of overall responses being removed as outliers.
 
-Data cleaning, preprocessing and statistical analysis were performed in R version 3.6.3. For statistical analysis, only 16th notes with expressive notations were included. Three trials were entirely excluded from data analysis because participants did not follow sheet music or complete performing till the end. Pitch errors were identified by comparing a sequence of musical notes produced by a participant with the sequence of musical notes according to the sheet music. Pitch errors included either extra, missing or substituted tones and were manually removed by using editData package. For onsets, 5.16\% of the trials contained at least one pitch error (extra notes; 2.78\%, missing notes; 2.24\%, substituted notes; 0.13\%). For offsets, 6.24\% of the trials contained at least one pitch error (extra notes; 2.78\%, missing notes; 2.29\%, substituted notes; 1.17\%). After we removed pitch errors, outliers for IOIs, KOT and KV were defined as values more than 3 standard deviations from the mean of each dependent variable and excluded from data analysis. Removed outliers were less than 5\% of overall responses for each dependent variable.
-
-We performed separate analyses for the two expressive techniques (i.e., articulation, dynamics). A paired-sample \emph{t}-test or a Wilcoxon signed-rank tests (a non-parametric alternative to a paired \emph{t}-test) was performed to compare the mean IOIs in the teaching and performing condition. For KOT and KV, we performed a 2 x 2 repeated-measures analysis of variance (ANOVA) with the factors Condition (teaching vs.~performing) and Subcomponent (LS; legato vs.~staccato or FP; forte vs.~piano, respectively). The ``aov\_car" function in the afex package was used for a repeated-measures ANOVA. For post-hoc comparisons on the estimated marginal means, we used emmeans package.
+We performed separate analyses for the two expressive techniques (i.e., articulation, dynamics). A paired-sample \emph{t}-test or a Wilcoxon signed-rank tests (a non-parametric alternative to a paired \emph{t}-test) was performed to compare the mean IOIs in the teaching and performing condition. For KOT and KV, we performed a 2 x 2 repeated-measures analysis of variance (ANOVA) with the factors Condition (teaching vs.~performing) and Subcomponent (LS; legato vs.~staccato or FP; forte vs.~piano, respectively). The \emph{afex} R package was used for a repeated-measures ANOVA. For post-hoc comparisons on the estimated marginal means, we used the \emph{emmeans} R package.
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{manuscript_files/figure-latex/stim-1-1} \caption{\label{fig:stimuli}(A)Non-expressive sheet music. (B)Articulation. The curved line (slur) indicates legato and the dots indicate staccato. (C)Dynamics. The symbol `f' denotes forte and the symbol `p' denotes piano. For data analysis, only the 16th notes were included.}\label{fig:stim-1}
@@ -290,8 +312,8 @@ The same apparatus as Experiment 1 was used. We selected Clementi's Sonatina Op.
 
 We employed the same procedure as Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., \emph{Figure \ref{fig:stimuli-2}, A}) prior to the experiment. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations (see details in \emph{\protect\hyperlink{supplemental}{Supplemental Materials}}). Third, participants could choose their preferred tempo from one of the 3 options (100, 110 and 120 beats per minute) as a leading metronome. In order to make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the non-expressive sheet music. As Experiment 1, those who could not perform the piece twice consecutively within 5 attempts were excluded from data analysis (as a result, one participant was excluded). The rest of the procedure was identical to Experiment 1.
 
-\hypertarget{design-and-data-analysis-1}{%
-\subsubsection{3.1.4. Design and data analysis}\label{design-and-data-analysis-1}}
+\hypertarget{design-and-data-analysis}{%
+\subsubsection{3.1.4. Design and data analysis}\label{design-and-data-analysis}}
 
 Data cleaning, preprocessing and statistical analysis were almost identical as Experiment 1. For statistical analysis, only 8th notes with expressive notations were included. As a result, only one 8th note in the 4th measure without any expression was not included to calculate dependent variables. IOIs were normalised by their preferred tempo because each participant chose different tempi from the 3 options. Key-overlap Ratio (KOR) was calculated by dividing KOT by the mean IOI of each performance in order to normalise KOT due to a different tempo for each participant. Additionally, we include KV difference (i.e., KV difference for each interval) at transition points (i.e., forte to piano or piano to forte) as a dependent variable based on the findings of Experiment 1. Three trials were entirely excluded from data analysis because participants did not follow sheet music. With the same method as Experiment 1, pitch errors were removed manually. For onsets, 3.32\% of the trials contained at least one pitch error (extra notes; 1.66\%, missing notes; 1.57\%, substituted notes; 0.09\%). For offsets, 5.11\% of the trials contained at least one pitch error (extra notes; 1.66\%, missing notes; 1.57\%, substituted notes; 1.88\%). Removed outliers (i.e., responses outside 3 standard deviations from the mean) were less than 5\% of overall responses for each dependent variable.
 
@@ -403,58 +425,59 @@ All authors have no conflict of interest.
 \setlength{\leftskip}{0in}
 
 \hypertarget{refs}{}
-\begin{cslreferences}
-\leavevmode\hypertarget{ref-brand_2002}{}%
-Brand, R. J., Baldwin, D. A., \& Ashburn, L. A. (2002). Evidence for ``motionese'': Modifications in mothers' infant-directed action. \emph{Developmental Science}, \emph{5}(1), 72--83. \url{https://doi.org/10.1111/1467-7687.00211}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-brand_2002}{}}%
+Brand, R. J., Baldwin, D. A., \& Ashburn, L. A. (2002). Evidence for {`motionese'}: Modifications in mothers' infant-directed action. \emph{Developmental Science}, \emph{5}(1), 72--83. \url{https://doi.org/10.1111/1467-7687.00211}
 
-\leavevmode\hypertarget{ref-bresin_2000}{}%
-Bresin, R., \& Battel, G. U. (2000). Articulation Strategies in Expressive Piano Performance Analysis of Legato, Staccato, and Repeated Notes in Performances of the Andante Movement of Mozart's Sonata in G Major (K 545). \emph{Journal of New Music Research}, \emph{29}(3), 211--224. \url{https://doi.org/10.1076/jnmr.29.3.211.3092}
+\leavevmode\vadjust pre{\hypertarget{ref-bresin_2000}{}}%
+Bresin, R., \& Battel, G. U. (2000). Articulation {Strategies} in {Expressive Piano Performance Analysis} of {Legato}, {Staccato}, and {Repeated Notes} in {Performances} of the {Andante Movement} of {Mozart}'s {Sonata} in {G Major} ({K} 545). \emph{Journal of New Music Research}, \emph{29}(3), 211--224. \url{https://doi.org/10.1076/jnmr.29.3.211.3092}
 
-\leavevmode\hypertarget{ref-campisi_2013}{}%
-Campisi, E., \& Özyürek, A. (2013). Iconicity as a communicative strategy: Recipient design in multimodal demonstrations for adults and children. \emph{Journal of Pragmatics}, \emph{47}(1), 14--27. \url{https://doi.org/10.1016/j.pragma.2012.12.007}
+\leavevmode\vadjust pre{\hypertarget{ref-campisi_2013}{}}%
+Campisi, E., \& Özyürek, A. (2013). Iconicity as a communicative strategy: {Recipient} design in multimodal demonstrations for adults and children. \emph{Journal of Pragmatics}, \emph{47}(1), 14--27. \url{https://doi.org/10.1016/j.pragma.2012.12.007}
 
-\leavevmode\hypertarget{ref-csibra_2009}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-csibra_2009}{}}%
 Csibra, G., \& Gergely, G. (2009). Natural pedagogy. \emph{Trends in Cognitive Sciences}, \emph{13}(4), 148--153. \url{https://doi.org/10.1016/j.tics.2009.01.005}
 
-\leavevmode\hypertarget{ref-fernald_1985}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-fernald_1985}{}}%
 Fernald, A. (1985). Four-month-old infants prefer to listen to motherese. \emph{Infant Behavior and Development}, \emph{8}(2), 181--195. \url{https://doi.org/10.1016/S0163-6383(85)80005-9}
 
-\leavevmode\hypertarget{ref-fukuyama_2015}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-fukuyama_2015}{}}%
 Fukuyama, H., Qin, S., Kanakogi, Y., Nagai, Y., Asada, M., \& Myowa-Yamakoshi, M. (2015). Infant's action skill dynamically modulates parental action demonstration in the dyadic interaction. \emph{Developmental Science}, \emph{18}(6), 1006--1013. \url{https://doi.org/10.1111/desc.12270}
 
-\leavevmode\hypertarget{ref-NIPS2016_6413}{}%
-Ho, M. K., Littman, M., MacGlashan, J., Cushman, F., \& Austerweil, J. L. (2016). Showing versus doing: Teaching by demonstration. In D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, \& R. Garnett (Eds.), \emph{Advances in neural information processing systems 29} (pp. 3027--3035). Curran Associates, Inc.
+\leavevmode\vadjust pre{\hypertarget{ref-NIPS2016_6413}{}}%
+Ho, M. K., Littman, M., MacGlashan, J., Cushman, F., \& Austerweil, J. L. (2016). Showing versus doing: {Teaching} by demonstration. In D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, \& R. Garnett (Eds.), \emph{Advances in neural information processing systems 29} (pp. 3027--3035). {Curran Associates, Inc.}
 
-\leavevmode\hypertarget{ref-juslin_2003}{}%
-Juslin, P. N. (2003). Five Facets of Musical Expression: A Psychologist's Perspective on Music Performance. \emph{Psychology of Music}, \emph{31}(3), 273--302. \url{https://doi.org/10.1177/03057356030313003}
+\leavevmode\vadjust pre{\hypertarget{ref-juslin_2003}{}}%
+Juslin, P. N. (2003). Five {Facets} of {Musical Expression}: {A Psychologist}'s {Perspective} on {Music Performance}. \emph{Psychology of Music}, \emph{31}(3), 273--302. \url{https://doi.org/10.1177/03057356030313003}
 
-\leavevmode\hypertarget{ref-lindstrom_2003}{}%
-Lindström, E., Juslin, P. N., Bresin, R., \& Williamon, A. (2003). ``Expressivity comes from within your soul'': A questionnaire study of music students' perspectives on expressivity. \emph{Research Studies in Music Education}, \emph{20}(1), 23--47. \url{https://doi.org/10.1177/1321103X030200010201}
+\leavevmode\vadjust pre{\hypertarget{ref-lindstrom_2003}{}}%
+Lindström, E., Juslin, P. N., Bresin, R., \& Williamon, A. (2003). {``{Expressivity} comes from within your soul''}: {A} questionnaire study of music students' perspectives on expressivity. \emph{Research Studies in Music Education}, \emph{20}(1), 23--47. \url{https://doi.org/10.1177/1321103X030200010201}
 
-\leavevmode\hypertarget{ref-mcellin_2017}{}%
-McEllin, L., Knoblich, G., \& Sebanz, N. (2017). Distinct kinematic markers of demonstration and joint action coordination? Evidence from virtual xylophone playing. \emph{Journal of Experimental Psychology: Human Perception and Performance}, \emph{44}(6), 885. \url{https://doi.org/10.1037/xhp0000505}
+\leavevmode\vadjust pre{\hypertarget{ref-mcellin_2017}{}}%
+McEllin, L., Knoblich, G., \& Sebanz, N. (2017). Distinct kinematic markers of demonstration and joint action coordination? {Evidence} from virtual xylophone playing. \emph{Journal of Experimental Psychology: Human Perception and Performance}, \emph{44}(6), 885. \url{https://doi.org/10.1037/xhp0000505}
 
-\leavevmode\hypertarget{ref-okazaki_2019}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-okazaki_2019}{}}%
 Okazaki, S., Muraoka, Y., \& Osu, R. (2019). Teacher-learner interaction quantifies scaffolding behaviour in imitation learning. \emph{Scientific Reports}, \emph{9}(1), 1--13. \url{https://doi.org/10.1038/s41598-019-44049-x}
 
-\leavevmode\hypertarget{ref-schaik_2019}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-schaik_2019}{}}%
 Schaik, J. E. van, Meyer, M., Ham, C. R. van, \& Hunnius, S. (2019). Motion tracking of parents' infant- versus adult-directed actions reveals general and action-specific modulations. \emph{Developmental Science}, \emph{0}(0), e12869. \url{https://doi.org/10.1111/desc.12869}
 
-\leavevmode\hypertarget{ref-sloboda_2000}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-sloboda_2000}{}}%
 Sloboda, J. A. (2000). Individual differences in music performance. \emph{Trends in Cognitive Sciences}, \emph{4}(10), 397--403. \url{https://doi.org/10.1016/S1364-6613(00)01531-X}
 
-\leavevmode\hypertarget{ref-sperber_1995}{}%
-Sperber, D., \& Wilson, D. (1995). \emph{Relevance: Communication and cognition, 2nd ed}. Malden: Blackwell Publishing.
+\leavevmode\vadjust pre{\hypertarget{ref-sperber_1995}{}}%
+Sperber, D., \& Wilson, D. (1995). \emph{Relevance: {Communication} and cognition, 2nd ed}. {Malden}: {Blackwell Publishing}.
 
-\leavevmode\hypertarget{ref-thornton_2008}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-thornton_2008}{}}%
 Thornton, A., \& Raihani, N. J. (2008). The evolution of teaching. \emph{Animal Behaviour}, \emph{75}(6), 1823--1836. \url{https://doi.org/10.1016/j.anbehav.2007.12.014}
 
-\leavevmode\hypertarget{ref-tomasello_2016}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-tomasello_2016}{}}%
 Tomasello, M. (2016). The ontogeny of cultural learning. \emph{Current Opinion in Psychology}, \emph{8}, 1--4. \url{https://doi.org/10.1016/j.copsyc.2015.09.008}
 
-\leavevmode\hypertarget{ref-uther_2007}{}%
-Uther, M., Knoll, M. A., \& Burnham, D. (2007). Do you speak E-NG-L-I-SH? A comparison of foreigner- and infant-directed speech. \emph{Speech Communication}, \emph{49}(1), 2--7. \url{https://doi.org/10.1016/j.specom.2006.10.003}
-\end{cslreferences}
+\leavevmode\vadjust pre{\hypertarget{ref-uther_2007}{}}%
+Uther, M., Knoll, M. A., \& Burnham, D. (2007). Do you speak {E}-{NG}-{L}-{I}-{SH}? {A} comparison of foreigner- and infant-directed speech. \emph{Speech Communication}, \emph{49}(1), 2--7. \url{https://doi.org/10.1016/j.specom.2006.10.003}
+
+\end{CSLReferences}
 
 \endgroup
 
@@ -479,5 +502,6 @@ In the performing condition, participants were displayed with the following inst
 In the teaching condition, we gave participants the exact same instruction as Experiment 1.
 
 In the performing condition, participants were displayed with the following instruction on a computer monitor; Now, play what you practised as if you were performing it to an audience. \emph{Perform the piece expressively with your interpretation}. \emph{Do your best as a performer to produce the piece according to the notation that you just practised}.
+
 
 \end{document}
