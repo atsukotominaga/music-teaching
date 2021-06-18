@@ -38,7 +38,9 @@ dt_offset_all <- dt_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr)]
 ####################################
 # Exclude 4 participants
 # (see error_summary.Rmd
-# and trimming_ioi.R) 
+# and trimming_ioi.R)
+# 2 (deviated tempi)
+# 2 (experimental error)
 ####################################
 dt_onset <- dt_onset_all[SubNr != 1 & SubNr != 3 & SubNr != 14 & SubNr != 16]
 dt_offset <- dt_offset_all[SubNr != 1 & SubNr != 3 & SubNr != 14 & SubNr != 16]
