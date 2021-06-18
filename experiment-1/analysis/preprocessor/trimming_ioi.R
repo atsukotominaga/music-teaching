@@ -142,7 +142,7 @@ plot(p_ioi_box)
 # exclude deviated participants
 ####################################
 ioi_summary <- dt_ioi_subset_all[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr)]
-# exclude tempo deviated participants
+# exclude tempo deviated participants (outside 2SD)
 ioi_summary$Include <- "No"
 ioi_summary[Mean < mean(ioi_summary$Mean)+2*sd(ioi_summary$Mean) & Mean > mean(ioi_summary$Mean)-2*sd(ioi_summary$Mean)]$Include <- "Yes"
 # exclude participants due to deviated tempi

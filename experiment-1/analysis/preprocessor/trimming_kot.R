@@ -58,7 +58,7 @@ dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr)]
 dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr)]
 
 ####################################
-# Exclude 3 participants
+# Exclude 4 participants
 # (see error_summary.Rmd
 # and trimming_ioi.R) 
 ####################################
