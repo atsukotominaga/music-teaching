@@ -167,7 +167,8 @@ if (nrow(ioi_summary[Include == "No"]) > 0){
 
 dt_ioi_subset <- dt_ioi_subset_all[Exclude == 0]
 
-# as a result, SubNr == 2 were excluded due to deviated tempi
+# as a result, no one was excluded
+# in Experiment 1, we used a 2SD criterion as there was only 1 metronome (80 bpm) whereas there were 3 tempo options (100, 110, 120 bpm) in Experiment 2
 
 ####################################
 # 1. > +- 3SD across the conditions
