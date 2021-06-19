@@ -67,7 +67,7 @@ missing_onset
 - SubNr 3: experimental error (8 trials)
 - SubNr 14: played in octave higher (8 trials)
 
-2. **some performances were removed because 1) participants didn't follow sheet music or 2) participants didn't finish till the end (5 trials)**
+2. **some performances were removed because 1) participants didn't follow the sheet music or 2) participants stopped performing before the end (5 trials)**
 
 ### Missing/Excluded Trials Onset (Summary)
 ```{r na-onset-summary, echo = FALSE}
@@ -115,7 +115,7 @@ missing_offset
 - SubNr 3: experimental error (8 trials)
 - SubNr 14: played in octave higher (8 trials)
 
-2. **some performances were removed because 1) participants didn't follow sheet music or 2) participants didn't finish till the end (5 trials)**
+2. **some performances were removed because 1) participants didn't follow the sheet music or 2) participants stopped performing before the end (5 trials)**
 
 ### Missing/Excluded Trials Offset (Summary)
 ```{r na-offset-summary, echo = FALSE}
