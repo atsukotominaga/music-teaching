@@ -31,8 +31,7 @@ ioi_art
 
 
 ## ----ioi-art-box,  echo = FALSE-----------------------------------------------
-ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
-  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
   geom_hline(yintercept = 188, linetype = "dashed")
 
 
@@ -45,9 +44,8 @@ ioi_art_all
 ## ----ioi-art-all-box, echo = FALSE--------------------------------------------
 ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
 
-ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
-  geom_hline(yintercept = 188, linetype = "dashed") +
-  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
+ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+  geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----normality1, echo = FALSE-------------------------------------------------
@@ -73,8 +71,7 @@ ioi_art_ch
 
 
 ## ----ioi-art-ch-box, echo = FALSE---------------------------------------------
-ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
-  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
   facet_grid(Boundary ~ .) +
   geom_hline(yintercept = 188, linetype = "dashed")
 
@@ -88,9 +85,8 @@ ioi_art_ch_all
 ## ----ioi-art-ch-all-box, echo = FALSE-----------------------------------------
 ioi_art_ch_plot <- data.table(subject = ioi_art_ch[Condition == "teaching"]$SubNr, teaching = ioi_art_ch[Condition == "teaching"]$Mean, performing = ioi_art_ch[Condition == "performing"]$Mean, boundary = ioi_art_ch[Condition == "teaching"]$Boundary)
 
-ggpaired(ioi_art_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
-  geom_hline(yintercept = 188, linetype = "dashed") +
-  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
+ggpaired(ioi_art_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+  geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----anova-art-boundary, echo = FALSE-----------------------------------------
@@ -110,9 +106,8 @@ ioi_art_trial
 
 
 ## ----ioi-art-trial-line, echo = FALSE, fig.height = 4-------------------------
-ggline(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggline(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   facet_wrap(SubNr ~ .) +
-  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
   scale_x_continuous(breaks = seq(1,8,1)) +
   geom_hline(yintercept = 188, linetype = "dashed")
 
@@ -124,9 +119,8 @@ ioi_art_trial_all
 
 
 ## ----ioi-art-trial-all-line, echo = FALSE-------------------------------------
-ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
@@ -137,8 +131,7 @@ ioi_dyn
 
 
 ## ----ioi-dyn-box,  echo = FALSE-----------------------------------------------
-ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
-  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
   geom_hline(yintercept = 188, linetype = "dashed")
 
 
@@ -151,9 +144,8 @@ ioi_dyn_all
 ## ----ioi-dyn-all-box, echo = FALSE--------------------------------------------
 ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
 
-ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 188, linetype = "dashed") +
-  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
+ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+  geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----normality2, echo = FALSE-------------------------------------------------
@@ -179,8 +171,7 @@ ioi_dyn_ch
 
 
 ## ----ioi-dyn-ch-box, echo = FALSE---------------------------------------------
-ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", palette = "aaas", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
-  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
+ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
   facet_grid(Boundary ~ .) +
   geom_hline(yintercept = 188, linetype = "dashed")
 
@@ -194,9 +185,8 @@ ioi_dyn_ch_all
 ## ----ioi-dyn-ch-all-box, echo = FALSE-----------------------------------------
 ioi_dyn_ch_plot <- data.table(subject = ioi_dyn_ch[Condition == "teaching"]$SubNr, teaching = ioi_dyn_ch[Condition == "teaching"]$Mean, performing = ioi_dyn_ch[Condition == "performing"]$Mean, boundary = ioi_dyn_ch[Condition == "teaching"]$Boundary)
 
-ggpaired(ioi_dyn_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 188, linetype = "dashed") +
-  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica Neue LT Std 57 Condensed")
+ggpaired(ioi_dyn_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+  geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----anova-dyn-boundary, echo = FALSE-----------------------------------------
@@ -216,9 +206,8 @@ ioi_dyn_trial
 
 
 ## ----ioi-dyn-trial-line, echo = FALSE, fig.height = 4-------------------------
-ggline(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", palette = "aaas", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+ggline(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   facet_wrap(SubNr ~ .) +
-  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
   scale_x_continuous(breaks = seq(1,8,1)) +
   geom_hline(yintercept = 188, linetype = "dashed")
 
@@ -230,9 +219,8 @@ ioi_dyn_trial_all
 
 
 ## ----ioi-dyn-trial-all-line, echo = FALSE-------------------------------------
-ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", palette = "aaas", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  theme_pubr(base_size = 20, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
@@ -240,9 +228,8 @@ ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = pos
 # For each individual
 ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
   scale_x_continuous(breaks = seq(1,66,1))
 
 
@@ -250,9 +237,8 @@ ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = posi
 # For each individual
 ioi_dyn_seq <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(ioi_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", palette = "aaas", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+ggline(ioi_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  theme_pubr(base_size = 12, legend = "bottom", base_family = "Helvetica Neue LT Std 57 Condensed") +
     scale_x_continuous(breaks = seq(1,66,1))
 
 
