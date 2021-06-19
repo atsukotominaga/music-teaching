@@ -155,7 +155,7 @@ kot_art_plot <- data.table(subject = kot_art[Condition == "teaching"]$SubNr, tea
 
 kot_art_1 <- ggpaired(kot_art_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Articulation") +
   ylim(-170, 105) +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = -50, method = "t.test", paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.45, label.y = -50, method = "t.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -227,7 +227,7 @@ vel_diff_dyn_plot <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$
 
 vel_diff_dyn_1 <- ggpaired(vel_diff_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Exp 1") +
   ylim(-40, 60) +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 45, method = "t.test", paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.4, label.y = 45, method = "t.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -362,7 +362,7 @@ kor_art_plot <- data.table(subject = kor_art[Condition == "teaching"]$SubNr, tea
 
 kor_art_2 <- ggpaired(kor_art_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "KOR", title = "KOR: Articulation") +
   ylim(-1, 0.4) +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = -0.5, method = "t.test", paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.4, label.y = -0.5, method = "t.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -422,7 +422,7 @@ ggsave(here("paper/image", "vel_dyn_2.png"), plot = vel_dyn_2, dpi = 600, width 
 img_vel_dyn_2 <- image_read(here("paper/image", "vel_dyn_2.png"))
 ```
 
-### 3.2.6. KV Transition Points
+### 3.2.6. Dynamics: KV Transition Points
 
 A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Subcomponent-FP (FtoP vs. PtoF) showed that there was a significant main effect of Subcomponent-FP (*F*(`r vel_diff_dyn_aov$anova_table[2,1]`,`r vel_diff_dyn_aov$anova_table[2,2]`) = `r sprintf('%.0f', vel_diff_dyn_aov$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[2,5])`) and a significant interaction of Condition and Subcomponent-FP (*F*(`r vel_diff_dyn_aov$anova_table[3,1]`,`r vel_diff_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,5])`; *Figure \ref{fig:vel-diff}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when the expressive notation changed from forte to piano and from piano to forte in the teaching condition [FtoP; *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$SD`, PtoF; *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$SD`] than in the performing condition [FtoP; *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$SD`, PtoF; *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$SD`] (FtoP; *p* `r if(vel_diff_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[1]))}`, PtoF; *p* `r if(vel_diff_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[2]))}`).
 
@@ -431,7 +431,7 @@ vel_diff_dyn_plot <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$
 
 vel_diff_dyn_2 <- ggpaired(vel_diff_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Exp 2") +
   ylim(-40, 60) +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 45, method = "t.test", paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.45, label.y = 45, method = "t.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
