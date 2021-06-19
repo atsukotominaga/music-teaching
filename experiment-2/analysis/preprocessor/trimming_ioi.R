@@ -164,6 +164,8 @@ for (i in 1:nrow(ioi_summary[Include == "No"])){
 }
 dt_ioi_subset <- dt_ioi_subset_all[Exclude == 0]
 
+# as a result, SubNr == 2 were excluded due to deviated tempi
+
 ####################################
 # 1. > +- 3SD across the conditions
 ####################################
