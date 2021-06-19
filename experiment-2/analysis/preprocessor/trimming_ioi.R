@@ -155,13 +155,16 @@ plot(p_ioi_box)
 ioi_summary <- dt_ioi_subset_all[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr)]
 # exclude tempo deviated participants
 ioi_summary$Include <- "No"
-ioi_summary[Mean < mean(ioi_summary$Mean)+2*sd(ioi_summary$Mean) & Mean > mean(ioi_summary$Mean)-2*sd(ioi_summary$Mean)]$Include <- "Yes"
+ioi_summary[Mean < mean(ioi_summary$Mean)+3*sd(ioi_summary$Mean) & Mean > mean(ioi_summary$Mean)-3*sd(ioi_summary$Mean)]$Include <- "Yes"
 # exclude participants due to deviated tempi
 dt_ioi_subset <- data.table()
 dt_ioi_subset_all$Exclude <- 0
-for (i in 1:nrow(ioi_summary[Include == "No"])){
-  dt_ioi_subset_all[SubNr == ioi_summary[Include == "No"]$SubNr[i]]$Exclude <- 1
+if (nrow(ioi_summary[Include == "No"]) > 0){
+  for (i in 1:nrow(ioi_summary[Include == "No"])){
+    dt_ioi_subset_all[SubNr == ioi_summary[Include == "No"]$SubNr[i]]$Exclude <- 1
+  }
 }
+
 dt_ioi_subset <- dt_ioi_subset_all[Exclude == 0]
 
 # as a result, SubNr == 2 were excluded due to deviated tempi

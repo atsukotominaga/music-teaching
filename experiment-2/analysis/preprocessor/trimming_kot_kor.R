@@ -74,8 +74,8 @@ dt_offset <- dt_kot_offset_all[order(SubNr, BlockNr, TrialNr, NoteNr)]
 # (see error_summary.Rmd
 # and trimming_ioi.R) 
 ####################################
-dt_kot_onset <- dt_onset[SubNr != 2]
-dt_kot_offset <- dt_offset[SubNr != 2]
+dt_kot_onset <- dt_onset
+dt_kot_offset <- dt_offset
 
 ####################################
 # Define Subcomponents

@@ -54,11 +54,11 @@ dt_vel_diff[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Conditi
 
 
 ## ----export-csv, echo = TRUE--------------------------------
-fwrite(dt_ioi[SubNr != 2 & SubNr != 3], file = "./trimmed/data_analysis_ioi.txt", sep = ",")
-fwrite(dt_kor[SubNr != 2 & SubNr != 3], file = "./trimmed/data_analysis_kor.txt", sep = ",")
-fwrite(dt_kot[SubNr != 2 & SubNr != 3], file = "./trimmed/data_analysis_kot.txt", sep = ",")
-fwrite(dt_vel[SubNr != 2 & SubNr != 3], file = "./trimmed/data_analysis_vel.txt", sep = ",")
-fwrite(dt_vel_diff[SubNr != 2 & SubNr != 3], file = "./trimmed/data_analysis_vel_diff.txt", sep = ",")
+fwrite(dt_ioi[SubNr != 3], file = "./trimmed/data_analysis_ioi.txt", sep = ",")
+fwrite(dt_kor[SubNr != 3], file = "./trimmed/data_analysis_kor.txt", sep = ",")
+fwrite(dt_kot[SubNr != 3], file = "./trimmed/data_analysis_kot.txt", sep = ",")
+fwrite(dt_vel[SubNr != 3], file = "./trimmed/data_analysis_vel.txt", sep = ",")
+fwrite(dt_vel_diff[SubNr != 3], file = "./trimmed/data_analysis_vel_diff.txt", sep = ",")
 
 
 ## ----export, include = FALSE--------------------------------
