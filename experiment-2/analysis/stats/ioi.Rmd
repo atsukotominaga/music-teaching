@@ -18,7 +18,6 @@ Description: This is a summary of tempo analysis.
 - Participants will play slower while teaching regardless of the techniques.
 
 2. Excluded participants
-- SubNr 2: A deviated tempo
 - SubNr 3: Insufficient motor skills
 
 3. Stats packages
@@ -175,7 +174,7 @@ ioi_art_ch_all
 
 ### Plot
 #### Box plot
-- A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms)
+- A dashed line represents the tempo given by a metronome.
 
 ```{r ioi-art-ch-all-box, echo = FALSE}
 ioi_art_ch_plot <- data.table(subject = ioi_art_ch[Condition == "teaching"]$SubNr, teaching = ioi_art_ch[Condition == "teaching"]$Mean, performing = ioi_art_ch[Condition == "performing"]$Mean, boundary = ioi_art_ch[Condition == "teaching"]$Boundary)
@@ -228,7 +227,7 @@ ioi_art_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 - A dashed line represents the tempo given by a metronome.
 
 ```{r ioi-art-trial-all-line, echo = FALSE}
@@ -388,7 +387,7 @@ ioi_dyn_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 - A dashed line represents the tempo given by a metronome.
 
 ```{r ioi-dyn-trial-all-line, echo = FALSE}

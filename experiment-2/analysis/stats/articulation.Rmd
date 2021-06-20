@@ -15,7 +15,7 @@ Description: This is a summary of articulation analysis.
 - Dependent variables: Key-Overlap Ratio (KOR), Key-Overlap Time (KOT)
 
 1. Main predictions
-Participants will exaggerate legato and staccato more while teaching.
+- Participants will exaggerate legato and staccato more while teaching.
 
 2. Excluded participants
 - SubNr 2: A deviated tempo
@@ -132,7 +132,7 @@ kor_art_all
 
 ### Plot
 #### Scatter plot
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r kor-art-all-scatter, echo = FALSE}
 ggerrorplot(kor_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KOR", title = "KOR: Articulation")
@@ -196,7 +196,7 @@ kor_art_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r kor-art-trial-all-line-legato, echo = FALSE}
 ggline(kor_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Articulation/Legato") +
@@ -238,7 +238,7 @@ kot_art_all
 
 ### Plot
 #### Scatter plot
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r kot-art-all-scatter, echo = FALSE}
 ggerrorplot(kot_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Articulation")
@@ -302,7 +302,7 @@ kot_art_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r kot-art-trial-all-line-legato, echo = FALSE}
 ggline(kot_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Articulation/Legato") +
@@ -342,7 +342,7 @@ kor_dyn_all
 
 ### Plot
 #### Scatter plot
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r kor-dyn-all-scatter, echo = FALSE}
 ggerrorplot(kor_dyn, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KOR", title = "KOR: Dynamics")
@@ -400,7 +400,7 @@ kor_dyn_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r kor-dyn-trial-all-line-forte, echo = FALSE}
 ggline(kor_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Dynamics/Forte") +
@@ -441,7 +441,7 @@ kot_dyn_all
 
 ### Plot
 #### Scatter plot
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r kot-dyn-all-scatter, echo = FALSE}
 ggerrorplot(kot_dyn, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Dynamics")
@@ -499,7 +499,7 @@ kot_dyn_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r kot-dyn-trial-all-line-forte, echo = FALSE}
 ggline(kot_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Forte") +
