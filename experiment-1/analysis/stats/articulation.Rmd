@@ -15,7 +15,7 @@ Description: This is a summary of articulation analysis.
 - Dependent variables: Key-Overlap Time (KOT), Key-Overlap Ratio (KOR)
 
 1. Main predictions
-Participants will exaggerate legato and staccato more while teaching.
+- Participants will exaggerate legato and staccato more while teaching.
 
 2. Excluded participants
 

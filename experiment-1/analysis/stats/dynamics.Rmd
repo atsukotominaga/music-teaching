@@ -41,9 +41,6 @@ Description: This is a summary of dynamics analysis.
 - Group results and stats (if available)
   + [All](#vel_dyn_group_all)
   + [Trial by trial](#vel_dyn_group_trial)
-  
-- Order analysis (teaching/performing first?)
-  + [All](#vel_dyn_order_group_all)
 
 ### KV-Diff
 - Individual results
@@ -54,9 +51,6 @@ Description: This is a summary of dynamics analysis.
   + [All](#vel_diff_dyn_group_all)
   + [Trial by trial](#vel_diff_dyn_group_trial)
 
-- Order analysis (teaching/performing first?)
-  + [All](#vel_diff_dyn_order_group_all)
-  
 - [Sequence plot](#sequence_dyn)
 
 ## [Articulation](#vel_articulation)
@@ -143,7 +137,7 @@ vel_dyn_all
 
 ### Plot
 #### Scatter plot
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r vel-dyn-all-scatter, echo = FALSE}
 ggerrorplot(vel_dyn, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics")
@@ -207,7 +201,7 @@ vel_dyn_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r vel-dyn-trial-all-line-forte, echo = FALSE}
 ggline(vel_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Dynamics/Forte") +
@@ -247,7 +241,7 @@ vel_diff_dyn_all
 
 ### Plot
 #### Scatter plot
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r vel-diff-dyn-all-scatter, echo = FALSE}
 ggerrorplot(vel_diff_dyn, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics")
@@ -311,7 +305,7 @@ vel_diff_dyn_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r vel-diff-dyn-trial-all-line-ftop, echo = FALSE}
 ggline(vel_diff_dyn_trial[Subcomponent == "FtoP"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Difference", title = "KV-Diff: Dynamics/Forte to Piano") +
@@ -351,7 +345,7 @@ vel_art_all
 
 ### Plot
 #### Scatter plot
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r vel-art-all-scatter, echo = FALSE}
 ggerrorplot(vel_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Articulation")
@@ -415,7 +409,7 @@ vel_art_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r vel-art-trial-all-line-legato, echo = FALSE}
 ggline(vel_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Articulation/Legato") +
@@ -455,7 +449,7 @@ vel_diff_art_all
 
 ### Plot
 #### Scatter plot
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r vel-diff_art-all-scatter, echo = FALSE}
 ggerrorplot(vel_diff_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Articulation")
@@ -519,7 +513,7 @@ vel_diff_art_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 
 ```{r vel-diff-art-trial-all-line-ltos, echo = FALSE}
 ggline(vel_diff_art_trial[Subcomponent == "LtoS"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Difference", title = "KV-Diff: Articulation/Legato to Staccato") +
