@@ -62,7 +62,8 @@ ioi_art_wilcoxon
 
 
 ## ----effect-art, echo = FALSE-------------------------------
-ioi_art %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
+wilcoxeff_art <- ioi_art %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
+wilcoxeff_art
 
 
 ## ----ioi-art-ch, echo = FALSE-------------------------------
@@ -166,7 +167,8 @@ ioi_dyn_wilcoxon
 
 
 ## ----effect-dyn, echo = FALSE-------------------------------
-ioi_dyn %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
+wilcoxeff_dyn <- ioi_dyn %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
+wilcoxeff_dyn
 
 
 ## ----ioi-dyn-ch, echo = FALSE-------------------------------

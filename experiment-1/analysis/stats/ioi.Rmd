@@ -27,6 +27,7 @@ Description: This is a summary of tempo analysis.
 
 3. Stats packages
 - [afex](https://github.com/singmann/afex) for ANOVAs
+- [rstatix](https://github.com/kassambara/rstatix) for effect sizes
 
 # Outline - Tempo (IOIs)
 ## [Articulation](#ioi-articulation)
@@ -234,7 +235,7 @@ ioi_art_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-trial-all-line, echo = FALSE}
@@ -394,7 +395,7 @@ ioi_dyn_trial_all
 
 ### Plot
 #### Line graph
-- Error bars show SEM of the mean
+- Error bars show SEM of the mean.
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-dyn-trial-all-line, echo = FALSE}

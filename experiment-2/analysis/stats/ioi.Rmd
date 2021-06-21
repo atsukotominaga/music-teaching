@@ -22,6 +22,7 @@ Description: This is a summary of tempo analysis.
 
 3. Stats packages
 - [afex](https://github.com/singmann/afex) for ANOVAs
+- [rstatix](https://github.com/kassambara/rstatix) for effect sizes
 
 # Outline - Tempo (IOIs)
 ## [Articulation](#ioi-articulation)
