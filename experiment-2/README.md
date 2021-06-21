@@ -32,7 +32,7 @@ This repo contains scripts and materials necessary for a musical experiment with
 - cond: contains a csv file and an excel file about the order of conditions for each participant
 
 # analysis
-- Environment: Mac OS X 10.15.7, R version 3.6.3 (2020-02-29)
+- Environment: Mac OS X 10.15.7, R version 4.0.5 (2021-03-31)
 
 ## 1. preprosessor
 data: `raw_data`
