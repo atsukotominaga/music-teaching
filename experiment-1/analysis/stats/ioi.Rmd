@@ -65,6 +65,7 @@ if (!require("data.table")) {install.packages("data.table"); require("data.table
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 # statistics
 if (!require("afex")) {install.packages("afex"); require("afex")}
+if (!require("rstatix")) {install.packages("rstatix"); require("rstatix")}
 ```
 
 ```{r file, include = FALSE}
@@ -138,6 +139,11 @@ ioi_art_norm
 ```{r wilcoxon-art, echo = FALSE}
 ioi_art_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_art, paired = TRUE, alternative = "two.sided")
 ioi_art_wilcoxon
+```
+#### Effect size
+```{r effect-art, echo = FALSE}
+wilcoxeff_art <- ioi_art %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
+wilcoxeff_art
 ```
 
 ## 3. Phrase boundaries - individual{#art_ind_phrase}
@@ -292,6 +298,12 @@ ioi_dyn_norm
 ```{r wilcoxon-dyn, echo = FALSE}
 ioi_dyn_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_dyn, paired = TRUE, alternative = "two.sided")
 ioi_dyn_wilcoxon
+```
+
+#### Effect size
+```{r effect-dyn, echo = FALSE}
+wilcoxeff_dyn <- ioi_dyn %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
+wilcoxeff_dyn
 ```
 
 ## 3. Phrase boundaries - individual{#dyn_ind_phrase}

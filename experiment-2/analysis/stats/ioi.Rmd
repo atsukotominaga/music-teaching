@@ -60,6 +60,7 @@ if (!require("data.table")) {install.packages("data.table"); require("data.table
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 # statistics
 if (!require("afex")) {install.packages("afex"); require("afex")}
+if (!require("rstatix")) {install.packages("rstatix"); require("rstatix")}
 ```
 
 ```{r file, include = FALSE}
@@ -132,11 +133,22 @@ ioi_art_norm
 ioi_art_ttest <- t.test(ioi_art[Condition == "teaching"]$Mean, ioi_art[Condition == "performing"]$Mean, paired = TRUE, alternative = "two.sided")
 ioi_art_ttest
 ```
+#### Effect size
+```{r effect-cohen-art, echo = FALSE}
+coheneff_art <- ioi_art %>% cohens_d(Mean ~ Condition, paired = TRUE)
+coheneff_art
+```
 
 #### Wilcoxon signed-rank test
 ```{r wilcoxon-art, echo = FALSE}
 ioi_art_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_art, paired = TRUE, alternative = "two.sided")
 ioi_art_wilcoxon
+```
+
+#### Effect size
+```{r effect-wilcox-art, echo = FALSE}
+wilcoxeff_art <- ioi_art %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
+wilcoxeff_art
 ```
 
 ## 3. Phrase boundaries - individual{#art_ind_phrase}
@@ -292,11 +304,22 @@ ioi_dyn_norm
 ioi_dyn_ttest <- t.test(ioi_dyn[Condition == "teaching"]$Mean, ioi_dyn[Condition == "performing"]$Mean, paired = TRUE, alternative = "two.sided")
 ioi_dyn_ttest
 ```
+#### Effect size
+```{r effect-cohen-dyn, echo = FALSE}
+coheneff_dyn <- ioi_dyn %>% cohens_d(Mean ~ Condition, paired = TRUE)
+coheneff_dyn
+```
 
 #### Wilcoxon signed-rank test
 ```{r wilcoxon-dyn, echo = FALSE}
 ioi_dyn_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_dyn, paired = TRUE, alternative = "two.sided")
 ioi_dyn_wilcoxon
+```
+
+#### Effect size
+```{r effect-wilcox-dyn, echo = FALSE}
+wilcoxeff_dyn <- ioi_dyn %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
+wilcoxeff_dyn
 ```
 
 ## 3. Phrase boundaries - individual{#dyn_ind_phrase}
