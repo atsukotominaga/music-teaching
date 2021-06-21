@@ -145,7 +145,7 @@ ggpaired(kor_art_plot, cond = "performing", cond2 = "teaching", color = "conditi
 ```
 
 ### Statistics
-#### Two-way ANOVA (car_aov)
+#### Two-way ANOVA (aov_car)
 ```{r anova-art-kor-1, echo = FALSE}
 kor_art_aov <- aov_car(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_art)
 summary(kor_art_aov)
@@ -251,7 +251,7 @@ ggpaired(kot_art_plot, cond = "performing", cond2 = "teaching", color = "conditi
 ```
 
 ### Statistics
-#### Two-way ANOVA (car_aov)
+#### Two-way ANOVA (aov_car)
 ```{r anova-art-kot-1, echo = FALSE}
 kot_art_aov <- aov_car(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kot_art)
 summary(kot_art_aov)
@@ -355,7 +355,7 @@ ggpaired(kor_dyn_plot, cond = "performing", cond2 = "teaching", color = "conditi
 ```
 
 ### Statistics
-#### Two-way ANOVA (car_aov)
+#### Two-way ANOVA (aov_car)
 ```{r anova-dyn-kor-1, echo = FALSE}
 kor_dyn_aov <- aov_car(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kor_dyn)
 summary(kor_dyn_aov)
@@ -454,7 +454,7 @@ ggpaired(kot_dyn_plot, cond = "performing", cond2 = "teaching", color = "conditi
 ```
 
 ### Statistics
-#### Two-way ANOVA (car_aov)
+#### Two-way ANOVA (aov_car)
 ```{r anova-dyn-kot-1, echo = FALSE}
 kot_dyn_aov <- aov_car(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), data = kot_dyn)
 summary(kot_dyn_aov)
