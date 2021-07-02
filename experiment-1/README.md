@@ -52,6 +52,9 @@ data: `raw_data`
 data: `questionnaire.csv`
 - `questionnaire.Rmd` >> output: html file
 
+# data
+filtered and trimmed data files for analysis (see details: [perception-v1.0: Workflow](https://github.com/atsukotominaga/music-teaching/tree/main/experiment-1/analysis/preprocessor))
+
 # material
 ## instruction
 - `instruction.Rmd`: instruction sheet for an experimenter >> output: html file

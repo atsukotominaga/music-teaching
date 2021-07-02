@@ -48,12 +48,12 @@ data: `raw_data`
 - `articulation.Rmd`: analysis and plots for KOT/KOR >> output: html file
 - `dynamics.Rmd`: analysis and plots for KV/KV-Diff >> output: html file
 
-## condfile
-- `condfile.R`:o generate a counterbalance sheet >> output: csv file
-
 ## demographics
 data: `questionnaire.csv`
 - `questionnaire.Rmd` >> output: html file
+
+# data
+filtered and trimmed data files for analysis (see details: [perception-v2.0: Workflow](https://github.com/atsukotominaga/music-teaching/tree/main/experiment-2/analysis/preprocessor))
 
 # material
 ## instruction
@@ -69,5 +69,6 @@ data: `questionnaire.csv`
 - `image`: used for stimuli generation
 
 ## etc
+- `condfile`: to generate a counterbalance sheet >> output: csv file
 - `cropped`: cropped sheet music
 - `checklist.xlsx`: a list to check each procedure during testing (for an experimenter)
