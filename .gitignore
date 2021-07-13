@@ -12,7 +12,7 @@ experiment/midi/
 paper/docs
 paper/manuscript_files
 paper/feedback
-paper/*bib
+paper/submission_info.md
 
 # personal stuff
 merged
