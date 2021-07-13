@@ -50,6 +50,9 @@ if (!require("magick")) {install.packages("magick"): require("magick")}
 if (!file.exists(here("paper/image"))){
   dir.create(here("paper/image"))
 }
+if (!file.exists(here("paper/figure"))){
+  dir.create(here("paper/figure"))
+}
 ```
 
 # Introduction
@@ -113,7 +116,7 @@ img_stimuli <- image_annotate(img_stimuli, "(C)", size = 80, location = "+100+13
 img_stimuli
 
 # save
-image_write(img_stimuli, path = here("paper/image/", "stimuli.tiff"), format = "tiff")
+image_write(img_stimuli, path = here("paper/figure", "Fig1.tiff"), format = "tiff")
 ```
 
 \newpage
@@ -126,7 +129,7 @@ source(here("experiment-1/analysis/stats", "articulation.R"), chdir = TRUE)
 source(here("experiment-1/analysis/stats", "dynamics.R"), chdir = TRUE)
 ```
 
-All effects are reported as significant at *p* < .05. We first report results for performance of the piece with the notated expression of articulation (*Fig \ref{fig:stimuli}, B*), followed by performance of the piece with the notated expression of dynamics (*Fig \ref{fig:stimuli}, C*). To recall our predictions, if participants play more slowly when they are trying to teach, interonset intervals (IOIs) should be larger when teaching. If participants specifically modulate relevant aspects of the expressive techniques they are trying to teach, key-overlap time (KOT) should reveal exaggerated legato/staccato when teaching articulation, and key velocity (KV) should reveal amplifications of forte and piano when teaching dynamics.
+All effects are reported as significant at *p* < .05. We first report results for performance of the piece with the notated expression of articulation (*Fig \ref{fig:stimuli}, B*), followed by performance of the piece with the notated expression of dynamics (*Fig \ref{fig:stimuli}, C*). To recall our predictions, if participants play more slowly when they are trying to teach, interonset intervals (IOIs) should be larger when teaching. If participants specifically modulate relevant aspects of the expressive techniques they are trying to teach, key-overlap time (KOT) should reveal be more positive for legato and more negative for staccato when teaching articulation, and key velocity (KV) should reveal amplifications of forte and piano when teaching dynamics.
 
 ## Articulation
 ### Interonset Intervals (IOIs)
@@ -222,7 +225,7 @@ img_vel_dyn_1 <- image_annotate(img_vel_dyn_1, "*", size = 280, color = "black",
 
 ### KV Transition Points
 
-Additionally, we conducted an exploratory analysis by focusing on specific points at which each subcomponent changed from one to the other (i.e., forte to piano: FtoP, piano to forte: PtoF). These points could be structurally important in order to make a contrast between forte and piano. We calculated the KV difference for each interval by subtracting the KV value of the current note from that of the following note. Outliers were removed using the same criteria as for the other dependent variables and less than 5 % of the data were excluded from analysis. A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Transition Type (FtoP vs. PtoF) showed that there was a significant main effect of Dynamics (*F*(`r vel_diff_dyn_aov$anova_table[2,1]`,`r vel_diff_dyn_aov$anova_table[2,2]`) = `r sprintf('%.0f', vel_diff_dyn_aov$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[2,5])`) and a significant interaction between Condition and Transition Type (*F*(`r vel_diff_dyn_aov$anova_table[3,1]`,`r vel_diff_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,5])`, *Fig \ref{fig:vel-diff}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when changing from forte to piano (FtoP: *p* `r if(vel_diff_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[1]))}`) and from piano to forte (PtoF: *p* `r if(vel_diff_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[2]))}`) in the teaching condition [FtoP: *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$SD`; PtoF: *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$SD`] than in the performing condition [FtoP: *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$SD`, PtoF: *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$SD`].
+Additionally, we conducted an exploratory analysis by focusing on specific points at which each subcomponent changed from one to the other (i.e., forte to piano: FtoP, piano to forte: PtoF). These points could be structurally important in order to make a contrast between forte and piano. We calculated the KV difference for each interval by subtracting the KV value of the current note from that of the following note. Outliers were removed using the same criteria as for the other dependent variables and less than 5 % of the data were excluded from analysis. A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Transition Type (FtoP vs. PtoF) showed that there was a significant main effect of Transition Type (*F*(`r vel_diff_dyn_aov$anova_table[2,1]`,`r vel_diff_dyn_aov$anova_table[2,2]`) = `r sprintf('%.0f', vel_diff_dyn_aov$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[2,5])`) and a significant interaction between Condition and Transition Type (*F*(`r vel_diff_dyn_aov$anova_table[3,1]`,`r vel_diff_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,5])`, *Fig \ref{fig:vel-diff}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when changing from forte to piano (FtoP: *p* `r if(vel_diff_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[1]))}`) and from piano to forte (PtoF: *p* `r if(vel_diff_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[2]))}`) in the teaching condition [FtoP: *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$SD`; PtoF: *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$SD`] than in the performing condition [FtoP: *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$SD`, PtoF: *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$SD`].
 
 ```{r vel-diff-dyn-1, echo = FALSE}
 vel_diff_dyn_plot <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn[Condition == "teaching"]$Mean, performing = vel_diff_dyn[Condition == "performing"]$Mean, subcomponent = vel_diff_dyn[Condition == "teaching"]$Subcomponent)
@@ -258,26 +261,26 @@ img_kot_dyn_1 <- image_read(here("paper/image", "kot_dyn_1.png"))
 
 The findings from Experiment 1 indicated that skilled pianists modified their performance for teaching purposes. For IOIs, we found a small but significant slowing down during teaching specifically when playing the piece with the notated articulation. This finding is in line with earlier studies that found slower performance of actions in a teaching context [e.g., @brand_2002; @mcellin_2017]. However, we did not find a significant difference in tempo when participants were teaching dynamics. It could be that trying to keep the prescribed tempo (conveyed through the leading metronome) limited the extent to which participants slowed down their performance during teaching. Another possibility is that slower performance may be beneficial to highlight the relation between two notes (i.e., to what extent two notes overlap) and was therefore employed when teaching articulation, whereas slower performance might not help when teaching dynamics. 
 
-The results for KOT and KV showed that participants successfully highlighted relevant aspects of articulation and dynamics. Specifically, they produced shorter staccato when teaching articulation and produced louder forte when teaching dynamics. Moreover, our exploratory analysis demonstrated that participants made a larger contrast in dynamics at transition points (i.e., forte to piano or piano to forte). Importantly, participants did not modulate their performance in terms of irrelevant aspects of the techniques for teaching purposes (e.g., modulating the smoothness of sound while teaching dynamics). These findings confirmed that participants modulated their performance in systematic and fine-grained ways in order to teach expressive techniques.
+The results for KOT and KV showed that participants successfully highlighted relevant aspects of articulation and dynamics. Specifically, key-overlap time was more negative when teaching articulation and key velocity for forte was higher when teaching dynamics. Moreover, our exploratory analysis demonstrated that participants made a larger contrast in dynamics at transition points (i.e., forte to piano or piano to forte). Importantly, participants did not modulate their performance in terms of irrelevant aspects of the techniques for teaching purposes (e.g., modulating the smoothness of sound while teaching dynamics). These findings confirmed that participants modulated their performance in systematic and fine-grained ways in order to teach expressive techniques.
 
 ```{r plot-ioi-1, out.width = "100%", fig.cap = "\\label{fig:ioi-1}Experiment 1: IOIs (ms) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_ioi_1 <- image_append(c(img_ioi_art_1, img_ioi_dyn_1))
-image_write(img_ioi_1, path = here("paper/image", "img_ioi_1.tiff"), format = "tiff")
+image_write(img_ioi_1, path = here("paper/figure", "Fig1.tiff"), format = "tiff")
 img_ioi_1
 ```
 
 ```{r plot-kot-1, out.width = "100%", fig.cap = "\\label{fig:kot-1}Experiment 1: KOT (ms) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_kot_1 <- image_append(c(img_kot_art_1, img_kot_dyn_1))
-image_write(img_kot_1, path = here("paper/image", "img_kot_1.tiff"), format = "tiff")
+image_write(img_kot_1, path = here("paper/figure", "Fig3.tiff"), format = "tiff")
 img_kot_1
 ```
 
 ```{r plot-vel-1, out.width = "100%", fig.cap = "\\label{fig:vel-1}Experiment 1: KV (0-127) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_vel_1 <- image_append(c(img_vel_art_1, img_vel_dyn_1))
-image_write(img_vel_1, path = here("paper/image", "img_vel_1.tiff"), format = "tiff")
+image_write(img_vel_1, path = here("paper/figure", "Fig4.tiff"), format = "tiff")
 img_vel_1
 ```
 
@@ -322,7 +325,7 @@ img_stimuli_2 <- image_annotate(img_stimuli_2, "(C)", size = 80, location = "+10
 img_stimuli_2
 
 # save
-image_write(img_stimuli_2, path = here("paper/image/", "stimuli_2.tiff"), format = "tiff")
+image_write(img_stimuli_2, path = here("paper/figure", "Fig5.tiff"), format = "tiff")
 ```
 
 ## Results
@@ -410,7 +413,7 @@ img_ioi_dyn_2 <- image_read(here("paper/image", "ioi_dyn_2.png"))
 
 ### Key Velocity (KV)
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Dynamics (forte vs. piano) showed that there was a significant main effect of Dynamics (*F*(`r vel_dyn_aov$anova_table[2,1]`,`r vel_dyn_aov$anova_table[2,2]`) = `r sprintf('%.0f', vel_dyn_aov$anova_table[2,4])`, *p* `r if(vel_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_dyn_aov$anova_table[2,5])`) and a significant interaction between Condition and Dynamics (*F*(`r vel_dyn_aov$anova_table[3,1]`,`r vel_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_dyn_aov$anova_table[3,4])`, *p* `r if(vel_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_dyn_aov$anova_table[3,5])`, *Fig \ref{fig:vel-2}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that participants produced higher key velocity (*p* `r if(vel_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_posthoc$p.value[1]))}`) when instructed to play forte. Also, participants produced lower key velocity (*p* `r if(vel_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_posthoc$p.value[2]))}`) in the teaching condition [Forte: *M* = `r vel_dyn_all[Condition == "teaching" & Subcomponent == "Forte"]$Mean`, *SD* = `r vel_dyn_all[Condition == "teaching" & Subcomponent == "Forte"]$SD`, Piano: *M* = `r vel_dyn_all[Condition == "teaching" & Subcomponent == "Piano"]$Mean`, *SD* = `r vel_dyn_all[Condition == "teaching" & Subcomponent == "Piano"]$SD`] than in the performing condition [Forte: *M* = `r vel_dyn_all[Condition == "performing" & Subcomponent == "Forte"]$Mean`, *SD* = `r vel_dyn_all[Condition == "performing" & Subcomponent == "Forte"]$SD`, Piano: *M* = `r vel_dyn_all[Condition == "performing" & Subcomponent == "Piano"]$Mean`, *SD* = `r vel_dyn_all[Condition == "performing" & Subcomponent == "Piano"]$SD`] than in the performing condition when instructed to play piano.
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Dynamics (forte vs. piano) showed that there was a significant main effect of Dynamics (*F*(`r vel_dyn_aov$anova_table[2,1]`,`r vel_dyn_aov$anova_table[2,2]`) = `r sprintf('%.0f', vel_dyn_aov$anova_table[2,4])`, *p* `r if(vel_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_dyn_aov$anova_table[2,5])`) and a significant interaction between Condition and Dynamics (*F*(`r vel_dyn_aov$anova_table[3,1]`,`r vel_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_dyn_aov$anova_table[3,4])`, *p* `r if(vel_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_dyn_aov$anova_table[3,5])`, *Fig \ref{fig:vel-2}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that participants produced higher key velocity (*p* `r if(vel_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_posthoc$p.value[1]))}`) when instructed to play forte. Also, participants produced lower key velocity (*p* `r if(vel_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_dyn_posthoc$p.value[2]))}`) in the teaching condition [Forte: *M* = `r vel_dyn_all[Condition == "teaching" & Subcomponent == "Forte"]$Mean`, *SD* = `r vel_dyn_all[Condition == "teaching" & Subcomponent == "Forte"]$SD`, Piano: *M* = `r vel_dyn_all[Condition == "teaching" & Subcomponent == "Piano"]$Mean`, *SD* = `r vel_dyn_all[Condition == "teaching" & Subcomponent == "Piano"]$SD`] than in the performing condition [Forte: *M* = `r vel_dyn_all[Condition == "performing" & Subcomponent == "Forte"]$Mean`, *SD* = `r vel_dyn_all[Condition == "performing" & Subcomponent == "Forte"]$SD`, Piano: *M* = `r vel_dyn_all[Condition == "performing" & Subcomponent == "Piano"]$Mean`, *SD* = `r vel_dyn_all[Condition == "performing" & Subcomponent == "Piano"]$SD`] when instructed to play piano.
 
 ```{r vel-dyn-2, echo = FALSE}
 vel_dyn_plot <- data.table(subject = vel_dyn[Condition == "teaching"]$SubNr, teaching = vel_dyn[Condition == "teaching"]$Mean, performing = vel_dyn[Condition == "performing"]$Mean, subcomponent = vel_dyn[Condition == "teaching"]$Subcomponent)
@@ -427,7 +430,7 @@ img_vel_dyn_2 <- image_read(here("paper/image", "vel_dyn_2.png"))
 
 ### KV Transition Points
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Transition Type (FtoP vs. PtoF) showed that there was a significant main effect of Dynamics (*F*(`r vel_diff_dyn_aov$anova_table[2,1]`,`r vel_diff_dyn_aov$anova_table[2,2]`) = `r sprintf('%.0f', vel_diff_dyn_aov$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[2,5])`) and a significant interaction between Condition and Transition Type (*F*(`r vel_diff_dyn_aov$anova_table[3,1]`,`r vel_diff_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,5])`, *Fig \ref{fig:vel-diff}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when changing from forte to piano (FtoP: *p* `r if(vel_diff_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[1]))}`) and from piano to forte (PtoF: *p* `r if(vel_diff_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[2]))}`) in the teaching condition [FtoP: *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$SD`, PtoF: *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$SD`] than in the performing condition [FtoP: *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$SD`, PtoF: *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$SD`].
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Transition Type (FtoP vs. PtoF) showed that there was a significant main effect of Transition Type (*F*(`r vel_diff_dyn_aov$anova_table[2,1]`,`r vel_diff_dyn_aov$anova_table[2,2]`) = `r sprintf('%.0f', vel_diff_dyn_aov$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[2,5])`) and a significant interaction between Condition and Transition Type (*F*(`r vel_diff_dyn_aov$anova_table[3,1]`,`r vel_diff_dyn_aov$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_diff_dyn_aov$anova_table[3,5])`, *Fig \ref{fig:vel-diff}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when changing from forte to piano (FtoP: *p* `r if(vel_diff_dyn_posthoc$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[1]))}`) and from piano to forte (PtoF: *p* `r if(vel_diff_dyn_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc$p.value[2]))}`) in the teaching condition [FtoP: *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "FtoP"]$SD`, PtoF: *M* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "teaching" & Subcomponent == "PtoF"]$SD`] than in the performing condition [FtoP: *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "FtoP"]$SD`, PtoF: *M* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_all[Condition == "performing" & Subcomponent == "PtoF"]$SD`].
 
 ```{r vel-diff-dyn-2, echo = FALSE}
 vel_diff_dyn_plot <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn[Condition == "teaching"]$Mean, performing = vel_diff_dyn[Condition == "performing"]$Mean, subcomponent = vel_diff_dyn[Condition == "teaching"]$Subcomponent)
@@ -461,32 +464,32 @@ img_kor_dyn_2 <- image_read(here("paper/image", "kor_dyn_2.png"))
 
 ## Discussion
 
-The results from Experiment 2 replicate our earlier findings and provide further evidence that skilled pianists were able to modulate their performance for teaching purposes. As in Experiment 1, we observed slower performance only while teaching the notated articulation. Again, KOR showed that when teaching articulation, participants produced shorter staccato, while there was no significant difference in legato between the two conditions. While teaching dynamics, KV showed that participants produced louder forte and softer piano. This pattern of exaggeration was more pronounced than in Experiment 1, where only louder forte was observed. Furthermore, we again found that when teaching dynamics, participants made a larger contrast between forte and piano bidirectionally at transition points. Importantly, participants did not modulate performance aspects that were irrelevant with regard to the techniques to be taught (i.e., no modulation of dynamics when teaching articulation and vice versa). Overall, Experiment 2 demonstrated systematic and fine-grained didactic performance modulations for a naturalistic piece of music.
+The results from Experiment 2 replicate our earlier findings and provide further evidence that skilled pianists were able to modulate their performance for teaching purposes. As in Experiment 1, we observed slower performance only while teaching the notated articulation. Again, KOR showed that when teaching articulation, key-overlap time was more negative for staccato, while there was no significant difference in legato between the two conditions. While teaching dynamics, KV showed that participants produced higher key velocity for forte and lower key velocity for piano. This pattern of exaggeration was more pronounced than in Experiment 1, where only higher key velocity for forte was observed. Furthermore, we again found that when teaching dynamics, participants made a larger contrast between forte and piano bidirectionally at transition points. Importantly, participants did not modulate performance aspects that were irrelevant with regard to the techniques to be taught (i.e., no modulation of dynamics when teaching articulation and vice versa). Overall, Experiment 2 demonstrated systematic and fine-grained didactic performance modulations for a naturalistic piece of music.
 
 ```{r plot-ioi-2, out.width = "100%", fig.cap = "\\label{fig:ioi-2}Experiment 2: Normalised IOIs when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 img_ioi_2 <- image_append(c(img_ioi_art_2, img_ioi_dyn_2))
-image_write(img_ioi_2, path = here("paper/image", "img_ioi_2.tiff"), format = "tiff")
+image_write(img_ioi_2, path = here("paper/figure", "Fig6.tiff"), format = "tiff")
 img_ioi_2
 ```
 
 ```{r plot-kor-2, out.width = "100%", fig.cap = "\\label{fig:kor-2}Experiment 2: KOR when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_kor_2 <- image_append(c(img_kor_art_2, img_kor_dyn_2))
-image_write(img_kor_2, path = here("paper/image", "img_kor_2.tiff"), format = "tiff")
+image_write(img_kor_2, path = here("paper/figure", "Fig7.tiff"), format = "tiff")
 img_kor_2
 ```
 
 ```{r plot-vel-2, out.width = "100%", fig.cap = "\\label{fig:vel-2}Experiment 2: KV (0-127) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_vel_2 <- image_append(c(img_vel_art_2, img_vel_dyn_2))
-image_write(img_vel_2, path = here("paper/image", "img_vel_2.tiff"), format = "tiff")
+image_write(img_vel_2, path = here("paper/figure", "Fig8.tiff"), format = "tiff")
 img_vel_2
 ```
 
 ```{r plot-vel-diff, out.width = "100%", fig.cap = "\\label{fig:vel-diff}Experiment 1, 2: KV Difference at transition points when playing the piece with dynamics (left: Experiment 1, right: Experiment 2). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_vel_diff <- image_append(c(img_vel_diff_dyn_1, img_vel_diff_dyn_2))
-image_write(img_vel_diff, path = here("paper/image", "img_vel_diff.tiff"), format = "tiff")
+image_write(img_vel_diff, path = here("paper/figure", "Fig9.tiff"), format = "tiff")
 img_vel_diff
 ```
 
@@ -532,73 +535,3 @@ In the performing condition, participants were shown the following instruction o
 ## Experiment 2
 
 In the teaching condition of Experiment 2, we gave participants the exact same instruction as in Experiment 1. In the performing condition, participants were given the following instruction on a computer monitor: "Now, play what you practised as if you were performing it to an audience. *Perform the piece expressively with your interpretation. Do your best as a performer to produce the piece according to the notation that you just practised.*"
-
-# General information
-## Section/Category
-Social and Behavioral Sciences
-
-
-## Opposed reviewers
-N/A?
-
-## Required statements
-	
-- This manuscript adheres to the appropriate reporting guidelines and community standards for data availability.
-- Any related manuscripts currently in press or under consideration elsewhere are mentioned in the cover letter and will be uploaded as part of your submission as a related manuscript.
-- Any persons named in the Acknowledgments section of the manuscript, or referred to as the source of a personal communication, have agreed to being so named.
-- All authors have read, and confirm that they meet, ICMJE criteria for authorship.
-- All contributing authors are aware of and agree to the submission of this manuscript.
-
-Agreed to all?
-
-## United States Government Employee
-No authors are employees of the U.S. government.
-
-## Financial Disclosure
-This research was supported by the European Research Council under the European Union's Seventh Framework Program (FP7/2007-2013)/ERC (European Research Council) grant agreement no. 609819, SOMICS, awarded to Günther Knoblich. and by ERC grant agreement no. 616072, JAXPERTISE, awarded to Natalie Sebanz.
-
-## Competing Interests
-The authors have declared that no competing interests exist.
-
-## Ethics Statement
-The study was approved by the United Ethical Review Committee for Research in Psychology (EPKEB) in Hungary (2018-124). The written form of consent was obtained.
-
-## Previous Interactions
-
-- I have had previous interactions about this manuscript with an Academic Editor of this journal.
-- This manuscript was previously submitted to a different PLOS journal as either a presubmission inquiry or a full submission.
-- One or more of the authors (including myself) currently serve, or have previously served, as an Academic Editor or Guest Editor for this journal.
-
-None of them?
-
-## Group Authorship
-No
-
-## Request Editor
-- Stefan Koelsch
-- Any suggestion?
-
-
-## Data Availability
-- Yes - all data are fully available without restriction
-
-## Describe where the data may be found in full sentences.
-All data files are available from the Open Science Framework repository (DOI:10.17605/OSF.IO/8NBJH).
-
-## Immediate Preprint Posting
-Yes?
-
-## Publication Fees
-- I am ineligible for any Open Access Funding Support and will pay the full fee upon article acceptance
-
-## Author Contributions
-- Conceptualization: Atsuko Tominaga, Günther Knoblich, Natalie Sebanz.
-- Data curation: Atsuko Tominaga.
-- -Formal analysis: Atsuko Tominaga, Günther Knoblich, Natalie Sebanz.
-Funding acquisition: Günther Knoblich, Natalie Sebanz.
-- Methodology: Atsuko Tominaga, Günther Knoblich, Natalie Sebanz.
-- Project administration: Natalie Sebanz.
-- Supervision: Günther Knoblich, Natalie Sebanz.
-- Visualization: Atsuko Tominaga.
-- Writing – original draft: Atsuko Tominaga.
-- Writing – review & editing: Atsuko Tominaga, Günther Knoblich, - Natalie Sebanz.
