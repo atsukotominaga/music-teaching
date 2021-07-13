@@ -146,7 +146,7 @@ ioi_art_1 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", co
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "ioi_art_1.png"), plot = ioi_art_1, dpi = 600, width = 5, height = 5)
+ggsave(here("paper/image", "ioi_art_1.png"), plot = ioi_art_1, dpi = 300, width = 4, height = 4)
 img_ioi_art_1 <- image_read(here("paper/image", "ioi_art_1.png"))
 ```
 
@@ -163,7 +163,7 @@ kot_art_1 <- ggpaired(kot_art_plot, cond = "performing", cond2 = "teaching", col
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "kot_art_1.png"), plot = kot_art_1, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "kot_art_1.png"), plot = kot_art_1, dpi = 300, width = 7, height = 5)
 img_kot_art_1 <- image_read(here("paper/image", "kot_art_1.png"))
 ```
 
@@ -180,7 +180,7 @@ vel_art_1 <- ggpaired(vel_art_plot, cond = "performing", cond2 = "teaching", col
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "vel_art_1.png"), plot = vel_art_1, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "vel_art_1.png"), plot = vel_art_1, dpi = 300, width = 7, height = 5)
 img_vel_art_1 <- image_read(here("paper/image", "vel_art_1.png"))
 ```
 
@@ -199,7 +199,7 @@ ioi_dyn_1 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", co
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "ioi_dyn_1.png"), plot = ioi_dyn_1, dpi = 600, width = 5, height = 5)
+ggsave(here("paper/image", "ioi_dyn_1.png"), plot = ioi_dyn_1, dpi = 300, width = 4, height = 4)
 img_ioi_dyn_1 <- image_read(here("paper/image", "ioi_dyn_1.png"))
 ```
 
@@ -216,11 +216,11 @@ vel_dyn_1 <- ggpaired(vel_dyn_plot, cond = "performing", cond2 = "teaching", col
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "vel_dyn_1.png"), plot = vel_dyn_1, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "vel_dyn_1.png"), plot = vel_dyn_1, dpi = 300, width = 7, height = 5)
 img_vel_dyn_1 <- image_read(here("paper/image", "vel_dyn_1.png"))
 
 # annotate * for forte
-img_vel_dyn_1 <- image_annotate(img_vel_dyn_1, "*", size = 280, color = "black", location = "+1430+800")
+img_vel_dyn_1 <- image_annotate(img_vel_dyn_1, "*", size = 130, color = "black", location = "+725+400")
 ```
 
 ### KV Transition Points
@@ -236,7 +236,7 @@ vel_diff_dyn_1 <- ggpaired(vel_diff_dyn_plot, cond = "performing", cond2 = "teac
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "vel_diff_dyn_1.png"), plot = vel_diff_dyn_1, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "vel_diff_dyn_1.png"), plot = vel_diff_dyn_1, dpi = 300, width = 7, height = 5)
 img_vel_diff_dyn_1 <- image_read(here("paper/image", "vel_diff_dyn_1.png"))
 ```
 
@@ -253,7 +253,7 @@ kot_dyn_1 <- ggpaired(kot_dyn_plot, cond = "performing", cond2 = "teaching", col
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "kot_dyn_1.png"), plot = kot_dyn_1, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "kot_dyn_1.png"), plot = kot_dyn_1, dpi = 300, width = 7, height = 5)
 img_kot_dyn_1 <- image_read(here("paper/image", "kot_dyn_1.png"))
 ```
 
@@ -266,7 +266,7 @@ The results for KOT and KV showed that participants successfully highlighted rel
 ```{r plot-ioi-1, out.width = "100%", fig.cap = "\\label{fig:ioi-1}Experiment 1: IOIs (ms) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_ioi_1 <- image_append(c(img_ioi_art_1, img_ioi_dyn_1))
-image_write(img_ioi_1, path = here("paper/figure", "Fig1.tiff"), format = "tiff")
+image_write(img_ioi_1, path = here("paper/figure", "Fig2.tiff"), format = "tiff")
 img_ioi_1
 ```
 
@@ -354,7 +354,7 @@ ioi_art_2 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", co
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "ioi_art_2.png"), plot = ioi_art_2, dpi = 600, width = 5, height = 5)
+ggsave(here("paper/image", "ioi_art_2.png"), plot = ioi_art_2, dpi = 300, width = 4, height = 4)
 img_ioi_art_2 <- image_read(here("paper/image", "ioi_art_2.png"))
 ```
 
@@ -371,7 +371,7 @@ kor_art_2 <- ggpaired(kor_art_plot, cond = "performing", cond2 = "teaching", col
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "kor_art_2.png"), plot = kor_art_2, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "kor_art_2.png"), plot = kor_art_2, dpi = 300, width = 7, height = 5)
 img_kor_art_2 <- image_read(here("paper/image", "kor_art_2.png"))
 ```
 
@@ -388,7 +388,7 @@ vel_art_2 <- ggpaired(vel_art_plot, cond = "performing", cond2 = "teaching", col
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "vel_art_2.png"), plot = vel_art_2, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "vel_art_2.png"), plot = vel_art_2, dpi = 300, width = 7, height = 5)
 img_vel_art_2 <- image_read(here("paper/image", "vel_art_2.png"))
 ```
 
@@ -407,7 +407,7 @@ ioi_dyn_2 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", co
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "ioi_dyn_2.png"), plot = ioi_dyn_2, dpi = 600, width = 5, height = 5)
+ggsave(here("paper/image", "ioi_dyn_2.png"), plot = ioi_dyn_2, dpi = 300, width = 4, height = 4)
 img_ioi_dyn_2 <- image_read(here("paper/image", "ioi_dyn_2.png"))
 ```
 
@@ -424,7 +424,7 @@ vel_dyn_2 <- ggpaired(vel_dyn_plot, cond = "performing", cond2 = "teaching", col
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "vel_dyn_2.png"), plot = vel_dyn_2, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "vel_dyn_2.png"), plot = vel_dyn_2, dpi = 300, width = 7, height = 5)
 img_vel_dyn_2 <- image_read(here("paper/image", "vel_dyn_2.png"))
 ```
 
@@ -441,7 +441,7 @@ vel_diff_dyn_2 <- ggpaired(vel_diff_dyn_plot, cond = "performing", cond2 = "teac
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "vel_diff_dyn_2.png"), plot = vel_diff_dyn_2, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "vel_diff_dyn_2.png"), plot = vel_diff_dyn_2, dpi = 300, width = 7, height = 5)
 img_vel_diff_dyn_2 <- image_read(here("paper/image", "vel_diff_dyn_2.png"))
 ```
 
@@ -458,7 +458,7 @@ kor_dyn_2 <- ggpaired(kor_dyn_plot, cond = "performing", cond2 = "teaching", col
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
-ggsave(here("paper/image", "kor_dyn_2.png"), plot = kor_dyn_2, dpi = 600, width = 7, height = 5)
+ggsave(here("paper/image", "kor_dyn_2.png"), plot = kor_dyn_2, dpi = 300, width = 7, height = 5)
 img_kor_dyn_2 <- image_read(here("paper/image", "kor_dyn_2.png"))
 ```
 
@@ -522,8 +522,6 @@ We thank Dávid Csűrös for his help with data collection.
 \endgroup
 
 \clearpage
-
-# Supporting information{#supplementary}
 
 # S1 File. Instructions
 ## Experiment 1
