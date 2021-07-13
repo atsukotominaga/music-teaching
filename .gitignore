@@ -9,8 +9,9 @@ experiment/data/
 experiment/midi/
 
 # paper
-paper/manuscript_files
+paper/coverletter
 paper/feedback
+paper/manuscript_files
 paper/submission_info.md
 
 # personal stuff
