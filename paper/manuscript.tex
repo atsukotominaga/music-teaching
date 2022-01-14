@@ -3,12 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  english,
   man,floatsintext]{apa6}
-\title{The sound of teaching music: Expert pianists' performance modulations for novices}
-\author{Atsuko Tominaga\textsuperscript{1}, Günther Knoblich\textsuperscript{1}, \& Natalie Sebanz\textsuperscript{1}}
-\date{}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -42,7 +37,7 @@
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   pdftitle={The sound of teaching music: Expert pianists' performance modulations for novices},
-  pdfauthor={Atsuko Tominaga1, Günther Knoblich1, \& Natalie Sebanz1},
+  pdfauthor={Atsuko Tominaga1,*, Günther Knoblich1, \& Natalie Sebanz1},
   pdflang={en-EN},
   pdfkeywords={teaching, expertise, skill transmission, artistic expression, music},
   hidelinks,
@@ -97,6 +92,15 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -127,6 +131,20 @@
 % \setlength{\parindent}{0.5in}
 % \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
 % \usepackage{etoolbox}
 \makeatletter
 \patchcmd{\HyOrg@maketitle}
@@ -138,31 +156,29 @@
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
 \makeatother
-\shorttitle{The sound of teaching music}
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
 \keywords{teaching, expertise, skill transmission, artistic expression, music}
 \usepackage{csquotes}
-\ifXeTeX
-  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
-  \usepackage{polyglossia}
-  \setmainlanguage[]{english}
-\else
-  \usepackage[main=english]{babel}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
-\fi
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
+\title{The sound of teaching music: Expert pianists' performance modulations for novices}
+\author{Atsuko Tominaga\textsuperscript{1,*}, Günther Knoblich\textsuperscript{1}, \& Natalie Sebanz\textsuperscript{1}}
+\date{}
 
-\authornote{
 
-Correspondence concerning this article should be addressed to Atsuko Tominaga, Quellenstraße 51, 1100 Vienna, Austria. E-mail: \href{mailto:Tominaga_Atsuko@phd.ceu.edu}{\nolinkurl{Tominaga\_Atsuko@phd.ceu.edu}}
+\shorttitle{The sound of teaching music}
 
-}
-
-\affiliation{\vspace{0.5cm}\textsuperscript{1} Department of Cognitive Science, Central European University, Vienna, Austria}
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Department of Cognitive Science, Central European University, Quellenstraße 51, 1100 Vienna, Austria\\\textsuperscript{*} Corresponding author: \href{mailto:Tominaga_Atsuko@phd.ceu.edu}{\nolinkurl{Tominaga\_Atsuko@phd.ceu.edu}}}
 
 \abstract{
 Experts modulate their performance of actions for teaching purposes, performing slower and exaggerated movements when demonstrating novel actions to novices. The present study asked whether such modulations are also used to teach techniques of artistic expression. One domain where subtle movement modulations are crucial for achieving artistic expression is music. We investigated how skilled pianists modulate their playing to demonstrate to students the techniques required for conveying piece-related musical expressions, compared to performing the piece without didactic intentions. Expressions in the piece concerned either articulation (i.e., legato and staccato) or dynamics (i.e., forte and piano). The pianists played either with the goal to perform the piece to an audience or with the goal to teach the respective techniques to novices. When intending to teach articulation, skilled pianists produced more exaggerated staccato. When intending to teach dynamics, they created a larger contrast between forte and piano at structurally important points. We found consistent results with a simple musical scale (Experiment 1) and a more naturalistic piece of music (Experiment 2). These findings suggest that action modulations are performed not only to attract learners' attention but to highlight the most relevant aspects of the actions to be learnt.
@@ -176,11 +192,11 @@ Experts modulate their performance of actions for teaching purposes, performing 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Deliberate teaching has supported human skill transmission over generations and provides a key route for learning {[}1,2{]}. Experts modulate their behaviour so that novices can extract relevant information to learn a novel skill. For instance, adults modulate their speech (motherese) and actions (motionese) when demonstrating a skill to infant learners {[}3,4{]}. These modulations include slowing down and exaggerating sounds and actions. Similar findings were obtained in studies with adult learners, where exaggerations were observed when native British English speakers were talking to first language English learners {[}5{]} and when skilled adults were teaching xylophone melodies to novices {[}6{]}. The observed modulations are thought to provide communicative signals that can facilitate learning by affecting attention and memory {[}7{]}.
+Deliberate teaching has supported human skill transmission over generations and provides a key route for learning\textsuperscript{1,2}. Experts modulate their behaviour so that novices can extract relevant information to learn a novel skill. For instance, adults modulate their speech (motherese) and actions (motionese) when demonstrating a skill to infant learners\textsuperscript{3,4}. These modulations include slowing down and exaggerating sounds and actions. Similar findings were obtained in studies with adult learners, where exaggerations were observed when native British English speakers were talking to first language English learners\textsuperscript{5} and when skilled adults were teaching xylophone melodies to novices\textsuperscript{6}. The observed modulations are thought to provide communicative signals that can facilitate learning by affecting attention and memory\textsuperscript{7}.
 
-Previous research has shown that demonstrators not only adjust their gestures {[}8{]} and actions {[}9{]} to learners' skills but engage in specific action modulations to highlight certain aspects of demonstrated actions. For example, Schaik and colleagues {[}10{]} showed that adults used specific action modulations for demonstrating different action effects of objects to infants. Ho and colleagues {[}11{]} found that demonstrators chose costly movement paths at structurally important points to disambiguate one goal over other possibilities.
+Previous research has shown that demonstrators not only adjust their gestures\textsuperscript{8} and actions\textsuperscript{9} to learners' skills but engage in specific action modulations to highlight certain aspects of demonstrated actions. For example, Schaik and colleagues\textsuperscript{10} showed that adults used specific action modulations for demonstrating different action effects of objects to infants. Ho and colleagues\textsuperscript{11} found that demonstrators chose costly movement paths at structurally important points to disambiguate one goal over other possibilities.
 
-Importantly, in some domains teaching requires not only demonstrating \emph{what} to do, but \emph{how} to perform actions. In artistic contexts, novices need to learn how exactly to perform actions by relying on specific techniques {[}12{]}. For example, when playing a piece of music on the piano, it is not sufficient to press the keys in the correct order, but learners need to be able to implement expressive techniques {[}13{]}. This raises the question of whether and how experts modulate their actions during didactic demonstration in artistic contexts, where expressivity is an integral part of what learners need to acquire. Studying action modulations that serve the teaching of artistic techniques is also of broader theoretical importance: It can show whether action modulations can be used to selectively highlight subtle aspects of actions that define expert performance.
+Importantly, in some domains teaching requires not only demonstrating \emph{what} to do, but \emph{how} to perform actions. In artistic contexts, novices need to learn how exactly to perform actions by relying on specific techniques\textsuperscript{12}. For example, when playing a piece of music on the piano, it is not sufficient to press the keys in the correct order, but learners need to be able to implement expressive techniques\textsuperscript{13}. This raises the question of whether and how experts modulate their actions during didactic demonstration in artistic contexts, where expressivity is an integral part of what learners need to acquire. Studying action modulations that serve the teaching of artistic techniques is also of broader theoretical importance: It can show whether action modulations can be used to selectively highlight subtle aspects of actions that define expert performance.
 
 In the present study, we employed musical expressive techniques as skills to be taught because multiple properties of the performance (e.g., timing, smoothness, loudness) can be modulated at the same time. Specific and subtle aspects of the performance may need to be highlighted to teach a respective technique. Pianists were asked to perform a piece to demonstrate to a learner how to implement the notated expressions (teaching condition) and to play the same piece for an audience (performing condition). Two basic expressive techniques in piano performance were used: articulation (legato and staccato) and dynamics (forte and piano). Articulation was assessed by key-overlap time between two consecutive notes. Positive key-overlap time indicates legato styles whereas negative key-overlap time indicates staccato styles. Dynamics was evaluated by key velocity of each key press. Higher key velocity means forte styles while lower key velocity means piano styles.
 
@@ -211,14 +227,14 @@ One musical excerpt was used as a stimulus. The excerpt was taken from ``A Dozen
 
 First, participants were allocated to either the teaching or performing condition and asked to practise the excerpt with the notated expression of either articulation or dynamics (\emph{Fig \ref{fig:stimuli} B-C}). As soon as they had produced the excerpt with the notated expression without pitch errors twice consecutively, the test trials began.
 
-In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with the notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience (see details in \emph{\protect\hyperlink{supplementary}{S1 File}}). Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was blocked and counterbalanced across participants. The order of the expressive techniques within each condition was also blocked and counterbalanced across participants. A leading metronome (80 quarter beats per minute, 8 beats) indicated the target tempo before each trial.
+In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with the notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience (see details in \emph{\protect\hyperlink{supplementary}{Supplementary Information}}). Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was blocked and counterbalanced across participants. The order of the expressive techniques within each condition was also blocked and counterbalanced across participants. A leading metronome (80 quarter beats per minute, 8 beats) indicated the target tempo before each trial.
 
 At the end of the experiment, participants filled in a questionnaire asking about their demographic information and experience in piano performance/teaching.
 
 \hypertarget{data-analysis}{%
 \subsubsection{Data analysis}\label{data-analysis}}
 
-Three dependent variables were computed for data analysis. Inter-onset intervals (IOIs) are the intervals between onsets of adjacent notes and provide a measure of tempo. Key-overlap time (KOT) is the difference between the offset time of the current tone (i.e., key release time) and the onset time of the ensuing tone and is a measure for the smoothness of musical sequences {[}14{]}. A positive value indicates smooth legato styles due to overlap between the current and ensuing tone whereas a negative value indicates sharp staccato styles due to separation between the current and ensuing tone. Tone intensity is assessed by key velocity (KV) and measures the loudness of a musical note. A higher value indicates forte styles whereas a lower value indicates piano styles. The value of KV in MIDI varies between 0 (minimum) and 127 (maximum).
+Three dependent variables were computed for data analysis. Inter-onset intervals (IOIs) are the intervals between onsets of adjacent notes and provide a measure of tempo. Key-overlap time (KOT) is the difference between the offset time of the current tone (i.e., key release time) and the onset time of the ensuing tone and is a measure for the smoothness of musical sequences\textsuperscript{14}. A positive value indicates smooth legato styles due to overlap between the current and ensuing tone whereas a negative value indicates sharp staccato styles due to separation between the current and ensuing tone. Tone intensity is assessed by key velocity (KV) and measures the loudness of a musical note. A higher value indicates forte styles whereas a lower value indicates piano styles. The value of KV in MIDI varies between 0 (minimum) and 127 (maximum).
 
 Data cleaning, preprocessing and statistical analysis were performed in R version 4.0.5. For statistical analysis, only 16th notes with expressive notations were included. Overall, five trials were excluded from data analysis because participants did not follow the sheet music or stopped performing before the end. Pitch errors were identified by comparing the sequence of musical notes produced by a participant with the sequence of musical notes according to the sheet music. Pitch errors included either extra, missing or substituted tones and were manually removed by using the \emph{editData} R package. For onsets, 11.65\% of the trials contained at least one pitch error (extra notes: 6.28\%, missing notes: 5.07\%, substituted notes: 0.30\%). For offsets, 14.08\% of the trials contained at least one pitch error (extra notes: 6.28\%, missing notes: 5.17\%, substituted notes: 2.63\%). As a result, less than 1 \% of total responses were corrected. In addition to pitch errors, we removed outliers for IOIs, KOT and KV, defined as values more than 3 standard deviations from the mean of each dependent variable. For each dependent variable, this resulted in less than 5\% of overall responses being removed as outliers.
 
@@ -246,12 +262,12 @@ To compare the mean IOIs between the teaching and performing condition, we condu
 \hypertarget{key-overlap-time-kot}{%
 \subsubsection{Key-Overlap Time (KOT)}\label{key-overlap-time-kot}}
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Articulation (legato vs.~staccato) revealed that there was a significant main effect of Articulation (\emph{F}(1,30) = 1158, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.94) and a significant interaction between Condition and Articulation (\emph{F}(1,30) = 8.31, \emph{p} = 0.007, \(\eta_G^2\) = 0.011, \emph{Fig \ref{fig:kot-1}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that for staccato KOT was more negative in the teaching condition {[}\emph{M} = -134.03 (ms), \emph{SD} = 19.86{]} than in the performing condition {[}\emph{M} = -128.35 (ms), \emph{SD} = 20.80{]} (\emph{p} = 0.004). For legato there was no significant difference in KOT between the teaching {[}\emph{M} = 15.91 (ms), \emph{SD} = 15.49{]} and performing condition {[}\emph{M} = 14.00 (ms), \emph{SD} = 17.01{]} (\emph{p} = 0.32).
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Articulation (legato vs.~staccato) revealed that there was a significant main effect of Articulation (\emph{F}(1,30) = 1158, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.94) and a significant interaction between Condition and Articulation (\emph{F}(1,30) = 8.31, \emph{p} = 0.007, \(\eta_G^2\) = 0.011, \emph{Fig \ref{fig:kot-1}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that for staccato KOT was more negative in the teaching condition {[}\emph{M} = -134.03 (ms), \emph{SD} = 19.86{]} than in the performing condition {[}\emph{M} = -128.35 (ms), \emph{SD} = 20.80{]} (\emph{p} = 0.007). For legato there was no significant difference in KOT between the teaching {[}\emph{M} = 15.91 (ms), \emph{SD} = 15.49{]} and performing condition {[}\emph{M} = 14.00 (ms), \emph{SD} = 17.01{]} (\emph{p} = 0.31).
 
 \hypertarget{key-velocity-kv}{%
 \subsubsection{Key Velocity (KV)}\label{key-velocity-kv}}
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Articulation (legato vs.~staccato) showed that there was a significant interaction between Condition and Articulation (\emph{F}(1,30) = 7.38, \emph{p} = 0.011, \(\eta_G^2\) = 0.004, \emph{Fig \ref{fig:vel-1}}). However, post-hoc comparisons based on the estimated marginal means with Tukey adjustment did not find a significant difference between the teaching {[}Legato: \emph{M} = 70.34, \emph{SD} = 6.45; Staccato: \emph{M} = 72.01, \emph{SD} = 8.74{]} and performing condition {[}Legato: \emph{M} = 70.68, \emph{SD} = 5.84, Staccato: \emph{M} = 70.42, \emph{SD} = 7.96{]} for each subcomponent (Legato: \emph{p} = 0.70, Staccato: \emph{p} = 0.07).
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Articulation (legato vs.~staccato) showed that there was a significant interaction between Condition and Articulation (\emph{F}(1,30) = 7.38, \emph{p} = 0.011, \(\eta_G^2\) = 0.004, \emph{Fig \ref{fig:vel-1}}). However, post-hoc comparisons based on the estimated marginal means with Tukey adjustment did not find a significant difference between the teaching {[}Legato: \emph{M} = 70.34, \emph{SD} = 6.45; Staccato: \emph{M} = 72.01, \emph{SD} = 8.74{]} and performing condition {[}Legato: \emph{M} = 70.68, \emph{SD} = 5.84, Staccato: \emph{M} = 70.42, \emph{SD} = 7.96{]} for each subcomponent (Legato: \emph{p} = 0.68, Staccato: \emph{p} = 0.09).
 
 \hypertarget{dynamics}{%
 \subsection{Dynamics}\label{dynamics}}
@@ -264,7 +280,7 @@ To compare the mean IOIs between the teaching and performing condition, we condu
 \hypertarget{key-velocity-kv-1}{%
 \subsubsection{Key Velocity (KV)}\label{key-velocity-kv-1}}
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Dynamics (forte vs.~piano) showed that there was a significant main effect of Dynamics (\emph{F}(1,30) = 370, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.74) and a significant interaction between Condition and Dynamics (\emph{F}(1,30) = 6.80, \emph{p} = 0.014, \(\eta_G^2\) = 0.003, \emph{Fig \ref{fig:vel-1}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that KV was higher in the teaching condition {[}\emph{M} = 82.78, \emph{SD} = 8.30{]} than in the performing condition {[}\emph{M} = 81.66, \emph{SD} = 7.43{]} (\emph{p} = 0.021) when instructed to play forte. There was no significant difference in KV between the teaching {[}\emph{M} = 60.63, \emph{SD} = 5.07{]} and performing condition {[}\emph{M} = 60.99, \emph{SD} = 4.40{]} (\emph{p} = 0.45) when instructed to play piano.
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Dynamics (forte vs.~piano) showed that there was a significant main effect of Dynamics (\emph{F}(1,30) = 370, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.74) and a significant interaction between Condition and Dynamics (\emph{F}(1,30) = 6.80, \emph{p} = 0.014, \(\eta_G^2\) = 0.003, \emph{Fig \ref{fig:vel-1}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that KV was higher in the teaching condition {[}\emph{M} = 82.78, \emph{SD} = 8.30{]} than in the performing condition {[}\emph{M} = 81.66, \emph{SD} = 7.43{]} (\emph{p} = 0.069) when instructed to play forte. There was no significant difference in KV between the teaching {[}\emph{M} = 60.63, \emph{SD} = 5.07{]} and performing condition {[}\emph{M} = 60.99, \emph{SD} = 4.40{]} (\emph{p} = 0.24) when instructed to play piano.
 
 \hypertarget{kv-transition-points}{%
 \subsubsection{KV Transition Points}\label{kv-transition-points}}
@@ -279,7 +295,7 @@ A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~perfo
 \hypertarget{discussion}{%
 \subsection{Discussion}\label{discussion}}
 
-The findings from Experiment 1 indicated that skilled pianists modified their performance for teaching purposes. For IOIs, we found a small but significant slowing down during teaching specifically when playing the piece with the notated articulation. This finding is in line with earlier studies that found slower performance of actions in a teaching context {[}e.g., 3,6{]}. However, we did not find a significant difference in tempo when participants were teaching dynamics. It could be that trying to keep the prescribed tempo (conveyed through the leading metronome) limited the extent to which participants slowed down their performance during teaching. Another possibility is that slower performance may be beneficial to highlight the relation between two notes (i.e., to what extent two notes overlap) and was therefore employed when teaching articulation, whereas slower performance might not help when teaching dynamics.
+The findings from Experiment 1 indicated that skilled pianists modified their performance for teaching purposes. For IOIs, we found a small but significant slowing down during teaching specifically when playing the piece with the notated articulation. This finding is in line with earlier studies that found slower performance of actions in a teaching context\textsuperscript{e.g., 3,6}. However, we did not find a significant difference in tempo when participants were teaching dynamics. It could be that trying to keep the prescribed tempo (conveyed through the leading metronome) limited the extent to which participants slowed down their performance during teaching. Another possibility is that slower performance may be beneficial to highlight the relation between two notes (i.e., to what extent two notes overlap) and was therefore employed when teaching articulation, whereas slower performance might not help when teaching dynamics.
 
 The results for KOT and KV showed that participants successfully highlighted relevant aspects of articulation and dynamics. Specifically, participants exaggerated staccato when teaching articulation and forte when teaching dynamics. Moreover, our exploratory analysis demonstrated that participants made a larger contrast in dynamics at transition points (i.e., forte to piano or piano to forte). Importantly, participants did not modulate their performance in terms of irrelevant aspects of the techniques for teaching purposes (e.g., modulating the smoothness of sound while teaching dynamics). These findings confirmed that participants modulated their performance in systematic and fine-grained ways to teach expressive techniques.
 
@@ -318,7 +334,7 @@ The same apparatus as in Experiment 1 was used. We selected Clementi's Sonatina 
 \hypertarget{procedure-2}{%
 \subsubsection{Procedure}\label{procedure-2}}
 
-We employed the same procedure as in Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., \emph{Fig \ref{fig:stimuli-2} A}) prior to the experiment. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations (see details in \emph{\protect\hyperlink{supplemental}{S1 File}}). Third, participants could choose their preferred tempo from one of three options (100, 110 and 120 quarter beats per minute). The chosen tempo was again cued by a leading metronome. To make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the non-expressive sheet music (\emph{Fig \ref{fig:stimuli-2} A}). Those who could not perform the piece without pitch errors twice consecutively within five attempts were excluded from data analysis (as a result, one participant was excluded). The rest of the procedure was identical to Experiment 1.
+We employed the same procedure as in Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., \emph{Fig \ref{fig:stimuli-2} A}) prior to the experiment. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations (see details in \emph{\protect\hyperlink{supplementary}{Supplementary Information}}). Third, participants could choose their preferred tempo from one of three options (100, 110 and 120 quarter beats per minute). The chosen tempo was again cued by a leading metronome. To make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the non-expressive sheet music (\emph{Fig \ref{fig:stimuli-2} A}). Those who could not perform the piece without pitch errors twice consecutively within five attempts were excluded from data analysis (as a result, one participant was excluded). The rest of the procedure was identical to Experiment 1.
 
 \hypertarget{data-analysis-1}{%
 \subsubsection{Data analysis}\label{data-analysis-1}}
@@ -346,7 +362,7 @@ A paired-sample \emph{t}-test showed that participants played more slowly in the
 \hypertarget{key-overlap-ratios-kors}{%
 \subsubsection{Key-Overlap Ratios (KORs)}\label{key-overlap-ratios-kors}}
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Articulation (legato vs.~staccato) showed that there was a significant main effect of Articulation (\emph{F}(1,19) = 2573, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.98) and a significant interaction between Condition and Articulation (\emph{F}(1,19) = 8.91, \emph{p} = 0.008, \(\eta_G^2\) = 0.01, \emph{Fig \ref{fig:kor-2}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that for staccato KORs were more negative in the teaching condition {[}\emph{M} = -0.76, \emph{SD} = 0.06{]} than in the performing condition {[}\emph{M} = -0.74, \emph{SD} = 0.04{]} (\emph{p} = 0.002). For legato there was no significant difference in KORs between the teaching {[}\emph{M} = 0.12, \emph{SD} = 0.07{]} and performing condition {[}\emph{M} = 0.12, \emph{SD} = 0.07{]} (\emph{p} = 0.56).
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Articulation (legato vs.~staccato) showed that there was a significant main effect of Articulation (\emph{F}(1,19) = 2573, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.98) and a significant interaction between Condition and Articulation (\emph{F}(1,19) = 8.91, \emph{p} = 0.008, \(\eta_G^2\) = 0.01, \emph{Fig \ref{fig:kor-2}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that for staccato KORs were more negative in the teaching condition {[}\emph{M} = -0.76, \emph{SD} = 0.06{]} than in the performing condition {[}\emph{M} = -0.74, \emph{SD} = 0.04{]} (\emph{p} = 0.000). For legato there was no significant difference in KORs between the teaching {[}\emph{M} = 0.12, \emph{SD} = 0.07{]} and performing condition {[}\emph{M} = 0.12, \emph{SD} = 0.07{]} (\emph{p} = 0.63).
 
 \hypertarget{key-velocity-kv-2}{%
 \subsubsection{Key Velocity (KV)}\label{key-velocity-kv-2}}
@@ -364,12 +380,12 @@ A paired-sample \emph{t}-test showed no significant difference between the teach
 \hypertarget{key-velocity-kv-3}{%
 \subsubsection{Key Velocity (KV)}\label{key-velocity-kv-3}}
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Dynamics (forte vs.~piano) showed that there was a significant main effect of Dynamics (\emph{F}(1,19) = 132, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.72) and a significant interaction between Condition and Dynamics (\emph{F}(1,19) = 6.12, \emph{p} = 0.023, \(\eta_G^2\) = 0.018, \emph{Fig \ref{fig:vel-2}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that KV was higher in the teaching condition {[}\emph{M} = 83.20, \emph{SD} = 8.84{]} than in the performing condition {[}\emph{M} = 81.49, \emph{SD} = 8.12{]} (\emph{p} = 0.040) when instructed to play forte. Also, KV was lower in the teaching condition {[}\emph{M} = 60.53, \emph{SD} = 3.76{]} than in the performing condition {[}\emph{M} = 62.42, \emph{SD} = 4.82{]} (\emph{p} = 0.024) when instructed to play piano.
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Dynamics (forte vs.~piano) showed that there was a significant main effect of Dynamics (\emph{F}(1,19) = 132, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.72) and a significant interaction between Condition and Dynamics (\emph{F}(1,19) = 6.12, \emph{p} = 0.023, \(\eta_G^2\) = 0.018, \emph{Fig \ref{fig:vel-2}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment revealed that KV was higher in the teaching condition {[}\emph{M} = 83.20, \emph{SD} = 8.84{]} than in the performing condition {[}\emph{M} = 81.49, \emph{SD} = 8.12{]} (\emph{p} = 0.020) when instructed to play forte. Also, KV was lower in the teaching condition {[}\emph{M} = 60.53, \emph{SD} = 3.76{]} than in the performing condition {[}\emph{M} = 62.42, \emph{SD} = 4.82{]} (\emph{p} = 0.046) when instructed to play piano.
 
 \hypertarget{kv-transition-points-1}{%
 \subsubsection{KV Transition Points}\label{kv-transition-points-1}}
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Transition Type (FtoP vs.~PtoF) showed that there was a significant main effect of Transition Type (\emph{F}(1,19) = 124, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.82) and a significant interaction between Condition and Transition Type (\emph{F}(1,19) = 9.15, \emph{p} = 0.007, \(\eta_G^2\) = 0.059, \emph{Fig \ref{fig:vel-diff}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when changing from forte to piano (\emph{p} = 0.029) and from piano to forte (\emph{p} = 0.002) in the teaching condition {[}FtoP: \emph{M} = -17.23, \emph{SD} = 8.26, PtoF: \emph{M} = 20.71, \emph{SD} = 8.87{]} than in the performing condition {[}FtoP: \emph{M} = -14.04, \emph{SD} = 7.67, PtoF: \emph{M} = 16.05, \emph{SD} = 7.32{]}.
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs.~performing) and Transition Type (FtoP vs.~PtoF) showed that there was a significant main effect of Transition Type (\emph{F}(1,19) = 124, \emph{p} \textless{} 0.001, \(\eta_G^2\) = 0.82) and a significant interaction between Condition and Transition Type (\emph{F}(1,19) = 9.15, \emph{p} = 0.007, \(\eta_G^2\) = 0.059, \emph{Fig \ref{fig:vel-diff}}). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was a larger KV difference when changing from forte to piano (\emph{p} = 0.029) and from piano to forte (\emph{p} = 0.003) in the teaching condition {[}FtoP: \emph{M} = -17.23, \emph{SD} = 8.26, PtoF: \emph{M} = 20.71, \emph{SD} = 8.87{]} than in the performing condition {[}FtoP: \emph{M} = -14.04, \emph{SD} = 7.67, PtoF: \emph{M} = 16.05, \emph{SD} = 7.32{]}.
 
 \hypertarget{key-overlap-ratios-kors-1}{%
 \subsubsection{Key-Overlap Ratios (KORs)}\label{key-overlap-ratios-kors-1}}
@@ -406,16 +422,11 @@ The aim of the study was to investigate how expert pianists modulate their perfo
 
 Although participants tended to play slower in the teaching condition than in the performing condition in general, we found a significant difference only for articulation, not for dynamics. As mentioned in the discussion of Experiment 1, it could be that the metronome beats given prior to each performance discouraged participants from deviating from the prescribed tempo. Another possibility is that expression is best taught when leaving the tempo unchanged when it is irrelevant. This would imply that general didactic modulations like slowing down might be less useful in the context of teaching expressive techniques where timing itself can be used to add an expression to a performance.
 
-Musicians and music teachers tend to consider expressive skills as a performer's most important skill {[}15{]}. In the present study, experts focused on the teaching of expressions that were notated. However, expression also has other facets {[}13{]} that are not only piece-related but performer- or context-related. An interesting topic for future research is how experts teach not only expressive techniques as such but convey possibilities of interpretation.
+Musicians and music teachers tend to consider expressive skills as a performer's most important skill\textsuperscript{15}. In the present study, experts focused on the teaching of expressions that were notated. However, expression also has other facets\textsuperscript{13} that are not only piece-related but performer- or context-related. An interesting topic for future research is how experts teach not only expressive techniques as such but convey possibilities of interpretation.
 
-One limitation of the study is that although we instructed participants to imagine a situation in which they were teaching musical expression to students, there was no feedback from actual students. Given that teachers modulate their demonstration throughout online interactions with learners {[}16{]}, future studies are needed to investigate how experts dynamically adapt their performance to their students' skill level and demonstrated abilities.
+One limitation of the study is that although we instructed participants to imagine a situation in which they were teaching musical expression to students, there was no feedback from actual students. Given that teachers modulate their demonstration throughout online interactions with learners\textsuperscript{16}, future studies are needed to investigate how experts dynamically adapt their performance to their students' skill level and demonstrated abilities.
 
-The present findings extend earlier research on teaching-related action modulations. First, our study sheds light on the teaching of expressive techniques that are an integral part of skill acquisition in artistic domains. We showed that compared to an expressive performance baseline, experts made specific modulations to teach particular techniques. Second, the specificity of the observed modulations supports the idea that teaching comprises more than generic modulations like slowing down or overall exaggeration that may draw learners' attention. Rather, expert demonstrators seem to follow principles of relevance in communication {[}17{]}, highlighting only those aspects they are intending to demonstrate. How learners benefit from the perceptual and motor cues that come with specific exaggerations, and whether understanding the teacher's intentions explicitly adds to the learning success are important questions for future research.
-
-\hypertarget{acknowledgements}{%
-\section{Acknowledgements}\label{acknowledgements}}
-
-We thank Dávid Csűrös for his help with data collection.
+The present findings extend earlier research on teaching-related action modulations. First, our study sheds light on the teaching of expressive techniques that are an integral part of skill acquisition in artistic domains. We showed that compared to an expressive performance baseline, experts made specific modulations to teach particular techniques. Second, the specificity of the observed modulations supports the idea that teaching comprises more than generic modulations like slowing down or overall exaggeration that may draw learners' attention. Rather, expert demonstrators seem to follow principles of relevance in communication\textsuperscript{17}, highlighting only those aspects they are intending to demonstrate. How learners benefit from the perceptual and motor cues that come with specific exaggerations, and whether understanding the teacher's intentions explicitly adds to the learning success are important questions for future research.
 
 \hypertarget{references}{%
 \section{References}\label{references}}
@@ -428,90 +439,110 @@ We thank Dávid Csűrös for his help with data collection.
 \begin{CSLReferences}{0}{0}
 \leavevmode\vadjust pre{\hypertarget{ref-thornton_2008}{}}%
 \CSLLeftMargin{1. }
-\CSLRightInline{Thornton A, Raihani NJ. The evolution of teaching. Animal Behaviour. 2008;75: 1823--1836. doi:\href{https://doi.org/10.1016/j.anbehav.2007.12.014}{10.1016/j.anbehav.2007.12.014}}
+\CSLRightInline{Thornton, A. \& Raihani, N. J. \href{https://doi.org/10.1016/j.anbehav.2007.12.014}{The evolution of teaching}. \emph{Animal Behaviour} \textbf{75}, 1823--1836 (2008).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-tomasello_2016}{}}%
 \CSLLeftMargin{2. }
-\CSLRightInline{Tomasello M. The ontogeny of cultural learning. Current Opinion in Psychology. 2016;8: 1--4. doi:\href{https://doi.org/10.1016/j.copsyc.2015.09.008}{10.1016/j.copsyc.2015.09.008}}
+\CSLRightInline{Tomasello, M. \href{https://doi.org/10.1016/j.copsyc.2015.09.008}{The ontogeny of cultural learning}. \emph{Current Opinion in Psychology} \textbf{8}, 1--4 (2016).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-brand_2002}{}}%
 \CSLLeftMargin{3. }
-\CSLRightInline{Brand RJ, Baldwin DA, Ashburn LA. Evidence for {`motionese'}: Modifications in mothers' infant-directed action. Developmental Science. 2002;5: 72--83. doi:\href{https://doi.org/10.1111/1467-7687.00211}{10.1111/1467-7687.00211}}
+\CSLRightInline{Brand, R. J., Baldwin, D. A. \& Ashburn, L. A. \href{https://doi.org/10.1111/1467-7687.00211}{Evidence for {`motionese'}: Modifications in mothers' infant-directed action}. \emph{Developmental Science} \textbf{5}, 72--83 (2002).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-saint-georges_2013}{}}%
 \CSLLeftMargin{4. }
-\CSLRightInline{Saint-Georges C, Chetouani M, Cassel R, Apicella F, Mahdhaoui A, Muratori F, et al. Motherese in {Interaction}: {At} the {Cross}-{Road} of {Emotion} and {Cognition}? ({A Systematic Review}). PLOS ONE. {Public Library of Science}; 2013;8: e78103. doi:\href{https://doi.org/10.1371/journal.pone.0078103}{10.1371/journal.pone.0078103}}
+\CSLRightInline{Saint-Georges, C. \emph{et al.} \href{https://doi.org/10.1371/journal.pone.0078103}{Motherese in {Interaction}: {At} the {Cross-Road} of {Emotion} and {Cognition}? ({A Systematic Review})}. \emph{PLOS ONE} \textbf{8}, e78103 (2013).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-uther_2007}{}}%
 \CSLLeftMargin{5. }
-\CSLRightInline{Uther M, Knoll MA, Burnham D. Do you speak {E}-{NG}-{L}-{I}-{SH}? {A} comparison of foreigner- and infant-directed speech. Speech Communication. 2007;49: 2--7. doi:\href{https://doi.org/10.1016/j.specom.2006.10.003}{10.1016/j.specom.2006.10.003}}
+\CSLRightInline{Uther, M., Knoll, M. A. \& Burnham, D. \href{https://doi.org/10.1016/j.specom.2006.10.003}{Do you speak {E-NG-L-I-SH}? {A} comparison of foreigner- and infant-directed speech}. \emph{Speech Communication} \textbf{49}, 2--7 (2007).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-mcellin_2017}{}}%
 \CSLLeftMargin{6. }
-\CSLRightInline{McEllin L, Knoblich G, Sebanz N. Distinct kinematic markers of demonstration and joint action coordination? {Evidence} from virtual xylophone playing. Journal of Experimental Psychology: Human Perception and Performance. 2017;44: 885. doi:\href{https://doi.org/10.1037/xhp0000505}{10.1037/xhp0000505}}
+\CSLRightInline{McEllin, L., Knoblich, G. \& Sebanz, N. \href{https://doi.org/10.1037/xhp0000505}{Distinct kinematic markers of demonstration and joint action coordination? {Evidence} from virtual xylophone playing.} \emph{Journal of Experimental Psychology: Human Perception and Performance} \textbf{44}, 885 (2017).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-csibra_2009}{}}%
 \CSLLeftMargin{7. }
-\CSLRightInline{Csibra G, Gergely G. Natural pedagogy. Trends in Cognitive Sciences. 2009;13: 148--153. doi:\href{https://doi.org/10.1016/j.tics.2009.01.005}{10.1016/j.tics.2009.01.005}}
+\CSLRightInline{Csibra, G. \& Gergely, G. \href{https://doi.org/10.1016/j.tics.2009.01.005}{Natural pedagogy}. \emph{Trends in Cognitive Sciences} \textbf{13}, 148--153 (2009).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-campisi_2013}{}}%
 \CSLLeftMargin{8. }
-\CSLRightInline{Campisi E, Özyürek A. Iconicity as a communicative strategy: {Recipient} design in multimodal demonstrations for adults and children. Journal of Pragmatics. 2013;47: 14--27. doi:\href{https://doi.org/10.1016/j.pragma.2012.12.007}{10.1016/j.pragma.2012.12.007}}
+\CSLRightInline{Campisi, E. \& Özyürek, A. \href{https://doi.org/10.1016/j.pragma.2012.12.007}{Iconicity as a communicative strategy: {Recipient} design in multimodal demonstrations for adults and children}. \emph{Journal of Pragmatics} \textbf{47}, 14--27 (2013).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-fukuyama_2015}{}}%
 \CSLLeftMargin{9. }
-\CSLRightInline{Fukuyama H, Qin S, Kanakogi Y, Nagai Y, Asada M, Myowa-Yamakoshi M. Infant's action skill dynamically modulates parental action demonstration in the dyadic interaction. Developmental Science. 2015;18: 1006--1013. doi:\href{https://doi.org/10.1111/desc.12270}{10.1111/desc.12270}}
+\CSLRightInline{Fukuyama, H. \emph{et al.} \href{https://doi.org/10.1111/desc.12270}{Infant's action skill dynamically modulates parental action demonstration in the dyadic interaction}. \emph{Developmental Science} \textbf{18}, 1006--1013 (2015).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-schaik_2019}{}}%
 \CSLLeftMargin{10. }
-\CSLRightInline{Schaik JE van, Meyer M, Ham CR van, Hunnius S. Motion tracking of parents' infant- versus adult-directed actions reveals general and action-specific modulations. Developmental Science. 2019;0: e12869. doi:\href{https://doi.org/10.1111/desc.12869}{10.1111/desc.12869}}
+\CSLRightInline{Schaik, J. E. van, Meyer, M., Ham, C. R. van \& Hunnius, S. \href{https://doi.org/10.1111/desc.12869}{Motion tracking of parents' infant- versus adult-directed actions reveals general and action-specific modulations}. \emph{Developmental Science} \textbf{0}, e12869 (2019).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-NIPS2016_6413}{}}%
 \CSLLeftMargin{11. }
-\CSLRightInline{Ho MK, Littman M, MacGlashan J, Cushman F, Austerweil JL. Showing versus doing: {Teaching} by demonstration. In: Lee DD, Sugiyama M, Luxburg UV, Guyon I, Garnett R, editors. Advances in neural information processing systems 29. {Curran Associates, Inc.}; 2016. pp. 3027--3035. }
+\CSLRightInline{Ho, M. K., Littman, M., MacGlashan, J., Cushman, F. \& Austerweil, J. L. Showing versus doing: {Teaching} by demonstration. in \emph{Advances in neural information processing systems 29} (eds. Lee, D. D., Sugiyama, M., Luxburg, U. V., Guyon, I. \& Garnett, R.) 3027--3035 ({Curran Associates, Inc.}, 2016).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-sloboda_2000}{}}%
 \CSLLeftMargin{12. }
-\CSLRightInline{Sloboda JA. Individual differences in music performance. Trends in Cognitive Sciences. 2000;4: 397--403. doi:\href{https://doi.org/10.1016/S1364-6613(00)01531-X}{10.1016/S1364-6613(00)01531-X}}
+\CSLRightInline{Sloboda, J. A. \href{https://doi.org/10.1016/S1364-6613(00)01531-X}{Individual differences in music performance}. \emph{Trends in Cognitive Sciences} \textbf{4}, 397--403 (2000).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-juslin_2003}{}}%
 \CSLLeftMargin{13. }
-\CSLRightInline{Juslin PN. Five {Facets} of {Musical Expression}: {A Psychologist}'s {Perspective} on {Music Performance}. Psychology of Music. {SAGE Publications Ltd}; 2003;31: 273--302. doi:\href{https://doi.org/10.1177/03057356030313003}{10.1177/03057356030313003}}
+\CSLRightInline{Juslin, P. N. \href{https://doi.org/10.1177/03057356030313003}{Five {Facets} of {Musical Expression}: {A Psychologist}'s {Perspective} on {Music Performance}}. \emph{Psychology of Music} \textbf{31}, 273--302 (2003).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-bresin_2000}{}}%
 \CSLLeftMargin{14. }
-\CSLRightInline{Bresin R, Battel GU. Articulation {Strategies} in {Expressive Piano Performance Analysis} of {Legato}, {Staccato}, and {Repeated Notes} in {Performances} of the {Andante Movement} of {Mozart}'s {Sonata} in {G Major} ({K} 545). Journal of New Music Research. 2000;29: 211--224. doi:\href{https://doi.org/10.1076/jnmr.29.3.211.3092}{10.1076/jnmr.29.3.211.3092}}
+\CSLRightInline{Bresin, R. \& Battel, G. U. \href{https://doi.org/10.1076/jnmr.29.3.211.3092}{Articulation {Strategies} in {Expressive Piano Performance Analysis} of {Legato}, {Staccato}, and {Repeated Notes} in {Performances} of the {Andante Movement} of {Mozart}'s {Sonata} in {G Major} ({K} 545)}. \emph{Journal of New Music Research} \textbf{29}, 211--224 (2000).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-lindstrom_2003}{}}%
 \CSLLeftMargin{15. }
-\CSLRightInline{Lindström E, Juslin PN, Bresin R, Williamon A. {``{Expressivity} comes from within your soul''}: {A} questionnaire study of music students' perspectives on expressivity. Research Studies in Music Education. {SAGE Publications Ltd}; 2003;20: 23--47. doi:\href{https://doi.org/10.1177/1321103X030200010201}{10.1177/1321103X030200010201}}
+\CSLRightInline{Lindström, E., Juslin, P. N., Bresin, R. \& Williamon, A. \href{https://doi.org/10.1177/1321103X030200010201}{{`{Expressivity} comes from within your soul'}: {A} questionnaire study of music students' perspectives on expressivity}. \emph{Research Studies in Music Education} \textbf{20}, 23--47 (2003).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-okazaki_2019}{}}%
 \CSLLeftMargin{16. }
-\CSLRightInline{Okazaki S, Muraoka Y, Osu R. Teacher-learner interaction quantifies scaffolding behaviour in imitation learning. Sci Rep. 2019;9: 1--13. doi:\href{https://doi.org/10.1038/s41598-019-44049-x}{10.1038/s41598-019-44049-x}}
+\CSLRightInline{Okazaki, S., Muraoka, Y. \& Osu, R. \href{https://doi.org/10.1038/s41598-019-44049-x}{Teacher-learner interaction quantifies scaffolding behaviour in imitation learning}. \emph{Sci Rep} \textbf{9}, 1--13 (2019).}
 
 \leavevmode\vadjust pre{\hypertarget{ref-sperber_1995}{}}%
 \CSLLeftMargin{17. }
-\CSLRightInline{Sperber D, Wilson D. Relevance: {Communication} and cognition, 2nd ed. {Malden}: {Blackwell Publishing}; 1995. }
+\CSLRightInline{Sperber, D. \& Wilson, D. \emph{Relevance: {Communication} and cognition, 2nd ed}. ({Blackwell Publishing}, 1995).}
 
 \end{CSLReferences}
 
 \endgroup
 
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
+
+This research was supported by the European Research Council under the European Union's Seventh Frame- work Program (FP7/2007--2013)/ERC Grant agreement no. 609819, SOMICS, and by ERC Grant agreement no. 616072, JAXPERTISE. We thank Dávid Csűrös for his help with data collection.
+
+\hypertarget{author-contributions}{%
+\section{Author contributions}\label{author-contributions}}
+
+A.T, G.K and N.S developed the study concept and designed the experiments. Stimuli and procedure were created by A.T. Data collection and analyses were performed by A.T. under the supervision of G.K. and N.S. A.T. drafted the manuscript, and N.S. and G.K. provided critical revisions. All authors approved the final version of the manuscript for submission.
+
+\hypertarget{data-availability-statement}{%
+\section{Data availability statement}\label{data-availability-statement}}
+
+All data is available at \url{https://osf.io/8nbjh/}.
+
+\hypertarget{competing-interests}{%
+\section{Competing interests}\label{competing-interests}}
+
+The authors declare no competing interests.
+
 \clearpage
 
-\hypertarget{s1-file.-instructions}{%
-\section{S1 File. Instructions}\label{s1-file.-instructions}}
+\hypertarget{supplementary}{%
+\section{Supplementary Information}\label{supplementary}}
 
-\hypertarget{experiment-1-1}{%
-\subsection{Experiment 1}\label{experiment-1-1}}
+\hypertarget{instructions-experiment-1}{%
+\subsection{Instructions (Experiment 1)}\label{instructions-experiment-1}}
 
 In the teaching condition, participants were shown the following instruction on a computer monitor (Italic sentences were highlighted in yellow colour on a black background): ``Now, play what you practised as if you were teaching it to students. Students already know how to produce the sequence of the tones and now are trying to \emph{learn how to perform the piece expressively} by listening to your performance. \emph{Do your best as a teacher to produce the piece according to the notation that you just practised.}''
 
 In the performing condition, participants were shown the following instruction on a computer monitor monitor: ``Now, play what you practised as if you were performing it to an audience. \emph{Do your best as a performer to produce the piece according to the notation that you just practised.}''
 
-\hypertarget{experiment-2-1}{%
-\subsection{Experiment 2}\label{experiment-2-1}}
+\hypertarget{instructions-experiment-2}{%
+\subsection{Instructions (Experiment 2)}\label{instructions-experiment-2}}
 
 In the teaching condition of Experiment 2, we gave participants the exact same instruction as in Experiment 1. In the performing condition, participants were given the following instruction on a computer monitor: ``Now, play what you practised as if you were performing it to an audience. \emph{Perform the piece expressively with your interpretation. Do your best as a performer to produce the piece according to the notation that you just practised.}''
 

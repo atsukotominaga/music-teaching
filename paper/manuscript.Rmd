@@ -4,10 +4,10 @@ shorttitle        : "The sound of teaching music"
 
 author: 
   - name          : "Atsuko Tominaga"
-    affiliation   : "1"
-    corresponding : yes    # Define only one corresponding author
-    address       : "Quellenstraße 51, 1100 Vienna, Austria"
-    email         : "Tominaga_Atsuko@phd.ceu.edu"
+    affiliation   : "1,*"
+#    corresponding : yes    # Define only one corresponding author
+#    address       : "Quellenstraße 51, 1100 Vienna, Austria"
+#    email         : "Tominaga_Atsuko@phd.ceu.edu"
     
   - name          : "Günther Knoblich"
     affiliation   : "1"
@@ -17,7 +17,9 @@ author:
 
 affiliation:
   - id            : "1"
-    institution   : "Department of Cognitive Science, Central European University, Vienna, Austria"
+    institution   : "Department of Cognitive Science, Central European University, Quellenstraße 51, 1100 Vienna, Austria"
+  - id            : "*"
+    institution   : "Corresponding author: Tominaga_Atsuko@phd.ceu.edu"
 
 authornote: |
 
@@ -28,7 +30,7 @@ keywords          : "teaching, expertise, skill transmission, artistic expressio
 #wordcount         : ""
 
 bibliography      : ["reference.bib"]
-csl: plos.csl
+csl: nature.csl
 
 floatsintext      : yes
 figurelist        : no
@@ -38,10 +40,10 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-#output: papaja::apa6_word
-output:
-  papaja::apa6_pdf:
-    latex_engine: xelatex
+output: papaja::apa6_word
+#output:
+#  papaja::apa6_pdf:
+#    latex_engine: xelatex
 ---
 
 ```{r set-up, include = FALSE}
@@ -94,7 +96,7 @@ One musical excerpt was used as a stimulus. The excerpt was taken from ``A Dozen
 
 First, participants were allocated to either the teaching or performing condition and asked to practise the excerpt with the notated expression of either articulation or dynamics (*Fig \ref{fig:stimuli} B-C*). As soon as they had produced the excerpt with the notated expression without pitch errors twice consecutively, the test trials began.
 
-In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with the notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience (see details in *[S1 File](#supplementary)*). Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was blocked and counterbalanced across participants. The order of the expressive techniques within each condition was also blocked and counterbalanced across participants. A leading metronome (80 quarter beats per minute, 8 beats) indicated the target tempo before each trial.
+In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with the notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience (see details in *[Supplementary Information](#supplementary)*). Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was blocked and counterbalanced across participants. The order of the expressive techniques within each condition was also blocked and counterbalanced across participants. A leading metronome (80 quarter beats per minute, 8 beats) indicated the target tempo before each trial.
 
 At the end of the experiment, participants filled in a questionnaire asking about their demographic information and experience in piano performance/teaching.
 
@@ -313,7 +315,7 @@ The same apparatus as in Experiment 1 was used. We selected Clementi's Sonatina 
 
 ### Procedure{#procedure-2}
 
-We employed the same procedure as in Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., *Fig \ref{fig:stimuli-2} A*) prior to the experiment. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations (see details in *[S1 File](#supplemental)*). Third, participants could choose their preferred tempo from one of three options (100, 110 and 120 quarter beats per minute). The chosen tempo was again cued by a leading metronome. To make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the non-expressive sheet music (*Fig \ref{fig:stimuli-2} A*). Those who could not perform the piece without pitch errors twice consecutively within five attempts were excluded from data analysis (as a result, one participant was excluded). The rest of the procedure was identical to Experiment 1.
+We employed the same procedure as in Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., *Fig \ref{fig:stimuli-2} A*) prior to the experiment. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations (see details in *[Supplementary Information](#supplementary)*). Third, participants could choose their preferred tempo from one of three options (100, 110 and 120 quarter beats per minute). The chosen tempo was again cued by a leading metronome. To make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the non-expressive sheet music (*Fig \ref{fig:stimuli-2} A*). Those who could not perform the piece without pitch errors twice consecutively within five attempts were excluded from data analysis (as a result, one participant was excluded). The rest of the procedure was identical to Experiment 1.
 
 ### Data analysis
 
@@ -519,9 +521,6 @@ One limitation of the study is that although we instructed participants to imagi
 
 The present findings extend earlier research on teaching-related action modulations. First, our study sheds light on the teaching of expressive techniques that are an integral part of skill acquisition in artistic domains. We showed that compared to an expressive performance baseline, experts made specific modulations to teach particular techniques. Second, the specificity of the observed modulations supports the idea that teaching comprises more than generic modulations like slowing down or overall exaggeration that may draw learners' attention. Rather, expert demonstrators seem to follow principles of relevance in communication [@sperber_1995], highlighting only those aspects they are intending to demonstrate. How learners benefit from the perceptual and motor cues that come with specific exaggerations, and whether understanding the teacher's intentions explicitly adds to the learning success are important questions for future research.   
 
-# Acknowledgements
-We thank Dávid Csűrös for his help with data collection. 
-
 # References
 
 \begingroup
@@ -531,15 +530,27 @@ We thank Dávid Csűrös for his help with data collection.
 <div id="refs" custom-style="Bibliography"></div>
 \endgroup
 
+# Acknowledgements
+This research was supported by the European Research Council under the European Union’s Seventh Frame- work Program (FP7/2007–2013)/ERC Grant agreement no. 609819, SOMICS, and by ERC Grant agreement no. 616072, JAXPERTISE. We thank Dávid Csűrös for his help with data collection. 
+
+# Author contributions
+A.T, G.K and N.S developed the study concept and designed the experiments. Stimuli and procedure were created by A.T. Data collection and analyses were performed by A.T. under the supervision of G.K. and N.S. A.T. drafted the manuscript, and N.S. and G.K. provided critical revisions. All authors approved the final version of the manuscript for submission.
+
+# Data availability statement
+All data is available at [https://osf.io/8nbjh/](https://osf.io/8nbjh/).
+
+# Competing interests
+The authors declare no competing interests.
+
 \clearpage
 
-# S1 File. Instructions
-## Experiment 1
+# Supplementary Information{#supplementary}
+## Instructions (Experiment 1)
 
 In the teaching condition, participants were shown the following instruction on a computer monitor (Italic sentences were highlighted in yellow colour on a black background): "Now, play what you practised as if you were teaching it to students. Students already know how to produce the sequence of the tones and now are trying to *learn how to perform the piece expressively* by listening to your performance. *Do your best as a teacher to produce the piece according to the notation that you just practised.*"
 
 In the performing condition, participants were shown the following instruction on a computer monitor monitor: "Now, play what you practised as if you were performing it to an audience. *Do your best as a performer to produce the piece according to the notation that you just practised.*"
 
-## Experiment 2
+## Instructions (Experiment 2)
 
 In the teaching condition of Experiment 2, we gave participants the exact same instruction as in Experiment 1. In the performing condition, participants were given the following instruction on a computer monitor: "Now, play what you practised as if you were performing it to an audience. *Perform the piece expressively with your interpretation. Do your best as a performer to produce the piece according to the notation that you just practised.*"
