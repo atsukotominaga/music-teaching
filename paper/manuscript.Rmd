@@ -5,9 +5,9 @@ shorttitle        : "The sound of teaching music"
 author: 
   - name          : "Atsuko Tominaga"
     affiliation   : "1,*"
-#    corresponding : yes    # Define only one corresponding author
-#    address       : "Quellenstraße 51, 1100 Vienna, Austria"
-#    email         : "Tominaga_Atsuko@phd.ceu.edu"
+    # corresponding : yes    # Define only one corresponding author
+    # address       : "Quellenstraße 51, 1100 Vienna, Austria"
+    # email         : "Tominaga_Atsuko@phd.ceu.edu"
     
   - name          : "Günther Knoblich"
     affiliation   : "1"
@@ -20,8 +20,6 @@ affiliation:
     institution   : "Department of Cognitive Science, Central European University, Quellenstraße 51, 1100 Vienna, Austria"
   - id            : "*"
     institution   : "Corresponding author: Tominaga_Atsuko@phd.ceu.edu"
-
-authornote: |
 
 abstract: |
   Experts modulate their performance of actions for teaching purposes, performing slower and exaggerated movements when demonstrating novel actions to novices. The present study asked whether such modulations are also used to teach techniques of artistic expression. One domain where subtle movement modulations are crucial for achieving artistic expression is music. We investigated how skilled pianists modulate their playing to demonstrate to students the techniques required for conveying piece-related musical expressions, compared to performing the piece without didactic intentions. Expressions in the piece concerned either articulation (i.e., legato and staccato) or dynamics (i.e., forte and piano). The pianists played either with the goal to perform the piece to an audience or with the goal to teach the respective techniques to novices. When intending to teach articulation, skilled pianists produced more exaggerated staccato. When intending to teach dynamics, they created a larger contrast between forte and piano at structurally important points. We found consistent results with a simple musical scale (Experiment 1) and a more naturalistic piece of music (Experiment 2). These findings suggest that action modulations are performed not only to attract learners' attention but to highlight the most relevant aspects of the actions to be learnt.
@@ -40,10 +38,10 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-output: papaja::apa6_word
-#output:
-#  papaja::apa6_pdf:
-#    latex_engine: xelatex
+# output: papaja::apa6_word
+output:
+ papaja::apa6_pdf:
+   latex_engine: xelatex
 ---
 
 ```{r set-up, include = FALSE}
@@ -531,7 +529,7 @@ The present findings extend earlier research on teaching-related action modulati
 \endgroup
 
 # Acknowledgements
-This research was supported by the European Research Council under the European Union’s Seventh Frame- work Program (FP7/2007–2013)/ERC Grant agreement no. 609819, SOMICS, and by ERC Grant agreement no. 616072, JAXPERTISE. We thank Dávid Csűrös for his help with data collection. 
+This research was supported by the European Research Council under the European Union’s Seventh Framework Program (FP7/2007–2013)/ERC Grant agreement no. 609819, SOMICS, and by ERC Grant agreement no. 616072, JAXPERTISE. We thank Dávid Csűrös for his help with data collection. 
 
 # Author contributions
 A.T, G.K and N.S developed the study concept and designed the experiments. Stimuli and procedure were created by A.T. Data collection and analyses were performed by A.T. under the supervision of G.K. and N.S. A.T. drafted the manuscript, and N.S. and G.K. provided critical revisions. All authors approved the final version of the manuscript for submission.
@@ -549,7 +547,7 @@ The authors declare no competing interests.
 
 In the teaching condition, participants were shown the following instruction on a computer monitor (Italic sentences were highlighted in yellow colour on a black background): "Now, play what you practised as if you were teaching it to students. Students already know how to produce the sequence of the tones and now are trying to *learn how to perform the piece expressively* by listening to your performance. *Do your best as a teacher to produce the piece according to the notation that you just practised.*"
 
-In the performing condition, participants were shown the following instruction on a computer monitor monitor: "Now, play what you practised as if you were performing it to an audience. *Do your best as a performer to produce the piece according to the notation that you just practised.*"
+In the performing condition, participants were shown the following instruction on a computer monitor: "Now, play what you practised as if you were performing it to an audience. *Do your best as a performer to produce the piece according to the notation that you just practised.*"
 
 ## Instructions (Experiment 2)
 
