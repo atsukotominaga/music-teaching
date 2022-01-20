@@ -38,10 +38,10 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-# output: papaja::apa6_word
-output:
- papaja::apa6_pdf:
-   latex_engine: xelatex
+output: papaja::apa6_word
+# output:
+#  papaja::apa6_pdf:
+#    latex_engine: xelatex
 ---
 
 ```{r set-up, include = FALSE}
@@ -88,13 +88,13 @@ We recruited 36 piano experts who played the piano for at least the past 10 year
 
 A weighted Yamaha MIDI digital piano was used to record participants' performance via Max/MSP ([https://cycling74.com/products/max](https://cycling74.com/products/max)) on a MacBook Pro with Mac OS X Mojave 10.14.3. The laptop and piano were connected to a high-fidelity soundcard (Focusrite Scarlett 6i6) to deliver a metronome and piano sound. All auditory feedback was given to participants through headphones (Audio-Technica ATH-M50X). Sheet music was displayed on a computer monitor in front of the participants. The pitch, onset and offset time of each note, and key velocity profiles were obtained from MIDI data using Max/MSP patchers.
 
-One musical excerpt was used as a stimulus. The excerpt was taken from ``A Dozen a Day - Play with Ease in Many Keys" by Edna-Mae Burnam and modified for the experiment. It consisted of a 6-measure isochronous melody noted in 4/4 meter. The stimulus was composed in C major to be played with the right hand only. Non-expressive sheet music (i.e., sheet music without expressive notations, *Fig \ref{fig:stimuli} A*) was used for the purpose of practice. Expressive notations were added to the non-expressive sheet music for the experiment. They referred to either articulation or dynamics (*Fig \ref{fig:stimuli} B-C*). Articulation was notated as either legato or staccato. Legato indicates that musical notes are to be connected and should sound smooth. Staccato requires producing musical notes with shortened duration, keeping them separate from each other. Dynamics was notated as either forte and piano. Forte indicates that musical notes should be played loudly whereas piano indicates that musical notes should be played softly. The notation did not include any indication of fingering (i.e., the positioning of the fingers when playing the piano) because the piece was simple and pilot testing had shown that specifying fingering was not necessary.
+One musical excerpt was used as a stimulus. The excerpt was taken from ``A Dozen a Day - Play with Ease in Many Keys" by Edna-Mae Burnam and modified for the experiment. It consisted of a 6-measure isochronous melody noted in 4/4 meter. The stimulus was composed in C major to be played with the right hand only. Non-expressive sheet music (i.e., sheet music without expressive notations, *Fig \ref{fig:stimuli} A*) was used for the purpose of practice. Expressive notations were added to the non-expressive sheet music for the experiment. They referred to either articulation or dynamics (*Fig \ref{fig:stimuli} B-C*). Articulation was notated as either legato or staccato. Legato indicates that musical notes are to be connected and should sound smooth. Staccato requires producing musical notes with shortened duration, keeping them separate from each other. Dynamics was notated as either forte or piano. Forte indicates that musical notes should be played loudly whereas piano indicates that musical notes should be played softly. The notation did not include any indication of fingering (i.e., the positioning of the fingers when playing the piano) because the piece was simple and pilot testing had shown that specifying fingering was not necessary.
 
 ### Procedure
 
 First, participants were allocated to either the teaching or performing condition and asked to practise the excerpt with the notated expression of either articulation or dynamics (*Fig \ref{fig:stimuli} B-C*). As soon as they had produced the excerpt with the notated expression without pitch errors twice consecutively, the test trials began.
 
-In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with the notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience (see details in *[Supplementary Information](#supplementary)*). Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was blocked and counterbalanced across participants. The order of the expressive techniques within each condition was also blocked and counterbalanced across participants. A leading metronome (80 quarter beats per minute, 8 beats) indicated the target tempo before each trial.
+In the teaching condition, participants were instructed to play the excerpt of music as if they were teaching it to students. It was mentioned that the students already knew the sequence of the tones and that they were trying to learn how to perform the piece with the notated expression by listening to the participant's performance. In the performing condition, participants were asked to play the excerpt of music as if they were performing it to an audience (see details in *[Supplementary material](#supplementary)*). Participants played the piece 8 times per expressive technique per condition, so there were 32 trials in total (2 conditions x 2 expressive techniques x 8 trials). The order of the conditions was blocked and counterbalanced across participants. The order of the expressive techniques within each condition was also blocked and counterbalanced across participants. A leading metronome (80 quarter beats per minute, 8 beats) indicated the target tempo before each trial.
 
 At the end of the experiment, participants filled in a questionnaire asking about their demographic information and experience in piano performance/teaching.
 
@@ -143,7 +143,7 @@ To compare the mean IOIs between the teaching and performing condition, we condu
 ```{r ioi-art-1, include = FALSE}
 ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
 
-ioi_art_1 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ioi_art_1 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs: Articulation") +
   ylim(150, 260) +
   geom_hline(yintercept = 188, linetype = "dashed") +
   stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 230, paired = TRUE) +
@@ -196,7 +196,7 @@ To compare the mean IOIs between the teaching and performing condition, we condu
 ```{r ioi-dyn-1, include = FALSE}
 ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
 
-ioi_dyn_1 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
+ioi_dyn_1 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs: Dynamics") +
   ylim(150, 260) +
   geom_hline(yintercept = 188, linetype = "dashed") +
   stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 200, paired = TRUE) +
@@ -267,7 +267,7 @@ The findings from Experiment 1 indicated that skilled pianists modified their pe
 
 The results for KOT and KV showed that participants successfully highlighted relevant aspects of articulation and dynamics. Specifically, participants exaggerated staccato when teaching articulation and forte when teaching dynamics. Moreover, our exploratory analysis demonstrated that participants made a larger contrast in dynamics at transition points (i.e., forte to piano or piano to forte). Importantly, participants did not modulate their performance in terms of irrelevant aspects of the techniques for teaching purposes (e.g., modulating the smoothness of sound while teaching dynamics). These findings confirmed that participants modulated their performance in systematic and fine-grained ways to teach expressive techniques.
 
-```{r plot-ioi-1, out.width = "100%", fig.cap = "\\label{fig:ioi-1}Experiment 1: IOIs (ms) when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+```{r plot-ioi-1, out.width = "100%", fig.cap = "\\label{fig:ioi-1}Experiment 1: IOIs (ms) when playing the piece with either articulation (left) or dynamics (right). A dashed line represents the tempo given by a metronome. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 # combine
 img_ioi_1 <- image_append(c(img_ioi_art_1, img_ioi_dyn_1))
 img_ioi_1 <- image_scale(img_ioi_1, "2200")
@@ -313,7 +313,7 @@ The same apparatus as in Experiment 1 was used. We selected Clementi's Sonatina 
 
 ### Procedure{#procedure-2}
 
-We employed the same procedure as in Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., *Fig \ref{fig:stimuli-2} A*) prior to the experiment. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations (see details in *[Supplementary Information](#supplementary)*). Third, participants could choose their preferred tempo from one of three options (100, 110 and 120 quarter beats per minute). The chosen tempo was again cued by a leading metronome. To make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the non-expressive sheet music (*Fig \ref{fig:stimuli-2} A*). Those who could not perform the piece without pitch errors twice consecutively within five attempts were excluded from data analysis (as a result, one participant was excluded). The rest of the procedure was identical to Experiment 1.
+We employed the same procedure as in Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., *Fig \ref{fig:stimuli-2} A*) prior to the experiment. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations (see details in *[Supplementary material](#supplementary)*). Third, participants could choose their preferred tempo from one of three options (100, 110 and 120 quarter beats per minute). The chosen tempo was again cued by a leading metronome. To make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the non-expressive sheet music (*Fig \ref{fig:stimuli-2} A*). Those who could not perform the piece without pitch errors twice consecutively within five attempts were excluded from data analysis (as a result, one participant was excluded). The rest of the procedure was identical to Experiment 1.
 
 ### Data analysis
 
@@ -355,7 +355,7 @@ A paired-sample *t*-test showed that participants played more slowly in the teac
 ```{r ioi-art-2, echo = FALSE}
 ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
 
-ioi_art_2 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Articulation") +
+ioi_art_2 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOIs: Articulation") +
   ylim(0.8, 1.1) +
   geom_hline(yintercept = 1, linetype = "dashed") +
   stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 1.05, method = "t.test", paired = TRUE) +
@@ -368,7 +368,7 @@ img_ioi_art_2 <- image_read(here("paper/image", "ioi_art_2.png"), density = 300)
 
 ### Key-Overlap Ratios (KORs)
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Articulation (legato vs. staccato) showed that there was a significant main effect of Articulation (*F*(`r kor_art_aov$anova_table[2,1]`,`r kor_art_aov$anova_table[2,2]`) = `r sprintf('%.0f', kor_art_aov$anova_table[2,4])`, *p* `r if(kor_art_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[2,5])`) and a significant interaction between Condition and Articulation (*F*(`r kor_art_aov$anova_table[3,1]`,`r kor_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', kor_art_aov$anova_table[3,4])`, *p* `r if(kor_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[3,5])`, *Fig \ref{fig:kor-2}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that for staccato KORs were more negative in the teaching condition [*M* = `r kor_art_all[Condition == "teaching" & Subcomponent == "Staccato"]$Mean`, *SD* = `r kor_art_all[Condition == "teaching" & Subcomponent == "Staccato"]$SD`] than in the performing condition [*M* = `r kor_art_all[Condition == "performing" & Subcomponent == "Staccato"]$Mean`, *SD* = `r kor_art_all[Condition == "performing" & Subcomponent == "Staccato"]$SD`] (*p* = `r sprintf('%.3f', kor_art_posthoc$p.value[2])`). For legato there was no significant difference in KORs between the teaching [*M* = `r kor_art_all[Condition == "teaching" & Subcomponent == "Legato"]$Mean`, *SD* = `r kor_art_all[Condition == "teaching" & Subcomponent == "Legato"]$SD`] and performing condition [*M* = `r kor_art_all[Condition == "performing" & Subcomponent == "Legato"]$Mean`, *SD* = `r kor_art_all[Condition == "performing" & Subcomponent == "Legato"]$SD`] (*p* = `r sprintf('%.2f', kor_art_posthoc$p.value[1])`).  
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Articulation (legato vs. staccato) showed that there was a significant main effect of Articulation (*F*(`r kor_art_aov$anova_table[2,1]`,`r kor_art_aov$anova_table[2,2]`) = `r sprintf('%.0f', kor_art_aov$anova_table[2,4])`, *p* `r if(kor_art_aov$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[2,5])`) and a significant interaction between Condition and Articulation (*F*(`r kor_art_aov$anova_table[3,1]`,`r kor_art_aov$anova_table[3,2]`) = `r sprintf('%.2f', kor_art_aov$anova_table[3,4])`, *p* `r if(kor_art_aov$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_aov$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', kor_art_aov$anova_table[3,5])`, *Fig \ref{fig:kor-2}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that for staccato KORs were more negative in the teaching condition [*M* = `r kor_art_all[Condition == "teaching" & Subcomponent == "Staccato"]$Mean`, *SD* = `r kor_art_all[Condition == "teaching" & Subcomponent == "Staccato"]$SD`] than in the performing condition [*M* = `r kor_art_all[Condition == "performing" & Subcomponent == "Staccato"]$Mean`, *SD* = `r kor_art_all[Condition == "performing" & Subcomponent == "Staccato"]$SD`] (*p* = `r if(kor_art_posthoc$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', kor_art_posthoc$p.value[2]))}`). For legato there was no significant difference in KORs between the teaching [*M* = `r kor_art_all[Condition == "teaching" & Subcomponent == "Legato"]$Mean`, *SD* = `r kor_art_all[Condition == "teaching" & Subcomponent == "Legato"]$SD`] and performing condition [*M* = `r kor_art_all[Condition == "performing" & Subcomponent == "Legato"]$Mean`, *SD* = `r kor_art_all[Condition == "performing" & Subcomponent == "Legato"]$SD`] (*p* = `r sprintf('%.2f', kor_art_posthoc$p.value[1])`).  
 
 ```{r kor-art-2, include = FALSE}
 kor_art_plot <- data.table(subject = kor_art[Condition == "teaching"]$SubNr, teaching = kor_art[Condition == "teaching"]$Mean, performing = kor_art[Condition == "performing"]$Mean, subcomponent = kor_art[Condition == "teaching"]$Subcomponent)
@@ -408,7 +408,7 @@ A paired-sample *t*-test showed no significant difference between the teaching c
 ```{r ioi-dyn-2, echo = FALSE}
 ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
 
-ioi_dyn_2 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Dynamics") +
+ioi_dyn_2 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOIs: Dynamics") +
   ylim(0.8, 1.1) +
   geom_hline(yintercept = 1, linetype = "dashed") +
   stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 1.05, method = "t.test", paired = TRUE) +
@@ -474,7 +474,7 @@ img_kor_dyn_2 <- image_read(here("paper/image", "kor_dyn_2.png"), density = 300)
 
 The results from Experiment 2 replicate our earlier findings and provide further evidence that skilled pianists were able to modulate their performance for teaching purposes. As in Experiment 1, we observed slower performance only while teaching the notated articulation. Again, KORs showed that when teaching articulation, participants exaggerated staccato while there was no significant difference in legato between the two conditions. While teaching dynamics, KV showed that participants exaggerated forte and piano. This pattern of exaggeration was more pronounced than in Experiment 1, where only higher KV for forte was observed. Furthermore, we again found that when teaching dynamics, at transition points participants produced a larger contrast in dynamics between forte and piano, bidirectionally. Importantly, participants did not modulate performance aspects that were irrelevant for the techniques to be taught (i.e., no modulation of dynamics when teaching articulation and vice versa). Overall, Experiment 2 demonstrated systematic and fine-grained didactic performance modulations for a naturalistic piece of music.
 
-```{r plot-ioi-2, out.width = "100%", fig.cap = "\\label{fig:ioi-2}Experiment 2: Normalised IOIs when playing the piece with either articulation (left) or dynamics (right). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+```{r plot-ioi-2, out.width = "100%", fig.cap = "\\label{fig:ioi-2}Experiment 2: Normalised IOIs when playing the piece with either articulation (left) or dynamics (right). A dashed line represents the tempo given by a metronome. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 img_ioi_2 <- image_append(c(img_ioi_art_2, img_ioi_dyn_2))
 img_ioi_2 <- image_scale(img_ioi_2, "2200")
 image_write(img_ioi_2, path = here("paper/figure", "Fig6.tiff"), format = "tiff")
@@ -542,7 +542,7 @@ The authors declare no competing interests.
 
 \clearpage
 
-# Supplementary Information{#supplementary}
+# Supplementary material{#supplementary}
 ## Instructions (Experiment 1)
 
 In the teaching condition, participants were shown the following instruction on a computer monitor (Italic sentences were highlighted in yellow colour on a black background): "Now, play what you practised as if you were teaching it to students. Students already know how to produce the sequence of the tones and now are trying to *learn how to perform the piece expressively* by listening to your performance. *Do your best as a teacher to produce the piece according to the notation that you just practised.*"
