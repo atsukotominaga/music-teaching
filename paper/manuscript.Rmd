@@ -543,12 +543,30 @@ The authors declare no competing interests.
 \clearpage
 
 # Supplementary material{#supplementary}
-## Instructions (Experiment 1)
+# Instructions
+
+## Experiment 1
 
 In the teaching condition, participants were shown the following instruction on a computer monitor (Italic sentences were highlighted in yellow colour on a black background): "Now, play what you practised as if you were teaching it to students. Students already know how to produce the sequence of the tones and now are trying to *learn how to perform the piece expressively* by listening to your performance. *Do your best as a teacher to produce the piece according to the notation that you just practised.*"
 
 In the performing condition, participants were shown the following instruction on a computer monitor: "Now, play what you practised as if you were performing it to an audience. *Do your best as a performer to produce the piece according to the notation that you just practised.*"
 
-## Instructions (Experiment 2)
+## Experiment 2
 
 In the teaching condition of Experiment 2, we gave participants the exact same instruction as in Experiment 1. In the performing condition, participants were given the following instruction on a computer monitor: "Now, play what you practised as if you were performing it to an audience. *Perform the piece expressively with your interpretation. Do your best as a performer to produce the piece according to the notation that you just practised.*"
+
+\clearpage
+
+# Variability
+
+## Data analysis
+
+## Results (Experiment 1)
+```{r variability-1, include = FALSE}
+source(here("experiment-1/analysis/stats", "variability.R"), chdir = TRUE)
+```
+
+## Results (Experiment 2)
+```{r variability-2, include = FALSE}
+source(here("experiment-2/analysis/stats", "variability.R"), chdir = TRUE)
+```
