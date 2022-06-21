@@ -47,13 +47,11 @@ ioi_dyn_seq_each <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by =
 ```{r, echo = FALSE, fig.width = 6, fig.height = 1.2}
 # Plot the whole sequence
 ggline(ioi_art_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOIs: Articulation") +
-  geom_hline(yintercept = 188, linetype = "dotted") + # target tempo
-  geom_vline(xintercept = c(8, 24, 49, 16, 41, 57), linetype = "twodash") + # transition points
+  geom_vline(xintercept = c(5, 17, 47, 8, 20, 39), linetype = "twodash") + # transition points
   scale_x_continuous(breaks = seq(1,66,1))
 
 ggline(ioi_dyn_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOIs: Dynamics") +
-  geom_hline(yintercept = 188, linetype = "dotted") + # target tempo
-  geom_vline(xintercept = c(8, 24, 49, 16, 41, 57), linetype = "twodash") + # transition points
+  geom_vline(xintercept = c(5, 17, 47, 8, 20, 39), linetype = "twodash") + # transition points
   scale_x_continuous(breaks = seq(1,66,1))
 ```
 
@@ -74,7 +72,6 @@ ggline(ioi_dyn_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "C
 <!--   scale_x_discrete(breaks = seq(1,66,3)) + labs(x = "Interval", y = "IOIs (ms)", title = "IOIs: Dynamics") + theme_pubr() + theme(legend.position = "right") -->
 <!-- ``` -->
 
-
 ## Coefficient of Variation
 
 ```{r, echo = FALSE}
@@ -90,10 +87,8 @@ ggplot(ioi_cv_subject, aes(x = Condition, y = MeanCV, color = Condition)) +
   theme_pubr()
 ```
 
-
-
 ### Stats
-- With Participant 2 (outside +/- 3SD)
+- With Participant 15 (outside +/- 3SD)
 
 ```{r, echo = FALSE}
 # descriptive stats
@@ -104,15 +99,15 @@ aov_ez(id = "SubNr", dv = "MeanCV",
        data = ioi_cv_subject)
 ```
 
-- Without Participant 2 (outside +/- 3SD)
+- Without Participant 15 (outside +/- 3SD)
 
 ```{r, echo = FALSE}
 # descriptive stats
-ioi_cv_subject[SubNr != 2, .(.N, MeanCV = mean(MeanCV), SDCV = sd(MeanCV)), by = .(Condition, Skill)]
+ioi_cv_subject[SubNr != 15, .(.N, MeanCV = mean(MeanCV), SDCV = sd(MeanCV)), by = .(Condition, Skill)]
 
 aov_ez(id = "SubNr", dv = "MeanCV",
        within = c("Condition", "Skill"),
-       data = ioi_cv_subject[SubNr != 2])
+       data = ioi_cv_subject[SubNr != 15])
 ```
 
 ## IOIs at transition points

@@ -1,16 +1,4 @@
----
-title: "Variability analysis"
-output:
-  html_notebook: default
-editor_options: 
-  chunk_output_type: inline
----
-
-Description: This is a summary of variability analysis. Added after the first review from the journal.
-
-- Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
-
-```{r setup, include = FALSE}
+## ----setup, include = FALSE--------------------------------
 # packages
 # data manipulation
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
@@ -35,49 +23,20 @@ ioi_art_seq_each <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by =
 dt_ioi_dyn <- dt_ioi[Skill == "dynamics"]
 # per participant
 ioi_dyn_seq_each <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
-```
 
-## Sequence Plots
-- Error bars show the standard error.
-- Dotted lines show the target tempo (IOI = 188ms).
-- Twodashed lines show transition points (i.e., from legato to staccato, from staccato to legato, from forte to piano, from piano to forte).
 
-### Overall
-
-```{r, echo = FALSE, fig.width = 6, fig.height = 1.2}
+## ---- echo = FALSE, fig.width = 6, fig.height = 1.2--------
 # Plot the whole sequence
 ggline(ioi_art_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOIs: Articulation") +
-  geom_hline(yintercept = 188, linetype = "dotted") + # target tempo
-  geom_vline(xintercept = c(8, 24, 49, 16, 41, 57), linetype = "twodash") + # transition points
+  geom_vline(xintercept = c(5, 17, 47, 8, 20, 39), linetype = "twodash") + # transition points
   scale_x_continuous(breaks = seq(1,66,1))
 
 ggline(ioi_dyn_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOIs: Dynamics") +
-  geom_hline(yintercept = 188, linetype = "dotted") + # target tempo
-  geom_vline(xintercept = c(8, 24, 49, 16, 41, 57), linetype = "twodash") + # transition points
+  geom_vline(xintercept = c(5, 17, 47, 8, 20, 39), linetype = "twodash") + # transition points
   scale_x_continuous(breaks = seq(1,66,1))
-```
-
-<!-- ### Each participant -->
-<!-- ```{r, echo = FALSE, fig.width = 5, fig.height = 5} -->
-<!-- # Plot the whole sequence for each participant -->
-<!-- ggplot(ioi_art_seq_each, aes(x = Interval, y = Mean, color = SubNr)) + -->
-<!--   geom_line() + geom_point() + facet_grid(Condition ~ .) + -->
-<!--   geom_hline(yintercept = 188, linetype = "dotted") + # target tempo -->
-<!--   geom_vline(xintercept = c(8, 24, 49, 16, 41, 57), linetype = "twodash") + # transition points -->
-<!--   scale_x_discrete(breaks = seq(1,66,3)) + labs(x = "Interval", y = "IOIs (ms)", title = "IOIs: Articulation") + theme_pubr() + theme(legend.position = "right") -->
-
-<!-- ioi_dyn_seq <- ioi_dyn_seq_each[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill, Interval)] -->
-<!-- ggplot(ioi_dyn_seq_each, aes(x = Interval, y = Mean, color = SubNr)) + -->
-<!--   geom_line() + geom_point() + facet_grid(Condition ~ .) + -->
-<!--   geom_hline(yintercept = 188, linetype = "dotted") + # target tempo -->
-<!--   geom_vline(xintercept = c(8, 24, 49, 16, 41, 57), linetype = "twodash") + # transition points -->
-<!--   scale_x_discrete(breaks = seq(1,66,3)) + labs(x = "Interval", y = "IOIs (ms)", title = "IOIs: Dynamics") + theme_pubr() + theme(legend.position = "right") -->
-<!-- ``` -->
 
 
-## Coefficient of Variation
-
-```{r, echo = FALSE}
+## ---- echo = FALSE-----------------------------------------
 ioi_cv_trial <- dt_ioi[, .(N = .N, Mean = mean(IOI), SD = sd(IOI), CV = sd(IOI)/mean(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
 ioi_cv_subject <- ioi_cv_trial[, .(N = .N, MeanCV = mean(CV), SD = sd(CV)), by = .(SubNr, Condition, Skill)]
 ioi_cv_subject <- ioi_cv_subject[order(SubNr, Condition, Skill)] # ordering
@@ -88,36 +47,27 @@ ggplot(ioi_cv_subject, aes(x = Condition, y = MeanCV, color = Condition)) +
   geom_point(aes(color = Condition)) +
   facet_grid(. ~ Skill) +
   theme_pubr()
-```
 
 
-
-### Stats
-- With Participant 2 (outside +/- 3SD)
-
-```{r, echo = FALSE}
+## ---- echo = FALSE-----------------------------------------
 # descriptive stats
 ioi_cv_subject[, .(.N, MeanCV = mean(MeanCV), SDCV = sd(MeanCV)), by = .(Condition, Skill)]
 
 aov_ez(id = "SubNr", dv = "MeanCV",
        within = c("Condition", "Skill"),
        data = ioi_cv_subject)
-```
 
-- Without Participant 2 (outside +/- 3SD)
 
-```{r, echo = FALSE}
+## ---- echo = FALSE-----------------------------------------
 # descriptive stats
-ioi_cv_subject[SubNr != 2, .(.N, MeanCV = mean(MeanCV), SDCV = sd(MeanCV)), by = .(Condition, Skill)]
+ioi_cv_subject[SubNr != 15, .(.N, MeanCV = mean(MeanCV), SDCV = sd(MeanCV)), by = .(Condition, Skill)]
 
 aov_ez(id = "SubNr", dv = "MeanCV",
        within = c("Condition", "Skill"),
-       data = ioi_cv_subject[SubNr != 2])
-```
+       data = ioi_cv_subject[SubNr != 15])
 
-## IOIs at transition points
 
-```{r, echo = FALSE}
+## ---- echo = FALSE-----------------------------------------
 ioi_tra <- dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
 ioi_tra <- ioi_tra[order(SubNr, Condition, Skill)] # ordering
 
@@ -127,21 +77,18 @@ ggplot(ioi_tra, aes(x = Condition, y = Mean, color = Condition)) +
   geom_point(aes(color = Condition)) +
   facet_grid(. ~ Skill) +
   theme_pubr()
-```
 
-```{r, echo = FALSE}
+
+## ---- echo = FALSE-----------------------------------------
 # descriptive stats
 ioi_tra[, .(.N, MeanCV = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill)]
 
 aov_ez(id = "SubNr", dv = "Mean",
        within = c("Condition", "Skill"),
        data = ioi_tra)
-```
 
-## IOIs at transition points vs. others
-Caution: the number of points included in each transition group is considerably different
 
-```{r, echo = FALSE}
+## ---- echo = FALSE-----------------------------------------
 dt_ioi$Transition <- "No"
 dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Transition <- "Yes"
 
@@ -158,14 +105,14 @@ ggplot(ioi_tra_others, aes(x = Condition, y = Mean, color = Condition)) +
   geom_point(aes(color = Condition)) +
   facet_grid(Skill ~ Transition) +
   theme_pubr()
-```
 
-```{r, echo = FALSE}
+
+## ---- echo = FALSE-----------------------------------------
 aov_ez(id = "SubNr", dv = "Mean",
        within = c("Condition", "Skill", "Transition"),
        data = ioi_tra_others)
-```
 
-```{r export, include = FALSE}
+
+## ----export, include = FALSE-------------------------------
 knitr::purl("variability.Rmd")
-```
+
