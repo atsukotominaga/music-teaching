@@ -33,9 +33,13 @@ colnames(dt_2)[3] <- "Age"
 colnames(dt_2)[4] <- "Gender"
 colnames(dt_2)[7] <- "Handedness"
 colnames(dt_2)[18] <- "PianoTotalPractice"
+colnames(dt_2)[28] <- "TeachingMusic"
 
 # extract the total number of years of training in piano (input manually based on the original csv file)
 dt_2$PianoTotalPractice <- c(13, 15, 15, 16, 9, 10, 24, 8, 19, 6, 12, 10, 21, 23, 15, 22, 22, 24, 17, 15, 12)
+dt_2$TeachingPianoYears <- c(NA, 4, NA, 2, NA, NA, NA, NA, 5, NA, NA, NA, 0.5, 9, 11, 2, NA, 8, 2, 1, 1)
+dt_2$TeachingPiano <- "No"
+dt_2[!is.na(TeachingPianoYears)]$TeachingPiano <- "Yes"
 
 # change some characteristics
 dt_2$Age <- as.numeric(dt_2$Age)
@@ -55,6 +59,8 @@ Note: A different questionnaire was used for only SubNr 21 and adjusted for nece
 - Female: `r nrow(dt_2_included[Gender == "Female"])` (mean age: `r round(mean(dt_2_included[Gender == "Female"]$Age), 2)`, sd: `r round(sd(dt_2_included[Gender == "Female"]$Age), 2)`)
 - Average training years: `r round(mean(dt_2_included$PianoTotalPractice), 2)` years
 - Handedness: Right (`r nrow(dt_2_included[Handedness == "Right"])`), Left (`r nrow(dt_2_included[Handedness == "Left"])`), Both (`r nrow(dt_2_included[Handedness == "Both"])`)
+- Teaching experience (any instrument): Yes (`r nrow(dt_2_included[TeachingMusic == "Yes"])`), No (`r nrow(dt_2_included[TeachingMusic == "No"])`)
+- Teaching experience (piano): Yes (`r nrow(dt_2_included[TeachingPiano == "Yes"])`, mean years of teaching: `r round( mean(dt_2_included[TeachingPiano == "Yes"]$TeachingPianoYears), 2)`, sd: `r round(sd(dt_2_included[TeachingPiano == "Yes"]$TeachingPianoYears), 2)`), No (`r nrow(dt_2_included[TeachingPiano == "No"])`)
 
 ## Some descriptive questions
 1. Did you try to perform differently when you are asked to play as a teacher during the experiment? If so, please describe how you changed your performance?

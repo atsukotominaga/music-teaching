@@ -31,12 +31,16 @@ colnames(dt)[2] <- "SubNr"
 colnames(dt)[3] <- "Age"
 colnames(dt)[4] <- "Gender"
 colnames(dt)[7] <- "Handedness"
+colnames(dt)[18] <- "TeachingMusic"
 
 # change some characteristics
 dt$Age <- as.numeric(dt$Age)
 
 # extract the total number of years of training in piano (input manually based on the original csv file)
 dt$PianoTotalPractice <- c(14, 20, 27, 21, 10, 16, 9, 13, 25, 14, 13, 11, 6, 4, 6, 8, 21, 15, 18, 7, 11, 12, 12, 18, 12, 5, 5, 10, 16, 10, 8, 22, 10, 5, 4, 14)
+dt$TeachingPianoYears <- c(NA, 4, NA, 12, NA, 3, NA, NA, 3, NA, NA, NA, NA, NA, 5, NA, 5, NA, 0.17, NA, NA, NA, NA, 0.17, NA, NA, NA, NA, 2, NA, NA, 0.5, NA, NA, NA, NA)
+dt$TeachingPiano <- "No"
+dt[!is.na(TeachingPianoYears)]$TeachingPiano <- "Yes"
 
 # exclude participants
 dt_included <- dt[SubNr != 1 & SubNr != 3 & SubNr != 8 & SubNr != 14 & SubNr != 16]
@@ -45,13 +49,17 @@ print(dt_included)
 ```
 
 ## Descriptive stats for included participants
+
 - Number of included participants: `r nrow(dt_included)` (mean age: `r round(mean(dt_included$Age), 2)`, sd: `r round(sd(dt_included$Age), 2)`)
 - Male: `r nrow(dt_included[Gender == "Male"])` (mean age: `r round(mean(dt_included[Gender == "Male"]$Age), 2)`, sd: `r round(sd(dt_included[Gender == "Male"]$Age), 2)`)
 - Female: `r nrow(dt_included[Gender == "Female"])` (mean age: `r round(mean(dt_included[Gender == "Female"]$Age), 2)`, sd: `r round(sd(dt_included[Gender == "Female"]$Age), 2)`)
 - Average training years: `r round(mean(dt_included$PianoTotalPractice), 2)` years
 - Handedness: Right (`r nrow(dt_included[Handedness == "Right"])`), Left (`r nrow(dt_included[Handedness == "Left"])`), Both (`r nrow(dt_included[Handedness == "Both"])`)
+- Teaching experience (any instrument): Yes (`r nrow(dt_included[TeachingMusic == "Yes"])`), No (`r nrow(dt_included[TeachingMusic == "No"])`)
+- Teaching experience (piano): Yes (`r nrow(dt_included[TeachingPiano == "Yes"])`, mean years of teaching: `r round( mean(dt_included[TeachingPiano == "Yes"]$TeachingPianoYears), 2)`, sd: `r round(sd(dt_included[TeachingPiano == "Yes"]$TeachingPianoYears), 2)`), No (`r nrow(dt_included[TeachingPiano == "No"])`)
 
 ## Some descriptive questions
+
 1. Did you try to perform differently when you are asked to play as a teacher during the experiment? If so, please describe how you changed your performance?
 
 ```{r 1, echo = FALSE}
