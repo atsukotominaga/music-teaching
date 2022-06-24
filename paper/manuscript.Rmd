@@ -38,10 +38,10 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-output: papaja::apa6_word
-# output:
-#  papaja::apa6_pdf:
-#    latex_engine: xelatex
+# output: papaja::apa6_word
+output:
+  papaja::apa6_pdf:
+    latex_engine: xelatex
 ---
 
 ```{r set-up, include = FALSE}
@@ -82,7 +82,7 @@ source(here("experiment-1/analysis/preprocessor", "error_summary.R"), chdir = TR
 
 ### Participants
 
-We recruited 36 piano experts who played the piano for at least the past 10 years or were studying advanced piano performance at a music school at the time of recruitment. For data analysis, we excluded three participants due to experimental errors, and two participants because they deviated substantially from the prescribed tempo (outside 2 standard deviations from the average tempo across participants). Thirty-one participants (`r nrow(dt_included[Gender == "Female"])` female) were included in data analysis. Most participants were right-handed (left: `r nrow(dt_included[Handedness == "Left"])`, ambidextrous: `r nrow(dt_included[Handedness == "Both"])`) with a mean age of `r round(mean(dt_included$Age), 2)` (*SD* = `r round(sd(dt_included$Age), 2)`). They had `r round(mean(dt_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_included$PianoTotalPractice), 2)`). All participants gave their informed consent before the experiment started and received vouchers for their participation. The study (No. 2018-124) was approved by the United Ethical Review Committee for Research in Psychology (EPKEB) in Hungary.
+We recruited 36 piano experts who played the piano for at least the past 10 years or were studying advanced piano performance at a music school at the time of recruitment. For data analysis, we excluded three participants due to experimental errors, and two participants because they deviated substantially from the prescribed tempo (outside 2 standard deviations from the average tempo across participants). Thirty-one participants (`r nrow(dt_included[Gender == "Female"])` female) were included in data analysis. Most participants were right-handed (left: `r nrow(dt_included[Handedness == "Left"])`, ambidextrous: `r nrow(dt_included[Handedness == "Both"])`) with a mean age of `r round(mean(dt_included$Age), 2)` (*SD* = `r round(sd(dt_included$Age), 2)`). They had `r round(mean(dt_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_included$PianoTotalPractice), 2)`). `r nrow(dt_included[TeachingPiano == "Yes"])` participants had an experience in teaching the piano (*M* = `r round( mean(dt_included[TeachingPiano == "Yes"]$TeachingPianoYears), 2)` years, *SD* = `r round( sd(dt_included[TeachingPiano == "Yes"]$TeachingPianoYears), 2)`). All participants gave their informed consent before the experiment started and received vouchers for their participation. The study (No. 2018-124) was approved by the United Ethical Review Committee for Research in Psychology (EPKEB) in Hungary.
 
 ### Apparatus and stimuli
 
@@ -305,7 +305,7 @@ source(here("experiment-2/analysis/preprocessor", "error_summary.R"), chdir = TR
 
 ### Participants
 
-We recruited 21 piano experts who already had a degree (above bachelor or equivalent) in piano performance/teaching or were studying advanced piano performance at a music school at the time of recruitment. For data analysis, we excluded one participant due to insufficient motor skills. Twenty participants (`r nrow(dt_2_included[Gender == "Female"])` female) were included in the data analysis. Most participants were right-handed (left: `r nrow(dt_2_included[Handedness == "Left"])`) with a mean age of `r round(mean(dt_2_included$Age), 2)` (*SD* = `r round(sd(dt_2_included$Age), 2)`). They had `r round(mean(dt_2_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_2_included$PianoTotalPractice), 2)`). All participants gave their informed consent before the experiment started and received vouchers for their participation. The study (No. 2018-124) was approved by the United Ethical Review Committee for Research in Psychology (EPKEB) in Hungary.
+We recruited 21 piano experts who already had a degree (above bachelor or equivalent) in piano performance/teaching or were studying advanced piano performance at a music school at the time of recruitment. For data analysis, we excluded one participant due to insufficient motor skills. Twenty participants (`r nrow(dt_2_included[Gender == "Female"])` female) were included in the data analysis. Most participants were right-handed (left: `r nrow(dt_2_included[Handedness == "Left"])`) with a mean age of `r round(mean(dt_2_included$Age), 2)` (*SD* = `r round(sd(dt_2_included$Age), 2)`). They had `r round(mean(dt_2_included$PianoTotalPractice), 2)` years of practice on average (*SD* = `r round(sd(dt_2_included$PianoTotalPractice), 2)`). `r nrow(dt_2_included[TeachingPiano == "Yes"])` participants had an experience in teaching the piano (*M* = `r round( mean(dt_2_included[TeachingPiano == "Yes"]$TeachingPianoYears), 2)` years, *SD* = `r round( sd(dt_2_included[TeachingPiano == "Yes"]$TeachingPianoYears), 2)`). All participants gave their informed consent before the experiment started and received vouchers for their participation. The study (No. 2018-124) was approved by the United Ethical Review Committee for Research in Psychology (EPKEB) in Hungary.
 
 ### Apparatus and stimuli
 
