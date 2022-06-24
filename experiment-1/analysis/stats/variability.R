@@ -1,4 +1,4 @@
-## ----setup, include = FALSE--------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 # packages
 # data manipulation
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
@@ -25,7 +25,7 @@ dt_ioi_dyn <- dt_ioi[Skill == "dynamics"]
 ioi_dyn_seq_each <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 
 
-## ---- echo = FALSE, fig.width = 6, fig.height = 1.2--------
+## ---- echo = FALSE, fig.width = 6, fig.height = 1.2---------------------------
 # Plot the whole sequence
 ggline(ioi_art_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOIs: Articulation") +
   geom_hline(yintercept = 188, linetype = "dotted") + # target tempo
@@ -38,7 +38,7 @@ ggline(ioi_dyn_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "C
   scale_x_continuous(breaks = seq(1,66,1))
 
 
-## ---- echo = FALSE-----------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 ioi_cv_trial <- dt_ioi[, .(N = .N, Mean = mean(IOI), SD = sd(IOI), CV = sd(IOI)/mean(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
 ioi_cv_subject <- ioi_cv_trial[, .(N = .N, MeanCV = mean(CV), SD = sd(CV)), by = .(SubNr, Condition, Skill)]
 ioi_cv_subject <- ioi_cv_subject[order(SubNr, Condition, Skill)] # ordering
@@ -51,7 +51,7 @@ ggplot(ioi_cv_subject, aes(x = Condition, y = MeanCV, color = Condition)) +
   theme_pubr()
 
 
-## ---- echo = FALSE-----------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 # descriptive stats
 ioi_cv_subject[, .(.N, MeanCV = mean(MeanCV), SDCV = sd(MeanCV)), by = .(Condition, Skill)]
 
@@ -60,7 +60,7 @@ aov_ez(id = "SubNr", dv = "MeanCV",
        data = ioi_cv_subject)
 
 
-## ---- echo = FALSE-----------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 # descriptive stats
 ioi_cv_subject[SubNr != 2, .(.N, MeanCV = mean(MeanCV), SDCV = sd(MeanCV)), by = .(Condition, Skill)]
 
@@ -69,7 +69,7 @@ aov_ez(id = "SubNr", dv = "MeanCV",
        data = ioi_cv_subject[SubNr != 2])
 
 
-## ---- echo = FALSE-----------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 ioi_tra <- dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
 ioi_tra <- ioi_tra[order(SubNr, Condition, Skill)] # ordering
 
@@ -81,7 +81,7 @@ ggplot(ioi_tra, aes(x = Condition, y = Mean, color = Condition)) +
   theme_pubr()
 
 
-## ---- echo = FALSE-----------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 # descriptive stats
 ioi_tra[, .(.N, MeanCV = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill)]
 
@@ -90,7 +90,7 @@ aov_ez(id = "SubNr", dv = "Mean",
        data = ioi_tra)
 
 
-## ---- echo = FALSE-----------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 dt_ioi$Transition <- "No"
 dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Transition <- "Yes"
 
@@ -109,12 +109,12 @@ ggplot(ioi_tra_others, aes(x = Condition, y = Mean, color = Condition)) +
   theme_pubr()
 
 
-## ---- echo = FALSE-----------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 aov_ez(id = "SubNr", dv = "Mean",
        within = c("Condition", "Skill", "Transition"),
        data = ioi_tra_others)
 
 
-## ----export, include = FALSE-------------------------------
+## ----export, include = FALSE--------------------------------------------------
 knitr::purl("variability.Rmd")
 
