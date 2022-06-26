@@ -75,6 +75,8 @@ Description: This is a summary of dynamics analysis.
 
 - [Sequence plot](#sequence_art)
 
+- Additional analysis based on reviewers' comments
+
 ```{r setup, include = FALSE}
 # packages
 # data manipulation
@@ -551,6 +553,37 @@ vel_diff_art_seq <- dt_vel_diff_art[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)
 
 ggline(vel_diff_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "", title = "KV-Diff: Articulation") +
   scale_x_continuous(breaks = seq(1,66,1))
+```
+
+# Additional analysis
+- Normalise KV difference by the range of KV value between forte and piano for each participant.
+
+```{r, echo = FALSE}
+# normalise diff by KV range
+vel_diff_dyn$NormalisedDiff <- 0
+for (i in unique(vel_diff_dyn$SubNr)){
+  vel_diff_dyn[SubNr == i & Condition == "teaching"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "teaching"]$Mean/(max(vel_dyn[SubNr == i & Condition == "teaching"]$Mean)-min(vel_dyn[SubNr == i & Condition == "teaching"]$Mean))
+  vel_diff_dyn[SubNr == i & Condition == "performing"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "performing"]$Mean/(max(vel_dyn[SubNr == i & Condition == "performing"]$Mean)-min(vel_dyn[SubNr == i & Condition == "performing"]$Mean))
+}
+vel_diff_dyn
+
+# group
+vel_diff_dyn_all_2 <- vel_diff_dyn[, .(N = .N, NormalisedMean = mean(NormalisedDiff), SD = sd(NormalisedDiff), SEM = sd(NormalisedDiff)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
+vel_diff_dyn_all_2
+```
+
+## Plot
+```{r, echo = FALSE}
+vel_diff_dyn_plot_2 <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn[Condition == "teaching"]$NormalisedDiff, performing = vel_diff_dyn[Condition == "performing"]$NormalisedDiff, subcomponent = vel_diff_dyn[Condition == "teaching"]$Subcomponent)
+
+ggpaired(vel_diff_dyn_plot_2, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised KV (0-127)", title = "KV-Diff: Dynamics")
+```
+
+## Stats
+```{r, echo = FALSE}
+# stats
+vel_diff_dyn_aov_2 <- aov_car(NormalisedDiff ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), vel_diff_dyn)
+summary(vel_diff_dyn_aov_2)
 ```
 
 ```{r export, include = FALSE}
