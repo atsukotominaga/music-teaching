@@ -528,7 +528,7 @@ ggline(vel_diff_art_seq, x = "Interval", y = "Mean", add = "mean_se", position =
 
 ## Normalised KV difference per trial
 
-```{r, echo = FALSE, message = FALSE}
+```{r, echo = FALSE, warning = FALSE}
 # normalise diff by KV range
 vel_diff_dyn_trial$NormalisedDiff <- 0
 for (i in unique(vel_diff_dyn_trial$SubNr)){

@@ -339,7 +339,7 @@ ggline(vel_diff_art_seq, x = "Interval", y = "Mean", add = "mean_se", position =
   scale_x_continuous(breaks = seq(1,71,1))
 
 
-## ---- echo = FALSE, message = FALSE------------------------
+## ---- echo = FALSE, warning = FALSE------------------------
 # normalise diff by KV range
 vel_diff_dyn_trial$NormalisedDiff <- 0
 for (i in unique(vel_diff_dyn_trial$SubNr)){
