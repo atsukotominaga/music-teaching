@@ -33,23 +33,20 @@ dt_vel_diff_dyn <- dt_vel_diff[Skill == "dynamics"]
 
 ## ----vel-dyn, echo = FALSE---------------------------------
 # For each individual
-vel_dyn <- dt_vel_dyn[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, Subcomponent)]
+vel_dyn_trial <- dt_vel_dyn[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+
+vel_dyn <- vel_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 vel_dyn
 
 
 ## ----vel-dyn-box,  echo = FALSE----------------------------
-ggboxplot(dt_vel_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Dynamics") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(vel_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Dynamics") + facet_grid(Subcomponent ~ .)
 
 
 ## ----vel-dyn-all, echo = FALSE-----------------------------
 # Group mean
 vel_dyn_all <- vel_dyn[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
 vel_dyn_all
-
-
-## ----vel-dyn-all-scatter, echo = FALSE---------------------
-ggerrorplot(vel_dyn, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics")
 
 
 ## ----vel-dyn-all-box, echo = FALSE-------------------------
@@ -75,17 +72,16 @@ vel_dyn_posthoc
 
 ## ----vel-dyn-trial, echo = FALSE---------------------------
 # For each individual
-vel_dyn_trial <- dt_vel_dyn[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, Subcomponent, TrialNr)]
 vel_dyn_trial
 
 
 ## ----vel-dyn-trial-line-forte, echo = FALSE, fig.height = 4----
-ggline(dt_vel_dyn[Subcomponent == "Forte", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Dynamics/Forte") +
+ggline(vel_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Dynamics/Forte") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-dyn-trial-line-piano, echo = FALSE, fig.height = 4----
-ggline(dt_vel_dyn[Subcomponent == "Piano", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Dynamics/Piano") +
+ggline(vel_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Dynamics/Piano") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
@@ -107,12 +103,14 @@ ggline(vel_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = 
 
 ## ----vel-diff-dyn, echo = FALSE----------------------------
 # For each individual
-vel_diff_dyn <- dt_vel_diff_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Subcomponent)]
+vel_diff_dyn_trial <- dt_vel_diff_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+
+vel_diff_dyn <- vel_diff_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 vel_diff_dyn
 
 
 ## ----vel-diff-dyn-box,  echo = FALSE-----------------------
-ggboxplot(dt_vel_diff_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Difference", title = "KV-Diff: Dynamics") +
+ggboxplot(vel_diff_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Difference", title = "KV-Diff: Dynamics") +
   facet_grid(Subcomponent ~ .)
 
 
@@ -120,10 +118,6 @@ ggboxplot(dt_vel_diff_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N =
 # Group mean
 vel_diff_dyn_all <- vel_diff_dyn[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
 vel_diff_dyn_all
-
-
-## ----vel-diff-dyn-all-scatter, echo = FALSE----------------
-ggerrorplot(vel_diff_dyn, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics")
 
 
 ## ----vel-diff-dyn-all-box, echo = FALSE--------------------
@@ -149,17 +143,16 @@ vel_diff_dyn_posthoc
 
 ## ----vel-diff-dyn-trial, echo = FALSE----------------------
 # For each individual
-vel_diff_dyn_trial <- dt_vel_diff_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Subcomponent,TrialNr)]
 vel_diff_dyn_trial
 
 
 ## ----vel-diff-dyn-trial-line-ftop, echo = FALSE, fig.height = 4----
-ggline(dt_vel_diff_dyn[Subcomponent == "FtoP", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Dynamics/Forte to Piano") +
+ggline(vel_diff_dyn_trial[Subcomponent == "FtoP"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Dynamics/Forte to Piano") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-dyn-trial-line-ptof, echo = FALSE, fig.height = 4----
-ggline(dt_vel_diff_dyn[Subcomponent == "PtoF", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Dynamics/Piano to Forte") +
+ggline(vel_diff_dyn_trial[Subcomponent == "PtoF"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Dynamics/Piano to Forte") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
@@ -181,12 +174,14 @@ ggline(vel_diff_dyn_trial[Subcomponent == "PtoF"], x = "TrialNr", y = "Mean", ad
 
 ## ----vel-art, echo = FALSE---------------------------------
 # For each individual
-vel_art <- dt_vel_art[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, Subcomponent)]
+vel_art_trial <- dt_vel_art[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+
+vel_art <- vel_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 vel_art
 
 
 ## ----vel-art-box,  echo = FALSE----------------------------
-ggboxplot(dt_vel_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Articulation") +
+ggboxplot(vel_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Articulation") +
   facet_grid(Subcomponent ~ .)
 
 
@@ -194,10 +189,6 @@ ggboxplot(dt_vel_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N 
 # Group mean
 vel_art_all <- vel_art[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
 vel_art_all
-
-
-## ----vel-art-all-scatter, echo = FALSE---------------------
-ggerrorplot(vel_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Articulation")
 
 
 ## ----vel-art-all-box, echo = FALSE-------------------------
@@ -223,17 +214,16 @@ vel_art_posthoc
 
 ## ----vel-art-trial, echo = FALSE---------------------------
 # For each individual
-vel_art_trial <- dt_vel_art[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, Subcomponent, TrialNr)]
 vel_art_trial
 
 
 ## ----vel-art-trial-line-legato, echo = FALSE, fig.height = 4----
-ggline(dt_vel_art[Subcomponent == "Legato", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Articulation/Legato") +
+ggline(vel_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Articulation/Legato") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-art-trial-line-staccato, echo = FALSE, fig.height = 4----
-ggline(dt_vel_art[Subcomponent == "Staccato", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Articulation/Staccato") +
+ggline(vel_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Articulation/Staccato") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
@@ -270,10 +260,6 @@ vel_diff_art_all <- vel_diff_art[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), S
 vel_diff_art_all
 
 
-## ----vel-diff_art-all-scatter, echo = FALSE----------------
-ggerrorplot(vel_diff_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Articulation")
-
-
 ## ----vel-diff-art-all-box, echo = FALSE--------------------
 vel_diff_art_plot <- data.table(subject = vel_diff_art[Condition == "teaching"]$SubNr, teaching = vel_diff_art[Condition == "teaching"]$Mean, performing = vel_diff_art[Condition == "performing"]$Mean, subcomponent = vel_diff_art[Condition == "teaching"]$Subcomponent)
 
@@ -302,18 +288,18 @@ vel_diff_art_trial
 
 
 ## ----vel-diff-artt-rial-line-ltos, echo = FALSE, fig.height = 4----
-ggline(dt_vel_diff_art[Subcomponent == "LtoS", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Articulation/Legato to Staccato") +
+ggline(vel_diff_art_trial[Subcomponent == "LtoS"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Articulation/Legato to Staccato") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-art-trial-line-stol, echo = FALSE, fig.height = 4----
-ggline(dt_vel_diff_art[Subcomponent == "StoL", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Articulation/Staccato to Legato") +
+ggline(vel_diff_art_trial[Subcomponent == "StoL"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Articulation/Staccato to Legato") +
   scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-art-trial-all, echo = FALSE------------------
 # Group mean
-vel_diff_art_trial_all <- vel_diff_art_trial[Subcomponent == "LtoS" | Subcomponent == "StoL", .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent, TrialNr)]
+vel_diff_art_trial_all <- vel_diff_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean), SEM = sd(Mean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent, TrialNr)]
 vel_diff_art_trial_all
 
 
@@ -353,30 +339,77 @@ ggline(vel_diff_art_seq, x = "Interval", y = "Mean", add = "mean_se", position =
   scale_x_continuous(breaks = seq(1,71,1))
 
 
-## ---- echo = FALSE-----------------------------------------
+## ---- echo = FALSE, message = FALSE------------------------
 # normalise diff by KV range
-vel_diff_dyn$NormalisedDiff <- 0
-for (i in unique(vel_diff_dyn$SubNr)){
-  vel_diff_dyn[SubNr == i & Condition == "teaching"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "teaching"]$Mean/(max(vel_dyn[SubNr == i & Condition == "teaching"]$Mean)-min(vel_dyn[SubNr == i & Condition == "teaching"]$Mean))
-  vel_diff_dyn[SubNr == i & Condition == "performing"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "performing"]$Mean/(max(vel_dyn[SubNr == i & Condition == "performing"]$Mean)-min(vel_dyn[SubNr == i & Condition == "performing"]$Mean))
+vel_diff_dyn_trial$NormalisedDiff <- 0
+for (i in unique(vel_diff_dyn_trial$SubNr)){
+  for (m in unique(vel_diff_dyn_trial[SubNr == i]$TrialNr)){
+    # teaching
+    # FtoP
+    vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching" & Subcomponent == "FtoP"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching" & Subcomponent == "FtoP"]$Mean/(max(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching"]$Mean)-min(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching"]$Mean))
+    # PtoF
+    vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching" & Subcomponent == "PtoF"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching" & Subcomponent == "PtoF"]$Mean/(max(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching"]$Mean)-min(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching"]$Mean))
+    
+    # performing
+    # FtoP
+    vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing" & Subcomponent == "FtoP"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing" & Subcomponent == "FtoP"]$Mean/(max(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing"]$Mean)-min(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing"]$Mean))
+    # PtoF
+    vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing" & Subcomponent == "PtoF"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing" & Subcomponent == "PtoF"]$Mean/(max(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing"]$Mean)-min(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing"]$Mean))
+    
+    # error messages for non-existing trials but it's not reflected on vel_diff_dyn_trial anyway
+  }
 }
-vel_diff_dyn
+
+# each participant
+vel_diff_dyn_normalised <- vel_diff_dyn_trial[, .(N = .N, NormalisedMean = mean(NormalisedDiff), SD = sd(NormalisedDiff), SEM = sd(NormalisedDiff)/sqrt(.N)), by = .(SubNr, Condition, Skill, Subcomponent)]
 
 # group
-vel_diff_dyn_all_2 <- vel_diff_dyn[, .(N = .N, NormalisedMean = mean(NormalisedDiff), SD = sd(NormalisedDiff), SEM = sd(NormalisedDiff)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
-vel_diff_dyn_all_2
+vel_diff_dyn_normalised_all <- vel_diff_dyn_normalised[, .(N = .N, Mean = mean(NormalisedMean), SD = sd(NormalisedMean), SEM = sd(NormalisedMean)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
+vel_diff_dyn_normalised_all
 
 
 ## ---- echo = FALSE-----------------------------------------
-vel_diff_dyn_plot_2 <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn[Condition == "teaching"]$NormalisedDiff, performing = vel_diff_dyn[Condition == "performing"]$NormalisedDiff, subcomponent = vel_diff_dyn[Condition == "teaching"]$Subcomponent)
+vel_diff_dyn_plot_2 <- data.table(subject = vel_diff_dyn_normalised[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn_normalised[Condition == "teaching"]$NormalisedMean, performing = vel_diff_dyn_normalised[Condition == "performing"]$NormalisedMean, subcomponent = vel_diff_dyn_normalised[Condition == "teaching"]$Subcomponent)
 
 ggpaired(vel_diff_dyn_plot_2, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised KV (0-127)", title = "KV-Diff: Dynamics")
 
 
 ## ---- echo = FALSE-----------------------------------------
 # stats
-vel_diff_dyn_aov_2 <- aov_car(NormalisedDiff ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), vel_diff_dyn)
-summary(vel_diff_dyn_aov_2)
+vel_diff_dyn_aov_3 <- aov_car(NormalisedMean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), vel_diff_dyn_normalised)
+summary(vel_diff_dyn_aov_3)
+
+
+## ---- echo = FALSE-----------------------------------------
+vel_diff_dyn$NormalisedDiff <- 0
+for (i in unique(vel_diff_dyn_trial$SubNr)){
+  # teaching
+  # FtoP
+  vel_diff_dyn[SubNr == i & Condition == "teaching" & Subcomponent == "FtoP"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "teaching" & Subcomponent == "FtoP"]$Mean/(max(vel_dyn[SubNr == i & Condition == "teaching"]$Mean)-min(vel_dyn[SubNr == i & Condition == "teaching"]$Mean))
+  # PtoF
+  vel_diff_dyn[SubNr == i & Condition == "teaching" & Subcomponent == "PtoF"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "teaching" & Subcomponent == "PtoF"]$Mean/(max(vel_dyn[SubNr == i & Condition == "teaching"]$Mean)-min(vel_dyn[SubNr == i & Condition == "teaching"]$Mean))
+  # performing
+  # FtoP
+  vel_diff_dyn[SubNr == i & Condition == "performing" & Subcomponent == "FtoP"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "performing" & Subcomponent == "FtoP"]$Mean/(max(vel_dyn[SubNr == i & Condition == "performing"]$Mean)-min(vel_dyn[SubNr == i & Condition == "performing"]$Mean))
+  # PtoF
+  vel_diff_dyn[SubNr == i & Condition == "performing" & Subcomponent == "PtoF"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "performing" & Subcomponent == "PtoF"]$Mean/(max(vel_dyn[SubNr == i & Condition == "performing"]$Mean)-min(vel_dyn[SubNr == i & Condition == "performing"]$Mean))
+}
+
+# group
+vel_diff_dyn_normalised_all_2 <- vel_diff_dyn[, .(N = .N, Mean = mean(NormalisedDiff), SD = sd(NormalisedDiff), SEM = sd(NormalisedDiff)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
+vel_diff_dyn_normalised_all_2
+
+
+## ---- echo = FALSE-----------------------------------------
+vel_diff_dyn_plot_3 <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn[Condition == "teaching"]$NormalisedDiff, performing = vel_diff_dyn[Condition == "performing"]$NormalisedDiff, subcomponent = vel_diff_dyn[Condition == "teaching"]$Subcomponent)
+
+ggpaired(vel_diff_dyn_plot_3, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised KV (0-127)", title = "KV-Diff: Dynamics")
+
+
+## ---- echo = FALSE-----------------------------------------
+# stats
+vel_diff_dyn_aov_4 <- aov_car(NormalisedDiff ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), vel_diff_dyn)
+summary(vel_diff_dyn_aov_4)
 
 
 ## ----export, include = FALSE-------------------------------
