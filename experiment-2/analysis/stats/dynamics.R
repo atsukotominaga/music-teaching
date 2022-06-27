@@ -181,8 +181,7 @@ vel_art
 
 
 ## ----vel-art-box,  echo = FALSE----------------------------
-ggboxplot(vel_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Articulation") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(vel_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Articulation") + facet_grid(Subcomponent ~ .)
 
 
 ## ----vel-art-all, echo = FALSE-----------------------------
