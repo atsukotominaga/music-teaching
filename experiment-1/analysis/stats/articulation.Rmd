@@ -40,8 +40,6 @@ Description: This is a summary of articulation analysis.
 - Group results and stats (if available)
   + [All](#kot_art_group_all)
   + [Trial by trial](#kot_art_group_trial)
-  
-- [Sequence plot](#sequence_art)
 
 ### KOR
 - Individual results
@@ -63,8 +61,6 @@ Description: This is a summary of articulation analysis.
   + [All](#kot_dyn_group_all)
   + [Trial by trial](#kot_dyn_group_trial)
 
-- [Sequence plot](#sequence_dyn)
-
 ### KOR
 - Individual results
   + [All](#kor_dyn_ind_all)
@@ -73,6 +69,8 @@ Description: This is a summary of articulation analysis.
 - Group results and stats (if available)
   + [All](#kor_dyn_group_all)
   + [Trial by trial](#kor_dyn_group_trial)
+  
+## [Sequence plot](#sequence)
 
 ```{r setup, include = FALSE}
 # packages
@@ -83,6 +81,9 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 # statistics
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("emmeans")) {install.packages("emmeans"); require("emmeans")}
+
+# chunk option
+knitr::opts_chunk$set(warning = FALSE)
 ```
 
 ```{r file, include = FALSE}
@@ -128,15 +129,16 @@ dt_kor_dyn <- dt_kor[Skill == "dynamics"]
 
 ```{r kot-art, echo = FALSE}
 # For each individual
-kot_art <- dt_kot_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, Subcomponent)]
+kot_art_trial <- dt_kot_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+
+kot_art <- kot_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 kot_art
 ```
 
 ### Plot
 #### Box plot
 ```{r kot-art-box,  echo = FALSE}
-ggboxplot(dt_kot_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOT (ms)", title = "KOT: Articulation") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(kot_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOT (ms)", title = "KOT: Articulation") + facet_grid(Subcomponent ~ .)
 ```
 
 ## 2. All - group{#kot_art_group_all}
@@ -150,13 +152,6 @@ kot_art_all
 ```
 
 ### Plot
-#### Scatter plot
-- Error bars show SEM of the mean.
-
-```{r kot-art-all-scatter, echo = FALSE}
-ggerrorplot(kot_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Articulation")
-```
-
 #### Box plot
 ```{r kot-art-all-box, echo = FALSE}
 kot_art_plot <- data.table(subject = kot_art[Condition == "teaching"]$SubNr, teaching = kot_art[Condition == "teaching"]$Mean, performing = kot_art[Condition == "performing"]$Mean, subcomponent = kot_art[Condition == "teaching"]$Subcomponent)
@@ -188,19 +183,17 @@ kot_art_posthoc
 
 ```{r kot-art-trial, echo = FALSE}
 # For each individual
-kot_art_trial <- dt_kot_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, Subcomponent, TrialNr)]
 kot_art_trial
 ```
 
 ### Plot
 #### Line graph
 ```{r kot-art-trial-line-legato, echo = FALSE, fig.height = 4}
-ggline(dt_kot_art[Subcomponent == "Legato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Articulation/Legato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kot_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Articulation/Legato") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kot-art-trial-line-staccato, echo = FALSE, fig.height = 4}
-ggline(dt_kot_art[Subcomponent == "Staccato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Articulation/Staccato") +
+ggline(kot_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Articulation/Staccato") +
   scale_x_continuous(breaks = seq(1,8,1))
 ```
 
@@ -233,7 +226,9 @@ ggline(kot_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add
 
 ```{r kor-art, echo = FALSE}
 # For each individual
-kor_art <- dt_kor_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent)]
+kor_art_trial <- dt_kor_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+
+kor_art <- kor_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 kor_art
 ```
 
@@ -241,8 +236,7 @@ kor_art
 #### Box plot
 
 ```{r kor-art-box,  echo = FALSE}
-ggboxplot(dt_kor_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOR", title = "KOR: Articulation") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(kor_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOR", title = "KOR: Articulation") + facet_grid(Subcomponent ~ .)
 ```
 
 ## 2. All - group{#kor_art_group_all}
@@ -256,13 +250,6 @@ kor_art_all
 ```
 
 ### Plot
-#### Scatter plot
-- Error bars show SEM of the mean.
-
-```{r kor-art-all-scatter, echo = FALSE}
-ggerrorplot(kor_art, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KOR", title = "KOR: Articulation")
-```
-
 #### Box plot
 ```{r kor-art-all-box, echo = FALSE}
 kor_art_plot <- data.table(subject = kor_art[Condition == "teaching"]$SubNr, teaching = kor_art[Condition == "teaching"]$Mean, performing = kor_art[Condition == "performing"]$Mean, subcomponent = kor_art[Condition == "teaching"]$Subcomponent)
@@ -294,20 +281,17 @@ kor_art_posthoc
 
 ```{r kor-art-trial, echo = FALSE}
 # For each individual
-kor_art_trial <- dt_kor_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent, TrialNr)]
 kor_art_trial
 ```
 
 ### Plot
 #### Line graph
 ```{r kor-art-trial-line-legato, echo = FALSE, fig.height = 4}
-ggline(dt_kor_art[Subcomponent == "Legato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOR", title = "KOR: Articulation/Legato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kor_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOR", title = "KOR: Articulation/Legato") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kor-art-trial-line-staccato, echo = FALSE, fig.height = 4}
-ggline(dt_kor_art[Subcomponent == "Staccato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOR", title = "KOR: Articulation/Staccato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kor_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOR", title = "KOR: Articulation/Staccato") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ## 4. Trial by trial - group{#kor_art_group_trial}
@@ -324,13 +308,11 @@ kor_art_trial_all
 - Error bars show SEM of the mean.
 
 ```{r kor-art-trial-all-line-legato, echo = FALSE}
-ggline(kor_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Articulation/Legato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kor_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Articulation/Legato") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kor-art-trial-all-line-staccato, echo = FALSE}
-ggline(kor_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Articulation/Staccato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kor_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Articulation/Staccato") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 # Key-Overlap Time (KOT) - Dynamics{#kot-dynamics}
@@ -339,7 +321,9 @@ ggline(kor_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add
 
 ```{r kot-dyn, echo = FALSE}
 # For each individual
-kot_dyn <- dt_kot_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, Subcomponent)]
+kot_dyn_trial <- dt_kot_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+
+kot_dyn <- kot_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 kot_dyn
 ```
 
@@ -347,8 +331,7 @@ kot_dyn
 #### Box plot
 
 ```{r kot-dyn-box,  echo = FALSE}
-ggboxplot(dt_kot_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOT (ms)", title = "KOT: Dynamics") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(kot_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOT (ms)", title = "KOT: Dynamics") + facet_grid(Subcomponent ~ .)
 ```
 
 ## 2. All - group{#kot_dyn_group_all}
@@ -361,13 +344,6 @@ kot_dyn_all
 ```
 
 ### Plot
-#### Scatter plot
-- Error bars show SEM of the mean.
-
-```{r kot-dyn-all-scatter, echo = FALSE}
-ggerrorplot(kot_dyn, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Dynamics")
-```
-
 #### Box plot
 ```{r kot-dyn-all-box, echo = FALSE}
 kot_dyn_plot <- data.table(subject = kot_dyn[Condition == "teaching"]$SubNr, teaching = kot_dyn[Condition == "teaching"]$Mean, performing = kot_dyn[Condition == "performing"]$Mean, subcomponent = kot_dyn[Condition == "teaching"]$Subcomponent)
@@ -393,20 +369,17 @@ summary(kot_dyn_aov_2)
 
 ```{r kot-dyn-trial, echo = FALSE}
 # For each individual
-kot_dyn_trial <- dt_kot_dyn[, .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, Subcomponent, TrialNr)]
 kot_dyn_trial
 ```
 
 ### Plot
 #### Line graph
 ```{r kot-dyn-trial-line-forte, echo = FALSE, fig.height = 4}
-ggline(dt_kot_dyn[Subcomponent == "Forte", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Dynamics/Forte") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kot_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Dynamics/Forte") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kot-dyn-trial-line-piano, echo = FALSE, fig.height = 4}
-ggline(dt_kot_dyn[Subcomponent == "Piano", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Dynamics/Piano") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kot_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ## 4. Trial by trial - group{#kot_dyn_group_trial}
@@ -423,13 +396,11 @@ kot_dyn_trial_all
 - Error bars show SEM of the mean.
 
 ```{r kot-dyn-trial-all-line-forte, echo = FALSE}
-ggline(kot_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Forte") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kot_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Forte") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kot-dyn-trial-all-line-piano, echo = FALSE}
-ggline(kot_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Piano") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kot_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 # Key-Overlap Ratio (KOR) - Dynamics
@@ -438,15 +409,16 @@ ggline(kot_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = 
 
 ```{r kor-dyn, echo = FALSE}
 # For each individual
-kor_dyn <- dt_kor_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent)]
+kor_dyn_trial <- dt_kor_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+
+kor_dyn <- kor_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 kor_dyn
 ```
 
 ### Plot
 #### Box plot
 ```{r kor-dyn-box,  echo = FALSE}
-ggboxplot(dt_kor_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOR", title = "KOR: Dynamics") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(kor_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOR", title = "KOR: Dynamics") + facet_grid(Subcomponent ~ .)
 ```
 
 ## 2. All - group{#kor_dyn_group_all}
@@ -459,13 +431,6 @@ kor_dyn_all
 ```
 
 ### Plot
-#### Scatter plot
-- Error bars show SEM of the mean.
-
-```{r kor-dyn-all-scatter, echo = FALSE}
-ggerrorplot(kor_dyn, x = "Condition", y = "Mean", add = "jitter", add.params = list(color = "darkgray"), error.plot = "errorbar", color = "Condition", facet.by = "Subcomponent", xlab = "Condition", ylab = "KOR", title = "KOR: Dynamics")
-```
-
 #### Box plot
 ```{r kor-dyn-all-box, echo = FALSE}
 kor_dyn_plot <- data.table(subject = kor_dyn[Condition == "teaching"]$SubNr, teaching = kor_dyn[Condition == "teaching"]$Mean, performing = kor_dyn[Condition == "performing"]$Mean, subcomponent = kor_dyn[Condition == "teaching"]$Subcomponent)
@@ -491,20 +456,17 @@ summary(kor_dyn_aov_2)
 
 ```{r kor-dyn-trial, echo = FALSE}
 # For each individual
-kor_dyn_trial <- dt_kor_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent, TrialNr)]
 kor_dyn_trial
 ```
 
 ### Plot
 #### Line graph
 ```{r kor-dyn-trial-line-forte, echo = FALSE, fig.height = 4}
-ggline(dt_kor_dyn[Subcomponent == "Forte", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOR", title = "KOR: Dynamics/Forte") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kor_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOR", title = "KOR: Dynamics/Forte") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kor-dyn-trial-line-piano, echo = FALSE, fig.height = 4}
-ggline(dt_kor_dyn[Subcomponent == "Piano", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOR", title = "KOR: Dynamics/Piano") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kor_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOR", title = "KOR: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ## 4. Trial by trial - group{#kor_dyn_group_trial}
@@ -521,16 +483,14 @@ kor_dyn_trial_all
 - Error bars show SEM of the mean.
 
 ```{r kor-dyn-trial-all-line-forte, echo = FALSE}
-ggline(kor_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Dynamics/Forte") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kor_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Dynamics/Forte") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 ```{r kor_dyn_trial_all_line_piano, echo = FALSE}
-ggline(kor_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Dynamics/Piano") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kor_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOR", title = "KOR: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-# Sequence plot
+# Sequence plot{#sequence}
 ## Articulation{#sequence_art}
 ```{r seq-art, fig.width = 9, fig.height = 3, echo = FALSE}
 # For each individual
