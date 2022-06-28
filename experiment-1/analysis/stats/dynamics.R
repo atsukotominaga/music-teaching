@@ -4,9 +4,12 @@
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
 # plot
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
-# statistics
+# statistic
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("emmeans")) {install.packages("emmeans"); require("emmeans")}
+
+# chunk option
+knitr::opts_chunk$set(warning = FALSE)
 
 
 ## ----file, include = FALSE----------------------------------
@@ -379,6 +382,11 @@ summary(vel_diff_dyn_aov_3)
 
 
 ## ---- echo = FALSE------------------------------------------
+vel_diff_dyn_posthoc_2 <- test(pairs(emmeans(vel_diff_dyn_aov_3,~Condition|Subcomponent), adjust = "tukey"), joint = TRUE)
+vel_diff_dyn_posthoc_2
+
+
+## ---- echo = FALSE------------------------------------------
 vel_diff_dyn$NormalisedDiff <- 0
 for (i in unique(vel_diff_dyn_trial$SubNr)){
   # teaching
@@ -408,6 +416,11 @@ ggpaired(vel_diff_dyn_plot_3, cond = "performing", cond2 = "teaching", color = "
 # stats
 vel_diff_dyn_aov_4 <- aov_car(NormalisedDiff ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), vel_diff_dyn)
 summary(vel_diff_dyn_aov_4)
+
+
+## ---- echo = FALSE------------------------------------------
+vel_diff_dyn_posthoc_3 <- test(pairs(emmeans(vel_diff_dyn_aov_4,~Condition|Subcomponent), adjust = "tukey"), joint = TRUE)
+vel_diff_dyn_posthoc_3
 
 
 ## ----export, include = FALSE--------------------------------

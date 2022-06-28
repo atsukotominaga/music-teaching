@@ -71,9 +71,9 @@ Description: This is a summary of dynamics analysis.
   + [All](#vel_diff_art_group_all)
   + [Trial by trial](#vel_diff_art_group_trial)
 
-### [Sequence plot](#sequence)
+## [Sequence plot](#sequence)
 
-- [Additional analysis based on reviewers' comments](#additional)
+## [Additional analysis](#additional)
 
 ```{r setup, include = FALSE}
 # packages
@@ -81,9 +81,12 @@ Description: This is a summary of dynamics analysis.
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
 # plot
 if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
-# statistics
+# statistic
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("emmeans")) {install.packages("emmeans"); require("emmeans")}
+
+# chunk option
+knitr::opts_chunk$set(warning = FALSE)
 ```
 
 ```{r file, include = FALSE}
