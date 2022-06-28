@@ -8,6 +8,9 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("emmeans")) {install.packages("emmeans"); require("emmeans")}
 
+# chunk option
+knitr::opts_chunk$set(warning = FALSE)
+
 
 ## ----file, include = FALSE---------------------------------
 filename_vel = "../preprocessor/trimmed/data_analysis_vel.txt"
@@ -244,12 +247,14 @@ ggline(vel_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add
 
 ## ----vel-diff-art, echo = FALSE----------------------------
 # For each individual
-vel_diff_art <- dt_vel_diff_art[Subcomponent == "LtoS" | Subcomponent == "StoL", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Subcomponent)]
+vel_diff_art_trial <- dt_vel_diff_art[Subcomponent == "LtoS" | Subcomponent == "StoL", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+
+vel_diff_art <- vel_diff_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 vel_diff_art
 
 
 ## ----vel-diff-art-box,  echo = FALSE-----------------------
-ggboxplot(dt_vel_diff_art[Subcomponent == "LtoS" | Subcomponent == "StoL", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Difference", title = "KV-Diff: Articulation") +
+ggboxplot(vel_diff_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Difference", title = "KV-Diff: Articulation") +
   facet_grid(Subcomponent ~ .)
 
 
@@ -282,7 +287,6 @@ vel_diff_art_posthoc
 
 ## ----vel-diff-art-trial, echo = FALSE----------------------
 # For each individual
-vel_diff_art_trial <- dt_vel_diff_art[Subcomponent == "LtoS" | Subcomponent == "StoL", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Subcomponent, TrialNr)]
 vel_diff_art_trial
 
 
