@@ -41,8 +41,6 @@ Description: This is a summary of tempo analysis.
   + [All](#art_group_all)
   + [Phrase bondaries](#art_group_phrase)
   + [Trial by trial](#art_group_trial)
-  
-- [Sequence plot](#sequence_art)
 
 ## [Dynamics](#ioi-dynamics)
 
@@ -56,7 +54,7 @@ Description: This is a summary of tempo analysis.
   + [Phrase bondaries](#dyn_group_phrase)
   + [Trial by trial](#dyn_group_trial)
   
-- [Sequence plot](#sequence_dyn)
+## [Sequence plot](#sequence)
 
 ```{r setup, include = FALSE}
 # packages
@@ -91,7 +89,9 @@ dt_ioi_dyn <- dt_ioi[Skill == "dynamics"]
 
 ```{r ioi-art, echo = FALSE}
 # For each individual
-ioi_art <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
+ioi_art_trial <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
+
+ioi_art <- ioi_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill)]
 ioi_art
 ```
 
@@ -100,8 +100,7 @@ ioi_art
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-box,  echo = FALSE}
-ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
-  geom_hline(yintercept = 188, linetype = "dashed")
+ggboxplot(ioi_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + geom_hline(yintercept = 188, linetype = "dashed")
 ```
 
 ## 2. All - group{#art_group_all}
@@ -156,7 +155,9 @@ dt_ioi_art$Boundary <- "No"
 dt_ioi_art[Subcomponent == "LtoS" | Subcomponent == "StoL"]$Boundary <- "Yes"
 
 # For each individual
-ioi_art_ch <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Boundary)]
+ioi_art_ch_trial <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)]
+
+ioi_art_ch <- ioi_art_ch_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Boundary)]
 ioi_art_ch
 ```
 
@@ -165,9 +166,7 @@ ioi_art_ch
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-ch-box, echo = FALSE}
-ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
-  facet_grid(Boundary ~ .) +
-  geom_hline(yintercept = 188, linetype = "dashed")
+ggboxplot(ioi_art_ch_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + facet_grid(Boundary ~ .) + geom_hline(yintercept = 188, linetype = "dashed")
 ```
 
 ## 4. Phrase boundaries - group{#art_group_phrase}
@@ -208,8 +207,6 @@ summary(ioi_art_ch_aov_2)
 - Average IOIs for each trial for each participant.
 
 ```{r ioi-art-trial, echo = FALSE}
-# For each individual
-ioi_art_trial <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, TrialNr)]
 ioi_art_trial
 ```
 
@@ -218,7 +215,7 @@ ioi_art_trial
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-art-trial-line, echo = FALSE, fig.height = 4}
-ggline(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggline(ioi_art_trial, x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   facet_wrap(SubNr ~ .) +
   scale_x_continuous(breaks = seq(1,8,1)) +
   geom_hline(yintercept = 188, linetype = "dashed")
@@ -250,7 +247,9 @@ ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = pos
 
 ```{r ioi-dyn, echo = FALSE}
 # For each individual
-ioi_dyn <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
+ioi_dyn_trial <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
+
+ioi_dyn <- ioi_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill)]
 ioi_dyn
 ```
 
@@ -259,7 +258,7 @@ ioi_dyn
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-dyn-box,  echo = FALSE}
-ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
+ggboxplot(ioi_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
   geom_hline(yintercept = 188, linetype = "dashed")
 ```
 
@@ -316,7 +315,9 @@ dt_ioi_dyn$Boundary <- "No"
 dt_ioi_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Boundary <- "Yes"
 
 # For each individual
-ioi_dyn_ch <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Boundary)]
+ioi_dyn_ch_trial <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)]
+
+ioi_dyn_ch <- ioi_dyn_ch_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Boundary)]
 ioi_dyn_ch
 ```
 
@@ -325,7 +326,7 @@ ioi_dyn_ch
 - A dashed line represents the tempo given by a metronome (80bpm / IOI-188ms).
 
 ```{r ioi-dyn-ch-box, echo = FALSE}
-ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
+ggboxplot(ioi_dyn_ch_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
   facet_grid(Boundary ~ .) +
   geom_hline(yintercept = 188, linetype = "dashed")
 ```
@@ -403,7 +404,8 @@ ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = pos
   geom_hline(yintercept = 188, linetype = "dashed") +
   scale_x_continuous(breaks = seq(1,8,1))
 ```
-# Sequence plot
+
+# Sequence plot{#sequence}
 ## Articulation{#sequence_art}
 ```{r seq-art, fig.width = 9, fig.height = 3, echo = FALSE}
 # For each individual
