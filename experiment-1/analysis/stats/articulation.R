@@ -8,6 +8,9 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("emmeans")) {install.packages("emmeans"); require("emmeans")}
 
+# chunk option
+knitr::opts_chunk$set(warning = FALSE)
+
 
 ## ----file, include = FALSE---------------------------------
 filename_ioi = "../preprocessor/trimmed/data_analysis_ioi.txt"
@@ -106,13 +109,11 @@ kot_art_trial_all
 
 
 ## ----kot-art-trial-all-line-legato, echo = FALSE-----------
-ggline(kot_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Articulation/Legato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kot_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Articulation/Legato") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----kot-art-trial-all-line-staccato, echo = FALSE---------
-ggline(kot_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Articulation/Staccato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(kot_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Articulation/Staccato") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----kor-art, echo = FALSE---------------------------------
