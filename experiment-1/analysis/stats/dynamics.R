@@ -43,8 +43,7 @@ vel_dyn
 
 
 ## ----vel-dyn-box,  echo = FALSE-----------------------------
-ggboxplot(vel_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Dynamics") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(vel_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Dynamics") + facet_grid(Subcomponent ~ .)
 
 
 ## ----vel-dyn-all, echo = FALSE------------------------------
@@ -80,13 +79,11 @@ vel_dyn_trial
 
 
 ## ----vel-dyn-trial-line-forte, echo = FALSE, fig.height = 4----
-ggline(dt_vel_dyn[Subcomponent == "Forte", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Dynamics/Forte") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(dt_vel_dyn[Subcomponent == "Forte", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Dynamics/Forte") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-dyn-trial-line-piano, echo = FALSE, fig.height = 4----
-ggline(dt_vel_dyn[Subcomponent == "Piano", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Dynamics/Piano") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(dt_vel_dyn[Subcomponent == "Piano", .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-dyn-trial-all, echo = FALSE------------------------
@@ -96,8 +93,7 @@ vel_dyn_trial_all
 
 
 ## ----vel-dyn-trial-all-line-forte, echo = FALSE-------------
-ggline(vel_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Dynamics/Forte") +
-    scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Dynamics/Forte") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-dyn-trial-all-line-piano, echo = FALSE-------------
