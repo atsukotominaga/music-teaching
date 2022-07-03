@@ -8,6 +8,9 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("rstatix")) {install.packages("rstatix"); require("rstatix")}
 
+# chunk option
+knitr::opts_chunk$set(warning = FALSE)
+
 
 ## ----file, include = FALSE---------------------------------
 filename_ioi = "../preprocessor/trimmed/data_analysis_ioi.txt"
@@ -27,13 +30,14 @@ dt_ioi_dyn <- dt_ioi[Skill == "dynamics"]
 
 ## ----ioi-art, echo = FALSE---------------------------------
 # For each individual
-ioi_art <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
+ioi_art_trial <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
+
+ioi_art <- ioi_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill)]
 ioi_art
 
 
 ## ----ioi-art-box,  echo = FALSE----------------------------
-ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
-  geom_hline(yintercept = 188, linetype = "dashed")
+ggboxplot(ioi_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----ioi-art-all, echo = FALSE-----------------------------
@@ -45,8 +49,7 @@ ioi_art_all
 ## ----ioi-art-all-box, echo = FALSE-------------------------
 ioi_art_plot <- data.table(subject = ioi_art[Condition == "teaching"]$SubNr, teaching = ioi_art[Condition == "teaching"]$Mean, performing = ioi_art[Condition == "performing"]$Mean)
 
-ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") +
-  geom_hline(yintercept = 188, linetype = "dashed")
+ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Articulation") + geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----normality1, echo = FALSE------------------------------
@@ -72,14 +75,14 @@ dt_ioi_art$Boundary <- "No"
 dt_ioi_art[Subcomponent == "LtoS" | Subcomponent == "StoL"]$Boundary <- "Yes"
 
 # For each individual
-ioi_art_ch <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Boundary)]
+ioi_art_ch_trial <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)]
+
+ioi_art_ch <- ioi_art_ch_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Boundary)]
 ioi_art_ch
 
 
 ## ----ioi-art-ch-box, echo = FALSE--------------------------
-ggboxplot(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + 
-  facet_grid(Boundary ~ .) +
-  geom_hline(yintercept = 188, linetype = "dashed")
+ggboxplot(ioi_art_ch_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Articulation") + facet_grid(Boundary ~ .) + geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----ioi-art-ch-all, echo = FALSE--------------------------
@@ -107,12 +110,11 @@ summary(ioi_art_ch_aov_2)
 
 ## ----ioi-art-trial, echo = FALSE---------------------------
 # For each individual
-ioi_art_trial <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, TrialNr)]
 ioi_art_trial
 
 
 ## ----ioi-art-trial-line, echo = FALSE, fig.height = 4------
-ggline(dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Articulation") +
+ggline(ioi_art_trial, x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "IOIs (ms)", title = "IOI: Articulation") +
   facet_wrap(SubNr ~ .) +
   scale_x_continuous(breaks = seq(1,8,1)) +
   geom_hline(yintercept = 188, linetype = "dashed")
@@ -125,20 +127,19 @@ ioi_art_trial_all
 
 
 ## ----ioi-art-trial-all-line, echo = FALSE------------------
-ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Articulation") +
-  geom_hline(yintercept = 188, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Articulation") + geom_hline(yintercept = 188, linetype = "dashed") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----ioi-dyn, echo = FALSE---------------------------------
 # For each individual
-ioi_dyn <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
+ioi_dyn_trial <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
+
+ioi_dyn <- ioi_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill)]
 ioi_dyn
 
 
 ## ----ioi-dyn-box,  echo = FALSE----------------------------
-ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
-  geom_hline(yintercept = 188, linetype = "dashed")
+ggboxplot(ioi_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----ioi-dyn-all, echo = FALSE-----------------------------
@@ -150,8 +151,7 @@ ioi_dyn_all
 ## ----ioi-dyn-all-box, echo = FALSE-------------------------
 ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
 
-ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 188, linetype = "dashed")
+ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") + geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----normality2, echo = FALSE------------------------------
@@ -177,14 +177,14 @@ dt_ioi_dyn$Boundary <- "No"
 dt_ioi_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Boundary <- "Yes"
 
 # For each individual
-ioi_dyn_ch <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Boundary)]
+ioi_dyn_ch_trial <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)]
+
+ioi_dyn_ch <- ioi_dyn_ch_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Boundary)]
 ioi_dyn_ch
 
 
 ## ----ioi-dyn-ch-box, echo = FALSE--------------------------
-ggboxplot(dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + 
-  facet_grid(Boundary ~ .) +
-  geom_hline(yintercept = 188, linetype = "dashed")
+ggboxplot(ioi_dyn_ch_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "IOIs (ms)", title = "IOI: Dynamics") + facet_grid(Boundary ~ .) + geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----ioi-dyn-ch-all, echo = FALSE--------------------------
@@ -196,8 +196,7 @@ ioi_dyn_ch_all
 ## ----ioi-dyn-ch-all-box, echo = FALSE----------------------
 ioi_dyn_ch_plot <- data.table(subject = ioi_dyn_ch[Condition == "teaching"]$SubNr, teaching = ioi_dyn_ch[Condition == "teaching"]$Mean, performing = ioi_dyn_ch[Condition == "performing"]$Mean, boundary = ioi_dyn_ch[Condition == "teaching"]$Boundary)
 
-ggpaired(ioi_dyn_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 188, linetype = "dashed")
+ggpaired(ioi_dyn_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOI: Dynamics") + geom_hline(yintercept = 188, linetype = "dashed")
 
 
 ## ----anova-dyn-boundary, echo = FALSE----------------------
@@ -230,27 +229,21 @@ ioi_dyn_trial_all
 
 
 ## ----ioi-dyn-trial-all-line, echo = FALSE------------------
-ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 188, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "IOIs (ms)", title = "IOI: Dynamics") + geom_hline(yintercept = 188, linetype = "dashed") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----seq-art, fig.width = 9, fig.height = 3, echo = FALSE----
 # For each individual
 ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Articulation") +
-  geom_hline(yintercept = 188, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,66,1))
+ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Articulation") + geom_hline(yintercept = 188, linetype = "dashed") + scale_x_continuous(breaks = seq(1,66,1))
 
 
 ## ----seq-dyn, fig.width = 9, fig.height = 3, echo = FALSE----
 # For each individual
 ioi_dyn_seq <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(ioi_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 188, linetype = "dashed") +
-    scale_x_continuous(breaks = seq(1,66,1))
+ggline(ioi_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOI: Dynamics") + geom_hline(yintercept = 188, linetype = "dashed") + scale_x_continuous(breaks = seq(1,66,1))
 
 
 ## ----export, include = FALSE-------------------------------
