@@ -34,24 +34,24 @@ Description: This is a summary of tempo analysis.
 
 - Individual results
   + [All](#art_ind_all)
-  + [Phrase bondaries](#art_ind_phrase)
+  + [Phrase boundaries](#art_ind_phrase)
   + [Trial by trial](#art_ind_trial)
 
 - Group results and stats (if available)
   + [All](#art_group_all)
-  + [Phrase bondaries](#art_group_phrase)
+  + [Phrase boundaries](#art_group_phrase)
   + [Trial by trial](#art_group_trial)
 
 ## [Dynamics](#ioi-dynamics)
 
 - Individual results
   + [All](#dyn_ind_all)
-  + [Phrase bondaries](#dyn_ind_phrase)
+  + [Phrase boundaries](#dyn_ind_phrase)
   + [Trial by trial](#dyn_ind_trial)
 
 - Group results and stats (if available)
   + [All](#dyn_group_all)
-  + [Phrase bondaries](#dyn_group_phrase)
+  + [Phrase boundaries](#dyn_group_phrase)
   + [Trial by trial](#dyn_group_trial)
   
 ## [Sequence plot](#sequence)
