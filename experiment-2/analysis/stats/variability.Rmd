@@ -1,5 +1,5 @@
 ---
-title: "Variability analysis"
+title: "Variability analysis 2"
 output:
   html_notebook: default
 editor_options: 
@@ -141,13 +141,14 @@ dt_ioi$Transition <- "No"
 dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Transition <- "Yes"
 
 # transition points vs. others
-ioi_tra_others <- dt_ioi[, .(.N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Transition)]
-ioi_tra_others <- ioi_tra_others[order(SubNr, Condition, Skill)] # ordering
+ioi_tra_others_trial <- dt_ioi[, .(.N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Transition)]
+ioi_tra_others_subject <- ioi_tra_others_trial[, .(.N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Transition)]
+ioi_tra_others_subject <- ioi_tra_others_subject[order(SubNr, Condition, Skill)] # ordering
 
 # descriptive stats
-ioi_tra_others[, .(.N, Mean = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill, Transition)]
+ioi_tra_others_subject[, .(.N, Mean = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill, Transition)]
 
-ggplot(ioi_tra_others, aes(x = Condition, y = Mean, color = Condition)) +
+ggplot(ioi_tra_others_subject, aes(x = Condition, y = Mean, color = Condition)) +
   geom_boxplot() +
   geom_line(aes(group = SubNr), size = 0.4, color = "gray") +
   geom_point(aes(color = Condition)) +
@@ -158,7 +159,7 @@ ggplot(ioi_tra_others, aes(x = Condition, y = Mean, color = Condition)) +
 ```{r, echo = FALSE}
 aov_ez(id = "SubNr", dv = "Mean",
        within = c("Condition", "Skill", "Transition"),
-       data = ioi_tra_others)
+       data = ioi_tra_others_subject)
 ```
 
 ```{r export, include = FALSE}

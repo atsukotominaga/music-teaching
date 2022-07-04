@@ -10,7 +10,7 @@ Description: This is a summary of tempo analysis.
 
 - Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
 
-# Experimental Design{#design}
+# Experimental Design
 - Independent variables: Condition (2 levels: teaching vs. performing) x Technique (2 levels: articulation vs. dynamics)
 - Dependent variables: Interonset intervals (IOIs)
 
@@ -29,24 +29,24 @@ Description: This is a summary of tempo analysis.
 
 - Individual results
   + [All](#art_ind_all)
-  + [Phrase bondaries](#art_ind_phrase)
+  + [Phrase boundaries](#art_ind_phrase)
   + [Trial by trial](#art_ind_trial)
 
 - Group results and stats (if available)
   + [All](#art_group_all)
-  + [Phrase bondaries](#art_group_phrase)
+  + [Phrase boundaries](#art_group_phrase)
   + [Trial by trial](#art_group_trial)
 
 ## [Dynamics](#ioi-dynamics)
 
 - Individual results
   + [All](#dyn_ind_all)
-  + [Phrase bondaries](#dyn_ind_phrase)
+  + [Phrase boundaries](#dyn_ind_phrase)
   + [Trial by trial](#dyn_ind_trial)
 
 - Group results and stats (if available)
   + [All](#dyn_group_all)
-  + [Phrase bondaries](#dyn_group_phrase)
+  + [Phrase boundaries](#dyn_group_phrase)
   + [Trial by trial](#dyn_group_trial)
   
 ## [Sequence plot](#sequence)
@@ -60,6 +60,9 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 # statistics
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("rstatix")) {install.packages("rstatix"); require("rstatix")}
+
+# chunk option
+knitr::opts_chunk$set(warning = FALSE)
 ```
 
 ```{r file, include = FALSE}
@@ -95,8 +98,7 @@ ioi_art
 - A dashed line represents the tempo given by a metronome.
 
 ```{r ioi-art-box,  echo = FALSE}
-ggboxplot(ioi_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Normalised IOIs", title = "IOI: Articulation") + 
-  geom_hline(yintercept = 1, linetype = "dashed")
+ggboxplot(ioi_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Normalised IOIs", title = "IOI: Articulation") + geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
 ## 2. All - group{#art_group_all}
@@ -133,6 +135,7 @@ ioi_art_norm
 ioi_art_ttest <- t.test(ioi_art[Condition == "teaching"]$Mean, ioi_art[Condition == "performing"]$Mean, paired = TRUE, alternative = "two.sided")
 ioi_art_ttest
 ```
+
 #### Effect size
 ```{r effect-cohen-art, echo = FALSE}
 coheneff_art <- ioi_art %>% cohens_d(Mean ~ Condition, paired = TRUE)
@@ -191,8 +194,7 @@ ioi_art_ch_all
 ```{r ioi-art-ch-all-box, echo = FALSE}
 ioi_art_ch_plot <- data.table(subject = ioi_art_ch[Condition == "teaching"]$SubNr, teaching = ioi_art_ch[Condition == "teaching"]$Mean, performing = ioi_art_ch[Condition == "performing"]$Mean, boundary = ioi_art_ch[Condition == "teaching"]$Boundary)
 
-ggpaired(ioi_art_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Articulation") +
-  geom_hline(yintercept = 1, linetype = "dashed")
+ggpaired(ioi_art_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Articulation") + geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
 ### Statistics
@@ -221,7 +223,7 @@ ioi_art_trial
 - A dashed line represents the tempo given by a metronome.
 
 ```{r ioi-art-trial-line, echo = FALSE, fig.height = 4}
-ggline(dt_ioi_art[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)], x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Normalised IOIs", title = "IOI: Articulation") +
+ggline(ioi_art_trial, x = "TrialNr", y = "Mean", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Normalised IOIs", title = "IOI: Articulation") +
   facet_wrap(SubNr ~ .) +
   scale_x_continuous(breaks = seq(1,8,1)) +
   geom_hline(yintercept = 1, linetype = "dashed")
@@ -242,9 +244,7 @@ ioi_art_trial_all
 - A dashed line represents the tempo given by a metronome.
 
 ```{r ioi-art-trial-all-line, echo = FALSE}
-ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Normalised IOIs", title = "IOI: Articulation") +
-  geom_hline(yintercept = 1, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Normalised IOIs", title = "IOI: Articulation") + geom_hline(yintercept = 1, linetype = "dashed") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 # IOI-Dynamics
@@ -284,8 +284,7 @@ ioi_dyn_all
 ```{r ioi-dyn-all-box, echo = FALSE}
 ioi_dyn_plot <- data.table(subject = ioi_dyn[Condition == "teaching"]$SubNr, teaching = ioi_dyn[Condition == "teaching"]$Mean, performing = ioi_dyn[Condition == "performing"]$Mean)
 
-ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 1, linetype = "dashed")
+ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Dynamics") + geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
 ### Statistics
@@ -302,6 +301,7 @@ ioi_dyn_norm
 ioi_dyn_ttest <- t.test(ioi_dyn[Condition == "teaching"]$Mean, ioi_dyn[Condition == "performing"]$Mean, paired = TRUE, alternative = "two.sided")
 ioi_dyn_ttest
 ```
+
 #### Effect size
 ```{r effect-cohen-dyn, echo = FALSE}
 coheneff_dyn <- ioi_dyn %>% cohens_d(Mean ~ Condition, paired = TRUE)
@@ -360,8 +360,7 @@ ioi_dyn_ch_all
 ```{r ioi-dyn-ch-all-box, echo = FALSE}
 ioi_dyn_ch_plot <- data.table(subject = ioi_dyn_ch[Condition == "teaching"]$SubNr, teaching = ioi_dyn_ch[Condition == "teaching"]$Mean, performing = ioi_dyn_ch[Condition == "performing"]$Mean, boundary = ioi_dyn_ch[Condition == "teaching"]$Boundary)
 
-ggpaired(ioi_dyn_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 1, linetype = "dashed")
+ggpaired(ioi_dyn_ch_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "boundary", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised IOIs", title = "IOI: Dynamics") + geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
 ### Statistics
@@ -411,9 +410,7 @@ ioi_dyn_trial_all
 - A dashed line represents the tempo given by a metronome.
 
 ```{r ioi-dyn-trial-all-line, echo = FALSE}
-ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Normalised IOIs", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 1, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Normalised IOIs", title = "IOI: Dynamics") + geom_hline(yintercept = 1, linetype = "dashed") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
 # Sequence plot{#sequence}
@@ -422,9 +419,7 @@ ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = pos
 # For each individual
 ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "Normalised IOIs", title = "IOI: Articulation") +
-  geom_hline(yintercept = 1, linetype = "dashed") +
-  scale_x_continuous(breaks = seq(1,71,1))
+ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "Normalised IOIs", title = "IOI: Articulation") + geom_hline(yintercept = 1, linetype = "dashed") + scale_x_continuous(breaks = seq(1,71,1))
 ```
 
 ## Dynamics{#sequence_dyn}
@@ -432,9 +427,7 @@ ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = posi
 # For each individual
 ioi_dyn_seq <- dt_ioi_dyn[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(ioi_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "Normalised IOIs", title = "IOI: Dynamics") +
-  geom_hline(yintercept = 1, linetype = "dashed") +
-    scale_x_continuous(breaks = seq(1,71,1))
+ggline(ioi_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "Normalised IOIs", title = "IOI: Dynamics") + geom_hline(yintercept = 1, linetype = "dashed") +　scale_x_continuous(breaks = seq(1,71,1))
 ```
 
 ```{r export, include = FALSE}

@@ -10,7 +10,7 @@ Description: This is a summary of articulation analysis.
 
 - Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
 
-# Experimental Design{#design}
+# Experimental Design
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: legato vs. staccato / forte vs. piano)
 - Dependent variables: Key-Overlap Ratio (KOR), Key-Overlap Time (KOT)
 
@@ -398,7 +398,6 @@ kot_dyn
 
 ### Plot
 #### Box plot
-
 ```{r kot-dyn-box,  echo = FALSE}
 ggboxplot(kot_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOT (ms)", title = "KOT: Dynamics") + facet_grid(Subcomponent ~ .)
 ```
