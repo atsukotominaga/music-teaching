@@ -1,5 +1,5 @@
 ---
-title: "Variability analysis"
+title: "Variability analysis 1"
 output:
   html_notebook: default
 editor_options: 
@@ -43,7 +43,6 @@ ioi_dyn_seq_each <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by =
 - Twodashed lines show transition points (i.e., from legato to staccato, from staccato to legato, from forte to piano, from piano to forte).
 
 ### Overall
-
 ```{r, echo = FALSE, fig.width = 6, fig.height = 1.2}
 # Plot the whole sequence
 ggline(ioi_art_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOIs: Articulation") +
@@ -74,13 +73,12 @@ ggline(ioi_dyn_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "C
 <!--   scale_x_discrete(breaks = seq(1,66,3)) + labs(x = "Interval", y = "IOIs (ms)", title = "IOIs: Dynamics") + theme_pubr() + theme(legend.position = "right") -->
 <!-- ``` -->
 
-
 ## Coefficient of Variation
-
 ```{r, echo = FALSE}
 ioi_cv_trial <- dt_ioi[, .(N = .N, Mean = mean(IOI), SD = sd(IOI), CV = sd(IOI)/mean(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
 ioi_cv_subject <- ioi_cv_trial[, .(N = .N, MeanCV = mean(CV), SD = sd(CV)), by = .(SubNr, Condition, Skill)]
 ioi_cv_subject <- ioi_cv_subject[order(SubNr, Condition, Skill)] # ordering
+ioi_cv_subject
 
 ggplot(ioi_cv_subject, aes(x = Condition, y = MeanCV, color = Condition)) +
   geom_boxplot() +
@@ -89,8 +87,6 @@ ggplot(ioi_cv_subject, aes(x = Condition, y = MeanCV, color = Condition)) +
   facet_grid(. ~ Skill) +
   theme_pubr()
 ```
-
-
 
 ### Stats
 - With Participant 2 (outside +/- 3SD)
@@ -116,12 +112,12 @@ aov_ez(id = "SubNr", dv = "MeanCV",
 ```
 
 ## IOIs at transition points
-
 ```{r, echo = FALSE}
-ioi_tra <- dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill)]
-ioi_tra <- ioi_tra[order(SubNr, Condition, Skill)] # ordering
+ioi_tra_trial <- dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
+ioi_tra_subject <- ioi_tra_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill)]
+ioi_tra_subject <- ioi_tra_subject[order(SubNr, Condition, Skill)] # ordering
 
-ggplot(ioi_tra, aes(x = Condition, y = Mean, color = Condition)) +
+ggplot(ioi_tra_subject, aes(x = Condition, y = Mean, color = Condition)) +
   geom_boxplot() +
   geom_line(aes(group = SubNr), size = 0.4, color = "gray") +
   geom_point(aes(color = Condition)) +
@@ -131,28 +127,29 @@ ggplot(ioi_tra, aes(x = Condition, y = Mean, color = Condition)) +
 
 ```{r, echo = FALSE}
 # descriptive stats
-ioi_tra[, .(.N, MeanCV = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill)]
+ioi_tra_subject[, .(.N, MeanCV = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill)]
 
 aov_ez(id = "SubNr", dv = "Mean",
        within = c("Condition", "Skill"),
-       data = ioi_tra)
+       data = ioi_tra_subject)
 ```
 
 ## IOIs at transition points vs. others
-Caution: the number of points included in each transition group is considerably different
+Caution: the number of points included in each transition group is considerably different.
 
 ```{r, echo = FALSE}
 dt_ioi$Transition <- "No"
 dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Transition <- "Yes"
 
 # transition points vs. others
-ioi_tra_others <- dt_ioi[, .(.N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Transition)]
-ioi_tra_others <- ioi_tra_others[order(SubNr, Condition, Skill)] # ordering
+ioi_tra_others_trial <- dt_ioi[, .(.N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Transition)]
+ioi_tra_others_subject <- ioi_tra_others_trial[, .(.N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Transition)]
+ioi_tra_others_subject <- ioi_tra_others_subject[order(SubNr, Condition, Skill)] # ordering
 
 # descriptive stats
-ioi_tra_others[, .(.N, Mean = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill, Transition)]
+ioi_tra_others_subject[, .(.N, Mean = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill, Transition)]
 
-ggplot(ioi_tra_others, aes(x = Condition, y = Mean, color = Condition)) +
+ggplot(ioi_tra_others_subject, aes(x = Condition, y = Mean, color = Condition)) +
   geom_boxplot() +
   geom_line(aes(group = SubNr), size = 0.4, color = "gray") +
   geom_point(aes(color = Condition)) +
@@ -163,7 +160,7 @@ ggplot(ioi_tra_others, aes(x = Condition, y = Mean, color = Condition)) +
 ```{r, echo = FALSE}
 aov_ez(id = "SubNr", dv = "Mean",
        within = c("Condition", "Skill", "Transition"),
-       data = ioi_tra_others)
+       data = ioi_tra_others_subject)
 ```
 
 ```{r export, include = FALSE}
