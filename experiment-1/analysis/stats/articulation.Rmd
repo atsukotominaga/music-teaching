@@ -10,7 +10,7 @@ Description: This is a summary of articulation analysis.
 
 - Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
 
-# Experimental Design{#design}
+# Experimental Design
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: legato vs. staccato / forte vs. piano)
 - Dependent variables: Key-Overlap Time (KOT), Key-Overlap Ratio (KOR)
 

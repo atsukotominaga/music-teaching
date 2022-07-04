@@ -10,7 +10,7 @@ Description: This is a summary of dynamics analysis.
 
 - Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
 
-# Experimental Design{#design}
+# Experimental Design
 - Independent variables: Condition (2 levels: teaching vs. performing) x Subcomponent (2 levels: forte vs. piano / legato vs. staccato)
 - Dependent variables: Key Velocity (KV), KV difference
 

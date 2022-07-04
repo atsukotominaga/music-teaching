@@ -97,8 +97,7 @@ ggline(vel_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = 
 
 
 ## ----vel-dyn-trial-all-line-piano, echo = FALSE-------------
-ggline(vel_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Dynamics/Piano") +
-    scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-dyn, echo = FALSE-----------------------------
@@ -110,8 +109,7 @@ vel_diff_dyn
 
 
 ## ----vel-diff-dyn-box,  echo = FALSE------------------------
-ggboxplot(vel_diff_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Difference", title = "KV-Diff: Dynamics") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(vel_diff_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Difference", title = "KV-Diff: Dynamics") + facet_grid(Subcomponent ~ .)
 
 
 ## ----vel-diff-dyn-all, echo = FALSE-------------------------
@@ -147,13 +145,11 @@ vel_diff_dyn_trial
 
 
 ## ----vel-diff-dyn-trial-line-ftop, echo = FALSE, fig.height = 4----
-ggline(vel_diff_dyn_trial[Subcomponent == "FtoP"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Dynamics/Forte to Piano") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_diff_dyn_trial[Subcomponent == "FtoP"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Dynamics/Forte to Piano") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-dyn-trial-line-ptof, echo = FALSE, fig.height = 4----
-ggline(vel_diff_dyn_trial[Subcomponent == "PtoF"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Dynamics/Piano to Forte") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_diff_dyn_trial[Subcomponent == "PtoF"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Dynamics/Piano to Forte") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-dyn-trial-all, echo = FALSE-------------------
@@ -163,13 +159,11 @@ vel_diff_dyn_trial_all
 
 
 ## ----vel-diff-dyn-trial-all-line-ftop, echo = FALSE---------
-ggline(vel_diff_dyn_trial[Subcomponent == "FtoP"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Difference", title = "KV-Diff: Dynamics/Forte to Piano") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_diff_dyn_trial[Subcomponent == "FtoP"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Difference", title = "KV-Diff: Dynamics/Forte to Piano") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-dyn-trial-all-line-ptof, echo = FALSE---------
-ggline(vel_diff_dyn_trial[Subcomponent == "PtoF"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Difference", title = "KV-Diff: Dynamics/Piano to Forte") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_diff_dyn_trial[Subcomponent == "PtoF"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Difference", title = "KV-Diff: Dynamics/Piano to Forte") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-art, echo = FALSE----------------------------------
@@ -181,8 +175,7 @@ vel_art
 
 
 ## ----vel-art-box,  echo = FALSE-----------------------------
-ggboxplot(vel_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Articulation") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(vel_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Articulation") + facet_grid(Subcomponent ~ .)
 
 
 ## ----vel-art-all, echo = FALSE------------------------------
@@ -232,13 +225,11 @@ vel_art_trial_all
 
 
 ## ----vel-art-trial-all-line-legato, echo = FALSE------------
-ggline(vel_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Articulation/Legato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Articulation/Legato") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-art-trial-all-line-staccato, echo = FALSE----------
-ggline(vel_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Articulation/Staccato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Articulation/Staccato") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-art, echo = FALSE-----------------------------
@@ -250,8 +241,7 @@ vel_diff_art
 
 
 ## ----vel-diff-art-box,  echo = FALSE------------------------
-ggboxplot(vel_diff_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Difference", title = "KV-Diff: Articulation") +
-  facet_grid(Subcomponent ~ .)
+ggboxplot(vel_diff_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Difference", title = "KV-Diff: Articulation") + facet_grid(Subcomponent ~ .)
 
 
 ## ----vel-diff-art-all, echo = FALSE-------------------------
@@ -287,13 +277,11 @@ vel_diff_art_trial
 
 
 ## ----vel-diff-artt-rial-line-ltos, echo = FALSE, fig.height = 4----
-ggline(vel_diff_art_trial[Subcomponent == "LtoS"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Articulation/Legato to Staccato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_diff_art_trial[Subcomponent == "LtoS"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Articulation/Legato to Staccato") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-art-trial-line-stol, echo = FALSE, fig.height = 4----
-ggline(vel_diff_art_trial[Subcomponent == "StoL"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Articulation/Staccato to Legato") +
-  scale_x_continuous(breaks = seq(1,8,1))
+ggline(vel_diff_art_trial[Subcomponent == "StoL"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Articulation/Staccato to Legato") + scale_x_continuous(breaks = seq(1,8,1))
 
 
 ## ----vel-diff-art-trial-all, echo = FALSE-------------------
@@ -314,26 +302,22 @@ ggline(vel_diff_art_trial[Subcomponent == "StoL"], x = "TrialNr", y = "Mean", ad
 # For each individual
 vel_dyn_seq <- dt_vel_dyn[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, RowNr)]
 
-ggline(vel_dyn_seq, x = "RowNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Note", ylab = "", title = "KV: Dynamics") +
-  scale_x_continuous(breaks = seq(1,67,1))
+ggline(vel_dyn_seq, x = "RowNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Note", ylab = "", title = "KV: Dynamics") + scale_x_continuous(breaks = seq(1,67,1))
 
 vel_diff_dyn_seq <- dt_vel_diff_dyn[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(vel_diff_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "", title = "KV-Diff: Dynamics") +
-  scale_x_continuous(breaks = seq(1,66,1))
+ggline(vel_diff_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "", title = "KV-Diff: Dynamics") + scale_x_continuous(breaks = seq(1,66,1))
 
 
 ## ----seq-art, fig.width = 9, fig.height = 3, echo = FALSE----
 # For each individual
 vel_art_seq <- dt_vel_art[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, RowNr)]
 
-ggline(vel_art_seq, x = "RowNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Note", ylab = "", title = "KV: Articulation") +
-  scale_x_continuous(breaks = seq(1,67,1))
+ggline(vel_art_seq, x = "RowNr", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Note", ylab = "", title = "KV: Articulation") + scale_x_continuous(breaks = seq(1,67,1))
 
 vel_diff_art_seq <- dt_vel_diff_art[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(vel_diff_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "", title = "KV-Diff: Articulation") +
-  scale_x_continuous(breaks = seq(1,66,1))
+ggline(vel_diff_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "", title = "KV-Diff: Articulation") + scale_x_continuous(breaks = seq(1,66,1))
 
 
 ## ---- echo = FALSE, warning = FALSE-------------------------

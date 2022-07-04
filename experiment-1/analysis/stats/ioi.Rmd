@@ -10,7 +10,7 @@ Description: This is a summary of tempo analysis.
 
 - Last checked: `r format(Sys.Date(), "%d-%b-%Y")`
 
-# Experimental Design{#design}
+# Experimental Design
 - Independent variables: Condition (2 levels: teaching vs. performing) x Technique (2 levels: articulation vs. dynamics)
 - Dependent variables: Interonset intervals (IOIs)
 
