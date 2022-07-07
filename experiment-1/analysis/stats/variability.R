@@ -1,4 +1,4 @@
-## ----setup, include = FALSE---------------------------------------------------
+## ----setup, include = FALSE-------------------------------
 # packages
 # data manipulation
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
@@ -25,7 +25,7 @@ dt_ioi_dyn <- dt_ioi[Skill == "dynamics"]
 ioi_dyn_seq_each <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 
 
-## ---- echo = FALSE, fig.width = 6, fig.height = 1.2---------------------------
+## ---- echo = FALSE, fig.width = 6, fig.height = 1.2-------
 # Plot the whole sequence
 ggline(ioi_art_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "IOIs (ms)", title = "IOIs: Articulation") +
   geom_hline(yintercept = 188, linetype = "dotted") + # target tempo
@@ -38,7 +38,7 @@ ggline(ioi_dyn_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "C
   scale_x_continuous(breaks = seq(1,66,1))
 
 
-## ---- echo = FALSE------------------------------------------------------------
+## ---- echo = FALSE----------------------------------------
 ioi_cv_trial <- dt_ioi[, .(N = .N, Mean = mean(IOI), SD = sd(IOI), CV = sd(IOI)/mean(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
 ioi_cv_subject <- ioi_cv_trial[, .(N = .N, MeanCV = mean(CV), SD = sd(CV)), by = .(SubNr, Condition, Skill)]
 ioi_cv_subject <- ioi_cv_subject[order(SubNr, Condition, Skill)] # ordering
@@ -52,25 +52,27 @@ ggplot(ioi_cv_subject, aes(x = Condition, y = MeanCV, color = Condition)) +
   theme_pubr()
 
 
-## ---- echo = FALSE------------------------------------------------------------
-# descriptive stats
-ioi_cv_subject[, .(.N, MeanCV = mean(MeanCV), SDCV = sd(MeanCV)), by = .(Condition, Skill)]
+## ---- echo = FALSE----------------------------------------
+# normality check
+diff <- ioi_cv_subject[Condition == "teaching" & Skill == "articulation"]$MeanCV-ioi_cv_subject[Condition == "performing" & Skill == "articulation"]$MeanCV
+ioi_art_cv_norm <- shapiro.test(diff)
+ioi_art_cv_norm
 
-aov_ez(id = "SubNr", dv = "MeanCV",
-       within = c("Condition", "Skill"),
-       data = ioi_cv_subject)
-
-
-## ---- echo = FALSE------------------------------------------------------------
-# descriptive stats
-ioi_cv_subject[SubNr != 2, .(.N, MeanCV = mean(MeanCV), SDCV = sd(MeanCV)), by = .(Condition, Skill)]
-
-aov_ez(id = "SubNr", dv = "MeanCV",
-       within = c("Condition", "Skill"),
-       data = ioi_cv_subject[SubNr != 2])
+ioi_art_cv_wilcoxon <- wilcox.test(MeanCV ~ Condition, data = ioi_cv_subject[Skill == "articulation"], paired = TRUE, alternative = "two.sided")
+ioi_art_cv_wilcoxon
 
 
-## ---- echo = FALSE------------------------------------------------------------
+## ---- echo = FALSE----------------------------------------
+# normality check
+diff2 <- ioi_cv_subject[Condition == "teaching" & Skill == "dynamics"]$MeanCV-ioi_cv_subject[Condition == "performing" & Skill == "dynamics"]$MeanCV
+ioi_dyn_cv_norm <- shapiro.test(diff2)
+ioi_dyn_cv_norm
+
+ioi_dyn_cv_wilcoxon <- wilcox.test(MeanCV ~ Condition, data = ioi_cv_subject[Skill == "dynamics"], paired = TRUE, alternative = "two.sided")
+ioi_dyn_cv_wilcoxon
+
+
+## ---- echo = FALSE----------------------------------------
 ioi_tra_trial <- dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
 ioi_tra_subject <- ioi_tra_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill)]
 ioi_tra_subject <- ioi_tra_subject[order(SubNr, Condition, Skill)] # ordering
@@ -83,41 +85,26 @@ ggplot(ioi_tra_subject, aes(x = Condition, y = Mean, color = Condition)) +
   theme_pubr()
 
 
-## ---- echo = FALSE------------------------------------------------------------
-# descriptive stats
-ioi_tra_subject[, .(.N, MeanCV = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill)]
+## ---- echo = FALSE----------------------------------------
+# normality check
+diff3 <- ioi_tra_subject[Condition == "teaching" & Skill == "articulation"]$Mean-ioi_tra_subject[Condition == "performing" & Skill == "articulation"]$Mean
+ioi_art_tra_norm <- shapiro.test(diff3)
+ioi_art_tra_norm
 
-aov_ez(id = "SubNr", dv = "Mean",
-       within = c("Condition", "Skill"),
-       data = ioi_tra_subject)
-
-
-## ---- echo = FALSE------------------------------------------------------------
-dt_ioi$Transition <- "No"
-dt_ioi[Subcomponent == "LtoS" | Subcomponent == "StoL" | Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Transition <- "Yes"
-
-# transition points vs. others
-ioi_tra_others_trial <- dt_ioi[, .(.N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Transition)]
-ioi_tra_others_subject <- ioi_tra_others_trial[, .(.N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Transition)]
-ioi_tra_others_subject <- ioi_tra_others_subject[order(SubNr, Condition, Skill)] # ordering
-
-# descriptive stats
-ioi_tra_others_subject[, .(.N, Mean = mean(Mean), SD = sd(Mean)), by = .(Condition, Skill, Transition)]
-
-ggplot(ioi_tra_others_subject, aes(x = Condition, y = Mean, color = Condition)) +
-  geom_boxplot() +
-  geom_line(aes(group = SubNr), size = 0.4, color = "gray") +
-  geom_point(aes(color = Condition)) +
-  facet_grid(Skill ~ Transition) +
-  theme_pubr()
+ioi_art_tra_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_tra_subject[Skill == "articulation"], paired = TRUE, alternative = "two.sided")
+ioi_art_tra_wilcoxon
 
 
-## ---- echo = FALSE------------------------------------------------------------
-aov_ez(id = "SubNr", dv = "Mean",
-       within = c("Condition", "Skill", "Transition"),
-       data = ioi_tra_others_subject)
+## ---- echo = FALSE----------------------------------------
+# normality check
+diff4 <- ioi_tra_subject[Condition == "teaching" & Skill == "dynamics"]$Mean-ioi_tra_subject[Condition == "performing" & Skill == "dynamics"]$Mean
+ioi_dyn_tra_norm <- shapiro.test(diff4)
+ioi_dyn_tra_norm
+
+ioi_dyn_tra_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_tra_subject[Skill == "dynamics"], paired = TRUE, alternative = "two.sided")
+ioi_dyn_tra_wilcoxon
 
 
-## ----export, include = FALSE--------------------------------------------------
+## ----export, include = FALSE------------------------------
 knitr::purl("variability.Rmd")
 
