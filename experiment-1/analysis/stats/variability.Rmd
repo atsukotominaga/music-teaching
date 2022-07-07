@@ -85,6 +85,7 @@ ggplot(ioi_cv_subject, aes(x = Condition, y = MeanCV, color = Condition)) +
   geom_boxplot() +
   geom_line(aes(group = SubNr), size = 0.4, color = "gray") +
   geom_point(aes(color = Condition)) +
+  labs(y = "CVs") +
   facet_grid(. ~ Skill) +
   theme_pubr()
 ```
@@ -136,6 +137,7 @@ ggplot(ioi_tra_subject, aes(x = Condition, y = Mean, color = Condition)) +
   geom_boxplot() +
   geom_line(aes(group = SubNr), size = 0.4, color = "gray") +
   geom_point(aes(color = Condition)) +
+  labs(y = "IOIs (ms)") +
   facet_grid(. ~ Skill) +
   theme_pubr()
 ```
@@ -154,7 +156,7 @@ ioi_art_tra_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_tra_subject[Ski
 ioi_art_tra_wilcoxon
 
 # effect size
-wilcoxeff_art_tra <- ioi_tra_subject[Skill == "articulation"] %>% wilcox_d(Mean ~ Condition, paired = TRUE)
+wilcoxeff_art_tra <- ioi_tra_subject[Skill == "articulation"] %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
 wilcoxeff_art_tra
 ```
 
