@@ -560,13 +560,22 @@ In the teaching condition of Experiment 2, we gave participants the exact same i
 # Variability
 
 ## Data analysis
+The tempo variability of performance was assessed with the coefficient of variation (CV) of the IOIs to in investigate the tempo stability of performance between the teaching and performing condition. CVs were calculated by dividing the standard deviation by the mean of IOIs.
 
 ## Results (Experiment 1)
 ```{r variability-1, include = FALSE}
 source(here("experiment-1/analysis/stats", "variability.R"), chdir = TRUE)
 ```
 
+### Articulation
+
+To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_art_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not significantly differ between the teaching [*Mdn* = `r ioi_cv[Condition == "teaching" & Skill == "articulation"]$Median` (ms), *IQR* = `r ioi_cv[Condition == "teaching" & Skill == "articulation"]$IQR`] and performing condition [*Mdn* = `r ioi_cv[Condition == "performing" & Skill == "articulation"]$Median` (ms), *IQR* = `r ioi_cv[Condition == "performing" & Skill == "articulation"]$IQR`] while playing the piece with the notated articulation (*p* `r if(ioi_art_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art_cv$effsize, 2)`, two-tailed).
+
+### Dynamics
+
 ## Results (Experiment 2)
 ```{r variability-2, include = FALSE}
 source(here("experiment-2/analysis/stats", "variability.R"), chdir = TRUE)
 ```
+
+# Temporal grouping
