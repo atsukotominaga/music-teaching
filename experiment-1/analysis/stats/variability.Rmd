@@ -169,16 +169,16 @@ ioi_dyn_tra_norm <- shapiro.test(diff4)
 ioi_dyn_tra_norm
 
 # t test
-ioi_dyn_tra_t_test <- t.test(Mean ~ Condition, data = ioi_tra_subject[Skill == "dynamics"], paired = TRUE, alternative = "two.sided")
-ioi_dyn_tra_t_test
+ioi_dyn_tra_ttest <- t.test(Mean ~ Condition, data = ioi_tra_subject[Skill == "dynamics"], paired = TRUE, alternative = "two.sided")
+ioi_dyn_tra_ttest
 
 # wilcoxon test
 ioi_dyn_tra_wilcoxon <- wilcox.test(Mean ~ Condition, data = ioi_tra_subject[Skill == "dynamics"], paired = TRUE, alternative = "two.sided")
 ioi_dyn_tra_wilcoxon
 
 # effect size
-wilcoxeff_dyn_tra <- ioi_tra_subject[Skill == "dynamics"] %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
-wilcoxeff_dyn_tra
+coheneff_dyn_tra <- ioi_tra_subject[Skill == "dynamics"] %>% cohens_d(Mean ~ Condition, paired = TRUE)
+coheneff_dyn_tra
 ```
 
 ```{r export, include = FALSE}
