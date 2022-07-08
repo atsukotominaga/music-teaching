@@ -236,7 +236,7 @@ vel_diff_dyn_plot <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$
 
 vel_diff_dyn_1 <- ggpaired(vel_diff_dyn_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Exp 1") +
   ylim(-40, 60) +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.4, label.y = 45, method = "t.test", paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.4, label.y = 45, method = "t.test", paired = TRUE, symnum.args = list(cutpoints = c(0, 0.0001, 0.01, 0.05, 1), symbols = c("***", "**", "*", "ns"))) + # adjust significance level according to the actual stats
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -475,6 +475,7 @@ img_kor_dyn_2 <- image_read(here("paper/image", "kor_dyn_2.png"), density = 300)
 The results from Experiment 2 replicate our earlier findings and provide further evidence that skilled pianists were able to modulate their performance for teaching purposes. As in Experiment 1, we observed slower performance only while teaching the notated articulation. Again, KORs showed that when teaching articulation, participants exaggerated staccato while there was no significant difference in legato between the two conditions. While teaching dynamics, KV showed that participants exaggerated forte and piano. This pattern of exaggeration was more pronounced than in Experiment 1, where only higher KV for forte was observed. Furthermore, we again found that when teaching dynamics, at transition points participants produced a larger contrast in dynamics between forte and piano, bidirectionally. Importantly, participants did not modulate performance aspects that were irrelevant for the techniques to be taught (i.e., no modulation of dynamics when teaching articulation and vice versa). Overall, Experiment 2 demonstrated systematic and fine-grained didactic performance modulations for a naturalistic piece of music.
 
 ```{r plot-ioi-2, out.width = "100%", fig.cap = "\\label{fig:ioi-2}Experiment 2: Normalised IOIs when playing the piece with either articulation (left) or dynamics (right). A dashed line represents the tempo given by a metronome. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+# combine
 img_ioi_2 <- image_append(c(img_ioi_art_2, img_ioi_dyn_2))
 img_ioi_2 <- image_scale(img_ioi_2, "2200")
 image_write(img_ioi_2, path = here("paper/figure", "Fig6.tiff"), format = "tiff")
@@ -575,6 +576,20 @@ To compare the mean CVs between the teaching and performing condition, we conduc
 
 To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_dyn_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_dyn_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "dynamics"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "dynamics"]$IQR)`] while playing the piece with the notated dynamics (*p* `r if(ioi_dyn_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_dyn_cv$effsize, 2)`, two-tailed).
 
+```{r, echo = FALSE}
+ioi_cv_plot <- data.table(subject = ioi_cv_subject[Condition == "teaching"]$SubNr, teaching = ioi_cv_subject[Condition == "teaching"]$MeanCV, performing = ioi_cv_subject[Condition == "performing"]$MeanCV, skill = ioi_cv_subject[Condition == "teaching"]$Skill)
+
+ioi_cv_1 <- ggpaired(ioi_cv_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "CVs", title = "CVs: Exp 1") +
+  ylim(0.02, 0.20) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_cv_1.png"), plot = ioi_cv_1, dpi = 300, width = 7, height = 5)
+img_ioi_cv_1 <- image_read(here("paper/image", "ioi_cv_1.png"), density = 300)
+```
+
+
+
 ## Results (Experiment 2)
 ```{r variability-2, include = FALSE}
 source(here("experiment-2/analysis/stats", "variability.R"), chdir = TRUE)
@@ -587,5 +602,24 @@ To compare the mean CVs between the teaching and performing condition, we conduc
 ### Dynamics
 
 A paired-sample *t*-test showed that the tempo variability of performance did not differ significantly between the teaching [*M* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$SD)`] and the performing condition [*M* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$SD)`] while playing the piece with the notated dynamics (*t*(`r ioi_dyn_cv_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_dyn_cv_ttest$statistic))`, *p* `r if(ioi_dyn_cv_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_cv_ttest$p.value))}`, Cohen's *d* = `r round(abs(coheneff_dyn_cv$effsize), 3)`, two-tailed, *Fig \ref{fig:ioi-2}*).
+
+```{r, echo = FALSE}
+ioi_cv_plot <- data.table(subject = ioi_cv_subject[Condition == "teaching"]$SubNr, teaching = ioi_cv_subject[Condition == "teaching"]$MeanCV, performing = ioi_cv_subject[Condition == "performing"]$MeanCV, skill = ioi_cv_subject[Condition == "teaching"]$Skill)
+
+ioi_cv_2 <- ggpaired(ioi_cv_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "CVs", title = "CVs: Exp 2") +
+  ylim(0.02, 0.20) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_cv_2.png"), plot = ioi_cv_2, dpi = 300, width = 7, height = 5)
+img_ioi_cv_2 <- image_read(here("paper/image", "ioi_cv_2.png"), density = 300)
+```
+
+```{r plot-cv-1, out.width = "100%", fig.cap = "\\label{fig:vel-2}Experiment 1, 2: CVs when playing the piece with either articulation or dynamics (left: Experiment 1, right: Experiment 2). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+img_ioi_cv <- image_append(c(img_ioi_cv_1, img_ioi_cv_2))
+img_ioi_cv <- image_scale(img_ioi_cv, "2200")
+image_write(img_ioi_cv, path = here("paper/figure", "Fig10.tiff"), format = "tiff")
+img_ioi_cv
+```
 
 # Temporal grouping
