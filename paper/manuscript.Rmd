@@ -560,23 +560,23 @@ In the teaching condition of Experiment 2, we gave participants the exact same i
 
 # Tempo Variability
 
-## Data analysis
-The tempo variability of performance was assessed with the coefficient of variation (CV) of the IOIs to in investigate the tempo stability of performance between the teaching and performing condition. CVs were calculated by dividing the standard deviation by the mean of IOIs.
+The tempo variability of performance was assessed with the coefficient of variation (CV) of the IOIs to investigate the tempo stability of performance between the teaching and performing condition. CVs were calculated by dividing the standard deviation by the mean of IOIs.
 
-## Results (Experiment 1)
+## Results
+## Experiment 1
 ```{r variability-1, include = FALSE}
 source(here("experiment-1/analysis/stats", "variability.R"), chdir = TRUE)
 ```
 
 ### Articulation
 
-To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_art_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$IQR)`] while playing the piece with the notated articulation (*p* `r if(ioi_art_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_art_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art_cv$effsize, 2)`, two-tailed).
+To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_art_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$IQR)`] while playing the piece with the notated articulation (*p* `r if(ioi_art_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_art_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art_cv$effsize, 2)`, two-tailed, *Fig \ref{fig:cv}*).
 
 ### Dynamics
 
-To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_dyn_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_dyn_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "dynamics"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "dynamics"]$IQR)`] while playing the piece with the notated dynamics (*p* `r if(ioi_dyn_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_dyn_cv$effsize, 2)`, two-tailed).
+To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_dyn_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_dyn_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "dynamics"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "dynamics"]$IQR)`] while playing the piece with the notated dynamics (*p* `r if(ioi_dyn_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_dyn_cv$effsize, 2)`, two-tailed, *Fig \ref{fig:cv}*).
 
-```{r, echo = FALSE}
+```{r ioi-cv-1, echo = FALSE}
 ioi_cv_plot <- data.table(subject = ioi_cv_subject[Condition == "teaching"]$SubNr, teaching = ioi_cv_subject[Condition == "teaching"]$MeanCV, performing = ioi_cv_subject[Condition == "performing"]$MeanCV, skill = ioi_cv_subject[Condition == "teaching"]$Skill)
 
 ioi_cv_1 <- ggpaired(ioi_cv_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "CVs", title = "CVs: Exp 1") +
@@ -588,22 +588,20 @@ ggsave(here("paper/image", "ioi_cv_1.png"), plot = ioi_cv_1, dpi = 300, width = 
 img_ioi_cv_1 <- image_read(here("paper/image", "ioi_cv_1.png"), density = 300)
 ```
 
-
-
-## Results (Experiment 2)
+## Experiment 2
 ```{r variability-2, include = FALSE}
 source(here("experiment-2/analysis/stats", "variability.R"), chdir = TRUE)
 ```
 
 ### Articulation
 
-To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_art_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$IQR)`] while playing the piece with the notated articulation (*p* `r if(ioi_art_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_art_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art_cv$effsize, 2)`, two-tailed).
+To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_art_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$IQR)`] while playing the piece with the notated articulation (*p* `r if(ioi_art_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_art_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art_cv$effsize, 2)`, two-tailed, *Fig \ref{fig:cv}*).
 
 ### Dynamics
 
-A paired-sample *t*-test showed that the tempo variability of performance did not differ significantly between the teaching [*M* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$SD)`] and the performing condition [*M* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$SD)`] while playing the piece with the notated dynamics (*t*(`r ioi_dyn_cv_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_dyn_cv_ttest$statistic))`, *p* `r if(ioi_dyn_cv_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_cv_ttest$p.value))}`, Cohen's *d* = `r round(abs(coheneff_dyn_cv$effsize), 3)`, two-tailed, *Fig \ref{fig:ioi-2}*).
+A paired-sample *t*-test showed that the tempo variability of performance did not differ significantly between the teaching [*M* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$SD)`] and the performing condition [*M* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$SD)`] while playing the piece with the notated dynamics (*t*(`r ioi_dyn_cv_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_dyn_cv_ttest$statistic))`, *p* `r if(ioi_dyn_cv_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_cv_ttest$p.value))}`, Cohen's *d* = `r round(abs(coheneff_dyn_cv$effsize), 3)`, two-tailed, *Fig \ref{fig:cv}*).
 
-```{r, echo = FALSE}
+```{r ioi-cv-2, echo = FALSE}
 ioi_cv_plot <- data.table(subject = ioi_cv_subject[Condition == "teaching"]$SubNr, teaching = ioi_cv_subject[Condition == "teaching"]$MeanCV, performing = ioi_cv_subject[Condition == "performing"]$MeanCV, skill = ioi_cv_subject[Condition == "teaching"]$Skill)
 
 ioi_cv_2 <- ggpaired(ioi_cv_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "CVs", title = "CVs: Exp 2") +
@@ -615,7 +613,7 @@ ggsave(here("paper/image", "ioi_cv_2.png"), plot = ioi_cv_2, dpi = 300, width = 
 img_ioi_cv_2 <- image_read(here("paper/image", "ioi_cv_2.png"), density = 300)
 ```
 
-```{r plot-cv-1, out.width = "100%", fig.cap = "\\label{fig:vel-2}Experiment 1, 2: CVs when playing the piece with either articulation or dynamics (left: Experiment 1, right: Experiment 2). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+```{r plot-cv, out.width = "100%", fig.cap = "\\label{fig:cv}Experiment 1, 2: CVs when playing the piece with either articulation or dynamics (left: Experiment 1, right: Experiment 2). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
 img_ioi_cv <- image_append(c(img_ioi_cv_1, img_ioi_cv_2))
 img_ioi_cv <- image_scale(img_ioi_cv, "2200")
 image_write(img_ioi_cv, path = here("paper/figure", "Fig10.tiff"), format = "tiff")
@@ -623,3 +621,60 @@ img_ioi_cv
 ```
 
 # Temporal grouping
+
+In order to investigated if participants used temporal grouping to make a boundary between each subcomponent (e.g., between legato and staccato, between forte and piano) clearer for teaching purposes, we looked at IOIs only at transition points. 
+
+## Results
+## Experiment 1
+```{r variability-1-1, include = FALSE}
+source(here("experiment-1/analysis/stats", "variability.R"), chdir = TRUE)
+```
+
+### Articulation
+
+To compare the mean IOIs at transition points between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_art_tra_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_tra_norm$p.value))}`). The Wilcoxon Signed-rank test revealed that IOIs at transition points were larger for the teaching condition [*Mdn* = `r ioi_tra[Condition == "teaching" & Skill == "articulation"]$Median` (ms), *IQR* = `r ioi_tra[Condition == "teaching" & Skill == "articulation"]$IQR`] than in the performing condition [*Mdn* = `r ioi_tra[Condition == "performing" & Skill == "articulation"]$Median` (ms), *IQR* = `r ioi_tra[Condition == "performing" & Skill == "articulation"]$IQR`] while playing the piece with the notated articulation (*p* `r if(ioi_art_tra_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_art_tra_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art_tra$effsize, 2)`, two-tailed, *Fig \ref{fig:tra}*).
+
+### Dynamics
+
+A paired-sample *t*-test showed that IOIs at transition points were larger for the teaching condition [*M* = `r ioi_tra[Condition == "teaching" & Skill == "dynamics"]$Mean` (ms), *SD* = `r ioi_tra[Condition == "teaching" & Skill == "dynamics"]$SD`] than the performing condition [*M* = `r ioi_tra[Condition == "performing" & Skill == "dynamics"]$Mean` (ms), *SD* = `r ioi_tra[Condition == "performing" & Skill == "dynamics"]$SD`] while playing the piece with the notated dynamics (*t*(`r ioi_dyn_tra_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_dyn_tra_ttest$statistic))`, *p* `r if(ioi_dyn_tra_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_tra_ttest$p.value))}`, Cohen's *d* = `r round(abs(coheneff_dyn_tra$effsize), 3)`, two-tailed, *Fig \ref{fig:tra}*).
+
+```{r ioi-tra-1, echo = FALSE}
+ioi_tra_plot <- data.table(subject = ioi_tra_subject[Condition == "teaching"]$SubNr, teaching = ioi_tra_subject[Condition == "teaching"]$Mean, performing = ioi_tra_subject[Condition == "performing"]$Mean, skill = ioi_tra_subject[Condition == "teaching"]$Skill)
+
+ioi_tra_1 <- ggpaired(ioi_tra_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs at transition: Exp 1") +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_tra_1.png"), plot = ioi_tra_1, dpi = 300, width = 7, height = 5)
+img_ioi_tra_1 <- image_read(here("paper/image", "ioi_tra_1.png"), density = 300)
+```
+
+## Experiment 2
+### Articulation
+```{r variability-2-2, include = FALSE}
+source(here("experiment-2/analysis/stats", "variability.R"), chdir = TRUE)
+```
+
+A paired-sample *t*-test showed that IOIs at transition points were larger for the teaching condition [*M* = `r sprintf('%.2f', ioi_tra[Condition == "teaching" & Skill == "articulation"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_tra[Condition == "teaching" & Skill == "articulation"]$SD)`] than the performing condition [*M* = `r sprintf('%.2f', ioi_tra[Condition == "performing" & Skill == "articulation"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_tra[Condition == "performing" & Skill == "articulation"]$SD)`] while playing the piece with the notated articulation (*t*(`r ioi_art_tra_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_art_tra_ttest$statistic))`, *p* `r if(ioi_art_tra_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_art_tra_ttest$p.value))}`, Cohen's *d* = `r round(abs(coheneff_art_tra$effsize), 3)`, two-tailed, *Fig \ref{fig:tra}*).
+
+### Dynamics
+
+To compare the mean IOIs at transition points between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_dyn_tra_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_dyn_tra_norm$p.value))}`). The Wilcoxon Signed-rank test revealed that IOIs at transition points did not differ significantly between the teaching [*Mdn* = `r ioi_tra[Condition == "teaching" & Skill == "dynamics"]$Median`, *IQR* = `r ioi_tra[Condition == "teaching" & Skill == "dynamics"]$IQR`] and the performing condition [*Mdn* = `r ioi_tra[Condition == "performing" & Skill == "dynamics"]$Median`, *IQR* = `r ioi_tra[Condition == "performing" & Skill == "dynamics"]$IQR`] while playing the piece with the notated dynamics (*p* `r if(ioi_dyn_tra_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_tra_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_dyn_tra$effsize, 2)`, two-tailed, *Fig \ref{fig:tra}*).
+
+```{r ioi-tra-2, echo = FALSE}
+ioi_tra_plot <- data.table(subject = ioi_tra_subject[Condition == "teaching"]$SubNr, teaching = ioi_tra_subject[Condition == "teaching"]$Mean, performing = ioi_tra_subject[Condition == "performing"]$Mean, skill = ioi_tra_subject[Condition == "teaching"]$Skill)
+
+ioi_tra_2 <- ggpaired(ioi_tra_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOIs at transition: Exp 2") +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_tra_2.png"), plot = ioi_tra_2, dpi = 300, width = 7, height = 5)
+img_ioi_tra_2 <- image_read(here("paper/image", "ioi_tra_2.png"), density = 300)
+```
+
+```{r plot-tra, out.width = "100%", fig.cap = "\\label{fig:tra}Experiment 1, 2: IOIs at transition points when playing the piece with either articulation or dynamics (left: Experiment 1, right: Experiment 2). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box. Significance levels: * \\textit{p} < .05, ** \\textit{p} < .01, *** \\textit{p} < .001"}
+img_ioi_tra <- image_append(c(img_ioi_tra_1, img_ioi_tra_2))
+img_ioi_tra <- image_scale(img_ioi_tra, "2200")
+image_write(img_ioi_tra, path = here("paper/figure", "Fig10.tiff"), format = "tiff")
+img_ioi_tra
+```
