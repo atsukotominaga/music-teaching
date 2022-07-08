@@ -557,7 +557,7 @@ In the teaching condition of Experiment 2, we gave participants the exact same i
 
 \clearpage
 
-# Variability
+# Tempo Variability
 
 ## Data analysis
 The tempo variability of performance was assessed with the coefficient of variation (CV) of the IOIs to in investigate the tempo stability of performance between the teaching and performing condition. CVs were calculated by dividing the standard deviation by the mean of IOIs.
@@ -569,13 +569,23 @@ source(here("experiment-1/analysis/stats", "variability.R"), chdir = TRUE)
 
 ### Articulation
 
-To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_art_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not significantly differ between the teaching [*Mdn* = `r ioi_cv[Condition == "teaching" & Skill == "articulation"]$Median` (ms), *IQR* = `r ioi_cv[Condition == "teaching" & Skill == "articulation"]$IQR`] and performing condition [*Mdn* = `r ioi_cv[Condition == "performing" & Skill == "articulation"]$Median` (ms), *IQR* = `r ioi_cv[Condition == "performing" & Skill == "articulation"]$IQR`] while playing the piece with the notated articulation (*p* `r if(ioi_art_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art_cv$effsize, 2)`, two-tailed).
+To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_art_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$IQR)`] while playing the piece with the notated articulation (*p* `r if(ioi_art_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_art_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art_cv$effsize, 2)`, two-tailed).
 
 ### Dynamics
+
+To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_dyn_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_dyn_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "dynamics"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "dynamics"]$IQR)`] while playing the piece with the notated dynamics (*p* `r if(ioi_dyn_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_dyn_cv$effsize, 2)`, two-tailed).
 
 ## Results (Experiment 2)
 ```{r variability-2, include = FALSE}
 source(here("experiment-2/analysis/stats", "variability.R"), chdir = TRUE)
 ```
+
+### Articulation
+
+To compare the mean CVs between the teaching and performing condition, we conducted a Wilcoxon Signed-rank test, instead of a paired *t*-test, because a Shapiro-Wilk test showed that the distribution of the mean difference was significantly different from the normal distribution (*p* `r if(ioi_art_cv_norm$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_cv_norm$p.value))}`). The Wilcoxon Signed-rank test showed that the tempo variability of performance did not differ significantly between the teaching [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "articulation"]$IQR)`] and performing condition [*Mdn* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$Median)`, *IQR* = `r sprintf('%.3f', ioi_cv[Condition == "performing" & Skill == "articulation"]$IQR)`] while playing the piece with the notated articulation (*p* `r if(ioi_art_cv_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_art_cv_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art_cv$effsize, 2)`, two-tailed).
+
+### Dynamics
+
+A paired-sample *t*-test showed that the tempo variability of performance did not differ significantly between the teaching [*M* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$SD)`] and the performing condition [*M* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_cv[Condition == "teaching" & Skill == "dynamics"]$SD)`] while playing the piece with the notated dynamics (*t*(`r ioi_dyn_cv_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_dyn_cv_ttest$statistic))`, *p* `r if(ioi_dyn_cv_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', ioi_dyn_cv_ttest$p.value))}`, Cohen's *d* = `r round(abs(coheneff_dyn_cv$effsize), 3)`, two-tailed, *Fig \ref{fig:ioi-2}*).
 
 # Temporal grouping
