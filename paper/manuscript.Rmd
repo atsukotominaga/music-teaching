@@ -38,10 +38,10 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-# output: papaja::apa6_word
-output:
-  papaja::apa6_pdf:
-    latex_engine: xelatex
+output: papaja::apa6_word
+# output:
+#   papaja::apa6_pdf:
+#     latex_engine: xelatex
 ---
 
 ```{r set-up, include = FALSE}
