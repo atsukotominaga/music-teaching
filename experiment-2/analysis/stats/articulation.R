@@ -8,9 +8,6 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("emmeans")) {install.packages("emmeans"); require("emmeans")}
 
-# chunk option
-knitr::opts_chunk$set(warning = FALSE)
-
 
 ## ----file, include = FALSE----------------------------------------------------
 filename_kor = "../preprocessor/trimmed/data_analysis_kor.txt"
