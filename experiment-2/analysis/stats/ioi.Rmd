@@ -60,9 +60,6 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 # statistics
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("rstatix")) {install.packages("rstatix"); require("rstatix")}
-
-# chunk option
-knitr::opts_chunk$set(warning = FALSE)
 ```
 
 ```{r file, include = FALSE}

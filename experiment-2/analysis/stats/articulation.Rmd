@@ -76,9 +76,6 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 # statistics
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("emmeans")) {install.packages("emmeans"); require("emmeans")}
-
-# chunk option
-knitr::opts_chunk$set(warning = FALSE)
 ```
 
 ```{r file, include = FALSE}
