@@ -79,9 +79,6 @@ if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 # statistics
 if (!require("afex")) {install.packages("afex"); require("afex")}
 if (!require("emmeans")) {install.packages("emmeans"); require("emmeans")}
-
-# chunk option
-knitr::opts_chunk$set(warning = FALSE)
 ```
 
 ```{r file, include = FALSE}
@@ -513,24 +510,17 @@ ggline(vel_diff_art_seq, x = "Interval", y = "Mean", add = "mean_se", position =
 - Normalise KV difference by the range of KV value between forte and piano for each participant.
 
 ## Normalised KV difference per trial
-```{r, echo = FALSE, warning = FALSE}
+```{r, echo = FALSE}
 # normalise diff by KV range
 vel_diff_dyn_trial$NormalisedDiff <- 0
 for (i in unique(vel_diff_dyn_trial$SubNr)){
-  for (m in unique(vel_diff_dyn_trial[SubNr == i]$TrialNr)){
-    # teaching
-    # FtoP
-    vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching" & Subcomponent == "FtoP"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching" & Subcomponent == "FtoP"]$Mean/(max(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching"]$Mean)-min(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching"]$Mean))
-    # PtoF
-    vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching" & Subcomponent == "PtoF"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching" & Subcomponent == "PtoF"]$Mean/(max(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching"]$Mean)-min(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "teaching"]$Mean))
-    
-    # performing
-    # FtoP
-    vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing" & Subcomponent == "FtoP"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing" & Subcomponent == "FtoP"]$Mean/(max(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing"]$Mean)-min(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing"]$Mean))
-    # PtoF
-    vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing" & Subcomponent == "PtoF"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing" & Subcomponent == "PtoF"]$Mean/(max(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing"]$Mean)-min(vel_dyn_trial[SubNr == i & TrialNr == m & Condition == "performing"]$Mean))
-    
-    # error messages for non-existing trials but it's not reflected on vel_diff_dyn_trial anyway
+  for (m in unique(vel_diff_dyn_trial[SubNr == i]$BlockNr)){
+    for (n in unique(vel_diff_dyn_trial[SubNr == i & BlockNr == m]$TrialNr)){
+      # FtoP
+      vel_diff_dyn_trial[SubNr == i & BlockNr == m & TrialNr == n & Subcomponent == "FtoP"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & BlockNr == m & TrialNr == n & Subcomponent == "FtoP"]$Mean/(max(vel_dyn_trial[SubNr == i & BlockNr == m & TrialNr == n]$Mean)-min(vel_dyn_trial[SubNr == i & BlockNr == m & TrialNr == n]$Mean))
+      # PtoF
+      vel_diff_dyn_trial[SubNr == i & BlockNr == m & TrialNr == n & Subcomponent == "PtoF"]$NormalisedDiff <- vel_diff_dyn_trial[SubNr == i & BlockNr == m & TrialNr == n & Subcomponent == "PtoF"]$Mean/(max(vel_dyn_trial[SubNr == i & BlockNr == m & TrialNr == n]$Mean)-min(vel_dyn_trial[SubNr == i & BlockNr == m & TrialNr == n]$Mean))
+    }
   }
 }
 
