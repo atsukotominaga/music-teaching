@@ -38,10 +38,10 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-# output: papaja::apa6_word
-output:
-  papaja::apa6_pdf:
-    latex_engine: xelatex
+output: papaja::apa6_word
+# output:
+#   papaja::apa6_pdf:
+#     latex_engine: xelatex
 ---
 
 ```{r set-up, include = FALSE}
@@ -102,7 +102,7 @@ At the end of the experiment, participants filled in a questionnaire asking abou
 
 Three dependent variables were computed for data analysis. Inter-onset intervals (IOIs) are the intervals between onsets of adjacent notes and provide a measure of tempo. Key-overlap time (KOT) is the difference between the offset time of the current tone (i.e., key release time) and the onset time of the ensuing tone and is a measure for the smoothness of musical sequences [@bresin_2000]. A positive value indicates smooth legato styles due to overlap between the current and ensuing tone whereas a negative value indicates sharp staccato styles due to separation between the current and ensuing tone. Tone intensity is assessed by key velocity (KV) and measures the loudness of a musical note. A higher value indicates forte styles whereas a lower value indicates piano styles. The value of KV in MIDI varies between 0 (minimum) and 127 (maximum).
 
-Data cleaning, preprocessing and statistical analysis were performed in R version 4.0.5. For statistical analysis, only 16th notes with expressive notations were included. Overall, five trials were excluded from data analysis because participants did not follow the sheet music or stopped performing before the end. Pitch errors were identified by comparing the sequence of musical notes produced by a participant with the sequence of musical notes according to the sheet music. Pitch errors included either extra, missing or substituted tones and were manually removed by using the *editData* R package. For onsets, `r round(sum(error_onset_summary$N)/((31*4*8)-5)*100, 2)`% of the trials contained at least one pitch error (extra notes: `r round(error_onset_summary[Reason == "Extra Notes"]$N/((31*4*8)-5)*100, 2)`%, missing notes: `r round(error_onset_summary[Reason == "Missing Notes"]$N/((31*4*8)-5)*100, 2)`%, substituted notes: `r round(error_onset_summary[Reason == "Substituted"]$N/((31*4*8)-5)*100, 2)`%). For offsets, `r round(sum(error_offset_summary$N)/((31*4*8)-5)*100, 2)`% of the trials contained at least one pitch error (extra notes: `r round(error_offset_summary[Reason == "Extra Notes"]$N/((31*4*8)-5)*100, 2)`%, missing notes: `r round(error_offset_summary[Reason == "Missing Notes"]$N/((31*4*8)-5)*100, 2)`%, substituted notes: `r round(error_offset_summary[Reason == "Substituted"]$N/((31*4*8)-5)*100, 2)`%). As a result, less than 1 % of total responses were corrected. In addition to pitch errors, we removed outliers for IOIs, KOT and KV, defined as values more than 3 standard deviations from the mean of each dependent variable. For each dependent variable, this resulted in less than 5% of overall responses being removed as outliers.
+Data cleaning, preprocessing and statistical analysis were performed in R version 4.0.5. For statistical analysis, only 16th notes with expressive notations were included. Overall, five trials were excluded from data analysis because participants did not follow the sheet music or stopped performing before the end. Pitch errors were identified by comparing the sequence of musical notes produced by a participant with the sequence of musical notes according to the sheet music. Pitch errors included either extra, missing or substituted tones and were manually removed by using the *editData* R package. For onsets, `r round(sum(error_onset_summary$N)/((31*4*8)-5)*100, 2)`% of the trials contained at least one pitch error (extra notes: `r round(error_onset_summary[Reason == "Extra Notes"]$N/((31*4*8)-5)*100, 2)`%, missing notes: `r round(error_onset_summary[Reason == "Missing Notes"]$N/((31*4*8)-5)*100, 2)`%, substituted notes: `r round(error_onset_summary[Reason == "Substituted"]$N/((31*4*8)-5)*100, 2)`%). For offsets, `r round(sum(error_offset_summary$N)/((31*4*8)-5)*100, 2)`% of the trials contained at least one pitch error (extra notes: `r round(error_offset_summary[Reason == "Extra Notes"]$N/((31*4*8)-5)*100, 2)`%, missing notes: `r round(error_offset_summary[Reason == "Missing Notes"]$N/((31*4*8)-5)*100, 2)`%, substituted notes: `r round(error_offset_summary[Reason == "Substituted"]$N/((31*4*8)-5)*100, 2)`%). We found that some participants did not follow sheet music (e.g., hold some notes longer than notated), therefore the order of offsets did not correspond to that of onsets. We counted these as errors and removed the erroneous notes even if the order of onsets was correct. As a result, less than 1 % of total responses were corrected. In addition to pitch errors, we removed outliers for IOIs, KOT and KV, defined as values more than 3 standard deviations from the mean of each dependent variable. For each dependent variable, this resulted in less than 5% of overall responses being removed as outliers. 
 
 We performed separate analyses for the two expressive techniques (i.e., articulation and dynamics). A paired-sample *t*-test or a Wilcoxon Signed-rank test (a non-parametric alternative to a paired *t*-test) was performed to compare the mean IOIs in the teaching and performing condition. For KOT and KV, we performed a 2 x 2 repeated-measures analysis of variance (ANOVA) with the factors Condition (teaching vs. performing) and Subcomponent (Articulation: legato vs. staccato or Dynamics: forte vs. piano, respectively). The *t.test* or *wilcox.test* function in the *stats* R package was used for a *t*-test or a Wilcoxon Signed-rank test. For calculating an effect size, we used the *rstatix* R package. The *aov_car* function in the *afex* R package was used for a repeated-measures ANOVA. For post-hoc comparisons on the estimated marginal means, we used the *emmeans* R package. 
 
@@ -299,7 +299,7 @@ The same apparatus as in Experiment 1 was used. We selected Clementi's Sonatina 
 
 ### Procedure{#procedure-2}
 
-We employed the same procedure as in Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., *Fig \ref{fig:stimuli-2} A*) prior to the experiment. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations (see details in *[Supplementary material](#supplementary)*). Third, participants could choose their preferred tempo from one of three options (100, 110 and 120 quarter beats per minute). The chosen tempo was again cued by a leading metronome. To make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the original sheet music (*Fig \ref{fig:stimuli-2} A*). Those who could not perform the piece without pitch errors twice consecutively within five attempts were excluded from data analysis (as a result, one participant was excluded). The rest of the procedure was identical to Experiment 1.
+We employed the same procedure as in Experiment 1 with several modifications. First, all participants were required to memorise the piece without expressive notations (i.e., *Fig \ref{fig:stimuli-2} A*) prior to the experiment so that they had enough time to familiarise themselves with the piece and perform it without pitch errors while performing it with different notated expressions in the lab. Second, we modified the wording of instructions for the performing condition so that both instructions had the same focus on expressive notations because there was less emphasis on expression in the instruction in the performing condition in Experiment 1 (see details in *[Supplementary material](#supplementary)*). Third, participants could choose their preferred tempo from one of three options (100, 110 and 120 quarter beats per minute) because some evidence show that musicians have their own preferred tempo, which affects their temporal variability [@zamm_2018]. The chosen tempo was again cued by a leading metronome.  To make sure that participants memorised the piece and had sufficient motor skills, we asked participants to perform the piece without looking at the original sheet music (*Fig \ref{fig:stimuli-2} A*). Those who could not perform the piece without pitch errors twice consecutively within five attempts were excluded from data analysis (as a result, one participant was excluded). The rest of the procedure was identical to Experiment 1.
 
 ### Data analysis
 
@@ -516,6 +516,7 @@ The authors declare no competing interests.
 \clearpage
 
 # Supplementary material{#supplementary}
+
 # Instructions
 
 ## Experiment 1
@@ -530,7 +531,7 @@ In the teaching condition of Experiment 2, we gave participants the exact same i
 
 \clearpage
 
-# Tempo Variability
+# Temporal Variability
 
 The tempo variability of performance was assessed with the coefficient of variation (CV) of the IOIs to investigate the tempo stability of performance between the teaching and performing condition. CVs were calculated by dividing the standard deviation by the mean of IOIs.
 
@@ -552,7 +553,8 @@ To compare the mean CVs between the teaching and performing condition, we conduc
 ioi_cv_plot <- data.table(subject = ioi_cv_subject[Condition == "teaching"]$SubNr, teaching = ioi_cv_subject[Condition == "teaching"]$MeanCV, performing = ioi_cv_subject[Condition == "performing"]$MeanCV, skill = ioi_cv_subject[Condition == "teaching"]$Skill)
 
 ioi_cv_1 <- ggpaired(ioi_cv_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "CVs", title = "CVs: Exp 1") +
-  ylim(0.02, 0.20) +
+  ylim(0, 0.20) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 0.08, method = "t.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -577,7 +579,8 @@ A paired-sample *t*-test showed that the tempo variability of performance did no
 ioi_cv_plot <- data.table(subject = ioi_cv_subject[Condition == "teaching"]$SubNr, teaching = ioi_cv_subject[Condition == "teaching"]$MeanCV, performing = ioi_cv_subject[Condition == "performing"]$MeanCV, skill = ioi_cv_subject[Condition == "teaching"]$Skill)
 
 ioi_cv_2 <- ggpaired(ioi_cv_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "CVs", title = "CVs: Exp 2") +
-  ylim(0.02, 0.20) +
+  ylim(0, 0.20) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 0.08, method = "t.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -617,6 +620,7 @@ ioi_tra_plot <- data.table(subject = ioi_tra_subject[Condition == "teaching"]$Su
 
 ioi_tra_1 <- ggpaired(ioi_tra_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs at transition: Exp 1") +
   geom_hline(yintercept = 188, linetype = "dashed") +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 150, method = "t.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -641,6 +645,7 @@ ioi_tra_plot <- data.table(subject = ioi_tra_subject[Condition == "teaching"]$Su
 
 ioi_tra_2 <- ggpaired(ioi_tra_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOIs at transition: Exp 2") +
   geom_hline(yintercept = 1, linetype = "dashed") +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 1.05, method = "t.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -659,6 +664,8 @@ img_ioi_tra
 
 # Additional analysis for dynamics difference
 
+In order to examine if the dynamics difference between forte and piano at transition points is larger when the difference between forte and piano in overall performance is considered, we normalised the KV difference at transition points by dividing it by the average range between forte and piano per performance (per trial).
+
 ## Results
 ## Experiment 1
 ```{r additional-dynamics-1, include = FALSE}
@@ -668,7 +675,7 @@ source(here("experiment-1/analysis/stats", "dynamics.R"), chdir = TRUE)
 A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Transition Type (FtoP vs. PtoF) showed that there was a significant main effect of Transition Type (*F*(`r vel_diff_dyn_aov_3$anova_table[2,1]`,`r vel_diff_dyn_aov_3$anova_table[2,2]`) = `r sprintf('%.0f', vel_diff_dyn_aov_3$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov_3$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_diff_dyn_aov_3$anova_table[2,5])`) and a significant interaction between Condition and Transition Type (*F*(`r vel_diff_dyn_aov_3$anova_table[3,1]`,`r vel_diff_dyn_aov_3$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov_3$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov_3$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[3,5])`, *Fig \ref{fig:vel-diff-2}*). Post-hoc comparisons based on the estimated marginal means with Tukey adjustment showed that there was no significant difference when changing from forte to piano (*p* `r if(vel_diff_dyn_posthoc_2$p.value[1] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc_2$p.value[1]))}`) and from piano to forte (*p* `r if(vel_diff_dyn_posthoc_2$p.value[2] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_posthoc_2$p.value[2]))}`) between the teaching condition [FtoP: *M* = `r vel_diff_dyn_normalised_all[Condition == "teaching" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_normalised_all[Condition == "teaching" & Subcomponent == "FtoP"]$SD`, PtoF: *M* = `r vel_diff_dyn_normalised_all[Condition == "teaching" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_normalised_all[Condition == "teaching" & Subcomponent == "PtoF"]$SD`] and the performing condition [FtoP: *M* = `r vel_diff_dyn_normalised_all[Condition == "performing" & Subcomponent == "FtoP"]$Mean`, *SD* = `r vel_diff_dyn_normalised_all[Condition == "performing" & Subcomponent == "FtoP"]$SD`, PtoF: *M* = `r vel_diff_dyn_normalised_all[Condition == "performing" & Subcomponent == "PtoF"]$Mean`, *SD* = `r vel_diff_dyn_normalised_all[Condition == "performing" & Subcomponent == "PtoF"]$SD`].
 
 ```{r vel-diff-dyn-normalised-1, echo = FALSE}
-vel_diff_dyn_normalised_1 <- ggpaired(vel_diff_dyn_plot_2, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas",xlab = "Condition", ylab = "Normalised Difference", title = "KV-Diff: Dynamics")
+vel_diff_dyn_normalised_1 <- ggpaired(vel_diff_dyn_plot_2, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas",xlab = "Condition", ylab = "Normalised Difference", title = "KV-Diff: Exp 1") + ylim(-6, 5) + stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 3, method = "t.test", paired = TRUE) + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
 ggsave(here("paper/image", "vel_diff_dyn_normalised_1.png"), plot = vel_diff_dyn_normalised_1, dpi = 300, width = 7, height = 5)
@@ -683,7 +690,7 @@ source(here("experiment-2/analysis/stats", "dynamics.R"), chdir = TRUE)
 A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Transition Type (FtoP vs. PtoF) showed that there was a significant main effect of Transition Type (*F*(`r vel_diff_dyn_aov_3$anova_table[2,1]`,`r vel_diff_dyn_aov_3$anova_table[2,2]`) = `r sprintf('%.0f', vel_diff_dyn_aov_3$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov_3$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_diff_dyn_aov_3$anova_table[2,5])`). However, there was no significant interaction between Condition and Transition Type (*F*(`r vel_diff_dyn_aov_3$anova_table[3,1]`,`r vel_diff_dyn_aov_3$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov_3$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov_3$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[3,5])`, *Fig \ref{fig:vel-diff-2}*).
 
 ```{r vel-diff-dyn-normalised-2, echo = FALSE}
-vel_diff_dyn_normalised_2 <- ggpaired(vel_diff_dyn_plot_2, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised Difference", title = "KV-Diff: Dynamics")
+vel_diff_dyn_normalised_2 <- ggpaired(vel_diff_dyn_plot_2, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised Difference", title = "KV-Diff: Exp 2") + ylim(-6, 5) + stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 3, method = "t.test", paired = TRUE) + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
 ggsave(here("paper/image", "vel_diff_dyn_normalised_2.png"), plot = vel_diff_dyn_normalised_2, dpi = 300, width = 7, height = 5)

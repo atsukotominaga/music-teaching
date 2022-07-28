@@ -106,9 +106,9 @@
 
 % Create new environments so endfloat can handle them
 % \newenvironment{ltable}
-%   {\begin{landscape}\begin{center}\begin{threeparttable}}
-%   {\end{threeparttable}\end{center}\end{landscape}}
-\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
 
 % Enables adjusting longtable caption width to table width
 % Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
@@ -180,7 +180,7 @@
 
 \affiliation{\vspace{0.5cm}\textsuperscript{1} Department of Cognitive Science, Central European University, Quellenstraße 51, 1100 Vienna, Austria\\\textsuperscript{*} Corresponding author: \href{mailto:Tominaga_Atsuko@phd.ceu.edu}{\nolinkurl{Tominaga\_Atsuko@phd.ceu.edu}}}
 
-\abstract{
+\abstract{%
 Experts modulate their performance of actions for teaching purposes, performing slower and exaggerated movements when demonstrating novel actions to novices. The present study asked whether such modulations are also used to teach techniques of artistic expression. One domain where subtle movement modulations are crucial for achieving artistic expression is music. We investigated how skilled pianists modulate their playing to demonstrate to students the techniques required for conveying piece-related musical expressions, compared to performing the piece without didactic intentions. Expressions in the piece concerned either articulation (i.e., legato and staccato) or dynamics (i.e., forte and piano). The pianists played either with the goal to perform the piece to an audience or with the goal to teach the respective techniques to novices. When intending to teach articulation, skilled pianists produced more exaggerated staccato. When intending to teach dynamics, they created a larger contrast between forte and piano at structurally important points. We found consistent results with a simple musical scale (Experiment 1) and a more naturalistic piece of music (Experiment 2). These findings suggest that action modulations are performed not only to attract learners' attention but to highlight the most relevant aspects of the actions to be learnt.
 }
 
@@ -633,6 +633,8 @@ To compare the mean IOIs at transition points between the teaching and performin
 
 \hypertarget{additional-analysis-for-dynamics-difference}{%
 \section{Additional analysis for dynamics difference}\label{additional-analysis-for-dynamics-difference}}
+
+In order to examine if the dynamics difference between forte and piano at transition points is larger when the difference between forte and piano in overall performance is considered, we normalised the KV difference at transition points by dividing it by the average range between forte and piano per performance (per trial).
 
 \hypertarget{results-4}{%
 \subsection{Results}\label{results-4}}
