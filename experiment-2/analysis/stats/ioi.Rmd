@@ -24,33 +24,6 @@ Description: This is a summary of tempo analysis.
 - [afex](https://github.com/singmann/afex) for ANOVAs
 - [rstatix](https://github.com/kassambara/rstatix) for effect sizes
 
-# Outline - Tempo (IOIs)
-## [Articulation](#ioi-articulation)
-
-- Individual results
-  + [All](#art_ind_all)
-  + [Phrase boundaries](#art_ind_phrase)
-  + [Trial by trial](#art_ind_trial)
-
-- Group results and stats (if available)
-  + [All](#art_group_all)
-  + [Phrase boundaries](#art_group_phrase)
-  + [Trial by trial](#art_group_trial)
-
-## [Dynamics](#ioi-dynamics)
-
-- Individual results
-  + [All](#dyn_ind_all)
-  + [Phrase boundaries](#dyn_ind_phrase)
-  + [Trial by trial](#dyn_ind_trial)
-
-- Group results and stats (if available)
-  + [All](#dyn_group_all)
-  + [Phrase boundaries](#dyn_group_phrase)
-  + [Trial by trial](#dyn_group_trial)
-  
-## [Sequence plot](#sequence)
-
 ```{r setup, include = FALSE}
 # packages
 # data manipulation
@@ -79,12 +52,13 @@ dt_ioi_dyn <- dt_ioi[Skill == "dynamics"]
 ```
 
 # IOI-Articulation 
-## 1. All - individual{#art_ind_all}
+## 1. All - individual
 - Average normIOIs for each participant.
 
 ```{r ioi-art, echo = FALSE}
 # For each individual
 ioi_art_trial <- dt_ioi_art[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
+setorder(ioi_art_trial, "SubNr", "Condition", "Skill")
 
 ioi_art <- ioi_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill)]
 ioi_art
@@ -98,7 +72,7 @@ ioi_art
 ggboxplot(ioi_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Normalised IOIs", title = "IOI: Articulation") + geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
-## 2. All - group{#art_group_all}
+## 2. All - group
 - Average normIOIs for each condition.
 - Hypothesis: Participants will play slower when teaching.
 
@@ -151,7 +125,7 @@ wilcoxeff_art <- ioi_art %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
 wilcoxeff_art
 ```
 
-## 3. Phrase boundaries - individual{#art_ind_phrase}
+## 3. Phrase boundaries - individual
 - Compare normIOIs at phrase boundaries with others for each participant.
 
 ```{r ioi-art-ch, echo = FALSE}
@@ -161,6 +135,7 @@ dt_ioi_art[Subcomponent == "LtoS" | Subcomponent == "StoL"]$Boundary <- "Yes"
 
 # For each individual
 ioi_art_ch_trial <- dt_ioi_art[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)]
+setorder(ioi_art_ch_trial, "SubNr", "Condition", "Skill", "Boundary")
 
 ioi_art_ch <- ioi_art_ch_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Boundary)]
 ioi_art_ch
@@ -174,7 +149,7 @@ ioi_art_ch
 ggboxplot(ioi_art_ch_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Normalised IOIs", title = "IOI: Articulation") + facet_grid(Boundary ~ .) + geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
-## 4. Phrase boundaries - group{#art_group_phrase}
+## 4. Phrase boundaries - group
 - Compare normIOIs at phrase boundaries with others in the two conditions.
 - Hypothesis: Participants will play more slowly at phrase boundaries compared to other locations (especially for teaching purposes).
 
@@ -207,7 +182,7 @@ ioi_art_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Bound
 summary(ioi_art_ch_aov_2)
 ```
 
-## 5. Trial by trial - individual{#art_ind_trial}
+## 5. Trial by trial - individual
 - Average normIOIs for each trial for each participant.
 
 ```{r ioi-art-trial, echo = FALSE}
@@ -226,7 +201,7 @@ ggline(ioi_art_trial, x = "TrialNr", y = "Mean", shape = "Condition", color = "C
   geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
-## 6. Trial by trial - group{#art_group_trial}
+## 6. Trial by trial - group
 - Average normIOIs for each trial for each condition.
 
 ```{r ioi-art-trial-all, echo = FALSE}
@@ -245,12 +220,13 @@ ggline(ioi_art_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = pos
 ```
 
 # IOI-Dynamics
-## 1. All - individual{#dyn_ind_all}
+## 1. All - individual
 - Average normIOIs for each participant.
 
 ```{r ioi-dyn, echo = FALSE}
 # For each individual
 ioi_dyn_trial <- dt_ioi_dyn[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
+setorder(ioi_dyn_trial, "SubNr", "Condition", "Skill")
 
 ioi_dyn <- ioi_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill)]
 ioi_dyn
@@ -264,7 +240,7 @@ ioi_dyn
 ggboxplot(ioi_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Normalised IOIs", title = "IOI: Dynamics") + geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
-## 2. All - group{#dyn_group_all}
+## 2. All - group
 - Average normIOIs for each condition.
 - Hypothesis: Participants will play slower when teaching.
 
@@ -317,7 +293,7 @@ wilcoxeff_dyn <- ioi_dyn %>% wilcox_effsize(Mean ~ Condition, paired = TRUE)
 wilcoxeff_dyn
 ```
 
-## 3. Phrase boundaries - individual{#dyn_ind_phrase}
+## 3. Phrase boundaries - individual
 - Compare normIOIs at phrase boundaries with others for each participant.
 
 ```{r ioi-dyn-ch, echo = FALSE}
@@ -327,6 +303,7 @@ dt_ioi_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF"]$Boundary <- "Yes"
 
 # For each individual
 ioi_dyn_ch_trial <- dt_ioi_dyn[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Boundary)]
+setorder(ioi_dyn_ch_trial, "SubNr", "Condition", "Skill", "Boundary")
 
 ioi_dyn_ch <- ioi_dyn_ch_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Boundary)]
 ioi_dyn_ch
@@ -340,7 +317,7 @@ ioi_dyn_ch
 ggboxplot(ioi_dyn_ch_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Normalised IOIs", title = "IOI: Dynamics") + facet_grid(Boundary ~ .) + geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
-## 4. Phrase boundaries - group{#dyn_group_phrase}
+## 4. Phrase boundaries - group
 - Compare normIOIs at phrase boundaries with others in the two conditions.
 - Hypothesis: Participants will play more slowly at phrase boundaries compared to other locations (especially for teaching purposes).
 
@@ -373,7 +350,7 @@ ioi_dyn_ch_aov_2 <- aov(Mean ~ Condition*Boundary + Error(SubNr/(Condition*Bound
 summary(ioi_dyn_ch_aov_2)
 ```
 
-## 5. Trial by trial - individual{#dyn_ind_trial}
+## 5. Trial by trial - individual
 - Average normIOIs for each trial for each participant.
 
 ```{r ioi-dyn-trial, echo = FALSE}
@@ -392,7 +369,7 @@ ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", shape = "Condition", color = "C
   geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
-## 6. Trial by trial - group{#dyn_group_trial}
+## 6. Trial by trial - group
 - Average normIOIs for each trial for each condition.
 
 ```{r ioi-dyn-trial-all, echo = FALSE}
@@ -410,8 +387,8 @@ ioi_dyn_trial_all
 ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Normalised IOIs", title = "IOI: Dynamics") + geom_hline(yintercept = 1, linetype = "dashed") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-# Sequence plot{#sequence}
-## Articulation{#sequence_art}
+# Sequence plot
+## Articulation
 ```{r seq-art, fig.width = 9, fig.height = 3, echo = FALSE}
 # For each individual
 ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr, Condition, Skill, Interval)]
@@ -419,7 +396,7 @@ ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), b
 ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "Normalised IOIs", title = "IOI: Articulation") + geom_hline(yintercept = 1, linetype = "dashed") + scale_x_continuous(breaks = seq(1,71,1))
 ```
 
-## Dynamics{#sequence_dyn}
+## Dynamics
 ```{r seq-dyn, fig.width = 9, fig.height = 3, echo = FALSE}
 # For each individual
 ioi_dyn_seq <- dt_ioi_dyn[, .(N = .N, Mean = mean(normIOI), SD = sd(normIOI)), by = .(SubNr, Condition, Skill, Interval)]

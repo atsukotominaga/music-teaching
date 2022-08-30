@@ -24,49 +24,6 @@ Description: This is a summary of articulation analysis.
 - [afex](https://github.com/singmann/afex) for ANOVAs
 - [emmeans](https://github.com/rvlenth/emmeans) for posthoc comparisons
 
-# Outline - Articulation (KOR, KOT)
-## [Articulation](#kor-articulation)
-
-### KOR
-- Individual results
-  + [All](#kor_art_ind_all)
-  + [Trial by trial](#kor_art_ind_trial)
- 
-- Group results and stats (if available)
-  + [All](#kor_art_group_all)
-  + [Trial by trial](#kor_art_group_trial)
-
-### KOT
-- Individual results
-  + [All](#kot_art_ind_all)
-  + [Trial by trial](#kot_art_ind_trial)
- 
-- Group results and stats (if available)
-  + [All](#kot_art_group_all)
-  + [Trial by trial](#kot_art_group_trial)
-
-## [Dynamics](#kor-dynamics)
-
-### KOR
-- Individual results
-  + [All](#kor_dyn_ind_all)
-  + [Trial by trial](#kor_dyn_ind_trial)
- 
-- Group results and stats (if available)
-  + [All](#kor_dyn_group_all)
-  + [Trial by trial](#kor_dyn_group_trial)
-  
-### KOT
-- Individual results
-  + [All](#kot_dyn_ind_all)
-  + [Trial by trial](#kot_dyn_ind_trial)
-
-- Group results and stats (if available)
-  + [All](#kot_dyn_group_all)
-  + [Trial by trial](#kot_dyn_group_trial)
-
-## [Sequence plot](#sequence)
-
 ```{r setup, include = FALSE}
 # packages
 # data manipulation
@@ -100,13 +57,14 @@ dt_kor_dyn <- dt_kor[Skill == "dynamics"]
 dt_kot_dyn <- dt_kot[Skill == "dynamics"]
 ```
 
-# Key-Overlap Ratio (KOR) - Articulation{#kor-articulation}
-## 1. All - individual{#kor_art_ind_all}
+# Key-Overlap Ratio (KOR) - Articulation
+## 1. All - individual
 - Average KOR for each participant.
 
 ```{r kor-art, echo = FALSE}
 # For each individual
 kor_art_trial <- dt_kor_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+setorder(kor_art_trial, "SubNr", "Condition", "Skill", "Subcomponent")
 
 kor_art <- kor_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 kor_art
@@ -118,7 +76,7 @@ kor_art
 ggboxplot(dt_kor_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOR", title = "KOR: Articulation") + facet_grid(Subcomponent ~ .)
 ```
 
-## 2. All - group{#kor_art_group_all}
+## 2. All - group
 - Average KOR for each condition.
 - Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
@@ -155,7 +113,7 @@ kor_art_posthoc <- test(pairs(emmeans(kor_art_aov,~Condition|Subcomponent), adju
 kor_art_posthoc
 ```
 
-## 3. Trial by trial - individual{#kor_art_ind_trial}
+## 3. Trial by trial - individual
 - Average KOR for each trial for each participant.
 
 ```{r kor-art-trial, echo = FALSE}
@@ -174,7 +132,7 @@ ggline(kor_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", fac
   scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-## 4. Trial by trial - group{#kor_art_group_trial}
+## 4. Trial by trial - group
 - Average KOR d for each trial for each condition.
 
 ```{r kor-art-trial-all, echo = FALSE}
@@ -196,12 +154,13 @@ ggline(kor_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add
 ```
 
 # Key-Overlap Time (KOT) - Articulation
-## 1. All - individual{#kot_art_ind_all}
+## 1. All - individual
 - Average KOT for each participant.
 
 ```{r kot-art, echo = FALSE}
 # For each individual
 kot_art_trial <- dt_kot_art[Subcomponent == "Legato" | Subcomponent == "Staccato", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+setorder(kot_art_trial, "SubNr", "Condition", "Skill", "Subcomponent")
 
 kot_art <- kot_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 kot_art
@@ -209,12 +168,11 @@ kot_art
 
 ### Plot
 #### Box plot
-
 ```{r kot-art-box,  echo = FALSE}
 ggboxplot(kot_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOT (ms)", title = "KOT: Articulation") + facet_grid(Subcomponent ~ .)
 ```
 
-## 2. All - group{#kot_art_group_all}
+## 2. All - group
 - Average KOT for each condition.
 - Hypothesis: Participants will exaggerate legato and staccato when teaching.
 
@@ -251,7 +209,7 @@ kot_art_posthoc <- test(pairs(emmeans(kot_art_aov,~Condition|Subcomponent), adju
 kot_art_posthoc
 ```
 
-## 3. Trial by trial - individual{#kot_art_ind_trial}
+## 3. Trial by trial - individual
 - Average KOT for each trial for each participant.
 
 ```{r kot-art-trial, echo = FALSE}
@@ -270,7 +228,7 @@ ggline(kot_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", fac
   scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-## 4. Trial by trial - group{#kot_art_group_trial}
+## 4. Trial by trial - group
 - Average KOT for each trial for each condition.
 
 ```{r kot-art-trial-all, echo = FALSE}
@@ -293,13 +251,14 @@ ggline(kot_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add
   scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-# Key-Overlap Ratio (KOR) - Dynamics{#kor-dynamics}
-## 1. All - individual{#kor_dyn_ind_all}
+# Key-Overlap Ratio (KOR) - Dynamics
+## 1. All - individual
 - Average KOR for each participant.
 
 ```{r kor-dyn, echo = FALSE}
 # For each individual
 kor_dyn_trial <- dt_kor_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+setorder(kor_dyn_trial, "SubNr", "Condition", "Skill", "Subcomponent")
 
 kor_dyn <- kor_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 kor_dyn
@@ -311,7 +270,7 @@ kor_dyn
 ggboxplot(kor_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOR", title = "KOR: Dynamics") + facet_grid(Subcomponent ~ .)
 ```
 
-## 2. All - group{#kor_dyn_group_all}
+## 2. All - group
 - Average KOR for each condition.
 
 ```{r kor-dyn-all, echo = FALSE}
@@ -341,7 +300,7 @@ kor_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subc
 summary(kor_dyn_aov_2)
 ```
 
-## 3. Trial by trial - individual{#kor_dyn_ind_trial}
+## 3. Trial by trial - individual
 - Average KOR for each trial for each participant.
 
 ```{r kor-dyn-trial, echo = FALSE}
@@ -359,7 +318,7 @@ ggline(kor_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", facet.
 ggline(kor_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOR", title = "KOR: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-## 4. Trial by trial - group{#kor_dyn_group_trial}
+## 4. Trial by trial - group
 - Average KOR for each trial for each condition.
 
 ```{r kor-dyn-trial-all, echo = FALSE}
@@ -382,12 +341,13 @@ ggline(kor_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = 
 ```
 
 # Key-Overlap Time (KOT) - Dynamics
-## 1. All - individual{#kot_dyn_ind_all}
+## 1. All - individual
 - Average KOT for each participant.
 
 ```{r kot-dyn, echo = FALSE}
 # For each individual
 kot_dyn_trial <- dt_kot_dyn[Subcomponent == "Forte" | Subcomponent == "Piano", .(N = .N, Mean = mean(KOT), SD = sd(KOT)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+setorder(kot_dyn_trial, "SubNr", "Condition", "Skill", "Subcomponent")
 
 kot_dyn <- kot_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 kot_dyn
@@ -399,7 +359,7 @@ kot_dyn
 ggboxplot(kot_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KOT (ms)", title = "KOT: Dynamics") + facet_grid(Subcomponent ~ .)
 ```
 
-## 2. All - group{#kot_dyn_group_all}
+## 2. All - group
 - Average KOT for each condition.
 
 ```{r kot-dyn-all, echo = FALSE}
@@ -429,7 +389,7 @@ kot_dyn_aov_2 <- aov(Mean ~ Condition*Subcomponent + Error(SubNr/(Condition*Subc
 summary(kot_dyn_aov_2)
 ```
 
-## 3. Trial by trial - individual{#kot_dyn_ind_trial}
+## 3. Trial by trial - individual
 - Average KOT for each trial for each participant.
 
 ```{r kot-dyn-trial, echo = FALSE}
@@ -447,7 +407,7 @@ ggline(kot_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", facet.
 ggline(kot_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KOT (ms)", title = "KOT: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-## 4. Trial by trial - group{#kot_dyn_group_trial}
+## 4. Trial by trial - group
 - Average KOT for each trial for each condition.
 
 ```{r kot-dyn-trial-all, echo = FALSE}
@@ -468,8 +428,8 @@ ggline(kot_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", add = 
 ggline(kot_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KOT (ms)", title = "KOT: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-# Sequence plot{#sequence}
-## Articulation{#sequence_art}
+# Sequence plot
+## Articulation
 ```{r seq-art, fig.width = 9, fig.height = 3, echo = FALSE}
 # For each individual
 kor_art_seq <- dt_kor_art[, .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Interval)]
@@ -478,7 +438,7 @@ ggline(kor_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = posi
   scale_x_continuous(breaks = seq(1,71,1))
 ```
 
-## Dynamics{#sequence_dyn}
+## Dynamics
 ```{r seq-dyn, fig.width = 9, fig.height = 3, echo = FALSE}
 # For each individual
 kor_dyn_seq <- dt_kor_dyn[, .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Interval)]

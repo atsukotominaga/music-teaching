@@ -24,52 +24,6 @@ Description: This is a summary of dynamics analysis.
 - [afex](https://github.com/singmann/afex) for ANOVAs
 - [emmeans](https://github.com/rvlenth/emmeans) for posthoc comparisons
 
-# Outline - Dynamics (Key Velocity)
-
-## [Dynamics](#vel-dynamics)
-
-### KV
-- Individual results
-  + [All](#vel_dyn_ind_all)
-  + [Trial by trial](#vel_dyn_ind_trial)
-
-- Group results and stats (if available)
-  + [All](#vel_dyn_group_all)
-  + [Trial by trial](#vel_dyn_group_trial)
-
-### KV-Diff
-- Individual results
-  + [All](#vel_diff_dyn_ind_all)
-  + [Trial by trial](#vel_diff_dyn_ind_trial)
-
-- Group results and stats (if available)
-  + [All](#vel_diff_dyn_group_all)
-  + [Trial by trial](#vel_diff_dyn_group_trial)
-
-## [Articulation](#vel_articulation)
-
-### KV
-- Individual results
-  + [All](#vel_art_ind_all)
-  + [Trial by trial](#vel_art_ind_trial)
-
-- Group results and stats (if available)
-  + [All](#vel_art_group_all)
-  + [Trial by trial](#vel_art_group_trial)
-
-### KV-Diff
-- Individual results
-  + [All](#vel_diff_art_ind_all)
-  + [Trial by trial](#vel_diff_art_ind_trial)
-
-- Group results and stats (if available)
-  + [All](#vel_diff_art_group_all)
-  + [Trial by trial](#vel_diff_art_group_trial)
-
-## [Sequence plot](#sequence)
-
-## [Additional analysis](#additional)
-
 ```{r setup, include = FALSE}
 # packages
 # data manipulation
@@ -104,12 +58,13 @@ dt_vel_diff_dyn <- dt_vel_diff[Skill == "dynamics"]
 ```
 
 # Key Velocity (KV) - Dynamics
-## 1. All - individual{#vel_dyn_ind_all}
+## 1. All - individual
 - Average KV for each participant.
 
 ```{r vel-dyn, echo = FALSE}
 # For each individual
 vel_dyn_trial <- dt_vel_dyn[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+setorder(vel_dyn_trial, "SubNr", "Condition", "Skill", "Subcomponent")
 
 vel_dyn <- vel_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 vel_dyn
@@ -121,7 +76,7 @@ vel_dyn
 ggboxplot(vel_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Dynamics") + facet_grid(Subcomponent ~ .)
 ```
 
-## 2. All - group{#vel_dyn_group_all}
+## 2. All - group
 - Average KV for each condition.
 - Hypothesis: Participants will exaggerate forte and piano when teaching.
 
@@ -158,7 +113,7 @@ vel_dyn_posthoc <- test(pairs(emmeans(vel_dyn_aov,~Condition|Subcomponent), adju
 vel_dyn_posthoc
 ```
 
-## 3. Trial by trial - individual{#vel_dyn_ind_trial}
+## 3. Trial by trial - individual
 - Average KV for each trial for each participant.
 
 ```{r vel-dyn-trial, echo = FALSE}
@@ -176,7 +131,7 @@ ggline(vel_dyn_trial[Subcomponent == "Forte"], x = "TrialNr", y = "Mean", facet.
 ggline(vel_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Dynamics/Piano") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-## 4. Trial by trial - group{#vel_dyn_group_trial}
+## 4. Trial by trial - group
 - Average KV for each trial for each condition.
 
 ```{r vel-dyn-trial-all, echo = FALSE}
@@ -198,12 +153,13 @@ ggline(vel_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = 
 ```
 
 # Key Velocity Difference (Difference) - Dynamics
-## 1. All - individual{#vel_diff_dyn_ind_all}
+## 1. All - individual
 - Average KV-Diff for each participant.
 
 ```{r vel-diff-dyn, echo = FALSE}
 # For each individual
 vel_diff_dyn_trial <- dt_vel_diff_dyn[Subcomponent == "FtoP" | Subcomponent == "PtoF", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+setorder(vel_diff_dyn_trial, "SubNr", "Condition", "Skill", "Subcomponent")
 
 vel_diff_dyn <- vel_diff_dyn_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 vel_diff_dyn
@@ -216,7 +172,7 @@ ggboxplot(vel_diff_dyn_trial, "SubNr", "Mean", color = "Condition", xlab = "SubN
   facet_grid(Subcomponent ~ .)
 ```
 
-## 2. All - group{#vel_diff_dyn_group_all}
+## 2. All - group
 - Average KV-Diff for each condition.
 
 ```{r vel-diff-dyn-all, echo = FALSE}
@@ -252,7 +208,7 @@ vel_diff_dyn_posthoc <- test(pairs(emmeans(vel_diff_dyn_aov,~Condition|Subcompon
 vel_diff_dyn_posthoc
 ```
 
-## 3. Trial by trial - individual{#vel_diff_dyn_ind_trial}
+## 3. Trial by trial - individual
 - Average KV-Diff for each trial for each participant.
 
 ```{r vel-diff-dyn-trial, echo = FALSE}
@@ -272,7 +228,7 @@ ggline(vel_diff_dyn_trial[Subcomponent == "PtoF"], x = "TrialNr", y = "Mean", fa
   scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-## 4. Trial by trial - group{#vel_diff_dyn_group_trial}
+## 4. Trial by trial - group
 - Average KV-Diff for each trial for each condition.
 
 ```{r vel-diff-dyn-trial-all, echo = FALSE}
@@ -296,12 +252,13 @@ ggline(vel_diff_dyn_trial[Subcomponent == "PtoF"], x = "TrialNr", y = "Mean", ad
 ```
 
 # Key Velocity (KV) - Articulation
-## 1. All - individual{#vel_art_ind_all}
+## 1. All - individual
 - Average KV for each participant.
 
 ```{r vel-art, echo = FALSE}
 # For each individual
 vel_art_trial <- dt_vel_art[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+setorder(vel_art_trial, "SubNr", "Condition", "Skill", "Subcomponent")
 
 vel_art <- vel_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 vel_art
@@ -313,7 +270,7 @@ vel_art
 ggboxplot(vel_art_trial, "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "KV (0-127)", title = "KV: Articulation") + facet_grid(Subcomponent ~ .)
 ```
 
-## 2. All - group{#vel_art_group_all}
+## 2. All - group
 - Average KV for each condition.
 
 ```{r vel-art-all, echo = FALSE}
@@ -349,7 +306,7 @@ vel_art_posthoc <- test(pairs(emmeans(vel_art_aov,~Condition|Subcomponent), adju
 vel_art_posthoc
 ```
 
-## 3. Trial by trial - individual{#vel_art_ind_trial}
+## 3. Trial by trial - individual
 - Average KV for each trial for each participant.
 
 ```{r vel-art-trial, echo = FALSE}
@@ -367,7 +324,7 @@ ggline(vel_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", facet
 ggline(vel_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "KV (0-127)", title = "KV: Articulation/Staccato") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-## 4. Trial by trial - group{#vel_art_group_trial}
+## 4. Trial by trial - group
 - Average KV for each trial for each condition.
 
 ```{r vel-art-trial-all, echo = FALSE}
@@ -388,13 +345,14 @@ ggline(vel_art_trial[Subcomponent == "Legato"], x = "TrialNr", y = "Mean", add =
 ggline(vel_art_trial[Subcomponent == "Staccato"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "KV (0-127)", title = "KV: Articulation/Staccato") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-# Key Velocity Difference (Difference) - Articulation{#vel_articulation}
-## 1. All - individual{#vel_diff_art_ind_all}
+# Key Velocity Difference (Difference) - Articulation
+## 1. All - individual
 - Average KV-Diff for each participant.
 
 ```{r vel-diff-art, echo = FALSE}
 # For each individual
 vel_diff_art_trial <- dt_vel_diff_art[Subcomponent == "LtoS" | Subcomponent == "StoL", .(N = .N, Mean = mean(Diff), SD = sd(Diff)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr, Subcomponent)]
+setorder(vel_diff_art_trial, "SubNr", "Condition", "Skill", "Subcomponent")
 
 vel_diff_art <- vel_diff_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent)]
 vel_diff_art
@@ -406,7 +364,7 @@ vel_diff_art
 ggboxplot(vel_diff_art_trial[, .(N = .N, Mean = mean(Mean), SD = sd(Mean)), by = .(SubNr, Condition, Skill, Subcomponent, BlockNr, TrialNr)], "SubNr", "Mean", color = "Condition", xlab = "SubNr", ylab = "Difference", title = "KV-Diff: Articulation") + facet_grid(Subcomponent ~ .)
 ```
 
-## 2. All - group{#vel_diff_art_group_all}
+## 2. All - group
 - Average KV-Diff for each condition.
 
 ```{r vel-diff-art-all, echo = FALSE}
@@ -442,7 +400,7 @@ vel_diff_art_posthoc <- test(pairs(emmeans(vel_diff_art_aov,~Condition|Subcompon
 vel_diff_art_posthoc
 ```
 
-## 3. Trial by trial - individual{#vel_diff_art_ind_trial}
+## 3. Trial by trial - individual
 - Average KV-Diff for each trial for each participant.
 
 ```{r vel-diff-art-trial, echo = FALSE}
@@ -460,7 +418,7 @@ ggline(vel_diff_art_trial[Subcomponent == "LtoS"], x = "TrialNr", y = "Mean", fa
 ggline(vel_diff_art_trial[Subcomponent == "StoL"], x = "TrialNr", y = "Mean", facet.by = "SubNr", shape = "Condition", color = "Condition", xlab = "TrialNr", ylab = "Difference", title = "KV-Diff: Articulation/Staccato to Legato") + scale_x_continuous(breaks = seq(1,8,1))
 ```
 
-## 4. Trial by trial - group{#vel_diff_art_group_trial}
+## 4. Trial by trial - group
 - Average KV-Diff for each trial for each condition.
 
 ```{r vel-diff-art-trial-all, echo = FALSE}
@@ -481,8 +439,8 @@ ggline(vel_diff_art_trial[Subcomponent == "LtoS"], x = "TrialNr", y = "Mean", ad
 ggline(vel_diff_art_trial[Subcomponent == "StoL"], x = "TrialNr", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Trial", ylab = "Difference", title = "KV-Diff: Articulation/Staccato to Legato") + scale_x_continuous(breaks=seq(1,8,1))
 ```
 
-# Sequence plot{#sequence}
-## Dynamics{#sequence_dyn}
+# Sequence plot
+## Dynamics
 ```{r seq-dyn, fig.width = 9, fig.height = 3, echo = FALSE}
 # For each individual
 vel_dyn_seq <- dt_vel_dyn[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, RowNr)]
@@ -494,7 +452,7 @@ vel_diff_dyn_seq <- dt_vel_diff_dyn[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)
 ggline(vel_diff_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "", title = "KV-Diff: Dynamics") + scale_x_continuous(breaks = seq(1,71,1))
 ```
 
-## Articulation{#sequence_art}
+## Articulation
 ```{r seq-art, fig.width = 9, fig.height = 3, echo = FALSE}
 # For each individual
 vel_art_seq <- dt_vel_art[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, RowNr)]
@@ -506,7 +464,7 @@ vel_diff_art_seq <- dt_vel_diff_art[, .(N = .N, Mean = mean(Diff), SD = sd(Diff)
 ggline(vel_diff_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), linetype = "Condition", shape = "Condition", color = "Condition", xlab = "Interval", ylab = "", title = "KV-Diff: Articulation") + scale_x_continuous(breaks = seq(1,71,1))
 ```
 
-# Additional analysis{#additional}
+# Additional analysis
 - Normalise KV difference by the range of KV value between forte and piano for each participant.
 
 ## Normalised KV difference per trial
