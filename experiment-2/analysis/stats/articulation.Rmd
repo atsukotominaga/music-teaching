@@ -430,20 +430,20 @@ ggline(kot_dyn_trial[Subcomponent == "Piano"], x = "TrialNr", y = "Mean", add = 
 
 # Sequence plot
 ## Articulation
-```{r seq-art, fig.width = 9, fig.height = 3, echo = FALSE}
+```{r seq-art, fig.width = 6, fig.height = 1.2, echo = FALSE}
 # For each individual
 kor_art_seq <- dt_kor_art[, .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(kor_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Interval", ylab = "KOR", title = "KOT: Articulation") +
+ggline(kor_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Interval", ylab = "KOR", title = "KOR: Articulation") +
   scale_x_continuous(breaks = seq(1,71,1))
 ```
 
 ## Dynamics
-```{r seq-dyn, fig.width = 9, fig.height = 3, echo = FALSE}
+```{r seq-dyn, fig.width = 6, fig.height = 1.2, echo = FALSE}
 # For each individual
 kor_dyn_seq <- dt_kor_dyn[, .(N = .N, Mean = mean(KOR), SD = sd(KOR)), by = .(SubNr, Condition, Skill, Interval)]
 
-ggline(kor_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Interval", ylab = "KOR", title = "KOT: Dynamics")+
+ggline(kor_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position = position_dodge(.2), shape = "Condition", color = "Condition", xlab = "Interval", ylab = "KOR", title = "KOR: Dynamics")+
   scale_x_continuous(breaks = seq(1,71,1)) 
 ```
 
