@@ -374,7 +374,7 @@ ggline(ioi_dyn_trial, x = "TrialNr", y = "Mean", add = "mean_se", position = pos
 
 # Sequence plot
 ## Articulation
-```{r seq-art, fig.width = 9, fig.height = 3, echo = FALSE}
+```{r seq-art, fig.width = 6, fig.height = 1.2, echo = FALSE}
 # For each individual
 ioi_art_seq <- dt_ioi_art[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 
@@ -382,7 +382,7 @@ ggline(ioi_art_seq, x = "Interval", y = "Mean", add = "mean_se", position = posi
 ```
 
 ## Dynamics
-```{r seq-dyn, fig.width = 9, fig.height = 3, echo = FALSE}
+```{r seq-dyn, fig.width = 6, fig.height = 1.2, echo = FALSE}
 # For each individual
 ioi_dyn_seq <- dt_ioi_dyn[, .(N = .N, Mean = mean(IOI), SD = sd(IOI)), by = .(SubNr, Condition, Skill, Interval)]
 

@@ -441,7 +441,7 @@ ggline(vel_diff_art_trial[Subcomponent == "StoL"], x = "TrialNr", y = "Mean", ad
 
 # Sequence plot
 ## Dynamics
-```{r seq-dyn, fig.width = 9, fig.height = 3, echo = FALSE}
+```{r seq-dyn, fig.width = 6, fig.height = 1.2, echo = FALSE}
 # For each individual
 vel_dyn_seq <- dt_vel_dyn[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, RowNr)]
 
@@ -453,7 +453,7 @@ ggline(vel_diff_dyn_seq, x = "Interval", y = "Mean", add = "mean_se", position =
 ```
 
 ## Articulation
-```{r seq-art, fig.width = 9, fig.height = 3, echo = FALSE}
+```{r seq-art, fig.width = 6, fig.height = 1.2, echo = FALSE}
 # For each individual
 vel_art_seq <- dt_vel_art[, .(N = .N, Mean = mean(Velocity), SD = sd(Velocity)), by = .(SubNr, Condition, Skill, RowNr)]
 
@@ -494,7 +494,7 @@ vel_diff_dyn_normalised_all
 ```{r, echo = FALSE}
 vel_diff_dyn_plot_2 <- data.table(subject = vel_diff_dyn_normalised[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn_normalised[Condition == "teaching"]$NormalisedMean, performing = vel_diff_dyn_normalised[Condition == "performing"]$NormalisedMean, subcomponent = vel_diff_dyn_normalised[Condition == "teaching"]$Subcomponent)
 
-ggpaired(vel_diff_dyn_plot_2, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised KV (0-127)", title = "KV-Diff: Dynamics")
+ggpaired(vel_diff_dyn_plot_2, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised Difference", title = "KV-Diff (normalised): Dynamics")
 ```
 
 ### Stats
@@ -507,47 +507,6 @@ summary(vel_diff_dyn_aov_3)
 ```{r, echo = FALSE}
 vel_diff_dyn_posthoc_2 <- test(pairs(emmeans(vel_diff_dyn_aov_3,~Condition|Subcomponent), adjust = "tukey"), joint = TRUE)
 vel_diff_dyn_posthoc_2
-```
-
-## Normalised KV difference per participant
-```{r, echo = FALSE}
-vel_diff_dyn$NormalisedDiff <- 0
-for (i in unique(vel_diff_dyn_trial$SubNr)){
-  # teaching
-  # FtoP
-  vel_diff_dyn[SubNr == i & Condition == "teaching" & Subcomponent == "FtoP"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "teaching" & Subcomponent == "FtoP"]$Mean/(max(vel_dyn[SubNr == i & Condition == "teaching"]$Mean)-min(vel_dyn[SubNr == i & Condition == "teaching"]$Mean))
-  # PtoF
-  vel_diff_dyn[SubNr == i & Condition == "teaching" & Subcomponent == "PtoF"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "teaching" & Subcomponent == "PtoF"]$Mean/(max(vel_dyn[SubNr == i & Condition == "teaching"]$Mean)-min(vel_dyn[SubNr == i & Condition == "teaching"]$Mean))
-  # performing
-  # FtoP
-  vel_diff_dyn[SubNr == i & Condition == "performing" & Subcomponent == "FtoP"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "performing" & Subcomponent == "FtoP"]$Mean/(max(vel_dyn[SubNr == i & Condition == "performing"]$Mean)-min(vel_dyn[SubNr == i & Condition == "performing"]$Mean))
-  # PtoF
-  vel_diff_dyn[SubNr == i & Condition == "performing" & Subcomponent == "PtoF"]$NormalisedDiff <- vel_diff_dyn[SubNr == i & Condition == "performing" & Subcomponent == "PtoF"]$Mean/(max(vel_dyn[SubNr == i & Condition == "performing"]$Mean)-min(vel_dyn[SubNr == i & Condition == "performing"]$Mean))
-}
-
-# group
-vel_diff_dyn_normalised_all_2 <- vel_diff_dyn[, .(N = .N, Mean = mean(NormalisedDiff), SD = sd(NormalisedDiff), SEM = sd(NormalisedDiff)/sqrt(.N)), by = .(Condition, Skill, Subcomponent)]
-vel_diff_dyn_normalised_all_2
-```
-
-### Plot
-```{r, echo = FALSE}
-vel_diff_dyn_plot_3 <- data.table(subject = vel_diff_dyn[Condition == "teaching"]$SubNr, teaching = vel_diff_dyn[Condition == "teaching"]$NormalisedDiff, performing = vel_diff_dyn[Condition == "performing"]$NormalisedDiff, subcomponent = vel_diff_dyn[Condition == "teaching"]$Subcomponent)
-
-ggpaired(vel_diff_dyn_plot_3, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised KV (0-127)", title = "KV-Diff: Dynamics")
-```
-
-### Stats
-```{r, echo = FALSE}
-# stats
-vel_diff_dyn_aov_4 <- aov_car(NormalisedDiff ~ Condition*Subcomponent + Error(SubNr/(Condition*Subcomponent)), vel_diff_dyn)
-summary(vel_diff_dyn_aov_4)
-```
-
-#### Post-hoc (emmeans)
-```{r, echo = FALSE}
-vel_diff_dyn_posthoc_3 <- test(pairs(emmeans(vel_diff_dyn_aov_4,~Condition|Subcomponent), adjust = "tukey"), joint = TRUE)
-vel_diff_dyn_posthoc_3
 ```
 
 ```{r export, include = FALSE}
