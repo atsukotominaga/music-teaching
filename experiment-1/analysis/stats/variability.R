@@ -40,6 +40,8 @@ ggline(ioi_dyn_seq_each, x = "Interval", y = "Mean", add = "mean_se", shape = "C
 
 ## ---- echo = FALSE------------------------------------------------------------
 ioi_cv_trial <- dt_ioi[, .(N = .N, Mean = mean(IOI), SD = sd(IOI), CV = sd(IOI)/mean(IOI)), by = .(SubNr, Condition, Skill, BlockNr, TrialNr)]
+setorder(ioi_cv_trial, "SubNr", "Condition", "Skill")
+
 ioi_cv_subject <- ioi_cv_trial[, .(N = .N, MeanCV = mean(CV), SD = sd(CV)), by = .(SubNr, Condition, Skill)]
 ioi_cv_subject <- ioi_cv_subject[order(SubNr, Condition, Skill)] # ordering
 ioi_cv <- ioi_cv_subject[, .(N = .N, MeanCV = mean(MeanCV), MedianCV = median(MeanCV), SD = sd(MeanCV), IQR = IQR(MeanCV)), by = .(Condition, Skill)]
@@ -52,6 +54,8 @@ ggplot(ioi_cv_subject, aes(x = Condition, y = MeanCV, color = Condition)) +
   labs(y = "CVs") +
   facet_grid(. ~ Skill) +
   theme_pubr()
+
+ioi_cv_trial
 
 
 ## ---- echo = FALSE------------------------------------------------------------
