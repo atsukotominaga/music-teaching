@@ -38,10 +38,10 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-output: papaja::apa6_word
-# output:
-#   papaja::apa6_pdf:
-#     latex_engine: xelatex
+#output: papaja::apa6_word
+output:
+  papaja::apa6_pdf:
+    latex_engine: xelatex
 ---
 
 ```{r set-up, include = FALSE}
@@ -519,7 +519,7 @@ The authors declare no competing interests.
 
 # Supplementary material{#supplementary}
 
-# Instructions
+# 1. Instructions
 
 ## Experiment 1
 
@@ -533,7 +533,7 @@ In the teaching condition of Experiment 2, we gave participants the exact same i
 
 \clearpage
 
-# Temporal Variability
+# 2. Temporal Variability
 
 The tempo variability of performance was assessed with the coefficient of variation (CV) of the IOIs to investigate the tempo stability of performance between the teaching and performing condition. CVs were calculated by dividing the standard deviation by the mean of IOIs.
 
@@ -599,7 +599,7 @@ img_ioi_cv
 
 \clearpage
 
-# Temporal grouping
+# 3. Temporal grouping
 
 In order to investigate if participants used temporal grouping to make boundaries between subcomponents (i.e., between legato and staccato, between forte and piano) clearer for teaching purposes, we looked at IOIs only at transition points. 
 
@@ -664,7 +664,7 @@ img_ioi_tra
 
 \clearpage
 
-# Additional analysis for dynamics difference
+# 4. Additional analysis for dynamics difference
 
 In order to examine if the dynamics difference between forte and piano at transition points is larger when the difference between forte and piano in overall performance is considered, we normalised the KV difference at transition points by dividing it by the average range between forte and piano per performance (per trial).
 
@@ -704,4 +704,344 @@ img_vel_diff_dyn_normalised <- image_append(c(img_vel_diff_dyn_normalised_1, img
 img_vel_diff_dyn_normalised <- image_scale(img_vel_diff_dyn_normalised, "2200")
 image_write(img_vel_diff_dyn_normalised, path = here("paper/figure", "Fig11.tiff"), format = "tiff")
 img_vel_diff_dyn_normalised
+```
+
+\clearpage
+
+# 5. Descriptive statistics depending on participants' teaching experience
+
+## Experiment 1
+```{r teaching-1, include = FALSE}
+source(here("experiment-1/analysis/teaching", "teaching_ioi.R"), chdir = TRUE)
+source(here("experiment-1/analysis/teaching", "teaching_art.R"), chdir = TRUE)
+source(here("experiment-1/analysis/teaching", "teaching_dyn.R"), chdir = TRUE)
+```
+
+```{r ioi-teaching-1, include = FALSE}
+# articulation
+ioi_art_plot$teachingexp <- factor(ioi_art_plot$teachingexp, levels = c("Yes", "No"))
+
+ioi_art_teaching_1 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs: Articulation") + geom_hline(yintercept = 188, linetype = "dashed") +
+  ylim(150, 260) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_art_teaching_1.png"), plot = ioi_art_teaching_1, dpi = 300, width = 7, height = 5)
+img_ioi_art_teaching_1 <- image_read(here("paper/image", "ioi_art_teaching_1.png"), density = 300)
+
+# dynamics
+ioi_dyn_plot$teachingexp <- factor(ioi_dyn_plot$teachingexp, levels = c("Yes", "No"))
+
+ioi_dyn_teaching_1 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs: Dynamics") + geom_hline(yintercept = 188, linetype = "dashed") +
+  ylim(150, 260) +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_dyn_teaching_1.png"), plot = ioi_dyn_teaching_1, dpi = 300, width = 7, height = 5)
+img_ioi_dyn_teaching_1 <- image_read(here("paper/image", "ioi_dyn_teaching_1.png"), density = 300)
+```
+
+```{r art-teaching-1, include = FALSE}
+kot_art_plot$teachingexp <- factor(kot_art_plot$teachingexp, levels = c("Yes", "No"))
+
+art_leg_teaching_1 <- ggpaired(kot_art_plot[subcomponent == "Legato"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Articulation-Legato") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "art_leg_teaching_1.png"), plot = art_leg_teaching_1, dpi = 300, width = 7, height = 5)
+img_art_leg_teaching_1 <- image_read(here("paper/image", "art_leg_teaching_1.png"), density = 300)
+
+art_sta_teaching_1 <- ggpaired(kot_art_plot[subcomponent == "Staccato"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Articulation-Staccato") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "art_sta_teaching_1.png"), plot = art_sta_teaching_1, dpi = 300, width = 7, height = 5)
+img_art_sta_teaching_1 <- image_read(here("paper/image", "art_sta_teaching_1.png"), density = 300)
+```
+
+```{r dyn-teaching-1, include = FALSE}
+vel_dyn_plot$teachingexp <- factor(vel_dyn_plot$teachingexp, levels = c("Yes", "No"))
+
+vel_for_teaching_1 <- ggpaired(vel_dyn_plot[subcomponent == "Forte"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics-Forte") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_for_teaching_1.png"), plot = vel_for_teaching_1, dpi = 300, width = 7, height = 5)
+img_vel_for_teaching_1 <- image_read(here("paper/image", "vel_for_teaching_1.png"), density = 300)
+
+vel_pia_teaching_1 <- ggpaired(vel_dyn_plot[subcomponent == "Piano"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics-Piano") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_pia_teaching_1.png"), plot = vel_pia_teaching_1, dpi = 300, width = 7, height = 5)
+img_vel_pia_teaching_1 <- image_read(here("paper/image", "vel_pia_teaching_1.png"), density = 300)
+```
+
+```{r dyn-diff-teaching-1, include = FALSE}
+vel_diff_dyn_plot$teachingexp <- factor(vel_diff_dyn_plot$teachingexp, levels = c("Yes", "No"))
+
+vel_diff_for_teaching_1 <- ggpaired(vel_diff_dyn_plot[subcomponent == "FtoP"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics-FtoP") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_diff_for_teaching_1.png"), plot = vel_diff_for_teaching_1, dpi = 300, width = 7, height = 5)
+img_vel_diff_for_teaching_1 <- image_read(here("paper/image", "vel_diff_for_teaching_1.png"), density = 300)
+
+vel_diff_pia_teaching_1 <- ggpaired(vel_diff_dyn_plot[subcomponent == "PtoF"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics-PtoF") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_diff_pia_teaching_1.png"), plot = vel_diff_pia_teaching_1, dpi = 300, width = 7, height = 5)
+img_vel_diff_pia_teaching_1 <- image_read(here("paper/image", "vel_diff_pia_teaching_1.png"), density = 300)
+```
+
+```{r plot-ioi-teaching-1, out.width = "100%", fig.cap = "\\label{fig:ioi-teaching-1}BAA"}
+img_ioi_teaching_1 <- image_append(c(img_ioi_art_teaching_1, img_ioi_dyn_teaching_1))
+image_write(img_ioi_teaching_1, path = here("paper/figure", "Fig13.tiff"), format = "tiff")
+img_ioi_teaching_1
+```
+
+```{r plot-art-teaching-1, out.width = "100%", fig.cap = "\\label{fig:art-teaching-1}BAA"}
+img_art_teaching_1 <- image_append(c(img_art_leg_teaching_1, img_art_sta_teaching_1))
+image_write(img_art_teaching_1, path = here("paper/figure", "Fig14.tiff"), format = "tiff")
+img_art_teaching_1
+```
+
+```{r plot-dyn-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-1}BAA"}
+img_dyn_teaching_1 <- image_append(c(img_vel_for_teaching_1, img_vel_pia_teaching_1))
+image_write(img_dyn_teaching_1, path = here("paper/figure", "Fig15.tiff"), format = "tiff")
+img_dyn_teaching_1
+```
+
+```{r plot-dyn-diff-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-1}BAA"}
+img_dyn_diff_teaching_1 <- image_append(c(img_vel_diff_for_teaching_1, img_vel_diff_pia_teaching_1))
+image_write(img_dyn_diff_teaching_1, path = here("paper/figure", "Fig16.tiff"), format = "tiff")
+img_dyn_diff_teaching_1
+```
+
+```{r ioi-teaching-desc-1, echo = FALSE}
+ioi_all <- rbind(ioi_art_all, ioi_dyn_all)
+colnames(ioi_all)[2] <- "Technique"
+ioi_all[Condition == "teaching"]$Condition <- "Teaching"
+ioi_all[Condition == "performing"]$Condition <- "Performing"
+ioi_all[Technique == "articulation"]$Technique <- "Articulation"
+ioi_all[Technique == "dynamics"]$Technique <- "Dynamics"
+
+apa_table(
+  ioi_all
+  , caption = "Caption"
+  , note = "Note"
+  , escape = TRUE
+)
+```
+
+```{r art-teaching-desc-1, echo = FALSE}
+colnames(kot_art_all)[2] <- "Technique"
+kot_art_all[Condition == "teaching"]$Condition <- "Teaching"
+kot_art_all[Condition == "performing"]$Condition <- "Performing"
+kot_art_all[Technique == "articulation"]$Technique <- "Articulation"
+
+apa_table(
+  kot_art_all
+  , caption = "Caption"
+  , note = "Note"
+  , escape = TRUE
+)
+```
+
+```{r dyn-teaching-desc-1}
+colnames(vel_dyn_all)[2] <- "Technique"
+vel_dyn_all[Condition == "teaching"]$Condition <- "Teaching"
+vel_dyn_all[Condition == "performing"]$Condition <- "Performing"
+vel_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
+
+apa_table(
+  vel_dyn_all
+  , caption = "Caption"
+  , note = "Note"
+  , escape = TRUE
+)
+```
+
+```{r dyn-diff-teaching-desc-1}
+colnames(vel_diff_dyn_all)[2] <- "Technique"
+vel_diff_dyn_all[Condition == "teaching"]$Condition <- "Teaching"
+vel_diff_dyn_all[Condition == "performing"]$Condition <- "Performing"
+vel_diff_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
+
+apa_table(
+  vel_diff_dyn_all
+  , caption = "Caption"
+  , note = "Note"
+  , escape = TRUE
+)
+```
+
+\newpage
+
+## Experiment 2
+```{r teaching-2, include = FALSE}
+source(here("experiment-2/analysis/teaching", "teaching_ioi.R"), chdir = TRUE)
+source(here("experiment-2/analysis/teaching", "teaching_art.R"), chdir = TRUE)
+source(here("experiment-2/analysis/teaching", "teaching_dyn.R"), chdir = TRUE)
+```
+
+```{r ioi-teaching-2, include = FALSE}
+# articulation
+ioi_art_plot$teachingexp <- factor(ioi_art_plot$teachingexp, levels = c("Yes", "No"))
+
+ioi_art_teaching_2 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs: Articulation") +
+  ylim(0.8, 1.1) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_art_teaching_2.png"), plot = ioi_art_teaching_2, dpi = 300, width = 7, height = 5)
+img_ioi_art_teaching_2 <- image_read(here("paper/image", "ioi_art_teaching_2.png"), density = 300)
+
+# dynamics
+ioi_dyn_plot$teachingexp <- factor(ioi_dyn_plot$teachingexp, levels = c("Yes", "No"))
+
+ioi_dyn_teaching_2 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs: Dynamics") +
+  ylim(0.8, 1.1) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "ioi_dyn_teaching_2.png"), plot = ioi_dyn_teaching_2, dpi = 300, width = 7, height = 5)
+img_ioi_dyn_teaching_2 <- image_read(here("paper/image", "ioi_dyn_teaching_2.png"), density = 300)
+```
+
+```{r art-teaching-2, include = FALSE}
+kor_art_plot$teachingexp <- factor(kor_art_plot$teachingexp, levels = c("Yes", "No"))
+
+art_leg_teaching_2 <- ggpaired(kor_art_plot[subcomponent == "Legato"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KOR", title = "KOR: Articulation-Legato") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "art_leg_teaching_2.png"), plot = art_leg_teaching_2, dpi = 300, width = 7, height = 5)
+img_art_leg_teaching_2 <- image_read(here("paper/image", "art_leg_teaching_2.png"), density = 300)
+
+art_sta_teaching_2 <- ggpaired(kor_art_plot[subcomponent == "Staccato"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KOR", title = "KOR: Articulation-Staccato") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "art_sta_teaching_2.png"), plot = art_sta_teaching_2, dpi = 300, width = 7, height = 5)
+img_art_sta_teaching_2 <- image_read(here("paper/image", "art_sta_teaching_2.png"), density = 300)
+```
+
+```{r dyn-teaching-2, include = FALSE}
+vel_dyn_plot$teachingexp <- factor(vel_dyn_plot$teachingexp, levels = c("Yes", "No"))
+
+vel_for_teaching_2 <- ggpaired(vel_dyn_plot[subcomponent == "Forte"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics-Forte") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_for_teaching_2.png"), plot = vel_for_teaching_2, dpi = 300, width = 7, height = 5)
+img_vel_for_teaching_2 <- image_read(here("paper/image", "vel_for_teaching_2.png"), density = 300)
+
+vel_pia_teaching_2 <- ggpaired(vel_dyn_plot[subcomponent == "Piano"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics-Piano") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_pia_teaching_2.png"), plot = vel_pia_teaching_2, dpi = 300, width = 7, height = 5)
+img_vel_pia_teaching_2 <- image_read(here("paper/image", "vel_pia_teaching_2.png"), density = 300)
+```
+
+```{r dyn-diff-teaching-2, include = FALSE}
+vel_diff_dyn_plot$teachingexp <- factor(vel_diff_dyn_plot$teachingexp, levels = c("Yes", "No"))
+
+vel_diff_for_teaching_2 <- ggpaired(vel_diff_dyn_plot[subcomponent == "FtoP"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics-FtoP") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_diff_for_teaching_2.png"), plot = vel_diff_for_teaching_2, dpi = 300, width = 7, height = 5)
+img_vel_diff_for_teaching_2 <- image_read(here("paper/image", "vel_diff_for_teaching_2.png"), density = 300)
+
+vel_diff_pia_teaching_2 <- ggpaired(vel_diff_dyn_plot[subcomponent == "PtoF"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics-PtoF") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
+
+# save plots
+ggsave(here("paper/image", "vel_diff_pia_teaching_2.png"), plot = vel_diff_pia_teaching_2, dpi = 300, width = 7, height = 5)
+img_vel_diff_pia_teaching_2 <- image_read(here("paper/image", "vel_diff_pia_teaching_2.png"), density = 300)
+```
+
+```{r plot-ioi-teaching-2, out.width = "100%", fig.cap = "\\label{fig:ioi-teaching-2}BAA"}
+img_ioi_teaching_2 <- image_append(c(img_ioi_art_teaching_2, img_ioi_dyn_teaching_2))
+image_write(img_ioi_teaching_2, path = here("paper/figure", "Fig17.tiff"), format = "tiff")
+img_ioi_teaching_2
+```
+
+```{r plot-art-teaching-2, out.width = "100%", fig.cap = "\\label{fig:art-teaching-2}BAA"}
+img_art_teaching_2 <- image_append(c(img_art_leg_teaching_2, img_art_sta_teaching_2))
+image_write(img_art_teaching_2, path = here("paper/figure", "Fig18.tiff"), format = "tiff")
+img_art_teaching_2
+```
+
+```{r plot-dyn-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-2}BAA"}
+img_dyn_teaching_2 <- image_append(c(img_vel_for_teaching_2, img_vel_pia_teaching_2))
+image_write(img_dyn_teaching_2, path = here("paper/figure", "Fig19.tiff"), format = "tiff")
+img_dyn_teaching_2
+```
+
+```{r plot-dyn-diff-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-2}BAA"}
+img_dyn_diff_teaching_2 <- image_append(c(img_vel_diff_for_teaching_2, img_vel_diff_pia_teaching_2))
+image_write(img_dyn_diff_teaching_2, path = here("paper/figure", "Fig20.tiff"), format = "tiff")
+img_dyn_diff_teaching_2
+```
+
+```{r ioi-teaching-desc-2, echo = FALSE}
+ioi_all <- rbind(ioi_art_all, ioi_dyn_all)
+colnames(ioi_all)[2] <- "Technique"
+ioi_all[Condition == "teaching"]$Condition <- "Teaching"
+ioi_all[Condition == "performing"]$Condition <- "Performing"
+ioi_all[Technique == "articulation"]$Technique <- "Articulation"
+ioi_all[Technique == "dynamics"]$Technique <- "Dynamics"
+ioi_all$Teaching <- factor(ioi_all$Teaching, levels = c("Yes", "No"))
+setorder(ioi_all, "Technique", "Teaching")
+
+apa_table(
+  ioi_all
+  , caption = "Caption"
+  , note = "Note"
+  , escape = TRUE
+  , digits = 3
+)
+```
+
+```{r art-teaching-desc-2, echo = FALSE}
+colnames(kor_art_all)[2] <- "Technique"
+kor_art_all[Condition == "teaching"]$Condition <- "Teaching"
+kor_art_all[Condition == "performing"]$Condition <- "Performing"
+kor_art_all[Technique == "articulation"]$Technique <- "Articulation"
+kor_art_all$Teaching <- factor(kor_art_all$Teaching, levels = c("Yes", "No"))
+setorder(kor_art_all, "Technique", "Teaching")
+
+apa_table(
+  kor_art_all
+  , caption = "Caption"
+  , note = "Note"
+  , escape = TRUE
+  , digits = 3
+)
+```
+
+```{r dyn-teaching-desc-2}
+colnames(vel_dyn_all)[2] <- "Technique"
+vel_dyn_all[Condition == "teaching"]$Condition <- "Teaching"
+vel_dyn_all[Condition == "performing"]$Condition <- "Performing"
+vel_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
+vel_dyn_all$Teaching <- factor(vel_dyn_all$Teaching, levels = c("Yes", "No"))
+setorder(vel_dyn_all, "Technique", "Teaching")
+
+apa_table(
+  vel_dyn_all
+  , caption = "Caption"
+  , note = "Note"
+  , escape = TRUE
+)
+```
+
+```{r dyn-diff-teaching-desc-2}
+colnames(vel_diff_dyn_all)[2] <- "Technique"
+vel_diff_dyn_all[Condition == "teaching"]$Condition <- "Teaching"
+vel_diff_dyn_all[Condition == "performing"]$Condition <- "Performing"
+vel_diff_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
+vel_diff_dyn_all$Teaching <- factor(vel_diff_dyn_all$Teaching, levels = c("Yes", "No"))
+setorder(vel_diff_dyn_all, "Technique", "Teaching")
+
+apa_table(
+  vel_diff_dyn_all
+  , caption = "Caption"
+  , note = "Note"
+  , escape = TRUE
+)
 ```
