@@ -212,9 +212,6 @@ vel_dyn_1 <- ggpaired(vel_dyn_plot, cond = "performing", cond2 = "teaching", col
 # save plots
 ggsave(here("paper/image", "vel_dyn_1.png"), plot = vel_dyn_1, dpi = 300, width = 7, height = 5)
 img_vel_dyn_1 <- image_read(here("paper/image", "vel_dyn_1.png"), density = 300)
-
-# annotate * for forte
-img_vel_dyn_1 <- image_annotate(img_vel_dyn_1, "*", size = 130, color = "black", location = "+725+400")
 ```
 
 ### KV Transition Points
@@ -490,7 +487,7 @@ One limitation of the study is that although we instructed participants to imagi
 
 Another limitation of the study is that it is not certain how the results might generalise to performances of more complex pieces and pieces with fewer notations. In more complex pieces of music, multiple expressive notations could be assigned to one note or phrase. Also, it is rare that almost all the notes are assigned to one expressive notation as in our stimuli. Future studies are needed to determine whether pianists would exaggerate specific parts of a piece or prioritise one aspect over the others given multiple concurrent expressive notations and more possibilities for giving the music different interpretations.
 
-Musicians and music teachers tend to consider expressive skills as performers’ most important skills [@lindstrom_2003]. In the present study, experts focused on the teaching of expressions that were notated. However, expression also has other facets [@juslin_2003] that are not only piece-related (e.g., notated expressions) but performer- or context-related (e.g., performer’s interpretation, listening contexts such as recordings or concerts). The ultimate goal of expressive performance is considered to lie in developing performers’ own interpretations of music and convey affects and emotions by using expressive tools such as articulation, dynamics, tempo and timing [@meissner_2021]. The current research opens up the possibility of studying the teaching of expressive performance by demonstrating that pianists could signal didactic intentions without relying on verbal instructions, which are heavily used in actually teaching settings [e.g., @woody_2000]. It would be interesting to examine how teachers play (i.e., demonstrate) relates to verbal instructions they give.
+Musicians and music teachers tend to consider expressive skills as performers’ most important skills [@lindstrom_2003]. In the present study, experts focused on the teaching of expressions that were notated. However, expression also has other facets [@juslin_2003] that are not only piece-related (e.g., notated expressions) but performer- or context-related (e.g., performer’s interpretation, listening contexts such as recordings or concerts). The ultimate goal of expressive performance is considered to lie in developing performers’ own interpretations of music and convey affects and emotions by using expressive tools such as articulation, dynamics, tempo and timing [@meissner_2021]. The current research opens up the possibility of studying the teaching of expressive performance by demonstrating that pianists could signal didactic intentions without relying on verbal instructions, which are heavily used in actually teaching settings [@woody_2000; @colprit_2000]. Given that teachers demonstrate for students [@colprit_2000] and students often learn by listening to the performances of either their teachers or recordings [@volioti_2017], it is important to investigate how performance itself could affect students’ learning processes.It would be interesting to examine how teachers play (i.e., demonstrate) relates to verbal instructions they give.
 
 The present findings extend earlier research on teaching-related action modulations. First, our study sheds light on the teaching of technical skills that are an integral part of skill acquisition in artistic domains. We showed that compared to an expressive performance baseline, experts made specific modulations to teach particular techniques. Second, the specificity of the observed modulations supports the idea that teaching comprises more than generic modulations like slowing down or overall exaggeration that may draw learners’ attention. Rather, expert demonstrators seem to follow principles of relevance in communication [@sperber_1995], highlighting only those aspects they are intending to demonstrate. How learners benefit from the perceptual and motor cues that come with specific exaggerations, and whether understanding the teacher's intentions explicitly adds to the learning success are important questions for future research.   
 
@@ -825,9 +822,9 @@ ioi_all[Technique == "articulation"]$Technique <- "Articulation"
 ioi_all[Technique == "dynamics"]$Technique <- "Dynamics"
 
 apa_table(
-  ioi_all
-  , caption = "Experiment 1:"
-  , note = "Note"
+  ioi_all[, -c(8, 9)]
+  , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of IOIs (ms)."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -840,8 +837,8 @@ kot_art_all[Technique == "articulation"]$Technique <- "Articulation"
 
 apa_table(
   kot_art_all
-  , caption = "Experiment 1:"
-  , note = "Note"
+  , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of KOT (ms)."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -854,8 +851,8 @@ vel_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
 
 apa_table(
   vel_dyn_all
-  , caption = "Experiment 1:"
-  , note = "Note"
+  , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of KV (0-127)."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -868,13 +865,13 @@ vel_diff_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
 
 apa_table(
   vel_diff_dyn_all
-  , caption = "Experiment 1:"
-  , note = "Note"
+  , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
 
-\newpage
+\clearpage
 
 ## Experiment 2
 ```{r teaching-2, include = FALSE}
@@ -957,13 +954,13 @@ ggsave(here("paper/image", "vel_diff_pia_teaching_2.png"), plot = vel_diff_pia_t
 img_vel_diff_pia_teaching_2 <- image_read(here("paper/image", "vel_diff_pia_teaching_2.png"), density = 300)
 ```
 
-```{r plot-ioi-teaching-2, out.width = "100%", fig.cap = "\\label{fig:ioi-teaching-2}Experiment 2: Comparison between those with and without piano teaching experience in terms of IOIs (ms) when playing the piece with either articulation (left) or dynamics (right). A dashed line represents the tempo given by a metronome. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
+```{r plot-ioi-teaching-2, out.width = "100%", fig.cap = "\\label{fig:ioi-teaching-2}Experiment 2: Comparison between those with and without piano teaching experience in terms of normalised IOIs when playing the piece with either articulation (left) or dynamics (right). A dashed line represents the tempo given by a metronome. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_ioi_teaching_2 <- image_append(c(img_ioi_art_teaching_2, img_ioi_dyn_teaching_2))
 image_write(img_ioi_teaching_2, path = here("paper/figure", "Fig17.tiff"), format = "tiff")
 img_ioi_teaching_2
 ```
 
-```{r plot-art-teaching-2, out.width = "100%", fig.cap = "\\label{fig:art-teaching-2}Experiment 2:  Comparison between those with and without piano teaching experience in terms of KOT (ms) when playing the piece with articulation. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
+```{r plot-art-teaching-2, out.width = "100%", fig.cap = "\\label{fig:art-teaching-2}Experiment 2:  Comparison between those with and without piano teaching experience in terms of KOR when playing the piece with articulation. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_art_teaching_2 <- image_append(c(img_art_leg_teaching_2, img_art_sta_teaching_2))
 image_write(img_art_teaching_2, path = here("paper/figure", "Fig18.tiff"), format = "tiff")
 img_art_teaching_2
@@ -992,9 +989,9 @@ ioi_all$Teaching <- factor(ioi_all$Teaching, levels = c("Yes", "No"))
 setorder(ioi_all, "Technique", "Teaching")
 
 apa_table(
-  ioi_all
-  , caption = "Experiment 2:"
-  , note = "Note"
+  ioi_all[, -c(8, 9)]
+  , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of normalised IOIs."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
   , digits = 3
 )
@@ -1010,8 +1007,8 @@ setorder(kor_art_all, "Technique", "Teaching")
 
 apa_table(
   kor_art_all
-  , caption = "Experiment 2:"
-  , note = "Note"
+  , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of KOR."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
   , digits = 3
 )
@@ -1027,8 +1024,8 @@ setorder(vel_dyn_all, "Technique", "Teaching")
 
 apa_table(
   vel_dyn_all
-  , caption = "Experiment 2:"
-  , note = "Note"
+  , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of KV (0-127)."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -1043,8 +1040,8 @@ setorder(vel_diff_dyn_all, "Technique", "Teaching")
 
 apa_table(
   vel_diff_dyn_all
-  , caption = "Experiment 2:"
-  , note = "Note"
+  , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
