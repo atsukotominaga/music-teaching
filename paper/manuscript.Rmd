@@ -38,10 +38,10 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-output: papaja::apa6_word
-# output:
-#   papaja::apa6_pdf:
-#     latex_engine: xelatex
+#output: papaja::apa6_word
+output:
+  papaja::apa6_pdf:
+    latex_engine: xelatex
 ---
 
 ```{r set-up, include = FALSE}
@@ -653,7 +653,7 @@ ioi_all[Technique == "dynamics"]$Technique <- "Dynamics"
 apa_table(
   ioi_all[, -c(8, 9)]
   , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of IOIs (ms)."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -667,7 +667,7 @@ kot_art_all[Technique == "articulation"]$Technique <- "Articulation"
 apa_table(
   kot_art_all
   , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of KOT (ms)."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -681,7 +681,7 @@ vel_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
 apa_table(
   vel_dyn_all
   , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of KV (0-127)."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -695,7 +695,7 @@ vel_diff_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
 apa_table(
   vel_diff_dyn_all
   , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -820,7 +820,7 @@ setorder(ioi_all, "Technique", "Teaching")
 apa_table(
   ioi_all[, -c(8, 9)]
   , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of normalised IOIs."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
   , digits = 3
 )
@@ -837,7 +837,7 @@ setorder(kor_art_all, "Technique", "Teaching")
 apa_table(
   kor_art_all
   , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of KOR."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
   , digits = 3
 )
@@ -854,7 +854,7 @@ setorder(vel_dyn_all, "Technique", "Teaching")
 apa_table(
   vel_dyn_all
   , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of KV (0-127)."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -870,7 +870,7 @@ setorder(vel_diff_dyn_all, "Technique", "Teaching")
 apa_table(
   vel_diff_dyn_all
   , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicate performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
