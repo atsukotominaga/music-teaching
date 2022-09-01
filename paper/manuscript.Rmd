@@ -742,6 +742,7 @@ img_ioi_dyn_teaching_1 <- image_read(here("paper/image", "ioi_dyn_teaching_1.png
 ```
 
 ```{r art-teaching-1, include = FALSE}
+# articulation
 kot_art_plot$teachingexp <- factor(kot_art_plot$teachingexp, levels = c("Yes", "No"))
 
 art_leg_teaching_1 <- ggpaired(kot_art_plot[subcomponent == "Legato"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KOT (ms)", title = "KOT: Articulation-Legato") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
@@ -758,6 +759,7 @@ img_art_sta_teaching_1 <- image_read(here("paper/image", "art_sta_teaching_1.png
 ```
 
 ```{r dyn-teaching-1, include = FALSE}
+# dynamics
 vel_dyn_plot$teachingexp <- factor(vel_dyn_plot$teachingexp, levels = c("Yes", "No"))
 
 vel_for_teaching_1 <- ggpaired(vel_dyn_plot[subcomponent == "Forte"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "KV (0-127)", title = "KV: Dynamics-Forte") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
@@ -774,6 +776,7 @@ img_vel_pia_teaching_1 <- image_read(here("paper/image", "vel_pia_teaching_1.png
 ```
 
 ```{r dyn-diff-teaching-1, include = FALSE}
+# dynamics difference
 vel_diff_dyn_plot$teachingexp <- factor(vel_diff_dyn_plot$teachingexp, levels = c("Yes", "No"))
 
 vel_diff_for_teaching_1 <- ggpaired(vel_diff_dyn_plot[subcomponent == "FtoP"], cond = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Difference", title = "KV-Diff: Dynamics-FtoP") + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
@@ -789,25 +792,25 @@ ggsave(here("paper/image", "vel_diff_pia_teaching_1.png"), plot = vel_diff_pia_t
 img_vel_diff_pia_teaching_1 <- image_read(here("paper/image", "vel_diff_pia_teaching_1.png"), density = 300)
 ```
 
-```{r plot-ioi-teaching-1, out.width = "100%", fig.cap = "\\label{fig:ioi-teaching-1}BAA"}
+```{r plot-ioi-teaching-1, out.width = "100%", fig.cap = "\\label{fig:ioi-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of IOIs (ms) when playing the piece with either articulation (left) or dynamics (right). A dashed line represents the tempo given by a metronome. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_ioi_teaching_1 <- image_append(c(img_ioi_art_teaching_1, img_ioi_dyn_teaching_1))
 image_write(img_ioi_teaching_1, path = here("paper/figure", "Fig13.tiff"), format = "tiff")
 img_ioi_teaching_1
 ```
 
-```{r plot-art-teaching-1, out.width = "100%", fig.cap = "\\label{fig:art-teaching-1}BAA"}
+```{r plot-art-teaching-1, out.width = "100%", fig.cap = "\\label{fig:art-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of KOT (ms) when playing the piece with articulation. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_art_teaching_1 <- image_append(c(img_art_leg_teaching_1, img_art_sta_teaching_1))
 image_write(img_art_teaching_1, path = here("paper/figure", "Fig14.tiff"), format = "tiff")
 img_art_teaching_1
 ```
 
-```{r plot-dyn-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-1}BAA"}
+```{r plot-dyn-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of KV (0-127) when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_dyn_teaching_1 <- image_append(c(img_vel_for_teaching_1, img_vel_pia_teaching_1))
 image_write(img_dyn_teaching_1, path = here("paper/figure", "Fig15.tiff"), format = "tiff")
 img_dyn_teaching_1
 ```
 
-```{r plot-dyn-diff-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-1}BAA"}
+```{r plot-dyn-diff-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_dyn_diff_teaching_1 <- image_append(c(img_vel_diff_for_teaching_1, img_vel_diff_pia_teaching_1))
 image_write(img_dyn_diff_teaching_1, path = here("paper/figure", "Fig16.tiff"), format = "tiff")
 img_dyn_diff_teaching_1
@@ -823,7 +826,7 @@ ioi_all[Technique == "dynamics"]$Technique <- "Dynamics"
 
 apa_table(
   ioi_all
-  , caption = "Caption"
+  , caption = "Experiment 1:"
   , note = "Note"
   , escape = TRUE
 )
@@ -837,7 +840,7 @@ kot_art_all[Technique == "articulation"]$Technique <- "Articulation"
 
 apa_table(
   kot_art_all
-  , caption = "Caption"
+  , caption = "Experiment 1:"
   , note = "Note"
   , escape = TRUE
 )
@@ -851,7 +854,7 @@ vel_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
 
 apa_table(
   vel_dyn_all
-  , caption = "Caption"
+  , caption = "Experiment 1:"
   , note = "Note"
   , escape = TRUE
 )
@@ -865,7 +868,7 @@ vel_diff_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
 
 apa_table(
   vel_diff_dyn_all
-  , caption = "Caption"
+  , caption = "Experiment 1:"
   , note = "Note"
   , escape = TRUE
 )
@@ -954,25 +957,25 @@ ggsave(here("paper/image", "vel_diff_pia_teaching_2.png"), plot = vel_diff_pia_t
 img_vel_diff_pia_teaching_2 <- image_read(here("paper/image", "vel_diff_pia_teaching_2.png"), density = 300)
 ```
 
-```{r plot-ioi-teaching-2, out.width = "100%", fig.cap = "\\label{fig:ioi-teaching-2}BAA"}
+```{r plot-ioi-teaching-2, out.width = "100%", fig.cap = "\\label{fig:ioi-teaching-2}Experiment 2: Comparison between those with and without piano teaching experience in terms of IOIs (ms) when playing the piece with either articulation (left) or dynamics (right). A dashed line represents the tempo given by a metronome. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_ioi_teaching_2 <- image_append(c(img_ioi_art_teaching_2, img_ioi_dyn_teaching_2))
 image_write(img_ioi_teaching_2, path = here("paper/figure", "Fig17.tiff"), format = "tiff")
 img_ioi_teaching_2
 ```
 
-```{r plot-art-teaching-2, out.width = "100%", fig.cap = "\\label{fig:art-teaching-2}BAA"}
+```{r plot-art-teaching-2, out.width = "100%", fig.cap = "\\label{fig:art-teaching-2}Experiment 2:  Comparison between those with and without piano teaching experience in terms of KOT (ms) when playing the piece with articulation. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_art_teaching_2 <- image_append(c(img_art_leg_teaching_2, img_art_sta_teaching_2))
 image_write(img_art_teaching_2, path = here("paper/figure", "Fig18.tiff"), format = "tiff")
 img_art_teaching_2
 ```
 
-```{r plot-dyn-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-2}BAA"}
+```{r plot-dyn-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-2}Experiment 2: Comparison between those with and without piano teaching experience in terms of KV (0-127) when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_dyn_teaching_2 <- image_append(c(img_vel_for_teaching_2, img_vel_pia_teaching_2))
 image_write(img_dyn_teaching_2, path = here("paper/figure", "Fig19.tiff"), format = "tiff")
 img_dyn_teaching_2
 ```
 
-```{r plot-dyn-diff-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-2}BAA"}
+```{r plot-dyn-diff-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-2}Experiment 2: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_dyn_diff_teaching_2 <- image_append(c(img_vel_diff_for_teaching_2, img_vel_diff_pia_teaching_2))
 image_write(img_dyn_diff_teaching_2, path = here("paper/figure", "Fig20.tiff"), format = "tiff")
 img_dyn_diff_teaching_2
@@ -990,7 +993,7 @@ setorder(ioi_all, "Technique", "Teaching")
 
 apa_table(
   ioi_all
-  , caption = "Caption"
+  , caption = "Experiment 2:"
   , note = "Note"
   , escape = TRUE
   , digits = 3
@@ -1007,7 +1010,7 @@ setorder(kor_art_all, "Technique", "Teaching")
 
 apa_table(
   kor_art_all
-  , caption = "Caption"
+  , caption = "Experiment 2:"
   , note = "Note"
   , escape = TRUE
   , digits = 3
@@ -1024,7 +1027,7 @@ setorder(vel_dyn_all, "Technique", "Teaching")
 
 apa_table(
   vel_dyn_all
-  , caption = "Caption"
+  , caption = "Experiment 2:"
   , note = "Note"
   , escape = TRUE
 )
@@ -1040,7 +1043,7 @@ setorder(vel_diff_dyn_all, "Technique", "Teaching")
 
 apa_table(
   vel_diff_dyn_all
-  , caption = "Caption"
+  , caption = "Experiment 2:"
   , note = "Note"
   , escape = TRUE
 )
