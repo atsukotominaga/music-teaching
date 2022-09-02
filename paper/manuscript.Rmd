@@ -1,6 +1,6 @@
 ---
-title             : "The sound of teaching music: Expert pianists' performance modulations for novices"
-shorttitle        : "The sound of teaching music"
+title             : "Expert pianists make specific exaggerations for teaching"
+shorttitle        : "Expert pianists make specific exaggerations for teaching"
 
 author: 
   - name          : "Atsuko Tominaga"
@@ -479,7 +479,7 @@ img_vel_diff
 
 # General Discussion
 
-The aim of this study was to investigate how expert pianists modulate their performance to teach techniques necessary to implement musical expressions. Overall, the findings of the two experiments showed that pianists performed one and the same piece differently depending on whether they played with the intention to teach expressive techniques or with the intention to perform the piece for an audience. When playing with the intention to teach, pianists selectively highlighted relevant aspects of artistic expressions. Across two different pieces, participants exaggerated staccato when playing with the intention to teach expressions concerning articulation. The lack of a difference for legato when teaching articulation might stem from a ceiling effect because there might not be enough room for exaggeration without significantly dropping the tempo. When playing with the intention to teach expressions concerning dynamics, participants made larger dynamics changes between forte and piano (in both directions). This constitutes an effective way to highlight the technique as loudness is determined relatively. Taken together, our findings demonstrate that expert pianists systematically modulated their sound depending on the specific technique they were trying to convey.
+The aim of this study was to investigate how expert pianists modulate their performance to teach techniques necessary to implement musical expressions. Overall, the findings of the two experiments showed that pianists performed one and the same piece differently depending on whether they played with the intention to teach techniques or with the intention to perform the piece for an audience. When playing with the intention to teach, pianists selectively highlighted relevant aspects of artistic expressions. Across two different pieces, participants exaggerated staccato when playing with the intention to teach expressions concerning articulation. The lack of a difference for legato when teaching articulation might stem from a ceiling effect because there might not be enough room for exaggeration without significantly dropping the tempo. When playing with the intention to teach expressions concerning dynamics, participants made larger dynamics changes between forte and piano (in both directions). This constitutes an effective way to highlight the technique as loudness is determined relatively. Taken together, our findings demonstrate that expert pianists systematically modulated their sound depending on the specific technique they were trying to convey.
 
 Although participants tended to play slower in the teaching condition than in the performing condition in general, we found a significant difference only for articulation, not for dynamics. As mentioned in the discussion of Experiment 1, it could be that the metronome beats given prior to each performance discouraged participants from deviating from the prescribed tempo. Another possibility is that expression is best taught when leaving the tempo unchanged when it is irrelevant. This would imply that general didactic modulations like slowing down might be less useful in the context of teaching techniques where timing itself can be used to add an expression to a performance.
 
@@ -534,7 +534,7 @@ In the teaching condition of Experiment 2, we gave participants the exact same i
 
 # 2. Descriptive statistics depending on participants' teaching experience
 
-We summarised descriptive statistics for those had an experience in teaching the piano and those who did not. Due to the lack of statistical power, we did not perform any statistical tests.
+We summarised descriptive statistics for those with and without teaching experience in piano. Due to the lack of statistical power, we did not perform any statistical tests.
 
 ## Experiment 1
 ```{r teaching-1, include = FALSE}
@@ -624,19 +624,19 @@ image_write(img_ioi_teaching_1, path = here("paper/figure", "Fig13.tiff"), forma
 img_ioi_teaching_1
 ```
 
-```{r plot-art-teaching-1, out.width = "100%", fig.cap = "\\label{fig:art-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of KOT (ms) when playing the piece with articulation. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
+```{r plot-art-teaching-1, out.width = "100%", fig.cap = "\\label{fig:art-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of KOT (ms) when playing the piece with articulation (left: legato, right: staccato). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_art_teaching_1 <- image_append(c(img_art_leg_teaching_1, img_art_sta_teaching_1))
 image_write(img_art_teaching_1, path = here("paper/figure", "Fig14.tiff"), format = "tiff")
 img_art_teaching_1
 ```
 
-```{r plot-dyn-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of KV (0-127) when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
+```{r plot-dyn-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of KV (0-127) when playing the piece with dynamics (left: forte, right: piano). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_dyn_teaching_1 <- image_append(c(img_vel_for_teaching_1, img_vel_pia_teaching_1))
 image_write(img_dyn_teaching_1, path = here("paper/figure", "Fig15.tiff"), format = "tiff")
 img_dyn_teaching_1
 ```
 
-```{r plot-dyn-diff-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
+```{r plot-dyn-diff-teaching-1, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-1}Experiment 1: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points when playing the piece with dynamics  (left: forte to piano, right: piano to forte). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_dyn_diff_teaching_1 <- image_append(c(img_vel_diff_for_teaching_1, img_vel_diff_pia_teaching_1))
 image_write(img_dyn_diff_teaching_1, path = here("paper/figure", "Fig16.tiff"), format = "tiff")
 img_dyn_diff_teaching_1
@@ -645,57 +645,69 @@ img_dyn_diff_teaching_1
 ```{r ioi-teaching-desc-1, echo = FALSE}
 ioi_all <- rbind(ioi_art_all, ioi_dyn_all)
 colnames(ioi_all)[2] <- "Technique"
+colnames(ioi_all)[3] <- "TeachingExp"
 ioi_all[Condition == "teaching"]$Condition <- "Teaching"
 ioi_all[Condition == "performing"]$Condition <- "Performing"
 ioi_all[Technique == "articulation"]$Technique <- "Articulation"
 ioi_all[Technique == "dynamics"]$Technique <- "Dynamics"
+ioi_all$TeachingExp <- factor(ioi_all$TeachingExp, levels = c("Yes", "No"))
+setorder(ioi_all, "Technique", "TeachingExp")
 
 apa_table(
   ioi_all[, -c(8, 9)]
   , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of IOIs (ms)."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). TeachingExp indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
 
 ```{r art-teaching-desc-1, echo = FALSE}
 colnames(kot_art_all)[2] <- "Technique"
+colnames(kot_art_all)[4] <- "TeachingExp"
 kot_art_all[Condition == "teaching"]$Condition <- "Teaching"
 kot_art_all[Condition == "performing"]$Condition <- "Performing"
 kot_art_all[Technique == "articulation"]$Technique <- "Articulation"
+kot_art_all$TeachingExp <- factor(kot_art_all$TeachingExp, levels = c("Yes", "No"))
+setorder(kot_art_all, "Technique", "TeachingExp", "Subcomponent")
 
 apa_table(
   kot_art_all
   , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of KOT (ms)."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). TeachingExp indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
 
 ```{r dyn-teaching-desc-1}
 colnames(vel_dyn_all)[2] <- "Technique"
+colnames(vel_dyn_all)[4] <- "TeachingExp"
 vel_dyn_all[Condition == "teaching"]$Condition <- "Teaching"
 vel_dyn_all[Condition == "performing"]$Condition <- "Performing"
 vel_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
+vel_dyn_all$TeachingExp <- factor(vel_dyn_all$TeachingExp, levels = c("Yes", "No"))
+setorder(vel_dyn_all, "Technique", "TeachingExp", "Subcomponent")
 
 apa_table(
   vel_dyn_all
   , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of KV (0-127)."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). TeachingExp indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
 
 ```{r dyn-diff-teaching-desc-1}
 colnames(vel_diff_dyn_all)[2] <- "Technique"
+colnames(vel_diff_dyn_all)[4] <- "TeachingExp"
 vel_diff_dyn_all[Condition == "teaching"]$Condition <- "Teaching"
 vel_diff_dyn_all[Condition == "performing"]$Condition <- "Performing"
 vel_diff_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
+vel_diff_dyn_all$TeachingExp <- factor(vel_diff_dyn_all$TeachingExp, levels = c("Yes", "No"))
+setorder(vel_diff_dyn_all, "Technique", "TeachingExp", "Subcomponent")
 
 apa_table(
   vel_diff_dyn_all
   , caption = "Experiment 1: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.1 B) or dynamics (Fig.1 C). TeachingExp indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -713,7 +725,7 @@ source(here("experiment-2/analysis/teaching", "teaching_dyn.R"), chdir = TRUE)
 # articulation
 ioi_art_plot$teachingexp <- factor(ioi_art_plot$teachingexp, levels = c("Yes", "No"))
 
-ioi_art_teaching_2 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs: Articulation") +
+ioi_art_teaching_2 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised IOIs", title = "IOIs: Articulation") +
   ylim(0.8, 1.1) +
   geom_hline(yintercept = 1, linetype = "dashed") +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
@@ -725,7 +737,7 @@ img_ioi_art_teaching_2 <- image_read(here("paper/image", "ioi_art_teaching_2.png
 # dynamics
 ioi_dyn_plot$teachingexp <- factor(ioi_dyn_plot$teachingexp, levels = c("Yes", "No"))
 
-ioi_dyn_teaching_2 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs: Dynamics") +
+ioi_dyn_teaching_2 <- ggpaired(ioi_dyn_plot, cond1 = "performing", cond2 = "teaching", color = "condition", facet.by = "teachingexp", panel.labs = list(teachingexp = c("Teaching: Yes", "Teaching: No")), palette = "aaas", line.size = 0.3, line.color = "gray", xlab = "Condition", ylab = "Normalised IOIs", title = "IOIs: Dynamics") +
   ylim(0.8, 1.1) +
   geom_hline(yintercept = 1, linetype = "dashed") +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
@@ -789,19 +801,19 @@ image_write(img_ioi_teaching_2, path = here("paper/figure", "Fig17.tiff"), forma
 img_ioi_teaching_2
 ```
 
-```{r plot-art-teaching-2, out.width = "100%", fig.cap = "\\label{fig:art-teaching-2}Experiment 2:  Comparison between those with and without piano teaching experience in terms of KOR when playing the piece with articulation. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
+```{r plot-art-teaching-2, out.width = "100%", fig.cap = "\\label{fig:art-teaching-2}Experiment 2:  Comparison between those with and without piano teaching experience in terms of KOR when playing the piece with articulation (left: legato, right: staccato). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_art_teaching_2 <- image_append(c(img_art_leg_teaching_2, img_art_sta_teaching_2))
 image_write(img_art_teaching_2, path = here("paper/figure", "Fig18.tiff"), format = "tiff")
 img_art_teaching_2
 ```
 
-```{r plot-dyn-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-2}Experiment 2: Comparison between those with and without piano teaching experience in terms of KV (0-127) when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
+```{r plot-dyn-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-teaching-2}Experiment 2: Comparison between those with and without piano teaching experience in terms of KV (0-127) when playing the piece with dynamics  (left: forte, right: piano). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_dyn_teaching_2 <- image_append(c(img_vel_for_teaching_2, img_vel_pia_teaching_2))
 image_write(img_dyn_teaching_2, path = here("paper/figure", "Fig19.tiff"), format = "tiff")
 img_dyn_teaching_2
 ```
 
-```{r plot-dyn-diff-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-2}Experiment 2: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points when playing the piece with dynamics. Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
+```{r plot-dyn-diff-teaching-2, out.width = "100%", fig.cap = "\\label{fig:dyn-diff-teaching-2}Experiment 2: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points when playing the piece with dynamics (left: forte to piano, right: piano to forte). Each box indicates the IQR with the median, and whiskers extend to a maximum of 1.5 × IQR beyond the box."}
 img_dyn_diff_teaching_2 <- image_append(c(img_vel_diff_for_teaching_2, img_vel_diff_pia_teaching_2))
 image_write(img_dyn_diff_teaching_2, path = here("paper/figure", "Fig20.tiff"), format = "tiff")
 img_dyn_diff_teaching_2
@@ -810,17 +822,18 @@ img_dyn_diff_teaching_2
 ```{r ioi-teaching-desc-2, echo = FALSE}
 ioi_all <- rbind(ioi_art_all, ioi_dyn_all)
 colnames(ioi_all)[2] <- "Technique"
+colnames(ioi_all)[3] <- "TeachingExp"
 ioi_all[Condition == "teaching"]$Condition <- "Teaching"
 ioi_all[Condition == "performing"]$Condition <- "Performing"
 ioi_all[Technique == "articulation"]$Technique <- "Articulation"
 ioi_all[Technique == "dynamics"]$Technique <- "Dynamics"
-ioi_all$Teaching <- factor(ioi_all$Teaching, levels = c("Yes", "No"))
-setorder(ioi_all, "Technique", "Teaching")
+ioi_all$TeachingExp <- factor(ioi_all$TeachingExp, levels = c("Yes", "No"))
+setorder(ioi_all, "Technique", "TeachingExp")
 
 apa_table(
   ioi_all[, -c(8, 9)]
   , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of normalised IOIs."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). TeachingExp indicates if participants had an experience in teaching the piano."
   , escape = TRUE
   , digits = 3
 )
@@ -828,16 +841,17 @@ apa_table(
 
 ```{r art-teaching-desc-2, echo = FALSE}
 colnames(kor_art_all)[2] <- "Technique"
+colnames(kor_art_all)[4] <- "TeachingExp"
 kor_art_all[Condition == "teaching"]$Condition <- "Teaching"
 kor_art_all[Condition == "performing"]$Condition <- "Performing"
 kor_art_all[Technique == "articulation"]$Technique <- "Articulation"
-kor_art_all$Teaching <- factor(kor_art_all$Teaching, levels = c("Yes", "No"))
-setorder(kor_art_all, "Technique", "Teaching")
+kor_art_all$TeachingExp <- factor(kor_art_all$TeachingExp, levels = c("Yes", "No"))
+setorder(kor_art_all, "Technique", "TeachingExp", "Subcomponent")
 
 apa_table(
   kor_art_all
   , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of KOR."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). TeachingExp indicates if participants had an experience in teaching the piano."
   , escape = TRUE
   , digits = 3
 )
@@ -845,32 +859,34 @@ apa_table(
 
 ```{r dyn-teaching-desc-2}
 colnames(vel_dyn_all)[2] <- "Technique"
+colnames(vel_dyn_all)[4] <- "TeachingExp"
 vel_dyn_all[Condition == "teaching"]$Condition <- "Teaching"
 vel_dyn_all[Condition == "performing"]$Condition <- "Performing"
 vel_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
-vel_dyn_all$Teaching <- factor(vel_dyn_all$Teaching, levels = c("Yes", "No"))
-setorder(vel_dyn_all, "Technique", "Teaching")
+vel_dyn_all$TeachingExp <- factor(vel_dyn_all$TeachingExp, levels = c("Yes", "No"))
+setorder(vel_dyn_all, "Technique", "TeachingExp", "Subcomponent")
 
 apa_table(
   vel_dyn_all
   , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of KV (0-127)."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). TeachingExp indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
 
 ```{r dyn-diff-teaching-desc-2}
 colnames(vel_diff_dyn_all)[2] <- "Technique"
+colnames(vel_diff_dyn_all)[4] <- "TeachingExp"
 vel_diff_dyn_all[Condition == "teaching"]$Condition <- "Teaching"
 vel_diff_dyn_all[Condition == "performing"]$Condition <- "Performing"
 vel_diff_dyn_all[Technique == "dynamics"]$Technique <- "Dynamics"
-vel_diff_dyn_all$Teaching <- factor(vel_diff_dyn_all$Teaching, levels = c("Yes", "No"))
-setorder(vel_diff_dyn_all, "Technique", "Teaching")
+vel_diff_dyn_all$TeachingExp <- factor(vel_diff_dyn_all$TeachingExp, levels = c("Yes", "No"))
+setorder(vel_diff_dyn_all, "Technique", "TeachingExp", "Subcomponent")
 
 apa_table(
   vel_diff_dyn_all
   , caption = "Experiment 2: Comparison between those with and without piano teaching experience in terms of KV Difference at transition points."
-  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). Teaching indicates if participants had an experience in teaching the piano."
+  , note = "N, SD and SEM represent sample size, standard deviation and standard error of the mean, respectively. Technique indicates performance data when participants playing the piece with either articulation (Fig.5 B) or dynamics (Fig.5 C). TeachingExp indicates if participants had an experience in teaching the piano."
   , escape = TRUE
 )
 ```
@@ -966,7 +982,7 @@ ioi_tra_plot <- data.table(subject = ioi_tra_subject[Condition == "teaching"]$Su
 
 ioi_tra_1 <- ggpaired(ioi_tra_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs at transition: Exp 1") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 150, method = "t.test", paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 230, method = "t.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -1033,7 +1049,7 @@ img_vel_diff_dyn_normalised_1 <- image_read(here("paper/image", "vel_diff_dyn_no
 source(here("experiment-2/analysis/stats", "dynamics.R"), chdir = TRUE)
 ```
 
-A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Transition Type (FtoP vs. PtoF) showed that there was a significant main effect of Transition Type (*F*(`r vel_diff_dyn_aov_3$anova_table[2,1]`,`r vel_diff_dyn_aov_3$anova_table[2,2]`) = `r sprintf('%.0f', vel_diff_dyn_aov_3$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov_3$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_diff_dyn_aov_3$anova_table[2,5])`). However, there was no significant interaction between Condition and Transition Type (*F*(`r vel_diff_dyn_aov_3$anova_table[3,1]`,`r vel_diff_dyn_aov_3$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov_3$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov_3$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[3,5])`, *Fig \ref{fig:vel-diff-2}*).
+A two-way repeated-measures ANOVA with the factors Condition (teaching vs. performing) and Transition Type (FtoP vs. PtoF) showed that there was a significant main effect of Transition Type (*F*(`r vel_diff_dyn_aov_3$anova_table[2,1]`,`r vel_diff_dyn_aov_3$anova_table[2,2]`) = `r sprintf('%.0f', vel_diff_dyn_aov_3$anova_table[2,4])`, *p* `r if(vel_diff_dyn_aov_3$anova_table[2,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[2,6]))}`, $\eta_G^2$ = `r sprintf('%.2f', vel_diff_dyn_aov_3$anova_table[2,5])`). However, there was no significant interaction between Condition and Transition Type (*F*(`r vel_diff_dyn_aov_3$anova_table[3,1]`,`r vel_diff_dyn_aov_3$anova_table[3,2]`) = `r sprintf('%.2f', vel_diff_dyn_aov_3$anova_table[3,4])`, *p* `r if(vel_diff_dyn_aov_3$anova_table[3,6] < 0.001){"< 0.001"} else {paste("= ", sprintf('%.2f', vel_diff_dyn_aov_3$anova_table[3,6]))}`, $\eta_G^2$ = `r sprintf('%.3f', vel_diff_dyn_aov_3$anova_table[3,5])`, *Fig \ref{fig:vel-diff-2}*).
 
 ```{r vel-diff-dyn-normalised-2, echo = FALSE}
 vel_diff_dyn_normalised_2 <- ggpaired(vel_diff_dyn_plot_2, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "subcomponent", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised Difference", title = "KV-Diff: Exp 2") + ylim(-6, 5) + stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 3, method = "t.test", paired = TRUE) + theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
