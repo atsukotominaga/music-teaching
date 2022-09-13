@@ -51,9 +51,9 @@ data: `raw_data`
 ## teaching
 The analyses in stats for those with and without teaching experience
 
-- `teaching_ioi.Rmd`
-- `teaching_art.Rmd`
-- `teaching_dyn.Rmd`
+- `teaching_ioi.Rmd` >> output: html file
+- `teaching_art.Rmd` >> output: html file
+- `teaching_dyn.Rmd` >> output: html file
 
 ## demographics
 data: `questionnaire.csv`
