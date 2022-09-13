@@ -1,4 +1,4 @@
-# The Sound of Teaching Music  (Experiment 1)
+# Experiment 1
 
 ![](material/etc/cropped/stim_n.png)
 
