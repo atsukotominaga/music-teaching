@@ -1,4 +1,4 @@
-# The Sound of Teaching Music
+# Expert pianists make specific exaggerations for teaching
 
 <p align="center">
   <img height="300" src="https://media.giphy.com/media/oqyKi6VA1du8M/giphy.gif">
