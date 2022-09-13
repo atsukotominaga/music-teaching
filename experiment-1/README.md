@@ -48,12 +48,19 @@ data: `raw_data`
 - `articulation.Rmd`: analysis and plots for KOT/KOR >> output: html file
 - `dynamics.Rmd`: analysis and plots for KV/KV-Diff >> output: html file
 
+## teaching
+The analyses in stats for those with and without teaching experience
+
+- `teaching_ioi.Rmd`
+- `teaching_art.Rmd`
+- `teaching_dyn.Rmd`
+
 ## demographics
 data: `questionnaire.csv`
 - `questionnaire.Rmd` >> output: html file
 
 # data
-filtered and trimmed data files for analysis (see details: [perception-v1.0: Workflow](https://github.com/atsukotominaga/music-teaching/tree/main/experiment-1/analysis/preprocessor))
+Filtered and trimmed data files for analysis (see details: [perception-v1.0: Workflow](https://github.com/atsukotominaga/music-teaching/tree/main/experiment-1/analysis/preprocessor))
 
 # material
 ## instruction
