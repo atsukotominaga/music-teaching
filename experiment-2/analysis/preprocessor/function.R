@@ -71,7 +71,7 @@ insert_na <- function(data, ideal){
   # insert NA row
   while (nrow(data) < nrow(ideal)){
     for (note in 1:nrow(data)){
-      if (note != 66){
+      if (note != 71){
         if (data$Pitch[note] != ideal$Pitch[note]){
           data <- add_row(data, .before = note)
           data[note] <- data[note-1]
@@ -80,7 +80,7 @@ insert_na <- function(data, ideal){
           data$Pitch[note] <- ideal$Pitch[note]
           break
         }
-      } else if (note == 66){
+      } else if (note == 71){
         if (data$Pitch[note] != ideal$Pitch[note]){
           data <- add_row(data, .after = note)
           data[note+1] <- data[note]
