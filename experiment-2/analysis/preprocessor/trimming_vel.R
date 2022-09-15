@@ -48,14 +48,6 @@ dt_onset <- dt_onset[order(SubNr, BlockNr, TrialNr, NoteNr)]
 dt_offset <- dt_offset[order(SubNr, BlockNr, TrialNr, NoteNr)]
 
 ####################################
-# Exclude participants
-# (see error_summary.Rmd
-# and trimming_ioi.R) 
-####################################
-dt_kot_onset <- dt_onset
-dt_kot_offset <- dt_offset
-
-####################################
 # Define Subcomponents
 ####################################
 # for intervals
