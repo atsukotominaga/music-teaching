@@ -70,7 +70,7 @@ change_2 <- c(8, 20, 39)
 ####################################
 # Key Velocity - dynamics
 ####################################
-# calculate Acc (acceleration - velocity difference between notes)
+# calculate Diff (velocity difference between notes)
 dt_vel <- dt_onset
 dt_vel$Diff <- diff(c(0, dt_vel$Velocity))
 # convert bpm to ms
