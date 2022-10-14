@@ -32,7 +32,7 @@ This repo contains scripts and materials necessary for a musical experiment with
 
 # analysis
 
-## Analysis summary
+## analysis summary
 - [Tempo Analysis](https://rpubs.com/atsukotominaga/956071)
 - [Variability Analysis](https://rpubs.com/atsukotominaga/956072)
 - [Articulation Analysis](https://rpubs.com/atsukotominaga/956074)
