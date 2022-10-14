@@ -1,5 +1,5 @@
 ---
-title: "Variability analysis: The Sound of Teaching Music 1"
+title: "Variability analysis: Experiment 1"
 output:
   html_notebook: default
 editor_options: 

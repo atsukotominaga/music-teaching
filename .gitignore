@@ -3,6 +3,7 @@
 *.bib
 *.log
 *.html
+*rsconnect
 
 # experiment
 experiment/data/

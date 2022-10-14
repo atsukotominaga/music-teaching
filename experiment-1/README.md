@@ -31,6 +31,13 @@ This repo contains scripts and materials necessary for a musical experiment with
 - `cond`: csv file and an excel file about the order of conditions for each participant
 
 # analysis
+
+## Analysis summary
+- [Tempo Analysis](https://rpubs.com/atsukotominaga/956071)
+- [Variability Analysis](https://rpubs.com/atsukotominaga/956072)
+- [Articulation Analysis](https://rpubs.com/atsukotominaga/956074)
+- [Dynamics Analysis](https://rpubs.com/atsukotominaga/956077)
+
 - Environment: Mac OS X 10.15.7, R version 4.0.5 (2021-03-31)
 
 ## 1. preprosessor

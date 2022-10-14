@@ -1,5 +1,5 @@
 ---
-title: 'Tempo Analysis: The Sound of Teaching Music 1'
+title: 'Tempo Analysis: Experiment 1'
 output:
   html_notebook: default
 editor_options: 

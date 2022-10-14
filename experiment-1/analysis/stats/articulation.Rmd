@@ -1,5 +1,5 @@
 ---
-title: 'Articulation Analysis: The Sound of Teaching Music 1'
+title: 'Articulation Analysis: Experiment 1'
 output:
   html_notebook: default
 editor_options: 
