@@ -2,8 +2,6 @@
 
 ![](material/etc/cropped/stim_n.png)
 
-This repo contains scripts and materials necessary for a musical experiment with expert pianists (Experiment 2).
-
 # experiment
 - Environment: Mac OS X 10.14.3, Max MSP 8
 
