@@ -1,7 +1,7 @@
 # Expert pianists make specific exaggerations for teaching
 
 <p align="center">
-  <img height="300" src="https://media.giphy.com/media/abGjeRq4sQO6A/giphy.gif">
+  <img height="300" src="music_teaching.jpg">
 </p>
 Open Science Framework: https://osf.io/8nbjh/
 
