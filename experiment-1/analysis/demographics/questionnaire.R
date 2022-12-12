@@ -2,8 +2,6 @@
 # packages
 # data manipulation
 if (!require("data.table")) {install.packages("data.table"); require("data.table")}
-# plot
-if (!require("ggpubr")) {install.packages("ggpubr"); require("ggpubr")}
 
 
 ## ----file, include = FALSE----------------------------------------------------
