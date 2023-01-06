@@ -38,7 +38,9 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-#output: papaja::apa6_word
+# documentclass     : "apa6"
+# classoption       : "man"
+# output: papaja::apa6_word
 output:
   papaja::apa6_pdf:
     latex_engine: xelatex
