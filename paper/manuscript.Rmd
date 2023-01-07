@@ -38,12 +38,12 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-# documentclass     : "apa6"
-# classoption       : "man"
-# output: papaja::apa6_word
-output:
+# documentclass     : "apa6" # for word
+# classoption       : "man" # for word
+# output: papaja::apa6_word # for word
+output: 
   papaja::apa6_pdf:
-    latex_engine: xelatex
+    latex_engine: xelatex # for pdf
 ---
 
 ```{r set-up, include = FALSE}
@@ -334,8 +334,7 @@ As Experiment 1, we first report results for performance of the piece with the n
 ## Articulation
 ### Inter-onset Intervals (IOIs)
 
-A paired-sample *t*-test showed that participants played more slowly in the teaching condition [*M* = `r sprintf('%.2f', ioi_art_all[Condition == "teaching"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_art_all[Condition == "teaching"]$SD)`] than in the performing condition [*M* = `r sprintf('%.2f', ioi_art_all[Condition == "performing"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_art_all[Condition == "performing"]$SD)`] while playing the piece with the notated articulation (*t*(`r ioi_art_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_art_ttest$statistic))`
-, *p* `r if(ioi_art_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_ttest$p.value))}`, Cohen's *d* = `r round(abs(coheneff_art$effsize), 3)`, two-tailed, *Fig \ref{fig:ioi-2}*). A Wilcoxon Signed-rank test also confirmed that there was a significant difference between the two conditions (*p* `r if(ioi_art_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art$effsize, 2)`, two-tailed).
+A paired-sample *t*-test showed that participants played more slowly in the teaching condition [*M* = `r sprintf('%.2f', ioi_art_all[Condition == "teaching"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_art_all[Condition == "teaching"]$SD)`] than in the performing condition [*M* = `r sprintf('%.2f', ioi_art_all[Condition == "performing"]$Mean)`, *SD* = `r sprintf('%.3f', ioi_art_all[Condition == "performing"]$SD)`] while playing the piece with the notated articulation (*t*(`r ioi_art_ttest$parameter`) = `r sprintf('%.2f', abs(ioi_art_ttest$statistic))`, *p* `r if(ioi_art_ttest$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_ttest$p.value))}`, Cohen's *d* = `r round(abs(coheneff_art$effsize), 3)`, two-tailed, *Fig \ref{fig:ioi-2}*). A Wilcoxon Signed-rank test also confirmed that there was a significant difference between the two conditions (*p* `r if(ioi_art_wilcoxon$p.value < 0.001){"< 0.001"} else {paste("= ", sprintf('%.3f', ioi_art_wilcoxon$p.value))}`, *r* = `r round(wilcoxeff_art$effsize, 2)`, two-tailed).
 
 ```{r ioi-art-2, echo = FALSE}
 ioi_art_2 <- ggpaired(ioi_art_plot, cond1 = "performing", cond2 = "teaching", color = "condition", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOIs: Articulation") +
