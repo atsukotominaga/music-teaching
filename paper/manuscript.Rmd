@@ -38,10 +38,10 @@ linenumbers       : no
 mask              : no
 draft             : no
 
-# documentclass     : "apa6" # for word
-# classoption       : "man" # for word
+documentclass     : "apa6"
+classoption       : "man"
 # output: papaja::apa6_word # for word
-output: 
+output:
   papaja::apa6_pdf:
     latex_engine: xelatex # for pdf
 ---
@@ -985,7 +985,7 @@ ioi_tra_plot <- data.table(subject = ioi_tra_subject[Condition == "teaching"]$Su
 
 ioi_tra_1 <- ggpaired(ioi_tra_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "IOIs (ms)", title = "IOIs at transition: Exp 1") +
   geom_hline(yintercept = 188, linetype = "dashed") +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 230, method = "t.test", paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 230, method = "wilcox.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
@@ -1010,7 +1010,7 @@ ioi_tra_plot <- data.table(subject = ioi_tra_subject[Condition == "teaching"]$Su
 
 ioi_tra_2 <- ggpaired(ioi_tra_plot, cond = "performing", cond2 = "teaching", color = "condition", facet.by = "skill", line.size = 0.3, line.color = "gray", palette = "aaas", xlab = "Condition", ylab = "Normalised IOIs", title = "IOIs at transition: Exp 2") +
   geom_hline(yintercept = 1, linetype = "dashed") +
-  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 1.05, method = "t.test", paired = TRUE) +
+  stat_compare_means(label = "p.signif", hide.ns = TRUE, size = 10, label.x = 1.5, label.y = 1.05, method = "wilcox.test", paired = TRUE) +
   theme_pubr(base_size = 20, legend = "none", base_family = "Helvetica")
 
 # save plots
