@@ -5,6 +5,9 @@
 *.html
 *rsconnect
 
+# rawdata
+rawdata
+
 # experiment
 experiment/data/
 experiment/midi/
