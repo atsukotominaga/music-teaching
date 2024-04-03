@@ -4,6 +4,7 @@
 *.log
 *.html
 *rsconnect
+merged
 
 # rawdata
 rawdata
@@ -17,4 +18,3 @@ paper/coverletter
 paper/feedback
 paper/revision
 paper/others
-merged
